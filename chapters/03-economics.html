@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 Economics — Kerala PSC</title>
+<link rel="stylesheet" href="../assets/css/landing.css">
+</head>
+<body data-base="../">
+
+<header class="hero">
+  <h1>💰 03 Economics</h1>
+  <p>സാമ്പത്തികം — Indian Economy, Plans, Banking, Taxes, GST</p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../index.html">🏠 Home</a> ›
+    <span>Economics</span>
+  </div>
+
+  <section>
+    <div class="section-head"><h2>📚 Chapters in this Subject</h2></div>
+    <div class="grid" id="chapterGrid"><p style="color:var(--muted)">Loading…</p></div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite · Works fully offline</footer>
+
+<script src="../assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const subject = Syllabus.getSubject('economics');
+  const grid = document.getElementById('chapterGrid');
+  if (!subject) { grid.innerHTML = '<p>Subject not found</p>'; return; }
+
+  const fileOf = id => {
+    const slug = id.replace(/\./g, '-').toLowerCase();
+    const nameMap = {
+      '3': '3-indian-economy'
+    };
+    return `chapters/economics/${nameMap[id] || slug}.html`;
+  };
+
+  grid.innerHTML = subject.chapters.map(c => {
+    const badge = c.tag === '573' ? '573 only' : c.tag === '883' ? '883 only' : 'BOTH';
+    const topicCount = (c.topics || []).length;
+    return `
+      <a href="../${fileOf(c.id)}" class="card">
+        <span class="badge">${c.id}</span>
+        <h3>${c.title}</h3>
+        <p class="desc">${c.titleMl || ''}</p>
+        <div class="meta">
+          <span>${topicCount} topics</span>
+          <span>${badge}</span>
+        </div>
+        <div class="bar"><i style="width:0%"></i></div>
+      </a>`;
+  }).join('');
+
+  const s = document.createElement('script');
+  s.src = '../assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>

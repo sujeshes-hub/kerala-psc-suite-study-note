@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kerala PSC Study Suite</title>
+<link rel="stylesheet" href="assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Kerala PSC Study Suite</h1>
+  <p>573/2025 + 883/2025 - Master Combined Syllabus</p>
+  <div class="badges">
+    <span>Works offline</span>
+    <span>17 subjects</span>
+    <span>Progress saved locally</span>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <div class="section-head">
+      <h2>Subjects</h2>
+      <button class="btn danger" id="resetAllBtn" type="button">Reset all progress</button>
+    </div>
+    <div class="grid" id="subjectGrid">
+      <p class="empty">Loading...</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="summary">
+      <h3>Overall Progress</h3>
+      <div class="summary-grid">
+        <div class="stat"><span class="k">Subjects started</span><span class="v" id="sumParts">0</span></div>
+        <div class="stat"><span class="k">Total questions</span><span class="v" id="sumTotal">0</span></div>
+        <div class="stat"><span class="k">Attempted</span><span class="v" id="sumAtt">0</span></div>
+        <div class="stat"><span class="k">Correct</span><span class="v" id="sumCor">0</span></div>
+        <div class="stat"><span class="k">Wrong</span><span class="v" id="sumWr">0</span></div>
+        <div class="stat"><span class="k">Net score</span><span class="v" id="sumNet">0.00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="howto">
+    <h3>How to use</h3>
+    <ul>
+      <li>Tap any <b>subject</b> to see its chapters.</li>
+      <li>Tap a <b>chapter</b> to see its topics.</li>
+      <li>Tap a <b>topic</b> to open notes + mock test.</li>
+      <li>Progress saves automatically in your browser.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>Kerala PSC Study Suite - Works fully offline</footer>
+
+<script src="assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const grid = document.getElementById('subjectGrid');
+  const list = Syllabus.getAllSubjects();
+  if (!list || !list.length) {
+    grid.innerHTML = '<p class="empty">No subjects found.</p>';
+    return;
+  }
+  grid.innerHTML = list.map(S => {
+    const totalTopics = S.chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
+    return '<a href="subjects/' + S.code + '-' + S.id + '.html" class="card">' +
+      '<span class="badge">' + S.code + '</span>' +
+      '<h3>' + S.icon + ' ' + S.title + '</h3>' +
+      '<p class="desc">' + S.titleMl + ' - ' + S.desc + '</p>' +
+      '<div class="meta">' +
+        '<span>' + S.chapters.length + ' chapter' + (S.chapters.length === 1 ? '' : 's') + '</span>' +
+        '<span>' + totalTopics + ' topics</span>' +
+      '</div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+    '</a>';
+  }).join('');
+  const s = document.createElement('script');
+  s.src = 'assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+
+</body>
+</html>

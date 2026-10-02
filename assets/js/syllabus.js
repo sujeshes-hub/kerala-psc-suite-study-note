@@ -1,0 +1,1580 @@
+/* =====================================================================
+   Kerala PSC Study Suite — Master Combined Syllabus (573/2025 + 883/2025)
+   ---------------------------------------------------------------------
+   Tag values : "BOTH" | "573" | "883"
+   Save as    : UTF-8 (no BOM) — Malayalam content inside
+   ---------------------------------------------------------------------
+   Exposes:
+     window.KPSC_SYLLABUS  → nested API (flatten, forExam, onlyIn, find,
+                             MARKS, EXAMS, PARTS, FILES, CHAPTER_FILES, TITLE_ML)
+     window.Syllabus       → legacy API (getSubject, getAllSubjects, load)
+   ===================================================================== */
+(function () {
+  "use strict";
+
+  const t = (id, title, tag, children, extra) => {
+    const o = { id, title };
+    if (tag) o.tag = tag;
+    if (children && children.length) o.children = children;
+    return extra ? Object.assign(o, extra) : o;
+  };
+
+  const EXAMS = {
+    "573": { code: "573/2025", marks: 100 },
+    "883": { code: "883/2025", post: "Inspecting Assistant (Legal Metrology)", marks: 100 }
+  };
+
+  const MARKS = {
+    1:  { title: "History",                            "573": 5,    "883": 5 },
+    2:  { title: "Geography",                          "573": 5,    "883": 5 },
+    3:  { title: "Economics",                          "573": 5,    "883": 5 },
+    4:  { title: "Indian Constitution",                "573": 5,    "883": 5 },
+    5:  { title: "Kerala Administration & Governance", "573": 10,   "883": 3 },
+    6:  { title: "Biology & Public Health",            "573": 6,    "883": 4 },
+    7:  { title: "Physics",                            "573": 3,    "883": 6 },
+    8:  { title: "Chemistry",                          "573": 3,    "883": 5 },
+    9:  { title: "Art, Sports, Literature & Culture",  "573": 5,    "883": 3 },
+    10: { title: "Computer",                           "573": 3,    "883": 4 },
+    11: { title: "Simple Arithmetic",                  "573": 5,    "883": 10,
+          note: "883: Arithmetic 10 + Mental Ability 5 = 15 combined block" },
+    12: { title: "Mental Ability & Observation",       "573": 5,    "883": 5 },
+    13: { title: "General English",                    "573": 10,   "883": 10 },
+    14: { title: "Malayalam (regional language)",      "573": 10,   "883": 10 },
+    15: { title: "Current Affairs",                    "573": 15,   "883": 10 },
+    16: { title: "Important Acts",                     "573": 5,    "883": null },
+    17: { title: "Special Topics — Legal Metrology",   "573": null, "883": 10 }
+  };
+
+  /* -----------------------------------------------------------------
+     TITLE_ML — Malayalam name for every node (subject / chapter / topic)
+     ----------------------------------------------------------------- */
+  const TITLE_ML = {
+    /* HISTORY */
+    "1": "ചരിത്രം",
+    "1.1": "കേരള ചരിത്രം",
+    "1.1.1": "കേരളത്തിലെ യൂറോപ്യന്മാരുടെ വരവ്",
+    "1.1.2": "തിരുവിതാംകൂർ ചരിത്രം",
+    "1.1.3": "സാമൂഹിക പരിഷ്കരണ പ്രസ്ഥാനങ്ങൾ",
+    "1.1.4": "മതനവോത്ഥാന പ്രസ്ഥാനങ്ങൾ",
+    "1.1.5": "കേരളത്തിലെ ദേശീയ പ്രസ്ഥാനം",
+    "1.1.6": "കേരള ചരിത്രത്തിന്റെ സാഹിത്യ സ്രോതസ്സുകൾ",
+    "1.1.7": "ഐക്യകേരള പ്രസ്ഥാനം",
+    "1.1.8": "1956-ന് ശേഷമുള്ള കേരള ചരിത്രം",
+    "1.2": "ഇന്ത്യൻ ചരിത്രം",
+    "1.2.1": "ബ്രിട്ടീഷ് ആധിപത്യം",
+    "1.2.2": "ഒന്നാം സ്വാതന്ത്ര്യസമരം",
+    "1.2.3": "INC രൂപീകരണം",
+    "1.2.4": "സ്വദേശി പ്രസ്ഥാനം",
+    "1.2.5": "സാമൂഹിക പരിഷ്കരണ പ്രസ്ഥാനങ്ങൾ",
+    "1.2.6": "പത്രപ്രവർത്തനം",
+    "1.2.7": "സ്വാതന്ത്ര്യസമരകാലത്തെ സാഹിത്യവും കലയും",
+    "1.2.8": "ഗാന്ധിയും സ്വാതന്ത്ര്യസമരവും",
+    "1.2.9": "സ്വാതന്ത്ര്യാനന്തര ഇന്ത്യ",
+    "1.2.10": "സംസ്ഥാന പുനഃസംഘടന",
+    "1.2.11": "ശാസ്ത്രം, വിദ്യാഭ്യാസം, സാങ്കേതികവിദ്യ",
+    "1.2.12": "ഇന്ത്യയുടെ വിദേശനയം",
+    "1.3": "ലോകചരിത്രം",
+    "1.3.1": "ഇംഗ്ലണ്ടിലെ മഹത്തായ വിപ്ലവം",
+    "1.3.2": "അമേരിക്കൻ സ്വാതന്ത്ര്യസമരം",
+    "1.3.3": "ഫ്രഞ്ച് വിപ്ലവം",
+    "1.3.4": "റഷ്യൻ വിപ്ലവം",
+    "1.3.5": "ചൈനീസ് വിപ്ലവം",
+    "1.3.6": "രണ്ടാം ലോകമഹായുദ്ധാനന്തര ചരിത്രം",
+    "1.3.7": "ഐക്യരാഷ്ട്രസഭ",
+    "1.3.8": "പ്രധാന അന്താരാഷ്ട്ര സംഘടനകൾ",
+
+    /* GEOGRAPHY */
+    "2": "ഭൂമിശാസ്ത്രം",
+    "2.1": "അടിസ്ഥാന ഭൂമിശാസ്ത്രം",
+    "2.1.1": "ഭൂമിശാസ്ത്രത്തിന്റെ അടിസ്ഥാന തത്വങ്ങൾ",
+    "2.1.2": "ഭൂമിയുടെ ഘടന",
+    "2.1.3": "അന്തരീക്ഷം",
+    "2.1.4": "പാറകൾ",
+    "2.1.5": "ഭൗമോപരിതലം",
+    "2.1.6": "അന്തരീക്ഷമർദ്ദം",
+    "2.1.7": "കാറ്റ്",
+    "2.1.8": "താപനില",
+    "2.1.9": "ഋതുക്കൾ",
+    "2.1.10": "ആഗോള പ്രശ്നങ്ങൾ",
+    "2.1.11": "ആഗോളതാപനം",
+    "2.1.12": "മലിനീകരണം",
+    "2.1.13": "ഭൂപടങ്ങൾ",
+    "2.1.14": "ടോപ്പോഗ്രാഫിക് ഭൂപടങ്ങൾ",
+    "2.1.15": "ഭൂപട ചിഹ്നങ്ങൾ",
+    "2.1.16": "റിമോട്ട് സെൻസിംഗ്",
+    "2.1.17": "ജി.ഐ.എസ്",
+    "2.1.18": "സമുദ്രങ്ങൾ",
+    "2.1.19": "സമുദ്ര ചലനങ്ങൾ",
+    "2.1.20": "ഭൂഖണ്ഡങ്ങൾ",
+    "2.1.21": "ലോക രാജ്യങ്ങളും സവിശേഷതകളും",
+    "2.2": "ഇന്ത്യ",
+    "2.2.1": "ഭൂപ്രകൃതി",
+    "2.2.2": "സംസ്ഥാനങ്ങളും സവിശേഷതകളും",
+    "2.2.3": "ഉത്തര പർവ്വതനിരകൾ",
+    "2.2.4": "നദികൾ",
+    "2.2.5": "ഉത്തര സമതലങ്ങൾ",
+    "2.2.6": "ദക്ഷിണേന്ത്യൻ പീഠഭൂമി",
+    "2.2.7": "തീരദേശ സമതലങ്ങൾ",
+    "2.2.8": "കാലാവസ്ഥ",
+    "2.2.9": "പ്രകൃതിദത്ത സസ്യജാലം",
+    "2.2.10": "കൃഷി",
+    "2.2.11": "ധാതുക്കൾ",
+    "2.2.12": "വ്യവസായങ്ങൾ",
+    "2.2.13": "ഊർജ്ജ വിഭവങ്ങൾ",
+    "2.2.14": "റോഡ് ഗതാഗതം",
+    "2.2.15": "ജല ഗതാഗതം",
+    "2.2.16": "റെയിൽവേ",
+    "2.2.17": "വ്യോമ ഗതാഗതം",
+    "2.3": "കേരളം",
+    "2.3.1": "ഭൂപ്രകൃതി",
+    "2.3.2": "ജില്ലാ സവിശേഷതകൾ",
+    "2.3.3": "നദികൾ",
+    "2.3.4": "കാലാവസ്ഥ",
+    "2.3.5": "പ്രകൃതിദത്ത സസ്യജാലം",
+    "2.3.6": "വന്യജീവികൾ",
+    "2.3.7": "കൃഷി",
+    "2.3.8": "ഗവേഷണ സ്ഥാപനങ്ങൾ",
+    "2.3.9": "ധാതുക്കൾ",
+    "2.3.10": "വ്യവസായങ്ങൾ",
+    "2.3.11": "ഊർജ്ജം",
+    "2.3.12": "റോഡ്",
+    "2.3.13": "ജല ഗതാഗതം",
+    "2.3.14": "റെയിൽവേ",
+    "2.3.15": "വ്യോമ ഗതാഗതം",
+
+    /* ECONOMICS */
+    "3": "സാമ്പത്തികം",
+    "3.1": "ഇന്ത്യൻ സാമ്പത്തിക വ്യവസ്ഥ",
+    "3.2": "പഞ്ചവത്സര പദ്ധതികൾ",
+    "3.3": "ആസൂത്രണ കമ്മീഷൻ",
+    "3.4": "നീതി ആയോഗ്",
+    "3.5": "പുതിയ സാമ്പത്തിക പരിഷ്കാരങ്ങൾ",
+    "3.6": "ധനകാര്യ സ്ഥാപനങ്ങൾ",
+    "3.7": "കാർഷിക വിളകൾ",
+    "3.8": "ധാതുക്കൾ",
+    "3.9": "ഹരിത വിപ്ലവം",
+    "3.10": "നേരിട്ടുള്ള നികുതികൾ",
+    "3.11": "പരോക്ഷ നികുതികൾ",
+    "3.12": "ഇന്ത്യയിൽ ജി.എസ്.ടി",
+
+    /* CONSTITUTION */
+    "4": "ഇന്ത്യൻ ഭരണഘടന",
+    "4.1": "ഭരണഘടനാ നിർമ്മാണ സഭ",
+    "4.2": "ആമുഖം",
+    "4.3": "പൗരത്വം",
+    "4.4": "മൗലികാവകാശങ്ങൾ",
+    "4.5": "നിർദ്ദേശക തത്വങ്ങൾ",
+    "4.6": "മൗലിക കടമകൾ",
+    "4.7": "കേന്ദ്ര സർക്കാർ",
+    "4.8": "സംസ്ഥാന സർക്കാർ",
+    "4.9": "ഭരണഘടനാ സ്ഥാപനങ്ങൾ",
+    "4.10": "ഭരണഘടനാ സ്ഥാപനങ്ങളുടെ ധർമ്മങ്ങൾ",
+    "4.11": "പഞ്ചായത്തീരാജ്",
+    "4.12": "യൂണിയൻ ലിസ്റ്റ്",
+    "4.13": "സംസ്ഥാന ലിസ്റ്റ്",
+    "4.14": "സമവർത്തി ലിസ്റ്റ്",
+    "4.15": "പ്രത്യേക ഫോർമാറ്റുകൾ",
+    "4.16": "ഭേദഗതികൾ",
+    "4.17": "സ്ഥാപനം → ആർട്ടിക്കിൾ → ധർമ്മം",
+    "4.18": "കംപ്ട്രോളർ ആൻഡ് ഓഡിറ്റർ ജനറൽ",
+    "4.19": "അറ്റോർണി ജനറൽ",
+    "4.20": "അഡ്വക്കേറ്റ് ജനറൽ",
+    "4.21": "ഇന്ത്യൻ തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ",
+    "4.22": "സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ",
+    "4.23": "യു.പി.എസ്.സി",
+    "4.24": "സംസ്ഥാന പി.എസ്.സി",
+    "4.25": "ധനകാര്യ കമ്മീഷൻ",
+    "4.26": "സംസ്ഥാന ധനകാര്യ കമ്മീഷൻ",
+    "4.27": "ജി.എസ്.ടി കൗൺസിൽ",
+    "4.28": "നിയമനിർമ്മാണ അധികാര വിഭജനം",
+    "4.29": "യൂണിയൻ-സംസ്ഥാന സേവനങ്ങൾ",
+    "4.30": "ട്രിബ്യൂണലുകൾ",
+    "4.31": "ദേശീയ പട്ടികജാതി കമ്മീഷൻ",
+    "4.32": "ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ",
+    "4.33": "ദേശീയ പിന്നാക്ക വിഭാഗ കമ്മീഷൻ",
+    "4.34": "ഔദ്യോഗിക ഭാഷ",
+    "4.35": "പ്രാദേശിക ഭാഷകൾ",
+    "4.36": "സുപ്രീംകോടതി-ഹൈക്കോടതി ഭാഷ",
+    "4.37": "ഭാഷയെ സംബന്ധിച്ച പ്രത്യേക നിർദ്ദേശങ്ങൾ",
+
+    /* KERALA ADMINISTRATION */
+    "5": "കേരള ഭരണം",
+    "5.1": "കേരള സ്റ്റേറ്റ് സിവിൽ സർവീസ്",
+    "5.2": "ഭരണഘടനാ സ്ഥാപനങ്ങൾ",
+    "5.3": "വിവിധ കമ്മീഷനുകൾ",
+    "5.4": "സാമൂഹിക ആസൂത്രണം",
+    "5.5": "സാമ്പത്തിക ആസൂത്രണം",
+    "5.6": "വാണിജ്യ ആസൂത്രണം",
+    "5.7": "അടിസ്ഥാന വിവരങ്ങൾ / സാമൂഹ്യ-സാമ്പത്തിക വികസനം",
+    "5.8": "ദുരന്ത നിവാരണ അതോറിറ്റി",
+    "5.9": "ജലസംരക്ഷണ പ്രവർത്തനങ്ങൾ",
+    "5.10": "തൊഴിലും തൊഴിൽ രംഗവും",
+    "5.11": "ദേശീയ ഗ്രാമീണ തൊഴിൽ പദ്ധതികൾ",
+    "5.12": "ഭൂപരിഷ്കരണം",
+    "5.13": "വനിതാ സംരക്ഷണം",
+    "5.14": "ശിശു സംരക്ഷണം",
+    "5.15": "മുതിർന്ന പൗരന്മാരുടെ സംരക്ഷണം",
+    "5.16": "സാമൂഹിക ക്ഷേമം",
+    "5.17": "സാമൂഹിക സുരക്ഷ",
+    "5.18": "അർദ്ധ ന്യായിക സ്ഥാപനങ്ങൾ",
+    "5.19": "ആസൂത്രണ ബോർഡ്",
+    "5.20": "ജനസംഖ്യ",
+    "5.21": "സാക്ഷരത",
+    "5.22": "ഇ-ഗവേണൻസ്",
+    "5.23": "അധികാര കൈമാറ്റ നിയമനിർമ്മാണം",
+    "5.24": "നിയമനിർമ്മാണ നിയന്ത്രണങ്ങൾ",
+    "5.25": "ന്യായിക നിയന്ത്രണങ്ങൾ",
+    "5.26": "ഭരണഘടനാ പരിഹാരങ്ങൾ",
+    "5.27": "ഭരണപരമായ വിവേചനാധികാരം",
+    "5.28": "ഭരണപരമായ വിധിന്യായം",
+    "5.29": "നൈസർഗ്ഗിക നീതിയുടെ തത്വങ്ങൾ",
+
+    /* BIOLOGY */
+    "6": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
+    "6.1": "മനുഷ്യ ശരീരം",
+    "6.2": "വിറ്റാമിനുകളും ധാതുക്കളും",
+    "6.3": "പകർച്ചവ്യാധികൾ",
+    "6.4": "കേരള ആരോഗ്യവും ക്ഷേമവും",
+    "6.5": "ജീവിതശൈലീ രോഗങ്ങൾ",
+    "6.6": "അടിസ്ഥാന ആരോഗ്യം",
+    "6.7": "പരിസ്ഥിതി",
+    "6.8": "പരിസ്ഥിതി അപകടങ്ങൾ",
+
+    /* PHYSICS */
+    "7": "ഭൗതികശാസ്ത്രം",
+    "7.1": "അടിസ്ഥാന ഭൗതികശാസ്ത്രം",
+    "7.2": "ചലനം",
+    "7.3": "പ്രകാശം",
+    "7.4": "ശബ്ദം",
+    "7.5": "ബലം",
+    "7.6": "ഗുരുത്വാകർഷണം",
+    "7.7": "താപം",
+    "7.8": "പ്രവൃത്തി, ഊർജ്ജം, പവർ",
+    "7.9": "ഇലക്ട്രോണിക്സ്",
+
+    /* CHEMISTRY */
+    "8": "രസതന്ത്രം",
+    "8.1": "ആറ്റം",
+    "8.2": "തന്മാത്ര",
+    "8.3": "ദ്രവ്യത്തിന്റെ അവസ്ഥകൾ",
+    "8.4": "രൂപഭേദം",
+    "8.5": "വാതക നിയമങ്ങൾ",
+    "8.6": "അക്വാ റീജിയ",
+    "8.7": "മൂലകങ്ങൾ",
+    "8.8": "ആവർത്തന പട്ടിക",
+    "8.9": "ലോഹങ്ങൾ / അലോഹങ്ങൾ",
+    "8.10": "രാസ / ഭൗതിക മാറ്റങ്ങൾ",
+    "8.11": "രാസ പ്രതിപ്രവർത്തനങ്ങൾ",
+    "8.12": "ലായനികൾ",
+    "8.13": "മിശ്രിതങ്ങൾ",
+    "8.14": "സംയുക്തങ്ങൾ",
+    "8.15": "ലോഹസങ്കരങ്ങൾ",
+    "8.16": "ആസിഡുകൾ",
+    "8.17": "ബേസുകൾ / ക്ഷാരങ്ങൾ",
+    "8.18": "pH",
+    "8.19": "ആൽക്കലോയിഡുകൾ",
+
+    /* ART / SPORTS / LITERATURE */
+    "9": "കല, കായികം, സാഹിത്യം, സംസ്കാരം",
+    "9.1": "കലയും സംസ്കാരവും",
+    "9.2": "കായികം",
+    "9.3": "സാഹിത്യം",
+    "9.4": "സംസ്കാരം",
+
+    /* COMPUTER */
+    "10": "കമ്പ്യൂട്ടർ",
+    "10.1": "ഹാർഡ്‌വെയർ",
+    "10.2": "സോഫ്റ്റ്‌വെയറും ഓ.എസും",
+    "10.3": "നെറ്റ്‌വർക്കുകൾ",
+    "10.4": "ഇന്റർനെറ്റ്",
+    "10.5": "HTML, മറ്റുള്ളവ",
+    "10.6": "സൈബർ കുറ്റകൃത്യങ്ങളും നിയമങ്ങളും",
+
+    /* ARITHMETIC */
+    "11": "ലഘു ഗണിതം",
+    "11.1": "സംഖ്യകൾ",
+    "11.2": "ഭിന്നസംഖ്യകൾ",
+    "11.3": "ദശാംശങ്ങൾ",
+    "11.4": "ശതമാനം",
+    "11.5": "ലാഭവും നഷ്ടവും",
+    "11.6": "സാധാരണ പലിശ",
+    "11.7": "കൂട്ടുപലിശ",
+    "11.8": "അനുപാതം",
+    "11.9": "സമയവും ദൂരവും",
+    "11.10": "സമയവും ജോലിയും",
+    "11.11": "ശരാശരി",
+    "11.12": "കൃത്യങ്കങ്ങൾ",
+    "11.13": "ക്ഷേത്രഗണിതം",
+    "11.14": "ചുറ്റളവ്",
+    "11.15": "വിസ്തീർണ്ണം",
+    "11.16": "വ്യാപ്തം",
+    "11.17": "ശ്രേണികൾ",
+    "11.20": "ജ്യാമിതി",
+    "11.21": "ത്രികോണമിതി",
+
+    /* MENTAL ABILITY */
+    "12": "മാനസിക നൈപുണ്യവും നിരീക്ഷണവും",
+    "12.1": "സംഖ്യാ ശ്രേണി",
+    "12.2": "അക്ഷര ശ്രേണി",
+    "12.3": "ഗണിത ചിഹ്നങ്ങൾ",
+    "12.4": "സ്ഥാന നിർണ്ണയം",
+    "12.5": "വാക്ക് സാദൃശ്യം",
+    "12.6": "അക്ഷര സാദൃശ്യം",
+    "12.7": "സംഖ്യാ സാദൃശ്യം",
+    "12.8": "ഒറ്റയാൻ കണ്ടെത്തൽ",
+    "12.9": "സംഖ്യാ യുക്തി",
+    "12.10": "കോഡിംഗും ഡീകോഡിംഗും",
+    "12.11": "കുടുംബ ബന്ധങ്ങൾ",
+    "12.12": "ദിശാ ബോധം",
+    "12.13": "ക്ലോക്ക് സമയവും കോണുകളും",
+    "12.14": "കണ്ണാടി പ്രതിബിംബം",
+    "12.15": "കലണ്ടറും തീയതികളും",
+    "12.16": "ക്ലാർക്കൽ കഴിവ്",
+
+    /* ENGLISH */
+    "13": "ഇംഗ്ലീഷ്",
+    "13.1": "വ്യാകരണം",
+    "13.1.1": "വാക്യങ്ങളുടെ തരങ്ങൾ",
+    "13.1.2": "വാക്യ പരിവർത്തനം",
+    "13.1.3": "വാക്കിന്റെ ഭാഗങ്ങൾ",
+    "13.1.4": "കർത്തൃ-ക്രിയ യോജിപ്പ്",
+    "13.1.5": "ആർട്ടിക്കിൾസ്",
+    "13.1.6": "പ്രൈമറി ഓക്സിലറികൾ",
+    "13.1.7": "മോഡൽ ഓക്സിലറികൾ",
+    "13.1.8": "ചോദ്യ ടാഗുകൾ",
+    "13.1.9": "ഇൻഫിനിറ്റീവ്സ്",
+    "13.1.10": "ജെറൻഡ്സ്",
+    "13.1.11": "കാലങ്ങൾ",
+    "13.1.12": "ഷർത്ത വാക്യങ്ങൾ",
+    "13.1.13": "പ്രിപൊസിഷൻസ്",
+    "13.1.14": "കോറിലേറ്റീവ്സ്",
+    "13.1.15": "നേരിട്ടുള്ള / പരോക്ഷ ഭാഷണം",
+    "13.1.16": "കർത്തരി / കർമ്മണി പ്രയോഗം",
+    "13.1.17": "വാക്യ ശുദ്ധി",
+    "13.1.18": "താരതമ്യ ഡിഗ്രികൾ",
+    "13.2": "പദസമ്പത്ത്",
+    "13.2.1": "ഏകവചനം / ബഹുവചനം",
+    "13.2.2": "ലിംഗം",
+    "13.2.3": "സമൂഹവാചക നാമങ്ങൾ",
+    "13.2.4": "പദനിർമ്മാണം",
+    "13.2.5": "പൂർവ്വ-ഉത്തര പ്രത്യയങ്ങൾ",
+    "13.2.6": "സംയുക്ത പദങ്ങൾ",
+    "13.2.7": "പര്യായപദങ്ങൾ",
+    "13.2.8": "വിപരീതപദങ്ങൾ",
+    "13.2.9": "ഫ്രേസൽ വെർബ്സ്",
+    "13.2.10": "വിദേശ പദങ്ങൾ",
+    "13.2.11": "ഏകപദങ്ങൾ",
+    "13.2.12": "ആശയക്കുഴപ്പമുള്ള വാക്കുകൾ",
+    "13.2.13": "അക്ഷരവിന്യാസം",
+    "13.2.14": "ശൈലികൾ",
+
+    /* MALAYALAM */
+    "14": "മലയാളം",
+    "14.2": "പദശുദ്ധി",
+    "14.3": "വാക്യശുദ്ധി",
+    "14.4": "പരിഭാഷ",
+    "14.5": "ഒറ്റപദം",
+    "14.6": "പര്യായം",
+    "14.7": "വിപരീതപദം",
+    "14.8": "ശൈലികൾ",
+    "14.9": "പഴഞ്ചൊല്ലുകൾ",
+    "14.10": "സമാനപദം",
+    "14.11": "ചേർത്തെഴുതുക",
+    "14.12": "സ്ത്രീലിംഗം",
+    "14.13": "പുല്ലിംഗം",
+    "14.14": "വചനം",
+    "14.15": "പിരിച്ചെഴുതൽ",
+
+    /* CURRENT AFFAIRS */
+    "15": "നിലവിലെ കാര്യങ്ങൾ",
+    "15.1": "നിലവിലെ കാര്യങ്ങൾ",
+    "15.1.1": "ദേശീയ കാര്യങ്ങൾ",
+    "15.1.2": "അന്താരാഷ്ട്ര കാര്യങ്ങൾ",
+    "15.1.3": "കേരള കാര്യങ്ങൾ",
+    "15.1.4": "ശാസ്ത്ര-സാങ്കേതികവിദ്യ",
+    "15.1.5": "അവാർഡുകൾ / കായികം / സംസ്കാരം",
+    "15.1.6": "പ്രധാന സർക്കാർ പദ്ധതികൾ",
+
+    /* IMPORTANT ACTS */
+    "16": "പ്രധാന നിയമങ്ങൾ",
+    "16.1": "വിവരാവകാശം",
+    "16.1.1": "RTI നിയമം, 2005",
+    "16.1.2": "നിർവചനങ്ങൾ",
+    "16.1.3": "ഒഴിവാക്കപ്പെട്ട വിവരങ്ങൾ",
+    "16.1.4": "മൂന്നാം കക്ഷി വിവരങ്ങൾ",
+    "16.1.5": "വിവര കമ്മീഷനുകൾ",
+    "16.1.6": "അധികാരങ്ങളും ധർമ്മങ്ങളും",
+    "16.2": "പൊതുസേവന അവകാശം",
+    "16.2.1": "കേരള അവകാശ സേവന നിയമം, 2012",
+    "16.2.2": "നിർവചനങ്ങൾ",
+    "16.2.3": "നിയമ ഘടന",
+    "16.2.4": "പരിഹാരം",
+    "16.2.5": "അപ്പീലുകൾ",
+    "16.2.6": "ശിക്ഷകൾ",
+    "16.3": "ഉപഭോക്തൃ സംരക്ഷണം",
+    "16.3.1": "ഉപഭോക്തൃ സംരക്ഷണ നിയമം, 2019",
+    "16.3.2": "ഉപഭോക്തൃ അവകാശങ്ങൾ",
+    "16.3.3": "ഉപഭോക്തൃ സംരക്ഷണ കൗൺസിലുകൾ",
+    "16.3.4": "ഉപഭോക്തൃ സംരക്ഷണ അതോറിറ്റി",
+    "16.3.5": "തർക്ക പരിഹാര കമ്മീഷനുകൾ",
+    "16.3.6": "ഉപഭോക്തൃ മധ്യസ്ഥത",
+    "16.3.7": "ഉൽപ്പന്ന ബാധ്യത",
+    "16.3.8": "കുറ്റങ്ങളും ശിക്ഷകളും",
+    "16.4": "ദുർബല വിഭാഗങ്ങളുടെ സംരക്ഷണം",
+    "16.4.1": "പൗരാവകാശ സംരക്ഷണ നിയമം, 1955",
+    "16.4.2": "SC/ST അതിക്രമങ്ങൾ തടയൽ നിയമം, 1989",
+    "16.4.3": "കേരള SC/ST കമ്മീഷൻ നിയമം, 2007",
+    "16.4.4": "കേരള സംസ്ഥാന SC/ST കമ്മീഷൻ",
+    "16.4.5": "മനുഷ്യാവകാശ സംരക്ഷണ നിയമം, 1993",
+    "16.4.6": "ദേശീയ മനുഷ്യാവകാശ കമ്മീഷൻ",
+    "16.4.7": "സംസ്ഥാന മനുഷ്യാവകാശ കമ്മീഷൻ",
+    "16.4.8": "മുതിർന്ന പൗരന്മാരുടെ ക്ഷേമ നിയമം, 2007",
+    "16.4.9": "ഭിന്നശേഷിക്കാർക്കുള്ള അവകാശ നിയമം, 2016",
+    "16.4.10": "ട്രാൻസ്ജെൻഡർ അവകാശ നിയമം, 2019",
+    "16.5": "വനിതാ സംരക്ഷണം",
+    "16.5.1": "BNS 2023 വനിതകൾക്കെതിരായ കുറ്റങ്ങൾ",
+    "16.5.2": "സ്ത്രീധന നിരോധന നിയമം, 1961",
+    "16.5.3": "ദേശീയ വനിതാ കമ്മീഷൻ നിയമം, 1990",
+    "16.5.4": "കേരള വനിതാ കമ്മീഷൻ നിയമം, 1991",
+    "16.5.5": "ഗാർഹിക പീഡന നിരോധന നിയമം, 2005",
+    "16.5.6": "POSH നിയമം, 2013",
+    "16.6": "ശിശു സംരക്ഷണം",
+    "16.6.1": "BNS കുട്ടികൾക്കെതിരായ കുറ്റങ്ങൾ",
+    "16.6.2": "POCSO നിയമം, 2012",
+    "16.6.3": "ബാലനീതി നിയമം, 2015",
+    "16.6.4": "JJ ബോർഡ്",
+    "16.6.5": "ശിശു ക്ഷേമ സമിതി",
+    "16.6.6": "നടപടിക്രമങ്ങൾ",
+    "16.7": "അഴിമതി നിവാരണം",
+    "16.7.1": "അഴിമതി നിവാരണ നിയമം, 1988",
+    "16.7.2": "കേന്ദ്ര വിജിലൻസ് കമ്മീഷൻ നിയമം, 2003",
+    "16.7.3": "ലോക്പാൽ, ലോകായുക്ത നിയമം, 2013",
+    "16.7.4": "കേരള ലോകായുക്ത നിയമം, 1999",
+    "16.8": "പൊതുപ്രവർത്തകൻ",
+    "16.8.1": "BNS പ്രകാരം നിർവചനം",
+    "16.8.2": "പൊതുപ്രവർത്തകർക്കെതിരായ കുറ്റങ്ങൾ",
+    "16.9": "ഭരണപരമായ ട്രിബ്യൂണലുകൾ",
+    "16.9.1": "ഭരണപരമായ ട്രിബ്യൂണൽ നിയമം, 1985",
+    "16.9.2": "കേന്ദ്ര ഭരണ ട്രിബ്യൂണൽ",
+    "16.9.3": "കേരള ഭരണ ട്രിബ്യൂണൽ",
+
+    /* LEGAL METROLOGY */
+    "17": "ലീഗൽ മെട്രോളജി",
+    "17.1": "ലീഗൽ മെട്രോളജിയുടെ അടിസ്ഥാനങ്ങൾ",
+    "17.1.1": "അന്താരാഷ്ട്ര-ദേശീയ മാനദണ്ഡങ്ങൾ",
+    "17.1.2": "അന്താരാഷ്ട്ര സംഘടനകളും ലബോറട്ടറികളും",
+    "17.1.3": "അളവ് ഉപകരണങ്ങൾ",
+    "17.1.4": "അളവ് സങ്കൽപ്പങ്ങൾ",
+    "17.2": "ലീഗൽ മെട്രോളജി ആക്ട്, 2009",
+    "17.2.1": "സെക്ഷൻ 17 — രേഖകൾ സൂക്ഷിക്കൽ",
+    "17.2.2": "സെക്ഷൻ 18 — പ്രീ-പാക്കേജ്ഡ് ഉൽപ്പന്ന പ്രഖ്യാപനം",
+    "17.2.3": "സെക്ഷൻ 22 — മോഡൽ അനുമതി",
+    "17.2.4": "സെക്ഷൻ 24 — പരിശോധനയും മുദ്രണവും",
+    "17.2.5": "സെക്ഷൻ 25 — അനധികൃത തൂക്കത്തിനുള്ള ശിക്ഷ",
+    "17.2.6": "സെക്ഷൻ 26 — മാറ്റത്തിനുള്ള ശിക്ഷ",
+    "17.2.7": "സെക്ഷൻ 27 — അനധികൃത നിർമ്മാണ/വിൽപ്പന ശിക്ഷ",
+    "17.2.8": "സെക്ഷൻ 31 — രേഖകൾ ഹാജരാക്കാത്തതിനുള്ള ശിക്ഷ",
+    "17.2.9": "സെക്ഷൻ 33 — പരിശോധിക്കാത്ത തൂക്കത്തിനുള്ള ശിക്ഷ",
+    "17.2.10": "സെക്ഷൻ 34 — അനധികൃത തൂക്ക ഉപയോഗത്തിനുള്ള ശിക്ഷ",
+    "17.2.11": "സെക്ഷൻ 36 — അനധികൃത പാക്കേജ് വിൽപ്പന ശിക്ഷ",
+    "17.2.12": "സെക്ഷൻ 44 — മുദ്ര കൃത്രിമത്വത്തിനുള്ള ശിക്ഷ",
+    "17.3": "പാക്കേജ്ഡ് കമ്മോഡിറ്റി റൂൾസ്, 2011",
+    "17.3.1": "റൂൾ 6 — ഓരോ പാക്കേജിലും പ്രഖ്യാപനം",
+    "17.3.2": "റൂൾ 7 — പ്രിൻസിപ്പൽ ഡിസ്പ്ലേ പാനൽ",
+    "17.3.3": "റൂൾ 8 — പ്രഖ്യാപനം കാണേണ്ട സ്ഥലം",
+    "17.3.4": "റൂൾ 10 — നിർമ്മാതാവിന്റെ വിവരങ്ങൾ",
+    "17.4": "കേരള എൻഫോഴ്സ്മെന്റ് റൂൾസ്, 2012",
+    "17.4.1": "റൂൾ 14 — പരിശോധനയും നിരീക്ഷണവും",
+    "17.4.2": "റൂൾ 15 — തൂക്കത്തിന്റെ മുദ്രണം",
+    "17.4.3": "റൂൾ 16 — പരിശോധനാ ഫീസ്",
+    "17.4.4": "റൂൾ 17 — ഫീസ് സ്വീകരണവും ട്രഷറി നിക്ഷേപവും",
+    "17.4.5": "റൂൾ 22 — തൂക്കങ്ങളുടെ ഉപയോഗം",
+    "17.4.6": "റൂൾ 23 — പരിശോധന സർട്ടിഫിക്കറ്റ് പ്രദർശനം",
+    "17.4.7": "റൂൾ 24 — ലംഘനത്തിനുള്ള ശിക്ഷ"
+  };
+
+  /* -----------------------------------------------------------------
+     FILES — topic id → published topic page
+     ----------------------------------------------------------------- */
+  const FILES = {
+    /* HISTORY */
+    "1.1.1": { file: "topics/history/1.1.1-europeans-in-kerala.html", key: "history-1.1.1-europeans-in-kerala", qs: 0 },
+    "1.1.2": { file: "topics/history/1.1.2-travancore-history.html",  key: "history-1.1.2-travancore-history",  qs: 0 },
+    "1.1.3": { file: "topics/history/1.1.3-social-reform-movements.html", key: "history-1.1.3-social-reform-movements", qs: 0 },
+    "1.1.4": { file: "topics/history/1.1.4-religious-renaissance.html", key: "history-1.1.4-religious-renaissance", qs: 0 },
+    "1.1.5": { file: "topics/history/1.1.5-national-movement.html",   key: "history-1.1.5-national-movement",   qs: 0 },
+    "1.1.6": { file: "topics/history/1.1.6-literary-sources.html",    key: "history-1.1.6-literary-sources",    qs: 0 },
+    "1.1.7": { file: "topics/history/1.1.7-aikya-kerala.html",        key: "history-1.1.7-aikya-kerala",        qs: 0 },
+    "1.1.8": { file: "topics/history/1.1.8-kerala-after-1956.html",   key: "history-1.1.8-kerala-after-1956",   qs: 0 },
+    "1.2.1": { file: "topics/history/1.2.1-british-rule.html",        key: "history-1.2.1-british-rule",        qs: 0 },
+    "1.2.2": { file: "topics/history/1.2.2-first-war-independence.html", key: "history-1.2.2-first-war-independence", qs: 0 },
+    "1.2.3": { file: "topics/history/1.2.3-formation-of-inc.html",    key: "history-1.2.3-formation-of-inc",    qs: 0 },
+    "1.2.4": { file: "topics/history/1.2.4-swadeshi-movement.html",   key: "history-1.2.4-swadeshi-movement",   qs: 0 },
+    "1.2.5": { file: "topics/history/1.2.5-social-reform-india.html", key: "history-1.2.5-social-reform-india", qs: 0 },
+    "1.2.6": { file: "topics/history/1.2.6-journalism.html",          key: "history-1.2.6-journalism",          qs: 0 },
+    "1.2.7": { file: "topics/history/1.2.7-literature-art.html",      key: "history-1.2.7-literature-art",      qs: 0 },
+    "1.2.8": { file: "topics/history/1.2.8-gandhi-freedom-struggle.html", key: "history-1.2.8-gandhi-freedom-struggle", qs: 0 },
+    "1.2.9": { file: "topics/history/1.2.9-post-independence-india.html", key: "history-1.2.9-post-independence-india", qs: 0 },
+    "1.2.10": { file: "topics/history/1.2.10-states-reorganisation.html", key: "history-1.2.10-states-reorganisation", qs: 0 },
+    "1.2.11": { file: "topics/history/1.2.11-science-education-tech.html", key: "history-1.2.11-science-education-tech", qs: 0 },
+    "1.2.12": { file: "topics/history/1.2.12-foreign-policy.html",    key: "history-1.2.12-foreign-policy",    qs: 0 },
+    "1.3.1": { file: "topics/history/1.3.1-glorious-revolution.html", key: "history-1.3.1-glorious-revolution", qs: 0 },
+    "1.3.2": { file: "topics/history/1.3.2-american-war-independence.html", key: "history-1.3.2-american-war-independence", qs: 0 },
+    "1.3.3": { file: "topics/history/1.3.3-french-revolution.html",   key: "history-1.3.3-french-revolution",   qs: 0 },
+    "1.3.4": { file: "topics/history/1.3.4-russian-revolution.html",  key: "history-1.3.4-russian-revolution",  qs: 0 },
+    "1.3.5": { file: "topics/history/1.3.5-chinese-revolution.html",  key: "history-1.3.5-chinese-revolution",  qs: 0 },
+    "1.3.6": { file: "topics/history/1.3.6-post-wwii.html",           key: "history-1.3.6-post-wwii",           qs: 0 },
+    "1.3.7": { file: "topics/history/1.3.7-united-nations.html",      key: "history-1.3.7-united-nations",      qs: 0 },
+    "1.3.8": { file: "topics/history/1.3.8-international-organisations.html", key: "history-1.3.8-international-organisations", qs: 0 },
+
+    /* GEOGRAPHY — BASIC */
+    "2.1.1":  { file: "topics/geography/2.1.1-basic-principles.html",    key: "geography-2.1.1-basic-principles",    qs: 0 },
+    "2.1.2":  { file: "topics/geography/2.1.2-structure-of-earth.html",  key: "geography-2.1.2-structure-of-earth",  qs: 0 },
+    "2.1.3":  { file: "topics/geography/2.1.3-atmosphere.html",          key: "geography-2.1.3-atmosphere",          qs: 0 },
+    "2.1.4":  { file: "topics/geography/2.1.4-rocks.html",               key: "geography-2.1.4-rocks",               qs: 0 },
+    "2.1.5":  { file: "topics/geography/2.1.5-landforms.html",           key: "geography-2.1.5-landforms",           qs: 0 },
+    "2.1.6":  { file: "topics/geography/2.1.6-pressure-belt.html",       key: "geography-2.1.6-pressure-belt",       qs: 0 },
+    "2.1.7":  { file: "topics/geography/2.1.7-wind.html",                key: "geography-2.1.7-wind",                qs: 0 },
+    "2.1.8":  { file: "topics/geography/2.1.8-temperature.html",         key: "geography-2.1.8-temperature",         qs: 0 },
+    "2.1.9":  { file: "topics/geography/2.1.9-seasons.html",             key: "geography-2.1.9-seasons",             qs: 0 },
+    "2.1.10": { file: "topics/geography/2.1.10-global-issues.html",      key: "geography-2.1.10-global-issues",      qs: 0 },
+    "2.1.11": { file: "topics/geography/2.1.11-global-warming.html",     key: "geography-2.1.11-global-warming",     qs: 0 },
+    "2.1.12": { file: "topics/geography/2.1.12-pollution.html",          key: "geography-2.1.12-pollution",          qs: 0 },
+    "2.1.13": { file: "topics/geography/2.1.13-maps.html",               key: "geography-2.1.13-maps",               qs: 0 },
+    "2.1.14": { file: "topics/geography/2.1.14-topographic-maps.html",   key: "geography-2.1.14-topographic-maps",   qs: 0 },
+    "2.1.15": { file: "topics/geography/2.1.15-map-symbols.html",        key: "geography-2.1.15-map-symbols",        qs: 0 },
+    "2.1.16": { file: "topics/geography/2.1.16-remote-sensing.html",     key: "geography-2.1.16-remote-sensing",     qs: 0 },
+    "2.1.17": { file: "topics/geography/2.1.17-gis.html",                key: "geography-2.1.17-gis",                qs: 0 },
+    "2.1.18": { file: "topics/geography/2.1.18-oceans.html",             key: "geography-2.1.18-oceans",             qs: 0 },
+    "2.1.19": { file: "topics/geography/2.1.19-ocean-movements.html",    key: "geography-2.1.19-ocean-movements",    qs: 0 },
+    "2.1.20": { file: "topics/geography/2.1.20-continents.html",         key: "geography-2.1.20-continents",         qs: 0 },
+    "2.1.21": { file: "topics/geography/2.1.21-world-countries.html",    key: "geography-2.1.21-world-countries",    qs: 0 },
+
+    /* GEOGRAPHY — INDIA */
+    "2.2.1":  { file: "topics/geography/2.2.1-india-physiography.html",   key: "geography-2.2.1-india-physiography",   qs: 0 },
+    "2.2.2":  { file: "topics/geography/2.2.2-states-features.html",      key: "geography-2.2.2-states-features",      qs: 0 },
+    "2.2.3":  { file: "topics/geography/2.2.3-northern-mountains.html",   key: "geography-2.2.3-northern-mountains",   qs: 0 },
+    "2.2.4":  { file: "topics/geography/2.2.4-india-rivers.html",         key: "geography-2.2.4-india-rivers",         qs: 0 },
+    "2.2.5":  { file: "topics/geography/2.2.5-northern-plains.html",      key: "geography-2.2.5-northern-plains",      qs: 0 },
+    "2.2.6":  { file: "topics/geography/2.2.6-peninsular-plateau.html",   key: "geography-2.2.6-peninsular-plateau",   qs: 0 },
+    "2.2.7":  { file: "topics/geography/2.2.7-coastal-regions.html",      key: "geography-2.2.7-coastal-regions",      qs: 0 },
+    "2.2.8":  { file: "topics/geography/2.2.8-india-climate.html",        key: "geography-2.2.8-india-climate",        qs: 0 },
+    "2.2.9":  { file: "topics/geography/2.2.9-natural-vegetation.html",   key: "geography-2.2.9-natural-vegetation",   qs: 0 },
+    "2.2.10": { file: "topics/geography/2.2.10-india-agriculture.html",   key: "geography-2.2.10-india-agriculture",   qs: 0 },
+    "2.2.11": { file: "topics/geography/2.2.11-india-minerals.html",      key: "geography-2.2.11-india-minerals",      qs: 0 },
+    "2.2.12": { file: "topics/geography/2.2.12-india-industries.html",    key: "geography-2.2.12-india-industries",    qs: 0 },
+    "2.2.13": { file: "topics/geography/2.2.13-energy-resources.html",    key: "geography-2.2.13-energy-resources",    qs: 0 },
+    "2.2.14": { file: "topics/geography/2.2.14-india-road.html",          key: "geography-2.2.14-india-road",          qs: 0 },
+    "2.2.15": { file: "topics/geography/2.2.15-india-water.html",         key: "geography-2.2.15-india-water",         qs: 0 },
+    "2.2.16": { file: "topics/geography/2.2.16-india-railway.html",       key: "geography-2.2.16-india-railway",       qs: 0 },
+    "2.2.17": { file: "topics/geography/2.2.17-india-air.html",           key: "geography-2.2.17-india-air",           qs: 0 },
+
+    /* GEOGRAPHY — KERALA */
+    "2.3.1":  { file: "topics/geography/2.3.1-physiography.html",           key: "geography-2.3.1-physiography",           qs: 15 },
+    "2.3.2":  { file: "topics/geography/2.3.2-districts.html",              key: "geography-2.3.2-districts",              qs: 20 },
+    "2.3.3":  { file: "topics/geography/2.3.3-kerala-rivers.html",          key: "geography-2.3.3-kerala-rivers",          qs: 0 },
+    "2.3.4":  { file: "topics/geography/2.3.3-climate.html",                key: "geography-2.3.3-climate",                qs: 15 },
+    "2.3.5":  { file: "topics/geography/2.3.5-kerala-natural-vegetation.html", key: "geography-2.3.5-kerala-natural-vegetation", qs: 0 },
+    "2.3.6":  { file: "topics/geography/2.3.6-kerala-wildlife.html",        key: "geography-2.3.6-kerala-wildlife",        qs: 0 },
+    "2.3.7":  { file: "topics/geography/2.3.7-kerala-agriculture.html",     key: "geography-2.3.7-kerala-agriculture",     qs: 0 },
+    "2.3.8":  { file: "topics/geography/2.3.8-research-institutions.html",  key: "geography-2.3.8-research-institutions",  qs: 0 },
+    "2.3.9":  { file: "topics/geography/2.3.9-kerala-minerals.html",        key: "geography-2.3.9-kerala-minerals",        qs: 0 },
+    "2.3.10": { file: "topics/geography/2.3.10-kerala-industries.html",     key: "geography-2.3.10-kerala-industries",     qs: 0 },
+    "2.3.11": { file: "topics/geography/2.3.11-kerala-energy.html",         key: "geography-2.3.11-kerala-energy",         qs: 0 },
+    "2.3.12": { file: "topics/geography/2.3.12-kerala-road.html",           key: "geography-2.3.12-kerala-road",           qs: 0 },
+    "2.3.13": { file: "topics/geography/2.3.13-kerala-water-transport.html", key: "geography-2.3.13-kerala-water-transport", qs: 0 },
+    "2.3.14": { file: "topics/geography/2.3.14-kerala-railway.html",        key: "geography-2.3.14-kerala-railway",        qs: 0 },
+    "2.3.15": { file: "topics/geography/2.3.15-kerala-air-transport.html",  key: "geography-2.3.15-kerala-air-transport",  qs: 0 },
+
+    /* ECONOMICS */
+    "3.1":  { file: "topics/economics/3.1-economic-system.html",       key: "economics-3.1-economic-system",       qs: 0 },
+    "3.2":  { file: "topics/economics/3.2-five-year-plans.html",       key: "economics-3.2-five-year-plans",       qs: 0 },
+    "3.3":  { file: "topics/economics/3.3-planning-commission.html",   key: "economics-3.3-planning-commission",   qs: 0 },
+    "3.4":  { file: "topics/economics/3.4-niti-aayog.html",            key: "economics-3.4-niti-aayog",            qs: 0 },
+    "3.5":  { file: "topics/economics/3.5-new-economic-reforms.html",  key: "economics-3.5-new-economic-reforms",  qs: 0 },
+    "3.6":  { file: "topics/economics/3.6-financial-institutions.html", key: "economics-3.6-financial-institutions", qs: 0 },
+    "3.7":  { file: "topics/economics/3.7-agricultural-crops.html",    key: "economics-3.7-agricultural-crops",    qs: 0 },
+    "3.8":  { file: "topics/economics/3.8-economics-minerals.html",    key: "economics-3.8-economics-minerals",    qs: 0 },
+    "3.9":  { file: "topics/economics/3.9-green-revolution.html",      key: "economics-3.9-green-revolution",      qs: 0 },
+    "3.10": { file: "topics/economics/3.10-direct-taxes.html",         key: "economics-3.10-direct-taxes",         qs: 0 },
+    "3.11": { file: "topics/economics/3.11-indirect-taxes.html",       key: "economics-3.11-indirect-taxes",       qs: 0 },
+    "3.12": { file: "topics/economics/3.12-gst-in-india.html",         key: "economics-3.12-gst-in-india",         qs: 0 },
+
+    /* CONSTITUTION */
+    "4.1":  { file: "topics/constitution/4.1-constituent-assembly.html",           key: "constitution-4.1-constituent-assembly",           qs: 0 },
+    "4.2":  { file: "topics/constitution/4.2-preamble.html",                       key: "constitution-4.2-preamble",                       qs: 0 },
+    "4.3":  { file: "topics/constitution/4.3-citizenship.html",                    key: "constitution-4.3-citizenship",                    qs: 0 },
+    "4.4":  { file: "topics/constitution/4.4-fundamental-rights.html",             key: "constitution-4.4-fundamental-rights",             qs: 0 },
+    "4.5":  { file: "topics/constitution/4.5-directive-principles.html",           key: "constitution-4.5-directive-principles",           qs: 0 },
+    "4.6":  { file: "topics/constitution/4.6-fundamental-duties.html",             key: "constitution-4.6-fundamental-duties",             qs: 0 },
+    "4.7":  { file: "topics/constitution/4.7-central-government.html",             key: "constitution-4.7-central-government",             qs: 0 },
+    "4.8":  { file: "topics/constitution/4.8-state-government.html",               key: "constitution-4.8-state-government",               qs: 0 },
+    "4.9":  { file: "topics/constitution/4.9-constitutional-institutions.html",    key: "constitution-4.9-constitutional-institutions",    qs: 0 },
+    "4.10": { file: "topics/constitution/4.10-functions-constitutional-institutions.html", key: "constitution-4.10-functions-constitutional-institutions", qs: 0 },
+    "4.11": { file: "topics/constitution/4.11-panchayati-raj.html",                key: "constitution-4.11-panchayati-raj",                qs: 0 },
+    "4.12": { file: "topics/constitution/4.12-union-list.html",                    key: "constitution-4.12-union-list",                    qs: 0 },
+    "4.13": { file: "topics/constitution/4.13-state-list.html",                    key: "constitution-4.13-state-list",                    qs: 0 },
+    "4.14": { file: "topics/constitution/4.14-concurrent-list.html",               key: "constitution-4.14-concurrent-list",               qs: 0 },
+    "4.15": { file: "topics/constitution/4.15-special-priority-formats.html",      key: "constitution-4.15-special-priority-formats",      qs: 0 },
+    "4.16": { file: "topics/constitution/4.16-amendments.html",                    key: "constitution-4.16-amendments",                    qs: 0 },
+    "4.17": { file: "topics/constitution/4.17-institution-article-function.html",  key: "constitution-4.17-institution-article-function",  qs: 0 },
+    "4.18": { file: "topics/constitution/4.18-cag.html",                           key: "constitution-4.18-cag",                           qs: 0 },
+    "4.19": { file: "topics/constitution/4.19-attorney-general.html",              key: "constitution-4.19-attorney-general",              qs: 0 },
+    "4.20": { file: "topics/constitution/4.20-advocate-general.html",              key: "constitution-4.20-advocate-general",              qs: 0 },
+    "4.21": { file: "topics/constitution/4.21-election-commission.html",           key: "constitution-4.21-election-commission",           qs: 0 },
+    "4.22": { file: "topics/constitution/4.22-state-election-commission.html",     key: "constitution-4.22-state-election-commission",     qs: 0 },
+    "4.23": { file: "topics/constitution/4.23-upsc.html",                          key: "constitution-4.23-upsc",                          qs: 0 },
+    "4.24": { file: "topics/constitution/4.24-state-psc.html",                     key: "constitution-4.24-state-psc",                     qs: 0 },
+    "4.25": { file: "topics/constitution/4.25-finance-commission.html",            key: "constitution-4.25-finance-commission",            qs: 0 },
+    "4.26": { file: "topics/constitution/4.26-state-finance-commission.html",      key: "constitution-4.26-state-finance-commission",      qs: 0 },
+    "4.27": { file: "topics/constitution/4.27-gst-council.html",                   key: "constitution-4.27-gst-council",                   qs: 0 },
+    "4.28": { file: "topics/constitution/4.28-distribution-legislative-powers.html", key: "constitution-4.28-distribution-legislative-powers", qs: 0 },
+    "4.29": { file: "topics/constitution/4.29-services-union-states.html",         key: "constitution-4.29-services-union-states",         qs: 0 },
+    "4.30": { file: "topics/constitution/4.30-constitution-tribunals.html",        key: "constitution-4.30-constitution-tribunals",        qs: 0 },
+    "4.31": { file: "topics/constitution/4.31-ncsc.html",                          key: "constitution-4.31-ncsc",                          qs: 0 },
+    "4.32": { file: "topics/constitution/4.32-ncst.html",                          key: "constitution-4.32-ncst",                          qs: 0 },
+    "4.33": { file: "topics/constitution/4.33-ncbc.html",                          key: "constitution-4.33-ncbc",                          qs: 0 },
+    "4.34": { file: "topics/constitution/4.34-official-language.html",             key: "constitution-4.34-official-language",             qs: 0 },
+    "4.35": { file: "topics/constitution/4.35-regional-languages.html",            key: "constitution-4.35-regional-languages",            qs: 0 },
+    "4.36": { file: "topics/constitution/4.36-sc-hc-language.html",                key: "constitution-4.36-sc-hc-language",                qs: 0 },
+    "4.37": { file: "topics/constitution/4.37-special-directives-languages.html",  key: "constitution-4.37-special-directives-languages",  qs: 0 },
+
+    /* KERALA ADMINISTRATION */
+    "5.1":  { file: "topics/kerala-administration/5.1-kerala-civil-service.html",     key: "kerala-administration-5.1-kerala-civil-service",     qs: 0 },
+    "5.2":  { file: "topics/kerala-administration/5.2-constitutional-institutions-kerala.html", key: "kerala-administration-5.2-constitutional-institutions-kerala", qs: 0 },
+    "5.3":  { file: "topics/kerala-administration/5.3-various-commissions.html",      key: "kerala-administration-5.3-various-commissions",      qs: 0 },
+    "5.4":  { file: "topics/kerala-administration/5.4-social-planning.html",          key: "kerala-administration-5.4-social-planning",          qs: 0 },
+    "5.5":  { file: "topics/kerala-administration/5.5-economic-planning.html",        key: "kerala-administration-5.5-economic-planning",        qs: 0 },
+    "5.6":  { file: "topics/kerala-administration/5.6-commercial-planning.html",      key: "kerala-administration-5.6-commercial-planning",      qs: 0 },
+    "5.7":  { file: "topics/kerala-administration/5.7-basic-information.html",        key: "kerala-administration-5.7-basic-information",        qs: 0 },
+    "5.8":  { file: "topics/kerala-administration/5.8-disaster-management-authority.html", key: "kerala-administration-5.8-disaster-management-authority", qs: 0 },
+    "5.9":  { file: "topics/kerala-administration/5.9-watershed-management.html",     key: "kerala-administration-5.9-watershed-management",     qs: 0 },
+    "5.10": { file: "topics/kerala-administration/5.10-labour-employment.html",       key: "kerala-administration-5.10-labour-employment",       qs: 0 },
+    "5.11": { file: "topics/kerala-administration/5.11-nrega.html",                   key: "kerala-administration-5.11-nrega",                   qs: 0 },
+    "5.12": { file: "topics/kerala-administration/5.12-land-reforms.html",            key: "kerala-administration-5.12-land-reforms",            qs: 0 },
+    "5.13": { file: "topics/kerala-administration/5.13-protection-women.html",        key: "kerala-administration-5.13-protection-women",        qs: 0 },
+    "5.14": { file: "topics/kerala-administration/5.14-protection-children.html",     key: "kerala-administration-5.14-protection-children",     qs: 0 },
+    "5.15": { file: "topics/kerala-administration/5.15-protection-senior-citizens.html", key: "kerala-administration-5.15-protection-senior-citizens", qs: 0 },
+    "5.16": { file: "topics/kerala-administration/5.16-social-welfare.html",          key: "kerala-administration-5.16-social-welfare",          qs: 0 },
+    "5.17": { file: "topics/kerala-administration/5.17-social-security.html",         key: "kerala-administration-5.17-social-security",         qs: 0 },
+    "5.18": { file: "topics/kerala-administration/5.18-quasi-judicial-bodies.html",   key: "kerala-administration-5.18-quasi-judicial-bodies",   qs: 0 },
+    "5.19": { file: "topics/kerala-administration/5.19-planning-board.html",          key: "kerala-administration-5.19-planning-board",          qs: 0 },
+    "5.20": { file: "topics/kerala-administration/5.20-population.html",              key: "kerala-administration-5.20-population",              qs: 0 },
+    "5.21": { file: "topics/kerala-administration/5.21-literacy.html",                key: "kerala-administration-5.21-literacy",                qs: 0 },
+    "5.22": { file: "topics/kerala-administration/5.22-e-governance.html",            key: "kerala-administration-5.22-e-governance",            qs: 0 },
+    "5.23": { file: "topics/kerala-administration/5.23-delegated-legislation.html",   key: "kerala-administration-5.23-delegated-legislation",   qs: 0 },
+    "5.24": { file: "topics/kerala-administration/5.24-legislative-controls.html",    key: "kerala-administration-5.24-legislative-controls",    qs: 0 },
+    "5.25": { file: "topics/kerala-administration/5.25-judicial-controls.html",       key: "kerala-administration-5.25-judicial-controls",       qs: 0 },
+    "5.26": { file: "topics/kerala-administration/5.26-constitutional-remedies.html", key: "kerala-administration-5.26-constitutional-remedies", qs: 0 },
+    "5.27": { file: "topics/kerala-administration/5.27-administrative-discretion.html", key: "kerala-administration-5.27-administrative-discretion", qs: 0 },
+    "5.28": { file: "topics/kerala-administration/5.28-administrative-adjudication.html", key: "kerala-administration-5.28-administrative-adjudication", qs: 0 },
+    "5.29": { file: "topics/kerala-administration/5.29-natural-justice.html",         key: "kerala-administration-5.29-natural-justice",         qs: 0 },
+
+    /* BIOLOGY */
+    "6.1": { file: "topics/biology/6.1-human-body.html",             key: "biology-6.1-human-body",             qs: 0 },
+    "6.2": { file: "topics/biology/6.2-vitamins-minerals.html",      key: "biology-6.2-vitamins-minerals",      qs: 0 },
+    "6.3": { file: "topics/biology/6.3-communicable-diseases.html",  key: "biology-6.3-communicable-diseases",  qs: 0 },
+    "6.4": { file: "topics/biology/6.4-kerala-health-welfare.html",  key: "biology-6.4-kerala-health-welfare",  qs: 0 },
+    "6.5": { file: "topics/biology/6.5-lifestyle-diseases.html",     key: "biology-6.5-lifestyle-diseases",     qs: 0 },
+    "6.6": { file: "topics/biology/6.6-basic-health.html",           key: "biology-6.6-basic-health",           qs: 0 },
+    "6.7": { file: "topics/biology/6.7-environment.html",            key: "biology-6.7-environment",            qs: 0 },
+    "6.8": { file: "topics/biology/6.8-environmental-hazards.html",  key: "biology-6.8-environmental-hazards",  qs: 0 },
+
+    /* PHYSICS */
+    "7.1": { file: "topics/physics/7.1-basic-physics.html",    key: "physics-7.1-basic-physics",    qs: 0 },
+    "7.2": { file: "topics/physics/7.2-motion.html",           key: "physics-7.2-motion",           qs: 0 },
+    "7.3": { file: "topics/physics/7.3-light.html",            key: "physics-7.3-light",            qs: 0 },
+    "7.4": { file: "topics/physics/7.4-sound.html",            key: "physics-7.4-sound",            qs: 0 },
+    "7.5": { file: "topics/physics/7.5-force.html",            key: "physics-7.5-force",            qs: 0 },
+    "7.6": { file: "topics/physics/7.6-gravitation.html",      key: "physics-7.6-gravitation",      qs: 0 },
+    "7.7": { file: "topics/physics/7.7-heat.html",             key: "physics-7.7-heat",             qs: 0 },
+    "7.8": { file: "topics/physics/7.8-work-energy-power.html", key: "physics-7.8-work-energy-power", qs: 0 },
+    "7.9": { file: "topics/physics/7.9-electronics.html",      key: "physics-7.9-electronics",      qs: 0 },
+
+    /* CHEMISTRY */
+    "8.1":  { file: "topics/chemistry/8.1-atom.html",                  key: "chemistry-8.1-atom",                  qs: 0 },
+    "8.2":  { file: "topics/chemistry/8.2-molecule.html",              key: "chemistry-8.2-molecule",              qs: 0 },
+    "8.3":  { file: "topics/chemistry/8.3-states-of-matter.html",      key: "chemistry-8.3-states-of-matter",      qs: 0 },
+    "8.4":  { file: "topics/chemistry/8.4-allotropy.html",             key: "chemistry-8.4-allotropy",             qs: 0 },
+    "8.5":  { file: "topics/chemistry/8.5-gas-laws.html",              key: "chemistry-8.5-gas-laws",              qs: 0 },
+    "8.6":  { file: "topics/chemistry/8.6-aqua-regia.html",            key: "chemistry-8.6-aqua-regia",            qs: 0 },
+    "8.7":  { file: "topics/chemistry/8.7-elements.html",              key: "chemistry-8.7-elements",              qs: 0 },
+    "8.8":  { file: "topics/chemistry/8.8-periodic-table.html",        key: "chemistry-8.8-periodic-table",        qs: 0 },
+    "8.9":  { file: "topics/chemistry/8.9-metals-non-metals.html",     key: "chemistry-8.9-metals-non-metals",     qs: 0 },
+    "8.10": { file: "topics/chemistry/8.10-chemical-physical-changes.html", key: "chemistry-8.10-chemical-physical-changes", qs: 0 },
+    "8.11": { file: "topics/chemistry/8.11-chemical-reactions.html",   key: "chemistry-8.11-chemical-reactions",   qs: 0 },
+    "8.12": { file: "topics/chemistry/8.12-solutions.html",            key: "chemistry-8.12-solutions",            qs: 0 },
+    "8.13": { file: "topics/chemistry/8.13-mixtures.html",             key: "chemistry-8.13-mixtures",             qs: 0 },
+    "8.14": { file: "topics/chemistry/8.14-compounds.html",            key: "chemistry-8.14-compounds",            qs: 0 },
+    "8.15": { file: "topics/chemistry/8.15-alloys.html",               key: "chemistry-8.15-alloys",               qs: 0 },
+    "8.16": { file: "topics/chemistry/8.16-acids.html",                key: "chemistry-8.16-acids",                qs: 0 },
+    "8.17": { file: "topics/chemistry/8.17-bases-alkalis.html",        key: "chemistry-8.17-bases-alkalis",        qs: 0 },
+    "8.18": { file: "topics/chemistry/8.18-ph.html",                   key: "chemistry-8.18-ph",                   qs: 0 },
+    "8.19": { file: "topics/chemistry/8.19-alkaloids.html",            key: "chemistry-8.19-alkaloids",            qs: 0 },
+
+    /* ART / SPORTS / LITERATURE */
+    "9.1": { file: "topics/art-sports-literature/9.1-art-culture.html",  key: "art-sports-literature-9.1-art-culture",  qs: 0 },
+    "9.2": { file: "topics/art-sports-literature/9.2-sports.html",       key: "art-sports-literature-9.2-sports",       qs: 0 },
+    "9.3": { file: "topics/art-sports-literature/9.3-literature.html",   key: "art-sports-literature-9.3-literature",   qs: 0 },
+    "9.4": { file: "topics/art-sports-literature/9.4-culture.html",      key: "art-sports-literature-9.4-culture",      qs: 0 },
+
+    /* COMPUTER */
+    "10.1": { file: "topics/computer/10.1-hardware.html",       key: "computer-10.1-hardware",       qs: 0 },
+    "10.2": { file: "topics/computer/10.2-software-os.html",    key: "computer-10.2-software-os",    qs: 0 },
+    "10.3": { file: "topics/computer/10.3-networks.html",       key: "computer-10.3-networks",       qs: 0 },
+    "10.4": { file: "topics/computer/10.4-internet.html",       key: "computer-10.4-internet",       qs: 0 },
+    "10.5": { file: "topics/computer/10.5-html-other.html",     key: "computer-10.5-html-other",     qs: 0 },
+    "10.6": { file: "topics/computer/10.6-cyber-crimes.html",   key: "computer-10.6-cyber-crimes",   qs: 0 },
+
+    /* ARITHMETIC */
+    "11.1":  { file: "topics/arithmetic/11.1-numbers.html",             key: "arithmetic-11.1-numbers",             qs: 0 },
+    "11.2":  { file: "topics/arithmetic/11.2-fractions.html",           key: "arithmetic-11.2-fractions",           qs: 0 },
+    "11.3":  { file: "topics/arithmetic/11.3-decimals.html",            key: "arithmetic-11.3-decimals",            qs: 0 },
+    "11.4":  { file: "topics/arithmetic/11.4-percentage.html",          key: "arithmetic-11.4-percentage",          qs: 0 },
+    "11.5":  { file: "topics/arithmetic/11.5-profit-loss.html",         key: "arithmetic-11.5-profit-loss",         qs: 0 },
+    "11.6":  { file: "topics/arithmetic/11.6-simple-interest.html",     key: "arithmetic-11.6-simple-interest",     qs: 0 },
+    "11.7":  { file: "topics/arithmetic/11.7-compound-interest.html",   key: "arithmetic-11.7-compound-interest",   qs: 0 },
+    "11.8":  { file: "topics/arithmetic/11.8-ratio-proportion.html",    key: "arithmetic-11.8-ratio-proportion",    qs: 0 },
+    "11.9":  { file: "topics/arithmetic/11.9-time-distance.html",       key: "arithmetic-11.9-time-distance",       qs: 0 },
+    "11.10": { file: "topics/arithmetic/11.10-time-work.html",          key: "arithmetic-11.10-time-work",          qs: 0 },
+    "11.11": { file: "topics/arithmetic/11.11-average.html",            key: "arithmetic-11.11-average",            qs: 0 },
+    "11.12": { file: "topics/arithmetic/11.12-exponents.html",          key: "arithmetic-11.12-exponents",          qs: 0 },
+    "11.13": { file: "topics/arithmetic/11.13-mensuration.html",        key: "arithmetic-11.13-mensuration",        qs: 0 },
+    "11.14": { file: "topics/arithmetic/11.14-perimeter.html",          key: "arithmetic-11.14-perimeter",          qs: 0 },
+    "11.15": { file: "topics/arithmetic/11.15-area.html",               key: "arithmetic-11.15-area",               qs: 0 },
+    "11.16": { file: "topics/arithmetic/11.16-volume.html",             key: "arithmetic-11.16-volume",             qs: 0 },
+    "11.17": { file: "topics/arithmetic/11.17-progressions.html",       key: "arithmetic-11.17-progressions",       qs: 0 },
+    "11.20": { file: "topics/arithmetic/11.20-geometry.html",           key: "arithmetic-11.20-geometry",           qs: 0 },
+    "11.21": { file: "topics/arithmetic/11.21-trigonometry.html",       key: "arithmetic-11.21-trigonometry",       qs: 0 },
+
+    /* MENTAL ABILITY */
+    "12.1":  { file: "topics/mental-ability/12.1-number-series.html",      key: "mental-ability-12.1-number-series",      qs: 0 },
+    "12.2":  { file: "topics/mental-ability/12.2-alphabet-series.html",    key: "mental-ability-12.2-alphabet-series",    qs: 0 },
+    "12.3":  { file: "topics/mental-ability/12.3-mathematical-signs.html", key: "mental-ability-12.3-mathematical-signs", qs: 0 },
+    "12.4":  { file: "topics/mental-ability/12.4-position-test.html",      key: "mental-ability-12.4-position-test",      qs: 0 },
+    "12.5":  { file: "topics/mental-ability/12.5-word-analogy.html",       key: "mental-ability-12.5-word-analogy",       qs: 0 },
+    "12.6":  { file: "topics/mental-ability/12.6-alphabet-analogy.html",   key: "mental-ability-12.6-alphabet-analogy",   qs: 0 },
+    "12.7":  { file: "topics/mental-ability/12.7-number-analogy.html",     key: "mental-ability-12.7-number-analogy",     qs: 0 },
+    "12.8":  { file: "topics/mental-ability/12.8-odd-one-out.html",        key: "mental-ability-12.8-odd-one-out",        qs: 0 },
+    "12.9":  { file: "topics/mental-ability/12.9-numerical-reasoning.html", key: "mental-ability-12.9-numerical-reasoning", qs: 0 },
+    "12.10": { file: "topics/mental-ability/12.10-coding-decoding.html",   key: "mental-ability-12.10-coding-decoding",   qs: 0 },
+    "12.11": { file: "topics/mental-ability/12.11-family-relations.html",  key: "mental-ability-12.11-family-relations",  qs: 0 },
+    "12.12": { file: "topics/mental-ability/12.12-direction-sense.html",   key: "mental-ability-12.12-direction-sense",   qs: 0 },
+    "12.13": { file: "topics/mental-ability/12.13-clock-time.html",        key: "mental-ability-12.13-clock-time",        qs: 0 },
+    "12.14": { file: "topics/mental-ability/12.14-mirror-image.html",      key: "mental-ability-12.14-mirror-image",      qs: 0 },
+    "12.15": { file: "topics/mental-ability/12.15-calendar.html",          key: "mental-ability-12.15-calendar",          qs: 0 },
+    "12.16": { file: "topics/mental-ability/12.16-clerical-ability.html",  key: "mental-ability-12.16-clerical-ability",  qs: 0 },
+
+    /* ENGLISH */
+    "13.1.1":  { file: "topics/english/13.1.1-types-of-sentences.html",       key: "english-13.1.1-types-of-sentences",       qs: 0 },
+    "13.1.2":  { file: "topics/english/13.1.2-interchange.html",              key: "english-13.1.2-interchange",              qs: 0 },
+    "13.1.3":  { file: "topics/english/13.1.3-parts-of-speech.html",          key: "english-13.1.3-parts-of-speech",          qs: 0 },
+    "13.1.4":  { file: "topics/english/13.1.4-subject-verb-agreement.html",   key: "english-13.1.4-subject-verb-agreement",   qs: 0 },
+    "13.1.5":  { file: "topics/english/13.1.5-articles.html",                 key: "english-13.1.5-articles",                 qs: 0 },
+    "13.1.6":  { file: "topics/english/13.1.6-primary-auxiliaries.html",      key: "english-13.1.6-primary-auxiliaries",      qs: 0 },
+    "13.1.7":  { file: "topics/english/13.1.7-modal-auxiliaries.html",        key: "english-13.1.7-modal-auxiliaries",        qs: 0 },
+    "13.1.8":  { file: "topics/english/13.1.8-question-tags.html",            key: "english-13.1.8-question-tags",            qs: 0 },
+    "13.1.9":  { file: "topics/english/13.1.9-infinitives.html",              key: "english-13.1.9-infinitives",              qs: 0 },
+    "13.1.10": { file: "topics/english/13.1.10-gerunds.html",                 key: "english-13.1.10-gerunds",                 qs: 0 },
+    "13.1.11": { file: "topics/english/13.1.11-tenses.html",                  key: "english-13.1.11-tenses",                  qs: 0 },
+    "13.1.12": { file: "topics/english/13.1.12-conditional-sentences.html",   key: "english-13.1.12-conditional-sentences",   qs: 0 },
+    "13.1.13": { file: "topics/english/13.1.13-prepositions.html",            key: "english-13.1.13-prepositions",            qs: 0 },
+    "13.1.14": { file: "topics/english/13.1.14-correlatives.html",            key: "english-13.1.14-correlatives",            qs: 0 },
+    "13.1.15": { file: "topics/english/13.1.15-direct-indirect-speech.html",  key: "english-13.1.15-direct-indirect-speech",  qs: 0 },
+    "13.1.16": { file: "topics/english/13.1.16-active-passive-voice.html",    key: "english-13.1.16-active-passive-voice",    qs: 0 },
+    "13.1.17": { file: "topics/english/13.1.17-sentence-correction.html",     key: "english-13.1.17-sentence-correction",     qs: 0 },
+    "13.1.18": { file: "topics/english/13.1.18-degrees-of-comparison.html",   key: "english-13.1.18-degrees-of-comparison",   qs: 0 },
+    "13.2.1":  { file: "topics/english/13.2.1-singular-plural.html",          key: "english-13.2.1-singular-plural",          qs: 0 },
+    "13.2.2":  { file: "topics/english/13.2.2-gender.html",                   key: "english-13.2.2-gender",                   qs: 0 },
+    "13.2.3":  { file: "topics/english/13.2.3-collective-nouns.html",         key: "english-13.2.3-collective-nouns",         qs: 0 },
+    "13.2.4":  { file: "topics/english/13.2.4-word-formation.html",           key: "english-13.2.4-word-formation",           qs: 0 },
+    "13.2.5":  { file: "topics/english/13.2.5-prefix-suffix.html",            key: "english-13.2.5-prefix-suffix",            qs: 0 },
+    "13.2.6":  { file: "topics/english/13.2.6-compound-words.html",           key: "english-13.2.6-compound-words",           qs: 0 },
+    "13.2.7":  { file: "topics/english/13.2.7-synonyms.html",                 key: "english-13.2.7-synonyms",                 qs: 0 },
+    "13.2.8":  { file: "topics/english/13.2.8-antonyms.html",                 key: "english-13.2.8-antonyms",                 qs: 0 },
+    "13.2.9":  { file: "topics/english/13.2.9-phrasal-verbs.html",            key: "english-13.2.9-phrasal-verbs",            qs: 0 },
+    "13.2.10": { file: "topics/english/13.2.10-foreign-words.html",           key: "english-13.2.10-foreign-words",           qs: 0 },
+    "13.2.11": { file: "topics/english/13.2.11-one-word-substitutes.html",    key: "english-13.2.11-one-word-substitutes",    qs: 0 },
+    "13.2.12": { file: "topics/english/13.2.12-confusing-words.html",         key: "english-13.2.12-confusing-words",         qs: 0 },
+    "13.2.13": { file: "topics/english/13.2.13-spelling.html",                key: "english-13.2.13-spelling",                qs: 0 },
+    "13.2.14": { file: "topics/english/13.2.14-idioms.html",                  key: "english-13.2.14-idioms",                  qs: 0 },
+
+    /* MALAYALAM */
+    "14.2":  { file: "topics/malayalam/14.2-padashuddhi.html",        key: "malayalam-14.2-padashuddhi",        qs: 0 },
+    "14.3":  { file: "topics/malayalam/14.3-vakyashuddhi.html",       key: "malayalam-14.3-vakyashuddhi",       qs: 0 },
+    "14.4":  { file: "topics/malayalam/14.4-paribhasha.html",         key: "malayalam-14.4-paribhasha",         qs: 0 },
+    "14.5":  { file: "topics/malayalam/14.5-ottapadam.html",          key: "malayalam-14.5-ottapadam",          qs: 0 },
+    "14.6":  { file: "topics/malayalam/14.6-paryayam.html",           key: "malayalam-14.6-paryayam",           qs: 0 },
+    "14.7":  { file: "topics/malayalam/14.7-vipareethapadam.html",    key: "malayalam-14.7-vipareethapadam",    qs: 0 },
+    "14.8":  { file: "topics/malayalam/14.8-shailikal.html",          key: "malayalam-14.8-shailikal",          qs: 0 },
+    "14.9":  { file: "topics/malayalam/14.9-pazhanchollukal.html",    key: "malayalam-14.9-pazhanchollukal",    qs: 0 },
+    "14.10": { file: "topics/malayalam/14.10-samanapadam.html",       key: "malayalam-14.10-samanapadam",       qs: 0 },
+    "14.11": { file: "topics/malayalam/14.11-cherthezhuthuka.html",   key: "malayalam-14.11-cherthezhuthuka",   qs: 0 },
+    "14.12": { file: "topics/malayalam/14.12-streelingam.html",       key: "malayalam-14.12-streelingam",       qs: 0 },
+    "14.13": { file: "topics/malayalam/14.13-pullingam.html",         key: "malayalam-14.13-pullingam",         qs: 0 },
+    "14.14": { file: "topics/malayalam/14.14-vachanam.html",          key: "malayalam-14.14-vachanam",          qs: 0 },
+    "14.15": { file: "topics/malayalam/14.15-pirichezhuthal.html",    key: "malayalam-14.15-pirichezhuthal",    qs: 0 },
+
+    /* CURRENT AFFAIRS */
+    "15.1.1": { file: "topics/current-affairs/15.1.1-national-affairs.html",     key: "current-affairs-15.1.1-national-affairs",     qs: 0 },
+    "15.1.2": { file: "topics/current-affairs/15.1.2-international-affairs.html", key: "current-affairs-15.1.2-international-affairs", qs: 0 },
+    "15.1.3": { file: "topics/current-affairs/15.1.3-kerala-affairs.html",        key: "current-affairs-15.1.3-kerala-affairs",        qs: 0 },
+    "15.1.4": { file: "topics/current-affairs/15.1.4-science-technology.html",   key: "current-affairs-15.1.4-science-technology",   qs: 0 },
+    "15.1.5": { file: "topics/current-affairs/15.1.5-awards-sports.html",        key: "current-affairs-15.1.5-awards-sports",        qs: 0 },
+    "15.1.6": { file: "topics/current-affairs/15.1.6-govt-schemes.html",         key: "current-affairs-15.1.6-govt-schemes",         qs: 0 },
+
+    /* IMPORTANT ACTS */
+    "16.1.1": { file: "topics/important-acts/16.1.1-rti-act-2005.html",              key: "important-acts-16.1.1-rti-act-2005",              qs: 0 },
+    "16.1.2": { file: "topics/important-acts/16.1.2-rti-definitions.html",           key: "important-acts-16.1.2-rti-definitions",           qs: 0 },
+    "16.1.3": { file: "topics/important-acts/16.1.3-exempted-information.html",      key: "important-acts-16.1.3-exempted-information",      qs: 0 },
+    "16.1.4": { file: "topics/important-acts/16.1.4-third-party-information.html",   key: "important-acts-16.1.4-third-party-information",   qs: 0 },
+    "16.1.5": { file: "topics/important-acts/16.1.5-information-commissions.html",   key: "important-acts-16.1.5-information-commissions",   qs: 0 },
+    "16.1.6": { file: "topics/important-acts/16.1.6-rti-powers-functions.html",      key: "important-acts-16.1.6-rti-powers-functions",      qs: 0 },
+    "16.2.1": { file: "topics/important-acts/16.2.1-kerala-right-service-act.html",  key: "important-acts-16.2.1-kerala-right-service-act",  qs: 0 },
+    "16.2.2": { file: "topics/important-acts/16.2.2-rps-definitions.html",           key: "important-acts-16.2.2-rps-definitions",           qs: 0 },
+    "16.2.3": { file: "topics/important-acts/16.2.3-statutory-framework.html",       key: "important-acts-16.2.3-statutory-framework",       qs: 0 },
+    "16.2.4": { file: "topics/important-acts/16.2.4-redressal.html",                 key: "important-acts-16.2.4-redressal",                 qs: 0 },
+    "16.2.5": { file: "topics/important-acts/16.2.5-rps-appeals.html",               key: "important-acts-16.2.5-rps-appeals",               qs: 0 },
+    "16.2.6": { file: "topics/important-acts/16.2.6-rps-penalties.html",             key: "important-acts-16.2.6-rps-penalties",             qs: 0 },
+    "16.3.1": { file: "topics/important-acts/16.3.1-consumer-protection-act-2019.html", key: "important-acts-16.3.1-consumer-protection-act-2019", qs: 0 },
+    "16.3.2": { file: "topics/important-acts/16.3.2-consumer-rights.html",           key: "important-acts-16.3.2-consumer-rights",           qs: 0 },
+    "16.3.3": { file: "topics/important-acts/16.3.3-consumer-protection-councils.html", key: "important-acts-16.3.3-consumer-protection-councils", qs: 0 },
+    "16.3.4": { file: "topics/important-acts/16.3.4-consumer-protection-authority.html", key: "important-acts-16.3.4-consumer-protection-authority", qs: 0 },
+    "16.3.5": { file: "topics/important-acts/16.3.5-dispute-redressal-commissions.html", key: "important-acts-16.3.5-dispute-redressal-commissions", qs: 0 },
+    "16.3.6": { file: "topics/important-acts/16.3.6-consumer-mediation.html",        key: "important-acts-16.3.6-consumer-mediation",        qs: 0 },
+    "16.3.7": { file: "topics/important-acts/16.3.7-product-liability.html",         key: "important-acts-16.3.7-product-liability",         qs: 0 },
+    "16.3.8": { file: "topics/important-acts/16.3.8-consumer-offences-penalties.html", key: "important-acts-16.3.8-consumer-offences-penalties", qs: 0 },
+    "16.4.1": { file: "topics/important-acts/16.4.1-protection-civil-rights-act.html", key: "important-acts-16.4.1-protection-civil-rights-act", qs: 0 },
+    "16.4.2": { file: "topics/important-acts/16.4.2-sc-st-atrocities-act.html",      key: "important-acts-16.4.2-sc-st-atrocities-act",      qs: 0 },
+    "16.4.3": { file: "topics/important-acts/16.4.3-kerala-sc-st-commission-act.html", key: "important-acts-16.4.3-kerala-sc-st-commission-act", qs: 0 },
+    "16.4.4": { file: "topics/important-acts/16.4.4-kerala-sc-st-commission.html",   key: "important-acts-16.4.4-kerala-sc-st-commission",   qs: 0 },
+    "16.4.5": { file: "topics/important-acts/16.4.5-protection-human-rights-act.html", key: "important-acts-16.4.5-protection-human-rights-act", qs: 0 },
+    "16.4.6": { file: "topics/important-acts/16.4.6-nhrc.html",                      key: "important-acts-16.4.6-nhrc",                      qs: 0 },
+    "16.4.7": { file: "topics/important-acts/16.4.7-shrc.html",                      key: "important-acts-16.4.7-shrc",                      qs: 0 },
+    "16.4.8": { file: "topics/important-acts/16.4.8-senior-citizens-act.html",       key: "important-acts-16.4.8-senior-citizens-act",       qs: 0 },
+    "16.4.9": { file: "topics/important-acts/16.4.9-rpwd-act.html",                  key: "important-acts-16.4.9-rpwd-act",                  qs: 0 },
+    "16.4.10": { file: "topics/important-acts/16.4.10-transgender-persons-act.html", key: "important-acts-16.4.10-transgender-persons-act",  qs: 0 },
+    "16.5.1": { file: "topics/important-acts/16.5.1-bns-offences-women.html",        key: "important-acts-16.5.1-bns-offences-women",        qs: 0 },
+    "16.5.2": { file: "topics/important-acts/16.5.2-dowry-prohibition-act.html",     key: "important-acts-16.5.2-dowry-prohibition-act",     qs: 0 },
+    "16.5.3": { file: "topics/important-acts/16.5.3-ncw-act.html",                   key: "important-acts-16.5.3-ncw-act",                   qs: 0 },
+    "16.5.4": { file: "topics/important-acts/16.5.4-kerala-womens-commission.html",  key: "important-acts-16.5.4-kerala-womens-commission",  qs: 0 },
+    "16.5.5": { file: "topics/important-acts/16.5.5-domestic-violence-act.html",     key: "important-acts-16.5.5-domestic-violence-act",     qs: 0 },
+    "16.5.6": { file: "topics/important-acts/16.5.6-posh-act.html",                  key: "important-acts-16.5.6-posh-act",                  qs: 0 },
+    "16.6.1": { file: "topics/important-acts/16.6.1-bns-offences-children.html",     key: "important-acts-16.6.1-bns-offences-children",     qs: 0 },
+    "16.6.2": { file: "topics/important-acts/16.6.2-pocso-act.html",                 key: "important-acts-16.6.2-pocso-act",                 qs: 0 },
+    "16.6.3": { file: "topics/important-acts/16.6.3-juvenile-justice-act.html",      key: "important-acts-16.6.3-juvenile-justice-act",      qs: 0 },
+    "16.6.4": { file: "topics/important-acts/16.6.4-jj-board.html",                  key: "important-acts-16.6.4-jj-board",                  qs: 0 },
+    "16.6.5": { file: "topics/important-acts/16.6.5-child-welfare-committee.html",   key: "important-acts-16.6.5-child-welfare-committee",   qs: 0 },
+    "16.6.6": { file: "topics/important-acts/16.6.6-child-procedures.html",          key: "important-acts-16.6.6-child-procedures",          qs: 0 },
+    "16.7.1": { file: "topics/important-acts/16.7.1-prevention-corruption-act.html", key: "important-acts-16.7.1-prevention-corruption-act", qs: 0 },
+    "16.7.2": { file: "topics/important-acts/16.7.2-cvc-act.html",                   key: "important-acts-16.7.2-cvc-act",                   qs: 0 },
+    "16.7.3": { file: "topics/important-acts/16.7.3-lokpal-lokayuktas-act.html",     key: "important-acts-16.7.3-lokpal-lokayuktas-act",     qs: 0 },
+    "16.7.4": { file: "topics/important-acts/16.7.4-kerala-lok-ayukta-act.html",     key: "important-acts-16.7.4-kerala-lok-ayukta-act",     qs: 0 },
+    "16.8.1": { file: "topics/important-acts/16.8.1-public-servant-bns.html",        key: "important-acts-16.8.1-public-servant-bns",        qs: 0 },
+    "16.8.2": { file: "topics/important-acts/16.8.2-offences-public-servants.html",  key: "important-acts-16.8.2-offences-public-servants",  qs: 0 },
+    "16.9.1": { file: "topics/important-acts/16.9.1-administrative-tribunals-act.html", key: "important-acts-16.9.1-administrative-tribunals-act", qs: 0 },
+    "16.9.2": { file: "topics/important-acts/16.9.2-cat.html",                       key: "important-acts-16.9.2-cat",                       qs: 0 },
+    "16.9.3": { file: "topics/important-acts/16.9.3-kat.html",                       key: "important-acts-16.9.3-kat",                       qs: 0 },
+
+    /* SPECIAL TOPICS — LEGAL METROLOGY */
+    "17.1.1": { file: "topics/special-topics/17.1.1-intl-national-standards.html",     key: "special-topics-17.1.1-intl-national-standards",     qs: 0 },
+    "17.1.2": { file: "topics/special-topics/17.1.2-intl-organisations-labs.html",     key: "special-topics-17.1.2-intl-organisations-labs",     qs: 0 },
+    "17.1.3": { file: "topics/special-topics/17.1.3-measuring-equipment.html",         key: "special-topics-17.1.3-measuring-equipment",         qs: 0 },
+    "17.1.4": { file: "topics/special-topics/17.1.4-measurement-concepts.html",        key: "special-topics-17.1.4-measurement-concepts",        qs: 0 },
+    "17.2.1":  { file: "topics/special-topics/17.2.1-lm-sec-17.html",                  key: "special-topics-17.2.1-lm-sec-17",                  qs: 0 },
+    "17.2.2":  { file: "topics/special-topics/17.2.2-lm-sec-18.html",                  key: "special-topics-17.2.2-lm-sec-18",                  qs: 0 },
+    "17.2.3":  { file: "topics/special-topics/17.2.3-lm-sec-22.html",                  key: "special-topics-17.2.3-lm-sec-22",                  qs: 0 },
+    "17.2.4":  { file: "topics/special-topics/17.2.4-lm-sec-24.html",                  key: "special-topics-17.2.4-lm-sec-24",                  qs: 0 },
+    "17.2.5":  { file: "topics/special-topics/17.2.5-lm-sec-25.html",                  key: "special-topics-17.2.5-lm-sec-25",                  qs: 0 },
+    "17.2.6":  { file: "topics/special-topics/17.2.6-lm-sec-26.html",                  key: "special-topics-17.2.6-lm-sec-26",                  qs: 0 },
+    "17.2.7":  { file: "topics/special-topics/17.2.7-lm-sec-27.html",                  key: "special-topics-17.2.7-lm-sec-27",                  qs: 0 },
+    "17.2.8":  { file: "topics/special-topics/17.2.8-lm-sec-31.html",                  key: "special-topics-17.2.8-lm-sec-31",                  qs: 0 },
+    "17.2.9":  { file: "topics/special-topics/17.2.9-lm-sec-33.html",                  key: "special-topics-17.2.9-lm-sec-33",                  qs: 0 },
+    "17.2.10": { file: "topics/special-topics/17.2.10-lm-sec-34.html",                 key: "special-topics-17.2.10-lm-sec-34",                 qs: 0 },
+    "17.2.11": { file: "topics/special-topics/17.2.11-lm-sec-36.html",                 key: "special-topics-17.2.11-lm-sec-36",                 qs: 0 },
+    "17.2.12": { file: "topics/special-topics/17.2.12-lm-sec-44.html",                 key: "special-topics-17.2.12-lm-sec-44",                 qs: 0 },
+    "17.3.1": { file: "topics/special-topics/17.3.1-pcr-rule-6.html",                 key: "special-topics-17.3.1-pcr-rule-6",                 qs: 0 },
+    "17.3.2": { file: "topics/special-topics/17.3.2-pcr-rule-7.html",                 key: "special-topics-17.3.2-pcr-rule-7",                 qs: 0 },
+    "17.3.3": { file: "topics/special-topics/17.3.3-pcr-rule-8.html",                 key: "special-topics-17.3.3-pcr-rule-8",                 qs: 0 },
+    "17.3.4": { file: "topics/special-topics/17.3.4-pcr-rule-10.html",                key: "special-topics-17.3.4-pcr-rule-10",                qs: 0 },
+    "17.4.1": { file: "topics/special-topics/17.4.1-kerala-rule-14.html",             key: "special-topics-17.4.1-kerala-rule-14",             qs: 0 },
+    "17.4.2": { file: "topics/special-topics/17.4.2-kerala-rule-15.html",             key: "special-topics-17.4.2-kerala-rule-15",             qs: 0 },
+    "17.4.3": { file: "topics/special-topics/17.4.3-kerala-rule-16.html",             key: "special-topics-17.4.3-kerala-rule-16",             qs: 0 },
+    "17.4.4": { file: "topics/special-topics/17.4.4-kerala-rule-17.html",             key: "special-topics-17.4.4-kerala-rule-17",             qs: 0 },
+    "17.4.5": { file: "topics/special-topics/17.4.5-kerala-rule-22.html",             key: "special-topics-17.4.5-kerala-rule-22",             qs: 0 },
+    "17.4.6": { file: "topics/special-topics/17.4.6-kerala-rule-23.html",             key: "special-topics-17.4.6-kerala-rule-23",             qs: 0 },
+    "17.4.7": { file: "topics/special-topics/17.4.7-kerala-rule-24.html",             key: "special-topics-17.4.7-kerala-rule-24",             qs: 0 }
+  };
+
+  /* -----------------------------------------------------------------
+     CHAPTER_FILES — chapter id → chapter page
+     ----------------------------------------------------------------- */
+  const CHAPTER_FILES = {
+    "1.1":  "chapters/history/1.1-kerala-history.html",
+    "1.2":  "chapters/history/1.2-indian-history.html",
+    "1.3":  "chapters/history/1.3-world-history.html",
+    "2.1":  "chapters/geography/2.1-basic-geography.html",
+    "2.2":  "chapters/geography/2.2-india.html",
+    "2.3":  "chapters/geography/2.3-kerala.html",
+    "3":    "chapters/economics/3-indian-economy.html",
+    "4":    "chapters/constitution/4-indian-constitution.html",
+    "5":    "chapters/kerala-administration/5-kerala-administration.html",
+    "6":    "chapters/biology/6-biology-public-health.html",
+    "7":    "chapters/physics/7-physics.html",
+    "8":    "chapters/chemistry/8-chemistry.html",
+    "9":    "chapters/art-sports-literature/9-art-sports-literature.html",
+    "10":   "chapters/computer/10-computer-it.html",
+    "11":   "chapters/arithmetic/11-simple-arithmetic.html",
+    "12":   "chapters/mental-ability/12-mental-ability.html",
+    "13.1": "chapters/english/13.1-grammar.html",
+    "13.2": "chapters/english/13.2-vocabulary.html",
+    "14":   "chapters/malayalam/14-malayalam.html",
+    "15.1": "chapters/current-affairs/15.1-current-affairs.html",
+    "16.1": "chapters/important-acts/16.1-rti.html",
+    "16.2": "chapters/important-acts/16.2-public-services.html",
+    "16.3": "chapters/important-acts/16.3-consumer-protection.html",
+    "16.4": "chapters/important-acts/16.4-vulnerable-sections.html",
+    "16.5": "chapters/important-acts/16.5-women.html",
+    "16.6": "chapters/important-acts/16.6-children.html",
+    "16.7": "chapters/important-acts/16.7-corruption.html",
+    "16.8": "chapters/important-acts/16.8-public-servant.html",
+    "16.9": "chapters/important-acts/16.9-tribunals.html",
+    "17.1": "chapters/special-topics/17.1-legal-metrology-basics.html",
+    "17.2": "chapters/special-topics/17.2-legal-metrology-act.html",
+    "17.3": "chapters/special-topics/17.3-packaged-commodity-rules.html",
+    "17.4": "chapters/special-topics/17.4-kerala-enforcement-rules.html"
+  };
+
+  /* =================================================================
+     MASTER SYLLABUS (nested)
+     ================================================================= */
+  const SYLLABUS = [
+
+    t("1", "HISTORY", "BOTH", [
+      t("1.1", "Kerala History", "BOTH", [
+        t("1.1.1", "Europeans' Arrival in Kerala", "BOTH"),
+        t("1.1.2", "Travancore History", "BOTH"),
+        t("1.1.3", "Social Reform Movements", "BOTH"),
+        t("1.1.4", "Religious Renaissance Movements", "BOTH"),
+        t("1.1.5", "National Movement in Kerala", "BOTH"),
+        t("1.1.6", "Literary Sources of Kerala History", "BOTH"),
+        t("1.1.7", "Aikya Kerala Movement", "BOTH"),
+        t("1.1.8", "Kerala After 1956", "BOTH")
+      ]),
+      t("1.2", "Indian History", "BOTH", [
+        t("1.2.1",  "British Rule", "BOTH"),
+        t("1.2.2",  "First War of Independence", "BOTH"),
+        t("1.2.3",  "Formation of INC", "BOTH"),
+        t("1.2.4",  "Swadeshi Movement", "BOTH"),
+        t("1.2.5",  "Social Reform Movements", "BOTH"),
+        t("1.2.6",  "Journalism", "BOTH"),
+        t("1.2.7",  "Literature and Art", "BOTH"),
+        t("1.2.8",  "Gandhi and Freedom Struggle", "BOTH"),
+        t("1.2.9",  "Post-Independence India", "BOTH"),
+        t("1.2.10", "States Reorganisation", "BOTH"),
+        t("1.2.11", "Science, Education, Technology", "BOTH"),
+        t("1.2.12", "India's Foreign Policy", "BOTH")
+      ]),
+      t("1.3", "World History", "BOTH", [
+        t("1.3.1", "Glorious Revolution", "BOTH"),
+        t("1.3.2", "American War of Independence", "BOTH"),
+        t("1.3.3", "French Revolution", "BOTH"),
+        t("1.3.4", "Russian Revolution", "BOTH"),
+        t("1.3.5", "Chinese Revolution", "BOTH"),
+        t("1.3.6", "Post-WWII Political History", "BOTH"),
+        t("1.3.7", "United Nations / UNO", "BOTH"),
+        t("1.3.8", "Important International Organizations", "BOTH")
+      ])
+    ]),
+
+    t("2", "GEOGRAPHY", "BOTH", [
+      t("2.1", "Basic Geography", "BOTH", [
+        t("2.1.1",  "Basic Principles of Geography", "BOTH"),
+        t("2.1.2",  "Structure of the Earth", "BOTH"),
+        t("2.1.3",  "Atmosphere", "BOTH"),
+        t("2.1.4",  "Rocks", "BOTH"),
+        t("2.1.5",  "Landforms", "BOTH"),
+        t("2.1.6",  "Pressure Belt", "BOTH"),
+        t("2.1.7",  "Wind", "BOTH"),
+        t("2.1.8",  "Temperature", "BOTH"),
+        t("2.1.9",  "Seasons", "BOTH"),
+        t("2.1.10", "Global Issues", "BOTH"),
+        t("2.1.11", "Global Warming", "BOTH"),
+        t("2.1.12", "Pollution", "BOTH"),
+        t("2.1.13", "Maps", "BOTH"),
+        t("2.1.14", "Topographic Maps", "BOTH"),
+        t("2.1.15", "Map Symbols / Signs", "BOTH"),
+        t("2.1.16", "Remote Sensing", "BOTH"),
+        t("2.1.17", "GIS", "BOTH"),
+        t("2.1.18", "Oceans", "BOTH"),
+        t("2.1.19", "Ocean Movements", "BOTH"),
+        t("2.1.20", "Continents", "BOTH"),
+        t("2.1.21", "World Countries & Features", "BOTH")
+      ]),
+      t("2.2", "India", "BOTH", [
+        t("2.2.1",  "Physiography", "BOTH"),
+        t("2.2.2",  "States & Features", "BOTH"),
+        t("2.2.3",  "Northern Mountains", "BOTH"),
+        t("2.2.4",  "Rivers", "BOTH"),
+        t("2.2.5",  "Northern Plains", "BOTH"),
+        t("2.2.6",  "Peninsular Plateau", "BOTH"),
+        t("2.2.7",  "Coastal Regions / Coastal Plain", "BOTH"),
+        t("2.2.8",  "Climate", "BOTH"),
+        t("2.2.9",  "Natural Vegetation", "BOTH"),
+        t("2.2.10", "Agriculture", "BOTH"),
+        t("2.2.11", "Minerals", "BOTH"),
+        t("2.2.12", "Industries", "BOTH"),
+        t("2.2.13", "Energy Resources", "BOTH"),
+        t("2.2.14", "Road Transport", "BOTH"),
+        t("2.2.15", "Water Transport", "BOTH"),
+        t("2.2.16", "Railway", "BOTH"),
+        t("2.2.17", "Air Transport", "BOTH")
+      ]),
+      t("2.3", "Kerala", "BOTH", [
+        t("2.3.1",  "Physiography", "BOTH"),
+        t("2.3.2",  "District Specialities", "BOTH"),
+        t("2.3.3",  "Rivers", "BOTH"),
+        t("2.3.4",  "Climate", "BOTH"),
+        t("2.3.5",  "Natural Vegetation", "BOTH"),
+        t("2.3.6",  "Wildlife", "BOTH"),
+        t("2.3.7",  "Agriculture", "BOTH"),
+        t("2.3.8",  "Research Institutions / Research Centres", "BOTH"),
+        t("2.3.9",  "Minerals", "BOTH"),
+        t("2.3.10", "Industries", "BOTH"),
+        t("2.3.11", "Energy", "BOTH"),
+        t("2.3.12", "Road Transport", "BOTH"),
+        t("2.3.13", "Water Transport", "BOTH"),
+        t("2.3.14", "Railway", "BOTH"),
+        t("2.3.15", "Air Transport", "BOTH")
+      ])
+    ]),
+
+    t("3", "ECONOMICS", "BOTH", [
+      t("3.1",  "Indian Economic System", "BOTH"),
+      t("3.2",  "Five-Year Plans", "BOTH"),
+      t("3.3",  "Planning Commission", "BOTH"),
+      t("3.4",  "NITI Aayog", "BOTH"),
+      t("3.5",  "New Economic Reforms", "BOTH"),
+      t("3.6",  "Financial Institutions", "BOTH"),
+      t("3.7",  "Agricultural Crops / Major Crops", "BOTH"),
+      t("3.8",  "Minerals", "BOTH"),
+      t("3.9",  "Green Revolution", "BOTH"),
+      t("3.10", "Direct Taxes", "573"),
+      t("3.11", "Indirect Taxes", "573"),
+      t("3.12", "GST in India", "573")
+    ]),
+
+    t("4", "INDIAN CONSTITUTION", "BOTH", [
+      t("4.1",  "Constituent Assembly", "BOTH"),
+      t("4.2",  "Preamble", "BOTH"),
+      t("4.3",  "Citizenship", "BOTH"),
+      t("4.4",  "Fundamental Rights", "BOTH"),
+      t("4.5",  "Directive Principles", "BOTH"),
+      t("4.6",  "Fundamental Duties", "BOTH"),
+      t("4.7",  "Central Government", "BOTH"),
+      t("4.8",  "State Government", "BOTH"),
+      t("4.9",  "Constitutional Institutions", "BOTH"),
+      t("4.10", "Functions of Constitutional Institutions", "BOTH"),
+      t("4.11", "Panchayati Raj", "BOTH"),
+      t("4.12", "Union List", "BOTH"),
+      t("4.13", "State List", "BOTH"),
+      t("4.14", "Concurrent List", "BOTH"),
+      t("4.15", "Special-Priority Formats", "BOTH"),
+      t("4.16", "Amendments", "BOTH"),
+      t("4.17", "Institution → Article → Function", "BOTH"),
+      t("4.18", "Comptroller and Auditor General — CAG", "573"),
+      t("4.19", "Attorney General", "573"),
+      t("4.20", "Advocate General", "573"),
+      t("4.21", "Election Commission of India", "573"),
+      t("4.22", "State Election Commission", "573"),
+      t("4.23", "UPSC", "573"),
+      t("4.24", "State PSC", "573"),
+      t("4.25", "Finance Commission", "573"),
+      t("4.26", "State Finance Commission", "573"),
+      t("4.27", "GST Council", "573"),
+      t("4.28", "Distribution of Legislative Powers", "573"),
+      t("4.29", "Services Under Union and States", "573"),
+      t("4.30", "Tribunals", "573"),
+      t("4.31", "National Commission for Scheduled Castes", "573"),
+      t("4.32", "National Commission for Scheduled Tribes", "573"),
+      t("4.33", "National Commission for Backward Classes", "573"),
+      t("4.34", "Official Language", "573"),
+      t("4.35", "Regional Languages", "573"),
+      t("4.36", "Language of Supreme Court and High Courts", "573"),
+      t("4.37", "Special Directives Relating to Languages", "573")
+    ]),
+
+    t("5", "KERALA — ADMINISTRATION & GOVERNANCE", "BOTH", [
+      t("5.1",  "Kerala State Civil Service", "BOTH"),
+      t("5.2",  "Constitutional Institutions", "BOTH"),
+      t("5.3",  "Various Commissions", "BOTH"),
+      t("5.4",  "Social Planning", "BOTH"),
+      t("5.5",  "Economic Planning", "BOTH"),
+      t("5.6",  "Commercial Planning", "BOTH"),
+      t("5.7",  "Basic Information / Socio-Economic Development", "BOTH"),
+      t("5.8",  "Disaster Management Authority", "BOTH"),
+      t("5.9",  "Watershed Management", "BOTH"),
+      t("5.10", "Labour and Employment", "BOTH"),
+      t("5.11", "National Rural Employment Programmes", "BOTH"),
+      t("5.12", "Land Reforms", "BOTH"),
+      t("5.13", "Protection of Women", "BOTH"),
+      t("5.14", "Protection of Children", "BOTH"),
+      t("5.15", "Protection of Senior Citizens", "BOTH"),
+      t("5.16", "Social Welfare", "BOTH"),
+      t("5.17", "Social Security", "BOTH"),
+      t("5.18", "Quasi-Judicial Bodies", "573"),
+      t("5.19", "Planning Board", "573"),
+      t("5.20", "Population", "573"),
+      t("5.21", "Literacy", "573"),
+      t("5.22", "E-Governance", "573"),
+      t("5.23", "Delegated Legislation and Its Controls", "573"),
+      t("5.24", "Legislative Controls", "573"),
+      t("5.25", "Judicial Controls", "573"),
+      t("5.26", "Constitutional Law Remedies", "573"),
+      t("5.27", "Administrative Discretion and Controls", "573"),
+      t("5.28", "Administrative Adjudication", "573"),
+      t("5.29", "Principles of Natural Justice", "573")
+    ]),
+
+    t("6", "BIOLOGY & PUBLIC HEALTH", "BOTH", [
+      t("6.1", "Human Body", "BOTH"),
+      t("6.2", "Vitamins & Minerals", "BOTH"),
+      t("6.3", "Communicable Diseases", "BOTH"),
+      t("6.4", "Kerala Health & Welfare", "BOTH"),
+      t("6.5", "Lifestyle Diseases", "BOTH"),
+      t("6.6", "Basic Health", "BOTH"),
+      t("6.7", "Environment", "BOTH"),
+      t("6.8", "Environmental Hazards", "BOTH")
+    ]),
+
+    t("7", "PHYSICS", "BOTH", [
+      t("7.1", "Basic Physics", "BOTH"),
+      t("7.2", "Motion", "BOTH"),
+      t("7.3", "Light", "BOTH"),
+      t("7.4", "Sound", "BOTH"),
+      t("7.5", "Force", "BOTH"),
+      t("7.6", "Gravitation", "BOTH"),
+      t("7.7", "Heat", "BOTH"),
+      t("7.8", "Work, Energy & Power", "BOTH"),
+      t("7.9", "Electronics", "883")
+    ]),
+
+    t("8", "CHEMISTRY", "BOTH", [
+      t("8.1",  "Atom", "BOTH"),
+      t("8.2",  "Molecule", "BOTH"),
+      t("8.3",  "States of Matter", "BOTH"),
+      t("8.4",  "Allotropy", "BOTH"),
+      t("8.5",  "Gas Laws", "BOTH"),
+      t("8.6",  "Aqua Regia", "BOTH"),
+      t("8.7",  "Elements", "BOTH"),
+      t("8.8",  "Periodic Table", "BOTH"),
+      t("8.9",  "Metals / Non-Metals", "BOTH"),
+      t("8.10", "Chemical / Physical Changes", "BOTH"),
+      t("8.11", "Chemical Reactions", "BOTH"),
+      t("8.12", "Solutions", "BOTH"),
+      t("8.13", "Mixtures", "BOTH"),
+      t("8.14", "Compounds", "BOTH"),
+      t("8.15", "Alloys", "BOTH"),
+      t("8.16", "Acids", "BOTH"),
+      t("8.17", "Bases / Alkalis", "BOTH"),
+      t("8.18", "pH", "BOTH"),
+      t("8.19", "Alkaloids", "BOTH")
+    ]),
+
+    t("9", "ART, SPORTS, LITERATURE & CULTURE", "BOTH", [
+      t("9.1", "Art & Culture", "BOTH"),
+      t("9.2", "Sports", "BOTH"),
+      t("9.3", "Literature", "BOTH"),
+      t("9.4", "Culture", "BOTH")
+    ]),
+
+    t("10", "COMPUTER", "BOTH", [
+      t("10.1", "Hardware, I/O, Memory", "BOTH"),
+      t("10.2", "Software, OS, Applications", "BOTH"),
+      t("10.3", "Networks, LAN / MAN / WAN", "BOTH"),
+      t("10.4", "Internet, WWW, E-mail, Browsers", "BOTH"),
+      t("10.5", "HTML & Other", "BOTH"),
+      t("10.6", "Cyber Crimes and Cyber Laws", "883")
+    ]),
+
+    t("11", "SIMPLE ARITHMETIC", "BOTH", [
+      t("11.1",  "Numbers", "BOTH"),
+      t("11.2",  "Fractions", "BOTH"),
+      t("11.3",  "Decimals", "BOTH"),
+      t("11.4",  "Percentage", "BOTH"),
+      t("11.5",  "Profit & Loss", "BOTH"),
+      t("11.6",  "Simple Interest", "BOTH"),
+      t("11.7",  "Compound Interest", "BOTH"),
+      t("11.8",  "Ratio & Proportion", "BOTH"),
+      t("11.9",  "Time & Distance", "BOTH"),
+      t("11.10", "Time & Work", "BOTH"),
+      t("11.11", "Average", "BOTH"),
+      t("11.12", "Exponents", "BOTH"),
+      t("11.13", "Mensuration", "BOTH"),
+      t("11.14", "Perimeter", "BOTH"),
+      t("11.15", "Area", "BOTH"),
+      t("11.16", "Volume", "BOTH"),
+      t("11.17", "Progressions", "BOTH"),
+      t("11.20", "Geometry", "883"),
+      t("11.21", "Trigonometry", "883")
+    ]),
+
+    t("12", "MENTAL ABILITY & OBSERVATION", "BOTH", [
+      t("12.1",  "Number Series", "BOTH"),
+      t("12.2",  "Alphabet Series", "BOTH"),
+      t("12.3",  "Mathematical Signs", "BOTH"),
+      t("12.4",  "Position Test", "BOTH"),
+      t("12.5",  "Word Analogy", "BOTH"),
+      t("12.6",  "Alphabet Analogy", "BOTH"),
+      t("12.7",  "Number Analogy", "BOTH"),
+      t("12.8",  "Odd One Out", "BOTH"),
+      t("12.9",  "Numerical Reasoning", "BOTH"),
+      t("12.10", "Coding & Decoding", "BOTH"),
+      t("12.11", "Family Relations", "BOTH"),
+      t("12.12", "Direction Sense", "BOTH"),
+      t("12.13", "Clock Time & Angles", "BOTH"),
+      t("12.14", "Mirror Image", "BOTH"),
+      t("12.15", "Calendar & Dates", "BOTH"),
+      t("12.16", "Clerical Ability", "BOTH")
+    ]),
+
+    t("13", "GENERAL ENGLISH", "BOTH", [
+      t("13.1", "Grammar", "BOTH", [
+        t("13.1.1",  "Types of Sentences", "BOTH"),
+        t("13.1.2",  "Interchange", "BOTH"),
+        t("13.1.3",  "Parts of Speech", "BOTH"),
+        t("13.1.4",  "Subject-Verb Agreement", "BOTH"),
+        t("13.1.5",  "Articles", "BOTH"),
+        t("13.1.6",  "Primary Auxiliaries", "BOTH"),
+        t("13.1.7",  "Modal Auxiliaries", "BOTH"),
+        t("13.1.8",  "Question Tags", "BOTH"),
+        t("13.1.9",  "Infinitives", "BOTH"),
+        t("13.1.10", "Gerunds", "BOTH"),
+        t("13.1.11", "Tenses", "BOTH"),
+        t("13.1.12", "Conditional Sentences", "BOTH"),
+        t("13.1.13", "Prepositions", "BOTH"),
+        t("13.1.14", "Correlatives", "BOTH"),
+        t("13.1.15", "Direct / Indirect Speech", "BOTH"),
+        t("13.1.16", "Active / Passive Voice", "BOTH"),
+        t("13.1.17", "Sentence Correction", "BOTH"),
+        t("13.1.18", "Degrees of Comparison", "BOTH")
+      ]),
+      t("13.2", "Vocabulary", "BOTH", [
+        t("13.2.1",  "Singular / Plural", "BOTH"),
+        t("13.2.2",  "Gender", "BOTH"),
+        t("13.2.3",  "Collective Nouns", "BOTH"),
+        t("13.2.4",  "Word Formation", "BOTH"),
+        t("13.2.5",  "Prefix / Suffix", "BOTH"),
+        t("13.2.6",  "Compound Words", "BOTH"),
+        t("13.2.7",  "Synonyms", "BOTH"),
+        t("13.2.8",  "Antonyms", "BOTH"),
+        t("13.2.9",  "Phrasal Verbs", "BOTH"),
+        t("13.2.10", "Foreign Words / Phrases", "BOTH"),
+        t("13.2.11", "One-Word Substitutes", "BOTH"),
+        t("13.2.12", "Confusing Words", "BOTH"),
+        t("13.2.13", "Spelling", "BOTH"),
+        t("13.2.14", "Idioms", "BOTH")
+      ])
+    ]),
+
+    t("14", "MALAYALAM", "BOTH", [
+      t("14.2",  "Padashuddhi", "BOTH"),
+      t("14.3",  "Vakyashuddhi", "BOTH"),
+      t("14.4",  "Paribhasha", "BOTH"),
+      t("14.5",  "Ottapadam", "BOTH"),
+      t("14.6",  "Paryayam", "BOTH"),
+      t("14.7",  "Vipareethapadam", "BOTH"),
+      t("14.8",  "Shailikal", "BOTH"),
+      t("14.9",  "Pazhanchollukal", "BOTH"),
+      t("14.10", "Samanapadam", "BOTH"),
+      t("14.11", "Cherthezhuthuka", "BOTH"),
+      t("14.12", "Streelingam", "BOTH"),
+      t("14.13", "Pullingam", "BOTH"),
+      t("14.14", "Vachanam", "BOTH"),
+      t("14.15", "Pirichezhuthal", "BOTH")
+    ]),
+
+    t("15", "CURRENT AFFAIRS", "BOTH", [
+      t("15.1", "Current Affairs", "BOTH", [
+        t("15.1.1", "Current National Affairs", "BOTH"),
+        t("15.1.2", "Current International Affairs", "BOTH"),
+        t("15.1.3", "Current Kerala Affairs", "BOTH"),
+        t("15.1.4", "Current Science & Technology", "BOTH"),
+        t("15.1.5", "Current Awards / Sports / Culture", "BOTH"),
+        t("15.1.6", "Important Government Schemes / Events", "BOTH")
+      ])
+    ]),
+
+    t("16", "IMPORTANT ACTS", "573", [
+      t("16.1", "Right to Information", "573", [
+        t("16.1.1", "RTI Act, 2005", "573"),
+        t("16.1.2", "Definitions", "573"),
+        t("16.1.3", "Exempted Information", "573"),
+        t("16.1.4", "Third-Party Information", "573"),
+        t("16.1.5", "Information Commissions", "573"),
+        t("16.1.6", "Powers and Functions", "573")
+      ]),
+      t("16.2", "Right to Public Services", "573", [
+        t("16.2.1", "Kerala Right to Service Act 2012", "573"),
+        t("16.2.2", "Definitions", "573"),
+        t("16.2.3", "Statutory Framework", "573"),
+        t("16.2.4", "Redressal", "573"),
+        t("16.2.5", "Appeals", "573"),
+        t("16.2.6", "Penalties", "573")
+      ]),
+      t("16.3", "Consumer Protection", "573", [
+        t("16.3.1", "Consumer Protection Act 2019", "573"),
+        t("16.3.2", "Consumer Rights", "573"),
+        t("16.3.3", "Consumer Protection Councils", "573"),
+        t("16.3.4", "Consumer Protection Authority", "573"),
+        t("16.3.5", "Dispute Redressal Commissions", "573"),
+        t("16.3.6", "Consumer Mediation", "573"),
+        t("16.3.7", "Product Liability", "573"),
+        t("16.3.8", "Offences and Penalties", "573")
+      ]),
+      t("16.4", "Protection of Vulnerable Sections", "573", [
+        t("16.4.1",  "Protection of Civil Rights Act 1955", "573"),
+        t("16.4.2",  "SC/ST Prevention of Atrocities Act 1989", "573"),
+        t("16.4.3",  "Kerala SC/ST Commission Act 2007", "573"),
+        t("16.4.4",  "Kerala State SC/ST Commission", "573"),
+        t("16.4.5",  "Protection of Human Rights Act 1993", "573"),
+        t("16.4.6",  "National Human Rights Commission", "573"),
+        t("16.4.7",  "State Human Rights Commission", "573"),
+        t("16.4.8",  "Senior Citizens Act 2007", "573"),
+        t("16.4.9",  "Rights of Persons with Disabilities Act 2016", "573"),
+        t("16.4.10", "Transgender Persons Act 2019", "573")
+      ]),
+      t("16.5", "Protection and Safeguarding of Women", "573", [
+        t("16.5.1", "BNS 2023 Offences Against Women", "573"),
+        t("16.5.2", "Dowry Prohibition Act 1961", "573"),
+        t("16.5.3", "National Commission for Women Act 1990", "573"),
+        t("16.5.4", "Kerala Women's Commission Act 1991", "573"),
+        t("16.5.5", "Protection of Women from Domestic Violence Act 2005", "573"),
+        t("16.5.6", "POSH Act 2013", "573")
+      ]),
+      t("16.6", "Protection and Safeguarding of Children", "573", [
+        t("16.6.1", "BNS Offences Against Children", "573"),
+        t("16.6.2", "POCSO Act 2012", "573"),
+        t("16.6.3", "Juvenile Justice Act 2015", "573"),
+        t("16.6.4", "JJ Board", "573"),
+        t("16.6.5", "Child Welfare Committee", "573"),
+        t("16.6.6", "Procedures", "573")
+      ]),
+      t("16.7", "Prevention of Corruption and Maladministration", "573", [
+        t("16.7.1", "Prevention of Corruption Act 1988", "573"),
+        t("16.7.2", "Central Vigilance Commission Act 2003", "573"),
+        t("16.7.3", "Lokpal and Lokayuktas Act 2013", "573"),
+        t("16.7.4", "Kerala Lok Ayukta Act 1999", "573")
+      ]),
+      t("16.8", "Public Servant", "573", [
+        t("16.8.1", "Definition under BNS", "573"),
+        t("16.8.2", "Offences By / Against Public Servants", "573")
+      ]),
+      t("16.9", "Administrative Tribunals", "573", [
+        t("16.9.1", "Administrative Tribunals Act 1985", "573"),
+        t("16.9.2", "Central Administrative Tribunal", "573"),
+        t("16.9.3", "Kerala Administrative Tribunal", "573")
+      ])
+    ]),
+
+    t("17", "SPECIAL TOPICS — LEGAL METROLOGY", "883", [
+      t("17.1", "Basics of Legal Metrology", "883", [
+        t("17.1.1", "International and National Standards", "883"),
+        t("17.1.2", "International Organisations & Laboratories", "883"),
+        t("17.1.3", "Measuring Equipment", "883"),
+        t("17.1.4", "Measurement Concepts", "883")
+      ]),
+      t("17.2", "Legal Metrology Act 2009", "883", [
+        t("17.2.1",  "Section 17", "883"),
+        t("17.2.2",  "Section 18", "883"),
+        t("17.2.3",  "Section 22", "883"),
+        t("17.2.4",  "Section 24", "883"),
+        t("17.2.5",  "Section 25", "883"),
+        t("17.2.6",  "Section 26", "883"),
+        t("17.2.7",  "Section 27", "883"),
+        t("17.2.8",  "Section 31", "883"),
+        t("17.2.9",  "Section 33", "883"),
+        t("17.2.10", "Section 34", "883"),
+        t("17.2.11", "Section 36", "883"),
+        t("17.2.12", "Section 44", "883")
+      ]),
+      t("17.3", "Packaged Commodity Rules 2011", "883", [
+        t("17.3.1", "Rule 6", "883"),
+        t("17.3.2", "Rule 7", "883"),
+        t("17.3.3", "Rule 8", "883"),
+        t("17.3.4", "Rule 10", "883")
+      ]),
+      t("17.4", "Kerala Enforcement Rules 2012", "883", [
+        t("17.4.1", "Rule 14", "883"),
+        t("17.4.2", "Rule 15", "883"),
+        t("17.4.3", "Rule 16", "883"),
+        t("17.4.4", "Rule 17", "883"),
+        t("17.4.5", "Rule 22", "883"),
+        t("17.4.6", "Rule 23", "883"),
+        t("17.4.7", "Rule 24", "883")
+      ])
+    ])
+  ];
+
+  /* =================================================================
+     HELPERS
+     ================================================================= */
+  function flatten(nodes, inherited, path) {
+    nodes = nodes || SYLLABUS;
+    inherited = inherited || "BOTH";
+    path = path || [];
+    const out = [];
+    for (const n of nodes) {
+      const tag = n.tag || inherited;
+      const p = path.concat([n.title]);
+      out.push({
+        id: n.id, title: n.title, titleMl: TITLE_ML[n.id] || "",
+        tag: tag, path: p,
+        crossRef: n.crossRef, note: n.note, formats: n.formats,
+        leaf: !n.children
+      });
+      if (n.children) out.push.apply(out, flatten(n.children, tag, p));
+    }
+    return out;
+  }
+
+  function forExam(code) {
+    return flatten().filter(x => x.tag === "BOTH" || x.tag === code);
+  }
+
+  function onlyIn(code) {
+    return flatten().filter(x => x.tag === code);
+  }
+
+  function find(id, nodes) {
+    nodes = nodes || SYLLABUS;
+    for (const n of nodes) {
+      if (n.id === id) return n;
+      if (n.children) {
+        const r = find(id, n.children);
+        if (r) return r;
+      }
+    }
+    return null;
+  }
+
+  const PARTS = SYLLABUS.map((s, i) => ({
+    part: i + 1, id: s.id, title: s.title, tag: s.tag, marks: MARKS[s.id]
+  }));
+
+  /* =================================================================
+     LEGACY ADAPTER
+     ================================================================= */
+  const SUBJECT_META = {
+    "1":  { id: "history",               code: "01", icon: "📜", title: "History",                      titleMl: "ചരിത്രം",                 desc: "Kerala, Indian & World History" },
+    "2":  { id: "geography",             code: "02", icon: "🌍", title: "Geography",                    titleMl: "ഭൂമിശാസ്ത്രം",            desc: "Basic, India & Kerala Geography" },
+    "3":  { id: "economics",             code: "03", icon: "💰", title: "Economics",                    titleMl: "സാമ്പത്തികം",             desc: "Plans, Banking, Taxes, GST" },
+    "4":  { id: "constitution",          code: "04", icon: "🏛️", title: "Indian Constitution",          titleMl: "ഭരണഘടന",                 desc: "Rights, Amendments, Institutions" },
+    "5":  { id: "kerala-administration", code: "05", icon: "🏢", title: "Kerala Administration",        titleMl: "കേരള ഭരണം",              desc: "Commissions, Planning, Welfare" },
+    "6":  { id: "biology",               code: "06", icon: "🔬", title: "Biology & Public Health",      titleMl: "ജീവശാസ്ത്രം",             desc: "Human Body, Diseases, Environment" },
+    "7":  { id: "physics",               code: "07", icon: "⚛️", title: "Physics",                      titleMl: "ഭൗതികശാസ്ത്രം",           desc: "Laws, Energy, Light, Electronics" },
+    "8":  { id: "chemistry",             code: "08", icon: "🧪", title: "Chemistry",                    titleMl: "രസതന്ത്രം",               desc: "Atom, Periodic table, Alloys" },
+    "9":  { id: "art-sports-literature", code: "09", icon: "🎭", title: "Art, Sports & Literature",     titleMl: "കല, കായികം, സാഹിത്യം",    desc: "Olympics, Dances, Awards" },
+    "10": { id: "computer",              code: "10", icon: "💻", title: "Computer & IT",                titleMl: "കമ്പ്യൂട്ടർ",             desc: "Hardware, Networks, Cyber Laws" },
+    "11": { id: "arithmetic",            code: "11", icon: "🔢", title: "Simple Arithmetic",            titleMl: "ലഘു ഗണിതം",              desc: "Numbers, Interest, Mensuration" },
+    "12": { id: "mental-ability",        code: "12", icon: "🧠", title: "Mental Ability & Observation", titleMl: "മാനസിക നൈപുണ്യം",        desc: "Series, Analogy, Coding" },
+    "13": { id: "english",               code: "13", icon: "📖", title: "General English",              titleMl: "ഇംഗ്ലീഷ്",                desc: "Grammar & Vocabulary" },
+    "14": { id: "malayalam",             code: "14", icon: "✍️", title: "Malayalam",                    titleMl: "മലയാളം",                  desc: "പദശുദ്ധി, വാക്യശുദ്ധി, ശൈലികൾ" },
+    "15": { id: "current-affairs",       code: "15", icon: "📰", title: "Current Affairs",              titleMl: "നിലവിലെ കാര്യങ്ങൾ",       desc: "National, International, Kerala" },
+    "16": { id: "important-acts",        code: "16", icon: "⚖️", title: "Important Acts",               titleMl: "പ്രധാന നിയമങ്ങൾ",         desc: "RTI, Consumer, Women, Children" },
+    "17": { id: "special-topics",        code: "17", icon: "📐", title: "Legal Metrology",              titleMl: "ലീഗൽ മെട്രോളജി",          desc: "Basics, Acts, Rules — 883 only" }
+  };
+
+  const CHAPTER_SECTIONS = new Set(["1", "2", "13", "15", "16", "17"]);
+
+  function toTopic(node, inheritedTag) {
+    const tag = node.tag || inheritedTag;
+    const files = FILES[node.id] || {};
+    return {
+      id: node.id,
+      title: node.title,
+      titleMl: TITLE_ML[node.id] || "",
+      tag: tag,
+      file: files.file || null,
+      key: files.key || null,
+      qs: files.qs || 0
+    };
+  }
+
+  function buildLegacySubjects() {
+    return SYLLABUS.map(function (section) {
+      const meta = SUBJECT_META[section.id];
+      if (!meta) return null;
+
+      const sectionTag = section.tag || "BOTH";
+      const chaptered = CHAPTER_SECTIONS.has(section.id);
+
+      let chapters;
+      if (chaptered) {
+        chapters = (section.children || []).map(function (ch) {
+          const chTag = ch.tag || sectionTag;
+          return {
+            id: ch.id,
+            title: ch.title,
+            titleMl: TITLE_ML[ch.id] || "",
+            tag: chTag,
+            file: CHAPTER_FILES[ch.id] || null,
+            key: null,
+            qs: 0,
+            topics: (ch.children || []).map(function (tp) { return toTopic(tp, chTag); })
+          };
+        });
+      } else {
+        chapters = [{
+          id: section.id,
+          title: meta.title,
+          titleMl: meta.titleMl,
+          tag: sectionTag,
+          file: CHAPTER_FILES[section.id] || null,
+          key: null,
+          qs: 0,
+          topics: (section.children || []).map(function (tp) { return toTopic(tp, sectionTag); })
+        }];
+      }
+
+      return {
+        id: meta.id,
+        code: meta.code,
+        icon: meta.icon,
+        title: meta.title,
+        titleMl: meta.titleMl,
+        desc: meta.desc,
+        chapters: chapters
+      };
+    }).filter(Boolean);
+  }
+
+  const subjects = buildLegacySubjects();
+
+  /* =================================================================
+     EXPORTS
+     ================================================================= */
+  window.KPSC_SYLLABUS = {
+    EXAMS: EXAMS,
+    MARKS: MARKS,
+    SYLLABUS: SYLLABUS,
+    PARTS: PARTS,
+    FILES: FILES,
+    CHAPTER_FILES: CHAPTER_FILES,
+    TITLE_ML: TITLE_ML,
+    flatten: flatten,
+    forExam: forExam,
+    onlyIn: onlyIn,
+    find: find
+  };
+
+  window.Syllabus = {
+    async load() { return { subjects: subjects }; },
+    getSubject(id) { return subjects.find(function (s) { return s.id === id; }); },
+    getAllSubjects() { return subjects; }
+  };
+
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = window.KPSC_SYLLABUS;
+  }
+})();

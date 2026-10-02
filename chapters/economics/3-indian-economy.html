@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loading - Kerala PSC</title>
+<link rel="stylesheet" href="../../assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1 id="heroTitle">Loading...</h1>
+  <p id="heroSub"></p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../../index.html">Home</a> &rsaquo;
+    <a id="crumbSubj" href="#">Subject</a> &rsaquo;
+    <span id="crumb">Chapter</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Topics in this Chapter</h2>
+    </div>
+    <div class="grid" id="topicGrid">
+      <p class="empty">Loading...</p>
+    </div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite - Works fully offline</footer>
+
+<script src="../../assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const filename = location.pathname.replace(/\\/g, '/').split('/').pop();
+  const chapterId = filename.replace(/\.html$/i, '').split('-')[0];
+
+  let foundSubj = null, foundChap = null;
+  for (const S of Syllabus.getAllSubjects()) {
+    const c = S.chapters.find(x => x.id === chapterId);
+    if (c) { foundSubj = S; foundChap = c; break; }
+  }
+  if (!foundChap) {
+    document.body.innerHTML = '<p style="padding:2rem;font-family:sans-serif">Chapter not found: <b>' + chapterId + '</b></p>';
+    return;
+  }
+
+  document.title = foundChap.id + ' ' + foundChap.title + ' - Kerala PSC';
+  document.getElementById('heroTitle').textContent = foundChap.id + ' ' + foundChap.title;
+  document.getElementById('heroSub').textContent = foundChap.titleMl || '';
+
+  const subjLink = document.getElementById('crumbSubj');
+  subjLink.textContent = foundSubj.title;
+  subjLink.href = '../../subjects/' + foundSubj.code + '-' + foundSubj.id + '.html';
+  document.getElementById('crumb').textContent = foundChap.title;
+
+  const grid = document.getElementById('topicGrid');
+  const topics = foundChap.topics || [];
+
+  if (!topics.length) {
+    grid.innerHTML = '<p class="empty">No topics in this chapter yet.</p>';
+    return;
+  }
+
+  grid.innerHTML = topics.map(t => {
+    const badge = t.tag === '573' ? '573 only' : t.tag === '883' ? '883 only' : 'BOTH';
+    const badgeCls = t.tag === '573' ? 'c573' : t.tag === '883' ? 'c883' : '';
+    const subsHtml = t.subs ? '<p class="desc" style="font-size:.78rem;min-height:auto">' + t.subs + '</p>' : '';
+
+    if (!t.file) {
+      return '<div class="card" style="opacity:.72;cursor:default">' +
+        '<span class="badge ' + badgeCls + '">' + t.id + '</span>' +
+        '<h3>' + t.title + '</h3>' +
+        '<p class="desc">' + (t.titleMl || '') + '</p>' +
+        subsHtml +
+        '<div class="meta"><span>Coming soon</span><span>' + badge + '</span></div>' +
+        '<div class="bar"><i style="width:0%"></i></div>' +
+      '</div>';
+    }
+
+    return '<a href="../../' + t.file + '" class="card" data-part="' + t.key + '" data-total="' + (t.qs || 0) + '">' +
+      '<span class="badge ' + badgeCls + '">' + t.id + '</span>' +
+      '<h3>' + t.title + '</h3>' +
+      '<p class="desc">' + (t.titleMl || '') + '</p>' +
+      subsHtml +
+      '<div class="meta"><span>' + (t.qs || 0) + ' MCQs</span><span>' + badge + '</span></div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+      '<div class="progressline"><span class="status">Not started</span><span class="score"></span></div>' +
+    '</a>';
+  }).join('');
+
+  const s = document.createElement('script');
+  s.src = '../../assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+
+</body>
+</html>

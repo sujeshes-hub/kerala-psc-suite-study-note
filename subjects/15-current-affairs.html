@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loading - Kerala PSC</title>
+<link rel="stylesheet" href="../assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1 id="heroTitle">Loading...</h1>
+  <p id="heroSub"></p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> &rsaquo;
+    <span id="crumb">...</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Chapters in this Subject</h2>
+    </div>
+    <div class="grid" id="chapterGrid">
+      <p class="empty">Loading...</p>
+    </div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite - Works fully offline</footer>
+
+<script src="../assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const filename = location.pathname.replace(/\\/g, '/').split('/').pop();
+  const slug = filename.replace(/\.html$/i, '').replace(/^\d+-/, '');
+  const S = Syllabus.getSubject(slug);
+  if (!S) {
+    document.body.innerHTML = '<p style="padding:2rem;font-family:sans-serif">Subject not found: <b>' + slug + '</b></p>';
+    return;
+  }
+  document.title = S.code + ' ' + S.title + ' - Kerala PSC';
+  document.getElementById('heroTitle').textContent = S.icon + ' ' + S.code + ' ' + S.title;
+  document.getElementById('heroSub').textContent = S.titleMl + ' - ' + S.desc;
+  document.getElementById('crumb').textContent = S.title;
+
+  const CF = (window.KPSC_SYLLABUS && window.KPSC_SYLLABUS.CHAPTER_FILES) || {};
+  const grid = document.getElementById('chapterGrid');
+
+  grid.innerHTML = S.chapters.map(c => {
+    const file = CF[c.id];
+    const badge = c.tag === '573' ? '573 only' : c.tag === '883' ? '883 only' : 'BOTH';
+    const badgeCls = c.tag === '573' ? 'c573' : c.tag === '883' ? 'c883' : '';
+    const topicCount = (c.topics || []).length;
+    if (!file) {
+      return '<div class="card" style="opacity:.72;cursor:default">' +
+        '<span class="badge ' + badgeCls + '">' + c.id + '</span>' +
+        '<h3>' + c.title + '</h3>' +
+        '<p class="desc">' + (c.titleMl || '') + '</p>' +
+        '<div class="meta"><span>Coming soon</span><span>' + badge + '</span></div>' +
+        '<div class="bar"><i style="width:0%"></i></div>' +
+      '</div>';
+    }
+    return '<a href="../' + file + '" class="card">' +
+      '<span class="badge ' + badgeCls + '">' + c.id + '</span>' +
+      '<h3>' + c.title + '</h3>' +
+      '<p class="desc">' + (c.titleMl || '') + '</p>' +
+      '<div class="meta"><span>' + topicCount + ' topics</span><span>' + badge + '</span></div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+    '</a>';
+  }).join('');
+
+  const s = document.createElement('script');
+  s.src = '../assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+
+</body>
+</html>
