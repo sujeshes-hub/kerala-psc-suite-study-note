@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Subjects Quick Revision | Kerala PSC Study Suite</title>
+<link rel="stylesheet" href="assets/css/landing.css">
+<style>
+.qrbar{display:flex;gap:.5rem;margin:1rem 0 .7rem}
+.qrbar input{flex:1;font-family:inherit;font-size:.95rem;padding:.65rem .9rem;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+.qrbar input:focus{outline:2px solid var(--brand2);outline-offset:1px}
+.qrctl{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;align-items:center;margin-bottom:.7rem}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.chip{border:1px solid var(--line);background:#f8fafc;color:var(--ink);padding:.34rem .78rem;border-radius:999px;cursor:pointer;font-size:.78rem;font-family:inherit;font-weight:700;transition:.15s}
+.chip:hover{background:#eef2f7}
+.chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.tools{display:flex;flex-wrap:wrap;gap:.4rem}
+
+/* Notice banner — ALWAYS visible when there is a warning/error */
+.qrnotice{
+  display:none;border-radius:12px;padding:.85rem 1rem;margin:.2rem 0 .9rem;
+  font-size:.86rem;line-height:1.55;border-left:5px solid;
+}
+.qrnotice.warn{background:#fff6e5;border-color:#e0a100;color:#7a4a00}
+.qrnotice.err{background:#fdecea;border-color:#c5221f;color:#7f1d1d}
+.qrnotice.info{background:#e6f6ff;border-color:#0b8ac9;color:#0b5a86}
+.qrnotice code{background:#fff;border:1px solid rgba(0,0,0,.1);padding:0 .3rem;border-radius:4px}
+
+/* Progress bar — visible while loading */
+.qrprogress{
+  display:flex;flex-direction:column;gap:.35rem;
+  margin:.2rem 0 .9rem;padding:.7rem .9rem;
+  background:var(--card);border:1px solid var(--line);
+  border-radius:12px;box-shadow:var(--shadow);
+}
+.qrbar-track{height:6px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.qrbar-fill{height:100%;width:0;background:linear-gradient(90deg,#0b5d63,#17a06a);transition:width .25s}
+.qrstatus{font-size:.8rem;color:var(--muted);font-weight:600}
+
+.qrstat{font-size:.8rem;color:var(--muted);margin:.2rem 0 .9rem}
+.qrcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:.85rem;overflow:hidden}
+.qrhead{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;padding:.8rem 1rem;cursor:pointer;user-select:none;background:linear-gradient(90deg,#f4fbfb,#ffffff);border-left:5px solid var(--brand2);transition:background .15s}
+.qrhead:hover{background:linear-gradient(90deg,#e6f4f6,#f8fcfc)}
+.qrhead .ico{font-size:1.25rem;line-height:1}
+.qrhead .ttl{font-weight:800;color:var(--brand);font-size:1rem}
+.qrhead .ttlml{font-size:.82rem;color:var(--muted);font-weight:600}
+.qrhead .tag{font-size:.66rem;font-weight:800;padding:.12rem .5rem;border-radius:6px}
+.qrhead .tag.both{background:#dbeafe;color:#1e40af}
+.qrhead .tag.c573{background:#fed7aa;color:#7c2d12}
+.qrhead .tag.c883{background:#ddd6fe;color:#4c1d95}
+.qrhead .cnt{margin-left:auto;font-size:.72rem;color:var(--muted);background:#eef2f7;padding:.15rem .55rem;border-radius:999px;font-weight:700}
+.qrhead .arw{font-size:.9rem;color:var(--brand2);transition:transform .2s}
+.qrcard.collapsed .arw{transform:rotate(-90deg)}
+.qrbody{padding:.2rem 1rem 1rem}
+.qrcard.collapsed .qrbody{display:none}
+
+.qrtopic{margin-top:.9rem;padding-left:.5rem;border-left:3px dashed #d6e4e6}
+.qrth{font-size:.88rem;color:#123f45;margin:0 0 .35rem;font-weight:800}
+.qrgh{font-size:.78rem;color:var(--brand);margin:.55rem 0 .25rem;text-transform:uppercase;letter-spacing:.4px;font-weight:800}
+.qrtopic ul{margin:0 0 .35rem;padding-left:1.3rem}
+.qrtopic li{font-size:.88rem;margin:.22rem 0;line-height:1.55}
+.qrtopic li::marker{color:var(--brand2);font-weight:800}
+.qrtopic mark{background:#fff2a8;padding:0 .12rem;border-radius:3px}
+.qrempty{color:var(--muted);font-size:.9rem;padding:1rem 0;text-align:center}
+.qrfoot{text-align:center;padding:1.2rem 1rem 2rem;color:var(--muted);font-size:.78rem}
+
+@media (max-width:520px){
+  .qrhead{padding:.7rem .8rem;gap:.45rem}
+  .qrhead .ttl{font-size:.92rem}
+  .qrhead .ttlml{font-size:.74rem}
+  .qrhead .cnt{display:none}
+  .qrtopic li{font-size:.84rem}
+  .qrbody{padding:.1rem .8rem .85rem}
+}
+@media print{
+  .qrbar,.qrctl,.qrprogress,.qrnotice,.qrstat,.hero .badges,.back-btn,.tools{display:none !important}
+  .hero{padding:1rem !important}
+  .hero::after{display:none}
+  .qrcard{box-shadow:none;border:1px solid #999;page-break-inside:avoid;margin-bottom:.5rem}
+  .qrcard.collapsed .qrbody{display:block !important}
+  .qrhead{background:#eef6f7 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;font-size:10.5pt}
+  main{padding:0}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>⚡ All Subjects Quick Revision</h1>
+  <p>ഓരോ ടോപ്പിക് പേജിലെയും <b>Quick Revision</b> വിഭാഗങ്ങൾ (30-Second Revision, One-Page Revision, Top Facts) ഒരിടത്ത് സമാഹരിച്ചിരിക്കുന്നു.</p>
+  <div class="badges">
+    <span id="badgeSubjects">— Subjects</span>
+    <span id="badgePoints">— Points</span>
+    <span>Auto-aggregated</span>
+    <span>Print-ready</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Notice banner (visible for warnings/errors) -->
+  <div class="qrnotice" id="qrNotice"></div>
+
+  <!-- Progress bar (visible during load) -->
+  <div class="qrprogress" id="qrProgress" hidden>
+    <div class="qrbar-track"><div class="qrbar-fill" id="qrBarFill"></div></div>
+    <div class="qrstatus" id="qrStatus">Starting…</div>
+  </div>
+
+  <div class="qrbar">
+    <input id="qrSearch" type="search" placeholder="തിരയുക…  (ഉദാ: മോണോസൈറ്റ്, Article 21, GST, ആനമുടി)">
+    <button class="btn" id="clearQr" type="button">Clear</button>
+  </div>
+
+  <div class="qrctl">
+    <div class="chips" id="qrChips">
+      <button class="chip active" type="button" data-tag="ALL">All</button>
+      <button class="chip" type="button" data-tag="BOTH">BOTH</button>
+      <button class="chip" type="button" data-tag="573">573/2025</button>
+      <button class="chip" type="button" data-tag="883">883/2025</button>
+    </div>
+    <div class="tools">
+      <button class="btn" id="reloadBtn" type="button">↻ Reload data</button>
+      <button class="btn" id="expandAll" type="button">Expand All</button>
+      <button class="btn" id="collapseAll" type="button">Collapse All</button>
+      <button class="btn" id="printBtn" type="button">🖨 Print</button>
+    </div>
+  </div>
+
+  <p class="qrstat" id="qrStat"></p>
+
+  <div id="qrHost">
+    <p class="qrempty">Loading topic revision points…</p>
+  </div>
+
+</main>
+
+<footer class="qrfoot">
+  Kerala PSC Study Suite • Quick Revision (aggregated from topic pages) • 573/2025 &amp; 883/2025
+</footer>
+
+<script src="assets/js/syllabus.js"></script>
+<script src="assets/js/quick-revision.js"></script>
+<script src="assets/js/sections.js"></script>
+</body>
+</html>
