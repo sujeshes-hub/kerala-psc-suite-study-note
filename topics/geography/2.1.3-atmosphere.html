@@ -1,105 +1,1360 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.1.3 Atmosphere - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂമിശാസ്ത്രം: അന്തരീക്ഷം | അധ്യായം 19</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
+      border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    .arrow-list { list-style: none; padding-left: 0; }
+    .arrow-list li::before { content: "→ "; color: var(--primary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.1.3 Atmosphere</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. അന്തരീക്ഷ വാതകങ്ങൾ</a></li>
+      <li><a href="#sec4">4. അന്തരീക്ഷ പാളികൾ</a></li>
+      <li><a href="#sec5">5. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec6">6. PSC വിശകലനം</a></li>
+      <li><a href="#sec7">7. മുൻകാല ചോദ്യ പ്രവണത</a></li>
+      <li><a href="#sec8">8. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</a></li>
+      <li><a href="#sec9">9. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec10">10. ഉയര സ്കെയിൽ</a></li>
+      <li><a href="#sec11">11. Mnemonics</a></li>
+      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
+      <li><a href="#sec13">13. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec14">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec15">15. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec16">16. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec17">17. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec18">18. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec19">19. അധിക ഉപകരണങ്ങൾ & ആശയങ്ങൾ</a></li>
+      <li><a href="#sec20">20. അധിക ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec21">21. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഭൂമിശാസ്ത്രം | അധ്യായം 19</div>
+      <h1>ഭൂമിശാസ്ത്രം – അന്തരീക്ഷം (Atmosphere)</h1>
+      <div class="subtitle">Atmosphere | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — അന്തരീക്ഷ വാതകങ്ങളുടെ അളവ് (നൈട്രജൻ 78%, ഓക്സിജൻ 21%, ആർഗൺ 0.93%, CO₂ 0.03%), അന്തരീക്ഷ പാളികളുടെ ക്രമം, ഓസോൺ പാളി (സ്ട്രാറ്റോസ്ഫിയർ), റേഡിയോ തരംഗങ്ങൾ (അയണോസ്ഫിയർ), ഉൽക്കകൾ കത്തുന്നത് (മീസോസ്ഫിയർ)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — Normal Lapse Rate (1000m ന് 6.5°C), അൽബിഡോ (30%), കാറ്മാൻ രേഖ (~100 km), കോറിയോലിസ് പ്രഭാവം</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — അറോറകൾ (Aurora Borealis/Australis), മോൺട്രിയൽ പ്രോട്ടോക്കോൾ (1987), ഹോമോസ്ഫിയർ/ഹെറ്ററോസ്ഫിയർ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ഉപകരണങ്ങൾ (ബാരോമീറ്റർ, ഹൈഗ്രോമീറ്റർ), മേഘങ്ങളുടെ വർഗ്ഗീകരണം</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — അന്തരീക്ഷത്തിന്റെ രൂപീകരണം, ഓക്സിജന്റെ വരവ് (Cyanobacteria)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഏറ്റവും കൂടുതലുള്ള വാതകം:</strong> നൈട്രജൻ (78.08%) | <strong>ജീവവായു:</strong> ഓക്സിജൻ (20.95%)</li>
+            <li><strong>ഉൽകൃഷ്ട വാതകം:</strong> ആർഗൺ (0.93%) | <strong>ഹരിതഗൃഹ വാതകം:</strong> CO₂ (0.03%)</li>
+            <li><strong>പാളികൾ (താഴെ→മുകളിൽ):</strong> ട്രോപ്പോ → സ്ട്രാറ്റോ → മീസോ → തെർമോ → എക്സോ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: അധ്യായ ആമുഖം -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> ഭൂമിയെ പൊതിഞ്ഞുനിൽക്കുന്ന വാതകങ്ങളുടെ പുതപ്പായ അന്തരീക്ഷം, അതിലടങ്ങിയിരിക്കുന്ന വാതകങ്ങളുടെ അളവ്, അന്തരീക്ഷത്തിന്റെ വിവിധ പാളികൾ (Layers of Atmosphere), അവയുടെ പ്രത്യേകതകൾ എന്നിവയാണ് ഈ അധ്യായത്തിൽ നാം പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഭൂമിയിൽ ജീവൻ നിലനിർത്താൻ സഹായിക്കുന്നത് അന്തരീക്ഷമാണ്. കാലാവസ്ഥാ വ്യതിയാനങ്ങൾ, മഴ, കാറ്റ്, റേഡിയോ ആശയവിനിമയം എന്നിവയെല്ലാം അന്തരീക്ഷവുമായി ബന്ധപ്പെട്ടിരിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ഭൂമിശാസ്ത്രത്തിൽ നിന്ന് എപ്പോഴും ഒരു ചോദ്യം ഉറപ്പുള്ള മേഖലയാണിത്. അന്തരീക്ഷ പാളികളുടെ ക്രമം, ഓസോൺ പാളി എവിടെയാണ്, വാതകങ്ങളുടെ അളവ് എന്നിവ 10th Level മുതൽ Degree Level വരെയുള്ള പരീക്ഷകളിലെ സ്ഥിരം ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> ട്രോപ്പോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, റേഡിയോ തരംഗങ്ങൾ പ്രതിഫലിപ്പിക്കുന്ന പാളി, അന്തരീക്ഷത്തിലെ ആർഗോണിന്റെ അളവ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ചരിത്ര പശ്ചാത്തലം -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> ഭൂമി ഉണ്ടായ കാലത്ത് ഇന്നത്തെപ്പോലെയുള്ള അന്തരീക്ഷം ഉണ്ടായിരുന്നില്ല. ഹൈഡ്രജനും ഹീലിയവും മാത്രമായിരുന്നു അന്നുണ്ടായിരുന്നത്. പിന്നീട് ഭൂമിയുടെ ഉള്ളിൽ നിന്നുള്ള വൻ അഗ്നിപർവ്വത സ്ഫോടനങ്ങളിലൂടെ ജലബാഷ്പവും കാർബൺ ഡയോക്സൈഡും നൈട്രജനും പുറത്തുവന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഓക്സിജൻ വന്നതെങ്ങനെ?</strong> ആദ്യകാലത്ത് അന്തരീക്ഷത്തിൽ ഓക്സിജൻ ഉണ്ടായിരുന്നില്ല. പിന്നീട് സമുദ്രങ്ങളിൽ ജീവൻ ഉത്ഭവിക്കുകയും, നീല ഹരിത പായലുകൾ (Cyanobacteria) പ്രകാശസംശ്ലേഷണം (Photosynthesis) വഴി ഓക്സിജൻ പുറത്തുവിടാൻ തുടങ്ങുകയും ചെയ്തതോടെയാണ് ഇന്നത്തെ അന്തരീക്ഷം രൂപപ്പെട്ടത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് അന്തരീക്ഷം ഭൂമിയിൽ തന്നെ നിൽക്കുന്നു?</strong> ഭൂമിയുടെ ശക്തമായ ഗുരുത്വാകർഷണ ബലം (Gravitational Force) കാരണമാണ് അന്തരീക്ഷത്തിലെ വാതകങ്ങൾ ബഹിരാകാശത്തേക്ക് പകർന്നുപോകാതെ ഭൂമിയെ പൊതിഞ്ഞുനിൽക്കുന്നത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: അന്തരീക്ഷ വാതകങ്ങൾ -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. അന്തരീക്ഷ വാതകങ്ങളുടെ ഘടന (Composition of Atmosphere)</h2>
+      <div class="section-body">
+        <p>അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതലുള്ള 4 വാതകങ്ങൾ താഴെ പറയുന്നവയാണ്:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നൈട്രജൻ (Nitrogen - 78%):</strong> അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതലുള്ള വാതകം. സസ്യങ്ങളുടെ വളർച്ചയ്ക്ക് ഇത് അത്യാവശ്യമാണ് (നേരിട്ട് എടുക്കാൻ കഴിയില്ല, ബാക്ടീരിയകൾ വഴിയാണ് എടുക്കുന്നത്).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഓക്സിജൻ (Oxygen - 21%):</strong> ജീവവായു എന്നറിയപ്പെടുന്നു. ജ്വലനത്തെ (Combustion) സഹായിക്കുന്ന വാതകമാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആർഗൺ (Argon - 0.93%):</strong> അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതലുള്ള ഉൽകൃഷ്ട വാതകം (Noble gas / Inert gas).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കാർബൺ ഡയോക്സൈഡ് (Carbon dioxide - 0.03%):</strong> ആഗോളതാപനത്തിന് (Global Warming) കാരണമാകുന്ന പ്രധാന ഹരിതഗൃഹ വാതകം (Greenhouse gas). സസ്യങ്ങൾ പ്രകാശസംശ്ലേഷണത്തിന് ഇത് ഉപയോഗിക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick (NO AC):</strong></span>
+          <ul>
+            <li><strong>N</strong>itrogen (78%)</li>
+            <li><strong>O</strong>xygen (21%)</li>
+            <li><strong>A</strong>rgon (0.93%)</li>
+            <li><strong>C</strong>arbon dioxide (0.03%)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: അന്തരീക്ഷ പാളികൾ -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. അന്തരീക്ഷ പാളികൾ (Layers of the Atmosphere)</h2>
+      <div class="section-body">
+        <p>താഴെമുതൽ മുകളിലേക്ക് അന്തരീക്ഷത്തെ പ്രധാനമായും 5 പാളികളായി തിരിച്ചിരിക്കുന്നു:</p>
+
+        <h3>1. ട്രോപ്പോസ്ഫിയർ (Troposphere):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിയോട് ചേർന്നുനിൽക്കുന്ന ഏറ്റവും താഴെയുള്ള പാളി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> മഴ, കാറ്റ്, ഇടിമിന്നൽ, മേഘങ്ങൾ തുടങ്ങി എല്ലാ കാലാവസ്ഥാ പ്രതിഭാസങ്ങളും (Weather phenomena) നടക്കുന്നത് ഇവിടെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അന്തരീക്ഷ വാതകങ്ങളുടെ 75%-വും ജലബാഷ്പവും ഈ പാളിയിലാണ്. ഏറ്റവും സാന്ദ്രത കൂടിയ പാളിയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇവിടെ മുകളിലേക്ക് പോകുന്തോറും താപനില കുറഞ്ഞുവരുന്നു (165 മീറ്റർ മുകളിലേക്ക് പോകുമ്പോൾ ഏകദേശം 1°C കുറയുന്നു). ഇതിനെ Normal Lapse Rate എന്ന് വിളിക്കുന്നു.</li>
+        </ul>
+
+        <h3>2. സ്ട്രാറ്റോസ്ഫിയർ (Stratosphere):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ട്രോപ്പോസ്ഫിയറിന് മുകളിലുള്ള പാളി. ഇവിടെ കാലാവസ്ഥാ വ്യതിയാനങ്ങളോ മേഘങ്ങളോ ഇല്ലാത്തതിനാൽ വിമാനങ്ങൾക്ക് പറക്കാൻ ഏറ്റവും അനുയോജ്യമായ പാളിയാണിത് (Ideal for flying airplanes).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സൂര്യനിൽ നിന്നുള്ള അപകടകാരിയായ അൾട്രാവയലറ്റ് (UV) രശ്മികളെ തടഞ്ഞുനിർത്തുന്ന <strong>ഓസോൺ പാളി (Ozone Layer)</strong> ഈ ഭാഗത്താണ് സ്ഥിതി ചെയ്യുന്നത് (പ്രധാനമായും ലോവർ സ്ട്രാറ്റോസ്ഫിയറിൽ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇവിടെ ഉയരം കൂടുന്തോറും താപനില വർദ്ധിക്കുന്നു (കാരണം ഓസോൺ UV രശ്മികളെ ആഗിരണം ചെയ്ത് ചൂടാകുന്നു).</li>
+        </ul>
+
+        <h3>3. മീസോസ്ഫിയർ (Mesosphere):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> അന്തരീക്ഷത്തിലെ ഏറ്റവും തണുപ്പുള്ള പാളിയാണിത് (Coldest layer).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ബഹിരാകാശത്തുനിന്നും ഭൂമിയിലേക്ക് വരുന്ന ഉൽക്കകൾ (Meteors) ഈ പാളിയിൽവെച്ച് വായുവുമായുള്ള ഘർഷണം കാരണം കത്തിനശിക്കുന്നു.</li>
+        </ul>
+
+        <h3>4. തെർമോസ്ഫിയർ / അയണോസ്ഫിയർ (Thermosphere / Ionosphere):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> അന്തരീക്ഷത്തിലെ ഏറ്റവും ചൂടുള്ള പാളിയാണിത് (Hottest layer).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഈ പാളിയുടെ കീഴ്ഭാഗത്ത് വൈദ്യുത ചാർജ്ജുള്ള അയോണുകൾ (Ions) ഉള്ളതിനാൽ ഈ ഭാഗത്തെ അയണോസ്ഫിയർ എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിയിൽ നിന്നുള്ള റേഡിയോ തരംഗങ്ങളെ (Radio waves) തിരിച്ചയക്കുന്നത് അയണോസ്ഫിയറാണ്. ആശയവിനിമയത്തിന് (Communication) നമ്മെ സഹായിക്കുന്നത് ഈ പാളിയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ധ്രുവപ്രദേശങ്ങളിൽ കാണുന്ന വർണ്ണരാജിയായ 'അറോറകൾ' (Auroras) ഈ പാളിയിലാണ് ഉണ്ടാകുന്നത്.</li>
+        </ul>
+
+        <h3>5. എക്സോസ്ഫിയർ (Exosphere):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> അന്തരീക്ഷത്തിന്റെ ഏറ്റവും മുകളിലെത്തുന്ന പാളി. ഇതിന് ശേഷം ബഹിരാകാശമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കൃത്രിമ ഉപഗ്രഹങ്ങൾ (Artificial Satellites) ഭ്രമണം ചെയ്യുന്നത് ഇവിടെയാണ്.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>The Smart Man Takes Elevator</strong>"</p>
+          <ul>
+            <li><strong>T</strong>roposphere</li>
+            <li><strong>S</strong>tratosphere</li>
+            <li><strong>M</strong>esosphere</li>
+            <li><strong>T</strong>hermosphere</li>
+            <li><strong>E</strong>xosphere</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: പ്രധാന വസ്തുതകൾ -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അന്തരീക്ഷ പഠനം:</strong> മീറ്റിയോറോളജി (Meteorology).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭൂവൽക്കത്തിൽ കൂടുതൽ:</strong> ഓക്സിജൻ (46.6%).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അന്തരീക്ഷത്തിൽ കൂടുതൽ:</strong> നൈട്രജൻ (78.08%).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രപഞ്ചത്തിൽ കൂടുതൽ:</strong> ഹൈഡ്രജൻ (Hydrogen).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ താപനില വീഴ്ചാ നിരക്ക് (Normal Lapse Rate):</strong> ഓരോ 1000 മീറ്റർ (1 കിലോമീറ്റർ) ഉയരത്തിലേക്ക് പോകുമ്പോഴും 6.5°C താപനില കുറയുന്നു (അല്ലെങ്കിൽ 165 മീറ്ററിന് 1°C).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അൽബിഡോ (Albedo):</strong> ഭൂമിയിൽ പതിക്കുന്ന സൂര്യപ്രകാശത്തിന്റെ ഒരു ഭാഗം ഭൂമി ആഗിരണം ചെയ്യാതെ അന്തരീക്ഷത്തിലേക്ക് തന്നെ തിരികെ പ്രതിഫലിപ്പിക്കുന്നു. ഇതിനെയാണ് അൽബിഡോ എന്ന് വിളിക്കുന്നത് (ഏകദേശം 30%).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സമുദ്രനിരപ്പിലെ സാധാരണ അന്തരീക്ഷ മർദ്ദം:</strong> 1013.25 hPa (millibar) അഥവാ 760 mm Hg (പാരദ കോളം).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PSC വിശകലനം -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> അന്തരീക്ഷ പാളികളുടെ ക്രമം, ഓസോൺ പാളി എവിടെയാണ്, റേഡിയോ തരംഗങ്ങൾ പ്രതിഫലിപ്പിക്കുന്ന പാളി, ഉൽക്കകൾ കത്തിനശിക്കുന്ന പാളി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> ആർഗൺ, കാർബൺ ഡയോക്സൈഡ് എന്നിവയുടെ ശതമാനം, വിമാനങ്ങൾക്ക് പറക്കാൻ അനുയോജ്യമായ പാളി.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> Normal Lapse Rate ന്റെ മൂല്യം, അൽബിഡോ, അറോറകൾ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇടയ്ക്ക് ചോദിക്കാവുന്നത്:</strong> അന്തരീക്ഷ മർദ്ദത്തിന്റെ യൂണിറ്റുകൾ, ഹോമോസ്ഫിയർ/ഹെറ്ററോസ്ഫിയർ വേർതിരിവ്, മേഘങ്ങളുടെ വർഗ്ഗീകരണം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 7: മുൻകാല ചോദ്യ പ്രവണത -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതലുള്ള ഉൽകൃഷ്ട വാതകം (Noble Gas) ഏത്?" (ആർഗൺ) എന്നത് PSC പതിവായി ചോദിക്കുന്ന ചോദ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "കാലാവസ്ഥാ വ്യതിയാനങ്ങൾ നടക്കുന്ന അന്തരീക്ഷ പാളി ഏത്?" (ട്രോപ്പോസ്ഫിയർ) എൽ.ഡി.സി പരീക്ഷകളിലെ സ്ഥിരം സാന്നിധ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> പാളികളെ അവയുടെ ഉയരത്തിന്റെയോ ഭൂമിയിൽ നിന്നുള്ള അകലത്തിന്റെയോ അടിസ്ഥാനത്തിൽ ക്രമീകരിക്കാനുള്ള (Chronological height order) ചോദ്യങ്ങൾ ഡിഗ്രി ലെവലിൽ വരാറുണ്ട്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 8: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ട്രോപ്പോസ്ഫിയർ</strong></td>
+                <td><strong>സ്ട്രാറ്റോസ്ഫിയർ</strong></td>
+                <td>ട്രോപ്പോസ്ഫിയറിലാണ് മഴയും മേഘങ്ങളും കാറ്റും ഉള്ളത്. എന്നാൽ വിമാനങ്ങൾ പറക്കുന്നത് ഇതിന് മുകളിലുള്ള, യാതൊരു അസ്വസ്ഥതകളുമില്ലാത്ത ശാന്തമായ സ്ട്രാറ്റോസ്ഫിയറിലൂടെയാണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>തെർമോസ്ഫിയർ</strong></td>
+                <td><strong>മീസോസ്ഫിയർ</strong></td>
+                <td>അന്തരീക്ഷത്തിലെ ഏറ്റവും ചൂട് കൂടിയ പാളിയാണ് തെർമോസ്ഫിയർ (Thermo = ചൂട്). എന്നാൽ ഏറ്റവും തണുപ്പുള്ള പാളിയാണ് അതിന് താഴെയുള്ള മീസോസ്ഫിയർ (-90°C വരെ).</td>
+              </tr>
+              <tr>
+                <td><strong>അയണോസ്ഫിയർ</strong></td>
+                <td><strong>എക്സോസ്ഫിയർ</strong></td>
+                <td>റേഡിയോ തരംഗങ്ങളെ തിരിച്ചയക്കുന്നത് അയണോസ്ഫിയറാണ്. എന്നാൽ നമ്മൾ വിക്ഷേപിക്കുന്ന കൃത്രിമ ഉപഗ്രഹങ്ങൾ (Satellites) ഭ്രമണം ചെയ്യുന്നത് ഏറ്റവും മുകളിലുള്ള എക്സോസ്ഫിയറിലാണ്.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: താരതമ്യ പട്ടികകൾ -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>Table 1: അന്തരീക്ഷ വാതകങ്ങൾ (Atmospheric Gases)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വാതകം</th><th>ശതമാനം</th><th>പ്രധാന ഉപയോഗം / പ്രത്യേകത</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>നൈട്രജൻ (N₂)</td><td>78.08%</td><td>പ്രോട്ടീൻ നിർമ്മാണത്തിനും സസ്യവളർച്ചയ്ക്കും</td></tr>
+              <tr><td>ഓക്സിജൻ (O₂)</td><td>20.95%</td><td>ശ്വസനത്തിനും ജ്വലനത്തിനും (Combustion)</td></tr>
+              <tr><td>ആർഗൺ (Ar)</td><td>0.93%</td><td>വൈദ്യുത ബൾബുകളിൽ ഉപയോഗിക്കുന്നു (ഇനർട്ട് ഗ്യാസ്)</td></tr>
+              <tr><td>കാർബൺ ഡയോക്സൈഡ് (CO₂)</td><td>0.03%</td><td>സസ്യങ്ങൾക്ക് പ്രകാശസംശ്ലേഷണത്തിന്, ആഗോളതാപനത്തിന് കാരണം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: അന്തരീക്ഷ പാളികളുടെ സവിശേഷതകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പാളി</th><th>സവിശേഷത 1</th><th>സവിശേഷത 2</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ട്രോപ്പോസ്ഫിയർ</td><td>കാലാവസ്ഥാ മാറ്റങ്ങൾ നടക്കുന്നു</td><td>ഏറ്റവും സാന്ദ്രത കൂടിയ പാളി</td></tr>
+              <tr><td>സ്ട്രാറ്റോസ്ഫിയർ</td><td>വിമാനങ്ങൾക്ക് പറക്കാൻ അനുയോജ്യം</td><td>ഓസോൺ പാളി സ്ഥിതി ചെയ്യുന്നു</td></tr>
+              <tr><td>മീസോസ്ഫിയർ</td><td>ഏറ്റവും തണുപ്പുള്ള പാളി</td><td>ഉൽക്കകൾ കത്തിനശിക്കുന്നു</td></tr>
+              <tr><td>തെർമോസ്ഫിയർ</td><td>ഏറ്റവും ചൂടുള്ള പാളി</td><td>റേഡിയോ ആശയവിനിമയം (അയണോസ്ഫിയർ)</td></tr>
+              <tr><td>എക്സോസ്ഫിയർ</td><td>ഏറ്റവും പുറമെയുള്ള പാളി</td><td>കൃത്രിമ ഉപഗ്രഹങ്ങൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: അളക്കൽ ഉപകരണങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>ഉപകരണം</th><th>അളക്കുന്നത്</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ബാരോമീറ്റർ (Barometer)</td><td>അന്തരീക്ഷ മർദ്ദം</td></tr>
+              <tr><td>ഹൈഗ്രോമീറ്റർ (Hygrometer)</td><td>അന്തരീക്ഷത്തിലെ ഈർപ്പം</td></tr>
+              <tr><td>തെർമോമീറ്റർ (Thermometer)</td><td>താപനില</td></tr>
+              <tr><td>അനിമോമീറ്റർ (Anemometer)</td><td>കാറ്റിന്റെ വേഗത</td></tr>
+              <tr><td>വിൻഡ് വേൻ (Wind Vane)</td><td>കാറ്റിന്റെ ദിശ</td></tr>
+              <tr><td>റെയിൻ ഗേജ് / പ്ലൂവിയോമീറ്റർ</td><td>മഴയുടെ അളവ്</td></tr>
+              <tr><td>പൈറാനോമീറ്റർ (Pyranometer)</td><td>സൗരോർജ്ജ വികിരണം</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: ഉയര സ്കെയിൽ -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ഉയര സ്കെയിൽ (Altitude Scale)</h2>
+      <div class="section-body">
+        <div class="last-minute">
+          <span class="box-label">📅 ഭൂമിയിൽ നിന്നുള്ള ഏകദേശ ഉയരം</span>
+          <ul>
+            <li><strong>0 മുതൽ 12 km വരെ:</strong> ട്രോപ്പോസ്ഫിയർ (ധ്രുവങ്ങളിൽ 8 km, ഭൂമധ്യരേഖയിൽ 18 km).</li>
+            <li><strong>12 മുതൽ 50 km വരെ:</strong> സ്ട്രാറ്റോസ്ഫിയർ (ഓസോൺ പാളി 15 മുതൽ 35 km വരെയാണ്).</li>
+            <li><strong>50 മുതൽ 80 km വരെ:</strong> മീസോസ്ഫിയർ.</li>
+            <li><strong>80 മുതൽ 400 km വരെ:</strong> തെർമോസ്ഫിയർ / അയണോസ്ഫിയർ.</li>
+            <li><strong>400 km ന് മുകളിൽ:</strong> എക്സോസ്ഫിയർ.</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>➕ കാർമാൻ രേഖ (Kármán Line):</strong> ഭൂമിയുടെ അന്തരീക്ഷവും ബഹിരാകാശവും തമ്മിലുള്ള അന്താരാഷ്ട്രമായി അംഗീകരിക്കപ്പെട്ട അതിർത്തി രേഖ — സമുദ്രനിരപ്പിൽ നിന്ന് ഏകദേശം 100 km ഉയരത്തിൽ.</p>
+          <p><strong>➕ Pause (പോസ്):</strong> രണ്ട് പാളികളെ വേർതിരിക്കുന്ന അതിരുകളെ പോസ് (Pause) എന്ന് വിളിക്കുന്നു. ഉദാ: ട്രോപ്പോസ്ഫിയറിനും സ്ട്രാറ്റോസ്ഫിയറിനും ഇടയിലുള്ള ഭാഗം ട്രോപ്പോപോസ് (Tropopause).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: Mnemonics -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong> വാതകങ്ങളുടെ അളവ് (ക്രമത്തിൽ ഓർക്കാൻ)</span>
+          <p>"<strong>NO AC</strong>" (ഒന്നാ എ.സി)</p>
+          <ul>
+            <li><strong>N</strong>itrogen (78%)</li>
+            <li><strong>O</strong>xygen (21%)</li>
+            <li><strong>A</strong>rgon (0.93%)</li>
+            <li><strong>C</strong>arbon dioxide (0.03%)</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong> അന്തരീക്ഷ പാളികൾ താഴെ നിന്ന് മുകളിലേക്ക് ഓർക്കാൻ</span>
+          <p>"<strong>The Smart Man Takes Elevator</strong>"</p>
+          <ul>
+            <li><strong>T</strong>roposphere</li>
+            <li><strong>S</strong>tratosphere</li>
+            <li><strong>M</strong>esosphere</li>
+            <li><strong>T</strong>hermosphere</li>
+            <li><strong>E</strong>xosphere</li>
+          </ul>
+          <p>(മലയാളത്തിൽ: "<strong>ട്രോഫി സ്ട്രാറ്റിൽ മീൻ തപ്പി എക്സ്</strong>")</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong> പാളികളുടെ സവിശേഷതകൾ</span>
+          <ul>
+            <li><strong>ട്രോപ്പോ:</strong> കാലാവസ്ഥ (Weather)</li>
+            <li><strong>സ്ട്രാറ്റോ:</strong> ഓസോൺ + വിമാനം</li>
+            <li><strong>മീസോ:</strong> ഉൽക്ക + തണുപ്പ്</li>
+            <li><strong>തെർമോ:</strong> ചൂട് + റേഡിയോ</li>
+            <li><strong>എക്സോ:</strong> ഉപഗ്രഹം</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong> Normal Lapse Rate</span>
+          <p>"<strong>1000 മീറ്റർ → 6.5°C കുറയും</strong> (165 മീറ്റർ → 1°C)"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: PSC കെണികൾ -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതലുള്ള രണ്ടാമത്തെ വാതകം ഏത്?</p>
+          <p><strong>Confusing Options:</strong> നൈട്രജൻ, ആർഗൺ, കാർബൺ ഡയോക്സൈഡ്, ഓക്സിജൻ.</p>
+          <p><strong>Fact:</strong> ഒന്നാമത്തേത് <strong>നൈട്രജനും</strong>, രണ്ടാമത്തേത് <strong>ഓക്സിജനുമാണ്</strong> (21%). (പലരും കാർബൺ ഡയോക്സൈഡ് ആണെന്ന് തെറ്റിദ്ധരിക്കാനുണ്ട്, അതിന്റെ അളവ് വെറും 0.03% മാത്രമാണ്).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> അന്തരീക്ഷത്തിലെ ഓസോൺ പാളിയുടെ അളവ് രേഖപ്പെടുത്താൻ ഉപയോഗിക്കുന്ന യൂണിറ്റ് ഏത്?</p>
+          <p><strong>Confusing Options:</strong> ഡെസിബൽ, ഡോബ്സൺ (Dobson), പാസ്കൽ.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>ഡോബ്സൺ (Dobson Unit - DU)</strong> ആണ്. ഡെസിബൽ ശബ്ദം അളക്കാനാണ് ഉപയോഗിക്കുന്നത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> അന്തരീക്ഷത്തിലെ ഏറ്റവും ചൂടുള്ള പാളിയും, ഏറ്റവും ഉയരം കൂടിയ പാളിയും ഒന്നാണോ?</p>
+          <p><strong>Fact:</strong> അല്ല. ഏറ്റവും ചൂടുള്ള പാളി <strong>തെർമോസ്ഫിയറാണ്</strong>; എന്നാൽ ഏറ്റവും ഉയരത്തിൽ (400 km ന് മുകളിൽ) സ്ഥിതി ചെയ്യുന്നത് <strong>എക്സോസ്ഫിയറാണ്</strong>.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ഓസോൺ പാളി കൃത്യമായി ഏത് പാളിയിലാണ്?</p>
+          <p><strong>Confusing Options:</strong> ട്രോപ്പോസ്ഫിയർ, മീസോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, തെർമോസ്ഫിയർ.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>സ്ട്രാറ്റോസ്ഫിയർ</strong> (പ്രധാനമായും 15-35 km ഉയരത്തിൽ). ഇത് UV രശ്മികളിൽ നിന്ന് സംരക്ഷിക്കുന്നു.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ഉൽക്കകൾ (Meteors) കത്തിനശിക്കുന്നത് ഏത് പാളിയിലാണ്?</p>
+          <p><strong>Confusing Options:</strong> ട്രോപ്പോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, മീസോസ്ഫിയർ, തെർമോസ്ഫിയർ.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>മീസോസ്ഫിയർ</strong>. ഈ പാളിയിലെ വായുവുമായുള്ള ഘർഷണം കാരണം ഉൽക്കകൾ കത്തിപ്പോകുന്നു.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: അധിക വസ്തുതകൾ -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അറോറകൾ (Auroras):</strong> സൂര്യനിൽ നിന്നുള്ള കാന്തിക കണങ്ങൾ അയണോസ്ഫിയറിലെ വാതകങ്ങളുമായി കൂട്ടിയിടിക്കുമ്പോൾ ധ്രുവപ്രദേശങ്ങളിൽ രാത്രി ആകാശത്ത് കാണുന്ന വർണ്ണക്കാഴ്ചയാണിത്. ഉത്തര ധ്രുവത്തിൽ ഇതിനെ <strong>അറോറ ബോറിയാലിസ് (Aurora Borealis)</strong> എന്നും, ദക്ഷിണ ധ്രുവത്തിൽ ഇതിനെ <strong>അറോറ ഓസ്ട്രാലിസ് (Aurora Australis)</strong> എന്നും വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഇൻസോലേഷൻ (Insolation - Incoming Solar Radiation):</strong> സൂര്യനിൽ നിന്നും ഭൂമിയിലേക്ക് വരുന്ന താപോർജ്ജത്തെയാണ് ഇൻസോലേഷൻ എന്ന് വിളിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഓസോൺ (Ozone):</strong> മൂന്ന് ഓക്സിജൻ ആറ്റങ്ങൾ ചേർന്നതാണ് ഓസോൺ വാതകം (O₃). ക്ലോറോ ഫ്ലൂറോ കാർബണുകൾ (CFC) ആണ് ഓസോൺ പാളിക്ക് ഏറ്റവും വലിയ നാശം വരുത്തുന്നത് (ഇവ റെഫ്രിജറേറ്റർ, എ.സി എന്നിവയിൽ നിന്ന് പുറത്തുവരുന്നു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഓസോൺ പാളി സംരക്ഷണവുമായി ബന്ധപ്പെട്ട് ലോകരാജ്യങ്ങൾ <strong>1987</strong>-ൽ ഒപ്പുവെച്ച സുപ്രധാന ഉടമ്പടിയാണ് <strong>മോൺട്രിയൽ പ്രോട്ടോക്കോൾ (Montreal Protocol)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സെപ്റ്റംബർ 16</strong> നാണ് നമ്മൾ ലോക ഓസോൺ ദിനമായി ആചരിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അന്തരീക്ഷ മർദ്ദം (Atmospheric Pressure) അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണമാണ് <strong>ബാരോമീറ്റർ (Barometer)</strong>. കണ്ടുപിടിച്ചത് ഇറ്റാലിയൻ ശാസ്ത്രജ്ഞനായ <strong>എവാഞ്ചലിസ്റ്റ ടോറിചെല്ലി (Evangelista Torricelli)</strong> ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> വായുവിലെ ഈർപ്പം (Humidity) അളക്കുന്ന ഉപകരണമാണ് <strong>ഹൈഗ്രോമീറ്റർ (Hygrometer)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഭൂതല ഉപരിതലത്തിൽ നിന്ന് ഏകദേശം 80 km വരെയുള്ള ഭാഗത്തെ <strong>'ഹോമോസ്ഫിയർ' (Homosphere)</strong> എന്ന് വിളിക്കുന്നു - ഇവിടെ വാതകങ്ങൾ ഏകതാനമായി കലർന്നിരിക്കുന്നു. 80 km ന് മുകളിലുള്ള ഭാഗത്തെ <strong>'ഹെറ്ററോസ്ഫിയർ' (Heterosphere)</strong> എന്ന് വിളിക്കുന്നു - ഇവിടെ വാതകങ്ങൾ അവയുടെ തന്മാത്രാ ഭാരം അനുസരിച്ച് പാളികളായി വേർതിരിഞ്ഞ് കിടക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഭൂമിയുടെ കാന്തികമണ്ഡലത്തിനുള്ളിൽ (Magnetosphere) സ്ഥിതി ചെയ്യുന്ന, ചാർജ്ജുള്ള കണങ്ങൾ കൂടുങ്ങിക്കിടക്കുന്ന മേഖലയാണ് <strong>'വാൻ അലൻ വികിരണ വലയങ്ങൾ' (Van Allen Radiation Belts)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഹരിതഗൃഹ പ്രഭാവം (Greenhouse Effect)</strong> എന്നത് സ്വാഭാവികമായി സംഭവിക്കുന്ന ഒരു പ്രക്രിയയാണ്, ഇത് ഭൂമിയെ ജീവൻ നിലനിർത്താൻ ആവശ്യമായ ചൂടിൽ നിലനിർത്തുന്നു; എന്നാൽ മനുഷ്യ പ്രവർത്തനങ്ങൾ മൂലം ഇത് അമിതമായി വർദ്ധിക്കുന്നതാണ് ആഗോളതാപനത്തിന് (Global Warming) കാരണമാകുന്നത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 14: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതൽ കാണപ്പെടുന്ന വാതകം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഓക്സിജൻ</span>
+            <span data-opt="B">B. കാർബൺ ഡയോക്സൈഡ്</span>
+            <span data-opt="C">C. നൈട്രജൻ</span>
+            <span data-opt="D">D. ആർഗൺ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) നൈട്രജൻ</div>
+            <div class="explanation">അന്തരീക്ഷത്തിന്റെ 78.08% നൈട്രജനാണ്. സസ്യവളർച്ചയ്ക്ക് ഇത് അത്യാവശ്യമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. മഴ, ഇടിമിന്നൽ, മേഘങ്ങൾ തുടങ്ങിയ കാലാവസ്ഥാ പ്രതിഭാസങ്ങൾ നടക്കുന്ന അന്തരീക്ഷ പാളി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സ്ട്രാറ്റോസ്ഫിയർ</span>
+            <span data-opt="B">B. മീസോസ്ഫിയർ</span>
+            <span data-opt="C">C. ട്രോപ്പോസ്ഫിയർ</span>
+            <span data-opt="D">D. എക്സോസ്ഫിയർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ട്രോപ്പോസ്ഫിയർ</div>
+            <div class="explanation">ഭൂമിയോട് ഏറ്റവും ചേർന്ന് നിൽക്കുന്ന, വായുവിന്റെ സാന്ദ്രത ഏറ്റവും കൂടിയ പാളിയാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. ആർഗൺ - 0.03%</span>
+            <span data-opt="B">B. ഓക്സിജൻ - 78%</span>
+            <span data-opt="C">C. കാർബൺ ഡയോക്സൈഡ് - 0.93%</span>
+            <span data-opt="D">D. നൈട്രജൻ - 78%</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) നൈട്രജൻ - 78%</div>
+            <div class="explanation">ആർഗൺ (0.93%), കാർബൺ ഡയോക്സൈഡ് (0.03%), ഓക്സിജൻ (21%) എന്നിങ്ങനെയാണ് ശരിയായ അളവുകൾ.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലക്രമത്തിൽ / ഉയരത്തിന്റെ അടിസ്ഥാനത്തിൽ (താഴെ നിന്ന് മുകളിലേക്ക്) ശരിയായി ക്രമീകരിച്ചിരിക്കുന്നത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ട്രോപ്പോസ്ഫിയർ, മീസോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, തെർമോസ്ഫിയർ</span>
+            <span data-opt="B">B. ട്രോപ്പോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, മീസോസ്ഫിയർ, തെർമോസ്ഫിയർ</span>
+            <span data-opt="C">C. സ്ട്രാറ്റോസ്ഫിയർ, ട്രോപ്പോസ്ഫിയർ, തെർമോസ്ഫിയർ, മീസോസ്ഫിയർ</span>
+            <span data-opt="D">D. മീസോസ്ഫിയർ, ട്രോപ്പോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, തെർമോസ്ഫിയർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ട്രോപ്പോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, മീസോസ്ഫിയർ, തെർമോസ്ഫിയർ</div>
+            <div class="explanation">"The Smart Man Takes Elevator" എന്ന ട്രിക്ക് ഓർക്കുക.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. സൂര്യനിൽ നിന്നുള്ള ഹാനികരമായ അൾട്രാവയലറ്റ് (UV) രശ്മികളെ തടഞ്ഞുനിർത്തുന്ന ഓസോൺ പാളി (Ozone layer) സ്ഥിതിചെയ്യുന്നത് എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ട്രോപ്പോസ്ഫിയർ</span>
+            <span data-opt="B">B. സ്ട്രാറ്റോസ്ഫിയർ</span>
+            <span data-opt="C">C. മീസോസ്ഫിയർ</span>
+            <span data-opt="D">D. അയണോസ്ഫിയർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സ്ട്രാറ്റോസ്ഫിയർ</div>
+            <div class="explanation">സ്ട്രാറ്റോസ്ഫിയറിന്റെ താഴ്ഭാഗത്താണ് ഈ പാളി സ്ഥിതി ചെയ്യുന്നത്. ഇതാണ് ഭൂമിയിലെ ജീവനെ സംരക്ഷിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഭൂമിയിൽ നിന്നുള്ള റേഡിയോ തരംഗങ്ങളെ തിരിച്ചയച്ച് ആശയവിനിമയം (Communication) സാധ്യമാക്കുന്ന അന്തരീക്ഷ പാളി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. എക്സോസ്ഫിയർ</span>
+            <span data-opt="B">B. സ്ട്രാറ്റോസ്ഫിയർ</span>
+            <span data-opt="C">C. ട്രോപ്പോസ്ഫിയർ</span>
+            <span data-opt="D">D. അയണോസ്ഫിയർ (തെർമോസ്ഫിയർ)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) അയണോസ്ഫിയർ (തെർമോസ്ഫിയർ)</div>
+            <div class="explanation">വൈദ്യുത ചാർജ്ജുള്ള അയോണുകൾ ഇവിടെയുള്ളതുകൊണ്ടാണ് റേഡിയോ തരംഗങ്ങൾ പ്രതിഫലിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: അന്തരീക്ഷ പാളികളുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. വിമാനങ്ങൾക്ക് പറക്കാൻ ഏറ്റവും അനുയോജ്യമായ പാളിയാണ് സ്ട്രാറ്റോസ്ഫിയർ.<br>
+            2. അന്തരീക്ഷത്തിലെ ഏറ്റവും തണുപ്പുള്ള പാളിയാണ് തെർമോസ്ഫിയർ.<br>
+            3. ഉൽക്കകൾ കത്തിനശിക്കുന്നത് മീസോസ്ഫിയറിൽ വെച്ചാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 2 തെറ്റാണ്; കാരണം തെർമോസ്ഫിയർ ഏറ്റവും ചൂടുള്ള പാളിയും മീസോസ്ഫിയർ ഏറ്റവും തണുപ്പുള്ള പാളിയുമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. അന്തരീക്ഷത്തിൽ ഏറ്റവും കൂടുതൽ കാണപ്പെടുന്ന ഉൽകൃഷ്ട വാതകം (Noble gas / Inert gas) ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹീലിയം</span>
+            <span data-opt="B">B. ആർഗൺ</span>
+            <span data-opt="C">C. നിയോൺ</span>
+            <span data-opt="D">D. ക്രിപ്റ്റോൺ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർഗൺ</div>
+            <div class="explanation">അന്തരീക്ഷത്തിൽ ആർഗോണിന്റെ അളവ് 0.93% ആണ്. ഇത് മൂന്നാമത്തെ വലിയ വാതകമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following:<br>
+            1. ട്രോപ്പോസ്ഫിയർ - a. കൃത്രിമ ഉപഗ്രഹങ്ങൾ<br>
+            2. മീസോസ്ഫിയർ - b. ഓസോൺ പാളി<br>
+            3. എക്സോസ്ഫിയർ - c. കാലാവസ്ഥാ വ്യതിയാനങ്ങൾ<br>
+            4. സ്ട്രാറ്റോസ്ഫിയർ - d. ഏറ്റവും തണുപ്പുള്ള പാളി</div>
+          <div class="options">
+            <span data-opt="A">A. 1-c, 2-d, 3-a, 4-b</span>
+            <span data-opt="B">B. 1-d, 2-c, 3-b, 4-a</span>
+            <span data-opt="C">C. 1-c, 2-b, 3-a, 4-d</span>
+            <span data-opt="D">D. 1-a, 2-d, 3-c, 4-b</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-c, 2-d, 3-a, 4-b</div>
+            <div class="explanation">ഓരോ പാളിയുടെയും പ്രധാന സവിശേഷതകളാണിവ.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ട്രോപ്പോസ്ഫിയറിൽ ഓരോ 1000 മീറ്റർ (1 കിലോമീറ്റർ) ഉയരത്തിലേക്ക് പോകുമ്പോഴും താപനിലയിൽ എത്ര മാറ്റം ഉണ്ടാകുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 6.5°C വർദ്ധിക്കുന്നു</span>
+            <span data-opt="B">B. 6.5°C കുറയുന്നു</span>
+            <span data-opt="C">C. 10°C വർദ്ധിക്കുന്നു</span>
+            <span data-opt="D">D. 10°C കുറയുന്നു</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 6.5°C കുറയുന്നു</div>
+            <div class="explanation">ഇതിനെയാണ് നോർമൽ ലാപ്സ് റേറ്റ് (Normal Lapse Rate) എന്ന് വിളിക്കുന്നത് (165 മീറ്ററിന് 1°C).</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഭൂമിയിൽ പതിക്കുന്ന സൂര്യപ്രകാശത്തിന്റെ ഒരു ഭാഗം ഭൂമി ആഗിരണം ചെയ്യാതെ അന്തരീക്ഷത്തിലേക്ക് തന്നെ പ്രതിഫലിപ്പിക്കുന്നതിനെ എന്തു വിളിക്കുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ഇൻസോലേഷൻ (Insolation)</span>
+            <span data-opt="B">B. ഹരിതഗൃഹ പ്രഭാവം (Greenhouse effect)</span>
+            <span data-opt="C">C. അൽബിഡോ (Albedo)</span>
+            <span data-opt="D">D. സോളാർ കോൺസ്റ്റന്റ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അൽബിഡോ (Albedo)</div>
+            <div class="explanation">ഭൂമിയുടെ ശരാശരി അൽബിഡോ 30% മുതൽ 35% വരെയാണ്. വെളുത്ത പ്രതലങ്ങൾക്ക് (ഉദാഹരണത്തിന് മഞ്ഞുപാളികൾക്ക്) അൽബിഡോ കൂടുതലായിരിക്കും.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): വിമാനങ്ങൾ കൂടുതലായും സ്ട്രാറ്റോസ്ഫിയറിലൂടെയാണ് പറക്കുന്നത്.<br>
+            Reason (R): സ്ട്രാറ്റോസ്ഫിയറിൽ കാറ്റോ മഴയോ മേഘങ്ങളോ മറ്റ് കാലാവസ്ഥാ വ്യതിയാനങ്ങളോ ഇല്ലാത്തതിനാൽ അത് ശാന്തമാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">ട്രോപ്പോസ്ഫിയറിലെ കാലാവസ്ഥാ അസ്വസ്ഥതകൾ ഒഴിവാക്കാനാണ് പൈലറ്റുമാർ വിമാനം സ്ട്രാറ്റോസ്ഫിയറിന്റെ താഴ്ഭാഗത്തുകൂടി പറത്തുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ദക്ഷിണ ധ്രുവ പ്രദേശങ്ങളിൽ ആകാശത്ത് കാണപ്പെടുന്ന വർണ്ണരാജിയായ പ്രതിഭാസം അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. അറോറ ബോറിയാലിസ് (Aurora Borealis)</span>
+            <span data-opt="B">B. അറോറ ഓസ്ട്രാലിസ് (Aurora Australis)</span>
+            <span data-opt="C">C. കൊറോണ (Corona)</span>
+            <span data-opt="D">D. സോളാർ ഫ്ലെയർ (Solar Flare)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) അറോറ ഓസ്ട്രാലിസ് (Aurora Australis)</div>
+            <div class="explanation">ദക്ഷിണ (South) ധ്രുവത്തിൽ ഓസ്ട്രാലിസ് എന്നും ഉത്തര (North) ധ്രുവത്തിൽ ബോറിയാലിസ് എന്നും വിളിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഓസോൺ പാളി സംരക്ഷണവുമായി ബന്ധപ്പെട്ട് 1987-ൽ ഒപ്പുവെച്ച ചരിത്രപ്രസിദ്ധമായ അന്താരാഷ്ട്ര ഉടമ്പടി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. പാരീസ് ഉടമ്പടി</span>
+            <span data-opt="B">B. കിയോട്ടോ പ്രോട്ടോക്കോൾ</span>
+            <span data-opt="C">C. മോൺട്രിയൽ പ്രോട്ടോക്കോൾ (Montreal Protocol)</span>
+            <span data-opt="D">D. റിയോ ഉച്ചകോടി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) മോൺട്രിയൽ പ്രോട്ടോക്കോൾ (Montreal Protocol)</div>
+            <div class="explanation">CFC വാതകങ്ങളുടെ ഉപയോഗം കുറയ്ക്കാനാണ് പ്രധാനമായും ഈ ഉടമ്പടി ഒപ്പുവെച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. അന്തരീക്ഷത്തിലെ ഈർപ്പം (Humidity) അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ബാരോമീറ്റർ</span>
+            <span data-opt="B">B. അനിമോമീറ്റർ</span>
+            <span data-opt="C">C. ഹൈഗ്രോമീറ്റർ (Hygrometer)</span>
+            <span data-opt="D">D. ലാക്ടോമീറ്റർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഹൈഗ്രോമീറ്റർ (Hygrometer)</div>
+            <div class="explanation">ബാരോമീറ്റർ അന്തരീക്ഷ മർദ്ദവും, അനിമോമീറ്റർ കാറ്റിന്റെ വേഗതയും, ലാക്ടോമീറ്റർ പാലിന്റെ സാന്ദ്രതയും അളക്കുന്നു.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: ഉത്തര സൂചിക -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>6</td><td>(D)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>7</td><td>(B)</td><td>12</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(D)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>9</td><td>(A)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(B)</td><td>15</td><td>(C)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: 30-സെക്കൻഡ് റിവിഷൻ -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>അന്തരീക്ഷ പഠനം: മീറ്റിയോറോളജി.</li>
+          <li>ഏറ്റവും കൂടുതലുള്ള വാതകം: നൈട്രജൻ (78%).</li>
+          <li>ജീവവായു/ജ്വലന വാതകം: ഓക്സിജൻ (21%).</li>
+          <li>ഉൽകൃഷ്ട വാതകം: ആർഗൺ (0.93%).</li>
+          <li>ഹരിതഗൃഹ വാതകം: കാർബൺ ഡയോക്സൈഡ് (0.03%).</li>
+          <li>പാളികളുടെ ക്രമം: ട്രോപ്പോ, സ്ട്രാറ്റോ, മീസോ, തെർമോ, എക്സോ.</li>
+          <li>കാലാവസ്ഥാ മാറ്റങ്ങൾ നടക്കുന്ന പാളി: ട്രോപ്പോസ്ഫിയർ.</li>
+          <li>വിമാനങ്ങൾക്ക് പറക്കാൻ അനുയോജ്യം: സ്ട്രാറ്റോസ്ഫിയർ.</li>
+          <li>ഓസോൺ പാളി എവിടെയാണ്: സ്ട്രാറ്റോസ്ഫിയർ.</li>
+          <li>ഏറ്റവും തണുപ്പുള്ള പാളി: മീസോസ്ഫിയർ.</li>
+          <li>ഉൽക്കകൾ കത്തിനശിക്കുന്നത്: മീസോസ്ഫിയറിൽ.</li>
+          <li>ഏറ്റവും ചൂടുള്ള പാളി: തെർമോസ്ഫിയർ.</li>
+          <li>റേഡിയോ തരംഗങ്ങൾ തിരിച്ചയക്കുന്നത്: അയണോസ്ഫിയർ (തെർമോസ്ഫിയറിന്റെ ഭാഗം).</li>
+          <li>കൃത്രിമ ഉപഗ്രഹങ്ങൾ എവിടെ: എക്സോസ്ഫിയർ.</li>
+          <li>താപനില കുറയുന്ന നിരക്ക് (Lapse Rate): 1000m ന് 6.5°C കുറയുന്നു.</li>
+          <li>ഓസോൺ നശിപ്പിക്കുന്നത്: CFC.</li>
+          <li>ഓസോണിന്റെ അളവ്: ഡോബ്സൺ (Dobson) യൂണിറ്റ്.</li>
+          <li>സൂര്യപ്രകാശം തിരിച്ചുവിടുന്നത്: അൽബിഡോ.</li>
+          <li>അന്തരീക്ഷ മർദ്ദം അളക്കുന്നത്: ബാരോമീറ്റർ.</li>
+          <li>വായുവിലെ ഈർപ്പം അളക്കുന്നത്: ഹൈഗ്രോമീറ്റർ.</li>
+          <li>കാർമാൻ രേഖ (ബഹിരാകാശ അതിർത്തി): ~100 km.</li>
+          <li>സാധാരണ അന്തരീക്ഷ മർദ്ദം: 1013.25 hPa / 760 mm Hg.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 17: ഒരു പേജ് റിവിഷൻ -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>വാതകങ്ങളുടെ ഘടന (NO AC):</h3>
+        <ul>
+          <li><strong>Nitrogen:</strong> 78.08%</li>
+          <li><strong>Oxygen:</strong> 20.95%</li>
+          <li><strong>Argon:</strong> 0.93% (ഏറ്റവും കൂടിയ Noble gas)</li>
+          <li><strong>Carbon dioxide:</strong> 0.03% (Greenhouse gas)</li>
+        </ul>
+
+        <h3>അന്തരീക്ഷ പാളികൾ (താഴെ നിന്നും മുകളിലേക്ക്):</h3>
+        <ul>
+          <li><strong>Troposphere:</strong> Weather, Densest, Normal Lapse Rate.</li>
+          <li><strong>Stratosphere:</strong> Airplanes, Ozone layer (UV protection).</li>
+          <li><strong>Mesosphere:</strong> Coldest, Meteors burn.</li>
+          <li><strong>Thermosphere / Ionosphere:</strong> Hottest, Radio waves, Auroras.</li>
+          <li><strong>Exosphere:</strong> Satellites.</li>
+        </ul>
+
+        <h3>പ്രധാന പദങ്ങൾ:</h3>
+        <ul>
+          <li><strong>Albedo:</strong> ഭൂമി പ്രകാശം തിരിച്ചുവിടുന്ന പ്രക്രിയ.</li>
+          <li><strong>Insolation:</strong> സൂര്യനിൽ നിന്നുള്ള താപം.</li>
+          <li><strong>Montreal Protocol (1987):</strong> ഓസോൺ സംരക്ഷണം.</li>
+          <li><strong>Kármán Line:</strong> ~100 km, ബഹിരാകാശ അതിർത്തി.</li>
+          <li><strong>Homosphere / Heterosphere:</strong> 80 km-ന് താഴെ/മുകളിൽ.</li>
+        </ul>
+
+        <h3>അളക്കൽ ഉപകരണങ്ങൾ:</h3>
+        <ul>
+          <li><strong>ബാരോമീറ്റർ:</strong> അന്തരീക്ഷ മർദ്ദം</li>
+          <li><strong>ഹൈഗ്രോമീറ്റർ:</strong> ഈർപ്പം</li>
+          <li><strong>അനിമോമീറ്റർ:</strong> കാറ്റിന്റെ വേഗത</li>
+          <li><strong>വിൻഡ് വേൻ:</strong> കാറ്റിന്റെ ദിശ</li>
+          <li><strong>പൈറാനോമീറ്റർ:</strong> സൗരോർജ്ജ വികിരണം</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 18: ടോപ്പ് 25 വസ്തുതകൾ -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഭൂമിയുടെ ഗുരുത്വാകർഷണ ബലമാണ് (Gravitational force) അന്തരീക്ഷത്തെ പിടിച്ചുനിർത്തുന്നത്.</li>
+          <li>അന്തരീക്ഷത്തിൽ വാതകങ്ങൾക്ക് പുറമെ പൊടിപടലങ്ങളും (Dust particles) ജലബാഷ്പവും (Water vapour) അടങ്ങിയിട്ടുണ്ട്.</li>
+          <li>അന്തരീക്ഷത്തിലെ ആകെ പിണ്ഡത്തിന്റെ (Mass) 99% വും ട്രോപ്പോസ്ഫിയറിലും സ്ട്രാറ്റോസ്ഫിയറിലുമായി (ഏകദേശം 32 കിലോമീറ്ററിനുള്ളിൽ) ഒതുങ്ങുന്നു.</li>
+          <li>അന്തരീക്ഷത്തിൽ ഹീലിയം, നിയോൺ, ക്രിപ്റ്റോൺ, സെനോൺ എന്നീ ഉൽകൃഷ്ട വാതകങ്ങളും, കൂടാതെ റാഡോൺ (Radon) പോലുള്ള റേഡിയോ ആക്ടീവ് വാതകവും വളരെ ചെറിയ (Trace) അളവിൽ അടങ്ങിയിട്ടുണ്ട്.</li>
+          <li>അന്തരീക്ഷ മർദ്ദം (Atmospheric pressure) സമുദ്രനിരപ്പിലാണ് ഏറ്റവും കൂടുതലുള്ളത്. ഉയരം കൂടുന്തോറും അന്തരീക്ഷ മർദ്ദം കുറഞ്ഞുവരുന്നു.</li>
+          <li>ഉയരമുള്ള മലനിരകളിൽ കയറുമ്പോൾ ശ്വാസംമുട്ടൽ അനുഭവപ്പെടാൻ കാരണം വായുവിന്റെ സാന്ദ്രതയും അന്തരീക്ഷ മർദ്ദവും അവിടെ കുറവായതിനാലാണ്.</li>
+          <li>കാർബൺ ഡയോക്സൈഡ്, മീഥേൻ, നൈട്രസ് ഓക്സൈഡ്, ജലബാഷ്പം എന്നിവ പ്രധാന ഹരിതഗൃഹ വാതകങ്ങളാണ് (Greenhouse gases). ഇവ ഭൂമിയിലെ ചൂട് പിടിച്ച് നിർത്തുന്നതുകൊണ്ടാണ് രാത്രിയിലും ഭൂമിയിൽ കൊടുംതണുപ്പ് അനുഭവപ്പെടാത്തത്.</li>
+          <li>എന്നാൽ ഹരിതഗൃഹ വാതകങ്ങളുടെ അളവ് പരിധിയിലധികം വർദ്ധിക്കുന്നത് ആഗോളതാപനത്തിന് (Global Warming) കാരണമാകുന്നു.</li>
+          <li>സ്ട്രാറ്റോസ്ഫിയറിൽ കാണുന്ന ഓസോൺ പാളിയെ നല്ല ഓസോൺ (Good Ozone) എന്നും, വാഹനങ്ങളുടെ പുക കാരണം ട്രോപ്പോസ്ഫിയറിൽ ഉണ്ടാകുന്ന ഓസോണിനെ ചീത്ത ഓസോൺ (Bad Ozone - മലിനീകാരി) എന്നും വിളിക്കുന്നു.</li>
+          <li>ധ്രുവപ്രദേശങ്ങളിൽ (പ്രത്യേകിച്ച് അന്റാർട്ടിക്കയ്ക്ക് മുകളിൽ) ഓസോൺ പാളിക്ക് വിള്ളലുണ്ടായത് ആദ്യമായി കണ്ടെത്തിയത് 1985-ലാണ് (ജോസഫ് ഫാർമാൻ).</li>
+          <li>ട്രോപ്പോസ്ഫിയറിനും സ്ട്രാറ്റോസ്ഫിയറിനും ഇടയിലുള്ള അതിർത്തിയാണ് ട്രോപ്പോപോസ് (Tropopause). ഇവിടെ താപനില സ്ഥിരമായി നിൽക്കുന്നു.</li>
+          <li>അന്തരീക്ഷത്തിലെ ഏറ്റവും വേഗമേറിയ കാറ്റായ 'ജെറ്റ് സ്ട്രീമുകൾ' (Jet streams) വീശുന്നത് ട്രോപ്പോപോസിന്റെ മുകൾ ഭാഗത്തുകൂടിയാണ്.</li>
+          <li>അൾട്രാവയലറ്റ് (UV) രശ്മികൾ മൂന്ന് തരമുണ്ട്: UV-A, UV-B, UV-C. ഇതിൽ ഏറ്റവും അപകടകാരിയായ UV-C നെ ഓസോൺ പാളി പൂർണ്ണമായും തടഞ്ഞുനിർത്തുന്നു.</li>
+          <li>അൾട്രാവയലറ്റ് രശ്മികൾ മനുഷ്യരിൽ പ്രധാനമായും സ്കിൻ കാൻസറിനും തിമിരത്തിനും (Cataracts) കാരണമാകുന്നു.</li>
+          <li>റേഡിയോ ആക്ടീവ് മൂലകങ്ങളുടെ ശോഷണം (Radioactive decay) മൂലമാണ് ഭൂമിക്കടിയിൽ നിന്നുള്ള താപം (Geothermal energy) പ്രധാനമായും ഉണ്ടാകുന്നത്.</li>
+          <li>സൂര്യനിൽ നിന്നുള്ള ഹ്രസ്വ തരംഗങ്ങളായി (Short waves) വരുന്ന താപത്തെ ഭൂമി ദീർഘ തരംഗങ്ങളായാണ് (Long waves) തിരിച്ചുവിടുന്നത് (Terrestrial Radiation). ഇത് മൂലമാണ് അന്തരീക്ഷം ചൂടാകുന്നത്.</li>
+          <li>വായുവിന്റെ ഊഷ്മാവ് അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണമാണ് തെർമോമീറ്റർ (Thermometer).</li>
+          <li>മഴയുടെ അളവ് രേഖപ്പെടുത്തുന്ന ഉപകരണമാണ് മഴമാപിനി അഥവാ പ്ലൂവിയോമീറ്റർ (Rain gauge / Pluviometer).</li>
+          <li>മേഘങ്ങളെ അവയുടെ രൂപത്തിനെ ആധാരമാക്കി സിറസ് (Cirrus - നാരുകൾ പോലെ), ക്യുമുലസ് (Cumulus - പഞ്ഞി പോലെ), സ്ട്രാറ്റസ് (Stratus - പാളികളായി), നിംബസ് (Nimbus - മഴമേഘങ്ങൾ) എന്നിങ്ങനെ തിരിച്ചിരിക്കുന്നു.</li>
+          <li>ഇടിമിന്നലോടു കൂടിയ കനത്ത മഴ പെയ്യുന്നത് ക്യുമുലോനിംബസ് (Cumulonimbus) മേഘങ്ങളിൽ നിന്നാണ്.</li>
+          <li>ഏറ്റവും ഉയരത്തിൽ കാണപ്പെടുന്ന മേഘങ്ങളാണ് സിറസ് മേഘങ്ങൾ.</li>
+          <li>അന്തരീക്ഷത്തിൽ കാറ്റിന്റെ ദിശ അറിയാൻ ഉപയോഗിക്കുന്ന ഉപകരണമാണ് വിൻഡ് വേൻ (Wind Vane).</li>
+          <li>സൂര്യപ്രകാശത്തിൽ നിന്നുള്ള ഊർജ്ജം അളക്കുന്ന ഉപകരണമാണ് പൈറാനോമീറ്റർ (Pyranometer).</li>
+          <li>അറോറകൾ എന്ന വർണ്ണക്കാഴ്ച ഉണ്ടാകുന്നത് സൗരവാതത്തിലെ ചാർജ്ജുള്ള കണങ്ങൾ ഭൂമിയുടെ കാന്തികക്ഷേത്രത്തിലെ ഓക്സിജൻ, നൈട്രജൻ വാതകങ്ങളുമായി കൂട്ടിയിടിക്കുമ്പോഴാണ് (ഓക്സിജൻ പച്ച/ചുവപ്പ് നിറവും, നൈട്രജൻ നീല/പർപ്പിൾ നിറവും നൽകുന്നു).</li>
+          <li>മനുഷ്യന് ജീവിക്കാൻ കഴിയുന്ന ഒരേയൊരു ഗ്രഹമായി ഭൂമിയെ മാറ്റുന്നത് പ്രധാനമായും ഈ അന്തരീക്ഷത്തിന്റെ സാന്നിധ്യമാണ്.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 19: അധിക ഉപകരണങ്ങൾ & ആശയങ്ങൾ -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. അധിക ഉപകരണങ്ങളും ആശയങ്ങളും</h2>
+      <div class="section-body">
+        <h3>A. അന്തരീക്ഷ മർദ്ദവും യൂണിറ്റുകളും:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സമുദ്രനിരപ്പിലെ സാധാരണ അന്തരീക്ഷ മർദ്ദം:</strong> 1013.25 hectopascal (hPa) / millibar (mb), അല്ലെങ്കിൽ 760 mm പാരദം (mm Hg), അല്ലെങ്കിൽ 29.92 ഇഞ്ച് പാരദം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഉയർന്ന മർദ്ദമുള്ള പ്രദേശങ്ങളിൽ (High Pressure Belt) നിന്ന് താഴ്ന്ന മർദ്ദമുള്ള പ്രദേശങ്ങളിലേക്കാണ് (Low Pressure Belt) കാറ്റ് വീശുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭൂമിയുടെ ഭ്രമണം മൂലം കാറ്റിന്റെ ദിശയിൽ ഉണ്ടാകുന്ന വ്യതിയാനമാണ് <strong>'കോറിയോലിസ് പ്രഭാവം' (Coriolis Effect)</strong> - ഉത്തരാർദ്ധഗോളത്തിൽ വലത്തോട്ടും, ദക്ഷിണാർദ്ധഗോളത്തിൽ ഇടത്തോട്ടും കാറ്റ് വ്യതിചലിക്കുന്നു.</li>
+        </ul>
+
+        <h3>B. ഹോമോസ്ഫിയറും ഹെറ്ററോസ്ഫിയറും:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> രാസഘടനയുടെ അടിസ്ഥാനത്തിൽ അന്തരീക്ഷത്തെ രണ്ടായി തിരിക്കാം: <strong>ഹോമോസ്ഫിയർ</strong> (ഭൂതലം മുതൽ ഏകദേശം 80 km വരെ, വാതകങ്ങൾ ഏകതാനമായി കലർന്നത്) കൂടാതെ <strong>ഹെറ്ററോസ്ഫിയർ</strong> (80 km ന് മുകളിൽ, വാതകങ്ങൾ തന്മാത്രാ ഭാരമനുസരിച്ച് പാളികളായി വേർതിരിഞ്ഞത്).</li>
+          <li><span class="stars">⭐⭐⭐</span> ട്രോപ്പോസ്ഫിയർ, സ്ട്രാറ്റോസ്ഫിയർ, മീസോസ്ഫിയർ, തെർമോസ്ഫിയർ, എക്സോസ്ഫിയർ എന്ന അഞ്ച് പാളികളുടെ വർഗ്ഗീകരണം താപനിലയുടെ (Temperature) അടിസ്ഥാനത്തിലാണ്; ഹോമോസ്ഫിയർ/ഹെറ്ററോസ്ഫിയർ വർഗ്ഗീകരണം രാസഘടനയുടെ (Composition) അടിസ്ഥാനത്തിലാണ് - ഇവ രണ്ടും വ്യത്യസ്ത മാനദണ്ഡങ്ങളാണ് എന്നത് PSC ചോദ്യങ്ങളിൽ ആശയക്കുഴപ്പമുണ്ടാക്കാനുണ്ട്.</li>
+        </ul>
+
+        <h3>C. ബഹിരാകാശ അതിർത്തി:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കാർമാൻ രേഖ (Kármán Line):</strong> സമുദ്രനിരപ്പിൽ നിന്ന് ഏകദേശം 100 km ഉയരത്തിൽ, ഭൂമിയുടെ അന്തരീക്ഷവും ബഹിരാകാശവും തമ്മിലുള്ള അന്താരാഷ്ട്ര അംഗീകൃത അതിർത്തിയായി ഇത് കണക്കാക്കപ്പെടുന്നു. ഹംഗേറിയൻ-അമേരിക്കൻ എഞ്ചിനീയറായ തിയോഡോർ വോൺ കാർമാന്റെ പേരിലാണ് ഇത് അറിയപ്പെടുന്നത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 20: അധിക ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. അധിക ചോദ്യങ്ങൾ (Extra Practice)</h2>
+      <div class="section-body">
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. സമുദ്രനിരപ്പിലെ സാധാരണ അന്തരീക്ഷ മർദ്ദം എന്താണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1013.25 hPa</span>
+            <span data-opt="B">B. 913.25 hPa</span>
+            <span data-opt="C">C. 1113.25 hPa</span>
+            <span data-opt="D">D. 760 hPa</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1013.25 hPa</div>
+            <div class="explanation">ഇത് 760 mm Hg അഥവാ 29.92 ഇഞ്ച് പാരദത്തിന് തുല്യമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ഭൂമിയുടെ അന്തരീക്ഷവും ബഹിരാകാശവും തമ്മിലുള്ള അതിർത്തിയായി അന്താരാഷ്ട്രമായി അംഗീകരിക്കപ്പെട്ടിരിക്കുന്ന രേഖ ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. വാൻ അലൻ രേഖ</span>
+            <span data-opt="B">B. കാർമാൻ രേഖ (Kármán Line)</span>
+            <span data-opt="C">C. ട്രോപ്പോപോസ്</span>
+            <span data-opt="D">D. ഹെറ്ററോപോസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കാർമാൻ രേഖ (Kármán Line)</div>
+            <div class="explanation">ഇത് സമുദ്രനിരപ്പിൽ നിന്ന് ഏകദേശം 100 km ഉയരത്തിലാണ് സ്ഥിതി ചെയ്യുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. അന്തരീക്ഷത്തിലെ വാതകങ്ങൾ ഏകതാനമായി കലർന്നിരിക്കുന്ന, ഭൂതലം മുതൽ ഏകദേശം 80 km വരെയുള്ള ഭാഗം അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹെറ്ററോസ്ഫിയർ</span>
+            <span data-opt="B">B. ഹോമോസ്ഫിയർ</span>
+            <span data-opt="C">C. മാഗ്നെറ്റോസ്ഫിയർ</span>
+            <span data-opt="D">D. ബാരിസ്ഫിയർ</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഹോമോസ്ഫിയർ</div>
+            <div class="explanation">ഇതിന് മുകളിലുള്ള ഭാഗമാണ് ഹെറ്ററോസ്ഫിയർ - അവിടെ വാതകങ്ങൾ ഭാരമനുസരിച്ച് വേർതിരിഞ്ഞ് കിടക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. ഭൂമിയുടെ ഭ്രമണം മൂലം കാറ്റുകളുടെ ദിശയിൽ വ്യതിയാനം സംഭവിക്കുന്നതിനെ എന്ത് പ്രഭാവം എന്ന് വിളിക്കുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ഗ്രീൻഹൗസ് പ്രഭാവം</span>
+            <span data-opt="B">B. ഫെറൽ പ്രഭാവം</span>
+            <span data-opt="C">C. കോറിയോലിസ് പ്രഭാവം (Coriolis Effect)</span>
+            <span data-opt="D">D. ആൽബിയേഡാ പ്രഭാവം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കോറിയോലിസ് പ്രഭാവം (Coriolis Effect)</div>
+            <div class="explanation">ഉത്തരാർദ്ധഗോളത്തിൽ കാറ്റ് വലത്തോട്ടും ദക്ഷിണാർദ്ധഗോളത്തിൽ ഇടത്തോട്ടും വ്യതിചലിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഓസോൺ പാളി സംരക്ഷണവുമായി ബന്ധപ്പെട്ട് ലോക ഓസോൺ ദിനം എപ്പോഴാണ് ആചരിക്കുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജൂൺ 5</span>
+            <span data-opt="B">B. സെപ്റ്റംബർ 16</span>
+            <span data-opt="C">C. ഏപ്രിൽ 22</span>
+            <span data-opt="D">D. ഡിസംബർ 1</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സെപ്റ്റംബർ 16</div>
+            <div class="explanation">1987-ൽ മോൺട്രിയൽ പ്രോട്ടോക്കോൾ ഒപ്പുവെച്ച ദിവസത്തിന്റെ ഓർമ്മയ്ക്കായി എല്ലാ വർഷവും സെപ്റ്റംബർ 16-ന് ലോക ഓസോൺ ദിനം ആചരിക്കുന്നു.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 21: ഉപസംഹാരം -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ജീവൻ നിലനിർത്തുന്നതിൽ നിർണ്ണായക പങ്ക് വഹിക്കുന്ന നമ്മുടെ അന്തരീക്ഷം പ്രധാനമായും നൈട്രജനും ഓക്സിജനും അടങ്ങിയതാണ്.</li>
+          <li>മഴയും കാറ്റും മേഘങ്ങളും നിറഞ്ഞ ട്രോപ്പോസ്ഫിയറും, ഓസോൺ പാളി സംരക്ഷിക്കുന്ന സ്ട്രാറ്റോസ്ഫിയറും, റേഡിയോ തരംഗങ്ങളെ തിരിച്ചയക്കുന്ന അയണോസ്ഫിയറുമൊക്കെ ഭൂമിയുടെ നിലനിൽപ്പിന് അത്യന്താപേക്ഷിതമാണ്.</li>
+          <li>ഇവയുടെ ഉയരം, സവിശേഷതകൾ, അതിലടങ്ങിയ വാതകങ്ങളുടെ അളവ് എന്നിവയാണ് ഈ അധ്യായത്തിലെ പ്രധാന പഠന മേഖല.</li>
+          <li>അൽബിഡോ, ഇൻസോലേഷൻ, കോറിയോലിസ് പ്രഭാവം, കാർമാൻ രേഖ എന്നീ ആശയങ്ങളും പരീക്ഷയ്ക്ക് പ്രധാനമാണ്.</li>
+        </ul>
+        <h3>സാധ്യതയുള്ള ചോദ്യങ്ങളുടെ എണ്ണം</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> PSC പരീക്ഷകളിൽ ഭൂമിശാസ്ത്രത്തിൽ നിന്ന് ചോദ്യങ്ങൾ വരുമ്പോൾ ഈ അധ്യായത്തിൽ നിന്ന് 1 ചോദ്യം ഉറപ്പായും പ്രതീക്ഷിക്കാം (പ്രത്യേകിച്ച് പാളികളുടെ സവിശേഷതകളിൽ നിന്ന്).</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഭൂമിയുടെ ഉള്ളറയും അന്തരീക്ഷവും നാം പഠിച്ചു കഴിഞ്ഞു. ഇനി ഭൂമിയുടെ ഉപരിതലത്തിൽ കാണുന്ന ശിലകളെക്കുറിച്ചും (Rocks) അവയ്ക്ക് മാറ്റങ്ങൾ സംഭവിക്കുന്നതിനെക്കുറിച്ചുമാണ് നാം പഠിക്കാൻ പോകുന്നത്. 'പാറകളും ഭൗമോപരിതലവും' (Rocks and Earth's Surface) എന്നതാണ് ഭൂമിശാസ്ത്രത്തിലെ അടുത്ത അധ്യായം. നന്നായി പഠിക്കുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.1.3 Atmosphere</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'geography-2.1.3-atmosphere';
-window.PART_TITLE = '2.1.3 Atmosphere';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) openOnly(sections[0]);
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaAtmosphere19Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) span.classList.add('selected');
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () { applyLock(!state.locked); });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>

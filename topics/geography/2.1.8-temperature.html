@@ -1,105 +1,1322 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.1.8 Temperature - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂമിശാസ്ത്രം: താപനിലയും ഋതുക്കളും | അധ്യായം 22</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
+      border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    .arrow-list { list-style: none; padding-left: 0; }
+    .arrow-list li::before { content: "→ "; color: var(--primary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.1.8 Temperature</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. ഭൂമിയുടെ ചലനങ്ങൾ</a></li>
+      <li><a href="#sec4">4. അച്ചുതണ്ടിലെ ചരിവ്</a></li>
+      <li><a href="#sec5">5. ഋതുഭേദങ്ങളും തീയതികളും</a></li>
+      <li><a href="#sec6">6. ഉപസൗരം & അപസൗരം</a></li>
+      <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. മുൻകാല ചോദ്യ പ്രവണത</a></li>
+      <li><a href="#sec10">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</a></li>
+      <li><a href="#sec11">11. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec12">12. സമയരേഖ / കലണ്ടർ</a></li>
+      <li><a href="#sec13">13. Mnemonics</a></li>
+      <li><a href="#sec14">14. PSC കെണികൾ</a></li>
+      <li><a href="#sec15">15. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec16">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec17">17. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec18">18. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec19">19. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec21">21. ജ്യോതിശാസ്ത്രജ്ഞർ & സമയം</a></li>
+      <li><a href="#sec22">22. അധിക ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec23">23. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഭൂമിശാസ്ത്രം | അധ്യായം 22</div>
+      <h1>ഭൂമിശാസ്ത്രം – താപനിലയും ഋതുക്കളും</h1>
+      <div class="subtitle">Temperature and Seasons | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — തീയതികൾ (ജൂൺ 21, ഡിസംബർ 22, മാർച്ച് 21, സെപ്റ്റംബർ 23), ഉപസൗരം (Perihelion - ജനുവരി 3), അപസൗരം (Aphelion - ജൂലൈ 4)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഭൂമിയുടെ അച്ചുതണ്ടിലെ ചരിവ് (23½°), ഭ്രമണപഥത്തിലെ കോണളവ് (66½°), ഭ്രമണം vs പരിക്രമണം, താപമേഖലകൾ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — അതിവർഷം (Leap Year), സൂര്യഗ്രഹണം/ചന്ദ്രഗ്രഹണം, പാതിരാസൂര്യൻ (Midnight Sun - നോർവേ)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — സ്പ്രിംഗ് ടൈഡ്/നീപ് ടൈഡ്, ഇന്ത്യയുടെ സ്റ്റാൻഡേർഡ് മെറിഡിയൻ (82.5°E), അന്താരാഷ്ട്ര ദിനരേഖ (180°)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ആര്യഭടൻ, കോപ്പർനിക്കസ്, കെപ്ലർ, ഫൂക്കോ</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഭ്രമണം (Rotation):</strong> രാവും പകലും | <strong>പരിക്രമണം (Revolution):</strong> വർഷവും ഋതുക്കളും</li>
+            <li><strong>അച്ചുതണ്ടിലെ ചരിവ്:</strong> 23.5° | <strong>ഭ്രമണപഥത്തിലെ കോണളവ്:</strong> 66.5°</li>
+            <li><strong>സമരാത്രങ്ങൾ:</strong> മാർച്ച് 21, സെപ്റ്റംബർ 23 | <strong>അയനാന്തങ്ങൾ:</strong> ജൂൺ 21, ഡിസംബർ 22</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: അധ്യായ ആമുഖം -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> ഭൂമിക്ക് സൂര്യനിൽ നിന്നും ലഭിക്കുന്ന താപം, ഭൂമിയുടെ പ്രധാനപ്പെട്ട രണ്ട് ചലനങ്ങളായ ഭ്രമണവും (Rotation) പരിക്രമണവും (Revolution), ഭൂമിയുടെ അച്ചുതണ്ടിലെ ചരിവ് (Tilt of the Earth's axis), ഇവ കാരണം ഭൂമിയിൽ അനുഭവപ്പെടുന്ന വിവിധ ഋതുക്കളുടെ (Seasons) എന്നിവയാണ് നാം ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> രാത്രിയും പകലും ഉണ്ടാകുന്നത് എങ്ങനെയെന്നും, വസന്തം, വേനൽ, ശരൽ, ഹേമന്തം എന്നീ കാലാവസ്ഥാ മാറ്റങ്ങൾ എങ്ങനെയാണുണ്ടാകുന്നത് എന്നും മനസ്സിലാക്കാൻ ഈ അടിസ്ഥാന ഭൂമിശാസ്ത്രം പഠിക്കേണ്ടതുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ജൂൺ 21, ഡിസംബർ 22, മാർച്ച് 21 തുടങ്ങിയ സുപ്രധാന തീയതികൾ LDC, Degree Level ഉൾപ്പെടെയുള്ള എല്ലാ PSC പരീക്ഷകളിലെയും എവർഗ്രീൻ ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> സമരാത്രങ്ങൾ (Equinoxes), അയനാന്തങ്ങൾ (Solstices), ഉപസൗരം (Perihelion), അപസൗരം (Aphelion), ഉത്തരായനരേഖ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ചരിത്ര പശ്ചാത്തലം -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എങ്ങനെ താപം ലഭിക്കുന്നു?</strong> ഭൂമിയിലെ എല്ലാ ഊർജ്ജത്തിന്റെയും അടിസ്ഥാന സ്രോതസ്സ് സൂര്യനാണ്. സൂര്യനിൽ നിന്നും ഭൂമിയിലേക്ക് ഹ്രസ്വ തരംഗങ്ങളായി (Short waves) വരുന്ന സൗരോർജ്ജത്തെ നാം ഇൻസോലേഷൻ (Insolation - Incoming Solar Radiation) എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എങ്ങനെ ഋതുക്കൾ ഉണ്ടാകുന്നു?</strong> ഭൂമി സൂര്യനെ വലംവെക്കുന്നതുകൊണ്ട് (Revolution) മാത്രം ഋതുക്കൾ ഉണ്ടാകില്ല. ഭൂമിയുടെ അച്ചുതണ്ടിന് (Axis) 23½ ഡിഗ്രി ചരിവ് ഉള്ളതുകൊണ്ടാണ് സൂര്യപ്രകാശം വർഷത്തിൽ പല സമയത്ത് പലയിടത്തായി പതിക്കുകയും അതുവഴി കാലാവസ്ഥാ മാറ്റങ്ങൾ (Seasons) ഉണ്ടാകുകയും ചെയ്യുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഫലങ്ങളും പ്രാധാന്യവും:</strong> ഈ ചരിവ് കാരണമാണ് ധ്രുവപ്രദേശങ്ങളിൽ 6 മാസം പകലും 6 മാസം രാത്രിയും അനുഭവപ്പെടുന്നത്. ഭൂമി കറങ്ങുന്നതുകൊണ്ട് രാവും പകലും ഉണ്ടാകുന്നു, സൂര്യനെ ചുറ്റുന്നതുകൊണ്ട് വർഷങ്ങളും ഋതുക്കളും ഉണ്ടാകുന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ഭൂമിയുടെ ചലനങ്ങൾ -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. ഭൂമിയുടെ ചലനങ്ങൾ (Motions of the Earth)</h2>
+      <div class="section-body">
+        <h3>1. ഭ്രമണം (Rotation):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമി സ്വന്തം അച്ചുതണ്ടിൽ (Axis) സ്വയം കറങ്ങുന്നതിനെ ഭ്രമണം എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പടിഞ്ഞാറ് നിന്ന് കിഴക്കോട്ട് (West to East) ഭൂമി കറങ്ങുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഒരു ഭ്രമണം പൂർത്തിയാക്കാൻ എടുക്കുന്ന സമയം: <strong>23 മണിക്കൂർ 56 മിനിറ്റ് 4 സെക്കൻഡ്</strong> (ഏകദേശം 24 മണിക്കൂർ / 1 ദിവസം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭ്രമണത്തിന്റെ ഫലമായാണ് <strong>രാവും പകലും</strong> (Day and Night) ഉണ്ടാകുന്നത്. കോറിയോലിസ് ബലം ഉണ്ടാകുന്നതും ഇതുകൊണ്ടാണ്.</li>
+        </ul>
+
+        <h3>2. പരിക്രമണം (Revolution):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമി അതിന്റെ ഭ്രമണപഥത്തിലൂടെ (Orbit) സൂര്യനെ വലംവെക്കുന്നതിനെ പരിക്രമണം എന്ന് വിളിക്കുന്നു. ഭ്രമണപഥം ദീർഘവൃത്താകൃതിയിലാണ് (Elliptical).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഒരു പരിക്രമണം പൂർത്തിയാക്കാൻ എടുക്കുന്ന സമയം: <strong>365 ¼ ദിവസങ്ങൾ</strong> അതായത് 1 വർഷം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പരിക്രമണത്തിന്റെയും അച്ചുതണ്ടിലെ ചരിവിന്റെയും ഫലമായാണ് ഭൂമിയിൽ <strong>ഋതുക്കളും കാലാവസ്ഥാ മാറ്റങ്ങളും</strong> (Seasons) ഉണ്ടാകുന്നത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 4: അച്ചുതണ്ടിലെ ചരിവ് -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. ഭൂമിയുടെ അച്ചുതണ്ടിലെ ചരിവ് (Tilt of the Axis)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിയുടെ അച്ചുതണ്ട് ലംബതലത്തിൽ (Vertical line) നിന്ന് <strong>23½°</strong> (23.5 ഡിഗ്രി) ചരിഞ്ഞാണ് ഇരിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> എന്നാൽ ഭൂമിയുടെ ഭ്രമണപഥവുമായി (Orbital plane) ഇത് ഉണ്ടാക്കുന്ന കോണളവ് <strong>66½°</strong> (66.5 ഡിഗ്രി) ആണ്.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ലംബതലത്തിൽ 23.5°, ഭ്രമണപഥത്തിൽ 66.5°</strong>" — രണ്ടും കൂടിയാൽ 90°.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ഋതുഭേദങ്ങളും തീയതികളും -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. ഋതുഭേദങ്ങളും സൂപ്രധാന തീയതികളും (Seasons & Important Dates)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മാർച്ച് 21:</strong> സൂര്യപ്രകാശം ഭൂമധ്യരേഖയിൽ (Equator) ലംബമായി പതിക്കുന്നു. ലോകമെമ്പാടും രാവും പകലും തുല്യം. <strong>വസന്ത വിഷുവം (Vernal Equinox)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ജൂൺ 21:</strong> സൂര്യപ്രകാശം ഉത്തരായന രേഖയിൽ (Tropic of Cancer - 23½° N) ലംബമായി പതിക്കുന്നു. ഉത്തരാർദ്ധഗോളത്തിൽ ഏറ്റവും വലിയ പകൽ. <strong>ഉത്തരായനാന്തം / ഗ്രീഷ്മ അയനാന്തം (Summer Solstice)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സെപ്റ്റംബർ 23:</strong> വീണ്ടും സൂര്യപ്രകാശം ഭൂമധ്യരേഖയിൽ (Equator) ലംബമായി പതിക്കുന്നു. രാവും പകലും തുല്യം. <strong>ശരത് കാല വിഷുവം (Autumnal Equinox)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഡിസംബർ 22:</strong> സൂര്യപ്രകാശം ദക്ഷിണായന രേഖയിൽ (Tropic of Capricorn - 23½° S) ലംബമായി പതിക്കുന്നു. ഉത്തരാർദ്ധഗോളത്തിൽ ഏറ്റവും ചെറിയ പകലും വലിയ രാത്രിയും. <strong>ദക്ഷിണായനാന്തം / ശൈത്യ അയനാന്തം (Winter Solstice)</strong>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ഉപസൗരം & അപസൗരം -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ഉപസൗരം, അപസൗരം (Perihelion and Aphelion)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉപസൗരം (Perihelion):</strong> ഭൂമി സൂര്യനോട് ഏറ്റവും അടുത്ത് വരുന്ന ദിവസം (ഏകദേശം 147 ദശലക്ഷം കി.മീ). സാധാരണയായി <strong>ജനുവരി 3</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അപസൗരം (Aphelion):</strong> ഭൂമി സൂര്യനിൽ നിന്ന് ഏറ്റവും അകലെ എത്തുന്ന ദിവസം (ഏകദേശം 152 ദശലക്ഷം കി.മീ). സാധാരണയായി <strong>ജൂലൈ 4</strong>.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <ul>
+            <li>"<strong>അപസൗരം = അകലെ</strong>" → അകലെ പോകാൻ കൂടുതൽ സമയം വേണം → ജൂലൈ 4.</li>
+            <li>"<strong>ഉപസൗരം = ഉള്ളിൽ/അടുത്ത്</strong>" → അടുത്തെത്താൻ വേഗം → ജനുവരി 3.</li>
+            <li>(ഇംഗ്ലീഷിൽ: Aphelion = Away / After).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: പ്രധാന വസ്തുതകൾ -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിവർഷം (Leap Year):</strong> 365 ¼ ദിവസങ്ങളിലെ കാൽ ദിവസം 4 വർഷം കൂടുമ്പോൾ കൂട്ടി ഫെബ്രുവരിക്ക് 29 ദിവസം നൽകുന്നു (ആകെ 366).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉഷ്ണമേഖല (Torrid Zone):</strong> ഉത്തരായന രേഖയ്ക്കും ദക്ഷിണായന രേഖയ്ക്കും ഇടയിൽ (ഏറ്റവും ചൂട്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സമശീതോഷ്ണ മേഖല (Temperate Zone):</strong> 23½° നും 66½° നും ഇടയിൽ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ശൈത്യ മേഖല (Frigid Zone):</strong> 66½° മുതൽ 90° (ധ്രുവം) വരെ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഭൂമിയുടെ ഭ്രമണവേഗത ഏറ്റവും കൂടുതൽ:</strong> ഭൂമധ്യരേഖ (Equator - 1670 km/hr). ധ്രുവങ്ങളിൽ പൂജ്യം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 8: PSC വിശകലനം -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> തീയതികൾ (ജൂൺ 21, ഡിസംബർ 22, മാർച്ച് 21, സെപ്റ്റംബർ 23), ഉപസൗരം-അപസൗരം തീയതികൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> ഭൂമിയുടെ അച്ചുതണ്ടിലെ ചരിവ് (23½°), ഭ്രമണവും പരിക്രമണവും തമ്മിലുള്ള വ്യത്യാസം.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> താപമേഖലകൾ (Heat Zones), നോർവേയിലെ പാതിരാസൂര്യൻ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇടയ്ക്ക് ചോദിക്കാവുന്നത്:</strong> ഇന്ത്യയുടെ സ്റ്റാൻഡേർഡ് മെറിഡിയൻ, അന്താരാഷ്ട്ര ദിനരേഖ, ആര്യഭടന്റെ സംഭാവനകൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 9: മുൻകാല ചോദ്യ പ്രവണത -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഉത്തരാർദ്ധഗോളത്തിൽ ഏറ്റവും വലിയ പകൽ അനുഭവപ്പെടുന്ന ദിവസം ഏത്?" (ജൂൺ 21) എൽ.ഡി.സി തലത്തിൽ സാധാരണ ചോദ്യം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "സമരാത്രങ്ങൾ (Equinoxes) അനുഭവപ്പെടുന്ന തീയതികൾ ഏവ?" (മാർച്ച് 21, സെപ്റ്റംബർ 23) ആവർത്തിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഉപസൗരം, അപസൗരം എന്നിവ മാറ്റി നൽകി Statement ആയി ചോദിക്കുന്നത് ഡിഗ്രി ലെവലിലെ സ്ഥിരം രീതി.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 10: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ഭ്രമണം (Rotation)</strong></td>
+                <td><strong>പരിക്രമണം (Revolution)</strong></td>
+                <td>ഭ്രമണം = സ്വന്തം അച്ചുതണ്ടിൽ കറങ്ങുന്നു (രാവും പകലും). പരിക്രമണം = സൂര്യനെ ചുറ്റുന്നു (വർഷവും ഋതുക്കളും).</td>
+              </tr>
+              <tr>
+                <td><strong>ഉപസൗരം (Perihelion)</strong></td>
+                <td><strong>അപസൗരം (Aphelion)</strong></td>
+                <td>ഉപസൗരം = സൂര്യനോട് ഏറ്റവും അടുത്ത് (ജനുവരി 3). അപസൗരം = സൂര്യനിൽ നിന്ന് ഏറ്റവും അകലെ (ജൂലൈ 4).</td>
+              </tr>
+              <tr>
+                <td><strong>അച്ചുതണ്ടിലെ ചരിവ് (23½°)</strong></td>
+                <td><strong>ഭ്രമണപഥത്തിലെ കോണളവ് (66½°)</strong></td>
+                <td>ലംബതലത്തിൽ നിന്നുള്ള ചരിവ് 23.5°. ഭ്രമണപഥവുമായി അച്ചുതണ്ട് ഉണ്ടാക്കുന്ന കോൺ 66.5°.</td>
+              </tr>
+              <tr>
+                <td><strong>നക്ഷത്ര ദിനം (Sidereal Day)</strong></td>
+                <td><strong>സൗര ദിനം (Solar Day)</strong></td>
+                <td>നക്ഷത്രങ്ങളെ അടിസ്ഥാനമാക്കിയുള്ള ഭ്രമണസമയം 23 മ 56 മി 4 സെ ആണ്. എന്നാൽ സൂര്യനെ അടിസ്ഥാനമാക്കിയുള്ള സാധാരണ ദിനം (24 മണിക്കൂർ) അല്പം കൂടുതലാണ് - കാരണം ഭൂമി ഭ്രമണത്തിനിടെ പരിക്രമണപഥത്തിലും അല്പം മുന്നോട്ട് നീങ്ങുന്നു.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: താരതമ്യ പട്ടികകൾ -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>Table 1: അയനാന്തങ്ങളും സമരാത്രങ്ങളും (Solstices and Equinoxes)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പ്രതിഭാസം</th><th>തിയതി</th><th>സൂര്യൻ എവിടെ പതിക്കുന്നു?</th><th>പ്രത്യേകത (ഉത്തരാർദ്ധഗോളം)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>സമരാത്രം (Equinox)</td><td>മാർച്ച് 21</td><td>ഭൂമധ്യരേഖ (Equator)</td><td>രാവും പകലും തുല്യം (വസന്തം)</td></tr>
+              <tr><td>ഉത്തരായനാന്തം (Summer Solstice)</td><td>ജൂൺ 21</td><td>ഉത്തരായന രേഖ (Tropic of Cancer)</td><td>ഏറ്റവും വലിയ പകൽ (വേനൽ)</td></tr>
+              <tr><td>സമരാത്രം (Equinox)</td><td>സെപ്റ്റംബർ 23</td><td>ഭൂമധ്യരേഖ (Equator)</td><td>രാവും പകലും തുല്യം (ശരത്)</td></tr>
+              <tr><td>ദക്ഷിണായനാന്തം (Winter Solstice)</td><td>ഡിസംബർ 22</td><td>ദക്ഷിണായന രേഖ (Tropic of Capricorn)</td><td>ഏറ്റവും വലിയ രാത്രി (ശൈത്യം)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ഭ്രമണവും പരിക്രമണവും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>ഭ്രമണം (Rotation)</th><th>പരിക്രമണം (Revolution)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>എന്ത് ചെയ്യുന്നു?</td><td>സ്വന്തം അച്ചുതണ്ടിൽ കറങ്ങുന്നു</td><td>ഭ്രമണപഥത്തിലൂടെ സൂര്യനെ ചുറ്റുന്നു</td></tr>
+              <tr><td>എടുക്കുന്ന സമയം</td><td>1 ദിവസം (24 മണിക്കൂർ)</td><td>1 വർഷം (365 ¼ ദിവസം)</td></tr>
+              <tr><td>പ്രധാന ഫലങ്ങൾ</td><td>രാവും പകലും, കാറ്റിന്റെ ദിശ മാറ്റം</td><td>ഋതുക്കൾ (Seasons)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: സമയരേഖ / കലണ്ടർ -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സമയരേഖ / കലണ്ടർ (Timeline / Calendar Flow)</h2>
+      <div class="section-body">
+        <div class="last-minute">
+          <span class="box-label">📅 പ്രധാന തീയതികൾ</span>
+          <ul>
+            <li><strong>ജനുവരി 3:</strong> ഉപസൗരം (ഭൂമി സൂര്യനോട് ഏറ്റവും അടുത്ത്).</li>
+            <li><strong>മാർച്ച് 21:</strong> സമരാത്രം. സൂര്യൻ മധ്യരേഖയ്ക്ക് മുകളിൽ.</li>
+            <li><strong>ജൂൺ 21:</strong> ഉത്തരായനാന്തം. ഏറ്റവും വലിയ പകൽ.</li>
+            <li><strong>ജൂലൈ 4:</strong> അപസൗരം (ഭൂമി സൂര്യനിൽ നിന്ന് ഏറ്റവും അകലെ).</li>
+            <li><strong>സെപ്റ്റംബർ 23:</strong> സമരാത്രം. സൂര്യൻ മധ്യരേഖയ്ക്ക് മുകളിൽ.</li>
+            <li><strong>ഡിസംബർ 22:</strong> ദക്ഷിണായനാന്തം. ഏറ്റവും വലിയ രാത്രി.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: Mnemonics -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong> ഉപസൗരം, അപസൗരം മാസങ്ങൾ ഓർക്കാൻ</span>
+          <ul>
+            <li><strong>അപസൗരം = അകലെ</strong> → അകലെ പോകാൻ കൂടുതൽ സമയം വേണം → ജൂലൈ 4.</li>
+            <li><strong>ഉപസൗരം = ഉള്ളിൽ/അടുത്ത്</strong> → അടുത്തെത്താൻ വേഗം → ജനുവരി 3.</li>
+            <li>(ഇംഗ്ലീഷിൽ: Aphelion = Away / After).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong> സൂപ്രധാന തീയതികൾ (ക്രമത്തിൽ)</span>
+          <p>മാർച്ച്, ജൂൺ, സെപ്റ്റംബർ, ഡിസംബർ (3 മാസ ഇടവേളകളിൽ).</p>
+          <p>തീയതികൾ: <strong>21, 21, 23, 22</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong> ഗ്രഹണങ്ങൾ ഓർക്കാൻ</span>
+          <ul>
+            <li><strong>സൂര്യഗ്രഹണം:</strong> സൂര്യൻ - ചന്ദ്രൻ - ഭൂമി (നൂ മൂൺ = New Moon).</li>
+            <li><strong>ചന്ദ്രഗ്രഹണം:</strong> സൂര്യൻ - ഭൂമി - ചന്ദ്രൻ (ഫുൾ മൂൺ).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong> അച്ചുതണ്ടിലെ ചരിവ്</span>
+          <p>"<strong>ലംബതലത്തിൽ 23.5°, ഭ്രമണപഥത്തിൽ 66.5°</strong>" — രണ്ടും കൂടിയാൽ 90°.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: PSC കെണികൾ -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഓസ്ട്രേലിയയിൽ ക്രിസ്മസ് ആഘോഷിക്കുന്നത് ഏത് ഋതുവിൽ?</p>
+          <p><strong>Confusing Options:</strong> ശൈത്യകാലം, വസന്തകാലം, വേനൽക്കാലം.</p>
+          <p><strong>Fact:</strong> ഡിസംബറിൽ സൂര്യൻ ദക്ഷിണാർദ്ധഗോളത്തിലായതിനാൽ <strong>ഓസ്ട്രേലിയയിൽ വേനൽക്കാലം</strong> ആയിരിക്കും.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> ഭൂമിയിൽ ഋതുക്കൾ ഉണ്ടാകാൻ കാരണം?</p>
+          <p><strong>Confusing Options:</strong> ഭ്രമണം മാത്രം, പരിക്രമണം മാത്രം, പരിക്രമണവും അച്ചുതണ്ടിന്റെ ചരിവും.</p>
+          <p><strong>Fact:</strong> <strong>പരിക്രമണവും 23.5 ഡിഗ്രി ചരിവുമാണ്</strong> ഋതുക്കൾക്ക് കാരണം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ഭൂമിയുടെ ഭ്രമണ സമയം (23മ 56മി 4സ) എന്നത് 24 മണിക്കൂറിന് തുല്യമാണോ?</p>
+          <p><strong>Fact:</strong> അല്ല. ഇത് <strong>നക്ഷത്ര ദിനമാണ് (Sidereal Day)</strong>. നാം ഉപയോഗിക്കുന്ന സാധാരണ 24 മണിക്കൂർ ദിനം <strong>സൗര ദിനമാണ് (Solar Day)</strong> - ഇവ രണ്ടും വ്യത്യസ്തമാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ഭൂമി സൂര്യനോട് ഏറ്റവും അടുത്ത് വരുന്നത് ഏത് മാസത്തിൽ?</p>
+          <p><strong>Confusing Options:</strong> ജൂലൈ, ജനുവരി, മാർച്ച്, ഡിസംബർ.</p>
+          <p><strong>Fact:</strong> <strong>ജനുവരി 3</strong> (ഉപസൗരം / Perihelion). ഏറ്റവും അകലെ ജൂലൈ 4 (അപസൗരം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ഇന്ത്യൻ സ്റ്റാൻഡേർഡ് സമയം കണക്കാക്കുന്ന രേഖാംശം ഏതാണ്?</p>
+          <p><strong>Confusing Options:</strong> 0° (ഗ്രീൻവിച്ച്), 82°30' കിഴക്ക്, 90° കിഴക്ക്, 77°30' കിഴക്ക്.</p>
+          <p><strong>Fact:</strong> <strong>82°30' കിഴക്ക്</strong> — ഉത്തർപ്രദേശിലെ മിർസാപൂരിലൂടെ കടന്നുപോകുന്ന ഈ രേഖയാണ് IST-യുടെ അടിസ്ഥാനം (GMT +5:30).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: അധിക വസ്തുതകൾ -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ചന്ദ്രൻ സൂര്യനും ഭൂമിക്കും ഇടയിൽ വരുമ്പോഴാണ് <strong>സൂര്യഗ്രഹണം (Solar Eclipse)</strong> (സൂര്യൻ-ചന്ദ്രൻ-ഭൂമി). കറുത്തവാവ് ദിവസം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭൂമി സൂര്യനും ചന്ദ്രനും ഇടയിൽ വരുമ്പോഴാണ് <strong>ചന്ദ്രഗ്രഹണം (Lunar Eclipse)</strong> (സൂര്യൻ-ഭൂമി-ചന്ദ്രൻ). വെളുത്തവാവ് ദിവസം.</li>
+          <li><span class="stars">⭐⭐⭐</span> സൂര്യന്റെയും ചന്ദ്രന്റെയും ഗുരുത്വാകർഷണം മൂലമുള്ള സമുദ്രജല ഉയർച്ചയാണ് <strong>വേലിയേറ്റവും വേലിയിറക്കവും (Tides)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> സൂര്യനും ഭൂമിയും ചന്ദ്രനും നേർരേഖയിൽ വരുമ്പോൾ (അമാവാസി, പൗർണ്ണമി) <strong>സ്പ്രിംഗ് ടൈഡുകൾ (Spring tides - വാവു വേലികൾ)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> മൂന്നും മട്ടകോണിൽ (90°) വരുമ്പോൾ <strong>നീപ് ടൈഡുകൾ (Neap tides - അഷ്ടമി വേലികൾ)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ധ്രുവപ്രദേശങ്ങളിൽ വേനൽക്കാലത്ത് അർദ്ധരാത്രിയിലും സൂര്യൻ അസ്തമിക്കാത്ത പ്രതിഭാസം <strong>പാതിരാസൂര്യൻ (Midnight Sun)</strong>. <strong>നോർവേ</strong> ആണ് ഇതിന് പ്രശസ്തം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>(Extra)</strong> ഭൂമി സ്വയം കറങ്ങുന്നു എന്ന് ആദ്യമായി ശാസ്ത്രീയമായി പ്രസ്താവിച്ചത് പ്രാചീന ഇന്ത്യൻ ജ്യോതിശാസ്ത്രജ്ഞനായ <strong>ആര്യഭടൻ</strong> ആണ് (അദ്ദേഹത്തിന്റെ 'ആര്യഭടീയം' എന്ന ഗ്രന്ഥത്തിൽ, ക്രി.വ. 499). ഇത് പാശ്ചാത്യ ശാസ്ത്രലോകം അംഗീകരിക്കുന്നതിന് നൂറ്റാണ്ടുകൾക്ക് മുൻപായിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>(Extra)</strong> സൂര്യകേന്ദ്ര സിദ്ധാന്തം (Heliocentric Theory - ഭൂമി ഉൾപ്പെടെയുള്ള ഗ്രഹങ്ങൾ സൂര്യനെ ചുറ്റുന്നു എന്ന ആശയം) ആധുനിക യൂറോപ്യൻ ശാസ്ത്രത്തിൽ അവതരിപ്പിച്ചത് പോളിഷ് ജ്യോതിശാസ്ത്രജ്ഞനായ <strong>നിക്കോളാസ് കോപ്പർനിക്കസ്</strong> ആണ് (16-ാം നൂറ്റാണ്ട്).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>(Extra)</strong> ഭൂമിയുടെ ഭ്രമണം പരീക്ഷണാടിസ്ഥാനത്തിൽ തെളിയിച്ചത് ഫ്രഞ്ച് ശാസ്ത്രജ്ഞനായ <strong>ലിയോൺ ഫൂക്കോ</strong> (Léon Foucault) 1851-ൽ പാരീസിലെ പാന്തിയോണിൽ നടത്തിയ 'ഫൂക്കോ പെൻഡുലം' (Foucault's Pendulum) പരീക്ഷണത്തിലൂടെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>(Extra)</strong> ജർമ്മൻ ജ്യോതിശാസ്ത്രജ്ഞനായ <strong>യൊഹാനസ് കെപ്ലർ</strong> (Johannes Kepler) ആവിഷ്കരിച്ച ഗ്രഹചലന നിയമങ്ങൾ (Kepler's Laws of Planetary Motion) മൂന്നെണ്ണമാണ് - അവയിൽ ആദ്യത്തേത് ഗ്രഹങ്ങളുടെ ഭ്രമണപഥം ദീർഘവൃത്താകൃതിയിലാണെന്നും (Elliptical Orbits), രണ്ടാമത്തേത് സൂര്യനോട് അടുക്കുമ്പോൾ ഗ്രഹങ്ങളുടെ വേഗത കൂടുമെന്നും വിശദീകരിക്കുന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 16: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഉത്തരാർദ്ധഗോളത്തിൽ (Northern Hemisphere) ഏറ്റവും വലിയ പകൽ അനുഭവപ്പെടുന്ന ഉത്തരായനാന്തം (Summer Solstice) ഏത് തീയതിയിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മാർച്ച് 21</span>
+            <span data-opt="B">B. സെപ്റ്റംബർ 23</span>
+            <span data-opt="C">C. ജൂൺ 21</span>
+            <span data-opt="D">D. ഡിസംബർ 22</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ജൂൺ 21</div>
+            <div class="explanation">സൂര്യൻ ഉത്തരായന രേഖയ്ക്ക് മുകളിൽ. ഈ ദിവസമാണ് ലോക യോഗാ ദിനം.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഭൂമി സൂര്യനോട് ഏറ്റവും അടുത്തു വരുന്ന ഉപസൗരം (Perihelion) സംഭവിക്കുന്ന തീയതി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജനുവരി 3</span>
+            <span data-opt="B">B. ജൂലൈ 4</span>
+            <span data-opt="C">C. മാർച്ച് 21</span>
+            <span data-opt="D">D. ഡിസംബർ 22</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ജനുവരി 3</div>
+            <div class="explanation">ഭൂമി സൂര്യനോട് ഏറ്റവും അടുത്ത് വരുന്ന ദിവസം (147 ദശലക്ഷം കി.മീ).</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. സമരാത്രം - ഡിസംബർ 22</span>
+            <span data-opt="B">B. ദക്ഷിണായനാന്തം - ജൂൺ 21</span>
+            <span data-opt="C">C. അപസൗരം (Aphelion) - ജൂലൈ 4</span>
+            <span data-opt="D">D. ഉത്തരായനാന്തം - മാർച്ച് 21</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അപസൗരം (Aphelion) - ജൂലൈ 4</div>
+            <div class="explanation">ഭൂമി സൂര്യനിൽ നിന്നും ഏറ്റവും അകലെ എത്തുന്ന ദിവസം.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. ലോകമെമ്പാടും രാവും പകലും തുല്യമായി അനുഭവപ്പെടുന്ന പ്രതിഭാസത്തെ എന്തു വിളിക്കുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ഉത്തരായനം</span>
+            <span data-opt="B">B. സമരാത്രങ്ങൾ (Equinoxes)</span>
+            <span data-opt="C">C. അപസൗരം</span>
+            <span data-opt="D">D. ദക്ഷിണായനം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സമരാത്രങ്ങൾ (Equinoxes)</div>
+            <div class="explanation">മാർച്ച് 21, സെപ്റ്റംബർ 23.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഭൂമി സ്വന്തം അച്ചുതണ്ടിൽ കറങ്ങുന്ന പ്രക്രിയയായ ഭ്രമണത്തിന്റെ (Rotation) പ്രധാന ഫലം?</div>
+          <div class="options">
+            <span data-opt="A">A. ഋതുക്കൾ ഉണ്ടാകുന്നു</span>
+            <span data-opt="B">B. വർഷങ്ങൾ ഉണ്ടാകുന്നു</span>
+            <span data-opt="C">C. രാവും പകലും ഉണ്ടാകുന്നു</span>
+            <span data-opt="D">D. ഉൽക്കകൾ ഉണ്ടാകുന്നു</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) രാവും പകലും ഉണ്ടാകുന്നു</div>
+            <div class="explanation">ഭൂമി സ്വയം കറങ്ങുന്നതുകൊണ്ടാണ് സൂര്യപ്രകാശം ലഭിക്കുന്ന ഭാഗത്ത് പകലും മറുഭാഗത്ത് രാത്രിയും.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഭൂമിയുടെ അച്ചുതണ്ട് ലംബതലത്തിൽ (Vertical Plane) നിന്നും എത്ര ഡിഗ്രി ചരിഞ്ഞാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 66½°</span>
+            <span data-opt="B">B. 90°</span>
+            <span data-opt="C">C. 180°</span>
+            <span data-opt="D">D. 23½°</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 23½°</div>
+            <div class="explanation">ഈ ചരിവാണ് ഋതുക്കൾക്ക് പ്രധാന കാരണം. (ഭ്രമണപഥവുമായുള്ള കോണളവ് ചോദിച്ചാൽ 66.5°).</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: ഭൂമിയുടെ ചലനങ്ങളുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഭൂമി പടിഞ്ഞാറ് നിന്നും കിഴക്കോട്ടാണ് സ്വയം കറങ്ങുന്നത്.<br>
+            2. ഭൂമിയുടെ പരിക്രമണവും അച്ചുതണ്ടിലെ ചരിവുമാണ് ഋതുക്കളെ ഉണ്ടാക്കാൻ കാരണം.<br>
+            3. ഭൂമിയുടെ ഭ്രമണവേഗത ഏറ്റവും കൂടുതൽ ധ്രുവപ്രദേശങ്ങളിലാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്; ഭ്രമണവേഗത കൂടുതൽ ഭൂമധ്യരേഖയിലാണ് (1670 km/hr).</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയിൽ വേനൽക്കാലമായിരിക്കുമ്പോൾ താഴെപ്പറയുന്ന ഏത് രാജ്യത്തായിരിക്കും ശൈത്യകാലം?</div>
+          <div class="options">
+            <span data-opt="A">A. അമേരിക്ക</span>
+            <span data-opt="B">B. ഓസ്ട്രേലിയ</span>
+            <span data-opt="C">C. ചൈന</span>
+            <span data-opt="D">D. ജപ്പാൻ</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഓസ്ട്രേലിയ</div>
+            <div class="explanation">ഇന്ത്യ ഉത്തരാർദ്ധഗോളത്തിലും ഓസ്ട്രേലിയ ദക്ഷിണാർദ്ധഗോളത്തിലും. ഋതുക്കൾ വിപരീതം.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following:<br>
+            1. വസന്ത വിഷുവം (Vernal Equinox) - a. ജൂലൈ 4<br>
+            2. ശൈത്യ അയനാന്തം (Winter Solstice) - b. ഡിസംബർ 22<br>
+            3. ഉപസൗരം (Perihelion) - c. മാർച്ച് 21<br>
+            4. അപസൗരം (Aphelion) - d. ജനുവരി 3</div>
+          <div class="options">
+            <span data-opt="A">A. 1-c, 2-b, 3-d, 4-a</span>
+            <span data-opt="B">B. 1-b, 2-c, 3-a, 4-d</span>
+            <span data-opt="C">C. 1-c, 2-d, 3-a, 4-b</span>
+            <span data-opt="D">D. 1-a, 2-b, 3-c, 4-d</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-c, 2-b, 3-d, 4-a</div>
+            <div class="explanation">തീയതികളും ഭൂമിശാസ്ത്രപരമായ പേരുകളും കൃത്യമായി ചേർത്തത്.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ചന്ദ്രൻ സൂര്യനും ഭൂമിക്കും ഇടയിൽ നേർരേഖയിൽ വരുമ്പോൾ സംഭവിക്കുന്ന പ്രതിഭാസം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ചന്ദ്രഗ്രഹണം (Lunar Eclipse)</span>
+            <span data-opt="B">B. സൂര്യഗ്രഹണം (Solar Eclipse)</span>
+            <span data-opt="C">C. സമരാത്രം</span>
+            <span data-opt="D">D. അപസൗരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സൂര്യഗ്രഹണം (Solar Eclipse)</div>
+            <div class="explanation">ചന്ദ്രൻ സൂര്യപ്രകാശം തടയുന്നു. കറുത്തവാവ് ദിവസം.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഉത്തരായനരേഖയ്ക്കും ദക്ഷിണായനരേഖയ്ക്കും ഇടയിലുള്ള ഭൂപ്രദേശം ഏത് താപമേഖലയിൽ ഉൾപ്പെടുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. സമശീതോഷ്ണ മേഖല (Temperate Zone)</span>
+            <span data-opt="B">B. ശൈത്യ മേഖല (Frigid Zone)</span>
+            <span data-opt="C">C. ഉഷ്ണ മേഖല (Torrid Zone)</span>
+            <span data-opt="D">D. ശാന്ത മേഖല (Doldrums)</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഉഷ്ണ മേഖല (Torrid Zone)</div>
+            <div class="explanation">സൂര്യപ്രകാശം ലംബമായി പതിക്കുന്ന, ഏറ്റവും ചൂട് കൂടിയ പ്രദേശം.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): അതിവർഷത്തിൽ (Leap Year) ഫെബ്രുവരി മാസത്തിൽ 29 ദിവസങ്ങൾ ഉണ്ടാകും (ആകെ 366 ദിവസം).<br>
+            Reason (R): ഭൂമി സൂര്യനെ ഒരു തവണ വലംവെക്കാൻ 365 ¼ ദിവസങ്ങൾ എടുക്കുന്നു. ഈ കാൽ ദിവസങ്ങൾ 4 വർഷം കൂടുമ്പോൾ ഒരു ദിവസമായി കണക്കാക്കുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">അതെ, 365 ¼ ദിവസം എന്നതിലെ കാൽ ദിവസമാണ് 4 വർഷം കൂടുമ്പോൾ ഒരു ദിവസമായി മാറുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. സൂര്യനും ഭൂമിയും ചന്ദ്രനും മട്ടകോണിൽ (90°) വരുമ്പോൾ ഉണ്ടാകുന്ന ചെറിയ വേലിയേറ്റങ്ങൾ (Tides) അറിയപ്പെടുന്ന പേരെന്ത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സ്പ്രിംഗ് ടൈഡുകൾ (Spring tides)</span>
+            <span data-opt="B">B. നീപ് ടൈഡുകൾ (Neap tides)</span>
+            <span data-opt="C">C. സുനാമി (Tsunami)</span>
+            <span data-opt="D">D. പ്ലാസ്റ്റിക് ടൈഡുകൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) നീപ് ടൈഡുകൾ (Neap tides)</div>
+            <div class="explanation">അഷ്ടമി വേലികൾ എന്നും അറിയപ്പെടുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഒരു വർഷത്തിൽ ഭൂമധ്യരേഖയിൽ സൂര്യരശ്മികൾ ലംബമായി പതിക്കുന്നത് എത്ര തവണ?</div>
+          <div class="options">
+            <span data-opt="A">A. ഒരു തവണ</span>
+            <span data-opt="B">B. മൂന്ന് തവണ</span>
+            <span data-opt="C">C. രണ്ട് തവണ</span>
+            <span data-opt="D">D. പതിക്കുന്നില്ല</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) രണ്ട് തവണ</div>
+            <div class="explanation">മാർച്ച് 21, സെപ്റ്റംബർ 23 എന്നീ സമരാത്രങ്ങളിൽ.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. 'പാതിരാസൂര്യന്റെ നാട്' (Land of Midnight Sun) എന്നറിയപ്പെടുന്ന രാജ്യം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. നോർവേ</span>
+            <span data-opt="B">B. ജപ്പാൻ</span>
+            <span data-opt="C">C. ഓസ്ട്രേലിയ</span>
+            <span data-opt="D">D. ഫിൻലാൻഡ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) നോർവേ</div>
+            <div class="explanation">ഭൂമിയുടെ ചരിവ് കാരണം ആർട്ടിക് വൃത്തത്തിന് വടക്കുള്ള പ്രദേശങ്ങളിൽ വേനൽക്കാലത്ത് അർദ്ധരാത്രിയിലും സൂര്യൻ കാണും.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17: ഉത്തര സൂചിക -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>6</td><td>(D)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(A)</td><td>7</td><td>(A)</td><td>12</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>9</td><td>(A)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(C)</td><td>10</td><td>(B)</td><td>15</td><td>(A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: 30-സെക്കൻഡ് റിവിഷൻ -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>ഭൂമി കറങ്ങുന്ന ദിശ: പടിഞ്ഞാറ് നിന്ന് കിഴക്കോട്ട്.</li>
+          <li>ഭ്രമണം: രാവും പകലും (24 മണിക്കൂർ).</li>
+          <li>പരിക്രമണം: വർഷവും ഋതുക്കളും (365 ¼ ദിവസം).</li>
+          <li>ഭൂമിയുടെ ചരിവ്: ലംബതലത്തിൽ 23½°, ഭ്രമണപഥത്തിൽ 66½°.</li>
+          <li>സമരാത്രങ്ങൾ: മാർച്ച് 21, സെപ്റ്റംബർ 23.</li>
+          <li>ഉത്തരായനാന്തം (വലിയ പകൽ): ജൂൺ 21.</li>
+          <li>ദക്ഷിണായനാന്തം (ചെറിയ പകൽ): ഡിസംബർ 22.</li>
+          <li>ഉപസൗരം (അടുത്ത്): ജനുവരി 3.</li>
+          <li>അപസൗരം (അകലെ): ജൂലൈ 4.</li>
+          <li>ഉഷ്ണമേഖല: 23½° N മുതൽ 23½° S വരെ.</li>
+          <li>സൂര്യഗ്രഹണം: സൂര്യൻ - ചന്ദ്രൻ - ഭൂമി (നൂ മൂൺ).</li>
+          <li>ചന്ദ്രഗ്രഹണം: സൂര്യൻ - ഭൂമി - ചന്ദ്രൻ (ഫുൾ മൂൺ).</li>
+          <li>വലിയ വേലിയേറ്റം: സ്പ്രിംഗ് ടൈഡ്.</li>
+          <li>ചെറിയ വേലിയേറ്റം: നീപ് ടൈഡ്.</li>
+          <li>ഭ്രമണവേഗത കൂടുതൽ: ഭൂമധ്യരേഖ (1670 km/hr).</li>
+          <li>ഭൂമിയുടെ ഭ്രമണം ആദ്യം പ്രസ്താവിച്ചത്: ആര്യഭടൻ. (Extra fact)</li>
+          <li>സൂര്യകേന്ദ്ര സിദ്ധാന്തം: കോപ്പർനിക്കസ്. (Extra fact)</li>
+          <li>ഭ്രമണം പരീക്ഷണത്തിലൂടെ തെളിയിച്ചത്: ഫൂക്കോ (1851). (Extra fact)</li>
+          <li>ഇന്ത്യയുടെ സ്റ്റാൻഡേർഡ് മെറിഡിയൻ: 82.5° E (മിർസാപൂർ). (Extra fact)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 19: ഒരു പേജ് റിവിഷൻ -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>ഭൂമിയുടെ ചലനങ്ങൾ:</h3>
+        <ul>
+          <li><strong>Rotation (ഭ്രമണം):</strong> അച്ചുതണ്ടിൽ കറങ്ങുന്നു → രാവും പകലും.</li>
+          <li><strong>Revolution (പരിക്രമണം):</strong> സൂര്യനെ ചുറ്റുന്നു → ഋതുക്കൾ.</li>
+        </ul>
+        <h3>സൂപ്രധാന തീയതികൾ (Dates):</h3>
+        <ul>
+          <li><strong>March 21:</strong> Vernal Equinox (സമരാത്രം - വസന്തം).</li>
+          <li><strong>June 21:</strong> Summer Solstice (ഉത്തരായനാന്തം - വലിയ പകൽ).</li>
+          <li><strong>Sept 23:</strong> Autumnal Equinox (സമരാത്രം - ശരത്).</li>
+          <li><strong>Dec 22:</strong> Winter Solstice (ദക്ഷിണായനാന്തം - വലിയ രാത്രി).</li>
+        </ul>
+        <h3>സൂര്യനുമായുള്ള അകലം:</h3>
+        <ul>
+          <li><strong>Perihelion:</strong> ജനുവരി 3 (ഏറ്റവും അടുത്ത് - 147 million km).</li>
+          <li><strong>Aphelion:</strong> ജൂലൈ 4 (ഏറ്റവും അകലെ - 152 million km).</li>
+        </ul>
+        <h3>ഗ്രഹണങ്ങൾ (Eclipses):</h3>
+        <ul>
+          <li><strong>Solar Eclipse:</strong> Sun → Moon → Earth.</li>
+          <li><strong>Lunar Eclipse:</strong> Sun → Earth → Moon.</li>
+        </ul>
+        <h3>ജ്യോതിശാസ്ത്രജ്ഞർ (Extra):</h3>
+        <ul>
+          <li><strong>ആര്യഭടൻ (499 CE):</strong> ഭൂമിയുടെ ഭ്രമണം ആദ്യം പ്രസ്താവിച്ചു.</li>
+          <li><strong>കോപ്പർനിക്കസ് (16th c.):</strong> സൂര്യകേന്ദ്ര സിദ്ധാന്തം.</li>
+          <li><strong>കെപ്ലർ:</strong> ഗ്രഹചലന നിയമങ്ങൾ (3 എണ്ണം).</li>
+          <li><strong>ഫൂക്കോ (1851):</strong> ഭ്രമണം പരീക്ഷണത്തിലൂടെ തെളിയിച്ചു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 20: ടോപ്പ് 25 വസ്തുതകൾ -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>സൂര്യനിൽ നിന്നും ഭൂമിക്ക് ലഭിക്കുന്ന സൗരോർജ്ജത്തെ ഇൻസോലേഷൻ (Insolation) എന്ന് വിളിക്കുന്നു. ഇത് അളക്കുന്ന ഉപകരണം പൈറാനോമീറ്റർ (Pyranometer).</li>
+          <li>ഭൂമി പകൽ ആഗിരണം ചെയ്യുന്ന ചൂട് രാത്രിയിൽ ബഹിരാകാശത്തേക്ക് തിരികെ വിടുന്നത് ഭൗമ വികിരണം (Terrestrial Radiation).</li>
+          <li>കോറിയോലിസ് പ്രഭാവം ധ്രുവങ്ങളിൽ കൂടുതലും മധ്യരേഖയിൽ പൂജ്യവുമാണ്.</li>
+          <li>ലീപ്പ് ഇയർ അല്ലാത്ത വർഷങ്ങളിൽ ഫെബ്രുവരി 28 ദിവസം മാത്രം. ലീപ്പ് ഇയറിൽ 29.</li>
+          <li>ഭൂമിയുടെ ചരിവ് ഇല്ലായിരുന്നുവെങ്കിൽ ഋതുക്കൾ ഉണ്ടാകുമായിരുന്നില്ല.</li>
+          <li>23½° വടക്ക് = ഉത്തരായന രേഖ (Tropic of Cancer). 23½° തെക്ക് = ദക്ഷിണായന രേഖ (Tropic of Capricorn).</li>
+          <li>ഇന്ത്യയുടെ ഏകദേശം മധ്യത്തിലൂടെ കടന്നുപോകുന്നത് ഉത്തരായന രേഖയാണ്.</li>
+          <li>66½° വടക്ക് = ആർട്ടിക് വൃത്തം. 66½° തെക്ക് = അന്റാർട്ടിക് വൃത്തം.</li>
+          <li>0° അക്ഷാംശം = ഭൂമധ്യരേഖ (Equator).</li>
+          <li>സൂര്യൻ ലംബമായി പതിക്കുന്നത് ഉത്തരായന രേഖയ്ക്കും ദക്ഷിണായന രേഖയ്ക്കും ഇടയിൽ മാത്രം (Torrid Zone).</li>
+          <li>ഉത്തരായനരേഖയ്ക്ക് വടക്കോട്ടും ദക്ഷിണായനരേഖയ്ക്ക് തെക്കോട്ടും സൂര്യരശ്മികൾ ചരിഞ്ഞ് പതിക്കുന്നു (Temperate Zone).</li>
+          <li>ഉത്തരാർദ്ധഗോളത്തിൽ മാർച്ച്-മേയ്: വസന്തം, സെപ്റ്റംബർ-നവംബർ: ശരത്.</li>
+          <li>ദക്ഷിണാർദ്ധഗോളത്തിൽ ഡിസംബർ 22 ന് ഏറ്റവും വലിയ പകൽ.</li>
+          <li>ഉപസൗരവും അപസൗരവും ഉണ്ടാകാൻ കാരണം ഭൂമിയുടെ ദീർഘവൃത്താകൃതിയിലുള്ള ഭ്രമണപഥം.</li>
+          <li>കെപ്ലറുടെ നിയമം അനുസരിച്ച് സൂര്യനോട് അടുക്കുമ്പോൾ (ഉപസൗരത്തിൽ) ഭൂമിയുടെ വേഗത കൂടുതൽ.</li>
+          <li>സൂര്യഗ്രഹണ സമയത്ത് ഡയമണ്ട് റിംഗ് എഫക്ട് (Diamond Ring Effect) കാണാം.</li>
+          <li>പൂർണ്ണ സൂര്യഗ്രഹണ സമയത്ത് സൂര്യന്റെ പുറം പാളിയായ കൊറോണ (Corona) കാണാൻ കഴിയും.</li>
+          <li>ചന്ദ്രഗ്രഹണം എല്ലായ്പ്പോഴും പൂർണ്ണചന്ദ്രൻ ദിവസം മാത്രം. എന്നാൽ എല്ലാ പൂർണ്ണചന്ദ്രനിലും ഉണ്ടാകില്ല.</li>
+          <li>ചന്ദ്രഗ്രഹണ സമയത്ത് ചന്ദ്രൻ ചുവപ്പായി കാണപ്പെടുന്നതിനെ ബ്ലഡ് മൂൺ (Blood Moon) എന്ന് വിളിക്കുന്നു.</li>
+          <li>വേലിയേറ്റത്തിന് പ്രധാന കാരണം ചന്ദ്രന്റെ ഗുരുത്വാകർഷണം. സൂര്യന്റെ സ്വാധീനം ചെറുതാണ്.</li>
+          <li>ഒരിടത്ത് വേലിയേറ്റം കഴിഞ്ഞ് അടുത്തതിന് ഏകദേശം 12 മണിക്കൂർ 26 മിനിറ്റ് സമയം.</li>
+          <li>സൂര്യപ്രകാശം ഭൂമിയിലെത്താൻ 8 മിനിറ്റ് 20 സെക്കൻഡ് (500 സെക്കൻഡ്).</li>
+          <li>ഭ്രമണപഥത്തിൽ ഭൂമിയുടെ ശരാശരി വേഗത സെക്കൻഡിൽ ഏകദേശം 30 കിലോമീറ്റർ.</li>
+          <li>ധ്രുവപ്രദേശങ്ങളിൽ 6 മാസം പകലും 6 മാസം രാത്രിയും.</li>
+          <li>പകലിന്റെ ദൈർഘ്യത്തിനനുസരിച്ച് സസ്യങ്ങളിൽ പുഷ്പിക്കുന്ന പ്രക്രിയയെ ഫോട്ടോപീരിയോഡിസം (Photoperiodism) എന്ന് വിളിക്കുന്നു.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 21: ജ്യോതിശാസ്ത്രജ്ഞർ & സമയം -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ജ്യോതിശാസ്ത്രജ്ഞർ, സമയ മേഖലകൾ & അധിക ആശയങ്ങൾ</h2>
+      <div class="section-body">
+        <h3>A. ജ്യോതിശാസ്ത്രത്തിലെ പ്രധാന വ്യക്തികൾ:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആര്യഭടൻ (Aryabhata, ജനനം ക്രി.വ. 476):</strong> ഭൂമി സ്വയം അച്ചുതണ്ടിൽ കറങ്ങുന്നു എന്നും അതാണ് രാവും പകലും ഉണ്ടാകാൻ കാരണം എന്നും ആദ്യമായി പ്രസ്താവിച്ച പ്രാചീന ഇന്ത്യൻ ജ്യോതിശാസ്ത്രജ്ഞൻ. അദ്ദേഹത്തിന്റെ ഗ്രന്ഥമാണ് 'ആര്യഭടീയം'. ഇന്ത്യയുടെ ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹത്തിന് അദ്ദേഹത്തിന്റെ പേരാണ് നൽകിയത് (ആര്യഭട, 1975).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>നിക്കോളാസ് കോപ്പർനിക്കസ് (Nicolaus Copernicus, 16-ാം നൂറ്റാണ്ട്):</strong> സൂര്യകേന്ദ്ര സിദ്ധാന്തം (ഭൂമിയും മറ്റ് ഗ്രഹങ്ങളും സൂര്യനെ ചുറ്റുന്നു) മുന്നോട്ടുവെച്ച പോളിഷ് ജ്യോതിശാസ്ത്രജ്ഞൻ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>യൊഹാനസ് കെപ്ലർ (Johannes Kepler):</strong> ഗ്രഹങ്ങളുടെ ചലനത്തെക്കുറിച്ചുള്ള മൂന്ന് നിയമങ്ങൾ (Laws of Planetary Motion) ആവിഷ്കരിച്ച ജർമ്മൻ ജ്യോതിശാസ്ത്രജ്ഞൻ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ലിയോൺ ഫൂക്കോ (Léon Foucault, 1851):</strong> ഭൂമിയുടെ ഭ്രമണം പെൻഡുലം ഉപയോഗിച്ച് പരീക്ഷണാടിസ്ഥാനത്തിൽ തെളിയിച്ച ഫ്രഞ്ച് ഭൗതികശാസ്ത്രജ്ഞൻ.</li>
+        </ul>
+
+        <h3>B. രേഖാംശവും സമയവും (Longitude and Time):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭൂമി 24 മണിക്കൂർ കൊണ്ട് 360° ഭ്രമണം ചെയ്യുന്നതിനാൽ, ഓരോ 15° രേഖാംശത്തിനും 1 മണിക്കൂർ സമയവ്യത്യാസം ഉണ്ടാകുന്നു (1° = 4 മിനിറ്റ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇന്ത്യയുടെ സ്റ്റാൻഡേർഡ് സമയം (IST) കണക്കാക്കുന്നത് <strong>82°30' കിഴക്ക് രേഖാംശം</strong> (ഉത്തർപ്രദേശിലെ മിർസാപൂരിലൂടെ കടന്നുപോകുന്നത്) അടിസ്ഥാനമാക്കിയാണ്. IST എന്നത് GMT (ഗ്രീൻവിച്ച് സമയം) യേക്കാൾ 5 മണിക്കൂർ 30 മിനിറ്റ് മുന്നിലാണ് (GMT +5:30).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> 180° രേഖാംശത്തിലൂടെ (പസഫിക് സമുദ്രത്തിലൂടെ) കടന്നുപോകുന്ന സാങ്കൽപ്പിക രേഖയാണ് <strong>അന്താരാഷ്ട്ര ദിനരേഖ (International Date Line - IDL)</strong>; ഇത് കടക്കുമ്പോൾ തീയതിയിൽ ഒരു ദിവസത്തിന്റെ വ്യത്യാസം വരുന്നു.</li>
+        </ul>
+
+        <h3>C. നക്ഷത്ര വർഷവും ഉഷ്ണക്കാല വർഷവും:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>നക്ഷത്ര വർഷം (Sidereal Year):</strong> നിശ്ചല നക്ഷത്രങ്ങളെ അടിസ്ഥാനമാക്കി ഭൂമി സൂര്യനെ ഒരു തവണ വലംവെക്കാൻ എടുക്കുന്ന യഥാർത്ഥ സമയം (365.256 ദിവസം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഉഷ്ണക്കാല വർഷം (Tropical Year):</strong> ഒരു വസന്ത വിഷുവം മുതൽ അടുത്ത വസന്ത വിഷുവം വരെയുള്ള സമയം (365.242 ദിവസം) - ഇതാണ് നമ്മുടെ കലണ്ടറിന്റെ അടിസ്ഥാനം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഭൂമിയുടെ അച്ചുതണ്ടിന് ഏകദേശം 26,000 വർഷം കൊണ്ട് പൂർത്തിയാകുന്ന ഒരു മന്ദമായ വൃത്താകൃതി ചലനമുണ്ട് - ഇതിനെ 'അയനചലനം' അഥവാ 'വിഷുവങ്ങളുടെ പൂർവ്വസരണം' (Precession of Equinoxes) എന്ന് വിളിക്കുന്നു; ഇത് ആദ്യമായി കണ്ടെത്തിയത് ഗ്രീക്ക് ജ്യോതിശാസ്ത്രജ്ഞനായ ഹിപ്പാർക്കസ് (Hipparchus) ആണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 22: അധിക ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. അധിക ചോദ്യങ്ങൾ (Extra Practice)</h2>
+      <div class="section-body">
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ഭൂമി സ്വന്തം അച്ചുതണ്ടിൽ കറങ്ങുന്നു എന്ന് ആദ്യമായി ശാസ്ത്രീയമായി പ്രസ്താവിച്ച പ്രാചീന ഇന്ത്യൻ ജ്യോതിശാസ്ത്രജ്ഞൻ ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. വരാഹമിഹിരൻ</span>
+            <span data-opt="B">B. ബ്രഹ്മഗുപ്തൻ</span>
+            <span data-opt="C">C. ആര്യഭടൻ</span>
+            <span data-opt="D">D. ഭാസ്കരാചാര്യർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആര്യഭടൻ</div>
+            <div class="explanation">ക്രി.വ. 499-ൽ രചിച്ച 'ആര്യഭടീയം' എന്ന ഗ്രന്ഥത്തിലാണ് ഇത് പ്രസ്താവിച്ചത്. ഇന്ത്യയുടെ ആദ്യ ഉപഗ്രഹത്തിന് അദ്ദേഹത്തിന്റെ പേരാണ് നൽകിയത്.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ഇന്ത്യൻ സ്റ്റാൻഡേർഡ് സമയം (IST) കണക്കാക്കുന്ന സ്റ്റാൻഡേർഡ് മെറിഡിയൻ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. 0° (ഗ്രീൻവിച്ച്)</span>
+            <span data-opt="B">B. 82°30' കിഴക്ക്</span>
+            <span data-opt="C">C. 90° കിഴക്ക്</span>
+            <span data-opt="D">D. 77°30' കിഴക്ക്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 82°30' കിഴക്ക്</div>
+            <div class="explanation">ഉത്തർപ്രദേശിലെ മിർസാപൂരിലൂടെ കടന്നുപോകുന്ന ഈ രേഖാംശമാണ് IST-യുടെ അടിസ്ഥാനം (GMT +5:30).</div>
+          </div>
+        </div>
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ഭൂമിയുടെ ഭ്രമണം പെൻഡുലം പരീക്ഷണത്തിലൂടെ തെളിയിച്ച ഫ്രഞ്ച് ശാസ്ത്രജ്ഞൻ ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഐസക് ന്യൂട്ടൺ</span>
+            <span data-opt="B">B. ഗലീലിയോ ഗലീലി</span>
+            <span data-opt="C">C. ലിയോൺ ഫൂക്കോ</span>
+            <span data-opt="D">D. യൊഹാനസ് കെപ്ലർ</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ലിയോൺ ഫൂക്കോ</div>
+            <div class="explanation">1851-ൽ പാരീസിലെ പാന്തിയോണിൽ നടത്തിയ പരീക്ഷണമാണിത് ('ഫൂക്കോ പെൻഡുലം').</div>
+          </div>
+        </div>
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. അന്താരാഷ്ട്ര ദിനരേഖ (International Date Line) ഏത് രേഖാംശത്തിലൂടെയാണ് കടന്നുപോകുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 0°</span>
+            <span data-opt="B">B. 90°</span>
+            <span data-opt="C">C. 180°</span>
+            <span data-opt="D">D. 82.5°</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 180°</div>
+            <div class="explanation">ഇത് പസഫിക് സമുദ്രത്തിലൂടെ കടന്നുപോകുന്നു; ഇത് കടക്കുമ്പോൾ തീയതി ഒരു ദിവസം മാറുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഭൂമിയുടെ അച്ചുതണ്ടിന് ഏകദേശം 26,000 വർഷം കൊണ്ട് പൂർത്തിയാകുന്ന മന്ദമായ വൃത്താകൃതി ചലനത്തെ എന്ത് വിളിക്കുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭ്രമണം (Rotation)</span>
+            <span data-opt="B">B. പരിക്രമണം (Revolution)</span>
+            <span data-opt="C">C. അയനചലനം (Precession of Equinoxes)</span>
+            <span data-opt="D">D. അപസൗരം (Aphelion)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അയനചലനം (Precession of Equinoxes)</div>
+            <div class="explanation">ഇത് ആദ്യമായി കണ്ടെത്തിയത് ഗ്രീക്ക് ജ്യോതിശാസ്ത്രജ്ഞനായ ഹിപ്പാർക്കസ് ആണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 23: ഉപസംഹാരം -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">23. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ഭൂമി നിശ്ചലമായ ഒരു ഗോളമല്ല. അത് അതിവേഗത്തിൽ സ്വയം കറങ്ങുകയും (ഭ്രമണം), സൂര്യനെ ചുറ്റുകയും (പരിക്രമണം) ചെയ്യുന്നു.</li>
+          <li>23.5 ഡിഗ്രി ചരിവുള്ള ഈ അച്ചുതണ്ടാണ് നമുക്ക് വൈവിധ്യമാർന്ന കാലാവസ്ഥകളും ഋതുക്കളും സമ്മാനിക്കുന്നത്.</li>
+          <li>ജൂൺ 21-ലെ ഏറ്റവും വലിയ പകലും ഡിസംബർ 22-ലെ ഏറ്റവും ചെറിയ പകലും ഈ ചരിവിന്റെ ഫലമാണ്.</li>
+          <li>താപനിലയെയും ഋതുക്കളെയും കുറിച്ചുള്ള ഈ പാഠം പ്രായോഗിക ഭൂമിശാസ്ത്രത്തിന്റെ അടിസ്ഥാനമാണ്.</li>
+        </ul>
+        <h3>സാധ്യതയുള്ള ചോദ്യങ്ങളുടെ എണ്ണം</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1 ചോദ്യം എങ്കിലും സ്ഥിരമായി വരാറുണ്ട് (പ്രത്യേകിച്ച് തീയതികൾ അല്ലെങ്കിൽ ഉപസൗരം/അപസൗരം).</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഭൂമിയുടെ ചലനങ്ങളും ഋതുക്കളും നാം പഠിച്ചു കഴിഞ്ഞു. ഭൂമിയിലെ താപനില വർദ്ധിക്കുന്ന പ്രതിഭാസമായ 'ആഗോളതാപനം' (Global Warming) ആണ് സിലബസിലെ അടുത്ത അധ്യായം. ഇത് ഇന്നത്തെ ലോകം നേരിടുന്ന ഏറ്റവും വലിയ വെല്ലുവിളിയായതിനാൽ പരീക്ഷയ്ക്ക് വളരെ പ്രാധാന്യമുള്ളതാണ്. ഈ ഭാഗം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.1.8 Temperature</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'geography-2.1.8-temperature';
-window.PART_TITLE = '2.1.8 Temperature';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) openOnly(sections[0]);
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaTempSeasons22Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) span.classList.add('selected');
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () { applyLock(!state.locked); });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>

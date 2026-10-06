@@ -1,105 +1,1266 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.1.7 Wind - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂമിശാസ്ത്രം: അന്തരീക്ഷമർദ്ദവും കാറ്റും | അധ്യായം 21</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
+      border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    .arrow-list { list-style: none; padding-left: 0; }
+    .arrow-list li::before { content: "→ "; color: var(--primary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.1.7 Wind</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. അന്തരീക്ഷമർദ്ദം</a></li>
+      <li><a href="#sec4">4. മർദ്ദമേഖലകൾ</a></li>
+      <li><a href="#sec5">5. കോറിയോലിസ് & ഫെറൽസ് നിയമം</a></li>
+      <li><a href="#sec6">6. കാറ്റുകളുടെ വർഗ്ഗീകരണം</a></li>
+      <li><a href="#sec7">7. ജെറ്റ് സ്ട്രീമുകൾ</a></li>
+      <li><a href="#sec8">8. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec9">9. PSC വിശകലനം</a></li>
+      <li><a href="#sec10">10. മുൻകാല ചോദ്യ പ്രവണത</a></li>
+      <li><a href="#sec11">11. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</a></li>
+      <li><a href="#sec12">12. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec13">13. സമയരേഖ / പ്രക്രിയ</a></li>
+      <li><a href="#sec14">14. Mnemonics</a></li>
+      <li><a href="#sec15">15. PSC കെണികൾ</a></li>
+      <li><a href="#sec16">16. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec17">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec18">18. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec19">19. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec21">21. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec22">22. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഭൂമിശാസ്ത്രം | അധ്യായം 21</div>
+      <h1>ഭൂമിശാസ്ത്രം – അന്തരീക്ഷമർദ്ദവും കാറ്റും</h1>
+      <div class="subtitle">Atmospheric Pressure and Wind | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഫെറൽസ് നിയമം (N-R & S-L), ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ (Roaring Forties), പ്രാദേശിക വാതങ്ങൾ (ചിനൂക്ക്, ഹർമറ്റാൻ, ലൂ), ഡോൾഡ്രംസ്, അശ്വാക്ഷാംശങ്ങൾ</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ബാരോമീറ്റർ (ടോറിച്ചെല്ലി), അനിമോമീറ്റർ, വിൻഡ് വേൻ, സമമർദ്ദ രേഖകൾ (Isobars), സമുദ്രനിരപ്പിലെ മർദ്ദം (1013.25 mb)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — കോറിയോലിസ് പ്രഭാവം, സിറോക്കോ (രക്തമഴ), മിസ്ട്രൽ (ശീതം), കടൽക്കാറ്റ്/കരക്കാറ്റ്</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ജെറ്റ് സ്ട്രീമുകൾ, ITCZ, സൈക്ലോൺ/ഹരിക്കേൻ/ടൈഫൂൺ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — പായക്കപ്പൽ കാലഘട്ടം, മൺസൂൺ പദോൽപ്പത്തി (മൗസിം)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഫെറൽസ് നിയമം:</strong> N ഹെമിസ്ഫിയർ = Right (വലത്തോട്ട്), S ഹെമിസ്ഫിയർ = Left (ഇടത്തോട്ട്)</li>
+            <li><strong>ഡോൾഡ്രംസ്:</strong> മധ്യരേഖാ നൂനമർദ്ദ മേഖല (ശാന്തമേഖല) | <strong>അശ്വാക്ഷാംശങ്ങൾ:</strong> 30°-35° ഉച്ചമർദ്ദ മേഖല</li>
+            <li><strong>ബാരോമീറ്റർ:</strong> ടോറിച്ചെല്ലി | <strong>അനിമോമീറ്റർ:</strong> കാറ്റിന്റെ വേഗത</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: അധ്യായ ആമുഖം -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> ഭൂമിക്ക് മേൽ വായു ചെലുത്തുന്ന ഭാരമായ അന്തരീക്ഷമർദ്ദത്തെക്കുറിച്ചും, മർദ്ദവ്യത്യാസം കാരണം വായു ചലിക്കുമ്പോൾ ഉണ്ടാകുന്ന വിവിധതരം കാറ്റുകളെക്കുറിച്ചും (ആഗോള വാതങ്ങൾ, കാലിക വാതങ്ങൾ, പ്രാദേശിക വാതങ്ങൾ) ആണ് ഈ അധ്യായത്തിൽ നാം പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> നമ്മുടെ ദൈനംദിന കാലാവസ്ഥയെയും മഴയെയും (പ്രത്യേകിച്ച് മൺസൂണിനെ) നിയന്ത്രിക്കുന്നത് കാറ്റിന്റെ ഗതിയാണ്. ഇത് മനസ്സിലാക്കാൻ മർദ്ദമേഖലകൾ പഠിക്കേണ്ടതുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ലോകത്തിലെ പ്രധാനപ്പെട്ട പ്രാദേശിക വാതങ്ങൾ (ഉദാഹരണത്തിന്: ചിനൂക്ക്, ലൂ, ഹർമറ്റാൻ), അശ്വാക്ഷാംശങ്ങൾ, ഡോൾഡ്രംസ് എന്നിവയിൽ നിന്ന് Degree Level, 10th Level പരീക്ഷകളിൽ എപ്പോഴും ചോദ്യങ്ങൾ വരാനുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> കാറ്റുകളുടെ ദിശ, ഡോക്ടർ വിൻഡ് എന്നറിയപ്പെടുന്ന കാറ്റ്, ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ (Roaring Forties), കടൽക്കാറ്റും കരക്കാറ്റും.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ചരിത്ര പശ്ചാത്തലം -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എങ്ങനെ കാറ്റ് ഉണ്ടാകുന്നു?</strong> ഭൂമിയിലെ എല്ലാ പ്രദേശങ്ങളിലും സൂര്യപ്രകാശം ഒരുപോലെയല്ല ലഭിക്കുന്നത്. ചൂട് കൂടുന്ന പ്രദേശങ്ങളിൽ വായു ചൂടായി വികസിച്ച് മുകളിലേക്ക് ഉയരുന്നു. അവിടെ വായുവിന്റെ ഭാരം (മർദ്ദം) കുറയുന്നു. മർദ്ദം കുറഞ്ഞ ഈ ഭാഗത്തേക്ക്, മർദ്ദം കൂടിയ മറ്റ് പ്രദേശങ്ങളിൽ നിന്നും വായു ഇരച്ചെത്തുന്നു. ഈ വായുവിന്റെ തിരശ്ചീനമായ (Horizontal) ചലനത്തെയാണ് നാം കാറ്റ് (Wind) എന്ന് വിളിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അടിസ്ഥാന നിയമം:</strong> കാറ്റ് എപ്പോഴും ഉയർന്ന മർദ്ദമുള്ള പ്രദേശത്തുനിന്നും (High Pressure) താഴ്ന്ന മർദ്ദമുള്ള പ്രദേശത്തേക്ക് (Low Pressure) വീശുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കോറിയോലിസ് പ്രഭാവം (Coriolis Effect):</strong> ഭൂമി പടിഞ്ഞാറ് നിന്ന് കിഴക്കോട്ട് കറങ്ങിക്കൊണ്ടിരിക്കുന്നതിനാൽ (Rotation), കാറ്റിന് നേരെ രേഖയിൽ സഞ്ചരിക്കാൻ കഴിയില്ല. ഭൂമിയുടെ ഭ്രമണം കാരണം കാറ്റിന്റെ ദിശയ്ക്ക് വ്യതിയാനം സംഭവിക്കുന്നതിനെയാണ് കോറിയോലിസ് പ്രഭാവം എന്ന് വിളിക്കുന്നത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: അന്തരീക്ഷമർദ്ദം -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. അന്തരീക്ഷമർദ്ദം (Atmospheric Pressure)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> വായുവിന് ഭാരമുണ്ട്. ഭൂമിയുടെ ഉപരിതലത്തിൽ വായു ചെലുത്തുന്ന ഈ ഭാരത്തെയാണ് അന്തരീക്ഷമർദ്ദം എന്ന് പറയുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> അന്തരീക്ഷമർദ്ദം അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണമാണ് <strong>ബാരോമീറ്റർ (Barometer)</strong>. ഇത് കണ്ടെത്തിയത് ഇറ്റാലിയൻ ശാസ്ത്രജ്ഞനായ <strong>എവാഞ്ചലിസ്റ്റ ടോറിചെല്ലി (Evangelista Torricelli)</strong> ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അന്തരീക്ഷമർദ്ദത്തിന്റെ യൂണിറ്റ് <strong>മില്ലിബാർ (Millibar - mb)</strong> അല്ലെങ്കിൽ <strong>ഹെക്ടോപാസ്കൽ (hPa)</strong> ആണ്. സമുദ്രനിരപ്പിലെ സാധാരണ അന്തരീക്ഷമർദ്ദം <strong>1013.25 mb</strong> ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂപടങ്ങളിൽ തുല്യ അന്തരീക്ഷമർദ്ദമുള്ള സ്ഥലങ്ങളെ യോജിപ്പിച്ചുകൊണ്ട് വരയ്ക്കുന്ന സാങ്കൽപ്പിക രേഖകളാണ് <strong>സമമർദ്ദ രേഖകൾ (Isobars)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മർദ്ദവും താപനിലയും:</strong> താപനില (Temperature) കൂടുമ്പോൾ വായു വികസിച്ച് മുകളിലേക്ക് പോകുന്നതിനാൽ മർദ്ദം (Pressure) കുറയുന്നു. അതായത് താപനിലയും മർദ്ദവും <strong>വിപരീത അനുപാതത്തിലാണ്</strong> (Inversely proportional).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>താപനില കൂടും → മർദ്ദം കുറയും; താപനില കുറയും → മർദ്ദം കൂടും</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: മർദ്ദമേഖലകൾ -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. ഭൂമിയിലെ പ്രധാന മർദ്ദമേഖലകൾ (Pressure Belts)</h2>
+      <div class="section-body">
+        <p>ഭൂമിയെ പ്രധാനമായും 4 മർദ്ദമേഖലകളായി തിരിച്ചിരിക്കുന്നു (ചില ഗ്രന്ഥങ്ങളിൽ 7 എന്ന് പറയാറുണ്ട് - വടക്കും തെക്കും വെവ്വേറെ കണക്കാക്കുമ്പോൾ):</p>
+
+        <h3>1. മധ്യരേഖാ നൂനമർദ്ദ മേഖല (Equatorial Low Pressure Belt):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമധ്യരേഖയ്ക്ക് ഇരുവശത്തുമായി 5° വടക്കും 5° തെക്കും അക്ഷാംശങ്ങൾക്കിടയിൽ കാണപ്പെടുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇവിടെ സൂര്യതാപം കൂടുതലായതിനാൽ എപ്പോഴും നൂനമർദ്ദമാണ്. വായു മുകളിലേക്ക് ഉയരുന്നതിനാൽ ഇവിടെ കാറ്റുകൾ അനുഭവപ്പെടാറില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> അതിനാലാണ് ഈ പ്രദേശത്തെ <strong>ശാന്തമേഖല അഥവാ ഡോൾഡ്രംസ് (Doldrums)</strong> എന്ന് വിളിക്കുന്നത്.</li>
+        </ul>
+
+        <h3>2. ഉപോഷ്ണ ഉച്ചമർദ്ദ മേഖല (Sub-tropical High Pressure Belt):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> 30° നും 35° നും ഇടയിലുള്ള വടക്കും തെക്കും അക്ഷാംശങ്ങളിൽ കാണപ്പെടുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> മധ്യരേഖാ പ്രദേശത്തുനിന്നും ഉയർന്ന വായു തണുത്ത് താഴേക്ക് പതിക്കുന്നത് ഇവിടെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഈ ഉച്ചമർദ്ദ മേഖലയെ <strong>അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes)</strong> എന്ന് വിളിക്കുന്നു.</li>
+        </ul>
+
+        <h3>3. ഉപധ്രുവ നൂനമർദ്ദ മേഖല (Sub-polar Low Pressure Belt):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> 60° നും 65° നും ഇടയിലുള്ള അക്ഷാംശങ്ങൾ. ഇവിടെയും കാറ്റുകൾ കൂടിച്ചേരുന്നതിനാൽ നൂനമർദ്ദം.</li>
+        </ul>
+
+        <h3>4. ധ്രുവീയ ഉച്ചമർദ്ദ മേഖല (Polar High Pressure Belt):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ധ്രുവപ്രദേശങ്ങളിൽ (90°) കടുത്ത തണുപ്പായതിനാൽ എപ്പോഴും ഉച്ചമർദ്ദമായിരിക്കും.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 5: കോറിയോലിസ് & ഫെറൽസ് നിയമം -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. കോറിയോലിസ് ബലവും ഫെറൽസ് നിയമവും (Ferrel's Law)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിയുടെ ഭ്രമണം കാരണം കാറ്റുകളുടെ ദിശയിലുണ്ടാകുന്ന മാറ്റത്തെക്കുറിച്ചുള്ള നിയമമാണ് <strong>ഫെറൽസ് നിയമം (Ferrel's Law)</strong>. വില്യം ഫെറൽ (William Ferrel) ആണ് ഇത് ആവിഷ്കരിച്ചത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഈ നിയമപ്രകാരം കോറിയോലിസ് ബലം കാരണം കാറ്റുകൾ:
+            <ul>
+              <li><strong>ഉത്തരാർദ്ധഗോളത്തിൽ (Northern Hemisphere):</strong> തങ്ങളുടെ സഞ്ചാരദിശയുടെ <strong>വലത്തോട്ട് (Right)</strong> വ്യതിചലിക്കുന്നു.</li>
+              <li><strong>ദക്ഷിണാർദ്ധഗോളത്തിൽ (Southern Hemisphere):</strong> തങ്ങളുടെ സഞ്ചാരദിശയുടെ <strong>ഇടത്തോട്ട് (Left)</strong> വ്യതിചലിക്കുന്നു.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>N-R & S-L</strong>" (No Rules, Strict Laws എന്ന് ഓർക്കാം).</p>
+          <ul>
+            <li>Northern Hemisphere = <strong>R</strong>ight (വലത്തോട്ട്)</li>
+            <li>Southern Hemisphere = <strong>L</strong>eft (ഇടത്തോട്ട്)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: കാറ്റുകളുടെ വർഗ്ഗീകരണം -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. കാറ്റുകളുടെ വർഗ്ഗീകരണം (Types of Winds)</h2>
+      <div class="section-body">
+        <h3>1. ആഗോള വാതങ്ങൾ അഥവാ സ്ഥിര വാതങ്ങൾ (Planetary / Prevailing Winds):</h3>
+        <p>വർഷം മുഴുവൻ ഒരേ ദിശയിൽ സ്ഥിരമായി വീശുന്ന കാറ്റുകളാണിവ. ഇവ 3 തരമുണ്ട്:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വാണിജ്യ വാതങ്ങൾ (Trade Winds):</strong> ഉപോഷ്ണ ഉച്ചമർദ്ദ മേഖലയിൽ (Horse latitudes) നിന്നും മധ്യരേഖാ നൂനമർദ്ദ മേഖലയിലേക്ക് (Doldrums) വീശുന്ന കാറ്റുകൾ. പുരാതന കാലത്ത് പായക്കപ്പലുകളിലെ കച്ചവടക്കാരെ സഹായിച്ചിരുന്നതിനാലാണ് ഈ പേര് വന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പശ്ചിമ വാതങ്ങൾ (Westerlies):</strong> ഉപോഷ്ണ ഉച്ചമർദ്ദ മേഖലയിൽ നിന്നും ഉപധ്രുവ നൂനമർദ്ദ മേഖലയിലേക്ക് വീശുന്ന കാറ്റുകൾ. ദക്ഷിണാർദ്ധഗോളത്തിൽ കടൽ കൂടുതലായതിനാൽ ഇവ വളരെ ശക്തിയായി വീശുന്നു. ഇവയെ 40° അക്ഷാംശത്തിൽ <strong>'ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ' (Roaring Forties)</strong> എന്നും, 50° ൽ <strong>'തിരമാലയടിക്കുന്ന അമ്പതുകൾ' (Furious Fifties)</strong> എന്നും, 60° ൽ <strong>'അലറുന്ന അറുപതുകൾ' (Shrieking Sixties)</strong> എന്നും വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ധ്രുവ വാതങ്ങൾ (Polar Easterlies):</strong> ധ്രുവപ്രദേശങ്ങളിൽ നിന്നും ഉപധ്രുവ പ്രദേശങ്ങളിലേക്ക് വീശുന്ന അതിശൈത്യമുള്ള കാറ്റുകൾ.</li>
+        </ul>
+
+        <h3>2. കാലിക വാതങ്ങൾ (Periodic Winds):</h3>
+        <p>ഉത്സവകാലത്തിനനുസരിപ്പോ രാപ്പകലുകൾക്കനുസരിപ്പോ ദിശ മാറുന്ന കാറ്റുകളാണിവ.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മൺസൂൺ കാറ്റുകൾ (Monsoon winds):</strong> സീസൺ അനുസരിച്ച് ദിശ മാറുന്നവ. (ഇന്ത്യയുടെ കാലാവസ്ഥയെ നിയന്ത്രിക്കുന്ന പ്രധാന ഘടകം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കടൽക്കാറ്റും കരക്കാറ്റും (Sea Breeze and Land Breeze):</strong> പകൽ സമയത്ത് കടലിൽ നിന്ന് കരയിലേക്കും (കടൽക്കാറ്റ്), രാത്രിയിൽ കരയിൽ നിന്ന് കടലിലേക്കും (കരക്കാറ്റ്) വീശുന്നവ.</li>
+        </ul>
+
+        <h3>3. പ്രാദേശിക വാതങ്ങൾ (Local Winds):</h3>
+        <p>ഭൂപ്രകൃതിയുടെ പ്രത്യേകതകൾ കാരണം ചെറിയ പ്രദേശങ്ങളിൽ മാത്രം വീശുന്ന കാറ്റുകളാണിവ. ലൂ (Loo), മാംഗോ ഷവർ (Mango shower), ചിനൂക്ക് (Chinook) എന്നിവ ഉദാഹരണങ്ങൾ.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 7: ജെറ്റ് സ്ട്രീമുകൾ -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. ജെറ്റ് സ്ട്രീമുകൾ (Jet Streams)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ട്രോപ്പോസ്ഫിയറിന്റെ മുകൾഭാഗത്ത് (ഏകദേശം 8-15 കി.മീ ഉയരത്തിൽ) വളരെ ശക്തിയായി വീശുന്ന ഇടുങ്ങിയ വായുപ്രവാഹങ്ങളാണ് <strong>ജെറ്റ് സ്ട്രീമുകൾ (Jet Streams)</strong>. ഇവ പടിഞ്ഞാറ് നിന്ന് കിഴക്കോട്ടാണ് സാധാരണയായി വീശുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യൻ മൺസൂണിന്റെ വരവിനെയും പിൻവാങ്ങലിനെയും നിയന്ത്രിക്കുന്നതിൽ <strong>ട്രോപ്പിക്കൽ ഈസ്റ്റർലി ജെറ്റ് സ്ട്രീം (Somali Jet)</strong> പ്രധാന പങ്ക് വഹിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> വിമാനങ്ങൾ കിഴക്കോട്ട് സഞ്ചരിക്കുമ്പോൾ ജെറ്റ് സ്ട്രീമിന്റെ സഹായത്തോടെ വേഗത്തിൽ എത്തിച്ചേരാൻ കഴിയും.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 8: പ്രധാന വസ്തുതകൾ -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാറ്റിന്റെ വേഗത (Wind Speed) അളക്കുന്ന ഉപകരണം: <strong>അനിമോമീറ്റർ (Anemometer)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാറ്റിന്റെ ദിശ (Wind Direction) അറിയാൻ ഉപയോഗിക്കുന്നത്: <strong>വിൻഡ് വേൻ (Wind Vane / Weather Cock)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> കാറ്റിന്റെ ശക്തി/വേഗത കണക്കാക്കാൻ ഉപയോഗിക്കുന്ന സ്കെയിൽ: <strong>ബ്യൂഫോർട്ട് സ്കെയിൽ (Beaufort Scale)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അന്തരീക്ഷമർദ്ദത്തിലെ പെട്ടെന്നുള്ള ഇടിവ് (Sudden fall in Barometer reading) കൊടുങ്കാറ്റിന്റെ (Storm) ലക്ഷണമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> സമുദ്രനിരപ്പിൽ നിന്ന് ഉയരത്തിലേക്ക് പോകുന്തോറും അന്തരീക്ഷമർദ്ദം കുറയുന്നു (അതുകൊണ്ടാണ് ഉയർന്ന പർവ്വതങ്ങളിൽ കയറുമ്പോൾ ചിലർക്ക് മൂക്കിൽ നിന്ന് രക്തം വരുന്നത്).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 9: PSC വിശകലനം -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ (Roaring Forties), കോറിയോലിസ് പ്രഭാവം / ഫെറൽസ് നിയമം, പ്രാദേശിക വാതങ്ങൾ (ചിനൂക്ക്, ഹർമറ്റാൻ, ലൂ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> കടൽക്കാറ്റും കരക്കാറ്റും വീശുന്ന സമയം, ഡോൾഡ്രംസ് ഏത് പ്രദേശമാണ്, അനിമോമീറ്റർ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> സമമർദ്ദ രേഖകൾ (Isobars), താപനിലയും മർദ്ദവും തമ്മിലുള്ള ബന്ധം, ജെറ്റ് സ്ട്രീമുകൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 10: മുൻകാല ചോദ്യ പ്രവണത -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഡോക്ടർ വിൻഡ് (Doctor Wind) എന്നറിയപ്പെടുന്ന കാറ്റ് ഏത്?" (ഹർമറ്റാൻ) എന്നത് പി.എസ്.സി യുടെ എവർഗ്രീൻ ചോദ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> സ്ഥിര വാതങ്ങളെ മാറ്റിമറിച്ചു നൽകി (ഉദാഹരണത്തിന്: ട്രേഡ് വിൻഡ്സ്, വെസ്റ്റർലീസ്) അവ എവിടെ നിന്ന് എവിടേക്ക് വീശുന്നു എന്ന് Statement ചോദ്യമായി ചോദിക്കാവുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> Match the Following ആയി പ്രാദേശിക വാതങ്ങളും അവ വീശുന്ന രാജ്യങ്ങളും സ്ഥിരമായി വരുന്നു (ഉദാ: Loo - India, Chinook - USA, Foehn - Alps).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 11: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>അനിമോമീറ്റർ (Anemometer)</strong></td>
+                <td><strong>വിൻഡ് വേൻ (Wind Vane)</strong></td>
+                <td>അനിമോമീറ്റർ കാറ്റിന്റെ വേഗത (Speed) അളക്കാൻ ഉപയോഗിക്കുന്നു. വിൻഡ് വേൻ കാറ്റിന്റെ ദിശ (Direction) അറിയാൻ ഉപയോഗിക്കുന്നു.</td>
+              </tr>
+              <tr>
+                <td><strong>കടൽക്കാറ്റ് (Sea Breeze)</strong></td>
+                <td><strong>കരക്കാറ്റ് (Land Breeze)</strong></td>
+                <td>പകൽ സമയത്ത് കര പെട്ടെന്ന് ചൂടാകുകയും അവിടെ നൂനമർദ്ദം ഉണ്ടാവുകയും ചെയ്യും. അതിനാൽ പകൽ കടലിൽ നിന്ന് കരയിലേക്ക് കടൽക്കാറ്റ് വീശും. രാത്രി കര പെട്ടെന്ന് തണുക്കുകയും അവിടെ ഉച്ചമർദ്ദം ഉണ്ടാവുകയും ചെയ്യും. അതിനാൽ രാത്രി കരയിൽ നിന്ന് കടലിലേക്ക് കരക്കാറ്റ് വീശും.</td>
+              </tr>
+              <tr>
+                <td><strong>ഡോൾഡ്രംസ് (Doldrums)</strong></td>
+                <td><strong>അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes)</strong></td>
+                <td>ഭൂമധ്യരേഖയ്ക്ക് സമീപമുള്ള ശാന്തമേഖല (Low Pressure) ആണ് ഡോൾഡ്രംസ്. 30°-35° അക്ഷാംശങ്ങളിലുള്ള ഉച്ചമർദ്ദ മേഖലയാണ് അശ്വാക്ഷാംശങ്ങൾ.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: താരതമ്യ പട്ടികകൾ -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>Table 1: ലോകത്തെ പ്രധാന പ്രാദേശിക വാതങ്ങൾ (Local Winds)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>കാറ്റിന്റെ പേര്</th><th>എവിടെ വീശുന്നു?</th><th>പ്രത്യേകത</th><th>വിശേഷണം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ലൂ (Loo)</td><td>ഉത്തരേന്ത്യ</td><td>ഉഷ്ണവാതം (Hot)</td><td>ഉഷ്ണകാലത്ത് വീശുന്ന വരണ്ട കാറ്റ്</td></tr>
+              <tr><td>ചിനൂക്ക് (Chinook)</td><td>വടക്കേ അമേരിക്ക (റോക്കി പർവ്വതം)</td><td>ഉഷ്ണവാതം (Hot)</td><td>മഞ്ഞുതിന്നവൻ (Snow Eater)</td></tr>
+              <tr><td>ഫോൺ (Foehn)</td><td>ആൽപ്സ് പർവ്വത നിരകൾ (യൂറോപ്പ്)</td><td>ഉഷ്ണവാതം (Hot)</td><td>മുന്തിരി കൃഷിയെ സഹായിക്കുന്നു</td></tr>
+              <tr><td>ഹർമറ്റാൻ (Harmattan)</td><td>പടിഞ്ഞാറൻ ആഫ്രിക്ക</td><td>ഉഷ്ണവാതം</td><td>ഡോക്ടർ വിൻഡ് (Doctor Wind)</td></tr>
+              <tr><td>സിറോക്കോ (Sirocco)</td><td>സഹാറ മരുഭൂമിയിൽ നിന്ന് ഇറ്റലിയിലേക്ക്</td><td>ഉഷ്ണവാതം (Hot)</td><td>രക്തമഴ (Blood rain) ഉണ്ടാക്കുന്നു</td></tr>
+              <tr><td>മിസ്ട്രൽ (Mistral)</td><td>ഫ്രാൻസ്, സ്പെയിൻ (ആൽപ്സിൽ നിന്ന് താഴേക്ക്)</td><td>ശീതവാതം (Cold)</td><td>അതിശൈത്യമുള്ള കാറ്റ്</td></tr>
+              <tr><td>പാംപെറോ (Pampero)</td><td>അർജന്റീന (തെക്കെ അമേരിക്ക)</td><td>ശീതവാതം (Cold)</td><td>പുൽമേടുകളിൽ വീശുന്ന തണുത്ത കാറ്റ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ആഗോള വാതങ്ങൾ (Planetary Winds)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വാതങ്ങൾ</th><th>ദിശ (എവിടെ നിന്ന് എവിടേക്ക്)</th><th>സവിശേഷത</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>വാണിജ്യ വാതങ്ങൾ (Trade Winds)</td><td>ഉപോഷ്ണ ഉച്ചമർദ്ദം → മധ്യരേഖാ നൂനമർദ്ദം</td><td>പ്രചീനകാലത്ത് കപ്പൽ യാത്രയെ സഹായിച്ചു</td></tr>
+              <tr><td>പശ്ചിമ വാതങ്ങൾ (Westerlies)</td><td>ഉപോഷ്ണ ഉച്ചമർദ്ദം → ഉപധ്രുവ നൂനമർദ്ദം</td><td>ദക്ഷിണാർദ്ധഗോളത്തിൽ 'ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ'</td></tr>
+              <tr><td>ധ്രുവ വാതങ്ങൾ (Polar Easterlies)</td><td>ധ്രുവീയ ഉച്ചമർദ്ദം → ഉപധ്രുവ നൂനമർദ്ദം</td><td>അതിശൈത്യമുള്ള കാറ്റുകൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: സമയരേഖ / പ്രക്രിയ -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. സമയരേഖ / പ്രക്രിയ (Process Flow)</h2>
+      <div class="section-body">
+        <h3>കടൽക്കാറ്റ് രൂപപ്പെടുന്ന പ്രക്രിയ (Sea Breeze Formation):</h3>
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐</span> പകൽ സമയത്ത് കര വേഗത്തിൽ ചൂടാകുന്നു (വെള്ളത്തേക്കാൾ വേഗത്തിൽ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കരയിലെ വായു ചൂടായി വികസിച്ച് മുകളിലേക്ക് പോകുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കരയിൽ നൂനമർദ്ദം (Low Pressure) രൂപപ്പെടുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കടലിന് മുകളിൽ വായു താരതമ്യേന തണുത്തതായതിനാൽ അവിടെ ഉച്ചമർദ്ദമാണ് (High Pressure).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാറ്റിന്റെ നിയമപ്രകാരം, ഉച്ചമർദ്ദമുള്ള കടലിൽ നിന്നും നൂനമർദ്ദമുള്ള കരയിലേക്ക് കാറ്റ് വീശുന്നു. ഇതാണ് <strong>കടൽക്കാറ്റ്</strong>.</li>
+        </ol>
+        <p>(രാത്രിയിൽ ഇതിന്റെ നേരെ വിപരീതം സംഭവിക്കുകയും കരക്കാറ്റ് ഉണ്ടാവുകയും ചെയ്യുന്നു.)</p>
+      </div>
+    </section>
+
+    <!-- SECTION 14: Mnemonics -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong> കോറിയോലിസ് പ്രഭാവം (ഫെറൽസ് നിയമം) ഓർക്കാൻ</span>
+          <p>"<strong>N-R & S-L</strong>" (No Rules, Strict Laws എന്ന് ഓർക്കാം).</p>
+          <ul>
+            <li>Northern Hemisphere = <strong>R</strong>ight (ഉത്തരാർദ്ധഗോളത്തിൽ വലത്തോട്ട്).</li>
+            <li>Southern Hemisphere = <strong>L</strong>eft (ദക്ഷിണാർദ്ധഗോളത്തിൽ ഇടത്തോട്ട്).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong> പ്രാദേശിക വാതങ്ങൾ ഓർക്കാൻ</span>
+          <ul>
+            <li><strong>ചിനൂക്ക് (മഞ്ഞുകുന്നവൻ):</strong> ചീനവല ഇട്ട് റോക്കി മഞ്ഞുകുന്നതിൽ അമേരിക്കയിൽ പോയി. (Chinook - Rocky mountains - USA - Snow eater).</li>
+            <li><strong>മിസ്ട്രൽ (തണുപ്പ്):</strong> മിസ് (Miss) ഫ്രാൻസിൽ ടവച്ച് തണുത്തുറഞ്ഞു. (Mistral - France - Cold).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong> ഡോൾഡ്രംസ് vs അശ്വാക്ഷാംശങ്ങൾ</span>
+          <p>"<strong>ഡോൾഡ്രംസ് = 0° (മധ്യരേഖ); അശ്വം (കുതിര) = 30°-35°</strong>"</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong> ഉപകരണങ്ങൾ</span>
+          <p>"<strong>അനി = അണ്ണൻ (വേഗത); വേൻ = വഴി (ദിശ)</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: PSC കെണികൾ -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> അന്തരീക്ഷത്തിൽ ഉച്ചമർദ്ദമുള്ള ഒരു പ്രദേശത്ത് നിന്നും നൂനമർദ്ദമുള്ള പ്രദേശത്തേക്ക് കാറ്റ് വീശാൻ കാരണമെന്ത്?</p>
+          <p><strong>Confusing Options:</strong> കോറിയോലിസ് ബലം, താപനിലയിലെ വ്യത്യാസം, ഭൂമിയുടെ ഗുരുത്വാകർഷണം.</p>
+          <p><strong>Fact:</strong> കാറ്റ് വീശാൻ അടിസ്ഥാന കാരണം <strong>താപനിലയിലെ വ്യത്യാസം</strong> (Temperature difference) മൂലമുണ്ടാകുന്ന മർദ്ദവ്യത്യാസമാണ്. (കോറിയോലിസ് ബലം കാറ്റിന്റെ ദിശ മാത്രമേ മാറ്റുന്നുള്ളൂ, കാറ്റ് ഉണ്ടാക്കുന്നില്ല).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> ദക്ഷിണാർദ്ധഗോളത്തിൽ 'ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ' എന്ന് വിളിക്കുന്നത് ഏത് കാറ്റിനെയാണ്?</p>
+          <p><strong>Confusing Options:</strong> വാണിജ്യ വാതങ്ങൾ, മൺസൂൺ കാറ്റുകൾ, പശ്ചിമ വാതങ്ങൾ.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>പശ്ചിമ വാതങ്ങൾ (Westerlies)</strong>.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> സിറോക്കോ (Sirocco) ഏത് ഭാഷയിൽ നിന്നാണ് വന്ന വാക്കാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഫ്രഞ്ച്, ഇറ്റാലിയൻ, സ്പാനിഷ്.</p>
+          <p><strong>Fact:</strong> 'സിറോക്കോ' (Sirocco) ഒരു <strong>ഇറ്റാലിയൻ പദമാണ്</strong> (Italian: scirocco); ഇത് 'കിഴക്ക്' എന്നർത്ഥമുള്ള അറബി പദമായ 'ശർഖ്' (sharq) എന്നതിൽ നിന്നാണ് ഉത്ഭവിച്ചത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ഉച്ചമർദ്ദ മേഖലയെ എന്താണ് വിളിക്കുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> ഡോൾഡ്രംസ്, അശ്വാക്ഷാംശങ്ങൾ, ഐ.ടി.സി.സെഡ്.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes)</strong> — 30°-35° അക്ഷാംശങ്ങളിൽ. (ഡോൾഡ്രംസ് = നൂനമർദ്ദം / ശാന്തമേഖല).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> രാത്രി കാലങ്ങളിൽ കരയിൽ നിന്ന് കടലിലേക്ക് വീശുന്ന കാറ്റ് ഏതാണ്?</p>
+          <p><strong>Confusing Options:</strong> കടൽക്കാറ്റ്, കരക്കാറ്റ്, മൺസൂൺ.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>കരക്കാറ്റ് (Land Breeze)</strong>. (പകൽ കടൽക്കാറ്റ്, രാത്രി കരക്കാറ്റ്).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: അധിക വസ്തുതകൾ -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> മധ്യരേഖാ പ്രദേശത്ത് ഉത്തരാർദ്ധഗോളത്തിൽ നിന്നുള്ള വാണിജ്യ വാതങ്ങളും ദക്ഷിണാർദ്ധഗോളത്തിൽ നിന്നുള്ള വാണിജ്യ വാതങ്ങളും കൂടിച്ചേരുന്ന ഭാഗത്തെ <strong>ITCZ (Inter-Tropical Convergence Zone)</strong> എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇന്ത്യയിലെ മൺസൂൺ (Monsoon) എന്നത് ഒരു തരം കാലിക വാതത്തിന് (Periodic wind) ഉദാഹരണമാണ്. മൺസൂൺ എന്ന പദം <strong>'മൗസിം' (Mausim)</strong> എന്ന അറബി പദത്തിൽ നിന്നാണ് വന്നത് (അർത്ഥം: സീസൺ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> സഹാറ മരുഭൂമിയിൽ നിന്നും മെഡിറ്ററേനിയൻ കടൽ കടന്ന് ഇറ്റലിയിലേക്ക് വീശുന്ന സിറോക്കോ (Sirocco) എന്ന കാറ്റ് കടലിൽ നിന്ന് ഈർപ്പവും മരുഭൂമിയിൽ നിന്ന് ചുവന്ന മണലും വഹിച്ച് ഇറ്റലിയിൽ പെയ്യുന്നതിനാൽ ഇതിനെ <strong>രക്തമഴ (Blood rain)</strong> എന്ന് വിളിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> മരുഭൂമിയിൽ വീശുന്ന മണൽക്കാറ്റുകളെ <strong>സിമൂം (Simoom)</strong> എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> തുല്യ അന്തരീക്ഷമർദ്ദമുള്ള സ്ഥലങ്ങളെ യോജിപ്പിക്കുന്ന രേഖകളാണ് <strong>സമമർദ്ദ രേഖകൾ (Isobars)</strong>. സമമർദ്ദ രേഖകൾ പരസ്പരം വളരെ അടുത്തടുത്താണെങ്കിൽ അവിടെ കാറ്റിന്റെ വേഗത വളരെ കൂടുതലായിരിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐</span> കാലിഫോർണിയ (അമേരിക്ക) തീരത്ത് വീശുന്ന ഉഷ്ണവാതമാണ് <strong>സാന്റാ അന (Santa Ana)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ട്രോപ്പോസ്ഫിയറിന്റെ മുകൾഭാഗത്തുകൂടി വളരെ വേഗത്തിൽ വീശുന്ന ഇടുങ്ങിയ വായുപ്രവാഹങ്ങളാണ് <strong>ജെറ്റ് സ്ട്രീമുകൾ (Jet Streams)</strong>. ഇന്ത്യൻ മൺസൂണിന്റെ സമയക്രമത്തെ സ്വാധീനിക്കുന്ന 'ട്രോപ്പിക്കൽ ഈസ്റ്റർലി ജെറ്റ്' (Somali Jet എന്നും അറിയപ്പെടുന്നു) ഇതിനുദാഹരണമാണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 17: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഭൂമിയുടെ ഭ്രമണം (Rotation) കാരണം കാറ്റുകളുടെ ദിശയിലുണ്ടാകുന്ന വ്യതിയാനത്തെ സൂചിപ്പിക്കുന്ന നിയമം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ബോയിൽ നിയമം</span>
+            <span data-opt="B">B. കെപ്ലർ നിയമം</span>
+            <span data-opt="C">C. ഫെറൽസ് നിയമം (Ferrel's Law)</span>
+            <span data-opt="D">D. ന്യൂട്ടന്റെ ഒന്നാം നിയമം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഫെറൽസ് നിയമം (Ferrel's Law)</div>
+            <div class="explanation">കോറിയോലിസ് പ്രഭാവം മൂലം കാറ്റുകൾ ഉത്തരാർദ്ധഗോളത്തിൽ വലത്തോട്ടും ദക്ഷിണാർദ്ധഗോളത്തിൽ ഇടത്തോട്ടും വ്യതിചലിക്കുന്നു എന്നതാണ് ഈ നിയമം.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. വടക്കേ അമേരിക്കയിലെ റോക്കി പർവ്വതനിരകളിൽ വീശുന്നതും 'മഞ്ഞുതിന്നവൻ' (Snow Eater) എന്ന് വിശേഷിപ്പിക്കപ്പെടുന്നതുമായ കാറ്റ് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഫോൺ (Foehn)</span>
+            <span data-opt="B">B. ചിനൂക്ക് (Chinook)</span>
+            <span data-opt="C">C. ഹർമറ്റാൻ</span>
+            <span data-opt="D">D. ലൂ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ചിനൂക്ക് (Chinook)</div>
+            <div class="explanation">ഇതൊരു ഉഷ്ണവാതമാണ്. ഇത് വീശുമ്പോൾ റോക്കി പർവ്വതത്തിലെ മഞ്ഞ് പെട്ടെന്ന് ഉരുകിമാറുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. ഡോക്ടർ വിൻഡ് - ചിനൂക്ക്</span>
+            <span data-opt="B">B. രക്തമഴ - മിസ്ട്രൽ</span>
+            <span data-opt="C">C. ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ - പശ്ചിമ വാതങ്ങൾ</span>
+            <span data-opt="D">D. ശാന്തമേഖല - അശ്വാക്ഷാംശങ്ങൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ - പശ്ചിമ വാതങ്ങൾ</div>
+            <div class="explanation">ദക്ഷിണാർദ്ധഗോളത്തിലെ 40° അക്ഷാംശത്തിൽ വീശുന്ന പശ്ചിമ വാതങ്ങളെയാണ് Roaring Forties എന്ന് വിളിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലിക വാതങ്ങൾക്ക് (Periodic Winds) ഏറ്റവും മികച്ച ഉദാഹരണം താഴെ പറയുന്നവയിൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. വാണിജ്യ വാതങ്ങൾ</span>
+            <span data-opt="B">B. മൺസൂൺ കാറ്റുകൾ (Monsoons)</span>
+            <span data-opt="C">C. ധ്രുവ വാതങ്ങൾ</span>
+            <span data-opt="D">D. പശ്ചിമ വാതങ്ങൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) മൺസൂൺ കാറ്റുകൾ (Monsoons)</div>
+            <div class="explanation">സീസണുകൾക്കനുസരിച്ച് (ആനയൂമാസം കരയിൽ നിന്നും ആനയൂമാസം കടലിൽ നിന്നും) ദിശ മാറുന്നവയാണിവ.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. കാറ്റിന്റെ വേഗത (Wind Speed) അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ബാരോമീറ്റർ</span>
+            <span data-opt="B">B. വിൻഡ് വേൻ</span>
+            <span data-opt="C">C. അനിമോമീറ്റർ (Anemometer)</span>
+            <span data-opt="D">D. ഹൈഗ്രോമീറ്റർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അനിമോമീറ്റർ (Anemometer)</div>
+            <div class="explanation">വിൻഡ് വേൻ കാറ്റിന്റെ ദിശ അറിയാനും, ബാരോമീറ്റർ അന്തരീക്ഷമർദ്ദം അളക്കാനുമാണ് ഉപയോഗിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. കടൽക്കാറ്റ് (Sea Breeze) കരയിലേക്ക് വീശുന്ന സമയം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. രാത്രി കാലങ്ങളിൽ</span>
+            <span data-opt="B">B. പകൽ കാലങ്ങളിൽ</span>
+            <span data-opt="C">C. വർഷത്തിൽ ആഗസ്റ്റ് മാസം മാത്രം</span>
+            <span data-opt="D">D. ശീതകാലത്ത് മാത്രം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) പകൽ കാലങ്ങളിൽ</div>
+            <div class="explanation">പകൽ കര പെട്ടെന്ന് ചൂടായി അവിടെ നൂനമർദ്ദം ഉണ്ടാകുന്നതുകൊണ്ടാണ് കടലിൽ നിന്നും തണുത്ത കാറ്റ് കരയിലേക്ക് വീശുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: അന്തരീക്ഷമർദ്ദവുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. അന്തരീക്ഷമർദ്ദം അളക്കുന്ന ഉപകരണം ബാരോമീറ്ററാണ്.<br>
+            2. താപനില വർദ്ധിക്കുമ്പോൾ അന്തരീക്ഷമർദ്ദം കുറയുന്നു (വിപരീത അനുപാതം).<br>
+            3. സമുദ്രനിരപ്പിൽ നിന്ന് ഉയരത്തിലേക്ക് പോകുന്തോറും അന്തരീക്ഷമർദ്ദം വർദ്ധിക്കുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്; കാരണം ഉയരത്തിലേക്ക് പോകുന്തോറും വായുവിന്റെ സാന്ദ്രത കുറയുന്നതിനാൽ അന്തരീക്ഷമർദ്ദം കുറയുകയാണ് ചെയ്യുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. പശ്ചിമ ആഫ്രിക്കയിൽ വീശുന്നതും അവിടെ 'ഡോക്ടർ വിൻഡ്' (Doctor Wind) എന്നറിയപ്പെടുന്നതുമായ വരണ്ട കാറ്റ് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സിറോക്കോ</span>
+            <span data-opt="B">B. പാംപെറോ</span>
+            <span data-opt="C">C. ഹർമറ്റാൻ (Harmattan)</span>
+            <span data-opt="D">D. ലൂ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഹർമറ്റാൻ (Harmattan)</div>
+            <div class="explanation">പശ്ചിമ ആഫ്രിക്കയിലെ ഈർപ്പുമുള്ള കാലാവസ്ഥയെ മാറ്റി ഈ വരണ്ട കാറ്റ് അവിടുത്തുകാർക്ക് വലിയ ആശ്വാസം നൽകുന്നതുകൊണ്ടാണ് ഇതിനെ ഡോക്ടർ വിൻഡ് എന്ന് വിളിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (പ്രാദേശിക വാതങ്ങളും രാജ്യങ്ങളും):<br>
+            1. ലൂ (Loo) - a. ആൽപ്സ് (യൂറോപ്പ്)<br>
+            2. മിസ്ട്രൽ (Mistral) - b. ഇന്ത്യ<br>
+            3. പാംപെറോ (Pampero) - c. ഫ്രാൻസ്<br>
+            4. ഫോൺ (Foehn) - d. അർജന്റീന</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-c, 3-d, 4-a</span>
+            <span data-opt="B">B. 1-b, 2-a, 3-d, 4-c</span>
+            <span data-opt="C">C. 1-c, 2-b, 3-a, 4-d</span>
+            <span data-opt="D">D. 1-a, 2-d, 3-c, 4-b</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-b, 2-c, 3-d, 4-a</div>
+            <div class="explanation">കാറ്റുകളും അവ വീശുന്ന പ്രധാന ഭൂപ്രദേശങ്ങളും കൃത്യമായി ചേർത്തത്.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. തുല്യ അന്തരീക്ഷമർദ്ദമുള്ള സ്ഥലങ്ങളെ യോജിപ്പിച്ചുകൊണ്ട് ഭൂപടങ്ങളിൽ വരയ്ക്കുന്ന രേഖകൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സമതാപ രേഖകൾ (Isotherms)</span>
+            <span data-opt="B">B. സമമർദ്ദ രേഖകൾ (Isobars)</span>
+            <span data-opt="C">C. സമവർഷ രേഖകൾ (Isohyets)</span>
+            <span data-opt="D">D. കോണ്ടൂർ രേഖകൾ</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സമമർദ്ദ രേഖകൾ (Isobars)</div>
+            <div class="explanation">ബാർ (Bar) എന്നത് മർദ്ദത്തിന്റെ യൂണിറ്റായതിനാൽ ഐസോബാർ എന്ന് എളുപ്പത്തിൽ ഓർക്കാം.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഭൂമധ്യരേഖയ്ക്ക് സമീപമുള്ള മധ്യരേഖാ നൂനമർദ്ദ മേഖല (Equatorial Low Pressure Belt) അറിയപ്പെടുന്നത് ഏത് പേരിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes)</span>
+            <span data-opt="B">B. ഡോൾഡ്രംസ് (Doldrums / ശാന്തമേഖല)</span>
+            <span data-opt="C">C. ഐ.ടി.സി.സെഡ് (ITCZ)</span>
+            <span data-opt="D">D. ഉപോഷ്ണ ഉച്ചമർദ്ദം</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഡോൾഡ്രംസ് (Doldrums / ശാന്തമേഖല)</div>
+            <div class="explanation">ഇവിടെ കാറ്റുകൾ കുറവായതിനാലാണ് ശാന്തമേഖല എന്ന് വിളിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): കാറ്റുകൾ എപ്പോഴും ഉച്ചമർദ്ദ (High Pressure) പ്രദേശത്തുനിന്ന് നൂനമർദ്ദ (Low Pressure) പ്രദേശത്തേക്ക് വീശുന്നു.<br>
+            Reason (R): ചൂടുകൂടിയ പ്രദേശങ്ങളിൽ വായു വികസിച്ച് ഉയരുമ്പോൾ അവിടെ നൂനമർദ്ദമുണ്ടാകുകയും, ആ കുറവ് നികത്താൻ തണുത്ത വായു ഉച്ചമർദ്ദ പ്രദേശത്തുനിന്ന് അവിടേക്ക് ഒഴുകിയെത്തുകയും ചെയ്യുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">കാറ്റുണ്ടാകുന്നതിന്റെ അടിസ്ഥാന ശാസ്ത്രമാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. സിറോക്കോ (Sirocco) എന്ന ഉഷ്ണവാതം സഹാറ മരുഭൂമിയിൽ നിന്നും കടൽ കടന്ന് എത്തുമ്പോൾ ഏത് രാജ്യത്താണ് 'രക്തമഴ' (Blood Rain) ഉണ്ടാകുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സ്പെയിൻ</span>
+            <span data-opt="B">B. ഗ്രീസ്</span>
+            <span data-opt="C">C. ഇറ്റലി</span>
+            <span data-opt="D">D. ഫ്രാൻസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഇറ്റലി</div>
+            <div class="explanation">ചുവന്ന മണൽത്തരികൾ മഴവെള്ളത്തിൽ കലർന്ന് പെയ്യുന്നതുകൊണ്ടാണ് ഇതിനെ രക്തമഴ എന്ന് വിളിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഫ്രാൻസിൽ റോൺ (Rhone) നദീതാഴ്വരയിലൂടെ വീശുന്ന അതിശൈത്യമുള്ള പ്രാദേശിക വാതകം (Cold local wind) ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. മിസ്ട്രൽ (Mistral)</span>
+            <span data-opt="B">B. ചിനൂക്ക് (Chinook)</span>
+            <span data-opt="C">C. ഫോൺ (Foehn)</span>
+            <span data-opt="D">D. ലൂ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) മിസ്ട്രൽ (Mistral)</div>
+            <div class="explanation">ആൽപ്സ് പർവ്വതത്തിൽ നിന്നും മെഡിറ്ററേനിയൻ കടലിലേക്ക് വീശുന്ന തണുത്ത കാറ്റാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഉപോഷ്ണ ഉച്ചമർദ്ദ മേഖലകളിൽ (30° - 35° അക്ഷാംശങ്ങൾ) അനുഭവപ്പെടുന്ന ശാന്തമായ പ്രദേശങ്ങൾ ചരിത്രത്തിൽ അറിയപ്പെടുന്നത് ഏത് പേരിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഐ.ടി.സി.സെഡ്</span>
+            <span data-opt="B">B. ഡോൾഡ്രംസ്</span>
+            <span data-opt="C">C. ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ</span>
+            <span data-opt="D">D. അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes)</div>
+            <div class="explanation">പായക്കപ്പലുകൾ കാറ്റില്ലാതെ ഇവിടെ കുടുങ്ങിയപ്പോൾ നാവികർ കുതിരകളെ കടലിലെറിഞ്ഞതുകൊണ്ടാണ് ഈ പേരുവന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ഇന്ത്യൻ മൺസൂണിന്റെ ആരംഭത്തെയും ഗതിയെയും സ്വാധീനിക്കുന്ന, ട്രോപ്പോസ്ഫിയറിന്റെ മുകൾഭാഗത്ത് ശക്തിയായി വീശുന്ന വായുപ്രവാഹം ഏത് പേരിൽ അറിയപ്പെടുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. പോളാർ വോർട്ടെക്സ്</span>
+            <span data-opt="B">B. ജെറ്റ് സ്ട്രീം (Jet Stream)</span>
+            <span data-opt="C">C. ഓസോൺ പാളി</span>
+            <span data-opt="D">D. വാൻ അലൻ ബെൽറ്റ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ജെറ്റ് സ്ട്രീം (Jet Stream)</div>
+            <div class="explanation">ട്രോപ്പിക്കൽ ഈസ്റ്റർലി ജെറ്റ് സ്ട്രീം (Somali Jet) ഇന്ത്യൻ മൺസൂണിനെ നേരിട്ട് സ്വാധീനിക്കുന്നു.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: ഉത്തര സൂചിക -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>5</td><td>(C)</td><td>9</td><td>(A)</td><td>13</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>6</td><td>(B)</td><td>10</td><td>(B)</td><td>14</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>7</td><td>(A)</td><td>11</td><td>(B)</td><td>15</td><td>(D)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>8</td><td>(C)</td><td>12</td><td>(A)</td><td>16</td><td>(B)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: 30-സെക്കൻഡ് റിവിഷൻ -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>കാറ്റിന്റെ ദിശ അറിയാൻ: വിൻഡ് വേൻ.</li>
+          <li>കാറ്റിന്റെ വേഗത അറിയാൻ: അനിമോമീറ്റർ.</li>
+          <li>അന്തരീക്ഷമർദ്ദം അളക്കാൻ: ബാരോമീറ്റർ.</li>
+          <li>അന്തരീക്ഷമർദ്ദ യൂണിറ്റ്: മില്ലിബാർ (mb).</li>
+          <li>സമുദ്രനിരപ്പിലെ മർദ്ദം: 1013.25 mb.</li>
+          <li>തുല്യ മർദ്ദമുള്ള സ്ഥലങ്ങൾ: സമമർദ്ദ രേഖകൾ (Isobars).</li>
+          <li>കാറ്റിന്റെ ദിശ മാറ്റുന്ന ബലം: കോറിയോലിസ് ബലം (ഫെറൽസ് നിയമം).</li>
+          <li>ഫെറൽസ് നിയമം: ഉത്തരാർദ്ധഗോളത്തിൽ വലത്തോട്ട്, ദക്ഷിണാർദ്ധഗോളത്തിൽ ഇടത്തോട്ട്.</li>
+          <li>മധ്യരേഖാ നൂനമർദ്ദ മേഖല: ഡോൾഡ്രംസ് (Doldrums).</li>
+          <li>ഉപോഷ്ണ ഉച്ചമർദ്ദ മേഖല: അശ്വാക്ഷാംശങ്ങൾ (Horse Latitudes).</li>
+          <li>ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ: പശ്ചിമ വാതങ്ങൾ (Westerlies).</li>
+          <li>കടൽക്കാറ്റ് (Sea Breeze): പകൽ സമയം.</li>
+          <li>കരക്കാറ്റ് (Land Breeze): രാത്രി സമയം.</li>
+          <li>മൺസൂൺ: കാലിക വാതത്തിന് ഉദാഹരണം.</li>
+          <li>മഞ്ഞുതിന്നവൻ (Snow Eater): ചിനൂക്ക് (അമേരിക്ക).</li>
+          <li>ഡോക്ടർ വിൻഡ് (Doctor Wind): ഹർമറ്റാൻ (ആഫ്രിക്ക).</li>
+          <li>രക്തമഴ (Blood Rain): സിറോക്കോ (ഇറ്റലി) - ഇറ്റാലിയൻ/അറബി ഉത്ഭവ പദം.</li>
+          <li>തണുത്ത പ്രാദേശിക കാറ്റ്: മിസ്ട്രൽ (ഫ്രാൻസ്), പാംപെറോ (അർജന്റീന).</li>
+          <li>ഇന്ത്യയിലെ ചൂടുകാറ്റ്: ലൂ.</li>
+          <li>കാറ്റ് എപ്പോഴും ഹൈ പ്രഷറിൽ നിന്നും ലോ പ്രഷറിലേക്ക് വീശുന്നു.</li>
+          <li>മൺസൂണിനെ സ്വാധീനിക്കുന്ന ജെറ്റ് സ്ട്രീം: ട്രോപ്പിക്കൽ ഈസ്റ്റർലി ജെറ്റ് (Somali Jet).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 20: ഒരു പേജ് റിവിഷൻ -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>അന്തരീക്ഷമർദ്ദം (Atmospheric Pressure):</h3>
+        <ul>
+          <li><strong>ഉപകരണം:</strong> ബാരോമീറ്റർ (യൂണിറ്റ്: mb).</li>
+          <li><strong>താപനില കൂടുമ്പോൾ →</strong> മർദ്ദം കുറയുന്നു (Low Pressure).</li>
+          <li><strong>ഉയരം കൂടുമ്പോൾ →</strong> മർദ്ദം കുറയുന്നു.</li>
+        </ul>
+
+        <h3>കാറ്റുകൾ (Winds):</h3>
+        <ul>
+          <li><strong>ആഗോള വാതങ്ങൾ:</strong> വാണിജ്യ വാതങ്ങൾ (Trade winds), പശ്ചിമ വാതങ്ങൾ (Westerlies), ധ്രുവ വാതങ്ങൾ.</li>
+          <li><strong>കാലിക വാതങ്ങൾ:</strong> മൺസൂൺ, കരക്കാറ്റ് (രാത്രി), കടൽക്കാറ്റ് (പകൽ).</li>
+          <li><strong>മുകൾതല വാതങ്ങൾ:</strong> ജെറ്റ് സ്ട്രീമുകൾ (Jet Streams).</li>
+        </ul>
+
+        <h3>പ്രാദേശിക വാതങ്ങൾ (Local Winds):</h3>
+        <ul>
+          <li><strong>Chinook:</strong> USA (Hot) - Snow eater.</li>
+          <li><strong>Harmattan:</strong> Africa (Hot/Dry) - Doctor wind.</li>
+          <li><strong>Sirocco:</strong> Africa to Italy (Hot) - Blood rain. (Italian word, Arabic root)</li>
+          <li><strong>Loo:</strong> India (Hot).</li>
+          <li><strong>Foehn:</strong> Alps / Europe (Hot).</li>
+          <li><strong>Mistral:</strong> France (Cold).</li>
+          <li><strong>Pampero:</strong> Argentina (Cold).</li>
+        </ul>
+
+        <h3>നിയമങ്ങൾ & മേഖലകൾ:</h3>
+        <ul>
+          <li><strong>Ferrel's Law:</strong> N. Hemisphere (Right), S. Hemisphere (Left).</li>
+          <li><strong>Doldrums:</strong> Equatorial Low (ശാന്തമേഖല).</li>
+          <li><strong>Horse Latitudes:</strong> Sub-tropical High (30°-35°).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 21: ടോപ്പ് 25 വസ്തുതകൾ -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഭൂമധ്യരേഖാ പ്രദേശത്ത് സൂര്യപ്രകാശം എപ്പോഴും നേരെ പതിക്കുന്നതുകൊണ്ടാണ് അവിടെ സ്ഥിരമായി നൂനമർദ്ദം (Low pressure) അനുഭവപ്പെടുന്നത്.</li>
+          <li>ഭൂമധ്യരേഖാ നൂനമർദ്ദ മേഖലയിൽ വായു തിരശ്ചീനമായി വീശാതെ ലംബമായി (Vertically) ഉയരുന്നതിനാലാണ് അവിടെ ശാന്തമേഖല (Doldrums) രൂപപ്പെടുന്നത്.</li>
+          <li>ഇറ്റാലിയൻ പദമായ 'സിറോക്കോ' (Sirocco - ഇറ്റാലിയൻ: scirocco) 'കിഴക്ക്' എന്നർത്ഥമുള്ള അറബി പദമായ 'ശർഖ്' (sharq) എന്നതിൽ നിന്നാണ് ഉത്ഭവിച്ചത്.</li>
+          <li>പസഫിക് സമുദ്രത്തിൽ രൂപപ്പെടുന്ന ഉഷ്ണമേഖലാ ചുഴലിക്കാറ്റുകളെ (Tropical cyclones) 'ടൈഫൂൺ' (Typhoon) എന്നും, അറ്റ്ലാന്റിക് സമുദ്രത്തിൽ രൂപപ്പെടുന്നവയെ 'ഹരിക്കേൻ' (Hurricane) എന്നും വിളിക്കുന്നു.</li>
+          <li>ഇന്ത്യൻ മഹാസമുദ്രത്തിൽ രൂപപ്പെടുന്ന കൊടുങ്കാറ്റുകളെ 'സൈക്ലോണുകൾ' (Cyclones) എന്നാണ് വിളിക്കുന്നത്.</li>
+          <li>ഓസ്ട്രേലിയൻ തീരത്ത് രൂപപ്പെടുന്ന ചുഴലിക്കാറ്റുകളാണ് വില്ലി-വില്ലീസ് (Willy-willies).</li>
+          <li>ചുഴലിക്കാറ്റിന്റെ കേന്ദ്രഭാഗത്തെ 'കണ്ണ്' (Eye of the cyclone) എന്നാണ് വിളിക്കുന്നത്. ഇവിടെ മർദ്ദം വളരെ കുറവായിരിക്കുകയും ശാന്തമായ കാലാവസ്ഥ അനുഭവപ്പെടുകയും ചെയ്യും.</li>
+          <li>സൈക്ലോണുകൾ ഉത്തരാർദ്ധഗോളത്തിൽ ആന്റി-ക്ലോക്ക്‌വൈസ് (Anti-clockwise) ദിശയിലും, ദക്ഷിണാർദ്ധഗോളത്തിൽ ക്ലോക്ക്‌വൈസ് (Clockwise) ദിശയിലുമാണ് കറങ്ങുന്നത്. (ഇതിന് കാരണം കോറിയോലിസ് ബലമാണ്).</li>
+          <li>അനിമോമീറ്റർ കണ്ടുപിടിച്ചത് ലിയോൺ ബാറ്റിസ്റ്റ ആൽബർട്ടി (Leon Battista Alberti) ആണ്.</li>
+          <li>കാറ്റിന്റെ വേഗത രേഖപ്പെടുത്താൻ നാവികർ ഉപയോഗിക്കുന്ന യൂണിറ്റാണ് 'നോട്ട്' (Knot - 1 Knot = 1.852 km/h).</li>
+          <li>കാറ്റിന്റെ ദിശ പ്രവചിക്കാൻ പണ്ടുകാലത്ത് വീടുകളുടെ മുകളിൽ വെച്ചിരുന്ന കോഴിയുടെ ആകൃതിയിലുള്ള ലോഹരൂപമാണ് വെതർ കോക്ക് (Weather Cock).</li>
+          <li>ഇന്ത്യയിലെ ഉഷ്ണകാലത്ത് പെയ്യുന്ന പ്രാദേശിക മഴകളാണ് 'മാംഗോ ഷവർ' (Mango showers - കേരളം/കർണാടക), 'കാൽബൈശാഖി' (ബംഗാൾ).</li>
+          <li>അറേബ്യൻ മരുഭൂമിയിൽ വീശുന്ന വരണ്ട കാറ്റാണ് 'സിമൂം' (Simoom).</li>
+          <li>സ്വിറ്റ്സർലൻഡിലെ ആൽപ്സ് പർവ്വതനിരകളിൽ വീശുന്ന 'ഫോൺ' (Foehn) എന്ന ഉഷ്ണവാതം മഞ്ഞ് ഉരുക്കുന്നതിനാൽ അവിടെ മുന്തിരി കൃഷി ചെയ്യാൻ സഹായിക്കുന്നു.</li>
+          <li>മരുഭൂമികളിൽ വീശുന്ന പൊടിക്കാറ്റായ 'ഹബൂബ്' (Haboo) സുഡാനിലാണ് പ്രധാനമായും കാണപ്പെടുന്നത്.</li>
+          <li>വടക്കേ അമേരിക്കയിൽ വീശുന്ന അതിശൈത്യമുള്ള കാറ്റാണ് 'ബ്ലിസാർഡ്' (Blizzard).</li>
+          <li>മൗണ്ടൻ ബ്രീസ് (Mountain Breeze): രാത്രി കാലങ്ങളിൽ മലമുകളിൽ നിന്നും താഴ്വരകളിലേക്ക് വീശുന്ന തണുത്ത കാറ്റ്. ഇതിനെ കാറ്റാബാറ്റിക് കാറ്റുകൾ (Katabatic winds) എന്നും വിളിക്കുന്നു.</li>
+          <li>വാലി ബ്രീസ് (Valley Breeze): പകൽ കാലങ്ങളിൽ താഴ്വരകളിൽ നിന്നും മലമുകളിലേക്ക് വീശുന്ന ചൂടുകാറ്റ്. ഇതിനെ അനാബാറ്റിക് കാറ്റുകൾ (Anabatic winds) എന്നും വിളിക്കുന്നു.</li>
+          <li>'ഗർജ്ജിക്കുന്ന നാൽപ്പതുകൾ' (Roaring Forties) എന്ന പേര് നൽകിയത് ദക്ഷിണ സമുദ്രങ്ങളിലൂടെ സഞ്ചരിച്ച നാവികരാണ്.</li>
+          <li>ഭൂമധ്യരേഖയിൽ (Equator) കോറിയോലിസ് ബലം പൂജ്യമായിരിക്കും (Zero). അതിനാൽ ഭൂമധ്യരേഖയിൽ ചുഴലിക്കാറ്റുകൾ ഉണ്ടാകാറില്ല. ധ്രുവങ്ങളിലേക്ക് പോകുന്തോറും കോറിയോലിസ് ബലം വർദ്ധിക്കുന്നു.</li>
+          <li>ഭൂമി പടിഞ്ഞാറ് നിന്ന് കിഴക്കോട്ട് കറങ്ങുന്നതുകൊണ്ടാണ് കോറിയോലിസ് ബലം ഉണ്ടാകുന്നത്.</li>
+          <li>കാലാവസ്ഥാ ഭൂപടങ്ങളിൽ (Weather maps) സമമർദ്ദ രേഖകൾ (Isobars) അടുത്തടുത്ത് കാണുന്നത് ആ പ്രദേശത്ത് ശക്തമായ കാറ്റുകളുടെ സൂചനയാണ് (High Pressure Gradient).</li>
+          <li>ബാരോമീറ്ററിലെ മെർക്കുറി ലെവൽ പെട്ടെന്ന് താഴുന്നത് കൊടുങ്കാറ്റിനെ (Storm) ലക്ഷണമാണ്.</li>
+          <li>ബാരോമീറ്ററിലെ മെർക്കുറി ലെവൽ സാവധാനം താഴുന്നത് മഴയുടെ (Rain) ലക്ഷണമാണ്.</li>
+          <li>ട്രോപ്പോസ്ഫിയറിന്റെ മുകൾഭാഗത്ത് വീശുന്ന ശക്തിയേറിയ ഇടുങ്ങിയ വായുപ്രവാഹങ്ങളാണ് ജെറ്റ് സ്ട്രീമുകൾ; ഇതുവഴി മൺസൂണിനെ സ്വാധീനിക്കുന്ന ട്രോപ്പിക്കൽ ഈസ്റ്റർലി ജെറ്റ് ഇതിനുദാഹരണമാണ്.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 22: ഉപസംഹാരം -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>സൂര്യപ്രകാശത്തിലുണ്ടാകുന്ന വ്യത്യാസങ്ങൾ ഭൂമിയിൽ പലയിടത്തും മർദ്ദവ്യത്യാസങ്ങൾ ഉണ്ടാകുന്നു.</li>
+          <li>ഉയർന്ന മർദ്ദത്തിൽ നിന്നും താഴ്ന്ന മർദ്ദത്തിലേക്കുള്ള വായുവിന്റെ ഒഴുക്കാണ് കാറ്റുകൾ.</li>
+          <li>ഈ കാറ്റുകളുടെ ദിശ മാറ്റുന്നത് ഭൂമിയുടെ ഭ്രമണം മൂലമുണ്ടാകുന്ന ഫെറൽസ് നിയമമാണ്.</li>
+          <li>ഡോൾഡ്രംസ്, അശ്വാക്ഷാംശങ്ങൾ തുടങ്ങിയ മർദ്ദമേഖലകളും, ചിനൂക്ക്, ലൂ പോലെയുള്ള പ്രാദേശിക വാതങ്ങളും, ഉയരത്തിൽ വീശുന്ന ജെറ്റ് സ്ട്രീമുകളും ലോക കാലാവസ്ഥയെ വലിയ രീതിയിൽ സ്വാധീനിക്കുന്നു.</li>
+        </ul>
+        <h3>സാധ്യതയുള്ള ചോദ്യങ്ങളുടെ എണ്ണം</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> PSC പരീക്ഷകളിൽ ഭൂമിശാസ്ത്രത്തിൽ നിന്ന് ചോദ്യങ്ങൾ വരുമ്പോൾ ഈ അധ്യായത്തിൽ നിന്ന് 1 മുതൽ 2 ചോദ്യങ്ങൾ വരെ പ്രതീക്ഷിക്കാം.</li>
+          <li>കാറ്റുകളുടെ പേരും രാജ്യങ്ങളും (പ്രത്യേകിച്ച് ചിനൂക്ക്, ഹർമറ്റാൻ) നന്നായി റിവിഷൻ ചെയ്യുക.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>കാറ്റുകളെക്കുറിച്ച് നാം പഠിച്ചു കഴിഞ്ഞു. ഭൂമിയിലെ താപനിലയിൽ മാറ്റങ്ങൾ ഉണ്ടാകുന്നത് എങ്ങനെയാണെന്നും, വസന്തം, ഹേമന്തം തുടങ്ങിയ ഋതുക്കൾ (Seasons) ഉണ്ടാകുന്നത് എങ്ങനെയാണെന്നും ജനങ്ങൾ പഠിക്കാൻ പോകുന്നത്. 'താപനിലയും ഋതുക്കളും' (Temperature and Seasons) എന്നതാണ് ഭൂമിശാസ്ത്രത്തിലെ അടുത്ത അധ്യായം. നന്നായി പഠിക്കുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.1.7 Wind</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'geography-2.1.7-wind';
-window.PART_TITLE = '2.1.7 Wind';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) openOnly(sections[0]);
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaAtmosPressure21Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) span.classList.add('selected');
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () { applyLock(!state.locked); });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
