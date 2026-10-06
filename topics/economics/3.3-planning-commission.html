@@ -1,105 +1,1127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>3.3 Planning Commission - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ആസൂത്രണ കമ്മീഷൻ, നീതി ആയോഗ്, കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
+      border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    .arrow-list { list-style: none; padding-left: 0; }
+    .arrow-list li::before { content: "→ "; color: var(--primary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">3.3 Planning Commission</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ആസൂത്രണ കമ്മീഷൻ</a></li>
+      <li><a href="#sec3">3. നീതി ആയോഗ്</a></li>
+      <li><a href="#sec4">4. കമ്മീഷൻ vs നീതി ആയോഗ്</a></li>
+      <li><a href="#sec5">5. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്</a></li>
+      <li><a href="#sec6">6. ബോർഡിന്റെ ഘടന</a></li>
+      <li><a href="#sec7">7. ജനകീയാസൂത്രണ പ്രസ്ഥാനം</a></li>
+      <li><a href="#sec8">8. കേരള ഇക്കണോമിക് റിവ്യൂ</a></li>
+      <li><a href="#sec9">9. പഞ്ചവത്സര പദ്ധതികൾ</a></li>
+      <li><a href="#sec10">10. PSC കെണികൾ</a></li>
+      <li><a href="#sec11">11. തിരുത്തലുകൾ & അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec12">12. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec13">13. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec14">14. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec15">15. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec16">16. ടോപ്പ് വസ്തുതകൾ</a></li>
+      <li><a href="#sec17">17. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ സാമ്പത്തിക ആസൂത്രണം | PSC പ്രത്യേകം</div>
+      <h1>ആസൂത്രണ കമ്മീഷൻ, നീതി ആയോഗ്, കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്</h1>
+      <div class="subtitle">Planning Commission, NITI Aayog & Kerala State Planning Board | Kerala PSC Rank File</div>
+    </header>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് രൂപീകരണം (1967), അധ്യക്ഷൻ (മുഖ്യമന്ത്രി), നീതി ആയോഗ് രൂപീകരണം (2015), ആസൂത്രണ കമ്മീഷൻ (1950)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — കമ്മീഷൻ vs നീതി ആയോഗ് വ്യത്യാസങ്ങൾ, കേരള ഇക്കണോമിക് റിവ്യൂ, ജനകീയാസൂത്രണം (1996)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ആദ്യ ചെയർമാൻ (ഇ.എം.എസ്.), ബോർഡിന്റെ 8 ഡിവിഷനുകൾ, 1974 സ്ഥിരം വകുപ്പ് (അനിശ്ചിതം)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ഡീസെൻട്രലൈസേഷൻ സെൽ, ഉപാധ്യക്ഷൻ ഘടന</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — പഞ്ചവത്സര പദ്ധതികളുടെ കാലഘട്ടങ്ങൾ</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ആസൂത്രണ കമ്മീഷൻ:</strong> 1950 മാർച്ച് 15 | <strong>നീതി ആയോഗ്:</strong> 2015 ജനുവരി 1</li>
+            <li><strong>കേരള ആസൂത്രണ ബോർഡ്:</strong> 1967 സെപ്റ്റംബർ | <strong>ജനകീയാസൂത്രണം:</strong> 1996 ഓഗസ്റ്റ് 17</li>
+            <li><strong>അവസാന പഞ്ചവത്സര പദ്ധതി:</strong> 12-ാം പദ്ധതി (2012–17)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: അധ്യായ ആമുഖം -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> സാമ്പത്തിക ആസൂത്രണവുമായി ബന്ധപ്പെട്ട് ദേശീയ ആസൂത്രണ കമ്മീഷന്റെയും (Planning Commission) നീതി ആയോഗിന്റെയും (NITI Aayog) കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെയും (Kerala State Planning Board) സുപ്രധാന വസ്തുതകൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രാധാന്യം:</strong> PSC പരീക്ഷകളിൽ ഏറ്റവും കൂടുതൽ ആഴത്തിൽ ചോദിക്കുന്ന വിഷയമാണിത്. കമ്മീഷൻ, നീതി ആയോഗ്, സംസ്ഥാന ആസൂത്രണ ബോർഡ് എന്നിവയുടെ രൂപീകരണം, ഘടന, പ്രവർത്തനങ്ങൾ എന്നിവ വ്യക്തമായി അറിഞ്ഞിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> LDC, Degree Level, KAS പരീക്ഷകളിൽ ഈ വിഷയത്തിൽ നിന്ന് 2–3 ചോദ്യങ്ങൾ വരെ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ആസൂത്രണ കമ്മീഷൻ -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ആസൂത്രണ കമ്മീഷൻ (Planning Commission)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രൂപീകരണം:</strong> <strong>1950 മാർച്ച് 15</strong>. കേന്ദ്ര സർക്കാരിന്റെ പ്രമേയം (executive resolution) വഴി രൂപീകരിച്ചതാണ്. ഭരണഘടനാ സ്ഥാപനമല്ല, നിയമപരമായ (statutory) സ്ഥാപനവുമല്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആദ്യ അധ്യക്ഷൻ:</strong> ജവഹർലാൽ നെഹ്റു (പ്രധാനമന്ത്രി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അവസാന ഡെപ്യൂട്ടി ചെയർമാൻ:</strong> മോണ്ടേക് സിംഗ് അലുവാലിയ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അധികാരവും സ്വഭാവവും:</strong> വളരെ ശക്തമായ സ്ഥാപനം. പഞ്ചവത്സര പദ്ധതികൾ രൂപപ്പെടുത്തുകയും സംസ്ഥാനങ്ങൾക്ക് ഫണ്ട് വിഭജിച്ച് നൽകുകയും ചെയ്തിരുന്നു (top-down).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ദേശീയ സുരക്ഷ:</strong> സാമ്പത്തിക തന്ത്രങ്ങൾ രൂപപ്പെടുത്തുമ്പോൾ ദേശീയ സുരക്ഷയുടെ ആവശ്യകതകൾ കൂടി ഉൾപ്പെടുത്തിയിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉദ്യോഗസ്ഥരുടെ എണ്ണം:</strong> ഏകദേശം <strong>1200</strong>-ഓളം തസ്തികകളുള്ള വളരെ വലിയ സംവിധാനം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പൂർണ്ണ സമയ അംഗങ്ങൾ:</strong> എട്ടിൽ താഴെ (less than eight).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>PC = പണം, പവർ, പ്രതിരോധം, 1200 പേർ</strong>" — ആസൂത്രണ കമ്മീഷന്റെ സവിശേഷതകൾ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: നീതി ആയോഗ് -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. നീതി ആയോഗ് (NITI Aayog)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പൂർണ്ണരൂപം:</strong> National Institution for Transforming India.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രൂപീകരണം:</strong> <strong>2015 ജനുവരി 1</strong> (ക്യാബിനറ്റ് പ്രമേയം വഴി). <strong>2014 ഓഗസ്റ്റ് 15</strong>-ന് പ്രധാനമന്ത്രി പ്രഖ്യാപിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആദ്യ വൈസ് ചെയർമാൻ:</strong> അരവിന്ദ് പനഗരിയ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സ്വഭാവം:</strong> പ്രധാനമായും ഒരു ഉപദേശക സമിതിയും (Advisory body) തിങ്ക്-ടാങ്കും (Think-tank) മാത്രം. ഫണ്ട് അനുവദിക്കാനുള്ള അധികാരമില്ല (ഇത് ധനമന്ത്രാലയത്തിനാണ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ദേശീയ സുരക്ഷ:</strong> സാമ്പത്തിക തന്ത്രങ്ങളിൽ ദേശീയ സുരക്ഷാ കാര്യങ്ങളിലെ ചുമതലകൾ നൽകിയിട്ടില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉദ്യോഗസ്ഥരുടെ എണ്ണം:</strong> ഏകദേശം <strong>500</strong>-ഓളം തസ്തികകളായി വെട്ടിച്ചുരുക്കിയ സംവിധാനം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പൂർണ്ണ സമയ അംഗങ്ങൾ:</strong> മൂന്നിലധികം പൂർണ്ണ സമയ അംഗങ്ങളും പാർട്ട് ടൈം അംഗങ്ങളുമുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഗവേണിംഗ് കൗൺസിൽ:</strong> എല്ലാ സംസ്ഥാന മുഖ്യമന്ത്രിമാരും ഉൾപ്പെടുന്ന ഗവേണിംഗ് കൗൺസിൽ ഉണ്ട്. ഇത് ദേശീയ വികസന കൗൺസിലിന്റെ (NDC) സ്ഥാനത്താണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Cooperative Federalism:</strong> സംസ്ഥാനങ്ങളുടെ പങ്കാളിത്തം (bottom-up) ഉറപ്പാക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>NITI = ഉപദേശം, ചെറുത്, 500 പേർ, സുരക്ഷ ഇല്ല</strong>" — നീതി ആയോഗിന്റെ സവിശേഷതകൾ.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഔദ്യോഗിക ഘടന</span>
+          <ul>
+            <li><strong>ചെയർപേഴ്സൺ:</strong> പ്രധാനമന്ത്രി</li>
+            <li><strong>വൈസ് ചെയർപേഴ്സൺ:</strong> ഒരാൾ</li>
+            <li><strong>CEO:</strong> ഒരാൾ</li>
+            <li><strong>ഫുൾടൈം അംഗങ്ങൾ:</strong> തുടക്കത്തിൽ 3</li>
+            <li><strong>പാർട്ട് ടൈം അംഗങ്ങൾ:</strong> പരമാവധി 2</li>
+            <li><strong>എക്സ്-ഒഫീഷ്യോ അംഗങ്ങൾ:</strong> പരമാവധി 4 കേന്ദ്രമന്ത്രിമാർ</li>
+            <li><strong>ഗവേണിംഗ് കൗൺസിൽ:</strong> മുഖ്യമന്ത്രിമാരും ലഫ്. ഗവർണർമാരും</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: കമ്മീഷൻ vs നീതി ആയോഗ് -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. ആസൂത്രണ കമ്മീഷൻ vs നീതി ആയോഗ്</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>ആസൂത്രണ കമ്മീഷൻ (1950)</th><th>നീതി ആയോഗ് (2015)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>സ്വഭാവം</td><td>ശക്തമായ ആസൂത്രണ സ്ഥാപനം</td><td>ഉപദേശക സമിതി / തിങ്ക്-ടാങ്ക്</td></tr>
+              <tr><td>ഫണ്ട് അനുവദിക്കൽ</td><td>ഉണ്ട് (top-down)</td><td>ഇല്ല (ധനമന്ത്രാലയത്തിനാണ്)</td></tr>
+              <tr><td>ദേശീയ സുരക്ഷാ ചുമതല</td><td>ഉണ്ട്</td><td>ഇല്ല</td></tr>
+              <tr><td>ഉദ്യോഗസ്ഥർ</td><td>ഏകദേശം 1200</td><td>ഏകദേശം 500</td></tr>
+              <tr><td>പൂർണ്ണ സമയ അംഗങ്ങൾ</td><td>8-ൽ താഴെ</td><td>3-ൽ അധികം</td></tr>
+              <tr><td>അധ്യക്ഷൻ</td><td>പ്രധാനമന്ത്രി</td><td>പ്രധാനമന്ത്രി</td></tr>
+              <tr><td>ഉപാധ്യക്ഷൻ</td><td>ഡെപ്യൂട്ടി ചെയർമാൻ</td><td>വൈസ് ചെയർപേഴ്സൺ</td></tr>
+              <tr><td>ആദ്യ അധ്യക്ഷൻ</td><td>ജവഹർലാൽ നെഹ്റു</td><td>— (ആദ്യ വൈസ്: അരവിന്ദ് പനഗരിയ)</td></tr>
+              <tr><td>അവസാന/ആദ്യ</td><td>അവസാന ഡെപ്യൂട്ടി: മോണ്ടേക് സിംഗ് അലുവാലിയ</td><td>ആദ്യ വൈസ്: അരവിന്ദ് പനഗരിയ</td></tr>
+              <tr><td>രൂപീകരണം</td><td>1950 മാർച്ച് 15</td><td>2015 ജനുവരി 1</td></tr>
+              <tr><td>ഫണ്ട് വിഭജന രീതി</td><td>Top-down</td><td>Bottom-up (Cooperative Federalism)</td></tr>
+              <tr><td>പദ്ധതികൾ</td><td>ആദ്യ പഞ്ചവത്സര പദ്ധതി 1951–56</td><td>അവസാന പഞ്ചവത്സര പദ്ധതി 12-ാം (2012–17)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>അമ്പതിൽ കമ്മീഷൻ (മാർച്ച് 15), പതിനഞ്ചിൽ നീതി (ജനുവരി 1)</strong>"</p>
+        </div>
+        <div class="correction">
+          <span class="box-label">✏️ വാചകം തിരുത്തി വായിക്കുക</span>
+          <p>ആസൂത്രണ കമ്മീഷൻ വളരെ അധികാരമുള്ള സ്ഥാപനമായിരുന്നു; പദ്ധതികൾ രൂപപ്പെടുത്തുകയും സംസ്ഥാനങ്ങൾക്ക് ഫണ്ട് വിഭജിച്ച് നൽകുകയും ചെയ്തിരുന്നു. നീതി ആയോഗിന് ഫണ്ട് അനുവദിക്കാനുള്ള അധികാരമില്ല (ഇത് ധനമന്ത്രാലയത്തിനാണ്). പഞ്ചവത്സര പദ്ധതികൾ <strong>2017-ൽ 12-ാം പദ്ധതിയോടെ</strong> അവസാനിച്ചു (നീതി ആയോഗ് വന്നതിനുശേഷം). കമ്മീഷൻ പദ്ധതികൾ നിർത്താൻ കാരണമായി എന്നതല്ല ഇവിടെ പറയുന്നത്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രൂപീകരണം:</strong> <strong>1967 സെപ്റ്റംബർ</strong>. സംസ്ഥാനതലത്തിൽ സമഗ്രമായ ആസൂത്രണം നടപ്പിൽ വരുത്തുന്നതിന്റെ ഭാഗമായി രൂപം നൽകി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആദ്യ ചെയർമാൻ:</strong> <strong>ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</strong> (അന്നത്തെ മുഖ്യമന്ത്രി).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സ്വഭാവം:</strong> ഒരു <strong>ഉപദേശക സ്ഥാപനമാണ്</strong> (advisory board). ആസ്ഥാനം: തിരുവനന്തപുരം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അധ്യക്ഷൻ:</strong> സംസ്ഥാന മുഖ്യമന്ത്രി എപ്പോഴും ആസൂത്രണ ബോർഡിന്റെ അധ്യക്ഷൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉപാധ്യക്ഷൻ:</strong> ഔദ്യോഗികമല്ലാത്ത (non-official), പാർട്ട് ടൈം വിദഗ്ധൻ. ബോർഡിന്റെ ദൈനംദിന പ്രവർത്തനങ്ങൾ നയിക്കുന്നത് ഉപാധ്യക്ഷനും മെമ്പർ സെക്രട്ടറിയും ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ചീഫ് സെക്രട്ടറി, ധനവകുപ്പ് അഡിഷണൽ ചീഫ് സെക്രട്ടറി എന്നിവർ സ്ഥിരം ക്ഷണിതാക്കളാണ് (permanent invitees).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ധനമന്ത്രി ഉൾപ്പെടെ ചില മന്ത്രിമാർ</strong> ബോർഡിലെ അംഗങ്ങളാണ്; എന്നാൽ അധ്യക്ഷൻ ധനമന്ത്രിയല്ല.</li>
+        </ul>
+        <div class="correction">
+          <span class="box-label">✏️ ശ്രദ്ധിക്കുക</span>
+          <p>ബോർഡിനെ സ്ഥിരം പ്രധാന വകുപ്പായി (Permanent major Department) മാറ്റിയ വർഷം <strong>1974</strong> എന്ന് PSC ഉത്തരസൂചികയിൽ ഉണ്ട്. എന്നാൽ ഈ വർഷം ഔദ്യോഗിക ഉറവിടങ്ങളിൽ സ്ഥിരീകരിക്കാൻ കഴിഞ്ഞിട്ടില്ല. ഉറപ്പുള്ളത്: <strong>1967 (സെപ്റ്റംബർ)</strong>. ചോദ്യത്തിൽ വന്നാൽ ഉത്തരസൂചിക പ്രകാരം 1974 എഴുതുക.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>അറുപത്തേഴിൽ ബോർഡ് (EMS), എഴുപത്തിനാലിൽ വകുപ്പ്, തൊണ്ണൂറ്റാറിൽ ജനകീയാസൂത്രണം</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ബോർഡിന്റെ ഘടന -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ബോർഡിന്റെ ഘടനയും ഡിവിഷനുകളും</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ചെയർമാൻ:</strong> സംസ്ഥാന മുഖ്യമന്ത്രി</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉപാധ്യക്ഷൻ:</strong> ഔദ്യോഗികേതര വിദഗ്ധൻ</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മെമ്പർ സെക്രട്ടറി:</strong> ദൈനംദിന പ്രവർത്തനങ്ങൾ</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സ്ഥിരം ക്ഷണിതാക്കൾ:</strong> ചീഫ് സെക്രട്ടറി, ധനവകുപ്പ് അഡിഷണൽ ചീഫ് സെക്രട്ടറി</li>
+        </ul>
+        <h3>ബോർഡിന്റെ 8 ഡിവിഷനുകൾ:</h3>
+        <ol>
+          <li>പ്ലാൻ കോ-ഓർഡിനേഷൻ</li>
+          <li>കൃഷി (Agriculture)</li>
+          <li>മൂല്യനിർണ്ണയം (Evaluation)</li>
+          <li>സാമൂഹ്യ സേവനം (Social Service)</li>
+          <li>വ്യവസായവും അടിസ്ഥാന സൗകര്യങ്ങളും (Industry and Infrastructure)</li>
+          <li>വികേന്ദ്രീകൃതാസൂത്രണം (Decentralized Planning)</li>
+          <li>പെഴ്സ്പെക്ടീവ് പ്ലാനിംഗ് (Perspective Planning)</li>
+          <li>ഇൻഫർമേഷൻ ആൻഡ് ടെക്നോളജി വിംഗ് (IT Wing)</li>
+        </ol>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>പ്ലാ-കൃ-മൂ-സാ-വ്യ-വി-പെ-ഐ</strong>" — "പ്ലാനർ കൃഷിയിൽ മൂല്യം നോക്കി, സാമൂഹ്യ വ്യവസായ വികേന്ദ്രീകരണത്തിന് പെഴ്സ്പെക്ടീവും ഐ.ടി.യും കൊടുത്തു."</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <p>"<strong>അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ</strong>" എന്നത് ഓഫീസ് ഭരണനിർവ്വഹണവുമായി ബന്ധപ്പെട്ടതാണ് — ഇത് സാങ്കേതിക ഡിവിഷൻ അല്ല. ചോദ്യത്തിൽ "ടെക്നിക്കൽ ഡിവിഷന്റെ ഉപവിഭാഗങ്ങളിൽ പെടാത്തത്" എന്ന് ചോദിച്ചാൽ ഉത്തരം അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: ജനകീയാസൂത്രണ പ്രസ്ഥാനം -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. ജനകീയാസൂത്രണ പ്രസ്ഥാനം (People's Plan Campaign)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആരംഭം:</strong> <strong>1996 ഓഗസ്റ്റ് 17</strong> (9-ാം പഞ്ചവത്സര പദ്ധതിക്കാലത്ത്).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാന സവിശേഷത:</strong> പദ്ധതി വിഹിതത്തിന്റെ <strong>35–40%</strong> തദ്ദേശ സ്ഥാപനങ്ങൾക്ക് കൈമാറി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഏകോപനം:</strong> ആസൂത്രണ ബോർഡിന്റെ ഡീസെൻട്രലൈസേഷൻ സെൽ സാങ്കേതിക സഹായം നൽകി.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പശ്ചാത്തലം:</strong> 73, 74 ഭരണഘടനാ ഭേദഗതികളുടെ (1992) അടിസ്ഥാനത്തിൽ.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>96-ൽ ജനകീയാസൂത്രണം, 35–40% തദ്ദേശത്തിന്</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: കേരള ഇക്കണോമിക് റിവ്യൂ -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള ഇക്കണോമിക് റിവ്യൂ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ആസൂത്രണ പ്രവർത്തനങ്ങൾക്ക് തുടക്കം കുറിക്കുന്നതിന് മുന്നോടിയായി, എല്ലാ വർഷവും ബജറ്റ് അവതരണത്തിന് മുമ്പ് സംസ്ഥാന നിയമസഭയിൽ സർക്കാർ സമർപ്പിക്കുന്ന സുപ്രധാന സാമ്പത്തിക രേഖയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഈ റിപ്പോർട്ട് <strong>ആസൂത്രണ ബോർഡ് ആണ് തയ്യാറാക്കുന്നത്</strong> (വർഷം തോറും).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേന്ദ്രത്തിലെ തുല്യ രേഖ <strong>ഇക്കണോമിക് സർവേ</strong> ആണ്. അത് ധനമന്ത്രാലയം (Chief Economic Adviser) തയ്യാറാക്കി കേന്ദ്ര ബജറ്റിന് തൊട്ടുമുൻപ് പാർലമെന്റിൽ വയ്ക്കും.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഇക്കണോമിക് റിവ്യൂ = ബോർഡ് (കേരളം); ഇക്കണോമിക് സർവേ = ധനമന്ത്രാലയം (കേന്ദ്രം)</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: പഞ്ചവത്സര പദ്ധതികൾ -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. പഞ്ചവത്സര പദ്ധതികൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആദ്യ പഞ്ചവത്സര പദ്ധതി:</strong> 1951–56</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അവസാന പഞ്ചവത്സര പദ്ധതി:</strong> 12-ാം പദ്ധതി (2012–17)</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> പഞ്ചവത്സര പദ്ധതി സമ്പ്രദായം <strong>2017</strong>-ൽ അവസാനിച്ചു (നീതി ആയോഗ് വന്നതിനുശേഷം).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 10: PSC കെണികൾ -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ അധ്യക്ഷൻ ആരാണ്?</p>
+          <p><strong>Confusing Options:</strong> ധനമന്ത്രി, ചീഫ് സെക്രട്ടറി, മുഖ്യമന്ത്രി, ഗവർണർ.</p>
+          <p><strong>Fact:</strong> <strong>മുഖ്യമന്ത്രി</strong> ആണ് എപ്പോഴും അധ്യക്ഷൻ. "ഉപാധ്യക്ഷൻ" എന്ന വാക്ക് കണ്ടാൽ ഉത്തരം <strong>വിദഗ്ധൻ</strong> (ഔദ്യോഗികേതര പാർട്ട് ടൈം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> നീതി ആയോഗ് നിലവിൽ വന്ന തീയതി?</p>
+          <p><strong>Confusing Options:</strong> 2014 ഓഗസ്റ്റ് 15, 2015 ജനുവരി 1, 2015 ഓഗസ്റ്റ് 15, 2016 ജനുവരി 1.</p>
+          <p><strong>Fact:</strong> <strong>2015 ജനുവരി 1</strong> (ക്യാബിനറ്റ് പ്രമേയം വഴി). 2014 ഓഗസ്റ്റ് 15-ന് പ്രധാനമന്ത്രി പ്രഖ്യാപിച്ചു.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> കേരള ആസൂത്രണ ബോർഡിന്റെ ആദ്യ ചെയർമാൻ ആരാണ്?</p>
+          <p><strong>Confusing Options:</strong> സി. അച്യുതമേനോൻ, ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്, പട്ടം താണുപിള്ള, ആർ. ശങ്കർ.</p>
+          <p><strong>Fact:</strong> <strong>ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</strong> (1967-ൽ രണ്ടാം ഇ.എം.എസ്. മന്ത്രിസഭ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ ടെക്നിക്കൽ ഡിവിഷന്റെ ഉപവിഭാഗത്തിൽ പെടാത്തത് ഏത്?</p>
+          <p><strong>Confusing Options:</strong> കൃഷി, വ്യവസായവും അടിസ്ഥാന സൗകര്യങ്ങളും, അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ, വികേന്ദ്രീകൃതാസൂത്രണം.</p>
+          <p><strong>Fact:</strong> <strong>അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ</strong> — ഇത് ഓഫീസ് ഭരണവുമായി ബന്ധപ്പെട്ടതാണ്, സാങ്കേതിക ഡിവിഷൻ അല്ല.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ജനകീയാസൂത്രണ പ്രസ്ഥാനം ആരംഭിച്ചത്?</p>
+          <p><strong>Confusing Options:</strong> 1992, 1994, 1996 ഓഗസ്റ്റ് 17, 2001.</p>
+          <p><strong>Fact:</strong> <strong>1996 ഓഗസ്റ്റ് 17</strong>. 9-ാം പദ്ധതിക്കാലത്ത് പദ്ധതി വിഹിതത്തിന്റെ 35–40% തദ്ദേശ സ്ഥാപനങ്ങൾക്ക് കൈമാറി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: തിരുത്തലുകൾ & അധിക വസ്തുതകൾ -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. പ്രധാന തിരുത്തലുകളും അധിക വസ്തുതകളും</h2>
+      <div class="section-body">
+        <div class="correction">
+          <span class="box-label">✏️ പ്രധാന തിരുത്തലുകൾ</span>
+          <ol>
+            <li>ടെക്നിക്കൽ ഡിവിഷൻ ലിസ്റ്റ് അപൂർണ്ണമാണ്. ബോർഡിന് <strong>8 ഡിവിഷനുകൾ</strong> ഉണ്ട്; ഇവിടെ 3 മാത്രമേ ഉള്ളൂ.</li>
+            <li>"പഞ്ചവത്സര പദ്ധതികൾ അവസാനിപ്പിക്കുന്നതിന് കാരണമായ" എന്ന വാചകം തെറ്റിദ്ധരിപ്പിക്കുന്നതാണ്. പഞ്ചവത്സര പദ്ധതികൾ അവസാനിച്ചത് 2017-ൽ 12-ാം പദ്ധതിയോടെയാണ്.</li>
+            <li>നീതി ആയോഗിലെ അംഗങ്ങളുടെ എണ്ണം PSC ഉത്തരസൂചികയിലെ രീതിയിലാണ് കൊടുത്തത്. ഔദ്യോഗിക ഘടന മുകളിൽ ചേർത്തിട്ടുണ്ട്.</li>
+            <li>ബോർഡ് 1974-ൽ സ്ഥിരം വകുപ്പായി എന്നത് സ്ഥിരീകരിക്കാൻ കഴിഞ്ഞില്ല. 1967 സ്ഥിരീകരിച്ചു (സെപ്റ്റംബർ 1967).</li>
+          </ol>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li><strong>ഉടമസ്ഥത/നിയമപദവി:</strong> ആസൂത്രണ കമ്മീഷനും നീതി ആയോഗും ഭരണഘടനാ സ്ഥാപനങ്ങളല്ല, നിയമപരമായ (statutory) സ്ഥാപനങ്ങളുമല്ല. കേന്ദ്ര സർക്കാരിന്റെ പ്രമേയം (executive resolution) വഴി രൂപീകരിച്ചതാണ്.</li>
+            <li><strong>അധ്യക്ഷൻ:</strong> രണ്ടിന്റെയും ചെയർപേഴ്സൺ പ്രധാനമന്ത്രി ആണ്. കമ്മീഷനിൽ ഉപാധ്യക്ഷൻ ഡെപ്യൂട്ടി ചെയർമാൻ; നീതി ആയോഗിൽ വൈസ് ചെയർപേഴ്സൺ (ഒപ്പം CEO).</li>
+            <li><strong>ഉപാധ്യക്ഷൻ (കേരളം):</strong> ഔദ്യോഗികമല്ലാത്ത (non-official), പാർട്ട് ടൈം വിദഗ്ധൻ. 2016 മുതൽ വി.കെ. രാമചന്ദ്രൻ ഉപാധ്യക്ഷനായിരുന്നു.</li>
+            <li><strong>ഇക്കണോമിക് റിവ്യൂ:</strong> ആസൂത്രണ ബോർഡ് തയ്യാറാക്കുന്നു. കേന്ദ്രത്തിലെ ഇക്കണോമിക് സർവേ ധനമന്ത്രാലയം തയ്യാറാക്കുന്നു.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡുമായി ബന്ധപ്പെട്ട താഴെപ്പറയുന്ന പ്രസ്താവനകളിൽ ശരിയായവ ഏത്?<br>
+            (i) സംസ്ഥാനതലത്തിൽ സമഗ്രമായ ആസൂത്രണം നടപ്പിൽ വരുത്തുന്നതിന്റെ ഭാഗമായി കേരളത്തിൽ 1967-ൽ രൂപം നൽകിയതാണ് "കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്".<br>
+            (ii) സാമ്പത്തിക ആസൂത്രണ മേഖലയുമായി ബന്ധപ്പെട്ട് പ്രവർത്തിക്കുന്ന ഒരാളെ ആസൂത്രണ ബോർഡിന്റെ അധ്യക്ഷനായി നിയമിക്കുന്നു.<br>
+            (iii) ആസൂത്രണ പ്രവർത്തനങ്ങൾക്ക് തുടക്കം കുറിക്കുന്നതിന് മുന്നോടിയായി എല്ലാ വർഷവും ബജറ്റ് അവതരണത്തിന് മുമ്പ് സംസ്ഥാന നിയമസഭയിൽ സമർപ്പിക്കുന്ന രേഖയാണ് "കേരള ഇക്കണോമിക് റിവ്യൂ".</div>
+          <div class="options">
+            <span data-opt="A">A. (i) മാത്രം</span>
+            <span data-opt="B">B. (i), (ii) മാത്രം</span>
+            <span data-opt="C">C. (i), (iii) മാത്രം</span>
+            <span data-opt="D">D. ഇവയെല്ലാം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) (i), (iii) മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന (ii) തെറ്റാണ്; കാരണം സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ അധ്യക്ഷൻ എപ്പോഴും സംസ്ഥാന മുഖ്യമന്ത്രിയായിരിക്കും. സാമ്പത്തിക വിദഗ്ധരെ സാധാരണയായി ഉപാധ്യക്ഷനായാണ് (Vice-Chairperson) നിയമിക്കാറുള്ളത്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ആസൂത്രണ കമ്മീഷൻ (Planning Commission) ഇന്ത്യയിൽ നിലവിൽ വന്നത് എന്ന്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1950</span>
+            <span data-opt="B">B. 1951</span>
+            <span data-opt="C">C. 1949</span>
+            <span data-opt="D">D. 1952</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1950</div>
+            <div class="explanation">1950 മാർച്ച് 15-നാണ് കമ്മീഷൻ രൂപീകരിച്ചത്. ഇതിന്റെ തുടർച്ചയായാണ് 1951-ൽ പഞ്ചവത്സര പദ്ധതികൾ ആരംഭിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിനെ (State Planning Board) സർക്കാരിന്റെ ഒരു സ്ഥിരം പ്രധാന വകുപ്പായി (Permanent major Department) മാറ്റിയ വർഷം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1967</span>
+            <span data-opt="B">B. 1969</span>
+            <span data-opt="C">C. 1974</span>
+            <span data-opt="D">D. 1972</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1974</div>
+            <div class="explanation">1967-ൽ രൂപീകരിച്ച ബോർഡിനെ, അതിന്റെ പ്രവർത്തന മേഖലകൾ വിപുലപ്പെടുത്തിക്കൊണ്ട് 1974-ലാണ് സ്ഥിരം വകുപ്പായി മാറ്റിയത്. (ഈ വർഷം ഔദ്യോഗിക ഉറവിടങ്ങളിൽ സ്ഥിരീകരിക്കാൻ കഴിഞ്ഞിട്ടില്ല; ഉത്തരസൂചികയനുസരിച്ച് 1974).</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ ടെക്നിക്കൽ ഡിവിഷന്റെ (Technical Division) ഉപവിഭാഗങ്ങളിൽ (Sub division) പെടാത്തത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കൃഷി (Agriculture)</span>
+            <span data-opt="B">B. വ്യവസായവും അടിസ്ഥാന സൗകര്യങ്ങളും (Industry and infrastructure)</span>
+            <span data-opt="C">C. അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ (Administrative Section)</span>
+            <span data-opt="D">D. വികേന്ദ്രീകൃതാസൂത്രണം (Decentralized planning)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ (Administrative Section)</div>
+            <div class="explanation">അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ എന്നത് ഓഫീസ് ഭരണനിർവ്വഹണവുമായി ബന്ധപ്പെട്ടതാണ്, സാങ്കേതിക പഠനങ്ങളുമായോ ആസൂത്രണവുമായോ നേരിട്ട് ബന്ധമുള്ള സാങ്കേതിക ഉപവിഭാഗമല്ല.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവന ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ബോർഡിന്റെ അധ്യക്ഷൻ കേരളത്തിന്റെ ധനകാര്യ മന്ത്രിയാണ്.</span>
+            <span data-opt="B">B. ഒരു പ്രത്യേക ഡീസെൻട്രലൈസേഷൻ സെൽ വഴി വികേന്ദ്രീകൃതാസൂത്രണം ഏകോപിപ്പിക്കുക എന്നത് ബോർഡിന്റെ പ്രവർത്തനങ്ങളിലൊന്നാണ്.</span>
+            <span data-opt="C">C. സംസ്ഥാനത്തിന്റെ വാർഷിക എക്കണോമിക് റിവ്യൂ തയ്യാറാക്കുന്നതിൽ ബോർഡിന് യാതൊരു പങ്കുമില്ല.</span>
+            <span data-opt="D">D. സംസ്ഥാന സർക്കാരിന്റെ കാലാവധി പരിഗണിക്കാതെ ബോർഡിന്റെ കാലാവധി പത്ത് വർഷമായി നിജപ്പെടുത്തിയിരിക്കുന്നു.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഒരു പ്രത്യേക ഡീസെൻട്രലൈസേഷൻ സെൽ വഴി വികേന്ദ്രീകൃതാസൂത്രണം ഏകോപിപ്പിക്കുക എന്നത് ബോർഡിന്റെ പ്രവർത്തനങ്ങളിലൊന്നാണ്.</div>
+            <div class="explanation">തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങളുടെ പദ്ധതികൾ ഏകോപിപ്പിക്കുന്നതിന് ഈ സെൽ നിർണ്ണായക പങ്ക് വഹിക്കുന്നു. ബോർഡിന്റെ അധ്യക്ഷൻ മുഖ്യമന്ത്രിയാണ്, ധനമന്ത്രിയല്ല.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. നീതി ആയോഗും (NITI Aayog) ആസൂത്രണ കമ്മീഷനുമായി ബന്ധപ്പെട്ട പ്രസ്താവനകളിൽ ശരിയല്ലാത്തത് (Not true) ഏത്?<br>
+            1. ആസൂത്രണ കമ്മീഷൻ ഇന്ത്യയിലെ പഞ്ചവത്സര പദ്ധതികൾ അവസാനിപ്പിക്കുന്നതിന് കാരണമായ രീതിയിൽ വളരെ ശക്തമായിരുന്നു, എന്നാൽ നീതി ആയോഗ് പ്രധാനമായും ഒരു ഉപദേശക സമിതിയും തിങ്ക്-ടാങ്കുമാണ്.<br>
+            2. സാമ്പത്തിക തന്ത്രങ്ങൾ രൂപപ്പെടുത്തുമ്പോൾ ദേശീയ സുരക്ഷയുമായി ബന്ധപ്പെട്ട കാര്യങ്ങൾ കൂടി പരിഗണിക്കാൻ ആസൂത്രണ കമ്മീഷന് ചുമതലയുണ്ടായിരുന്നു, എന്നാൽ നീതി ആയോഗിന് അത്തരം ചുമതലകളില്ല.<br>
+            3. ആസൂത്രണ കമ്മീഷനിൽ എട്ടിൽ താഴെ പൂർണ്ണ സമയ അംഗങ്ങളാണുണ്ടായിരുന്നത്, എന്നാൽ നീതി ആയോഗിൽ മൂന്നിലധികം പൂർണ്ണ സമയ അംഗങ്ങളും പാർട്ട് ടൈം അംഗങ്ങളുമുണ്ട്.<br>
+            4. ആസൂത്രണ കമ്മീഷൻ 1200-ഓളം തസ്തികകളുള്ള വലിയ സംവിധാനമായിരുന്നു, എന്നാൽ നീതി ആയോഗ് 500-ഓളം തസ്തികകളായി വെട്ടിച്ചുരുക്കിയ ചെറിയ സംവിധാനമാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1 ഉം 4 ഉം മാത്രം</span>
+            <span data-opt="B">B. 1 ഉം 3 ഉം 4 ഉം മാത്രം</span>
+            <span data-opt="C">C. 2 ഉം 3 ഉം മാത്രം</span>
+            <span data-opt="D">D. ഇവയൊന്നുമല്ല (എല്ലാ പ്രസ്താവനകളും ശരിയാണ്)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഇവയൊന്നുമല്ല (എല്ലാ പ്രസ്താവനകളും ശരിയാണ്)</div>
+            <div class="explanation">നൽകിയിരിക്കുന്ന നാല് പ്രസ്താവനകളും നീതി ആയോഗും ആസൂത്രണ കമ്മീഷനും തമ്മിലുള്ള യഥാർത്ഥ വ്യത്യാസങ്ങളെ വ്യക്തമാക്കുന്നവയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. നീതി ആയോഗ് (NITI Aayog) നിലവിൽ വന്ന തീയതി?</div>
+          <div class="options">
+            <span data-opt="A">A. 2014 ഓഗസ്റ്റ് 15</span>
+            <span data-opt="B">B. 2015 ജനുവരി 1</span>
+            <span data-opt="C">C. 2015 ഓഗസ്റ്റ് 15</span>
+            <span data-opt="D">D. 2016 ജനുവരി 1</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 2015 ജനുവരി 1</div>
+            <div class="explanation">2014 ഓഗസ്റ്റ് 15-ന് പ്രഖ്യാപിച്ചു; 2015 ജനുവരി 1-ന് ക്യാബിനറ്റ് പ്രമേയം വഴി രൂപീകരിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ ഉപാധ്യക്ഷൻ (Vice-Chairperson) ആയി നിയമിക്കപ്പെടുന്നത് ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. ധനമന്ത്രി</span>
+            <span data-opt="B">B. ചീഫ് സെക്രട്ടറി</span>
+            <span data-opt="C">C. ഔദ്യോഗികമല്ലാത്ത പാർട്ട് ടൈം വിദഗ്ധൻ</span>
+            <span data-opt="D">D. ഗവർണർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഔദ്യോഗികമല്ലാത്ത പാർട്ട് ടൈം വിദഗ്ധൻ</div>
+            <div class="explanation">ചെയർമാൻ മുഖ്യമന്ത്രി. ചീഫ് സെക്രട്ടറി സ്ഥിരം ക്ഷണിതാവാണ്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ ആദ്യ ചെയർമാൻ?</div>
+          <div class="options">
+            <span data-opt="A">A. സി. അച്യുതമേനോൻ</span>
+            <span data-opt="B">B. ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</span>
+            <span data-opt="C">C. പട്ടം താണുപിള്ള</span>
+            <span data-opt="D">D. ആർ. ശങ്കർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</div>
+            <div class="explanation">1967-ൽ (രണ്ടാം ഇ.എം.എസ്. മന്ത്രിസഭ) ബോർഡ് രൂപീകരിച്ചപ്പോൾ മുഖ്യമന്ത്രി ഇ.എം.എസ്. ആയിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. താഴെ പറയുന്നവയിൽ കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിലെ ഒരു ഡിവിഷൻ അല്ലാത്തത്?</div>
+          <div class="options">
+            <span data-opt="A">A. പ്ലാൻ കോ-ഓർഡിനേഷൻ</span>
+            <span data-opt="B">B. മൂല്യനിർണ്ണയം (Evaluation)</span>
+            <span data-opt="C">C. അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ</span>
+            <span data-opt="D">D. പെഴ്സ്പെക്ടീവ് പ്ലാനിംഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ</div>
+            <div class="explanation">മറ്റ് മൂന്നും ബോർഡിന്റെ 8 സാങ്കേതിക ഡിവിഷനുകളിൽ പെടുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ജനകീയാസൂത്രണ പ്രസ്ഥാനം (People's Plan Campaign) കേരളത്തിൽ ആരംഭിച്ചത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1992</span>
+            <span data-opt="B">B. 1994</span>
+            <span data-opt="C">C. 1996 ഓഗസ്റ്റ് 17</span>
+            <span data-opt="D">D. 2001</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1996 ഓഗസ്റ്റ് 17</div>
+            <div class="explanation">9-ാം പദ്ധതിക്കാലത്ത് പദ്ധതി വിഹിതത്തിന്റെ 35–40% തദ്ദേശ സ്ഥാപനങ്ങൾക്ക് കൈമാറി. ഏകോപനം ആസൂത്രണ ബോർഡിന്റെ ഡീസെൻട്രലൈസേഷൻ സെൽ.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. പഞ്ചവത്സര പദ്ധതികളുടെ അവസാനത്തേത് ഏത് (കാലയളവ്)?</div>
+          <div class="options">
+            <span data-opt="A">A. 10-ാം പദ്ധതി (2002–07)</span>
+            <span data-opt="B">B. 11-ാം പദ്ധതി (2007–12)</span>
+            <span data-opt="C">C. 12-ാം പദ്ധതി (2012–17)</span>
+            <span data-opt="D">D. 13-ാം പദ്ധതി (2017–22)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 12-ാം പദ്ധതി (2012–17)</div>
+            <div class="explanation">ആസൂത്രണ കമ്മീഷൻ നിർത്തലാക്കിയതിനുശേഷം 2017-ൽ പഞ്ചവത്സര പദ്ധതി സമ്പ്രദായം അവസാനിച്ചു.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: ഉത്തര സൂചിക -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>6</td><td>(D)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(A)</td><td>7</td><td>(B)</td><td>12</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>8</td><td>(C)</td><td></td><td></td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(B)</td><td></td><td></td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(C)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: 30-സെക്കൻഡ് റിവിഷൻ -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <div class="checklist">
+          <ul class="checklist">
+            <li>ആസൂത്രണ കമ്മീഷൻ വന്നത്: <strong>1950 മാർച്ച് 15</strong>.</li>
+            <li>പ്ലാനിംഗ് കമ്മീഷൻ: <strong>1200 തസ്തികകൾ</strong>, സാമ്പത്തിക അധികാരവും ദേശീയ സുരക്ഷാ ചുമതലയുമുണ്ടായിരുന്നു.</li>
+            <li>നീതി ആയോഗ്: ഉപദേശക സമിതി, <strong>500 തസ്തികകൾ</strong>, ദേശീയ സുരക്ഷാ ചുമതലകളില്ല.</li>
+            <li>കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് രൂപീകരിച്ചത്: <strong>1967 സെപ്റ്റംബർ</strong> (ആദ്യ ചെയർമാൻ ഇ.എം.എസ്.).</li>
+            <li>സംസ്ഥാന ആസൂത്രണ ബോർഡ് സ്ഥിരം വകുപ്പായത്: <strong>1974</strong> (ഉത്തരസൂചിക പ്രകാരം).</li>
+            <li>സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ അധ്യക്ഷൻ: <strong>മുഖ്യമന്ത്രി</strong> (വൈസ് ചെയർമാൻ വിദഗ്ധനായ വ്യക്തി).</li>
+            <li>ബജറ്റിന് മുൻപ് നിയമസഭയിൽ വെക്കുന്നത്: <strong>കേരള ഇക്കണോമിക് റിവ്യൂ</strong>.</li>
+            <li>ഡീസെൻട്രലൈസേഷൻ സെൽ പ്രവർത്തിക്കുന്നത്: <strong>വികേന്ദ്രീകൃതാസൂത്രണം</strong> ഏകോപിപ്പിക്കാൻ.</li>
+            <li>നീതി ആയോഗ് രൂപീകരണം: <strong>2015 ജനുവരി 1</strong>; ചെയർപേഴ്സൺ പ്രധാനമന്ത്രി; ആദ്യ വൈസ് ചെയർമാൻ അരവിന്ദ് പനഗരിയ.</li>
+            <li>ആസൂത്രണ കമ്മീഷന്റെ ആദ്യ ചെയർമാൻ നെഹ്റു; അവസാന ഡെപ്യൂട്ടി ചെയർമാൻ മോണ്ടേക് സിംഗ് അലുവാലിയ.</li>
+            <li>പഞ്ചവത്സര പദ്ധതി: ആദ്യത്തേത് 1951–56; അവസാനത്തേത് <strong>12-ാം പദ്ധതി (2012–17)</strong>.</li>
+            <li>സംസ്ഥാന ആസൂത്രണ ബോർഡിന് <strong>8 ഡിവിഷനുകൾ</strong>; അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ അതിൽ ഇല്ല.</li>
+            <li>ഇക്കണോമിക് റിവ്യൂ = ബോർഡ് (കേരളം); ഇക്കണോമിക് സർവേ = ധനമന്ത്രാലയം (കേന്ദ്രം).</li>
+            <li>ജനകീയാസൂത്രണം: <strong>1996 ഓഗസ്റ്റ് 17</strong>; <strong>35–40%</strong> വിഹിതം തദ്ദേശ സ്ഥാപനങ്ങൾക്ക്.</li>
+            <li>🧠 ഒറ്റ ട്രിക്ക്: "<strong>അറുപത്തേഴിൽ ബോർഡ് (EMS), എഴുപത്തിനാലിൽ വകുപ്പ്, തൊണ്ണൂറ്റാറിൽ ജനകീയാസൂത്രണം</strong>."</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: ഒരു പേജ് റിവിഷൻ -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>ആസൂത്രണ കമ്മീഷൻ (1950–2014):</h3>
+        <ul>
+          <li>രൂപീകരണം: 1950 മാർച്ച് 15</li>
+          <li>ആദ്യ അധ്യക്ഷൻ: ജവഹർലാൽ നെഹ്റു</li>
+          <li>അവസാന ഡെപ്യൂട്ടി ചെയർമാൻ: മോണ്ടേക് സിംഗ് അലുവാലിയ</li>
+          <li>സ്വഭാവം: ശക്തമായ ആസൂത്രണ സ്ഥാപനം (top-down)</li>
+          <li>ഉദ്യോഗസ്ഥർ: ~1200</li>
+          <li>ദേശീയ സുരക്ഷാ ചുമതല: ഉണ്ട്</li>
+        </ul>
+        <h3>നീതി ആയോഗ് (2015–):</h3>
+        <ul>
+          <li>രൂപീകരണം: 2015 ജനുവരി 1</li>
+          <li>ആദ്യ വൈസ് ചെയർമാൻ: അരവിന്ദ് പനഗരിയ</li>
+          <li>സ്വഭാവം: ഉപദേശക സമിതി / തിങ്ക്-ടാങ്ക് (bottom-up)</li>
+          <li>ഉദ്യോഗസ്ഥർ: ~500</li>
+          <li>ദേശീയ സുരക്ഷാ ചുമതല: ഇല്ല</li>
+          <li>ഗവേണിംഗ് കൗൺസിൽ: മുഖ്യമന്ത്രിമാർ</li>
+        </ul>
+        <h3>കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്:</h3>
+        <ul>
+          <li>രൂപീകരണം: 1967 സെപ്റ്റംബർ</li>
+          <li>ആദ്യ ചെയർമാൻ: ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</li>
+          <li>അധ്യക്ഷൻ: മുഖ്യമന്ത്രി</li>
+          <li>ഉപാധ്യക്ഷൻ: ഔദ്യോഗികേതര വിദഗ്ധൻ</li>
+          <li>ആസ്ഥാനം: തിരുവനന്തപുരം</li>
+          <li>ഡിവിഷനുകൾ: 8</li>
+          <li>ഇക്കണോമിക് റിവ്യൂ: ബോർഡ് തയ്യാറാക്കുന്നു</li>
+        </ul>
+        <h3>ജനകീയാസൂത്രണം:</h3>
+        <ul>
+          <li>ആരംഭം: 1996 ഓഗസ്റ്റ് 17</li>
+          <li>വിഹിതം: 35–40% തദ്ദേശ സ്ഥാപനങ്ങൾക്ക്</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 16: ടോപ്പ് വസ്തുതകൾ -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. ടോപ്പ് പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li><strong>ആസൂത്രണ കമ്മീഷൻ രൂപീകരണം:</strong> 1950 മാർച്ച് 15.</li>
+          <li><strong>ആദ്യ അധ്യക്ഷൻ:</strong> ജവഹർലാൽ നെഹ്റു.</li>
+          <li><strong>അവസാന ഡെപ്യൂട്ടി ചെയർമാൻ:</strong> മോണ്ടേക് സിംഗ് അലുവാലിയ.</li>
+          <li><strong>നീതി ആയോഗ് രൂപീകരണം:</strong> 2015 ജനുവരി 1.</li>
+          <li><strong>നീതി ആയോഗ് ആദ്യ വൈസ് ചെയർമാൻ:</strong> അരവിന്ദ് പനഗരിയ.</li>
+          <li><strong>നീതി ആയോഗ് പൂർണ്ണരൂപം:</strong> National Institution for Transforming India.</li>
+          <li><strong>കേരള ആസൂത്രണ ബോർഡ് രൂപീകരണം:</strong> 1967 സെപ്റ്റംബർ.</li>
+          <li><strong>കേരള ആസൂത്രണ ബോർഡ് ആദ്യ ചെയർമാൻ:</strong> ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്.</li>
+          <li><strong>ബോർഡിന്റെ അധ്യക്ഷൻ:</strong> മുഖ്യമന്ത്രി.</li>
+          <li><strong>ബോർഡിന്റെ ഉപാധ്യക്ഷൻ:</strong> ഔദ്യോഗികേതര പാർട്ട് ടൈം വിദഗ്ധൻ.</li>
+          <li><strong>ബോർഡിന്റെ ആസ്ഥാനം:</strong> തിരുവനന്തപുരം.</li>
+          <li><strong>ബോർഡിന്റെ 8 ഡിവിഷനുകൾ:</strong> പ്ലാൻ കോ-ഓർഡിനേഷൻ, കൃഷി, മൂല്യനിർണ്ണയം, സാമൂഹ്യ സേവനം, വ്യവസായം, വികേന്ദ്രീകൃതാസൂത്രണം, പെഴ്സ്പെക്ടീവ് പ്ലാനിംഗ്, IT വിംഗ്.</li>
+          <li><strong>അഡ്മിനിസ്ട്രേറ്റീവ് സെക്ഷൻ:</strong> സാങ്കേതിക ഡിവിഷൻ അല്ല.</li>
+          <li><strong>കേരള ഇക്കണോമിക് റിവ്യൂ:</strong> ആസൂത്രണ ബോർഡ് തയ്യാറാക്കുന്നു.</li>
+          <li><strong>ജനകീയാസൂത്രണം:</strong> 1996 ഓഗസ്റ്റ് 17.</li>
+          <li><strong>ജനകീയാസൂത്രണ വിഹിതം:</strong> 35–40% തദ്ദേശ സ്ഥാപനങ്ങൾക്ക്.</li>
+          <li><strong>ആദ്യ പഞ്ചവത്സര പദ്ധതി:</strong> 1951–56.</li>
+          <li><strong>അവസാന പഞ്ചവത്സര പദ്ധതി:</strong> 12-ാം പദ്ധതി (2012–17).</li>
+          <li><strong>പഞ്ചവത്സര പദ്ധതി സമ്പ്രദായം അവസാനിച്ചത്:</strong> 2017.</li>
+          <li><strong>ആസൂത്രണ കമ്മീഷൻ സ്വഭാവം:</strong> ശക്തമായ ആസൂത്രണ സ്ഥാപനം.</li>
+          <li><strong>നീതി ആയോഗ് സ്വഭാവം:</strong> ഉപദേശക സമിതി / തിങ്ക്-ടാങ്ക്.</li>
+          <li><strong>ആസൂത്രണ കമ്മീഷൻ ഉദ്യോഗസ്ഥർ:</strong> ~1200.</li>
+          <li><strong>നീതി ആയോഗ് ഉദ്യോഗസ്ഥർ:</strong> ~500.</li>
+          <li><strong>ദേശീയ സുരക്ഷാ ചുമതല:</strong> ആസൂത്രണ കമ്മീഷന് ഉണ്ട്; നീതി ആയോഗിന് ഇല്ല.</li>
+          <li><strong>അധ്യക്ഷൻ (രണ്ടിനും):</strong> പ്രധാനമന്ത്രി.</li>
+          <li><strong>ധനമന്ത്രി:</strong> കേരള ആസൂത്രണ ബോർഡിലെ അംഗമാണ്, അധ്യക്ഷനല്ല.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 17: ഉപസംഹാരം -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ആസൂത്രണ കമ്മീഷൻ (1950) ശക്തമായ ആസൂത്രണ സ്ഥാപനമായിരുന്നു; നീതി ആയോഗ് (2015) ഉപദേശക സമിതിയാണ്.</li>
+          <li>കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് (1967) ഉപദേശക സ്ഥാപനമാണ്; അധ്യക്ഷൻ മുഖ്യമന്ത്രി.</li>
+          <li>ജനകീയാസൂത്രണം (1996) വികേന്ദ്രീകൃതാസൂത്രണത്തിന്റെ മാതൃകയായി.</li>
+          <li>ഇക്കണോമിക് റിവ്യൂ (കേരളം) ആസൂത്രണ ബോർഡ് തയ്യാറാക്കുന്നു.</li>
+        </ul>
+        <h3>സാധ്യതയുള്ള ചോദ്യങ്ങളുടെ എണ്ണം</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> LDC: 2–3 ചോദ്യങ്ങൾ</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> Degree Level: 2–3 ചോദ്യങ്ങൾ</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> KAS: 3–4 ചോദ്യങ്ങൾ</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായത്തിലെ ഏറ്റവും പ്രധാനപ്പെട്ട കാര്യങ്ങൾ: കേരള ആസൂത്രണ ബോർഡിന്റെ രൂപീകരണം (1967), അധ്യക്ഷൻ (മുഖ്യമന്ത്രി), 8 ഡിവിഷനുകൾ, ജനകീയാസൂത്രണം (1996), നീതി ആയോഗ് (2015). ഈ വസ്തുതകൾ കൃത്യമായി ഓർത്തുവെക്കുക. 1974-ലെ സ്ഥിരം വകുപ്പ് വിഷയത്തിൽ അനിശ്ചിതത്വമുണ്ട്; പരീക്ഷയ്ക്ക് മുൻപ് ഒരു ഉറവിടം കൂടി ഒത്തുനോക്കുക.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>3.3 Planning Commission</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'economics-3.3-planning-commission';
-window.PART_TITLE = '3.3 Planning Commission';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) openOnly(sections[0]);
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaPlanningBoardQ_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) span.classList.add('selected');
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () { applyLock(!state.locked); });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>

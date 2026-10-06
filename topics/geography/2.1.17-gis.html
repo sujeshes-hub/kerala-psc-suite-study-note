@@ -1,105 +1,1412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.1.17 GIS - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂമിശാസ്ത്രം: GIS | അധ്യായം 27</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
+      border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.1.17 GIS</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാന്യൂറ കഥ</a></li>
+      <li><a href="#sec3">3. GIS ന്റെ ഘടകങ്ങൾ</a></li>
+      <li><a href="#sec4">4. GIS-ലെ വിവരങ്ങൾ</a></li>
+      <li><a href="#sec5">5. Vector vs Raster</a></li>
+      <li><a href="#sec6">6. ഓവർലേ അനാലിസിസ്</a></li>
+      <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. മുൻകാല ചോദ്യ പ്രവണത</a></li>
+      <li><a href="#sec10">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</a></li>
+      <li><a href="#sec11">11. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec12">12. സമയരേഖ</a></li>
+      <li><a href="#sec13">13. Mnemonics</a></li>
+      <li><a href="#sec14">14. PSC കെണികൾ</a></li>
+      <li><a href="#sec15">15. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec16">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec17">17. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec18">18. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec19">19. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec21">21. സർക്കാർ പദ്ധതികൾ</a></li>
+      <li><a href="#sec22">22. അധിക ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec23">23. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഭൂമിശാസ്ത്രം | അധ്യായം 27</div>
+      <h1>ഭൂമിശാസ്ത്രം – ജി.ഐ.എസ് (GIS)</h1>
+      <div class="subtitle">Geographic Information System | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — Spatial vs Attribute Data, Vector vs Raster Data, Point/Line/Polygon, ISRO യുടെ ഭൂവൻ പോർട്ടൽ, GIS ന്റെ പിതാവ് (Roger Tomlinson)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — QGIS (Open-source), ArcGIS (Commercial), Overlay Analysis, GIS ന്റെ 5 ഘടകങ്ങൾ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — SVAMITVA പദ്ധതി, ഭൂനിധി പോർട്ടൽ (2023), DILRMP, Geo-tagging</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — Buffer Analysis, Network Analysis, DEM, TIN</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — 1854-ൽ John Snow ന്റെ കോളറ മാപ്പിംഗ്, 1960-കളിലെ CGIS</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>GIS ന്റെ പിതാവ്:</strong> റോജർ ടോംലിൻസൺ (Roger Tomlinson)</li>
+            <li><strong>ലോകത്തിലെ ആദ്യ GIS സിസ്റ്റം:</strong> CGIS (Canada Geographic Information System)</li>
+            <li><strong>ISRO യുടെ 3D ഭൂപട പോർട്ടൽ:</strong> ഭൂവൻ (Bhuvan, 2009)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: അധ്യായ ആമുഖം -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> റിമോട്ട് സെൻസിംഗ് വഴിയും മറ്റും ശേഖരിക്കുന്ന ഭൂമിശാസ്ത്രപരമായ വിവരങ്ങളെ കമ്പ്യൂട്ടറിന്റെ സഹായത്തോടെ ശേഖരിക്കാനും, വിശകലനം ചെയ്യാനും, ഭൂപടങ്ങളാക്കി മാറ്റാനും സഹായിക്കുന്ന ആധുനിക സംവിധാനമാണ് ജി.ഐ.എസ് (GIS - ഭൂമിശാസ്ത്ര വിവരശൃംഖല).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ആധുനിക നഗരാസൂത്രണം, ദുരന്തനിവാരണം, ഗൂഗിൾ മാപ്പ് പോലെയുള്ള ദൈനംദിന ആവശ്യങ്ങൾ എന്നിവയെല്ലാം പൂർണ്ണമായും GIS സാങ്കേതികവിദ്യയുടെ അടിസ്ഥാനത്തിലാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> വെക്റ്റർ-റാസ്റ്റർ ഡാറ്റകൾ, ISRO യുടെ ഭൂവൻ (Bhuvan), GIS നെ പിതാവ് എന്നീ ഭാഗങ്ങളിൽ നിന്ന് LDC, Degree Level പരീക്ഷകളിൽ എപ്പോഴും ചോദ്യങ്ങൾ ചോദിക്കാനുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> സ്പേഷ്യൽ ഡാറ്റ, ആട്രിബ്യൂട്ട് ഡാറ്റ, GIS സോഫ്റ്റ്വെയറുകൾ, GIS ന്റെ ഘടകങ്ങൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: പിന്നാന്യൂറ കഥ -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പിന്നാന്യൂറ കഥ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> പണ്ടുകാലത്ത് ഒരേ സ്ഥലത്തെക്കുറിച്ചുള്ള വ്യത്യസ്ത വിവരങ്ങൾ (ഉദാഹരണത്തിന്: മണ്ണ്, വനം, ജനസാന്ദ്രത) മനസ്സിലാക്കാൻ പലതരം മാപ്പുകൾ വിരിച്ചുവെച്ച് നിവർത്തിവെച്ച് നോക്കേണ്ടി വന്നിരുന്നു. ഇത് വളരെ ശ്രമകരമായിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എങ്ങനെയാണ് ആരംഭിച്ചത്?</strong> 1960-കളിൽ കാനഡയിലെ വനങ്ങളെയും കൃഷിയിടങ്ങളെയും കുറിച്ച് പഠിക്കാൻ അവിടുത്തെ ഗവൺമെന്റ് തീരുമാനിച്ചു. ഈ വിവരങ്ങൾ വേഗത്തിൽ വിശകലനം ചെയ്യാൻ കമ്പ്യൂട്ടറുകളെ ഉപയോഗിക്കാമെന്ന് <strong>റോജർ ടോംലിൻസൺ (Roger Tomlinson)</strong> എന്ന ശാസ്ത്രജ്ഞൻ നിർദ്ദേശിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഫലങ്ങളും പ്രാധാന്യവും:</strong> ഇതിനായി അദ്ദേഹം ലോകത്തിലെ ആദ്യത്തെ GIS സംവിധാനമായ <strong>CGIS (Canada Geographic Information System)</strong> വികസിപ്പിച്ചെടുത്തു. ഒരേ സ്ഥലത്തിന്റെ പല വിവരങ്ങൾ പല പാളികളായി (Layers) കമ്പ്യൂട്ടറിൽ അടുക്കിവെച്ച് പഠിക്കുന്ന ഈ രീതി ഭൂമിശാസ്ത്ര പഠനത്തെ തന്നെ മാറ്റിമറിച്ചു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: GIS ന്റെ ഘടകങ്ങൾ -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. GIS ന്റെ പ്രധാന ഘടകങ്ങൾ (Components of GIS)</h2>
+      <div class="section-body">
+        <p>ഒരു മികച്ച GIS സംവിധാനം പ്രവർത്തിക്കണമെങ്കിൽ താഴെ പറയുന്ന 5 ഘടകങ്ങൾ അനിവാര്യമാണ്:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഹാർഡ്വെയർ (Hardware):</strong> കമ്പ്യൂട്ടർ, സ്കാനർ, പ്രിന്റർ തുടങ്ങിയവ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സോഫ്റ്റ്വെയർ (Software):</strong> വിവരങ്ങൾ വിശകലനം ചെയ്യാനുള്ള കമ്പ്യൂട്ടർ പ്രോഗ്രാമുകൾ (ഉദാ: QGIS, ArcGIS).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിവരങ്ങൾ (Data):</strong> ഏറ്റവും പ്രധാനപ്പെട്ട ഘടകം. റിമോട്ട് സെൻസിംഗിലൂടെയോ സർവ്വേയിലൂടെയോ ലഭിക്കുന്ന വിവരങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>വ്യക്തികൾ (People):</strong> ഈ സംവിധാനം ഉപയോഗിക്കുന്ന ശാസ്ത്രജ്ഞരും സാധാരണക്കാരും.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>രീതികൾ (Methods/Procedures):</strong> ഡാറ്റ വിശകലനം ചെയ്യാൻ ഉപയോഗിക്കുന്ന കൃത്യമായ നിയമങ്ങളും രീതികളും.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>H-S-D-P-M</strong>" (ഹൈസ്കൂൾ ഡി.പി.എം എന്ന് ഓർക്കാം)</p>
+          <ul>
+            <li><strong>H</strong>ardware</li>
+            <li><strong>S</strong>oftware</li>
+            <li><strong>D</strong>ata (ഏറ്റവും പ്രധാനം)</li>
+            <li><strong>P</strong>eople</li>
+            <li><strong>M</strong>ethods</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: GIS-ലെ വിവരങ്ങൾ -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. GIS-ലെ വിവരങ്ങൾ (Data in GIS)</h2>
+      <div class="section-body">
+        <p>കമ്പ്യൂട്ടറിലേക്ക് നൽകുന്ന വിവരങ്ങളെ (Data) പ്രധാനമായും രണ്ടായി തിരിക്കാം:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭൂമിശാസ്ത്രപരമായ വിവരങ്ങൾ (Spatial Data):</strong> ഭൂമിയിൽ ഒരു വസ്തു എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത് എന്നും അതിന്റെ ആകൃതി എന്താണെന്നും സൂചിപ്പിക്കുന്ന വിവരങ്ങൾ. (ഉദാഹരണം: ഒരു റോഡിന്റെ സ്ഥാനം, ഒരു വീടിന്റെ സ്ഥാനം, അക്ഷാംശ-രേഖാംശങ്ങൾ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സവിശേഷതാ വിവരങ്ങൾ (Attribute Data):</strong> ആ വസ്തുവിന്റെ പ്രത്യേകതകളെന്താണ് എന്ന് സൂചിപ്പിക്കുന്ന വിവരങ്ങൾ. (ഉദാഹരണം: ആ റോഡിന്റെ പേരെന്താണ്? ആ റോഡിന്റെ വീതി എത്രയാണ്? ആ വീട്ടിലെ താമസക്കാരുടെ എണ്ണമെത്രയാണ്?).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>Spatial = Where is it?</strong> (എവിടെ?)<br><strong>Attribute = What is it?</strong> (എന്താണ്?)"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Vector vs Raster -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. സ്പേഷ്യൽ ഡാറ്റയുടെ രണ്ട് ഫോർമാറ്റുകൾ (Vector vs Raster)</h2>
+      <div class="section-body">
+        <h3>1. വെക്റ്റർ ഡാറ്റ (Vector Data):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിയിലെ വസ്തുക്കളെ ബിന്ദുകൾ (Points), രേഖകൾ (Lines), ബഹുഭുജങ്ങൾ (Polygons) എന്നിവ ഉപയോഗിച്ച് ചിത്രീകരിക്കുന്ന രീതി.</li>
+          <li><strong>ബിന്ദു (Point):</strong> കിണർ, പോസ്റ്റ് ഓഫീസ്, ടവർ എന്നിവ കാണിക്കാൻ.</li>
+          <li><strong>രേഖ (Line):</strong> നദി, റോഡ്, റെയിൽവേ എന്നിവ കാണിക്കാൻ.</li>
+          <li><strong>ബഹുഭുജം (Polygon):</strong> കുളം, കാട്, കളിസ്ഥലം പോലെ വിസ്തീർണ്ണമുള്ളവ കാണിക്കാൻ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഫയൽ സൈസ് കുറവായിരിക്കും; അതിരുകൾ കൃത്യമായിരിക്കും.</li>
+        </ul>
+
+        <h3>2. റാസ്റ്റർ ഡാറ്റ (Raster Data):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഉപഗ്രഹങ്ങളിൽ നിന്നോ ക്യാമറകളിൽ നിന്നോ ലഭിക്കുന്ന ചിത്രങ്ങളെ ചെറിയ കളങ്ങളായി (Pixels / Grids) തിരിച്ച് സൂക്ഷിക്കുന്ന രീതി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> താപനില, മഴയുടെ അളവ്, വനപ്രദേശം പോലെയുള്ള തുടർച്ചയായ (Continuous) വിവരങ്ങൾ കാണിക്കാൻ റാസ്റ്റർ രീതിയാണ് നല്ലത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഫയൽ സൈസ് വളരെ വലുതായിരിക്കും.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <ul>
+            <li><strong>Point</strong> (പൊട്ട് പോലെ - കിണർ).</li>
+            <li><strong>Line</strong> (വര പോലെ - റോഡ്).</li>
+            <li><strong>Polygon</strong> (വട്ടം പോലെ വിസ്തീർണ്ണമുള്ളത് - കാട്/കുളം).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ഓവർലേ അനാലിസിസ് -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ഓവർലേ അനാലിസിസ് (Overlay Analysis)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> GIS ന്റെ ഏറ്റവും പ്രധാനപ്പെട്ട വിശകലന രീതിയാണിത്. ഒരേ പ്രദേശത്തിനുള്ളിൽ ചേർന്നുകിടക്കുന്ന വ്യത്യസ്ത വിവരങ്ങൾ ഉൾക്കൊള്ളുന്ന ഭൂപടങ്ങളെ ഒന്നിനുമുകളിൽ ഒന്നായി സൂത്രാരുമായ പാളികളായി (Layers) അടുക്കിവെച്ച് പഠിക്കുന്ന രീതിയെയാണ് ഓവർലേ അനാലിസിസ് എന്ന് വിളിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉദാഹരണം:</strong> ഒരു ആശുപത്രി പണിയാൻ സ്ഥലം കണ്ടെത്തുമ്പോൾ റോഡ് മാപ്പ്, ജനസാന്ദ്രതാ മാപ്പ്, കുടിവെള്ള മാപ്പ് എന്നിവ ഒന്നിനുമുകളിൽ ഒന്നായി വെച്ച് അനുയോജ്യമായ സ്ഥലം കണ്ടെത്താൻ GIS സഹായിക്കുന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 7: പ്രധാന വസ്തുതകൾ -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>GIS ന്റെ പിതാവ്:</strong> റോജർ ടോംലിൻസൺ (Roger Tomlinson).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ലോകത്തിലെ ആദ്യത്തെ GIS സിസ്റ്റം:</strong> CGIS (Canada Geographic Information System).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ISRO വികസിപ്പിച്ചെടുത്ത 3D ഭൗമനിരീക്ഷണ പോർട്ടൽ:</strong> ഭൂവൻ (Bhuvan - 2009 ൽ ആരംഭിച്ചു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സ്വതന്ത്രവും സൗജന്യവുമായ (Open-source) GIS സോഫ്റ്റ്വെയറുകൾ:</strong> QGIS (Quantum GIS), GRASS.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വിലകൊടുത്ത് വാങ്ങേണ്ട സ്വകാര്യ (Commercial) GIS സോഫ്റ്റ്വെയറുകൾ:</strong> ArcGIS, MapInfo.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ISRO യുടെ കീഴിലുള്ള പോർട്ടലുകൾ പ്രവർത്തിപ്പിക്കുന്നത്:</strong> NRSC (National Remote Sensing Centre), ഹൈദരാബാദ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>GIS ന്റെ ഏറ്റവും പ്രധാന ഘടകം:</strong> ഡാറ്റ (Data).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഉപഗ്രഹ ചിത്രങ്ങൾ ഏത് ഡാറ്റയാണ്:</strong> റാസ്റ്റർ ഡാറ്റ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>റോഡ്, നദി എന്നിവ ഏത് ഡാറ്റയാണ്:</strong> വെക്റ്റർ ഡാറ്റ (രേഖ/Line).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 8: PSC വിശകലനം -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> സ്പേഷ്യൽ ഡാറ്റയും ആട്രിബ്യൂട്ട് ഡാറ്റയും തമ്മിലുള്ള വ്യത്യാസം, വെക്റ്റർ ഡാറ്റ ഫോർമാറ്റുകൾ (Point, Line, Polygon), ISRO യുടെ ഭൂവൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> GIS ന്റെ പിതാവ്, ഓപ്പൺ സോഴ്സ് സോഫ്റ്റ്വെയറുകൾ ഏതെല്ലാം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ഓവർലേ അനാലിസിസ്, പിക്സലുകൾ ഉപയോഗിക്കുന്ന ഡാറ്റ ഫോർമാറ്റ് (Raster).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇടയ്ക്ക് ചോദിക്കാവുന്നത്:</strong> SVAMITVA പദ്ധതി, NRSC, ജിയോ-ടാഗിംഗ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 9: മുൻകാല ചോദ്യ പ്രവണത -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "GIS-ൽ റോഡ്, നദി എന്നിവയെ പ്രതിനിധീകരിക്കാൻ ഉപയോഗിക്കുന്ന വെക്റ്റർ ഡാറ്റ ഏത് രൂപത്തിലാണ്?" (<strong>രേഖകൾ / Lines</strong>) എന്നത് PSC യുടെ പ്രിയപ്പെട്ട ചോദ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഇന്ത്യൻ സ്പേസ് റിസർച്ച് ഓർഗനൈസേഷൻ (ISRO) തയ്യാറാക്കിയ വെബ് അധിഷ്ഠിത ജി.ഐ.എസ് പോർട്ടൽ ഏത്?" (<strong>ഭൂവൻ</strong>) എന്നത് എൽ.ഡി.സി പരീക്ഷകളിൽ എപ്പോഴും ചോദ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> Remote Sensing ഉം GIS ഉം തമ്മിലുള്ള വ്യത്യാസം Statement ചോദ്യങ്ങളായി ഡിഗ്രി തലത്തിൽ ചോദിക്കാറുണ്ട്. (വിവരങ്ങൾ ശേഖരിക്കുന്നത് RS, അത് കമ്പ്യൂട്ടറിൽ അനലൈസ് ചെയ്യുന്നത് GIS).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 10: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>സ്പേഷ്യൽ ഡാറ്റ (Spatial Data)</td>
+                <td>ആട്രിബ്യൂട്ട് ഡാറ്റ (Attribute Data)</td>
+                <td>ഒരു വസ്തു എവിടെയാണ് (Where is it?) എന്ന് പറയുന്നത് സ്പേഷ്യൽ ഡാറ്റ (ഉദാ: സ്ഥാനം). ആ വസ്തു എന്താണ് (What is it?) എന്ന് പറയുന്നത് ആട്രിബ്യൂട്ട് ഡാറ്റ (ഉദാ: പേര്, നീളം, വീതി).</td>
+              </tr>
+              <tr>
+                <td>വെക്റ്റർ ഡാറ്റ (Vector Data)</td>
+                <td>റാസ്റ്റർ ഡാറ്റ (Raster Data)</td>
+                <td>വ്യക്തമായ അതിരുകളുള്ള കാര്യങ്ങൾ (ഉദാ: റോഡ്, കിണർ) ബിന്ദു, രേഖ, ബഹുഭുജം ആയി കാണിക്കുന്നത് വെക്റ്റർ ഡാറ്റ. ഉപഗ്രഹ ചിത്രങ്ങൾ പോലെ തുടർച്ചയായ കാര്യങ്ങൾ പിക്സലുകളായി (Pixels) കാണിക്കുന്നത് റാസ്റ്റർ ഡാറ്റ.</td>
+              </tr>
+              <tr>
+                <td>റിമോട്ട് സെൻസിംഗ് (RS)</td>
+                <td>ജി.ഐ.എസ് (GIS)</td>
+                <td>അകലെ നിന്ന് ഉപഗ്രഹങ്ങൾ വഴി ഫോട്ടോ എടുക്കുന്നതും വിവരം ശേഖരിക്കുന്നതുമാണ് RS. ആ ലഭിച്ച വിവരങ്ങൾ കമ്പ്യൂട്ടറിലിട്ട് വിശകലനം ചെയ്ത് മാപ്പുണ്ടാക്കുന്നതാണ് GIS.</td>
+              </tr>
+              <tr>
+                <td>ഭൂവൻ (Bhuvan)</td>
+                <td>ഭൂനിധി (Bhoonidhi)</td>
+                <td>രണ്ടും ISRO-യുടെ ജിയോ-പോർട്ടലുകളാണ്. ഭൂവൻ (2009) പൊതുജനങ്ങൾക്കായുള്ള 3D ഭൂപട വീക്ഷണ പോർട്ടലാണ്; ഭൂനിധി (2023) ഉപഗ്രഹ ഡാറ്റ ആർക്കൈവ് ചെയ്ത് ഡൗൺലോഡ് ചെയ്യാനുള്ള പുതിയ പോർട്ടലാണ്.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: താരതമ്യ പട്ടികകൾ -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: GIS ന്റെ ഡാറ്റാ ഫോർമാറ്റുകൾ (Vector vs Raster)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>വെക്റ്റർ ഡാറ്റ (Vector Data)</th><th>റാസ്റ്റർ ഡാറ്റ (Raster Data)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>അടിസ്ഥാന ഘടകം</td><td>ബിന്ദു (Point), രേഖ (Line), ബഹുഭുജം (Polygon)</td><td>കളങ്ങൾ അഥവാ പിക്സലുകൾ (Pixels / Grids)</td></tr>
+              <tr><td>എന്തിന് ഉപയോഗിക്കുന്നു?</td><td>കൃത്യമായ അതിരുകളുള്ള വസ്തുക്കൾ കാണിക്കാൻ (Discrete data)</td><td>തുടർച്ചയായ കാര്യങ്ങൾ കാണിക്കാൻ (Continuous data)</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>കിണർ, റോഡ്, കെട്ടിടം, സംസ്ഥാന അതിർത്തി</td><td>ഉപഗ്രഹ ചിത്രം, മഴയുടെ വിതരണം, താപനില</td></tr>
+              <tr><td>ഫയലിന്റെ വലിപ്പം</td><td>വളരെ ചെറുതായിരിക്കും (കമ്പ്യൂട്ടറിൽ കുറച്ച് സ്ഥലം മതി)</td><td>ഫയൽ സൈസ് വളരെ വലുതായിരിക്കും</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: വെക്റ്റർ ഡാറ്റയുടെ 3 രൂപങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>രൂപം</th><th>എന്തിന് ഉപയോഗിക്കുന്നു?</th><th>ഉദാഹരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ബിന്ദു (Point)</td><td>സ്ഥലവിസ്തൃതി ഇല്ലാത്ത ഒറ്റപ്പെട്ട കാര്യങ്ങൾ കാണിക്കാൻ</td><td>ഇലക്ട്രിക് പോസ്റ്റ്, കിണർ, ടവർ, എ.ടി.എം (ATM)</td></tr>
+              <tr><td>രേഖ (Line)</td><td>നീളമുള്ളതും എന്നാൽ വീതി കുറഞ്ഞതുമായവ കാണിക്കാൻ</td><td>നദി, റെയിൽവേ ലൈൻ, റോഡ്, കനാൽ</td></tr>
+              <tr><td>ബഹുഭുജം (Polygon)</td><td>നീളവും വീതിയുമുള്ള (വിസ്തീർണ്ണമുള്ള)വ കാണിക്കാൻ</td><td>വനപ്രദേശം, കളിസ്ഥലം, ഒരു തടാകം, കൃഷിയിടം</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: സമയരേഖ -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സമയരേഖ / പ്രധാന നാഴികക്കല്ലുകൾ</h2>
+      <div class="section-body">
+        <div class="last-minute">
+          <span class="box-label">📅 GIS ന്റെ കാലക്രമം</span>
+          <ul>
+            <li><strong>1854:</strong> ജോൺ സ്നോ (John Snow) എന്ന ഡോക്ടർ ലണ്ടനിൽ കോളറ ബാധിച്ച പ്രദേശങ്ങൾ ഒരു ഭൂപടത്തിൽ അടയാളപ്പെടുത്തി വിശകലനം ചെയ്തു (Proto-GIS).</li>
+            <li><strong>1960-കളുടെ തുടക്കം:</strong> റോജർ ടോംലിൻസൺ കാനഡയിൽ CGIS ആശയം മുന്നോട്ടുവെക്കുകയും വികസിപ്പിക്കാൻ ആരംഭിക്കുകയും ചെയ്തു (GIS ന്റെ ജനനം).</li>
+            <li><strong>1968:</strong> 'Geographic Information System' എന്ന പദം ആദ്യമായി ഉപയോഗിച്ചു.</li>
+            <li><strong>1982:</strong> ESRI എന്ന കമ്പനി ലോകത്തിലെ ഏറ്റവും പ്രശസ്തമായ സ്വകാര്യ GIS സോഫ്റ്റ്വെയറായ ARC/INFO (പിന്നീട് ArcGIS) പുറത്തിറക്കി.</li>
+            <li><strong>2002:</strong> സൗജന്യമായി ഉപയോഗിക്കാവുന്ന QGIS (Quantum GIS) പുറത്തിറക്കി.</li>
+            <li><strong>2005:</strong> ഗൂഗിൾ (Google) തങ്ങളുടെ ഭൗമനിരീക്ഷണ പോർട്ടലായ ഗൂഗിൾ എർത്ത് (Google Earth) പുറത്തിറക്കി.</li>
+            <li><strong>2009:</strong> ഇന്ത്യയുടെ ISRO തങ്ങളുടെ വെബ് അധിഷ്ഠിത 3D പോർട്ടലായ ഭൂവൻ (Bhuvan) പുറത്തിറക്കി.</li>
+            <li><strong>2020:</strong> SVAMITVA പദ്ധതി ആരംഭിച്ചു - ഡ്രോൺ സർവ്വേയും GIS-ഉം ഉപയോഗിച്ച് ഗ്രാമീണ വസ്തുവകകൾക്ക് രേഖകൾ നൽകുന്ന കേന്ദ്ര പദ്ധതി.</li>
+            <li><strong>2023:</strong> ISRO-യുടെ ഭൂനിധി (Bhoonidhi) പോർട്ടൽ പുറത്തിറക്കി.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: Mnemonics -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong> GIS ന്റെ 5 ഘടകങ്ങൾ ഓർക്കാൻ</span>
+          <p>"<strong>H-S-D-P-M</strong>" (ഹൈസ്കൂൾ ഡി.പി.എം എന്ന് ഓർക്കാം)</p>
+          <ul>
+            <li><strong>H</strong>ardware</li>
+            <li><strong>S</strong>oftware</li>
+            <li><strong>D</strong>ata</li>
+            <li><strong>P</strong>eople</li>
+            <li><strong>M</strong>ethods</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong> വെക്റ്റർ ഡാറ്റാ രൂപങ്ങൾ ഓർക്കാൻ</span>
+          <ul>
+            <li><strong>Point</strong> (പൊട്ട് പോലെ - കിണർ).</li>
+            <li><strong>Line</strong> (വര പോലെ - റോഡ്).</li>
+            <li><strong>Polygon</strong> (വട്ടം പോലെ വിസ്തീർണ്ണമുള്ളത് - കാട്/കുളം).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong> Spatial vs Attribute</span>
+          <p>"<strong>Spatial = Where</strong> (എവിടെ), <strong>Attribute = What</strong> (എന്ത്)"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: PSC കെണികൾ -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഇന്ത്യയുടെ ISRO വികസിപ്പിച്ചെടുത്ത ജി.ഐ.എസ് ഭൗമനിരീക്ഷണ പോർട്ടൽ ഏത്?</p>
+          <p><strong>Confusing Options:</strong> നാവിക് (NavIC), ഭൂവൻ (Bhuvan), ഇൻസാറ്റ്, ഭാരത് മാപ്പ്.</p>
+          <p><strong>Fact:</strong> ഗൂഗിൾ എർത്തിന് സമാനമായി ISRO ഒരുക്കിയ വെബ് പോർട്ടൽ <strong>ഭൂവൻ (Bhuvan)</strong> ആണ്. എന്നാൽ നാവിക് (NavIC) എന്നത് ഇന്ത്യയുടെ സ്വന്തം നാവിഗേഷൻ സിസ്റ്റമാണ് (GPS ന് പകരമുള്ളത്). രണ്ടും തമ്മിൽ മാറിപ്പോകരുത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> പിക്സലുകൾ (Pixels) ഉപയോഗിച്ച് ഭൗമവിവരങ്ങൾ രേഖപ്പെടുത്തുന്ന ഡാറ്റാ ഫോർമാറ്റ് ഏത്?</p>
+          <p><strong>Confusing Options:</strong> സ്പേഷ്യൽ ഡാറ്റ, ആട്രിബ്യൂട്ട് ഡാറ്റ, വെക്റ്റർ ഡാറ്റ, റാസ്റ്റർ ഡാറ്റ.</p>
+          <p><strong>Fact:</strong> ഉപഗ്രഹ ചിത്രങ്ങളെപ്പോലെ കളങ്ങളായി (Pixels) തിരിച്ച് ഡാറ്റ സേവ് ചെയ്യുന്നത് <strong>റാസ്റ്റർ ഡാറ്റ (Raster Data)</strong> ആണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ഭൂവനും ഭൂനിധിയും ഒന്നാണോ?</p>
+          <p><strong>Fact:</strong> അല്ല. രണ്ടും ISRO പോർട്ടലുകളാണെങ്കിലും <strong>ഭൂവൻ</strong> ഭൂപടം കാണാനുള്ളതും, <strong>ഭൂനിധി</strong> ഉപഗ്രഹ ഡാറ്റ ഡൗൺലോഡ് ചെയ്യാനുള്ളതുമാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> GIS ന്റെ പിതാവ് ആരാണ്?</p>
+          <p><strong>Confusing Options:</strong> ആൽഫ്രഡ് വെഗനർ, റിച്ചാർഡ് സ്റ്റാൾമാൻ, റോജർ ടോംലിൻസൺ, പി.ആർ. പിഷാരടി.</p>
+          <p><strong>Fact:</strong> <strong>റോജർ ടോംലിൻസൺ (Roger Tomlinson)</strong> ആണ് GIS ന്റെ പിതാവ്. പി.ആർ. പിഷാരടി ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗിന്റെ പിതാവാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ഒരു GIS സംവിധാനത്തിന്റെ ഏറ്റവും പ്രധാനപ്പെട്ട ഘടകം ഏതാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഹാർഡ്വെയർ, സോഫ്റ്റ്വെയർ, വ്യക്തികൾ, ഡാറ്റ (Data).</p>
+          <p><strong>Fact:</strong> <strong>ഡാറ്റ (Data)</strong> ഇല്ലാതെ ഒരു കമ്പ്യൂട്ടറിനും അത് വിശകലനം ചെയ്യാൻ സാധിക്കില്ല. അതിനാൽ ഡാറ്റയാണ് ഏറ്റവും പ്രധാന ഘടകം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: അധിക വസ്തുതകൾ -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>CGIS ന്റെ പൂർണ്ണരൂപം:</strong> Canada Geographic Information System എന്നാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ആധുനിക GIS സോഫ്റ്റ്വെയറുകളിൽ നിർമ്മിത ബുദ്ധിയും (Artificial Intelligence - AI) മെഷീൻ ലേണിംഗും വലിയ തോതിൽ ഉപയോഗിക്കുന്നുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഒരു ഭൂപടത്തിലെ ഓരോ പിക്സലിന്റെയും (Pixel) വലിപ്പം കുറയുന്തോറും ചിത്രത്തിന്റെ വ്യക്തത (Resolution) കൂടുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> സ്വതന്ത്ര സോഫ്റ്റ്വെയറായ QGIS വിൻഡോസ്, മാക്, ഗ്നു/ലിനക്സ് (GNU/Linux) എന്നീ എല്ലാ ഓപ്പറേറ്റിംഗ് സിസ്റ്റങ്ങളിലും പ്രവർത്തിക്കും (Cross-platform). സി++ (C++) എന്ന പ്രോഗ്രാമിംഗ് ഭാഷയിലാണ് ഇത് എഴുതിയിട്ടുള്ളത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഭൂവൻ (Bhuvan):</strong> 2009 ഓഗസ്റ്റ് 12-നാണ് ISRO ഇത് ജനങ്ങൾക്കായി തുറന്നുകൊടുത്തത്. ഇത് ഇന്ത്യയുടെ അതിർത്തികൾക്കുള്ളിലുള്ള പ്രദേശങ്ങളുടെ ഏറ്റവും കൃത്യതയുള്ള ഉപഗ്രഹ ചിത്രങ്ങളും ഡാറ്റയും സൗജന്യമായി നൽകുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേരള സർക്കാരിന്റെ വിവരസാങ്കേതിക മിഷൻ (IT Mission) വികസിപ്പിച്ചെടുത്ത GIS പോർട്ടലാണ് <strong>കേരള സ്പേഷ്യൽ ഡാറ്റ ഇൻഫ്രാസ്ട്രക്ചർ (KSDI)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1854</strong>-ൽ ജോൺ സ്നോ (John Snow) എന്ന ഡോക്ടർ ലണ്ടനിൽ കോളറ ബാധിച്ച പ്രദേശങ്ങൾ ഒരു ഭൂപടത്തിൽ അടയാളപ്പെടുത്തി വിശകലനം ചെയ്തിരുന്നു. ഇതിനെയാണ് ആധുനിക GIS ന്റെ ആദ്യകാല മാതൃകയായി (Proto-GIS) പലരും കണക്കാക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ISRO-യുടെ കീഴിലുള്ള <strong>NRSC (National Remote Sensing Centre)</strong> ആണ് ഹൈദരാബാദ് ആസ്ഥാനമായി ഭൂവൻ പോർട്ടലും ഭൂനിധി പോർട്ടലും പ്രവർത്തിപ്പിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഗ്രാമീണ മേഖലയിലെ വീട്ടുകൾക്കും വസ്തുവകകൾക്കും ഡ്രോൺ സർവ്വേയിലൂടെ ഉടമസ്ഥാവകാശ രേഖ (Property Card) നൽകുന്ന കേന്ദ്ര പദ്ധതിയാണ് <strong>SVAMITVA</strong> (Survey of Villages and Mapping with Improvised Technology in Village Areas) - 2020-ൽ ആരംഭിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭൂരേഖകൾ പൂർണ്ണമായി ഡിജിറ്റൈസ് ചെയ്യാനുള്ള കേന്ദ്ര പദ്ധതിയാണ് <strong>DILRMP (Digital India Land Records Modernization Programme)</strong>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 16: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഭൂമിശാസ്ത്രപരമായ വിവരങ്ങളെ കമ്പ്യൂട്ടറിന്റെ സഹായത്തോടെ വിശകലനം ചെയ്യാനും ശേഖരിക്കാനുമുള്ള സാങ്കേതികവിദ്യയായ GIS ന്റെ പൂർണ്ണരൂപം എന്ത്?</div>
+          <div class="options">
+            <span data-opt="A">A. Global Information System</span>
+            <span data-opt="B">B. Geographic Information System</span>
+            <span data-opt="C">C. Geological Identification System</span>
+            <span data-opt="D">D. Geostationary Information Satellite</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Geographic Information System</div>
+            <div class="explanation">ഭൂമിശാസ്ത്ര വിവരശൃംഖല എന്നാണ് മലയാളത്തിൽ ഇത് അറിയപ്പെടുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ലോകത്തിലെ ആദ്യത്തെ GIS സിസ്റ്റം (CGIS) വികസിപ്പിച്ചെടുത്തതും 'GIS ന്റെ പിതാവ്' എന്ന് അറിയപ്പെടുന്നതുമായ ശാസ്ത്രജ്ഞൻ ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആൽഫ്രഡ് വെഗനർ</span>
+            <span data-opt="B">B. റിച്ചാർഡ് സ്റ്റാൾമാൻ</span>
+            <span data-opt="C">C. റോജർ ടോംലിൻസൺ (Roger Tomlinson)</span>
+            <span data-opt="D">D. പി. ആർ. പിഷാരടി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) റോജർ ടോംലിൻസൺ (Roger Tomlinson)</div>
+            <div class="explanation">1960-കളിൽ കാനഡ ഗവൺമെന്റിന് വേണ്ടിയാണ് അദ്ദേഹം ഇത് നിർമ്മിച്ചത്. (പി. ആർ. പിഷാരടി ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗിന്റെ പിതാവാണ്).</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. സ്പേഷ്യൽ ഡാറ്റ - വസ്തുവിന്റെ സവിശേഷതകൾ പറയുന്നു</span>
+            <span data-opt="B">B. ആട്രിബ്യൂട്ട് ഡാറ്റ - വസ്തുവിന്റെ സ്ഥാനം പറയുന്നു</span>
+            <span data-opt="C">C. വെക്റ്റർ ഡാറ്റ - ബിന്ദു, രേഖ, ബഹുഭുജം</span>
+            <span data-opt="D">D. റാസ്റ്റർ ഡാറ്റ - രേഖകൾ മാത്രം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) വെക്റ്റർ ഡാറ്റ - ബിന്ദു, രേഖ, ബഹുഭുജം</div>
+            <div class="explanation">സ്പേഷ്യൽ ഡാറ്റയാണ് സ്ഥാനം പറയുന്നത്, ആട്രിബ്യൂട്ട് ഡാറ്റ സവിശേഷതകളാണ് പറയുന്നത്. റാസ്റ്റർ ഡാറ്റ പിക്സലുകളാണ്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. GIS സോഫ്റ്റ്വെയറുകളിൽ ഭൗമ വിവരങ്ങളെ ഒന്നിനുമുകളിൽ ഒന്നായി സൂത്രാരുമായ പാളികളായി (Layers) വെച്ച് വിശകലനം ചെയ്യുന്ന രീതിയെ എന്ത് വിളിക്കുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. നെറ്റ്വർക്ക് അനാലിസിസ്</span>
+            <span data-opt="B">B. ബഫറിംഗ്</span>
+            <span data-opt="C">C. ഓവർലേ അനാലിസിസ് (Overlay Analysis)</span>
+            <span data-opt="D">D. ഡാറ്റാ മൈനിംഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഓവർലേ അനാലിസിസ് (Overlay Analysis)</div>
+            <div class="explanation">ഒരു സ്ഥലത്തെ വിവിധ ഡാറ്റകൾ (റോഡ്, കുടിവെള്ളം, മഴ) ഒരുമിച്ച് കണ്ട് തീരുമാനമെടുക്കാൻ ഇത് സഹായിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഇന്ത്യയുടെ ബഹിരാകാശ ഏജൻസിയായ ഐ.എസ്.ആർ.ഒ (ISRO) പൊതുജനങ്ങൾക്കായി വികസിപ്പിച്ചെടുത്ത 3D വെബ്-അധിഷ്ഠിത GIS പോർട്ടൽ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. നാവിക് (NavIC)</span>
+            <span data-opt="B">B. ഭൂവൻ (Bhuvan)</span>
+            <span data-opt="C">C. ആകാശ്</span>
+            <span data-opt="D">D. ഗൂഗിൾ എർത്ത്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഭൂവൻ (Bhuvan)</div>
+            <div class="explanation">2009-ലാണ് ഇത് ജനങ്ങൾക്കായി തുറന്നുകൊടുത്തത്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. താഴെ പറയുന്നവയിൽ ഏതാണ് സ്വതന്ത്രവും സൗജന്യവുമായ (Open-source) ഒരു GIS സോഫ്റ്റ്വെയറിന് ഉദാഹരണം?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർക്ക് ജി.ഐ.എസ് (ArcGIS)</span>
+            <span data-opt="B">B. ക്വാണ്ടം ജി.ഐ.എസ് (QGIS)</span>
+            <span data-opt="C">C. മാപ് ഇൻഫോ (MapInfo)</span>
+            <span data-opt="D">D. എം.എസ് ഓഫീസ് (MS Office)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ക്വാണ്ടം ജി.ഐ.എസ് (QGIS)</div>
+            <div class="explanation">ആർക്ക് ജി.ഐ.എസ്, മാപ് ഇൻഫോ എന്നിവ വിലകൊടുത്ത് വാങ്ങേണ്ടവയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: വെക്റ്റർ ഡാറ്റാ ഫോർമാറ്റുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            • കുളം, തടാകം, വനപ്രദേശം എന്നിവ പോലെ വിസ്തീർണ്ണമുള്ള കാര്യങ്ങൾ അടയാളപ്പെടുത്താൻ ബഹുഭുജം (Polygon) ഉപയോഗിക്കുന്നു.<br>
+            • കിണറുകൾ, ഇലക്ട്രിക് പോസ്റ്റുകൾ എന്നിവ കാണിക്കാൻ ബിന്ദുകൾ (Points) ഉപയോഗിക്കുന്നു.<br>
+            • ഉപഗ്രഹ ചിത്രങ്ങളെ അതേപടി പിക്സലുകളായി സേവ് ചെയ്യുന്നത് വെക്റ്റർ ഡാറ്റയുടെ പ്രത്യേകതയാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്; കാരണം പിക്സലുകളായി സേവ് ചെയ്യുന്നത് റാസ്റ്റർ ഡാറ്റയുടെ (Raster Data) പ്രത്യേകതയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഒരു റോഡ് അല്ലെങ്കിൽ റെയിൽവേ ലൈൻ പോലെയുള്ള നീളമുള്ള വസ്തുക്കളെ GIS ൽ പ്രതിനിധീകരിക്കാൻ ഉപയോഗിക്കുന്ന വെക്റ്റർ ഡാറ്റ രൂപം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ബഹുഭുജം (Polygon)</span>
+            <span data-opt="B">B. ബിന്ദു (Point)</span>
+            <span data-opt="C">C. രേഖ (Line)</span>
+            <span data-opt="D">D. പിക്സൽ (Pixel)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) രേഖ (Line)</div>
+            <div class="explanation">നീളമുണ്ടെങ്കിലും വീതി പരിഗണിക്കാത്ത വസ്തുക്കൾ ലൈൻ ആയാണ് കൊടുക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following:<br>
+            • ഭൂവൻ (Bhuvan) - a. സ്വകാര്യ GIS സോഫ്റ്റ്വെയർ<br>
+            • QGIS - b. പിക്സലുകൾ<br>
+            • ArcGIS - c. ISRO പോർട്ടൽ<br>
+            • റാസ്റ്റർ ഡാറ്റ - d. സ്വതന്ത്ര സോഫ്റ്റ്വെയർ</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-c, 3-a, 4-d</span>
+            <span data-opt="B">B. 1-c, 2-d, 3-a, 4-b</span>
+            <span data-opt="C">C. 1-c, 2-a, 3-d, 4-b</span>
+            <span data-opt="D">D. 1-d, 2-b, 3-c, 4-a</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1-c, 2-d, 3-a, 4-b</div>
+            <div class="explanation">കൃത്യമായ സോഫ്റ്റ്വെയറുകളും ഡാറ്റാ സവിശേഷതകളും.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. "ഒരു വീടിന് മുന്നിലൂടെ പോകുന്ന റോഡിന്റെ വീതി 5 മീറ്ററാണ്, ആ റോഡ് ടാർ ചെയ്തിട്ടുള്ളതാണ്" എന്ന് GIS ൽ രേഖപ്പെടുത്തുന്നത് താഴെ പറയുന്നവയിൽ ഏതുതരം ഡാറ്റയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സ്പേഷ്യൽ ഡാറ്റ (Spatial Data)</span>
+            <span data-opt="B">B. ആട്രിബ്യൂട്ട് ഡാറ്റ (Attribute Data)</span>
+            <span data-opt="C">C. ഇമേജ് ഡാറ്റ</span>
+            <span data-opt="D">D. അസ്ട്രോണമിക്കൽ ഡാറ്റ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആട്രിബ്യൂട്ട് ഡാറ്റ (Attribute Data)</div>
+            <div class="explanation">ഒരു വസ്തു എവിടെയാണ് എന്നതല്ല, മറിച്ച് അതിന്റെ സ്വഭാവവും പ്രത്യേകതകളുമാണ് (What is it) ഇവിടെ പറയുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഒരു GIS സംവിധാനത്തിന്റെ ഏറ്റവും പ്രധാനപ്പെട്ട ഘടകം (Component) താഴെ പറയുന്നവയിൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹാർഡ്വെയർ</span>
+            <span data-opt="B">B. സോഫ്റ്റ്വെയർ</span>
+            <span data-opt="C">C. വ്യക്തികൾ</span>
+            <span data-opt="D">D. ഡാറ്റ (Data - വിവരങ്ങൾ)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഡാറ്റ (Data - വിവരങ്ങൾ)</div>
+            <div class="explanation">ഡാറ്റ ഇല്ലാതെ ഒരു കമ്പ്യൂട്ടറിനും അത് വിശകലനം ചെയ്യാൻ സാധിക്കില്ല.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): മഴയുടെ വിതരണം, താപനില തുടങ്ങിയ മാറ്റം വന്നുകൊണ്ടിരിക്കുന്ന കാര്യങ്ങൾ അടയാളപ്പെടുത്താൻ റാസ്റ്റർ ഡാറ്റ (Raster Data) ആണ് കൂടുതൽ അനുയോജ്യം.<br>
+            Reason (R): റാസ്റ്റർ ഡാറ്റ ഒരു പ്രദേശത്തെ പിക്സലുകളുടെ (ഗ്രിഡുകൾ) ഒരു ഗണമായാണ് കണക്കാക്കുന്നത്. ഇത് തുടർച്ചയായ (Continuous) വിവരങ്ങൾ കൃത്യമായി പ്രതിനിധീകരിക്കാൻ സഹായിക്കുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">റാസ്റ്റർ ഡാറ്റയുടെ പ്രധാന ഉപയോഗമാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. താഴെ പറയുന്നവയിൽ GIS ന്റെ ഒരു ഘടകം (Component of GIS) അല്ലാത്തത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സോഫ്റ്റ്വെയർ</span>
+            <span data-opt="B">B. ഹാർഡ്വെയർ</span>
+            <span data-opt="C">C. ഉപഗ്രഹങ്ങൾ (Satellites)</span>
+            <span data-opt="D">D. വ്യക്തികൾ (People)</span>
+          </div>
+          <div class="answer-label" style="display:none"></div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഉപഗ്രഹങ്ങൾ (Satellites)</div>
+            <div class="explanation">ഉപഗ്രഹങ്ങൾ റിമോട്ട് സെൻസിംഗിന്റെ പ്ലാറ്റ്ഫോമുകളാണ്. GIS-ൽ ഹാർഡ്വെയർ, സോഫ്റ്റ്വെയർ, ഡാറ്റ, ആളുകൾ, രീതികൾ എന്നിവയാണുള്ളത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഒരു ജില്ലയുടെ മുഴുവൻ ഫയൽ സൈസ് വളരെ കുറഞ്ഞ തീവ്രതയിൽ, അതിരുകൾ (Boundaries) കൃത്യമായി രേഖപ്പെടുത്തിക്കൊണ്ട് GIS ൽ ഒരു മാപ്പ് ഉണ്ടാക്കാൻ ഏത് ഡാറ്റാ ഫോർമാറ്റ് ഉപയോഗിക്കുന്നതാണ് ഉത്തമം?</div>
+          <div class="options">
+            <span data-opt="A">A. റാസ്റ്റർ ഡാറ്റ</span>
+            <span data-opt="B">B. വെക്റ്റർ ഡാറ്റ (Vector Data)</span>
+            <span data-opt="C">C. പിക്സൽ ഡാറ്റ</span>
+            <span data-opt="D">D. ജെപെഗ് (JPEG) ചിത്രങ്ങൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) വെക്റ്റർ ഡാറ്റ (Vector Data)</div>
+            <div class="explanation">വെക്റ്റർ ഡാറ്റ ഫയലുകൾക്ക് സൈസ് കുറവായിരിക്കും, എന്നാൽ അതിരുകൾ വളരെ വ്യക്തമായിരിക്കും.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഡിജിറ്റൽ ഫോർമാറ്റിലുള്ള ഒരു മാപ്പിനെ അനലൈസ് ചെയ്യുന്നതിന് മുൻപ്, വ്യത്യസ്ത ഭൂപടങ്ങളിലെ സവിശേഷതകളെ പല പാളികളായി മാറ്റുന്ന പ്രക്രിയ അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ലേയറിംഗ് (Layering)</span>
+            <span data-opt="B">B. പ്രൊജക്ടറിംഗ് (Projecting)</span>
+            <span data-opt="C">C. പ്രിന്റിംഗ് (Printing)</span>
+            <span data-opt="D">D. സ്കാനിംഗ് (Scanning)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ലേയറിംഗ് (Layering)</div>
+            <div class="explanation">മഴ ഒരു ലേയർ, റോഡ് മറ്റൊരു ലേയർ എന്നിങ്ങനെ മാറ്റുന്നതാണ് ലേയറിംഗ്. ഇത് ഒന്നിനുമുകളിൽ വെക്കുന്നതാണ് ഓവർലേ അനാലിസിസ്.</div>
+          </div>
+        </div>
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ISRO-യുടെ ഭൂവൻ, ഭൂനിധി എന്നീ പോർട്ടലുകൾ പ്രവർത്തിപ്പിക്കുന്ന ഹൈദരാബാദ് ആസ്ഥാനമായ ഏജൻസി ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. NIC</span>
+            <span data-opt="B">B. NRSC (National Remote Sensing Centre)</span>
+            <span data-opt="C">C. NATMO</span>
+            <span data-opt="D">D. Survey of India</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) NRSC (National Remote Sensing Centre)</div>
+            <div class="explanation">ISRO-യുടെ കീഴിൽ ഹൈദരാബാദ് ആസ്ഥാനമായി പ്രവർത്തിക്കുന്ന ഏജൻസിയാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ഡ്രോൺ സർവ്വേയിലൂടെ ഗ്രാമീണ വസ്തുവകകൾക്ക് ഉടമസ്ഥാവകാശ രേഖ (Property Card) നൽകുന്ന 2020-ൽ ആരംഭിച്ച കേന്ദ്ര പദ്ധതി ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. SVAMITVA</span>
+            <span data-opt="B">B. DILRMP</span>
+            <span data-opt="C">C. PM-KISAN</span>
+            <span data-opt="D">D. PMAY</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) SVAMITVA</div>
+            <div class="explanation">കേന്ദ്ര പഞ്ചായത്തിരാജ് മന്ത്രാലയത്തിന്റെ പദ്ധതിയാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ഒരു ഫോട്ടോയ്ക്കോ പോസ്റ്റിനോ അതിന്റെ ഭൂമിശാസ്ത്രപരമായ സ്ഥാനം ഡിജിറ്റലായി കൂട്ടിച്ചേർക്കുന്ന പ്രക്രിയ ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജിയോ-കോഡിംഗ്</span>
+            <span data-opt="B">B. ജിയോ-ടാഗിംഗ് (Geo-tagging)</span>
+            <span data-opt="C">C. ജിയോ-ഫെൻസിംഗ്</span>
+            <span data-opt="D">D. ജിയോ-റെക്റ്റിഫിക്കേഷൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ജിയോ-ടാഗിംഗ് (Geo-tagging)</div>
+            <div class="explanation">സർക്കാർ പദ്ധതികളുടെ നിരീക്ഷണത്തിന് ഇത് വ്യാപകമായി ഉപയോഗിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. ഉപഗ്രഹ ഡാറ്റ ആർക്കൈവ് ചെയ്ത് ഡൗൺലോഡ് ചെയ്യാൻ അനുവദിക്കുന്ന ISRO-യുടെ 2023-ൽ പുറത്തിറക്കിയ പുതിയ പോർട്ടൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭൂവൻ (Bhuvan)</span>
+            <span data-opt="B">B. ഭൂനിധി (Bhoonidhi)</span>
+            <span data-opt="C">C. വായു</span>
+            <span data-opt="D">D. ദിശ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഭൂനിധി (Bhoonidhi)</div>
+            <div class="explanation">ഭൂവനിൽ നിന്നും വ്യത്യസ്തമായി, ഇത് പ്രധാനമായും ഡാറ്റ ഡൗൺലോഡ് ചെയ്യാനുള്ള പോർട്ടലാണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17: ഉത്തര സൂചിക -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(B)</td><td>11</td><td>(D)</td><td>16</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>7</td><td>(A)</td><td>12</td><td>(A)</td><td>17</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>8</td><td>(C)</td><td>13</td><td>(C)</td><td>18</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(B)</td><td>14</td><td>(B)</td><td>19</td><td>(B)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(B)</td><td>15</td><td>(A)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: 30-സെക്കൻഡ് റിവിഷൻ -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>GIS ഫൂൽരൂപം: Geographic Information System.</li>
+          <li>GIS ന്റെ പിതാവ്: റോജർ ടോംലിൻസൺ.</li>
+          <li>ലോകത്തെ ആദ്യത്തെ GIS സിസ്റ്റം: CGIS (കാനഡ).</li>
+          <li>GIS ഘടകങ്ങൾ (5 എണ്ണം): Hardware, Software, Data, People, Methods.</li>
+          <li>സ്പേഷ്യൽ ഡാറ്റ: സ്ഥാനം (Where is it?).</li>
+          <li>ആട്രിബ്യൂട്ട് ഡാറ്റ: സവിശേഷതകൾ (What is it?).</li>
+          <li>വെക്റ്റർ ഡാറ്റ ഫോർമാറ്റ്: Point (ബിന്ദു), Line (രേഖ), Polygon (ബഹുഭുജം).</li>
+          <li>പിക്സലുകൾ ഉള്ളത് ഏതിൽ: റാസ്റ്റർ ഡാറ്റയിൽ (Raster Data).</li>
+          <li>തുറന്ന (സൗജന്യ) സോഫ്റ്റ്വെയറുകൾ: QGIS, GRASS.</li>
+          <li>വാണിജ്യ (വിലകൊടുത്തു വാങ്ങുന്നവ) സോഫ്റ്റ്വെയറുകൾ: ArcGIS, MapInfo.</li>
+          <li>ISRO യുടെ 3D വെബ് പോർട്ടൽ: ഭൂവൻ (Bhuvan).</li>
+          <li>ഭൂവൻ ആരംഭിച്ചത്: 2009.</li>
+          <li>പാളികളായി വെച്ച് പഠിക്കുന്ന രീതി: ഓവർലേ അനാലിസിസ് (Overlay Analysis).</li>
+          <li>ഉപഗ്രഹ ചിത്രങ്ങൾ ഏത് ഡാറ്റയാണ്: റാസ്റ്റർ ഡാറ്റ.</li>
+          <li>വെക്റ്റർ ഡാറ്റയിൽ റോഡ് ഏത് രൂപത്തിലാണ്: ലൈൻ (Line).</li>
+          <li>വെക്റ്റർ ഡാറ്റയിൽ കിണർ, പോസ്റ്റ് ഓഫീസ്: പോയിന്റ് (Point).</li>
+          <li>വെക്റ്റർ ഡാറ്റയിൽ വനം, കുളം: പോളിഗോൺ (Polygon).</li>
+          <li>റിമോട്ട് സെൻസിംഗും GIS ഉം ബന്ധപ്പെട്ടിരിക്കുന്നു.</li>
+          <li>ഡാറ്റ ശേഖരിക്കുന്നത്: റിമോട്ട് സെൻസിംഗ്.</li>
+          <li>ഡാറ്റ വിശകലനം ചെയ്ത് മാപ്പുണ്ടാക്കുന്നത്: GIS.</li>
+          <li>ഭൂവനും ഭൂനിധിയും പ്രവർത്തിപ്പിക്കുന്നത്: NRSC (ISRO), ഹൈദരാബാദ്.</li>
+          <li>SVAMITVA പദ്ധതി: ഗ്രാമീണ വസ്തു രേഖകൾ, ഡ്രോൺ സർവ്വേ (2020).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 19: ഒരു പേജ് റിവിഷൻ -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>ഡാറ്റാ വിവരങ്ങൾ (Data Types):</h3>
+        <ul>
+          <li><strong>Spatial Data:</strong> ലൊക്കേഷൻ (അക്ഷാംശം, രേഖാംശം).</li>
+          <li><strong>Attribute Data:</strong> വിവരങ്ങൾ (പേര്, എണ്ണം, വീതി).</li>
+        </ul>
+        <h3>കമ്പ്യൂട്ടർ ഫോർമാറ്റുകൾ (Vector vs Raster):</h3>
+        <ul>
+          <li><strong>Vector Data:</strong>
+            <ul>
+              <li>Point (കിണർ, ടവർ).</li>
+              <li>Line (റോഡ്, നദി).</li>
+              <li>Polygon (വനം, കൃഷിയിടം, തടാകം).</li>
+              <li>കുറഞ്ഞ ഫയൽ സൈസ്, കൃത്യമായ അതിരുകൾ.</li>
+            </ul>
+          </li>
+          <li><strong>Raster Data:</strong>
+            <ul>
+              <li>Pixels (പിക്സലുകൾ).</li>
+              <li>തുടർച്ചയായ കാര്യങ്ങൾ (മഴ, താപനില, ഉപഗ്രഹ ഫോട്ടോ).</li>
+              <li>വലിയ ഫയൽ സൈസ്.</li>
+            </ul>
+          </li>
+        </ul>
+        <h3>സോഫ്റ്റ്വെയറുകൾ & പോർട്ടലുകൾ:</h3>
+        <ul>
+          <li><strong>Open-source:</strong> QGIS.</li>
+          <li><strong>Commercial:</strong> ArcGIS.</li>
+          <li><strong>ISRO Portal:</strong> Bhuvan (ഭൂവൻ), Bhoonidhi (ഭൂനിധി).</li>
+          <li><strong>Father of GIS:</strong> Roger Tomlinson.</li>
+        </ul>
+        <h3>സർക്കാർ പദ്ധതികൾ:</h3>
+        <ul>
+          <li><strong>SVAMITVA:</strong> ഗ്രാമീണ വസ്തു രേഖകൾ (ഡ്രോൺ + GIS), 2020.</li>
+          <li><strong>DILRMP:</strong> ഭൂരേഖകളുടെ ഡിജിറ്റൈസേഷൻ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 20: ടോപ്പ് 25 വസ്തുതകൾ -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>GIS-ലെ ഭൂപടങ്ങളെ ഡിജിറ്റൽ ഭൂപടങ്ങൾ (Digital Maps) എന്നാണ് വിളിക്കുന്നത്. ഇവ പേപ്പർ മാപ്പുകളേക്കാൾ വേഗത്തിൽ അപ്ഡേറ്റ് ചെയ്യാൻ കഴിയും.</li>
+          <li>ആട്രിബ്യൂട്ട് ഡാറ്റ (Attribute Data) കമ്പ്യൂട്ടറിൽ സേവ് ചെയ്യുന്നത് ഒരു ടേബിൾ (Table) രൂപത്തിലാണ്. ഇതിനെ ആട്രിബ്യൂട്ട് ടേബിൾ എന്ന് വിളിക്കുന്നു.</li>
+          <li>കമ്പ്യൂട്ടറിലെ സ്പേഷ്യൽ ഡാറ്റയെയും ആട്രിബ്യൂട്ട് ടേബിളിനെയും തമ്മിൽ പരസ്പരം ലിങ്ക് ചെയ്താണ് GIS പ്രവർത്തിക്കുന്നത്.</li>
+          <li>ബഫറിംഗ് (Buffering) എന്നത് GIS-ലെ ഒരു പ്രധാന പ്രക്രിയയാണ്. ഉദാഹരണത്തിന്, ഒരു റോഡിന്റെ ഇരുവശത്തും 50 മീറ്റർ അകലത്തിലുള്ള കെട്ടിടങ്ങൾ ഏതൊക്കെയെന്ന് കണ്ടെത്താൻ റോഡിന് ചുറ്റും ഒരു ബഫർ സോൺ (Buffer zone) വരയ്ക്കുന്നു.</li>
+          <li>ഗൂഗിൾ മാപ്പിൽ നമ്മൾ രണ്ട് സ്ഥലങ്ങൾക്കിടയിലുള്ള ഏറ്റവും കുറഞ്ഞ ദൂരമുള്ള വഴി (Shortest path) കണ്ടെത്തുന്നത് GIS-ലെ നെറ്റ്വർക്ക് അനാലിസിസ് (Network Analysis) എന്ന സാങ്കേതികവിദ്യ ഉപയോഗിച്ചാണ്.</li>
+          <li>സ്കാനറുകൾ വഴി പേപ്പർ മാപ്പുകളെ കമ്പ്യൂട്ടറിലേക്ക് മാറ്റുമ്പോൾ അത് റാസ്റ്റർ ഡാറ്റയായാണ് സേവ് ചെയ്യപ്പെടുന്നത്.</li>
+          <li>റാസ്റ്റർ ഡാറ്റയെ വെക്റ്റർ ഡാറ്റയാക്കി മാറ്റുന്ന പ്രക്രിയയെ ഡിജിറ്റൈസിംഗ് (Digitizing) അഥവാ വെക്ടറൈസേഷൻ (Vectorization) എന്ന് വിളിക്കുന്നു. ഇത് മാപ്പുകൾ എളുപ്പത്തിൽ വിശകലനം ചെയ്യാൻ സഹായിക്കുന്നു.</li>
+          <li>ഡിജിറ്റൽ എലവേഷൻ മോഡലുകൾ (DEM) ഉണ്ടാക്കാൻ GIS ഉപയോഗിക്കുന്നു. ഭൂമിയുടെ കിടപ്പും ഉയരവ്യത്യാസങ്ങളും കൃത്യമായി മനസ്സിലാക്കാൻ ഇത് സഹായിക്കും (ഉദാഹരണത്തിന് വെള്ളപ്പൊക്കം ബാധിക്കാൻ സാധ്യതയുള്ള സ്ഥലങ്ങൾ കണ്ടെത്താൻ).</li>
+          <li>ഇന്ത്യയിൽ സ്മാർട്ട് സിറ്റി (Smart City) പദ്ധതികളുടെ ആസൂത്രണത്തിന് പൂർണ്ണമായും GIS സാങ്കേതികവിദ്യയാണ് ഉപയോഗിക്കുന്നത്.</li>
+          <li>ടാക്സി ആപ്പുകൾ (ഉദാ: Uber, Ola), ഭക്ഷണ വിതരണ ആപ്പുകൾ (ഉദാ: Swiggy, Zomato) എന്നിവ നമ്മുടെ ലൊക്കേഷൻ കണ്ടെത്തുന്നതിന് GPS-ഉം GIS-ഉം ചേർന്ന സംവിധാനമാണ് ഉപയോഗിക്കുന്നത്.</li>
+          <li>ഒരു ജില്ലയിലെ ഭൂനികുതി വിവരങ്ങൾ (Land Records) പൂർണ്ണമായും കമ്പ്യൂട്ടറൈസ് ചെയ്യാൻ സർക്കാർ ഉപയോഗിക്കുന്ന സോഫ്റ്റ്വെയറുകൾ GIS അധിഷ്ഠിതമാണ്.</li>
+          <li>ആരോഗ്യ മേഖലയിൽ കോവിഡ് പോലെയുള്ള പകർച്ചവ്യാധികൾ എവിടെയൊക്കെയാണ് കൂടുതൽ പടരുന്നതെന്ന് മാപ്പിൽ അടയാളപ്പെടുത്തി റെഡ് സോണുകൾ നിർണ്ണയിക്കാൻ GIS സഹായിച്ചിരുന്നു.</li>
+          <li>കുറ്റകൃത്യങ്ങൾ നടക്കുന്ന സ്ഥലങ്ങൾ ഭൂപടത്തിൽ രേഖപ്പെടുത്തി പോലീസിന് പെട്രോളിംഗ് ശക്തമാക്കാൻ സഹായിക്കുന്നതിനെ ക്രൈം മാപ്പിംഗ് (Crime Mapping) എന്ന് വിളിക്കുന്നു.</li>
+          <li>QGIS-ന്റെ പൂർണ്ണരൂപം Quantum Geographic Information System എന്നാണ്. ഇത് ലോകമെമ്പാടുമുള്ള ഡെവലപ്പർമാർ സൗജന്യമായി മെച്ചപ്പെടുത്തിക്കൊണ്ടിരിക്കുന്ന ഒരു പ്രോഗ്രാമാണ്.</li>
+          <li>ISRO യുടെ ഭൂവൻ പോർട്ടൽ ഉപയോഗിച്ച് ഇന്ത്യയിലെ വനമേഖല, കൃഷിഭൂമി, വാട്ടർ ബോഡികൾ എന്നിവയുടെ 2D, 3D ചിത്രങ്ങൾ ജനങ്ങൾക്ക് സൗജന്യമായി കാണാൻ കഴിയും.</li>
+          <li>കാർഷിക മേഖലയിൽ എവിടെയൊക്കെയാണ് വളം കൂടുതൽ വേണ്ടത്, എവിടെയാണ് കീടബാധയുള്ളത് എന്ന് കൃത്യമായി കണ്ടെത്തി പരിഹാരം ചെയ്യുന്ന തീതിയെ പ്രിസിഷൻ ഫാമിംഗ് (Precision Farming) എന്ന് വിളിക്കുന്നു. ഇതിന് GIS അത്യാവശ്യമാണ്.</li>
+          <li>ഗവൺമെന്റിന്റെ വിവിധ വകുപ്പുകൾ (ഉദാഹരണത്തിന്: വനംവകുപ്പ്, ജലസേചന വകുപ്പ്, പൊതുമരാമത്ത് വകുപ്പ്) ഡാറ്റകൾ പങ്കുവെക്കുന്ന സംവിധാനമാണ് നാഷണൽ സ്പേഷ്യൽ ഡാറ്റാ ഇൻഫ്രാസ്ട്രക്ചർ (NSDI).</li>
+          <li>ഭൂമിയുടെ ഉപരിതലത്തെ എക്സ്-ആക്സിസ് (X) ലും വൈ-ആക്സിസ് (Y) ലും പ്രതിനിധീകരിക്കുന്ന സംവിധാനമാണ് കോർഡിനേറ്റ് സിസ്റ്റം (Coordinate System). ഇതാണ് GIS-ലെ ലൊക്കേഷന്റെ അടിസ്ഥാനം.</li>
+          <li>സിംബോളജി (Symbology) എന്നത് GIS ഭൂപടങ്ങളിൽ വിവിധ ഫീച്ചറുകൾ കാണിക്കാൻ ഉപയോഗിക്കുന്ന നിറങ്ങളുടെയും അടയാളങ്ങളുടെയും ശാസ്ത്രീയ നാമമാണ്.</li>
+          <li>ജി.പി.എസ് (GPS - Global Positioning System) ഒരു സ്ഥലത്തിന്റെ കോർഡിനേറ്റുകൾ (അക്ഷാംശവും രേഖാംശവും) മാത്രമേ തരൂ. എന്നാൽ GIS ആണ് ആ ഡാറ്റയെ ഒരു ഭൂപടമാക്കി മാറ്റുന്നത്.</li>
+          <li>ഓപ്പൺ സ്ട്രീറ്റ് മാപ്പ് (OpenStreetMap - OSM) എന്നത് ലോകമെമ്പാടുമുള്ള ആളുകൾ സംഭാവന ചെയ്ത് നിർമ്മിക്കുന്ന ഒരു സൗജന്യ ഡിജിറ്റൽ ഭൂപടമാണ് (വിക്കിപീഡിയ പോലെയുള്ള ഒരു മാപ്പ്).</li>
+          <li>പരിസ്ഥിതിലോല പ്രദേശങ്ങൾ (Eco-sensitive zones) കൃത്യമായി നിർണ്ണയിക്കാനും അതിരുകൾ തിരിക്കാനും മാധവ് ഗാഡ്ഗിൽ കമ്മിറ്റി ഉൾപ്പെടെയുള്ളവർ വ്യാപകമായി GIS സഹായം ഉപയോഗിച്ചിട്ടുണ്ട്.</li>
+          <li>ഭൂകമ്പ സാധ്യതയുള്ള പ്രദേശങ്ങളെ സോണുകളായി തിരിക്കുന്നതിനും (Seismic Zonation) ആ പ്രദേശത്തെ ജനങ്ങളെ ബോധവൽക്കരിക്കുന്നതിനും GIS മാപ്പുകൾ നിർണ്ണായകമാണ്.</li>
+          <li>ഖനനത്തിന് ശേഷം ഉപേക്ഷിക്കപ്പെട്ട സ്ഥലങ്ങൾ (Abandoned mines) കണ്ടെത്താനും അവയുടെ പാരിസ്ഥിതിക ആഘാതം പഠിക്കാനും GIS റാസ്റ്റർ ഡാറ്റ സഹായിക്കുന്നു.</li>
+          <li>ഭൗമവിവര സാങ്കേതികവിദ്യ (Geospatial Technology) എന്നത് റിമോട്ട് സെൻസിംഗ്, ജി.പി.എസ്, ജി.ഐ.എസ് എന്നിവ മൂന്നും കൂടിച്ചേർന്ന വിശാലമായ ഒരു ശാസ്ത്ര ശാഖയാണ്.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 21: സർക്കാർ പദ്ധതികൾ -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. സർക്കാർ പദ്ധതികളും ആശയങ്ങളും</h2>
+      <div class="section-body">
+        <h3>ISRO-യുടെ ജിയോ-പോർട്ടലുകൾ:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>NRSC (National Remote Sensing Centre):</strong> ഹൈദരാബാദ് ആസ്ഥാനമായി പ്രവർത്തിക്കുന്ന ISRO-യുടെ കീഴിലുള്ള ഏജൻസിയാണ് ഭൂവനും ഭൂനിധിയും ഉൾപ്പെടെയുള്ള ജിയോ-പോർട്ടലുകൾ പ്രവർത്തിപ്പിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭൂവൻ (Bhuvan, 2009):</strong> പൊതുജനങ്ങൾക്കായുള്ള 2D/3D ഭൂപട വീക്ഷണ പോർട്ടൽ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഭൂനിധി (Bhoonidhi, 2023):</strong> ISRO-യുടെ ഉപഗ്രഹങ്ങൾ ശേഖരിച്ച ഡാറ്റ ആർക്കൈവ് ചെയ്ത് ഗവേഷകർക്കും പൊതുജനങ്ങൾക്കും ഡൗൺലോഡ് ചെയ്യാൻ അനുവദിക്കുന്ന പുതിയ പോർട്ടൽ.</li>
+        </ul>
+        <h3>ഭൂരേഖകളും GIS-ഉം - സർക്കാർ പദ്ധതികൾ:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>SVAMITVA (2020):</strong> "Survey of Villages and Mapping with Improvised Technology in Village Areas" എന്നതിന്റെ ചുരുക്കെഴുത്ത്. ഡ്രോൺ ഉപയോഗിച്ച് ഗ്രാമീണ വാസസ്ഥലങ്ങൾ സർവ്വേ ചെയ്ത് വീട്ടുടമകൾക്ക് 'പ്രോപ്പർട്ടി കാർഡ്' (ഉടമസ്ഥാവകാശ രേഖ) നൽകുന്ന കേന്ദ്ര പഞ്ചായത്തിരാജ് മന്ത്രാലയത്തിന്റെ പദ്ധതിയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>DILRMP (Digital India Land Records Modernization Programme):</strong> രാജ്യത്തെ എല്ലാ ഭൂരേഖകളും ഡിജിറ്റൈസ് ചെയ്ത് GIS ഭൂപടങ്ങളുമായി ബന്ധിപ്പിക്കാനുള്ള കേന്ദ്ര പദ്ധതി.</li>
+        </ul>
+        <h3>മറ്റ് പ്രധാന ആശയങ്ങൾ:</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ജിയോ-ടാഗിംഗ് (Geo-tagging):</strong> ഒരു ഫോട്ടോയ്ക്കോ വീഡിയോയ്ക്കോ സോഷ്യൽ മീഡിയ പോസ്റ്റിനോ അതിന്റെ ഭൂമിശാസ്ത്രപരമായ സ്ഥാനം (അക്ഷാംശം, രേഖാംശം) ഡിജിറ്റലായി കൂട്ടിച്ചേർക്കുന്ന പ്രക്രിയ. സർക്കാർ പദ്ധതികളുടെ (ഉദാ: ശുചിത്വ മിഷൻ, തൊഴിലുറപ്പ് പദ്ധതി പ്രവൃത്തികൾ) നിരീക്ഷണത്തിന് ഇത് വ്യാപകമായി ഉപയോഗിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>TIN (Triangulated Irregular Network):</strong> DEM-ന് (Digital Elevation Model) പുറമേ ഭൂതല ഉയരം പ്രതിനിധീകരിക്കാൻ ഉപയോഗിക്കുന്ന മറ്റൊരു രീതി - ത്രികോണങ്ങളുടെ ഒരു വലയായി ഭൂതലം ചിത്രീകരിക്കുന്നു (റാസ്റ്ററിന് പകരം വെക്റ്റർ അധിഷ്ഠിതം).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 22: അധിക ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. അധിക ചോദ്യങ്ങൾ (Extra Practice)</h2>
+      <div class="section-body">
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ISRO-യുടെ ഭൂവൻ, ഭൂനിധി എന്നീ പോർട്ടലുകൾ പ്രവർത്തിപ്പിക്കുന്ന ഹൈദരാബാദ് ആസ്ഥാനമായ ഏജൻസി ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. NIC</span>
+            <span data-opt="B">B. NRSC (National Remote Sensing Centre)</span>
+            <span data-opt="C">C. NATMO</span>
+            <span data-opt="D">D. Survey of India</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) NRSC (National Remote Sensing Centre)</div>
+            <div class="explanation">ISRO-യുടെ കീഴിൽ ഹൈദരാബാദ് ആസ്ഥാനമായി പ്രവർത്തിക്കുന്ന ഏജൻസിയാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q21 -->
+        <div class="question-item" data-qindex="20">
+          <div class="q-text">21. ഡ്രോൺ സർവ്വേയിലൂടെ ഗ്രാമീണ വസ്തുവകകൾക്ക് ഉടമസ്ഥാവകാശ രേഖ (Property Card) നൽകുന്ന 2020-ൽ ആരംഭിച്ച കേന്ദ്ര പദ്ധതി ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. SVAMITVA</span>
+            <span data-opt="B">B. DILRMP</span>
+            <span data-opt="C">C. PM-KISAN</span>
+            <span data-opt="D">D. PMAY</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) SVAMITVA</div>
+            <div class="explanation">കേന്ദ്ര പഞ്ചായത്തിരാജ് മന്ത്രാലയത്തിന്റെ പദ്ധതിയാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q22 -->
+        <div class="question-item" data-qindex="21">
+          <div class="q-text">22. ഒരു ഫോട്ടോയ്ക്കോ പോസ്റ്റിനോ അതിന്റെ ഭൂമിശാസ്ത്രപരമായ സ്ഥാനം ഡിജിറ്റലായി കൂട്ടിച്ചേർക്കുന്ന പ്രക്രിയ ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജിയോ-കോഡിംഗ്</span>
+            <span data-opt="B">B. ജിയോ-ടാഗിംഗ് (Geo-tagging)</span>
+            <span data-opt="C">C. ജിയോ-ഫെൻസിംഗ്</span>
+            <span data-opt="D">D. ജിയോ-റെക്റ്റിഫിക്കേഷൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ജിയോ-ടാഗിംഗ് (Geo-tagging)</div>
+            <div class="explanation">സർക്കാർ പദ്ധതികളുടെ നിരീക്ഷണത്തിന് ഇത് വ്യാപകമായി ഉപയോഗിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q23 -->
+        <div class="question-item" data-qindex="22">
+          <div class="q-text">23. ഉപഗ്രഹ ഡാറ്റ ആർക്കൈവ് ചെയ്ത് ഡൗൺലോഡ് ചെയ്യാൻ അനുവദിക്കുന്ന ISRO-യുടെ 2023-ൽ പുറത്തിറക്കിയ പുതിയ പോർട്ടൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭൂവൻ (Bhuvan)</span>
+            <span data-opt="B">B. ഭൂനിധി (Bhoonidhi)</span>
+            <span data-opt="C">C. വായു</span>
+            <span data-opt="D">D. ദിശ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഭൂനിധി (Bhoonidhi)</div>
+            <div class="explanation">ഭൂവനിൽ നിന്നും വ്യത്യസ്തമായി, ഇത് പ്രധാനമായും ഡാറ്റ ഡൗൺലോഡ് ചെയ്യാനുള്ള പോർട്ടലാണ്.</div>
+          </div>
+        </div>
+        <!-- Q24 -->
+        <div class="question-item" data-qindex="23">
+          <div class="q-text">24. GIS-ൽ ഒരു നിർദ്ദിഷ്ട സ്ഥലത്തിന് ചുറ്റും ഒരു നിശ്ചിത ദൂരം (ഉദാ: 100 മീറ്റർ) വരച്ച് ആ പ്രദേശത്തുള്ള കാര്യങ്ങൾ കണ്ടെത്തുന്ന പ്രക്രിയ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഓവർലേ അനാലിസിസ്</span>
+            <span data-opt="B">B. ബഫറിംഗ് (Buffering)</span>
+            <span data-opt="C">C. നെറ്റ്വർക്ക് അനാലിസിസ്</span>
+            <span data-opt="D">D. ഡിജിറ്റൈസിംഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ബഫറിംഗ് (Buffering)</div>
+            <div class="explanation">ഒരു റോഡിന് ചുറ്റും 50 മീറ്റർ അകലത്തിലുള്ള കെട്ടിടങ്ങൾ കണ്ടെത്താൻ ബഫർ സോൺ ഉപയോഗിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q25 -->
+        <div class="question-item" data-qindex="24">
+          <div class="q-text">25. ഭൗമവിവര സാങ്കേതികവിദ്യ (Geospatial Technology) എന്നത് ഏതെല്ലാം സാങ്കേതികവിദ്യകളുടെ സംയോജനമാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. റിമോട്ട് സെൻസിംഗ് മാത്രം</span>
+            <span data-opt="B">B. GIS മാത്രം</span>
+            <span data-opt="C">C. റിമോട്ട് സെൻസിംഗ്, GPS, GIS</span>
+            <span data-opt="D">D. GPS മാത്രം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) റിമോട്ട് സെൻസിംഗ്, GPS, GIS</div>
+            <div class="explanation">ഈ മൂന്ന് സാങ്കേതികവിദ്യകളും കൂടിച്ചേർന്ന വിശാലമായ ശാസ്ത്ര ശാഖയാണ് ഭൗമവിവര സാങ്കേതികവിദ്യ.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 23: ഉപസംഹാരം -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">23. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>റിമോട്ട് സെൻസിംഗ് ക്യാമറകൾ ഒരുക്കുന്ന വിവരങ്ങളെ നമ്മുടെ കമ്പ്യൂട്ടർ സ്ക്രീനിൽ വിശകലനം ചെയ്യാനുള്ള അതുല്യവിദ്യയാണ് GIS.</li>
+          <li>ഡാറ്റകളെ സ്പേഷ്യൽ എന്നും ആട്രിബ്യൂട്ട് എന്നും വേർതിരിക്കുന്നതും, അതിൽത്തന്നെ അതിരുകളുള്ളതിനെ വെക്റ്റർ ഡാറ്റയായും, ചിത്രങ്ങളെ റാസ്റ്റർ ഡാറ്റയായും സേവ് ചെയ്യുന്നതുമാണ് ഇതിന്റെ അടിസ്ഥാനം.</li>
+          <li>PSC പരീക്ഷയിൽ സോഫ്റ്റ്വെയറുകൾ (QGIS), ഗവൺമെന്റ് പോർട്ടലുകൾ (ഭൂവൻ) എന്നിവയ്ക്ക് എപ്പോഴും പ്രാധാന്യമുണ്ട്.</li>
+        </ul>
+        <h3>സാധ്യതയുള്ള ചോദ്യങ്ങളുടെ എണ്ണം</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> PSC പരീക്ഷകളിൽ സാങ്കേതിക ഭൂമിശാസ്ത്രത്തിൽ നിന്ന് ഈ അധ്യായത്തിൽ നിന്ന് 1 ചോദ്യം സ്ഥിരമായി പ്രതീക്ഷിക്കാം (പ്രത്യേകിച്ച് ഡാറ്റാ ഫോർമാറ്റുകളെക്കുറിച്ച്).</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ആധുനിക മാപ്പുകളെക്കുറിച്ചുള്ള വിവരങ്ങളോടെ നാം സാങ്കേതിക ഭൂമിശാസ്ത്രം അവസാനിപ്പിച്ചു. ഇനി നാം ഭൂമിയുടെ 71% വരുന്ന വിശാലമായ സമുദ്രങ്ങളിലേക്കാണ് ഇറങ്ങുന്നത്. സിലബസിലെ അടുത്ത അധ്യായം 'മഹാസമുദ്രങ്ങളും സമുദ്രചലനങ്ങളും' (Oceans and Ocean Movements) എന്നതാണ്. ലോകത്തെ പ്രധാന സമുദ്രങ്ങളെക്കുറിച്ചും സമുദ്രജല പ്രവാഹങ്ങളെക്കുറിച്ചും അവിടെ പഠിക്കാം. നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.1.17 GIS</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'geography-2.1.17-gis';
-window.PART_TITLE = '2.1.17 GIS';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) openOnly(sections[0]);
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaGeography27Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) span.classList.add('selected');
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () { applyLock(!state.locked); });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>

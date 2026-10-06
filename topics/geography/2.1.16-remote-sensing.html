@@ -1,105 +1,1283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.1.16 Remote Sensing - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂമിശാസ്ത്രം: റിമോട്ട് സെൻസിംഗ് | അധ്യായം 26</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
+      border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.1.16 Remote Sensing</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാന്യൂറ കഥ</a></li>
+      <li><a href="#sec3">3. റിമോട്ട് സെൻസിംഗ് പ്രക്രിയ</a></li>
+      <li><a href="#sec4">4. സെൻസറുകളുടെ വർഗ്ഗീകരണം</a></li>
+      <li><a href="#sec5">5. പ്ലാറ്റ്ഫോമുകളുടെ വർഗ്ഗീകരണം</a></li>
+      <li><a href="#sec6">6. ഉപഗ്രഹ ഭ്രമണപഥങ്ങൾ</a></li>
+      <li><a href="#sec7">7. റെസലൂഷൻ തരങ്ങൾ</a></li>
+      <li><a href="#sec8">8. ഫാൾസ് കളർ കോമ്പോസിറ്റ്</a></li>
+      <li><a href="#sec9">9. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec10">10. PSC വിശകലനം</a></li>
+      <li><a href="#sec11">11. മുൻകാല ചോദ്യ പ്രവണത</a></li>
+      <li><a href="#sec12">12. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</a></li>
+      <li><a href="#sec13">13. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec14">14. സമയരേഖ</a></li>
+      <li><a href="#sec15">15. Mnemonics</a></li>
+      <li><a href="#sec16">16. PSC കെണികൾ</a></li>
+      <li><a href="#sec17">17. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec18">18. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec19">19. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec20">20. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec21">21. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec22">22. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec23">23. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഭൂമിശാസ്ത്രം | അധ്യായം 26</div>
+      <h1>ഭൂമിശാസ്ത്രം – റിമോട്ട് സെൻസിംഗ്</h1>
+      <div class="subtitle">Remote Sensing | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആക്ടീവ് vs പാസീവ് സെൻസറുകൾ, ഭൂസ്ഥിര vs സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ, NRSC/IIRS ആസ്ഥാനങ്ങൾ, INSAT vs IRS</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — P.R. പിഷാരടി, IRS-1A (1988), റെസലൂഷൻ തരങ്ങൾ, ISRO ആസ്ഥാനം vs വിക്ഷേപണ കേന്ദ്രം</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ഭാസ്കര-1 (1979), കൽപന-1 (2002), VSSC തിരുവനന്തപുരം, FCC</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — റിമോട്ട് സെൻസിംഗ് പ്രക്രിയയിലെ 4 ഘടകങ്ങൾ, പ്ലാറ്റ്ഫോം തരങ്ങൾ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — 1858 ഗാസ്പാർഡ് ടൂർണാഷോൺ, 1903 ജൂലിയസ് ന്യൂബ്രോണർ</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗ് പിതാവ്:</strong> പി.ആർ. പിഷാരടി</li>
+            <li><strong>ഇന്ത്യയുടെ ആദ്യ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം:</strong> ഭാസ്കര-1 (1979)</li>
+            <li><strong>ഇന്ത്യയുടെ ആദ്യ പ്രായോഗിക RS ഉപഗ്രഹം:</strong> IRS-1A (1988)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: അധ്യായ ആമുഖം -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> ഒരു വസ്തുവിനെയോ പ്രദേശത്തെയോ നേരിട്ട് സ്പർശിക്കാതെ, ദൂരെ നിന്ന് ഉപകരണങ്ങളുടെ (Sensors) സഹായത്തോടെ അവയെക്കുറിച്ചുള്ള വിവരങ്ങൾ ശേഖരിക്കുന്ന ശാസ്ത്ര സാങ്കേതിക വിദ്യയാണ് റിമോട്ട് സെൻസിംഗ് (വിദൂര സംവേദനം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ആധുനിക കാലത്ത് കാലാവസ്ഥാ പ്രവചനം, കാർഷിക വിളകളുടെ നിരീക്ഷണം, വനസംരക്ഷണം, കണ്ടെത്തൽ, ദുരന്തനിവാരണം എന്നിവയ്ക്കെല്ലാം നാം പ്രധാനമായും ആശ്രയിക്കുന്നത് റിമോട്ട് സെൻസിംഗിനെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ആക്ടീവ്-പാസീവ് സെൻസറുകൾ, കൃത്രിമ ഉപഗ്രഹങ്ങളുടെ ഭ്രമണപഥങ്ങൾ (Geostationary & Sun-synchronous), ഇന്ത്യയുടെ റിമോട്ട് സെൻസിംഗ് ഏജൻസികളുടെ ആസ്ഥാനങ്ങൾ എന്നിവ LDC, Degree Level പരീക്ഷകളിലെ സ്ഥിരം ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> ഫ്ലാഷ് ഉള്ള ക്യാമറ ഏത് സെൻസറാണ്, NRSC യുടെ ആസ്ഥാനം എവിടെ, ഇൻസാറ്റ് (INSAT) ഉപഗ്രഹങ്ങളുടെ ഉപയോഗം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: പിന്നാന്യൂറ കഥ -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പിന്നാന്യൂറ കഥ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> പണ്ടുകാലത്ത് മനുഷ്യർക്ക് ദൂരെയുള്ള കാര്യങ്ങൾ അറിയാൻ ഉയർന്ന മലകളിലോ മരങ്ങളിലോ കയറി നോക്കുക മാത്രമായിരുന്നു വഴി. എന്നാൽ കാലക്രമേണ കണ്ടുപിടിത്തങ്ങൾ ഇതിൽ വലിയ മാറ്റമുണ്ടാക്കി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആദ്യകാല പരീക്ഷണങ്ങൾ:</strong> <strong>1858</strong>-ൽ ഗാസ്പാർഡ് ടൂർണാഷോൺ (Gaspard Tournachon) എന്ന ഫ്രഞ്ചുകാരൻ ഒരു വലിയ ബലൂണിൽ കയറുമായി ഉയർന്നുനിന്നുകൊണ്ട് പാരിസ് നഗരത്തിന്റെ ചിത്രം എടുത്തതാണ് റിമോട്ട് സെൻസിംഗിന്റെ ആദ്യ പടിയായി കണക്കാക്കുന്നത്. പിന്നീട് പ്രാവുകളുടെ (Pigeons) കഴുത്തിൽ ചെറിയ ക്യാമറകൾ കെട്ടിവെച്ചും, ഒന്നാം ലോകമഹായുദ്ധകാലത്ത് വിമാനങ്ങളിൽ ക്യാമറ വെച്ചും ശത്രുക്കളുടെ താവളങ്ങൾ നിരീക്ഷിക്കാൻ തുടങ്ങി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആധുനിക കാലം:</strong> <strong>1957</strong>-ൽ റഷ്യ സ്പുട്നിക് (Sputnik) എന്ന ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം വിക്ഷേപിച്ചതോടെ റിമോട്ട് സെൻസിംഗ് ബഹിരാകാശത്തേക്ക് വളർന്നു. <strong>1972</strong>-ൽ അമേരിക്ക വിക്ഷേപിച്ച 'ലാൻഡ്സാറ്റ്-1' (Landsat-1, ആദ്യം ERTS-1 എന്നറിയപ്പെട്ടു) ആണ് ഭൗമനിരീക്ഷണത്തിനായുള്ള ആദ്യത്തെ സമർപ്പിത ഉപഗ്രഹം. <strong>ഇന്ന്</strong> ലോകത്തെവിടെയും മാറ്റങ്ങളും ഉപഗ്രഹങ്ങളുടെ കണ്ണിലൂടെ നമുക്ക് തത്സമയം കാണാൻ കഴിയുന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: റിമോട്ട് സെൻസിംഗ് പ്രക്രിയ -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. റിമോട്ട് സെൻസിംഗ് പ്രക്രിയ (Process of Remote Sensing)</h2>
+      <div class="section-body">
+        <p>റിമോട്ട് സെൻസിംഗ് പൂർണ്ണമാകണമെങ്കിൽ പ്രധാനമായും 4 ഘടകങ്ങൾ ആവശ്യമാണ്:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഊർജ്ജ സ്രോതസ്സ് (Energy Source):</strong> വിവരങ്ങൾ ശേഖരിക്കാൻ പ്രകാശമോ മറ്റ് ഊർജ്ജ തരംഗങ്ങളോ ആവശ്യമാണ്. സൂര്യനാണ് ഇതിലെ ഏറ്റവും പ്രധാനപ്പെട്ട പ്രകൃതിദത്ത ഊർജ്ജ സ്രോതസ്സ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വസ്തു / പ്രലം (Target/Object):</strong> ഏത് വസ്തുവിനെക്കുറിച്ചാണോ വിവരം ശേഖരിക്കുന്നത് അത് (ഉദാഹരണത്തിന്: വനം, നദി).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സെൻസർ (Sensor):</strong> വസ്തുവിൽ തട്ടി പ്രതിഫലിച്ചു വരുന്ന ഊർജ്ജ തരംഗങ്ങളെ പ്രത്യേകം തരംഗങ്ങളെ തിരിച്ചറിയുന്ന ക്യാമറ പോലെയുള്ള ഉപകരണമാണ് സെൻസർ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്ലാറ്റ്ഫോം (Platform):</strong> സെൻസറിനെ വഹിക്കുന്ന വാഹനമാണ് പ്ലാറ്റ്ഫോം. (ഉദാഹരണം: ബലൂൺകൾ, വിമാനങ്ങൾ, ഉപഗ്രഹങ്ങൾ).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 4: സെൻസറുകളുടെ വർഗ്ഗീകരണം -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. സെൻസറുകളുടെ വർഗ്ഗീകരണം (Types of Sensors)</h2>
+      <div class="section-body">
+        <p>വിവരങ്ങൾ ശേഖരിക്കാൻ ഉപയോഗിക്കുന്ന ഊർജ്ജത്തിന്റെ അടിസ്ഥാനത്തിൽ സെൻസറുകളെ 2 ആയി തിരിക്കാം:</p>
+        <h3>1. പാസീവ് സെൻസറുകൾ (Passive Sensors):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സ്വന്തമായി പ്രകാശമോ ഊർജ്ജമോ ഇല്ലാത്ത സെൻസറുകളാണിവ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> വസ്തുക്കളിൽ തട്ടി പ്രതിഫലിക്കുന്ന സൂര്യപ്രകാശത്തെ (Sunlight) ആശ്രയിച്ചാണ് ഇവ പ്രവർത്തിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അതുകൊണ്ടുതന്നെ സൂര്യപ്രകാശമില്ലാത്ത രാത്രി സമയത്തോ കനത്ത മേഘങ്ങളുള്ളപ്പോഴോ ഇവയ്ക്ക് വ്യക്തമായ ചിത്രങ്ങൾ എടുക്കാൻ കഴിയില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണം:</strong> ഫ്ലാഷ് ഇല്ലാത്ത ക്യാമറ (Camera without flash), മനുഷ്യന്റെ കണ്ണ്.</li>
+        </ul>
+        <h3>2. ആക്ടീവ് സെൻസറുകൾ (Active Sensors):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇവ സ്വന്തമായി ഊർജ്ജ തരംഗങ്ങൾ പുറപ്പെടുവിക്കുകയും, അത് വസ്തുവിൽ തട്ടി തിരികെ വരുമ്പോൾ പ്രതിഫലിപ്പിച്ചു കൊണ്ടുവരികയും ചെയ്യുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇവയ്ക്ക് സൂര്യപ്രകാശത്തിന്റെ ആവശ്യമില്ല. അതിനാൽ രാത്രിയും പകലും ഏത് സമയത്തും ഇവയ്ക്ക് പ്രവർത്തിക്കാൻ ഇവയ്ക്ക് കഴിയും.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണം:</strong> ഫ്ലാഷ് ഉള്ള ക്യാമറ (Camera with flash), റഡാർ (RADAR), ലിഡാർ (LIDAR).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>Passive = Photography using sunlight (പ്രകൃതിദത്തം)</strong>; <strong>Active = Artificial light / Action (സ്വന്തം പ്രകാശം)</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: പ്ലാറ്റ്ഫോമുകളുടെ വർഗ്ഗീകരണം -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. പ്ലാറ്റ്ഫോമുകളുടെ വർഗ്ഗീകരണം (Types of Platforms)</h2>
+      <div class="section-body">
+        <p>സെൻസറുകൾ പ്രവർത്തിക്കുന്ന സ്ഥാനത്തിന്റെ അടിസ്ഥാനത്തിൽ ഇവയെ മൂന്നായി തിരിക്കാം:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഭൗമിഷ്ഠ റിമോട്ട് സെൻസിംഗ് (Terrestrial):</strong> ഭൂമിയുടെ ഉപരിതലത്തിൽ തന്നെയുള്ള പ്ലാറ്റ്ഫോമുകൾ ഉപയോഗിക്കുന്നു. (ഉദാ: ട്രൈപോഡ് സ്റ്റാൻഡ്, കെട്ടിടങ്ങളുടെ മുകളിൽ ക്യാമറ വെക്കുന്നത്).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>വ്യോമിഷ്ഠ റിമോട്ട് സെൻസിംഗ് (Aerial):</strong> അന്തരീക്ഷത്തിൽ പറക്കുന്ന വാഹനങ്ങൾ ഉപയോഗിക്കുന്നു. വിമാനങ്ങൾ, ബലൂണുകൾ, ഡ്രോണുകൾ (Drones) എന്നിവ ഉദാഹരണങ്ങൾ. ഇതിലൂടെ എടുക്കുന്ന ചിത്രങ്ങളെ ഏരിയൽ ഫോട്ടോഗ്രാഫുകൾ എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ബഹിരാകാശിഷ്ഠ റിമോട്ട് സെൻസിംഗ് (Space-borne):</strong> അന്തരീക്ഷത്തിന് പുറത്ത് ഭൂമിയെ ചുറ്റിക്കൊണ്ട് കൃത്രിമ ഉപഗ്രഹങ്ങളിൽ (Satellites) സെൻസറുകൾ സ്ഥാപിച്ച് വിവരങ്ങൾ ശേഖരിക്കുന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ഉപഗ്രഹ ഭ്രമണപഥങ്ങൾ -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ഉപഗ്രഹ ഭ്രമണപഥങ്ങൾ (Satellite Orbits)</h2>
+      <div class="section-body">
+        <p>റിമോട്ട് സെൻസിംഗിനായി ബഹിരാകാശത്തേക്ക് വിക്ഷേപിക്കുന്ന ഉപഗ്രഹങ്ങളെ അവയുടെ ഭ്രമണപഥത്തിന്റെ (Orbit) അടിസ്ഥാനത്തിൽ പ്രധാനമായും 2 ആയി തിരിച്ചിരിക്കുന്നു:</p>
+
+        <h3>1. ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ (Geostationary / Geosynchronous Satellites):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമധ്യരേഖയ്ക്ക് മുകളിലായി ഏകദേശം <strong>36,000 കിലോമീറ്റർ</strong> ഉയരത്തിലാണ് ഇവ ഭ്രമണം ചെയ്യുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമി സ്വയം കറങ്ങാൻ എടുക്കുന്ന അതേ സമയം (24 മണിക്കൂർ) തന്നെയാണ് ഇവയ്ക്കും ഭൂമിയെ ചുറ്റാൻ വേണ്ടത്. അതിനാൽ ഭൂമിയിൽ നിന്ന് നോക്കുമ്പോൾ ഇവ എപ്പോഴും ആകാശത്ത് ഒരേ സ്ഥാനത്ത് സ്ഥിരമായി നിൽക്കുന്നതായി തോന്നും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഒരു വലിയ പ്രദേശത്തിന്റെ തുടർച്ചയായ വിവരങ്ങൾ നൽകാൻ ഇവയ്ക്ക് കഴിയും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉപയോഗങ്ങൾ:</strong> കാലാവസ്ഥാ നിരീക്ഷണം (Weather forecasting), വാർത്താവിനിമയം (Telecommunication/DTH).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണം:</strong> ഇന്ത്യയുടെ INSAT (Indian National Satellite System), GSAT പരമ്പരകൾ, കൽപന-1 (Kalpana-1 - ഇന്ത്യയുടെ ആദ്യത്തെ പ്രത്യേക കാലാവസ്ഥാ ഉപഗ്രഹം).</li>
+        </ul>
+
+        <h3>2. സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ (Sun-synchronous / Polar Satellites):</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിയിൽ നിന്നും ഏകദേശം <strong>700 മുതൽ 900 കിലോമീറ്റർ</strong> വരെ ഉയരത്തിൽ, വടക്ക്-തെക്ക് ദിശകളിലൂടെ (പോൾ ടു പോൾ) ഭ്രമണം ചെയ്യുന്ന ഉപഗ്രഹങ്ങളാണിവ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇവ ഭൂമിയോട് വളരെ അടുത്തായതിനാൽ ഭൂമിയിലെ ഓരോ പ്രദേശത്തിന്റെയും വളരെ വ്യക്തമായ ചിത്രങ്ങൾ (High resolution pictures) എടുക്കാൻ ഇവയ്ക്ക് കഴിയും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉപയോഗങ്ങൾ:</strong> ഭൗമനിരീക്ഷണം (Earth Observation), വനസമ്പത്ത്, ഭൂഗർഭജലം, കൃഷി എന്നിവ കണ്ടെത്താൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണം:</strong> ഇന്ത്യയുടെ IRS (Indian Remote Sensing Satellite) പരമ്പരകൾ (ഉദാ: കാർട്ടോസാറ്റ്, റിസോഴ്സ്റ്റാറ്റ്), RISAT (Radar Imaging Satellite - മൈക്രോവേവ് ഉപയോഗിച്ച് എല്ലാ കാലാവസ്ഥയിലും ചിത്രമെടുക്കാൻ കഴിയുന്ന ആക്ടീവ് സെൻസർ ഉപഗ്രഹം).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>36,000 km = Geostationary (INSAT) → Communication/Weather</strong>"<br>
+          "<strong>700-900 km = Sun-synchronous (IRS) → Earth Observation/Mapping</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: റെസലൂഷൻ തരങ്ങൾ -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. റെസലൂഷൻ തരങ്ങൾ (Types of Resolution)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സ്പേഷ്യൽ റെസലൂഷൻ (Spatial Resolution):</strong> ഭൂമിയിലുള്ള എത്ര ചെറിയ വസ്തുവിനെ സെൻസറിന് വ്യക്തമായി തിരിച്ചറിയാൻ കഴിയും എന്നതിന്റെ അളവ്. ഉദാ: 1 മീറ്റർ റെസലൂഷൻ ഉള്ള ക്യാമറയ്ക്ക് ഭൂമിയിലെ 1 മീറ്റർ വലിപ്പമുള്ള വസ്തുവിനെപ്പോലും വ്യക്തമായി പകർത്താനാകും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സ്പെക്ട്രൽ റെസലൂഷൻ (Spectral Resolution):</strong> വ്യത്യസ്ത തരംഗദൈർഘ്യങ്ങളെ (നിറങ്ങളെ) തിരിച്ചറിയാനുള്ള സെൻസറിന്റെ കഴിവ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>റേഡിയോമെട്രിക് റെസലൂഷൻ (Radiometric Resolution):</strong> പ്രകാശ തീവ്രതയിലെ ഏറ്റവും ചെറിയ വ്യത്യാസം പോലും തിരിച്ചറിയാനുള്ള സെൻസറിന്റെ കഴിവ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ടെമ്പറൽ റെസലൂഷൻ (Temporal Resolution):</strong> ഒരു ഉപഗ്രഹം ഒരേ പ്രദേശത്തിന്റെ ചിത്രം വീണ്ടും എടുക്കാൻ എടുക്കുന്ന സമയം (Revisit time).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 8: ഫാൾസ് കളർ കോമ്പോസിറ്റ് -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. ഫാൾസ് കളർ കോമ്പോസിറ്റ് (False Colour Composite - FCC)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> സാധാരണ കണ്ണിന് കാണാൻ കഴിയാത്ത ഇൻഫ്രാറെഡ് തരംഗങ്ങളെ ദൃശ്യ നിറങ്ങളാക്കി മാറ്റി ചിത്രീകരിക്കുന്ന രീതിയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സസ്യങ്ങൾ ഇൻഫ്രാറെഡ് തരംഗങ്ങളെ ശക്തമായി പ്രതിഫലിപ്പിക്കുന്നതിനാൽ, FCC ചിത്രങ്ങളിൽ പച്ചപ്പുള്ള സസ്യങ്ങൾ <strong>ചുവപ്പ് നിറത്തിൽ</strong> കാണപ്പെടുന്നു. ഇത് വിള ആരോഗ്യം, വനസാന്ദ്രത എന്നിവ പഠിക്കാൻ സഹായിക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>FCC = Plants appear RED</strong>" — പച്ച സസ്യങ്ങൾ ചുവപ്പ് നിറത്തിൽ കാണപ്പെടുന്നു.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: പ്രധാന വസ്തുതകൾ -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. പ്രധാന വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗ് പിതാവ്:</strong> പി.ആർ. പിഷാരടി (P. R. Pisharoty).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഇന്ത്യയുടെ ആദ്യത്തെ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം:</strong> ഭാസ്കര-1 (1979).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഇന്ത്യ തദ്ദേശീയമായി നിർമ്മിച്ച ആദ്യത്തെ പ്രായോഗിക റിമോട്ട് സെൻസിംഗ് ഉപഗ്രഹം:</strong> IRS-1A (1988-ൽ റഷ്യയിൽ നിന്ന് വിക്ഷേപിച്ചു).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>NRSC (National Remote Sensing Centre):</strong> ഉപഗ്രഹങ്ങൾ നൽകുന്ന വിവരങ്ങൾ സ്വീകരിച്ച് വിശകലനം ചെയ്യുന്ന ഇന്ത്യയിലെ പ്രധാന ഏജൻസിയാണിത്. <strong>ആസ്ഥാനം: ഹൈദരാബാദ് (തെലങ്കാന).</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>IIRS (Indian Institute of Remote Sensing):</strong> റിമോട്ട് സെൻസിംഗിൽ പരിശീലനവും ഗവേഷണവും നൽകുന്ന സ്ഥാപനം. <strong>ആസ്ഥാനം: ഡെറാഡൂൺ (ഉത്തരാഖണ്ഡ്).</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ISRO (Indian Space Research Organisation):</strong> ഇന്ത്യയുടെ ബഹിരാകാശ ഗവേഷണ ഏജൻസി. <strong>ആസ്ഥാനം: ബെംഗളൂരു (കർണാടക).</strong> ഉപഗ്രഹ വിക്ഷേപണം നടക്കുന്നത് ആന്ധ്രാപ്രദേശിലെ ശ്രീഹരിക്കോട്ടയിലെ സതീഷ് ധവാൻ സ്പേസ് സെന്ററിൽ നിന്നാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഭുവൻ (Bhuvan):</strong> ISRO വികസിപ്പിച്ച ഇന്ത്യൻ ഉപഗ്രഹ ചിത്രങ്ങൾ ഉപയോഗിക്കുന്ന ജിയോ-പോർട്ടൽ (Google Earth ന് സമാനം).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 10: PSC വിശകലനം -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ആക്ടീവ് - പാസീവ് സെൻസറുകളുടെ വ്യത്യാസവും ഉദാഹരണങ്ങളും, NRSC യുടെ ആസ്ഥാനം, ഇൻസാറ്റ് (INSAT), ഐ.ആർ.എസ് (IRS) ഉപഗ്രഹങ്ങളുടെ ഉപയോഗങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കുന്നത്:</strong> ഭൂസ്ഥിര ഉപഗ്രഹങ്ങളുടെ ഉയരം (36,000 km), IIRS ആസ്ഥാനം, ഫ്ലാഷ് ഉള്ള ക്യാമറ ഏത് സെൻസറാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> P. R. Pisharoty, IRS-1A വിക്ഷേപിച്ച വർഷം, റഡാർ (RADAR) ഏത് സെൻസറാണ്.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇടയ്ക്ക് ചോദിക്കാറുണ്ട്:</strong> ISRO ആസ്ഥാനം വിക്ഷേപണ കേന്ദ്രം, ഭുവൻ പോർട്ടൽ, റെസലൂഷന്റെ തരങ്ങൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 11: മുൻകാല ചോദ്യ പ്രവണത -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "സ്വന്തമായി ഊർജ്ജ സ്രോതസ്സുള്ള സെൻസറുകൾ അറിയപ്പെടുന്ന പേരെന്ത്?" (<strong>ആക്ടീവ് സെൻസറുകൾ</strong>) എന്നത് PSC ശാസ്ത്ര-ഭൂമിശാസ്ത്ര ഭാഗത്ത് പതിവായി ചോദിക്കുന്ന ചോദ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "വാർത്താവിനിമയത്തിനും ടെലിവിഷൻ സംപ്രേക്ഷണത്തിനും ഉപയോഗിക്കുന്ന ഉപഗ്രഹങ്ങൾ ഏത് ഭ്രമണപഥത്തിലാണ് വിക്ഷേപിക്കുന്നത്?" (<strong>ഭൂസ്ഥിര ഭ്രമണപഥം / Geostationary</strong>) എന്ന ചോദ്യം ഡിഗ്രി ലെവലിൽ സ്ഥിരമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> NRSC (ഹൈദരാബാദ്), IIRS (ഡെറാഡൂൺ) എന്നിവയുടെ ആസ്ഥാനങ്ങൾ എപ്പോഴും കുട്ടികളെ തെറ്റിക്കാൻ മാറ്റിമറിച്ചു ചോദിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ISRO യുടെ ആസ്ഥാനവും (ബെംഗളൂരു) വിക്ഷേപണ കേന്ദ്രവും (ശ്രീഹരിക്കോട്ട) തമ്മിൽ മാറ്റിക്കൊണ്ടുള്ള ചോദ്യങ്ങൾ വരാറുണ്ട്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 12: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>പാസീവ് സെൻസർ</td>
+                <td>ആക്ടീവ് സെൻസർ</td>
+                <td>സൂര്യപ്രകാശത്തെ ആശ്രയിക്കുന്നത് പാസീവ് (ഉദാ: ഫ്ലാഷില്ലാത്ത ക്യാമറ). സ്വന്തമായി പ്രകാശം/തരംഗങ്ങൾ പുറപ്പെടുവിക്കുന്നത് ആക്ടീവ് (ഉദാ: ഫ്ലാഷുള്ള ക്യാമറ, റഡാർ).</td>
+              </tr>
+              <tr>
+                <td>ഭൂസ്ഥിര ഉപഗ്രഹം (Geostationary)</td>
+                <td>സൗരാനവർത്തി ഉപഗ്രഹം (Polar/Sun-synchronous)</td>
+                <td>ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ 36,000 കി.മീ ഉയരത്തിലാണ്, വാർത്താവിനിമയത്തിനാണ് (INSAT). സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ 700-900 കി.മീ ഉയരത്തിലാണ്, ഭൗമനിരീക്ഷണത്തിനാണ് (IRS).</td>
+              </tr>
+              <tr>
+                <td>NRSC (National Remote Sensing Centre)</td>
+                <td>IIRS (Indian Institute of Remote Sensing)</td>
+                <td>ഉപഗ്രഹ ഡാറ്റ സ്വീകരിക്കുന്ന NRSC യുടെ ആസ്ഥാനം ഹൈദരാബാദിലാണ്. എന്നാൽ ഇത് പരിശീലിപ്പിക്കുന്ന സ്ഥാപനമായ IIRS ന്റെ ആസ്ഥാനം ഡെറാഡൂണിലാണ്.</td>
+              </tr>
+              <tr>
+                <td>ISRO ആസ്ഥാനം (ബെംഗളൂരു)</td>
+                <td>വിക്ഷേപണ കേന്ദ്രം (ശ്രീഹരിക്കോട്ട)</td>
+                <td>ISRO യുടെ ഭരണപരമായ ആസ്ഥാനം ബെംഗളൂരുവിലാണ്. എന്നാൽ ഉപഗ്രഹങ്ങൾ വിക്ഷേപിക്കുന്ന സതീഷ് ധവാൻ സ്പേസ് സെന്റർ ആന്ധ്രാപ്രദേശിലെ ശ്രീഹരിക്കോട്ടയിലാണ്.</td>
+              </tr>
+              <tr>
+                <td>IRS (Remote Sensing)</td>
+                <td>IRNSS / NavIC (Navigation)</td>
+                <td>IRS ഉപഗ്രഹങ്ങൾ ഭൗമ നിരീക്ഷണത്തിനാണ് (ചിത്രമെടുക്കൽ). IRNSS/NavIC ഉപഗ്രഹങ്ങൾ സ്ഥാനനിർണ്ണയത്തിനാണ് (GPS പോലെ) ഉപയോഗിക്കുന്നത് - ഇവ വ്യത്യസ്ത ദൗത്യങ്ങളാണ്.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: താരതമ്യ പട്ടികകൾ -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: ഇൻസാറ്റും ഐ.ആർ.എസും തമ്മിലുള്ള വ്യത്യാസം (INSAT vs IRS)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>ഇൻസാറ്റ് പരമ്പര (INSAT / GSAT)</th><th>ഐ.ആർ.എസ് പരമ്പര (IRS / Cartosat)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>പൂർണ്ണരൂപം</td><td>Indian National Satellite</td><td>Indian Remote Sensing Satellite</td></tr>
+              <tr><td>ഭ്രമണപഥം (Orbit)</td><td>ഭൂസ്ഥിര ഭ്രമണപഥം (Geostationary)</td><td>സൗരാനവർത്തി (Sun-synchronous/Polar)</td></tr>
+              <tr><td>ഭൂമിയിൽ നിന്നുള്ള ഉയരം</td><td>≈ 36,000 കിലോമീറ്റർ</td><td>700 - 900 കിലോമീറ്റർ</td></tr>
+              <tr><td>പ്രധാന ഉപയോഗം</td><td>ടെലികോം, ടി.വി സംപ്രേക്ഷണം, കാലാവസ്ഥാ പ്രവചനം</td><td>ഭൂപട നിർമ്മാണം, വനനിരീക്ഷണം, ദുരന്തനിവാരണം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ആക്ടീവ് vs പാസീവ് സെൻസറുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>പാസീവ് സെൻസർ</th><th>ആക്ടീവ് സെൻസർ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ഊർജ്ജം</td><td>സ്വന്തമായില്ല (സൂര്യനെ ആശ്രയിക്കുന്ന)</td><td>സ്വന്തമായി പുറപ്പെടുവിക്കുന്ന</td></tr>
+              <tr><td>പ്രവർത്തന സമയം</td><td>പകൽ മാത്രം (പ്രകാശമുള്ളപ്പോൾ)</td><td>രാവും പകലും പ്രവർത്തിക്കും</td></tr>
+              <tr><td>മേഘങ്ങളുള്ളപ്പോൾ</td><td>ചിത്രങ്ങൾ വ്യക്തമാകില്ല</td><td>മേഘങ്ങളെ മറികടന്ന് ചിത്രമെടുക്കാം</td></tr>
+              <tr><td>ഉദാഹരണങ്ങൾ</td><td>മനുഷ്യൻ കണ്ണ്, ഫ്ലാഷില്ലാത്ത ക്യാമറ</td><td>റഡാർ (RADAR), ഫ്ലാഷുള്ള ക്യാമറ, ലിഡാർ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: ഭൂസ്ഥിര vs സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>ഭൂസ്ഥിര (Geostationary)</th><th>സൗരാനവർത്തി (Sun-synchronous)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ഭ്രമണ പാത</td><td>ഭൂമധ്യരേഖയ്ക്ക് സമാന്തരം</td><td>ധ്രുവത്തിൽ നിന്ന് ധ്രുവത്തിലേക്ക്</td></tr>
+              <tr><td>ഭ്രമണ സമയം</td><td>24 മണിക്കൂർ (ഭൂമിക്കൊപ്പം)</td><td>ഏകദേശം 90-100 മിനിറ്റ്</td></tr>
+              <tr><td>ചിത്ര വ്യക്തത</td><td>കുറവ് (വളരെ ഉയരത്തിൽ)</td><td>കൂടുതൽ (ഭൂമിയോട് അടുത്ത്)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: സമയരേഖ -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. സമയരേഖ / പ്രധാന നാഴികക്കല്ലുകൾ</h2>
+      <div class="section-body">
+        <div class="last-minute">
+          <span class="box-label">📅 റിമോട്ട് സെൻസിംഗിന്റെ കാലക്രമം</span>
+          <ul>
+            <li><strong>1858:</strong> ഗാസ്പാർഡ് ടൂർണാഷോൺ ബലൂണിൽ നിന്ന് പാരിസിന്റെ ആദ്യ ഏരിയൽ ഫോട്ടോ എടുത്തു.</li>
+            <li><strong>1903:</strong> ജൂലിയസ് ന്യൂബ്രോണർ (Julius Neubronner) പ്രാവുകളുടെ കഴുത്തിൽ ക്യാമറ വെച്ച് പരീക്ഷണം നടത്തി.</li>
+            <li><strong>1957:</strong> റഷ്യ സ്പുട്നിക് വിക്ഷേപിച്ചതോടെ സാറ്റലൈറ്റ് റിമോട്ട് സെൻസിംഗ് ആരംഭിച്ചു.</li>
+            <li><strong>1972:</strong> അമേരിക്ക ലാൻഡ്സാറ്റ്-1 (ആദ്യ സമർപ്പിത ഭൗമനിരീക്ഷണ ഉപഗ്രഹം) വിക്ഷേപിച്ചു.</li>
+            <li><strong>1979:</strong> ഇന്ത്യയുടെ ആദ്യ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം ഭാസ്കര-1 വിക്ഷേപിച്ചു.</li>
+            <li><strong>1988:</strong> ഇന്ത്യയുടെ ആദ്യത്തെ പ്രായോഗിക റിമോട്ട് സെൻസിംഗ് ഉപഗ്രഹമായ IRS-1A വിക്ഷേപിച്ചു.</li>
+            <li><strong>2002:</strong> ഇന്ത്യയുടെ ആദ്യത്തെ പ്രത്യേക കാലാവസ്ഥാ ഉപഗ്രഹമായ കൽപന-1 വിക്ഷേപിച്ചു.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: Mnemonics -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong> സെൻസറുകൾ ഓർക്കാൻ</span>
+          <ul>
+            <li>Passive → Photography using sunlight (പ്രകൃതിദത്തം).</li>
+            <li>Active → Artificial light / Action (സ്വന്തം പ്രകാശം).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong> സ്ഥാപനങ്ങളുടെ ആസ്ഥാനം ഓർക്കാൻ</span>
+          <p>"<strong>NH - ID</strong>"</p>
+          <ul>
+            <li><strong>N</strong>RSC → <strong>H</strong>yderabad</li>
+            <li><strong>I</strong>IRS → <strong>D</strong>ehradun</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong> ISRO-യുടെ രണ്ട് സ്ഥലങ്ങൾ ഓർക്കാൻ</span>
+          <p>"<strong>B for Boardroom, S for Satellite launch</strong>"</p>
+          <ul>
+            <li><strong>B</strong>engaluru (ആസ്ഥാനം)</li>
+            <li><strong>S</strong>riharikota (വിക്ഷേപണം)</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong> ഉപഗ്രഹ ഭ്രമണപഥങ്ങൾ ഓർക്കാൻ</span>
+          <p>"<strong>36,000 = Geostationary (INSAT) → Communication</strong>"<br>
+          "<strong>700-900 = Sun-synchronous (IRS) → Earth Observation</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: PSC കെണികൾ -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഫ്ലാഷ് ഇല്ലാത്ത ക്യാമറ (Camera without flash) ഏത് തരം സെൻസറിന് ഉദാഹരണമാണ്?</p>
+          <p><strong>Confusing Options:</strong> ആക്ടീവ് സെൻസർ, പാസീവ് സെൻസർ, തെർമൽ സെൻസർ.</p>
+          <p><strong>Fact:</strong> ഫ്ലാഷ് ഇല്ലെങ്കിൽ ചിത്രമെടുക്കാൻ പുറത്തുനിന്നുള്ള വെളിച്ചം (സൂര്യപ്രകാശം/ബൾബ്) വേണം. അതിനാൽ ഇത് <strong>പാസീവ് സെൻസർ</strong> (Passive Sensor) ആണ്. ഫ്ലാഷ് ഉണ്ടെങ്കിൽ അത് ആക്ടീവാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> കാലാവസ്ഥാ വ്യതിയാനങ്ങളും ചുഴലിക്കാറ്റുകളും മുൻകൂട്ടി പ്രവചിക്കാൻ ഉപയോഗിക്കുന്ന ഉപഗ്രഹങ്ങൾ ഏത് വിഭാഗത്തിൽ പെടുന്നു?</p>
+          <p><strong>Confusing Options:</strong> സൗരാനവർത്തി (Sun-synchronous), ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ (Geostationary).</p>
+          <p><strong>Fact:</strong> ഒരു വലിയ പ്രദേശത്തെ തുടർച്ചയായി 24 മണിക്കൂറും നിരീക്ഷിക്കാൻ കഴിയുന്നത് ഭൂമിക്ക് ഒപ്പമൊപ്പം കറങ്ങുന്ന <strong>ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾക്കാണ്</strong> (Geostationary - ഉദാഹരണം INSAT). കാർട്ടോസാറ്റ് പോലുള്ള സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ ഭൂപട നിർമ്മാണത്തിനാണ് ഉപയോഗിക്കുന്നത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ISRO യുടെ ആസ്ഥാനം എവിടെയാണ്?</p>
+          <p><strong>Confusing Options:</strong> ശ്രീഹരിക്കോട്ട, ബെംഗളൂരു, തിരുവനന്തപുരം.</p>
+          <p><strong>Fact:</strong> ISRO യുടെ ഭരണ ആസ്ഥാനം <strong>ബെംഗളൂരുവിലാണ്</strong>. ശ്രീഹരിക്കോട്ട വിക്ഷേപണ കേന്ദ്രം മാത്രമാണ്; തിരുവനന്തപുരത്ത് VSSC (Vikram Sarabhai Space Centre) എന്ന റോക്കറ്റ് ഗവേഷണ കേന്ദ്രമാണുള്ളത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗിന്റെ പിതാവ് ആരാണ്?</p>
+          <p><strong>Confusing Options:</strong> വിക്രം സാരാഭായ്, പി.ആർ. പിഷാരടി, എ.പി.ജെ. അബ്ദുൾ കലാം, സതീഷ് ധവാൻ.</p>
+          <p><strong>Fact:</strong> കേരളീയനായ <strong>പ്രൊഫ. പി.ആർ. പിഷാരടി</strong> ആണ് ഇന്ത്യയിൽ റിമോട്ട് സെൻസിംഗ് സാങ്കേതികവിദ്യയ്ക്ക് അടിത്തറ പാകിയത്. വിക്രം സാരാഭായ് ഇന്ത്യൻ ബഹിരാകാശ പരിപാടിയുടെ പിതാവാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ ഏത് ദിശയിലാണ് ഭ്രമണം ചെയ്യുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> ഭൂമധ്യരേഖയ്ക്ക് സമാന്തരമായി, ധ്രുവങ്ങളിലൂടെ (വടക്ക്-തെക്ക്), കിഴക്ക്-പടിഞ്ഞാറ്.</p>
+          <p><strong>Fact:</strong> സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ <strong>ധ്രുവങ്ങളിലൂടെ (വടക്ക്-തെക്ക്)</strong> ആണ് സഞ്ചരിക്കുന്നത്. ഭൂമധ്യരേഖയ്ക്ക് സമാന്തരമായി സഞ്ചരിക്കുന്നത് ഭൂസ്ഥിര ഉപഗ്രഹങ്ങളാണ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17: അധിക വസ്തുതകൾ -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഉപഗ്രഹങ്ങളിൽ ഉപയോഗിക്കുന്ന ക്യാമറകളും സ്കാനറുകളുമാണ് റിമോട്ട് സെൻസിംഗിൽ പൊതുവെ സെൻസറുകൾ (Sensors) എന്ന് വിളിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഒരു സെൻസറിന് ഭൂമിയിലുള്ള എത്രത്തോളം ചെറിയ വസ്തുവിനെ വ്യക്തമായി തിരിച്ചറിയാൻ കഴിയുന്നു എന്നതിന്റെ അളവുകോലാണ് സ്പേഷ്യൽ റെസലൂഷൻ (Spatial Resolution). ഉദാഹരണത്തിന്, 1 മീറ്റർ റെസലൂഷൻ ഉള്ള ക്യാമറയ്ക്ക് ഭൂമിയിലെ 1 മീറ്റർ വലിപ്പമുള്ള വസ്തുവിനെപ്പോലും വ്യക്തമായി പകർത്താനാകും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> വസ്തുക്കളിൽ നിന്ന് പ്രതിഫലിച്ചു വരുന്ന വിവിധ നിറങ്ങളെയും തരംഗദൈർഘ്യങ്ങളെയും (Wavelengths) തിരിച്ചറിയാനുള്ള സെൻസറിന്റെ കഴിവിനെ സ്പെക്ട്രൽ റെസലൂഷൻ (Spectral Resolution) എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഉപഗ്രഹങ്ങൾ ശേഖരിക്കുന്ന വിവരങ്ങൾ (Digital data) ഭൂമിയിലെ സ്റ്റേഷനുകളിലേക്ക് റേഡിയോ തരംഗങ്ങളായി അയക്കുന്നു. ഇതിനെ ഡൗൺലിങ്ക് (Downlink) എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സ്പേസ് സെഗ്മെന്റ് (Space segment):</strong> ബഹിരാകാശത്ത് കറങ്ങുന്ന ഉപഗ്രഹങ്ങൾ ഉൾപ്പെടുന്ന ഭാഗം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഗ്രൗണ്ട് സെഗ്മെന്റ് (Ground segment):</strong> ഉപഗ്രഹങ്ങളെ നിയന്ത്രിക്കുന്നതും വിവരങ്ങൾ ശേഖരിക്കുന്നതുമായ ഭൂമിയിലെ കൺട്രോൾ സ്റ്റേഷനുകൾ (ഉദാഹരണത്തിന്: കർണാടകയിലെ ഹാസനിലുള്ള ISRO യുടെ മാസ്റ്റർ കൺട്രോൾ ഫെസിലിറ്റി - MCF).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> മത്സ്യത്തൊഴിലാളികൾക്ക് കടലിലെ മത്സ്യങ്ങളുടെ സാന്നിധ്യം കൂടുതലുള്ള സ്ഥലങ്ങൾ (Potential Fishing Zones) കണ്ടെത്താനും റിമോട്ട് സെൻസിംഗ് വിവരങ്ങൾ (സമുദ്രജലത്തിന്റെ താപനിലയും പച്ചപ്പും അളന്ന്) ഉപയോഗിക്കുന്നുണ്ട്. ഇതിനായി സഹായിക്കുന്ന ഇന്ത്യൻ സ്ഥാപനമാണ് INCOIS (ഹൈദരാബാദ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>GIS (Geographic Information System):</strong> റിമോട്ട് സെൻസിംഗിലൂടെ ലഭിക്കുന്ന ഭൂപടപരമായ വിവരങ്ങൾ ശേഖരിച്ച്, സംഭരിച്ച്, വിശകലനം ചെയ്ത് കമ്പ്യൂട്ടർ ഭൂപടങ്ങളായി അവതരിപ്പിക്കുന്ന സാങ്കേതികവിദ്യ. റിമോട്ട് സെൻസിംഗിന്റെ അനുബന്ധ മേഖലയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>GPS (Global Positioning System):</strong> അമേരിക്കയുടെ ഉപഗ്രഹാധിഷ്ഠിത സ്ഥാനനിർണ്ണയ സംവിധാനം. ഇന്ത്യയുടെ സമാന സംവിധാനമാണ് NavIC (IRNSS).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>VSSC (Vikram Sarabhai Space Centre):</strong> റോക്കറ്റ്, വിക്ഷേപണ വാഹന ഗവേഷണത്തിനുള്ള ISRO-യുടെ കേന്ദ്രം. <strong>ആസ്ഥാനം: തിരുവനന്തപുരം (കേരളം)</strong> - ഇത് കേരളവുമായി ബന്ധപ്പെട്ട ഒരു പ്രധാന PSC വസ്തുതയാണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 18: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. നേരിട്ട് സ്പർശിക്കാതെ അകലെ നിന്നും ഒരു വസ്തുവിനെക്കുറിച്ചോ പ്രദേശത്തെക്കുറിച്ചോ വിവരങ്ങൾ ശേഖരിക്കുന്ന സാങ്കേതികവിദ്യ അറിയപ്പെടുന്നത് ഏത് പേരിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജി.പി.എസ് (GPS)</span>
+            <span data-opt="B">B. റിമോട്ട് സെൻസിംഗ് (Remote Sensing)</span>
+            <span data-opt="C">C. ജി.ഐ.എസ് (GIS)</span>
+            <span data-opt="D">D. ട്രാപ്പോഗ്രാഫി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) റിമോട്ട് സെൻസിംഗ് (Remote Sensing)</div>
+            <div class="explanation">നേരിട്ട് സ്പർശിക്കാതെ (വിദൂര സംവേദനം വഴി) വിവരങ്ങൾ ശേഖരിക്കുന്ന ശാസ്ത്രമാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. റിമോട്ട് സെൻസിംഗിൽ ഉപയോഗിക്കുന്ന ക്യാമറ പോലെയുള്ള ഉപകരണങ്ങളെ (വിവരങ്ങൾ ഒപ്പിയെടുക്കുന്നവ) എന്ന് വിളിക്കുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. പ്ലാറ്റ്ഫോം</span>
+            <span data-opt="B">B. ടാർഗെറ്റ്</span>
+            <span data-opt="C">C. സെൻസർ (Sensor)</span>
+            <span data-opt="D">D. സാറ്റലൈറ്റ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സെൻസർ (Sensor)</div>
+            <div class="explanation">പ്ലാറ്റ്ഫോം എന്നത് ഈ സെൻസറുകളെ വഹിച്ച് പറക്കുന്ന വാഹനമാണ് (ഉദാ: ഉപഗ്രഹം).</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. സ്വന്തമായി ഊർജ്ജമോ പ്രകാശമോ പുറപ്പെടുവിച്ച് വിവരങ്ങൾ ശേഖരിക്കുന്ന സെൻസറുകൾ ഏത് വിഭാഗത്തിൽ പെടുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. പാസീവ് സെൻസറുകൾ</span>
+            <span data-opt="B">B. ലൂമിനസ് സെൻസറുകൾ</span>
+            <span data-opt="C">C. ആക്ടീവ് സെൻസറുകൾ (Active Sensors)</span>
+            <span data-opt="D">D. സ്പേഷ്യൽ സെൻസറുകൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആക്ടീവ് സെൻസറുകൾ (Active Sensors)</div>
+            <div class="explanation">റഡാർ (RADAR), ഫ്ലാഷ് ഉള്ള ക്യാമറ എന്നിവ ഇതിന് ഉദാഹരണങ്ങളാണ്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലക്രമത്തിൽ (Chronological Order) എഴുതുക (റിമോട്ട് സെൻസിംഗ് വികാസം):<br>
+            1. റഷ്യ സ്പുട്നിക് ഉപഗ്രഹം വിക്ഷേപിച്ച<br>
+            2. പ്രാവുകളുടെ കഴുത്തിൽ ക്യാമറ വെച്ചുള്ള പരീക്ഷണം<br>
+            3. ഇന്ത്യ IRS-1A ഉപഗ്രഹം വിക്ഷേപിച്ച<br>
+            4. ഗാസ്പാർഡ് ബലൂണിൽ കയറി പാരിസിന്റെ ഫോട്ടോ എടുത്ത</div>
+          <div class="options">
+            <span data-opt="A">A. 4, 2, 1, 3</span>
+            <span data-opt="B">B. 2, 4, 1, 3</span>
+            <span data-opt="C">C. 4, 1, 2, 3</span>
+            <span data-opt="D">D. 1, 4, 2, 3</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 4, 2, 1, 3</div>
+            <div class="explanation">ഗാസ്പാർഡിന്റെ ബലൂൺ ഫോട്ടോ (1858) → പ്രാവ് ക്യാമറ പരീക്ഷണം (1903) → സ്പുട്നിക് വിക്ഷേപണം (1957) → IRS-1A വിക്ഷേപണം (1988).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഭൂമധ്യരേഖയ്ക്ക് മുകളിൽ ഏകദേശം 36,000 കിലോമീറ്റർ ഉയരത്തിൽ, ഭൂമിയുടെ ഭ്രമണവേഗതയ്ക്ക് സമാനമായി സഞ്ചരിക്കുന്ന ഉപഗ്രഹങ്ങൾ അറിയപ്പെടുന്നത് എന്ത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സൗരാനുവർത്തി ഉപഗ്രഹങ്ങൾ</span>
+            <span data-opt="B">B. ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ (Geostationary)</span>
+            <span data-opt="C">C. ധ്രുവ ഉപഗ്രഹങ്ങൾ</span>
+            <span data-opt="D">D. LEO ഉപഗ്രഹങ്ങൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ (Geostationary)</div>
+            <div class="explanation">ഭൂമിയിൽ നിന്ന് നോക്കുമ്പോൾ ഇവ ആകാശത്ത് സ്ഥിരമായി ഒരു സ്ഥാനത്ത് നിൽക്കുന്നതായി തോന്നും. INSAT ഇതിന് ഉദാഹരണമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഇന്ത്യയിൽ റിമോട്ട് സെൻസിംഗ് വിവരങ്ങൾ സ്വീകരിച്ച് വിശകലനം ചെയ്യുന്ന NRSC-യുടെ ആസ്ഥാനം എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഡെറാഡൂൺ</span>
+            <span data-opt="B">B. ബെംഗളൂരു</span>
+            <span data-opt="C">C. ഹൈദരാബാദ്</span>
+            <span data-opt="D">D. തിരുവനന്തപുരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഹൈദരാബാദ്</div>
+            <div class="explanation">NRSC ഹൈദരാബാദിലെ ഷാദ്നഗറിലാണ് സ്ഥിതി ചെയ്യുന്നത്. (IIRS ഡെറാഡൂണിലാണ് - ഇത് ട്രെയിനിംഗ് സ്ഥാപനമാണ്).</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗിന്റെ പിതാവ് എന്നറിയപ്പെടുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. വിക്രം സാരാഭായ്</span>
+            <span data-opt="B">B. പ്രൊഫ. പി. ആർ. പിഷാരടി</span>
+            <span data-opt="C">C. എ.പി.ജെ. അബ്ദുൾ കലാം</span>
+            <span data-opt="D">D. സതീഷ് ധവാൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) പ്രൊഫ. പി. ആർ. പിഷാരടി</div>
+            <div class="explanation">കേരളീയനായ പിഷാരടിയാണ് ഇന്ത്യയിൽ റിമോട്ട് സെൻസിംഗ് സാങ്കേതികവിദ്യയ്ക്ക് അടിത്തറ പാകിയത്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. Statement Question: റിമോട്ട് സെൻസിംഗുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            • ആക്ടീവ് സെൻസറുകൾക്ക് രാത്രിയും പകലും പ്രവർത്തിക്കാൻ കഴിയും.<br>
+            • സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ ഭൂമധ്യരേഖയ്ക്ക് സമാന്തരമായി സഞ്ചരിക്കുന്നു.<br>
+            • IRS-1A ഇന്ത്യയുടെ ആദ്യത്തെ പ്രായോഗിക റിമോട്ട് സെൻസിംഗ് ഉപഗ്രഹമാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 2 തെറ്റാണ് - സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ ധ്രുവങ്ങളിലൂടെ (പോൾ ടു പോൾ) ആണ് സഞ്ചരിക്കുന്നത്, ഭൂമധ്യരേഖയ്ക്ക് സമാന്തരമായി (അത് ഭൂസ്ഥിര ഉപഗ്രഹങ്ങളുടെ പാതയാണ്).</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following:<br>
+            • NRSC - a. ഡെറാഡൂൺ<br>
+            • IIRS - b. ഹൈദരാബാദ്<br>
+            • ISRO ആസ്ഥാനം - c. ബെംഗളൂരു<br>
+            • VSSC - d. തിരുവനന്തപുരം</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-a, 3-c, 4-d</span>
+            <span data-opt="B">B. 1-a, 2-b, 3-c, 4-d</span>
+            <span data-opt="C">C. 1-b, 2-a, 3-d, 4-c</span>
+            <span data-opt="D">D. 1-c, 2-a, 3-b, 4-d</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-b, 2-a, 3-c, 4-d</div>
+            <div class="explanation">നാല് സ്ഥാപനങ്ങളും അവയുടെ ശരിയായ ആസ്ഥാനങ്ങളും തമ്മിലുള്ള ചേർച്ച.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. കാർട്ടോസാറ്റ്, റിസോഴ്സ്റ്റാറ്റ് തുടങ്ങിയ ഉപഗ്രഹങ്ങൾ ഏത് പരമ്പരയിൽ പെടുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. INSAT</span>
+            <span data-opt="B">B. GSAT</span>
+            <span data-opt="C">C. IRS (Indian Remote Sensing Satellite)</span>
+            <span data-opt="D">D. IRNSS</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) IRS (Indian Remote Sensing Satellite)</div>
+            <div class="explanation">ഇവ സൗരാനവർത്തി ഭ്രമണപഥത്തിൽ സഞ്ചരിച്ച് ഭൗമ നിരീക്ഷണം നടത്തുന്ന ഉപഗ്രഹങ്ങളാണ്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. Assertion (A): സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾക്ക് ഉയർന്ന സ്പേഷ്യൽ റെസലൂഷൻ ചിത്രങ്ങൾ എടുക്കാൻ കഴിയും.<br>
+            Reason (R): ഇവ ഭൂമിയോട് വളരെ അടുത്ത് (700-900 കി.മി) ഭ്രമണം ചെയ്യുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">ഭൂമിയോട് അടുത്ത് നിൽക്കുന്നതിനാൽ തന്നെയാണ് സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾക്ക് കൂടുതൽ വ്യക്തതയുള്ള ചിത്രങ്ങൾ എടുക്കാൻ കഴിയുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. ISRO-യുടെ ഉപഗ്രഹ വിക്ഷേപണങ്ങൾ നടക്കുന്ന സതീഷ് ധവാൻ സ്പേസ് സെന്റർ സ്ഥിതി ചെയ്യുന്നത് എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. തുമ്പ, കേരളം</span>
+            <span data-opt="B">B. ശ്രീഹരിക്കോട്ട, ആന്ധ്രാപ്രദേശ്</span>
+            <span data-opt="C">C. ബെംഗളൂരു, കർണാടക</span>
+            <span data-opt="D">D. ഹാസൻ, കർണാടക</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ശ്രീഹരിക്കോട്ട, ആന്ധ്രാപ്രദേശ്</div>
+            <div class="explanation">തുമ്പയിലുള്ളത് റോക്കറ്റ് വിക്ഷേപണ കേന്ദ്രമായ TERLS ആണ്; ഇന്നത്തെ പ്രധാന ഉപഗ്രഹ വിക്ഷേപണങ്ങൾ നടക്കുന്നത് ശ്രീഹരിക്കോട്ടയിലാണ്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. സസ്യങ്ങൾ ഇൻഫ്രാറെഡ് തരംഗങ്ങളെ ശക്തമായി പ്രതിഫലിപ്പിക്കുന്നതിനാൽ ചുവപ്പ് നിറത്തിൽ കാണപ്പെടുന്ന ചിത്രീകരണ രീതി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ട്രൂ കളർ കോമ്പോസിറ്റ്</span>
+            <span data-opt="B">B. ഫാൾസ് കളർ കോമ്പോസിറ്റ് (FCC)</span>
+            <span data-opt="C">C. ഗ്രേസ്കെയിൽ ഇമേജിംഗ്</span>
+            <span data-opt="D">D. തെർമൽ ഇമേജിംഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഫാൾസ് കളർ കോമ്പോസിറ്റ് (FCC)</div>
+            <div class="explanation">വിള ആരോഗ്യവും വനസാന്ദ്രതയും പഠിക്കാൻ ഈ രീതി വ്യാപകമായി ഉപയോഗിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഇന്ത്യയുടെ ആദ്യത്തെ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. IRS-1A</span>
+            <span data-opt="B">B. ഭാസ്കര-1</span>
+            <span data-opt="C">C. കൽപന-1</span>
+            <span data-opt="D">D. INSAT-1A</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഭാസ്കര-1</div>
+            <div class="explanation">1979-ൽ വിക്ഷേപിച്ച ഭാസ്കര-1 ആണ് ഇന്ത്യയുടെ ആദ്യത്തെ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം. IRS-1A (1988) ആദ്യ പ്രായോഗിക RS ഉപഗ്രഹമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഇന്ത്യയുടെ ബഹിരാകാശ ഗവേഷണ ഏജൻസിയായ ISRO-യുടെ ആസ്ഥാനം എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ശ്രീഹരിക്കോട്ട</span>
+            <span data-opt="B">B. തിരുവനന്തപുരം</span>
+            <span data-opt="C">C. ബെംഗളൂരു</span>
+            <span data-opt="D">D. ഹൈദരാബാദ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ബെംഗളൂരു</div>
+            <div class="explanation">ISRO-യുടെ ഭരണ ആസ്ഥാനം ബെംഗളൂരുവിലാണ്. ശ്രീഹരിക്കോട്ട വിക്ഷേപണ കേന്ദ്രമാണ്; തിരുവനന്തപുരത്ത് VSSC ആണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: ഉത്തര സൂചിക -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(C)</td><td>11</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>7</td><td>(B)</td><td>12</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>9</td><td>(A)</td><td>14</td><td>(B)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(C)</td><td>15</td><td>(C)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 20: 30-സെക്കൻഡ് റിവിഷൻ -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>റിമോട്ട് സെൻസിംഗ് നിർവ്വചനം: നേരിട്ട് സ്പർശിക്കാതെ ദൂരെ നിന്ന് വിവരം ശേഖരിക്കൽ.</li>
+          <li>4 പ്രധാന ഘടകങ്ങൾ: ഊർജ്ജ സ്രോതസ്സ്, വസ്തു, സെൻസർ, പ്ലാറ്റ്ഫോം.</li>
+          <li>പാസീവ് സെൻസർ ഉദാഹരണം: ഫ്ലാഷില്ലാത്ത ക്യാമറ.</li>
+          <li>ആക്ടീവ് സെൻസർ ഉദാഹരണം: റഡാർ, ഫ്ലാഷുള്ള ക്യാമറ.</li>
+          <li>ഭൂസ്ഥിര ഉപഗ്രഹ ഉയരം: 36,000 കി.മീ.</li>
+          <li>സൗരാനവർത്തി ഉപഗ്രഹ ഉയരം: 700-900 കി.മീ.</li>
+          <li>ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗ് പിതാവ്: പി. ആർ. പിഷാരടി.</li>
+          <li>ഇന്ത്യയുടെ ആദ്യ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം: ഭാസ്കര-1 (1979).</li>
+          <li>ഇന്ത്യയുടെ ആദ്യ പ്രായോഗിക RS ഉപഗ്രഹം: IRS-1A (1988).</li>
+          <li>NRSC ആസ്ഥാനം: ഹൈദരാബാദ്.</li>
+          <li>IIRS ആസ്ഥാനം: ഡെറാഡൂൺ.</li>
+          <li>ISRO ആസ്ഥാനം: ബെംഗളൂരു.</li>
+          <li>വിക്ഷേപണ കേന്ദ്രം: ശ്രീഹരിക്കോട്ട (ആന്ധ്രാപ്രദേശ്).</li>
+          <li>VSSC ആസ്ഥാനം: തിരുവനന്തപുരം (കേരളം).</li>
+          <li>ആദ്യ ലോക ഭൗമനിരീക്ഷണ ഉപഗ്രഹം: ലാൻഡ്സാറ്റ്-1 (1972, അമേരിക്ക).</li>
+          <li>ആദ്യ കൃത്രിമ ഉപഗ്രഹം: സ്പുട്നിക് (1957, റഷ്യ).</li>
+          <li>MCF (Master Control Facility) സ്ഥാനം: ഹാസൻ, കർണാടക.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 21: ഒരു പേജ് റിവിഷൻ -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>പ്രധാന സ്ഥാപനങ്ങളും ആസ്ഥാനങ്ങളും:</h3>
+        <ul>
+          <li><strong>NRSC:</strong> ഹൈദരാബാദ് (ഷാദ്നഗർ).</li>
+          <li><strong>IIRS:</strong> ഡെറാഡൂൺ.</li>
+          <li><strong>ISRO ആസ്ഥാനം:</strong> ബെംഗളൂരു.</li>
+          <li><strong>വിക്ഷേപണ കേന്ദ്രം:</strong> ശ്രീഹരിക്കോട്ട.</li>
+          <li><strong>VSSC:</strong> തിരുവനന്തപുരം.</li>
+          <li><strong>MCF:</strong> ഹാസൻ.</li>
+          <li><strong>INCOIS:</strong> ഹൈദരാബാദ്.</li>
+        </ul>
+        <h3>സെൻസറുകൾ:</h3>
+        <ul>
+          <li><strong>പാസീവ്:</strong> സൂര്യപ്രകാശം ആശ്രയം, പകൽ മാത്രം (ഫ്ലാഷില്ലാത്ത ക്യാമറ).</li>
+          <li><strong>ആക്ടീവ്:</strong> സ്വന്തം ഊർജ്ജം, രാവും പകലും (റഡാർ, ഫ്ലാഷുള്ള ക്യാമറ).</li>
+        </ul>
+        <h3>ഉപഗ്രഹ ഭ്രമണപഥങ്ങൾ:</h3>
+        <ul>
+          <li><strong>ഭൂസ്ഥിര (36,000 കി.മീ):</strong> INSAT, GSAT - വാർത്താവിനിമയം, കാലാവസ്ഥ.</li>
+          <li><strong>സൗരാനവർത്തി (700-900 കി.മീ):</strong> IRS, കാർട്ടോസാറ്റ് - ഭൗമനിരീക്ഷണം.</li>
+        </ul>
+        <h3>KPSC-യിൽ കൂടുതൽ ശ്രദ്ധിക്കേണ്ടവ:</h3>
+        <ul>
+          <li>NRSC vs IIRS ആസ്ഥാനങ്ങൾ തമ്മിൽ മാറ്റിക്കൊണ്ടുള്ള ചോദ്യങ്ങൾ.</li>
+          <li>ISRO ആസ്ഥാനവും വിക്ഷേപണ കേന്ദ്രവും തമ്മിലുള്ള വ്യത്യാസം.</li>
+          <li>ആക്ടീവ്-പാസീവ് സെൻസർ ഉദാഹരണങ്ങൾ.</li>
+          <li>P. R. പിഷാരടിയുടെ കേരള ബന്ധം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 22: ടോപ്പ് 25 വസ്തുതകൾ -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>റിമോട്ട് സെൻസിംഗ് എന്നാൽ നേരിട്ട് സ്പർശിക്കാതെ ദൂരെ നിന്ന് വിവരങ്ങൾ ശേഖരിക്കുന്ന ശാസ്ത്രമാണ്.</li>
+          <li>റിമോട്ട് സെൻസിംഗിന് 4 പ്രധാന ഘടകങ്ങൾ ആവശ്യമാണ്: ഊർജ്ജ സ്രോതസ്സ്, വസ്തു, സെൻസർ, പ്ലാറ്റ്ഫോം.</li>
+          <li>പാസീവ് സെൻസറുകൾ സൂര്യപ്രകാശത്തെ ആശ്രയിക്കുന്നു; ആക്ടീവ് സെൻസറുകൾ സ്വന്തമായി ഊർജ്ജം പുറപ്പെടുവിക്കുന്നു.</li>
+          <li>ഫ്ലാഷില്ലാത്ത ക്യാമറ പാസീവ് സെൻസറിനും, ഫ്ലാഷുള്ള ക്യാമറ ആക്ടീവ് സെൻസറിനും ഉദാഹരണമാണ്.</li>
+          <li>റഡാർ (RADAR), ലിഡാർ (LIDAR) എന്നിവ ആക്ടീവ് സെൻസറുകളാണ്.</li>
+          <li>1858-ൽ ഗാസ്പാർഡ് ടൂർണാഷോൺ ബലൂണിൽ നിന്ന് ആദ്യ ഏരിയൽ ഫോട്ടോ എടുത്തു.</li>
+          <li>1957-ൽ റഷ്യ വിക്ഷേപിച്ച സ്പുട്നിക് ആണ് ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം.</li>
+          <li>1972-ൽ അമേരിക്ക വിക്ഷേപിച്ച ലാൻഡ്സാറ്റ്-1 ആണ് ഭൗമനിരീക്ഷണത്തിലെ ആദ്യ സമർപ്പിത ഉപഗ്രഹം.</li>
+          <li>ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ ഭൂമധ്യരേഖയ്ക്ക് മുകളിൽ 36,000 കി.മീ ഉയരത്തിൽ, ഭൂമിയുടെ അതേ വേഗതയിൽ ഭ്രമണം ചെയ്യുന്നു.</li>
+          <li>സൗരാനവർത്തി ഉപഗ്രഹങ്ങൾ ധ്രുവങ്ങളിലൂടെ 700-900 കി.മീ ഉയരത്തിൽ ഭ്രമണം ചെയ്യുന്നു.</li>
+          <li>INSAT, GSAT പരമ്പരകൾ ഭൂസ്ഥിര ഉപഗ്രഹങ്ങളാണ് - വാർത്താവിനിമയത്തിനും കാലാവസ്ഥാ നിരീക്ഷണത്തിനും ഉപയോഗിക്കുന്നു.</li>
+          <li>IRS പരമ്പര (കാർട്ടോസാറ്റ്, റിസോഴ്സ്റ്റാറ്റ്) സൗരാനവർത്തി ഉപഗ്രഹങ്ങളാണ് - ഭൗമനിരീക്ഷണത്തിന്.</li>
+          <li>പ്രൊഫ. പി. ആർ. പിഷാരടി ആണ് ഇന്ത്യൻ റിമോട്ട് സെൻസിംഗിന്റെ പിതാവ്.</li>
+          <li>ഭാസ്കര-1 (1979) ആണ് ഇന്ത്യയുടെ ആദ്യ ഭൗമനിരീക്ഷണ ഉപഗ്രഹം.</li>
+          <li>IRS-1A (1988) ആണ് ഇന്ത്യയുടെ ആദ്യ പ്രായോഗിക റിമോട്ട് സെൻസിംഗ് ഉപഗ്രഹം - ഇത് റഷ്യയിൽ നിന്നാണ് വിക്ഷേപിച്ചത്.</li>
+          <li>NRSC (ഹൈദരാബാദ്) ആണ് ഇന്ത്യയിലെ ഉപഗ്രഹ വിവര വിശകലന ഏജൻസി.</li>
+          <li>IIRS (ഡെറാഡൂൺ) റിമോട്ട് സെൻസിംഗിൽ പരിശീലനവും ഗവേഷണവും നൽകുന്നു.</li>
+          <li>ISRO യുടെ ഭരണ ആസ്ഥാനം ബെംഗളൂരുവിലും, പ്രധാന വിക്ഷേപണ കേന്ദ്രം ശ്രീഹരിക്കോട്ടയിലുമാണ്.</li>
+          <li>VSSC (റോക്കറ്റ് ഗവേഷണ കേന്ദ്രം) തിരുവനന്തപുരത്താണ് - ഇത് കേരളവുമായി ബന്ധപ്പെട്ട പ്രധാന വസ്തുതയാണ്.</li>
+          <li>കൽപന-1 (2002) ഇന്ത്യയുടെ ആദ്യ പ്രത്യേക കാലാവസ്ഥാ ഉപഗ്രഹമാണ്.</li>
+          <li>RISAT ഉപഗ്രഹങ്ങൾ മൈക്രോവേവ് റഡാർ ഉപയോഗിച്ച് മേഘങ്ങളെ മറികടന്ന് എല്ലാ കാലാവസ്ഥയിലും ചിത്രമെടുക്കും.</li>
+          <li>ഭുവൻ (Bhuvan) ISRO യുടെ ഇന്ത്യൻ ജിയോ-പോർട്ടലാണ്.</li>
+          <li>ഫാൾസ് കളർ കോമ്പോസിറ്റ് (FCC) ചിത്രങ്ങളിൽ സസ്യങ്ങൾ ചുവപ്പ് നിറത്തിൽ കാണപ്പെടുന്നു.</li>
+          <li>റെസലൂഷന് 4 തരങ്ങളുണ്ട്: സ്പേഷ്യൽ, സ്പെക്ട്രൽ, റേഡിയോമെട്രിക്, ടെമ്പറൽ.</li>
+          <li>MCF (Master Control Facility) കർണാടകയിലെ ഹാസനിലാണ് സ്ഥിതി ചെയ്യുന്നത്.</li>
+          <li>INCOIS (ഹൈദരാബാദ്) മത്സ്യബന്ധന മേഖലകൾ കണ്ടെത്താൻ റിമോട്ട് സെൻസിംഗ് ഡാറ്റ ഉപയോഗിക്കുന്നു.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 23: ഉപസംഹാരം -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">23. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ആധുനിക ഭൂമിശാസ്ത്ര പഠനത്തിലും ദൈനംദിന ജീവിതത്തിലും ഒഴിച്ചുകൂടാനാവാത്ത സാങ്കേതികവിദ്യയായി റിമോട്ട് സെൻസിംഗ് മാറിയിരിക്കുന്നു. ആക്ടീവ്-പാസീവ് സെൻസറുകൾ തമ്മിലുള്ള വ്യത്യാസവും, ഭൂസ്ഥിര-സൗരാനവർത്തി ഉപഗ്രഹങ്ങളുടെ വ്യത്യസ്ത ഉപയോഗങ്ങളും വ്യക്തമായി മനസ്സിലാക്കുന്നത് ഈ അധ്യായത്തിലെ ചോദ്യങ്ങൾക്ക് ഉത്തരം നൽകാൻ അത്യാവശ്യമാണ്.</li>
+          <li>ഇന്ത്യയുടെ ബഹിരാകാശ ഏജൻസികളുടെ ആസ്ഥാനങ്ങളും കേരളവുമായുള്ള ബന്ധവും (പിഷാരടി, VSSC) പ്രത്യേകം ശ്രദ്ധിക്കുക.</li>
+        </ul>
+        <h3>സാധ്യതയുള്ള ചോദ്യങ്ങളുടെ എണ്ണം</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> PSC പരീക്ഷകളിൽ ഭൂമിശാസ്ത്രം വിഭാഗത്തിൽ നിന്ന് ഈ അധ്യായത്തിൽ നിന്ന് 1 മുതൽ 2 ചോദ്യങ്ങൾ വരെ പ്രതീക്ഷിക്കാം.</li>
+          <li>സെൻസർ വർഗ്ഗീകരണവും സ്ഥാപനങ്ങളുടെ ആസ്ഥാനങ്ങളും പ്രത്യേകം ഓർത്തുവെക്കുക.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായത്തിൽ നിന്ന് കുട്ടികൾക്ക് ഒരു ടാപ്പിംഗ് ഉണ്ടാകും ജി.ഐ.എസ് (Geographic Information System)-മായി ഒരു ടാപ്പിംഗ് ഉണ്ടാകും. ഇവ രണ്ടും ഒരേ ദിശയിലേക്ക് തുറക്കുന്ന ചിത്രങ്ങളാണ്; പഠിക്കാൻ എളുപ്പമാണ്; പക്ഷേ പരീക്ഷയിൽ കൂടുതൽ വ്യക്തത നൽകേണ്ട ഒരു ഭാഗമാണ്!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.1.16 Remote Sensing</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'geography-2.1.16-remote-sensing';
-window.PART_TITLE = '2.1.16 Remote Sensing';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) openOnly(sections[0]);
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaGeography26Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) span.classList.add('selected');
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () { applyLock(!state.locked); });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
