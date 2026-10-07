@@ -1,105 +1,1370 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>1.2.7 Literature and Art - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഇന്ത്യൻ ചരിത്രം – സ്വാതന്ത്ര്യസമരകാലത്തെ സാഹിത്യവും കലയും | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">1.2.7 Literature and Art</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമുറ കഥ</a></li>
+      <li><a href="#sec3">3. സാഹിത്യ കൃതികൾ</a></li>
+      <li><a href="#sec4">4. കലയും ചിത്രചനയും</a></li>
+      <li><a href="#sec5">5. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec6">6. PSC വിശകലനം</a></li>
+      <li><a href="#sec7">7. മുൻകാല ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec8">8. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec9">9. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec10">10. സമയരേഖ</a></li>
+      <li><a href="#sec11">11. നിനയ്ക്കാൻ എളുപ്പം</a></li>
+      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
+      <li><a href="#sec13">13. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec14">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec15">15. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec16">16. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec17">17. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec18">18. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec19">19. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ചരിത്രം | അധ്യായം 5</div>
+      <h1>ഇന്ത്യൻ ചരിത്രം – സ്വാതന്ത്ര്യസമരകാലത്തെ സാഹിത്യവും കലയും</h1>
+      <div class="subtitle">Literature and Art during the Freedom Struggle | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — വന്ദേമാതരം, ജനഗണമന, ഭാരത് മാതാ ചിത്രം, നന്ദലാൽ ബോസ്, നീൽ ദർപ്പൺ</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ആനന്ദമഠം, ഗീതാഞ്ജലി, ഡിസ്കവറി ഓഫ് ഇന്ത്യ, ഹിന്ദ് സ്വരാജ്, അബനീന്ദനാഥ് ടാഗോർ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — നേതാക്കളുടെ പുസ്തകങ്ങൾ, സരോജിനി നായിഡു, അമൃത ഷേർഗിൽ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — മറ്റ് കൃതികൾ, സാഹിത്യകാരർ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — പശ്ചാത്തലം, നാടക നിരോധനം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>വന്ദേമാതരം രചിച്ചത്:</strong> ബങ്കിം ചന്ദ്ര ചാറ്റർജി (ആനന്ദമഠം നോവലിൽ നിന്ന്)</li>
+            <li><strong>ജനഗണമന രചിച്ചത്:</strong> രവീന്ദ്രനാഥ ടാഗോർ</li>
+            <li><strong>ഭാരത് മാതാ ചിത്രം വരച്ചത്:</strong> അബനീന്ദനാഥ് ടാഗോർ (1905)</li>
+            <li><strong>ഭരണഘടന അലങ്കരിച്ചത്:</strong> നന്ദലാൽ ബോസ്</li>
+            <li><strong>നീൽ ദർപ്പൺ രചിച്ചത്:</strong> ദീനബന്ധു മിത്ര (1860)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ സ്വാതന്ത്ര്യ സമരത്തിന് വൈകാരികമായ ഊർജ്ജം പകർന്ന പുസ്തകങ്ങൾ, കവിതകൾ, ഗാനങ്ങൾ, ചിത്രചനകൾ എന്നിവയെക്കുറിച്ചാണ് ഈ അധ്യായത്തിൽ നമ്മൾ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ആയുധങ്ങളെക്കാൾ ശക്തമായിരുന്നു ഈ കാലഘട്ടത്തിലെ തൂലികകൾ. ബ്രിട്ടീഷ് വിരുദ്ധ മനോഭാവം സാധാരണക്കാരിൽ എത്തിക്കാൻ സാഹിത്യവും കലയും വലിയ പങ്കുവഹിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> നേതാക്കൾ രചിച്ച പുസ്തകങ്ങൾ, പ്രശസ്തമായ ഗാനങ്ങൾ (വന്ദേമാതരം, ജനഗണമന), ഭാരത് മാതാ ചിത്രം എന്നിവയിൽ നിന്ന് എല്ലാ PSC പരീക്ഷകളിലും സ്ഥിരമായി ചോദ്യങ്ങൾ ഉണ്ടാവാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> ദേശീയ നേതാക്കളുടെ പുസ്തകങ്ങൾ, നീൽ ദർപ്പൺ, ആനന്ദമഠം, നന്ദലാൽ ബോസ്, അബനീന്ദനാഥ് ടാഗോർ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: പിന്നാമുറ കഥ ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പിന്നാമുറ കഥ (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> 19-ാം നൂറ്റാണ്ടിന്റെ പകുതിയോടെ പാശ്ചാത്യ വിദ്യാഭ്യാസം ലഭിച്ച ഇന്ത്യക്കാർ സ്വന്തം മാതൃഭാഷയിലും ഇംഗ്ലീഷിലുമായി കവിതകളും നോവലുകളും നാടകങ്ങളും എഴുതാൻ തുടങ്ങി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ടാണ് ആരംഭിച്ചത്?</strong> ബ്രിട്ടീഷ് ഭരണത്തിന്റെ സാമ്പത്തിക ചൂഷണവും കർഷകരുടെ ദുരിതവും ജനങ്ങളെ അറിയിക്കാനും, ഇന്ത്യക്കാരുടെ പഴയകാല സാംസ്കാരിക പൈതൃകം ഓർമ്മിപ്പിച്ച് അവരിൽ അഭിമാനം വളർത്താനും സാഹിത്യം ഉപയോഗിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കലയുടെ പങ്ക്:</strong> എഴുത്ത് വായിക്കാൻ അറിയാത്ത നിരക്ഷരരായ ഗ്രാമീണർക്ക് പോലും ഒരു ചിത്രത്തിലൂടെ ദേശീയതയുടെ സന്ദേശം നൽകാൻ കലാകാരന്മാർക്ക് കഴിഞ്ഞു (ഉദാഹരണത്തിന്: ഭാരത് മാതാ ചിത്രം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഫലങ്ങളും പ്രതികരണവും:</strong> ഇത് ബ്രിട്ടീഷുകാരിൽ ഭയം സൃഷ്ടിച്ചു. അതുകൊണ്ടാണ് 'സോസ്-ഇ-വതൻ' (പ്രേംചന്ദ്) പോലെയുള്ള പല പുസ്തകങ്ങളും ബ്രിട്ടീഷുകാർ നിരോധിച്ചത്. നാടകങ്ങൾ നിരോധിക്കാൻ 1876-ൽ അവർ 'ഡ്രമാറ്റിക് പെർഫോമൻസ് ആക്ട്' (Dramatic Performances Act) കൊണ്ടുവന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: സാഹിത്യ കൃതികൾ ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. സ്വാതന്ത്ര്യ സമരകാലത്തെ പ്രധാന സാഹിത്യ കൃതികൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആനന്ദമഠം (Anandamath - 1882):</strong> ബങ്കിം ചന്ദ്ര ചാറ്റർജി രചിച്ച പ്രശസ്തമായ ബംഗാളി നോവൽ. 1770-കളിൽ ബംഗാളിൽ നടന്ന 'സന്യാസി ലഹള' (Sanyasi Rebellion) ആണ് ഇതിന്റെ പശ്ചാത്തലം. നമ്മുടെ ദേശീയ ഗീതമായ 'വന്ദേമാതരം' ഈ നോവലിൽ നിന്നാണ് എടുത്തത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നീൽ ദർപ്പൺ (Nil Darpan - 1860):</strong> ദീനബന്ധു മിത്ര (Dinabandhu Mitra) രചിച്ച ബംഗാളി നാടകം. ബംഗാളിലെ ഇൻഡിഗോ കർഷകർ (നീലച്ചടി കർഷകർ) ബ്രിട്ടീഷ് തോട്ടമുടമകളിൽ നിന്ന് അനുഭവിച്ച കൂരതകളാണ് ഈ നാടകത്തിന്റെ പ്രമേയം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഗീതാഞ്ജലി (Gitanjali - 1910):</strong> രവീന്ദ്രനാഥ ടാഗോർ ബംഗാളിയിൽ രചിച്ച കവിതാസമാഹാരം. ഇതിന്റെ ഇംഗ്ലീഷ് പരിഭാഷയായ 'Song Offerings'-നാണ് 1913-ൽ സാഹിത്യത്തിനുള്ള നോബൽ സമ്മാനം ലഭിച്ചത്. ഈ പുരസ്കാരം ലഭിക്കുന്ന ആദ്യ ഏഷ്യക്കാരനായി ടാഗോർ മാറി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാരേ ജഹാൻ സേ അച്ചാ (Sare Jahan se Accha - 1904):</strong> പ്രശസ്ത ഉറുദു കവിയായ മുഹമ്മദ് ഇക്ബാൽ (Muhammad Iqbal) രചിച്ച ദേശഭക്തി ഗാനം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: കലയും ചിത്രചനയും ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. കലയും ചിത്രചനയും (Art and Painting)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അബനീന്ദനാഥ് ടാഗോർ (Abanindranath Tagore):</strong> ഇന്ത്യൻ കലയിലെ 'ബംഗാൾ സ്കൂൾ ഓഫ് ആർട്ട്' (Bengal School of Art) എന്ന പ്രസ്ഥാനത്തിന്റെ സ്ഥാപകൻ. 1905-ലെ ബംഗാൾ വിഭജന കാലത്ത് അദ്ദേഹം വരച്ച പ്രശസ്തമായ ചിത്രമാണ് 'ഭാരത് മാതാ' (Bharat Mata). കാവിയുടുത്ത് നാല് കൈകളുള്ള ഒരു സന്യാസിനിയായാണ് ഭാരതമാതാവിനെ ഇതിൽ ചിത്രീകരിച്ചിരിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നന്ദലാൽ ബോസ് (Nandalal Bose):</strong> അബനീന്ദനാഥ് ടാഗോറിന്റെ ശിഷ്യൻ. ഇന്ത്യൻ ഭരണഘടനയുടെ യഥാർത്ഥ കൈയെഴുത്തുപതിപ്പ് (Original Manuscript) മനോഹരമായ ചിത്രങ്ങൾ വരച്ച് അലങ്കരിച്ചത് ഇദ്ദേഹമാണ്. ഗാന്ധിജിയുടെ ദണ്ഡിയാത്രയെ ആസ്പദമാക്കി ഇദ്ദേഹം തയ്യാറാക്കിയ 'ലിനോകട്ട്' (Linocut of Bapuji) ചിത്രം വളരെ പ്രശസ്തമാണ്. കോൺഗ്രസിന്റെ ഹരിപുര സമ്മേളനത്തിന് (1938) പോസ്റ്റുകൾ വരച്ചതും ഇദ്ദേഹമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>രാജാ രവിവർമ്മ (Raja Ravi Varma):</strong> കേരളത്തിൽ നിന്നുള്ള പ്രശസ്ത ചിത്രകാരൻ. സ്വാതന്ത്ര്യ സമരത്തിൽ നേരിട്ട് ഇടപെട്ടില്ലെങ്കിലും, ഇന്ത്യൻ പുരാണങ്ങളെയും ദേവീദേവൻമാരെയും പാശ്ചാത്യ ശൈലിയിൽ ചിത്രീകരിച്ച് ഇന്ത്യക്കാരിൽ സാംസ്കാരിക അഭിമാനം വളർത്താൻ അദ്ദേഹത്തിന്റെ ചിത്രങ്ങൾക്ക് കഴിഞ്ഞു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. പ്രധാന വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1860:</strong> ദീനബന്ധു മിത്രയുടെ 'നീൽ ദർപ്പൺ' പ്രസിദ്ധീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1882:</strong> ബങ്കിം ചന്ദ്ര ചാറ്റർജിയുടെ 'ആനന്ദമഠം' പ്രസിദ്ധീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1896:</strong> കൽക്കട്ട കോൺഗ്രസ് സമ്മേളനത്തിൽ ആദ്യമായി 'വന്ദേമാതരം' ആലപിച്ചു. (ആലപിച്ചത് രവീന്ദ്രനാഥ ടാഗോർ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1905:</strong> അബനീന്ദനാഥ് ടാഗോർ 'ഭാരത് മാതാ' ചിത്രം വരച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1911:</strong> കൽക്കട്ട കോൺഗ്രസ് സമ്മേളനത്തിൽ ആദ്യമായി 'ജനഗണമന' ആലപിച്ചു. (ഡിസംബർ 27).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പോവർട്ടി ആൻഡ് അൺ-ബ്രിട്ടീഷ് റൂൾ ഇൻ ഇന്ത്യ:</strong> ദാദാഭായ് നവറോജി രചിച്ച പുസ്തകം. (ഇന്ത്യയിലെ സാമ്പത്തിക ചോർച്ചാ സിദ്ധാന്തം - Drain Theory അവതരിപ്പിച്ചു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഇന്ത്യ വിൻസ് ഫ്രീഡം (India Wins Freedom):</strong> മൗലാന അബുൽ കലാം ആസാദിന്റെ ആത്മകഥ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഡിസ്കവറി ഓഫ് ഇന്ത്യ (Discovery of India):</strong> അഹമ്മദ് നഗർ ജയിലിൽ വെച്ച് ജവഹർലാൽ നെഹ്റു രചിച്ച പുസ്തകം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: PSC വിശകലനം ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഗാന്ധിജി, നെഹ്റു, മൗലാന ആസാദ്, സുഭാഷ് ചന്ദ്രബോസ് എന്നിവരുടെ പുസ്തകങ്ങൾ, വന്ദേമാതരം, ജനഗണമന.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> ഭാരത് മാതാ ചിത്രം വരച്ചത് ആര്, ഭരണഘടന അലങ്കരിച്ചത് ആര്, നീൽ ദർപ്പൺ നാടകത്തിന്റെ പ്രമേയം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ടാഗോറിന്റെ മറ്റ് കൃതികൾ, അംബേദ്കറുടെ പുസ്തകങ്ങൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: മുൻകാല ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Match the Following:</strong> ഒരു വശത്ത് പുസ്തകങ്ങളുടെ പേരും മറുവശത്ത് രചയിതാക്കളുടെ പേരും (ഉദാഹരണത്തിന്: Unhappy India, India Divided, Hind Swaraj).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ചിത്രകലയുമായി ബന്ധപ്പെട്ട് നന്ദലാൽ ബോസും ഭരണഘടനയുമായുള്ള ബന്ധം നിരവധി തവണ LDC, Degree Level പരീക്ഷകളിൽ ചോദിച്ചിട്ടുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> നീൽ ദർപ്പൺ എന്ന നാടകത്തിന്റെ ഇംഗ്ലീഷ് പരിഭാഷ ആരുടേതാണ് എന്നത് പലരെയും കുഴപ്പത്തിലാക്കുന്ന ഒരു സ്ഥിരം ചോദ്യമാണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>രവീന്ദ്രനാഥ് ടാഗോർ</td>
+                <td>അബനീന്ദനാഥ് ടാഗോർ</td>
+                <td>'ഗീതാഞ്ജലി' രചിച്ചതും 'ജനഗണമന' എഴുതിയതും സാഹിത്യകാരനായ രവീന്ദ്രനാഥ് ടാഗോർ. 'ഭാരത് മാതാ' ചിത്രം വരച്ചത് അദ്ദേഹത്തിന്റെ അനന്തരവനായ ചിത്രകാരൻ അബനീന്ദനാഥ് ടാഗോർ.</td>
+              </tr>
+              <tr>
+                <td>വന്ദേമാതരം (ഗാനം)</td>
+                <td>വന്ദേമാതരം (പത്രം)</td>
+                <td>'വന്ദേമാതരം' ഗാനം എഴുതിയത് ബങ്കിം ചന്ദ്ര ചാറ്റർജി. ഇംഗ്ലീഷിൽ 'വന്ദേമാതരം' എന്ന പത്രം ആരംഭിച്ചത് അരബിന്ദോ ഘോഷ്.</td>
+              </tr>
+              <tr>
+                <td>നീൽ ദർപ്പൺ (രചിച്ചത്)</td>
+                <td>നീൽ ദർപ്പൺ (പരിഭാഷ)</td>
+                <td>ബംഗാളിയിൽ ഈ നാടകം രചിച്ചത് ദീനബന്ധു മിത്ര. ഇത് ഇംഗ്ലീഷിലേക്ക് പരിഭാഷപ്പെടുത്തിയത് മൈക്കിൾ മധുസൂദൻ ദത്ത്.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: പ്രമുഖ നേതാക്കളും അവരുടെ പ്രധാന കൃതികളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>നേതാവ്</th><th>പ്രധാന പുസ്തകങ്ങൾ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>മഹാത്മാ ഗാന്ധി</td><td>എന്റെ സത്യാന്വേഷണ പരീക്ഷണങ്ങൾ (ആത്മകഥ), ഹിന്ദ് സ്വരാജ്</td></tr>
+              <tr><td>ജവഹർലാൽ നെഹ്റു</td><td>ഡിസ്കവറി ഓഫ് ഇന്ത്യ, ഗ്ലിംപ്സസ് ഓഫ് വേൾഡ് ഹിസ്റ്ററി</td></tr>
+              <tr><td>സുഭാഷ് ചന്ദ്രബോസ്</td><td>ദി ഇന്ത്യൻ സ്ട്രഗിൾ (The Indian Struggle)</td></tr>
+              <tr><td>ബി.ആർ അംബേദ്കർ</td><td>അനിഹിലേഷൻ ഓഫ് കാസ്റ്റ് (Annihilation of Caste), ദി അൺടച്ചബിൾസ്</td></tr>
+              <tr><td>രാജേന്ദ്ര പ്രസാദ്</td><td>ഇന്ത്യ ഡിവൈഡഡ് (India Divided)</td></tr>
+              <tr><td>ലാലാ ലജ്പത് റായ്</td><td>അൺഹാപ്പി ഇന്ത്യ (Unhappy India)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ദേശീയ ഗീതവും ദേശീയ ഗാനവും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>വന്ദേമാതരം (National Song)</th><th>ജനഗണമന (National Anthem)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>രചയിതാവ്</td><td>ബങ്കിം ചന്ദ്ര ചാറ്റർജി</td><td>രവീന്ദ്രനാഥ ടാഗോർ</td></tr>
+              <tr><td>ഏത് പുസ്തകത്തിൽ</td><td>ആനന്ദമഠം</td><td>തത്വബോധിനി പത്രിക ('ഭാരത് വിധാത' എന്ന പേരിൽ)</td></tr>
+              <tr><td>ആദ്യമായി ആലപിച്ചത്</td><td>1896 (കൽക്കട്ട കോൺഗ്രസ്)</td><td>1911 (കൽക്കട്ട കോൺഗ്രസ്)</td></tr>
+              <tr><td>ആലപിക്കാൻ എടുക്കുന്ന സമയം</td><td>65 സെക്കൻഡ്</td><td>52 സെക്കൻഡ്</td></tr>
+              <tr><td>അംഗീകരിച്ച തീയതി</td><td>1950 ജനുവരി 24</td><td>1950 ജനുവരി 24</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: സമയരേഖ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. സമയരേഖ (Timeline)</h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <span class="box-label">📅 സാഹിത്യ-കലാ സമയരേഖ</span>
+          <svg viewBox="0 0 900 200" width="100%" height="auto" role="img" aria-label="സാഹിത്യ-കലാ സമയരേഖ">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="90" cy="100" r="10" fill="#c62828"/>
+            <text x="90" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1860</text>
+            <text x="90" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">നീൽ ദർപ്പൺ</text>
+            <circle cx="200" cy="100" r="10" fill="#ef6c00"/>
+            <text x="200" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1882</text>
+            <text x="200" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ആനന്ദമഠം</text>
+            <circle cx="310" cy="100" r="10" fill="#2e7d32"/>
+            <text x="310" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1896</text>
+            <text x="310" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">വന്ദേമാതരം</text>
+            <circle cx="420" cy="100" r="10" fill="#1565c0"/>
+            <text x="420" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1905</text>
+            <text x="420" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഭാരത് മാതാ</text>
+            <circle cx="530" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="530" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1911</text>
+            <text x="530" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ജനഗണമന</text>
+            <circle cx="640" cy="100" r="10" fill="#b83b2c"/>
+            <text x="640" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1913</text>
+            <text x="640" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">നോബൽ</text>
+            <circle cx="750" cy="100" r="10" fill="#00695c"/>
+            <text x="750" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1938</text>
+            <text x="750" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഹരിപുര പോസ്റ്റർ</text>
+          </svg>
+          <div class="viz-caption">📅 പ്രധാന സംഭവങ്ങളുടെ കാലക്രമം (1860–1938)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: നിനയ്ക്കാൻ എളുപ്പം ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>നെഹ്റുവിന്റെ പ്രധാന പുസ്തകങ്ങൾ ഓർക്കാൻ: "<strong>ലോകത്തിന്റെ ചരിത്രം (World History) അന്വേഷിച്ച് പോയ നെഹ്റുവിന് ഇന്ത്യയെ കണ്ടെത്താൻ (Discovery of India) സാധിച്ചു</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>സുഭാഷ് ചന്ദ്രബോസ്, ലാലാ ലജ്പത് റായ്, രാജേന്ദ്ര പ്രസാദ് എന്നിവരുടെ പുസ്തകങ്ങൾ:</p>
+          <ul>
+            <li><strong>ബോസ് സ്ട്രഗിൾ ചെയ്തു</strong> (The Indian Struggle).</li>
+            <li><strong>ലാലയ്ക്ക് സന്തോഷമില്ല</strong> (Unhappy India).</li>
+            <li><strong>പ്രസാദ് ഡിവൈഡ് ചെയ്തു</strong> (India Divided).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p>"<strong>86-ൽ നീലം, 82-ൽ ആനന്ദം, 96-ൽ വന്ദേ, 05-ൽ മാതാ, 11-ൽ ജനഗണം, 13-ൽ നോബൽ, 38-ൽ പോസ്റ്റർ</strong>."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: PSC കെണികൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സാധാരണ PSC കെണികൾ (Common PSC Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ ആദ്യ പതിപ്പ് അലങ്കരിച്ചത് ആര്?</p>
+          <p><strong>Confusing Options:</strong> ബി.ആർ അംബേദ്കർ, പ്രേം ബിഹാരി നരേൻ റായ്സാദ, നന്ദലാൽ ബോസ്.</p>
+          <p><strong>Fact:</strong> അലങ്കാര പണികൾ (ചിത്രരചന) ചെയ്തത് <strong>നന്ദലാൽ ബോസ്</strong> ആണ്. (കൈപ്പടയിൽ എഴുതിയത് പ്രേം ബിഹാരി നരേൻ റായ്സാദ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> ആനന്ദമഠം എന്ന നോവലിന്റെ പശ്ചാത്തലം ഏത് കലാപമാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഇൻഡിഗോ കലാപം, സന്താൾ കലാപം, സന്യാസി കലാപം.</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>സന്യാസി കലാപം</strong> (Sanyasi Rebellion). (ഇൻഡിഗോ കലാപം നീൽ ദർപ്പണിന്റെ പശ്ചാത്തലമാണ്).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ഗാന്ധിജിയുടെ ഹിന്ദ് സ്വരാജ് ആദ്യം എഴുതിയത് ഏത് ഭാഷയിലാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഇംഗ്ലീഷ്, ഹിന്ദി, ഗുജറാത്തി.</p>
+          <p><strong>Fact:</strong> ഹിന്ദ് സ്വരാജ് ആദ്യം എഴുതിയത് <strong>ഗുജറാത്തി</strong> ഭാഷയിലാണ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> രവീന്ദ്രനാഥ ടാഗോറിന്റെ 'ജനഗണമന' ഇംഗ്ലീഷിലേക്ക് പരിഭാഷപ്പെടുത്തിയത് അദ്ദേഹം തന്നെയാണ്. 'Morning Song of India' എന്ന പേരിലാണ് ഇത് പരിഭാഷപ്പെടുത്തിയത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യൻ ദേശീയ ഗാനത്തിന് സംഗീതം നൽകിയത് (Musical Composition) ക്യാപ്റ്റൻ രാം സിംഗ് താക്കൂർ (INA ലെ സൈനികൻ) ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> വന്ദേമാതരം ഇംഗ്ലീഷിലേക്ക് വിവർത്തനം ചെയ്തത് അരബിന്ദോ ഘോഷ് ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> വന്ദേമാതരത്തിന് ഈണം നൽകിയത് ജദുനാഥ് ഭട്ടാചാര്യ (യദുനാഥ് ഭട്ടാചാര്യ) ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> തമിഴ്നാട്ടിൽ സ്വാതന്ത്ര്യ സമരത്തെ ആളിക്കത്തിച്ച പ്രശസ്ത കവിയാണ് സുബ്രഹ്മണ്യ ഭാരതി (മഹാകവി ഭാരതിയാർ). 'പാഞ്ചാലി ശപഥം' അദ്ദേഹത്തിന്റെ പ്രശസ്തമായ കൃതിയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഹിന്ദി സാഹിത്യത്തിലെ പ്രശസ്ത എഴുത്തുകാരനായ മുൻഷി പ്രേംചന്ദ് (Munshi Premchand) എഴുതിയ 'സോസ്-ഇ-വതൻ' (Soz-e-Watan) എന്ന കഥാസമാഹാരം രാജ്യദ്രോഹക്കുറ്റം ചുമത്തി ബ്രിട്ടീഷുകാർ നിരോധിച്ചു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഇന്ത്യൻ ഭരണഘടനയുടെ യഥാർത്ഥ കൈയെഴുത്തുപതിപ്പിൽ ചിത്രങ്ങൾ വരച്ച് അലങ്കരിച്ച പ്രശസ്ത ചിത്രകാരൻ ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. അബനീന്ദനാഥ് ടാഗോർ</span>
+            <span data-opt="B">B. രാജാ രവിവർമ്മ</span>
+            <span data-opt="C">C. നന്ദലാൽ ബോസ്</span>
+            <span data-opt="D">D. എം.എഫ് ഹുസൈൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) നന്ദലാൽ ബോസ്</div>
+            <div class="explanation">അദ്ദേഹം ഭരണഘടനയുടെ താളുകളിൽ ഇന്ത്യയുടെ ചരിത്രവും സംസ്കാരവും ചിത്രീകരിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ദീനബന്ധു മിത്ര രചിച്ച 'നീൽ ദർപ്പൺ' എന്ന നാടകത്തിന്റെ പശ്ചാത്തലം താഴെ പറയുന്നവയിൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1857-ലെ ഒന്നാം സ്വാതന്ത്ര്യ സമരം</span>
+            <span data-opt="B">B. സന്യാസി ലഹള</span>
+            <span data-opt="C">C. ബംഗാൾ വിഭജനം</span>
+            <span data-opt="D">D. ഇൻഡിഗോ (നീലച്ചടി) കർഷകരുടെ സമരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഇൻഡിഗോ (നീലച്ചടി) കർഷകരുടെ സമരം</div>
+            <div class="explanation">1859-ൽ നടന്ന ഇൻഡിഗോ സമരമാണ് ഇതിന്റെ പശ്ചാത്തലം.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. ഡിസ്കവറി ഓഫ് ഇന്ത്യ - സുഭാഷ് ചന്ദ്രബോസ്</span>
+            <span data-opt="B">B. അൺഹാപ്പി ഇന്ത്യ - ലാലാ ലജ്പത് റായ്</span>
+            <span data-opt="C">C. ഇന്ത്യ വിൻസ് ഫ്രീഡം - ജവഹർലാൽ നെഹ്റു</span>
+            <span data-opt="D">D. ഇന്ത്യ ഡിവൈഡഡ് - മഹാത്മാ ഗാന്ധി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) അൺഹാപ്പി ഇന്ത്യ - ലാലാ ലജ്പത് റായ്</div>
+            <div class="explanation">ബാക്കിയുള്ളവ (ഡിസ്കവറി ഓഫ് ഇന്ത്യ - നെഹ്റു, ഇന്ത്യ വിൻസ് ഫ്രീഡം - ആസാദ്, ഇന്ത്യ ഡിവൈഡഡ് - രാജേന്ദ്ര പ്രസാദ്).</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. 1905-ൽ 'ഭാരത് മാതാ' എന്ന പ്രശസ്തമായ ചിത്രം വരച്ചത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. നന്ദലാൽ ബോസ്</span>
+            <span data-opt="B">B. അമൃത ഷേർഗിൽ</span>
+            <span data-opt="C">C. രവീന്ദ്രനാഥ ടാഗോർ</span>
+            <span data-opt="D">D. അബനീന്ദനാഥ് ടാഗോർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) അബനീന്ദനാഥ് ടാഗോർ</div>
+            <div class="explanation">സ്വദേശി പ്രസ്ഥാന കാലത്താണ് ഈ ചിത്രം രചിക്കപ്പെട്ടത്.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ദേശീയ ഗാനമായ 'ജനഗണമന' ആദ്യമായി ആലപിച്ച കോൺഗ്രസ്സ് സമ്മേളനം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1896 കൽക്കട്ട സമ്മേളനം</span>
+            <span data-opt="B">B. 1911 കൽക്കട്ട സമ്മേളനം</span>
+            <span data-opt="C">C. 1929 ലാഹോർ സമ്മേളനം</span>
+            <span data-opt="D">D. 1907 സൂറത്ത് സമ്മേളനം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1911 കൽക്കട്ട സമ്മേളനം</div>
+            <div class="explanation">ബിഷൻ നാരായൺ ദാർ ആയിരുന്നു അന്നത്തെ അധ്യക്ഷൻ.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ബങ്കിം ചന്ദ്ര ചാറ്റർജിയുടെ 'ആനന്ദമഠം' എന്ന നോവൽ ഏത് കലാപത്തെ ആസ്പദമാക്കിയുള്ളതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സന്യാസി ലഹള</span>
+            <span data-opt="B">B. സന്താൾ കലാപം</span>
+            <span data-opt="C">C. മാപ്പിള ലഹള</span>
+            <span data-opt="D">D. പബ്ന കലാപം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) സന്യാസി ലഹള</div>
+            <div class="explanation">1770-ൽ ബംഗാളിലുണ്ടായ കടുത്ത ക്ഷാമത്തെ തുടർന്നാണ് സന്യാസിമാരുടെ നേതൃത്വത്തിൽ കലാപം നടന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: വന്ദേമാതരവുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ആനന്ദമഠം എന്ന നോവലിൽ നിന്നാണ് ഇത് എടുത്തത്.<br>
+            2. 1896-ലെ കോൺഗ്രസ് സമ്മേളനത്തിൽ ഇത് ആദ്യമായി ആലപിച്ചു.<br>
+            3. ഇത് ഇംഗ്ലീഷിലേക്ക് പരിഭാഷപ്പെടുത്തിയത് രവീന്ദ്രനാഥ ടാഗോർ ആണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">വന്ദേമാതരം ഇംഗ്ലീഷിലേക്ക് വിവർത്തനം ചെയ്തത് അരബിന്ദോ ഘോഷ് ആണ്, ടാഗോർ അല്ല.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയിലെ സാമ്പത്തിക ചോർച്ചാ സിദ്ധാന്തം (Drain Theory) ആദ്യമായി വിശദീകരിച്ച പുസ്തകം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ദ ഇന്ത്യൻ സ്ട്രഗിൾ</span>
+            <span data-opt="B">B. പോവർട്ടി ആൻഡ് അൺ-ബ്രിട്ടീഷ് റൂൾ ഇൻ ഇന്ത്യ</span>
+            <span data-opt="C">C. ഹിന്ദ് സ്വരാജ്</span>
+            <span data-opt="D">D. ഡിസ്കവറി ഓഫ് ഇന്ത്യ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) പോവർട്ടി ആൻഡ് അൺ-ബ്രിട്ടീഷ് റൂൾ ഇൻ ഇന്ത്യ</div>
+            <div class="explanation">ദാദാഭായ് നവറോജി ബ്രിട്ടീഷ് സാമ്പത്തിക ചൂഷണം ഇതിലൂടെ ലോകത്തെ അറിയിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (പുസ്തകങ്ങളും രചയിതാക്കളും):<br>
+            ഇന്ത്യ വിൻസ് ഫ്രീഡം - a. സുഭാഷ് ചന്ദ്രബോസ്<br>
+            ദ ഇന്ത്യൻ സ്ട്രഗിൾ - b. രാജേന്ദ്ര പ്രസാദ്<br>
+            അനിഹിലേഷൻ ഓഫ് കാസ്റ്റ് - c. മൗലാന അബുൽ കലാം ആസാദ്<br>
+            ഇന്ത്യ ഡിവൈഡഡ് - d. ബി.ആർ അംബേദ്കർ</div>
+          <div class="options">
+            <span data-opt="A">A. 1-c, 2-a, 3-d, 4-b</span>
+            <span data-opt="B">B. 1-a, 2-c, 3-b, 4-d</span>
+            <span data-opt="C">C. 1-c, 2-d, 3-a, 4-b</span>
+            <span data-opt="D">D. 1-b, 2-a, 3-c, 4-d</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-c, 2-a, 3-d, 4-b</div>
+            <div class="explanation">കൃത്യമായ ചേരുംപടി ചേർക്കൽ.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ഗാന്ധിജി തന്റെ പ്രസിദ്ധമായ 'ഹിന്ദ് സ്വരാജ്' (Hind Swaraj) എന്ന പുസ്തകം ആദ്യം എഴുതിയത് ഏത് ഭാഷയിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഇംഗ്ലീഷ്</span>
+            <span data-opt="B">B. ഹിന്ദി</span>
+            <span data-opt="C">C. ഗുജറാത്തി</span>
+            <span data-opt="D">D. മറാത്തി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഗുജറാത്തി</div>
+            <div class="explanation">1909-ൽ ലണ്ടനിൽ നിന്ന് ദക്ഷിണാഫ്രിക്കയിലേക്കുള്ള കപ്പൽ യാത്രയ്ക്കിടെയാണ് അദ്ദേഹം ഇതെഴുതിയത്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. രവീന്ദ്രനാഥ ടാഗോറിന് സാഹിത്യത്തിനുള്ള നോബൽ പുരസ്കാരം ലഭിച്ച വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1910</span>
+            <span data-opt="B">B. 1911</span>
+            <span data-opt="C">C. 1913</span>
+            <span data-opt="D">D. 1915</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1913</div>
+            <div class="explanation">ഗീതാഞ്ജലിയുടെ ഇംഗ്ലീഷ് പരിഭാഷയായ 'Song Offerings'-നാണ് നോബൽ ലഭിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): നീൽ ദർപ്പൺ എന്ന നാടകം ബ്രിട്ടീഷ് ഇന്ത്യയിൽ വലിയ വിവാദങ്ങൾക്ക് കാരണമായി.<br>
+            Reason (R): ബംഗാളിലെ നീലച്ചടി കർഷകരെ ബ്രിട്ടീഷുകാർ ചൂഷണം ചെയ്യുന്നത് നാടകം വളരെ വ്യക്തമായി തുറന്നുകാട്ടി.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">ഈ നാടകം ബ്രിട്ടീഷ് ഭരണത്തിന്റെ ക്രൂരത തുറന്നുകാട്ടി.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ബ്രിട്ടീഷ് ഗവൺമെന്റ് നിരോധിച്ച മുൻഷി പ്രേംചന്ദിന്റെ പ്രശസ്തമായ പുസ്തകം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഗോദാൻ</span>
+            <span data-opt="B">B. സോസ്-ഇ-വതൻ</span>
+            <span data-opt="C">C. സേവാസദൻ</span>
+            <span data-opt="D">D. നിർമ്മല</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സോസ്-ഇ-വതൻ</div>
+            <div class="explanation">ഈ ചെറുകഥാ സമാഹാരത്തിൽ ദേശഭക്തി പ്രകടിപ്പിച്ചതിനാണ് നിരോധിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. തമിഴ്നാട്ടിൽ സ്വാതന്ത്ര്യ സമരത്തിന് ഊർജ്ജം പകർന്ന 'പാഞ്ചാലി ശപഥം' എന്ന കൃതി രചിച്ചത് ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. സി. രാജഗോപാലാചാരി</span>
+            <span data-opt="B">B. പെരിയാർ ഇ.വി. രാമസ്വാമി</span>
+            <span data-opt="C">C. സുബ്രഹ്മണ്യ ഭാരതി</span>
+            <span data-opt="D">D. വി.ഒ. ചിദംബരം പിള്ള</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സുബ്രഹ്മണ്യ ഭാരതി</div>
+            <div class="explanation">തമിഴ്നാട്ടിലെ ദേശീയതയുടെ കവിയാണ് ഭാരതിയാർ.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. 'സാരേ ജഹാൻ സേ അച്ചാ' എന്ന ഗാനം രചിച്ചതാര്?</div>
+          <div class="options">
+            <span data-opt="A">A. മുഹമ്മദ് ഇക്ബാൽ</span>
+            <span data-opt="B">B. അബ്ദുൽ കലാം ആസാദ്</span>
+            <span data-opt="C">C. റാം പ്രസാദ് ബിസ്മിൽ</span>
+            <span data-opt="D">D. ഭഗത് സിംഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) മുഹമ്മദ് ഇക്ബാൽ</div>
+            <div class="explanation">ഈ ഉറുദു ഗാനം 1904-ലാണ് അദ്ദേഹം പ്രസിദ്ധീകരിച്ചത്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>9</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(D)</td><td>10</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>4</td><td>(D)</td><td>12</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>6</td><td>(A)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>7</td><td>(A)</td><td>15</td><td>(A)</td></tr>
+              <tr><td>8</td><td>(B)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>വന്ദേമാതരം ഉൾപ്പെടുന്ന നോവൽ: ആനന്ദമഠം.</li>
+          <li>ആനന്ദമഠം രചിച്ചത്: ബങ്കിം ചന്ദ്ര ചാറ്റർജി (1882).</li>
+          <li>ആനന്ദമഠത്തിന്റെ പശ്ചാത്തലം: സന്യാസി കലാപം.</li>
+          <li>ഇൻഡിഗോ കർഷകരുടെ കഥ പറയുന്ന നാടകം: നീൽ ദർപ്പൺ.</li>
+          <li>നീൽ ദർപ്പൺ രചിച്ചത്: ദീനബന്ധു മിത്ര (1860).</li>
+          <li>നീൽ ദർപ്പൺ പരിഭാഷപ്പെടുത്തിയത്: മൈക്കിൾ മധുസൂദൻ ദത്ത്.</li>
+          <li>ഭാരത് മാതാ ചിത്രം വരച്ചത്: അബനീന്ദനാഥ് ടാഗോർ.</li>
+          <li>ഭരണഘടനയെ ചിത്രങ്ങളാൽ അലങ്കരിച്ചത്: നന്ദലാൽ ബോസ്.</li>
+          <li>ഗീതാഞ്ജലിക്ക് നോബൽ സമ്മാനം ലഭിച്ച വർഷം: 1913.</li>
+          <li>ഡിസ്കവറി ഓഫ് ഇന്ത്യ: ജവഹർലാൽ നെഹ്റു.</li>
+          <li>ഇന്ത്യ വിൻസ് ഫ്രീഡം: മൗലാന അബുൽ കലാം ആസാദ്.</li>
+          <li>ഇന്ത്യ ഡിവൈഡഡ്: രാജേന്ദ്ര പ്രസാദ്.</li>
+          <li>ദ ഇന്ത്യൻ സ്ട്രഗിൾ: സുഭാഷ് ചന്ദ്രബോസ്.</li>
+          <li>ഹിന്ദ് സ്വരാജ് ആദ്യം എഴുതിയ ഭാഷ: ഗുജറാത്തി.</li>
+          <li>അൺഹാപ്പി ഇന്ത്യ: ലാലാ ലജ്പത് റായ്.</li>
+          <li>പോവർട്ടി ആൻഡ് അൺ-ബ്രിട്ടീഷ് റൂൾ ഇൻ ഇന്ത്യ: ദാദാഭായ് നവറോജി.</li>
+          <li>വന്ദേമാതരം ആദ്യമായി പാടിയ കോൺഗ്രസ് സമ്മേളനം: 1896 കൽക്കട്ട.</li>
+          <li>ജനഗണമന ആദ്യമായി പാടിയ കോൺഗ്രസ് സമ്മേളനം: 1911 കൽക്കട്ട.</li>
+          <li>വന്ദേമാതരം ഇംഗ്ലീഷിലേക്ക് വിവർത്തനം ചെയ്തത്: അരബിന്ദോ ഘോഷ്.</li>
+          <li>നിരോധിക്കപ്പെട്ട മുൻഷി പ്രേംചന്ദിന്റെ കൃതി: സോസ്-ഇ-വതൻ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>കലയും ചിത്രങ്ങളും</h3>
+        <ul>
+          <li><strong>ഭാരത് മാതാ (1905)</strong> → അബനീന്ദനാഥ് ടാഗോർ.</li>
+          <li><strong>ഭരണഘടനയിലെ ചിത്രങ്ങൾ, ഹരിപുര പോസ്റ്റർ, ദണ്ഡിയാത്ര ലിനോകട്ട്</strong> → നന്ദലാൽ ബോസ്.</li>
+          <li><strong>പുരാണ ചിത്രങ്ങളിലൂടെ സാംസ്കാരിക അഭിമാനം</strong> → രാജാ രവിവർമ്മ.</li>
+        </ul>
+        <h3>ദേശീയ ഗാനങ്ങളും ഗീതങ്ങളും</h3>
+        <ul>
+          <li><strong>വന്ദേമാതരം:</strong> ബങ്കിം ചന്ദ്ര ചാറ്റർജി → ആനന്ദമഠം നോവൽ (1882) → ആദ്യം പാടിയത് 1896-ൽ.</li>
+          <li><strong>ജനഗണമന:</strong> രവീന്ദ്രനാഥ ടാഗോർ → തത്വബോധിനി പത്രിക → ആദ്യം പാടിയത് 1911-ൽ.</li>
+          <li><strong>സാരേ ജഹാൻ സേ അച്ചാ:</strong> മുഹമ്മദ് ഇക്ബാൽ.</li>
+        </ul>
+        <h3>കൃതികൾ ← രചയിതാക്കൾ</h3>
+        <ul>
+          <li><strong>നീൽ ദർപ്പൺ</strong> ← ദീനബന്ധു മിത്ര (പരിഭാഷ: മധുസൂദൻ ദത്ത്).</li>
+          <li><strong>ഇന്ത്യ വിൻസ് ഫ്രീഡം</strong> → അബുൽ കലാം ആസാദ്.</li>
+          <li><strong>ഡിസ്കവറി ഓഫ് ഇന്ത്യ</strong> → നെഹ്റു.</li>
+          <li><strong>ദി അൺടച്ചബിൾസ്, അനിഹിലേഷൻ ഓഫ് കാസ്റ്റ്</strong> → ബി.ആർ അംബേദ്കർ.</li>
+          <li><strong>അൺഹാപ്പി ഇന്ത്യ</strong> ← ലാലാ ലജ്പത് റായ്.</li>
+          <li><strong>ദി ഇന്ത്യൻ സ്ട്രഗിൾ</strong> ← സുഭാഷ് ചന്ദ്രബോസ്.</li>
+          <li><strong>പോവർട്ടി ആൻഡ് അൺ-ബ്രിട്ടീഷ് റൂൾ ഇൻ ഇന്ത്യ</strong> → ദാദാഭായ് നവറോജി.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: ടോപ്പ് 25 വസ്തുതകൾ ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ആനന്ദമഠം നോവലിന്റെ പ്രധാന പ്രമേയം ബംഗാളിലെ സന്യാസി-ഫക്കീർ കലാപമാണ്.</li>
+          <li>നീൽ ദർപ്പൺ നാടകത്തിന്റെ പരിഭാഷയായ 'The Indigo Planting Mirror' അച്ചടിച്ചതിന്റെ പേരിൽ റവറന്റ് ജയിംസ് ലോംഗ് (Rev. James Long) എന്ന വിദേശിയെ ബ്രിട്ടീഷുകാർ ജയിലിലടച്ചിട്ടുണ്ട്.</li>
+          <li>ദാദാഭായ് നവറോജിയുടെ സാമ്പത്തിക ചോർച്ചാ സിദ്ധാന്തത്തെ (Drain Theory) ഔദ്യോഗികമായി അംഗീകരിച്ച കോൺഗ്രസ്റ്റ് സമ്മേളനമാണ് 1896-ലെ കൽക്കട്ട സമ്മേളനം.</li>
+          <li>'ജനഗണമന' ആദ്യമായി പ്രസിദ്ധീകരിച്ചത് 'ഭാരത് വിധാത' എന്ന പേരിലാണ്.</li>
+          <li>അലിഗഡ് മുസ്ലീം യൂണിവേഴ്സിറ്റി സ്ഥാപകനായ സർ സയ്യിദ് അഹമ്മദ് ഖാൻ രചിച്ച പ്രശസ്തമായ പുസ്തകമാണ് 'Asbab-e-Baghawat-e-Hind' (Causes of the Indian Revolt). 1857-ലെ കലാപത്തെക്കുറിച്ചുള്ള ആദ്യത്തെ ഇന്ത്യൻ വിശകലനമാണിത്.</li>
+          <li>'താരീഖ്-ഇ-ഹിന്ദ്' എന്ന ഗ്രന്ഥം രചിച്ചത് അൽ-ബിറൂനിയാണെങ്കിൽ, 'ഡിസ്കവറി ഓഫ് ഇന്ത്യ' രചിച്ചത് നെഹ്റുവാണ്.</li>
+          <li>അഹമ്മദ് നഗർ ജയിലിൽ കിടക്കുമ്പോഴാണ് നെഹ്റു തന്റെ പ്രശസ്തമായ പുസ്തകങ്ങളായ ഡിസ്കവറി ഓഫ് ഇന്ത്യയും, ഗ്ലിംപ്സസ് ഓഫ് വേൾഡ് ഹിസ്റ്ററിയും രചിച്ചത്.</li>
+          <li>ഭഗത് സിംഗ് ജയിലിൽ വെച്ച് രചിച്ച പ്രശസ്തമായ ലേഖനമാണ് 'Why I am an Atheist' (ഞാൻ എന്തുകൊണ്ട് ഒരു നിരീശ്വരവാദിയായി).</li>
+          <li>'ദി ആർട്ടിക് ഹോം ഇൻ ദ വേദാസ്' (The Arctic Home in the Vedas), 'ഗീതാ രഹസ്യം' എന്നിവ ബാലഗംഗാധര തിലകന്റെ പ്രശസ്തമായ പുസ്തകങ്ങളാണ്.</li>
+          <li>വി.ഡി. സവർക്കർ രചിച്ച പുസ്തകമാണ് 'ഹിസ്റ്ററി: ഹു ഈസ് എ ഹിസ്റ്ററി?'.</li>
+          <li>'അമൃത ഷേർഗിൽ' (Amrita Sher-Gil) ഇന്ത്യയിലെ പ്രശസ്തയായ വനിതാ ചിത്രകാരിയാണ്. സാധാരണക്കാരായ ഇന്ത്യക്കാരുടെ ജീവിതം അവർ ചിത്രങ്ങളിൽ പകർത്തി.</li>
+          <li>ബംഗാൾ ക്ഷാമത്തിന്റെ (1943) ഭീകരത വരച്ചുകാട്ടിയ പ്രശസ്ത ചിത്രകാരനാണ് സോമനാഥ് ഹോർ (Somnath Hore).</li>
+          <li>അബനീന്ദനാഥ് ടാഗോർ ഇന്ത്യൻ സൊസൈറ്റി ഓഫ് ഓറിയന്റൽ ആർട്ട് (Indian Society of Oriental Art) 1907-ൽ സ്ഥാപിച്ചു.</li>
+          <li>ഗാന്ധിജിയുടെ ആത്മകഥയായ 'എന്റെ സത്യാന്വേഷണ പരീക്ഷണങ്ങൾ' ഇംഗ്ലീഷിലേക്ക് വിവർത്തനം ചെയ്തത് മഹാദേവ് ദേശായിയാണ്.</li>
+          <li>സരോജിനി നായിഡുവിന്റെ കവിതാസമാഹാരമാണ് 'ദ ഗോൾഡൻ ത്രെഷോൾഡ്' (The Golden Threshold).</li>
+          <li>അവരെ 'ഇന്ത്യയുടെ വാനമ്പാടി' (Nightingale of India) എന്ന് വിളിച്ചത് ഗാന്ധിജിയാണ്.</li>
+          <li>വന്ദേമാതരം ആലപിക്കാൻ 65 സെക്കൻഡും (1 മിനിറ്റ് 5 സെക്കൻഡ്), ജനഗണമന ആലപിക്കാൻ 52 സെക്കൻഡുമാണ് ഔദ്യോഗിക സമയം.</li>
+          <li>രവീന്ദ്രനാഥ ടാഗോർ ഇന്ത്യയുടെ മാത്രമല്ല, ബംഗ്ലാദേശിന്റെയും (അമർ സോനാർ ബംഗ്ല) ദേശീയഗാനം രചിച്ചു. ശ്രീലങ്കയുടെ ദേശീയഗാനമായ 'ശ്രീ ലങ്കാ മാതാ' എന്ന ഗാനത്തിന് പ്രചോദനമായതും അദ്ദേഹത്തിന്റെ കവിതയാണ്.</li>
+          <li>മുഹമ്മദ് ഇക്ബാൽ ആണ് പാകിസ്ഥാൻ എന്ന ആശയത്തിന് ബീജാവാപം നൽകിയ കവി (എന്നാൽ ആ പേര് നിർദ്ദേശിച്ചത് ചൗധരി റഹമത്ത് അലി).</li>
+          <li>ദേശീയ വിദ്യാഭ്യാസ പദ്ധതിയുടെ ഭാഗമായി ശാന്തിനികേതനിൽ (വിശ്വഭാരതി യൂണിവേഴ്സിറ്റി) കലാഭവൻ (Kala Bhavana) സ്ഥാപിച്ചത് ടാഗോർ ആണ്. നന്ദലാൽ ബോസ് ഇതിന്റെ പിൻസിപ്പാളായി പ്രവർത്തിച്ചു.</li>
+          <li>രാം പ്രസാദ് ബിസ്മിൽ (കാക്കോരി ഗൂഢാലോചന കേസ്) പ്രശസ്തമാക്കിയ വരികളാണ് "സർഫറോഷി കി തമന്ന അബ് ഹമാരേ ദിൽ മേ ഹൈ" (രചിച്ചത് ബിസ്മിൽ അസിമാബാദി).</li>
+          <li>ഭാരതത്തിന്റെ ദേശീയ മുദ്രാവാക്യമായ "സത്യമേവ ജയതേ" മുണ്ഡകോപനിഷത്തിൽ നിന്നാണ് എടുത്തത്. ഇത് ജനകീയമാക്കിയത് മദൻ മോഹൻ മാളവ്യയാണ്.</li>
+          <li>ശരത് ചന്ദ്ര ചാറ്റർജിയുടെ പ്രശസ്തമായ നോവലായ 'പഥേർ ദാബി' (Pather Dabi) വിപ്ലവകാരികളെ പുകഴ്ത്തുന്നു എന്ന കാരണത്താൽ ബ്രിട്ടീഷുകാർ നിരോധിച്ചിരുന്നു.</li>
+          <li>അബുൽ കലാം ആസാദിന്റെ 'ഇന്ത്യ വിൻസ് ഫ്രീഡം' പൂർണ്ണരൂപത്തിൽ പ്രസിദ്ധീകരിച്ചത് അദ്ദേഹത്തിന്റെ മരണത്തിന് 30 വർഷങ്ങൾക്ക് ശേഷമാണ്.</li>
+          <li>1857-ലെ കലാപത്തെ സ്വാതന്ത്ര്യ സമരമായി ചിത്രീകരിച്ച വി.ഡി. സവർക്കറുടെ പുസ്തകം (The Indian War of Independence 1857) രഹസ്യമായാണ് ഇന്ത്യയിൽ വിതരണം ചെയ്തിരുന്നത്.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>സ്വാതന്ത്ര്യ സമരം കേവലം സമരപ്രതലങ്ങളിലോ ജയിലുകളിലോ മാത്രം ഒതുങ്ങിയിരുന്നില്ല. എഴുത്തുകാരും കലാകാരന്മാരും തങ്ങളുടെ കഴിവുകൾ ഉപയോഗിച്ച് സാധാരണക്കാരിൽ ബ്രിട്ടീഷ് വിരുദ്ധതയും ദേശീയബോധവും കുത്തിവെച്ചു.</li>
+          <li>'നീൽ ദർപ്പണി'ലെ കർഷകരുടെ കണ്ണീരും, 'ആനന്ദമഠ'ത്തിലെ വന്ദേമാതരവും, 'ഭാരത് മാതാ' ചിത്രവും കോടിക്കണക്കിന് ഇന്ത്യക്കാരെ ഒറ്റക്കെട്ടായി ബ്രിട്ടീഷുകാർക്കെതിരെ പോരാടാൻ പ്രേരിപ്പിച്ചു.</li>
+          <li>ഇന്ത്യൻ ദേശീയതയുടെ സാംസ്കാരിക അടിത്തറയാണ് ഇവയെല്ലാം.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1 മുതൽ 2 ചോദ്യങ്ങൾ വരെ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഇനി നാം കടക്കുന്നത് ഇന്ത്യൻ സ്വാതന്ത്ര്യ സമരത്തിന്റെ ഏറ്റവും പ്രധാനപ്പെട്ട കാലഘട്ടത്തിലേക്കാണ് - 'ഇന്ത്യൻ ചരിത്രം - മഹാത്മാഗാന്ധിയും സ്വാതന്ത്ര്യസമരവും'. ഈ നോട്ട് നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>1.2.7 Literature and Art</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'history-1.2.7-literature-art';
-window.PART_TITLE = '1.2.7 Literature and Art';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaHistoryLitArtQ_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
