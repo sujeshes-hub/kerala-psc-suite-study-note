@@ -1,105 +1,2032 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>1.1.7 Aikya Kerala Movement - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള ചരിത്രം – ഐക്യകേരള പ്രസ്ഥാനം | Kerala PSC</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .toc-nav {
+      list-style: none;
+    }
+
+    .toc-nav li {
+      margin-bottom: 2px;
+    }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover {
+      background: var(--light-bg);
+      color: var(--primary);
+    }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover {
+      background: #ede7f6;
+    }
+
+    .section h2:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+
+    .toggle-icon {
+      font-size: 14px;
+      transition: transform 0.3s;
+      color: var(--primary);
+    }
+
+    .section.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+
+    .section.collapsed > *:not(h2) {
+      display: none;
+    }
+
+    .section-body {
+      padding: 16px 18px;
+    }
+
+    /* ========== CONTENT BOXES ========== */
+    .important,
+    .memory,
+    .trap,
+    .correction,
+    .added-fact,
+    .revision,
+    .last-minute,
+    .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important {
+      background: var(--important-bg);
+      border-left-color: var(--important-border);
+    }
+
+    .memory {
+      background: var(--memory-bg);
+      border-left-color: var(--memory-border);
+    }
+
+    .trap {
+      background: var(--trap-bg);
+      border-left-color: var(--trap-border);
+    }
+
+    .correction {
+      background: var(--correction-bg);
+      border-left-color: var(--correction-border);
+    }
+
+    .added-fact {
+      background: var(--added-bg);
+      border-left-color: var(--added-border);
+    }
+
+    .revision {
+      background: var(--revision-bg);
+      border-left-color: var(--revision-border);
+    }
+
+    .last-minute {
+      background: #4a148c;
+      color: #fff;
+      border-left-color: #7c43bd;
+    }
+
+    .last-minute strong {
+      color: #ffd54f;
+    }
+
+    .viz-box {
+      background: #fafafa;
+      border-left-color: var(--primary);
+      text-align: center;
+    }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .stars {
+      color: var(--star);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    /* ========== LISTS ========== */
+    ul, ol {
+      padding-left: 22px;
+      margin: 8px 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--table-alt);
+    }
+
+    tbody tr:hover {
+      background: #ede7f6;
+    }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover {
+      border-color: var(--primary-light);
+      background: var(--light-bg);
+    }
+
+    .options span.selected {
+      border-color: var(--primary);
+      background: #ede7f6;
+      font-weight: 600;
+    }
+
+    .options span.correct {
+      border-color: var(--memory-border);
+      background: #c8e6c9;
+    }
+
+    .options span.wrong {
+      border-color: var(--trap-border);
+      background: #ffcdd2;
+    }
+
+    .options span.locked {
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover {
+      background: var(--light-bg);
+    }
+
+    .btn-save {
+      background: var(--secondary) !important;
+      color: #fff !important;
+      border-color: var(--secondary) !important;
+    }
+
+    .btn-show {
+      background: var(--primary) !important;
+      color: #fff !important;
+      border-color: var(--primary) !important;
+    }
+
+    .btn-mark.active {
+      background: var(--star) !important;
+      color: #fff !important;
+      border-color: var(--star) !important;
+    }
+
+    .btn-lock {
+      background: var(--accent) !important;
+      color: #fff !important;
+      border-color: var(--accent) !important;
+    }
+
+    .q-status {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: auto;
+      color: var(--text-light);
+    }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show {
+      display: block;
+    }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 {
+      font-size: 17px;
+      color: var(--primary);
+      margin: 14px 0 8px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    strong {
+      color: var(--primary);
+    }
+
+    .last-minute strong {
+      color: #ffd54f;
+    }
+
+    /* ========== CHECKLIST ========== */
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li::before {
+      content: "✔ ";
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+
+      .toc-title,
+      .toc-controls {
+        display: none;
+      }
+
+      .toc-nav {
+        display: flex;
+        gap: 6px;
+        white-space: nowrap;
+        padding-bottom: 4px;
+      }
+
+      .toc-nav li {
+        margin: 0;
+      }
+
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+
+      .toc-nav a.active {
+        background: var(--primary);
+        color: #fff;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 15.2px;
+      }
+
+      .chapter-header h1 {
+        font-size: 21px;
+      }
+
+      .section h2 {
+        font-size: 17.5px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      thead th,
+      tbody td {
+        padding: 6px 8px;
+      }
+
+      .q-text {
+        font-size: 14.7px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .options span {
+        font-size: 13.5px;
+      }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body {
+        background: #fff;
+        font-size: 10.5pt;
+        padding: 0;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .toc {
+        display: none;
+      }
+
+      .main-container {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+      }
+
+      .chapter-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+
+      .section.collapsed > *:not(h2) {
+        display: block !important;
+      }
+
+      .section {
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+      }
+
+      .section h2 {
+        cursor: default;
+        background: #f3e5f5 !important;
+      }
+
+      .toggle-icon {
+        display: none;
+      }
+
+      .q-controls {
+        display: none;
+      }
+
+      .answer-block {
+        display: block !important;
+      }
+    }
+
+    /* ========== SVG / MAP ========== */
+    .map-container {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    .map-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">1.1.7 Aikya Kerala Movement</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. ആദ്യകാല സമ്മേളനങ്ങൾ</a></li>
+      <li><a href="#sec4">4. തൃശൂർ കൺവെൻഷൻ</a></li>
+      <li><a href="#sec5">5. തിരു-കൊച്ചി സംയോജനം</a></li>
+      <li><a href="#sec6">6. ഫസൽ അലി കമ്മീഷൻ</a></li>
+      <li><a href="#sec7">7. കേരളപ്പിറവി</a></li>
+      <li><a href="#sec8">8. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec9">9. PSC വിശകലനം</a></li>
+      <li><a href="#sec10">10. മുൻകാല ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec11">11. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec12">12. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec13">13. സമയരേഖ / ഡയഗ്രം</a></li>
+      <li><a href="#sec14">14. നിനയ്ക്കാൻ എളുപ്പം</a></li>
+      <li><a href="#sec15">15. PSC കെണികൾ</a></li>
+      <li><a href="#sec16">16. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec17">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec18">18. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec19">19. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec21">21. ടോപ്പ് വസ്തുതകൾ</a></li>
+      <li><a href="#sec22">22. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">കേരള ചരിത്രം | ഐക്യകേരള പ്രസ്ഥാനം</div>
+      <h1>കേരള ചരിത്രം – ഐക്യകേരള പ്രസ്ഥാനം (Aikya Kerala Movement)</h1>
+      <div class="subtitle">Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഫസൽ അലി കമ്മീഷൻ (SRC), തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ (1947), പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928), തിരു-കൊച്ചി സംയോജനം (1949), കേരളപ്പിറവി (1956)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഒറ്റപ്പാലം സമ്മേളനം (1921), ജെ.വി.പി കമ്മിറ്റി (1948), ധാർ കമ്മീഷൻ (1948), ആദ്യ കമ്മ്യൂണിസ്റ്റ് സർക്കാർ (1957)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — തിരു-കൊച്ചിയിലെ മുഖ്യമന്ത്രിമാർ, ജില്ലാ രൂപീകരണ വർഷങ്ങൾ, 1956-ലെ അതിർത്തി മാറ്റങ്ങൾ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — കെ.പി.സി.സി രൂപീകരണം, മയ്യഴി, ആദ്യ ഗവർണ്ണർ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ബ്രിട്ടീഷ് ഭരണകാലത്തെ ഭരണപ്രദേശങ്ങൾ</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഐക്യകേരള പ്രമേയം പാസാക്കിയത്:</strong> പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928)</li>
+            <li><strong>ഐക്യകേരളം തമ്പുരാൻ:</strong> കേരളവർമ്മ വലിയ തമ്പുരാൻ</li>
+            <li><strong>SRC അധ്യക്ഷൻ:</strong> സയ്യിദ് ഫസൽ അലി</li>
+            <li><strong>കേരളപ്പിറവി:</strong> 1956 നവംബർ 1</li>
+            <li><strong>ആദ്യ മുഖ്യമന്ത്രി:</strong> ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് (1957)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> മലയാളം സംസാരിക്കുന്ന ജനവിഭാഗങ്ങളെ ഒന്നിപ്പിച്ച് 'കേരളം' എന്ന ഒരൊറ്റ സംസ്ഥാനം രൂപീകരിക്കുന്നതിന് വേണ്ടി നടന്ന പ്രക്ഷോഭങ്ങളായ ഐക്യകേരള പ്രസ്ഥാനം, പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം, തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ, ഫസൽ അലി കമ്മീഷൻ, കേരളപ്പിറവി എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രാധാന്യം:</strong> തിരുവിതാംകൂർ, കൊച്ചി, മലബാർ എന്നിങ്ങനെ മൂന്നായി വിഭജിക്കപ്പെട്ടിരുന്ന ഒരു ഭൂപ്രദേശം ഇന്നത്തെ കേരളമായി മാറിയതിന്റെ നാൾവഴികളാണിത്. സംസ്ഥാന രൂപീകരണവുമായി ബന്ധപ്പെട്ട കമ്മിറ്റികൾ PSC എപ്പോഴും ചോദിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ അധ്യക്ഷൻ (ഫസൽ അലി), തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ ഉദ്ഘാടനം ചെയ്തതാര് (കേരളവർമ്മ വലിയ തമ്പുരാൻ), ഐക്യകേരള പ്രമേയം പാസാക്കിയ കോൺഗ്രസ് സമ്മേളനം (1928 പയ്യന്നൂർ) തുടങ്ങിയവ നിരന്തരം ആവർത്തിക്കുന്ന ചോദ്യങ്ങളാണ്.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ പഠിക്കാനുള്ള രീതി</span>
+          <p>ഈ അധ്യായം <strong>വർഷം → സംഭവം → വ്യക്തി</strong> എന്ന ക്രമത്തിൽ ഓർക്കുക: 1920 → 1921 → 1928 → 1947 → 1949 → 1953 → 1956.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>നാട്ടിൽ ഒത്തുചേർന്ന് പണിയെടുത്തു, തൃശൂരിൽ തിരു-കൊച്ചി ഫലം കണ്ടു, കേരളം പിറന്നു</strong>" (നാഗ്പൂർ 1920, ഒറ്റപ്പാലം 1921, പയ്യന്നൂർ 1928, തൃശൂർ 1947, തിരു-കൊച്ചി 1949, ഫസൽ അലി 1953, കേരളപ്പിറവി 1956).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം</h2>
+      <div class="section-body">
+        <p>ബ്രിട്ടീഷ് ഭരണകാലത്ത് കേരളം പ്രധാനമായും മൂന്ന് ഭരണപ്രദേശങ്ങളായാണ് കിടന്നിരുന്നത്. വടക്ക് ബ്രിട്ടീഷുകാരുടെ നേരിട്ടുള്ള ഭരണത്തിന് കീഴിലുള്ള മലബാർ (മദ്രാസ് പ്രസിഡൻസിയുടെ ഭാഗം), മധ്യത്തിൽ കൊച്ചി രാജ്യം, തെക്ക് തിരുവിതാംകൂർ രാജ്യം.</p>
+        <p>മലയാളം സംസാരിക്കുന്ന ഈ മൂന്ന് പ്രദേശങ്ങളെയും സംയോജിപ്പിച്ച് ഒരൊറ്റ സംസ്ഥാനമാക്കണം എന്ന ചിന്ത ഇരുപതാം നൂറ്റാണ്ടിന്റെ തുടക്കത്തിൽ തന്നെ സാഹിത്യകാരന്മാർക്കിടയിലും രാഷ്ട്രീയക്കാർക്കിടയിലും ഉദിച്ചിരുന്നു. 1920-ലെ നാഗ്പൂർ കോൺഗ്രസ് സമ്മേളനത്തിൽ ഭാഷാടിസ്ഥാനത്തിൽ പ്രവിശ്യാ കോൺഗ്രസ് കമ്മിറ്റികൾ രൂപീകരിക്കാൻ തീരുമാനിച്ചതോടെയാണ് ഐക്യകേരള പ്രസ്ഥാനത്തിന് രാഷ്ട്രീയമായ അടിത്തറ ലഭിച്ചത് (ഇതിന്റെ ഫലമായാണ് കെ.പി.സി.സി രൂപീകൃതമായത്).</p>
+        <div class="added-fact">
+          <span class="box-label">➕ മലബാറിന് പുറത്തുള്ള ഭാഗങ്ങൾ</span>
+          <p>ഇന്നത്തെ കാസർഗോഡ് അന്ന് മദ്രാസ് പ്രസിഡൻസിയിലെ ദക്ഷിണ കാനറ (South Canara) ജില്ലയുടെ ഭാഗമായിരുന്നു, മലബാറിന്റെ ഭാഗമായിരുന്നില്ല. മയ്യഴി (മാഹി) ഫ്രഞ്ച് ഭരണത്തിലായിരുന്നു. അത് ഇപ്പോഴും പുതുച്ചേരി കേന്ദ്രഭരണ പ്രദേശത്തിന്റെ ഭാഗമാണ്, കേരളത്തിൽ ചേർത്തിട്ടില്ല.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ സ്വാതന്ത്ര്യാനന്തരം ഭാഷാ സംസ്ഥാനത്തിനുള്ള ശ്രമങ്ങൾ</span>
+          <ul>
+            <li><strong>ധാർ കമ്മീഷൻ (1948):</strong> ഭാഷാടിസ്ഥാനത്തിലുള്ള പുനഃസംഘടനയെ അനുകൂലിച്ചില്ല.</li>
+            <li><strong>ജെ.വി.പി കമ്മിറ്റി (1948 ഡിസംബർ):</strong> ജവഹർലാൽ നെഹ്‌റു, വല്ലഭ്‌ഭായ് പട്ടേൽ, പട്ടാഭി സീതാരാമയ്യ എന്നിവർ. ഇതും ഭാഷാ സംസ്ഥാനത്തെ അന്ന് തള്ളി.</li>
+            <li><strong>പോറ്റി ശ്രീരാമുലുവിന്റെ നിരാഹാര സമരവും മരണവും (1952):</strong> ഇതിന്റെ ഫലമായി 1953 ഒക്ടോബർ 1-ന് ആന്ധ്ര ആദ്യ ഭാഷാ സംസ്ഥാനമായി. ഇതിനുശേഷമാണ് ഫസൽ അലി കമ്മീഷൻ വന്നത്.</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ധാർ വേണ്ട, JVP വേണ്ട; ശ്രീരാമുലു മരിച്ചു, ആന്ധ്ര വന്നു, SRC വന്നു.</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: ആദ്യകാല സമ്മേളനങ്ങൾ ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. ആദ്യകാല സമ്മേളനങ്ങളും പ്രമേയങ്ങളും</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഒറ്റപ്പാലം സമ്മേളനം (1921):</strong> കേരളത്തിലെ ആദ്യത്തെ അഖില കേരള രാഷ്ട്രീയ സമ്മേളനം നടന്നത് 1921-ൽ ഒറ്റപ്പാലത്ത് വെച്ചാണ്. ആന്ധ്രാ കേസരി എന്നറിയപ്പെടുന്ന <strong>ടി. പ്രകാശം</strong> ആയിരുന്നു ഇതിന്റെ അധ്യക്ഷൻ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇത് ഒന്നാം കേരള പ്രാദേശിക (പ്രൊവിൻഷ്യൽ) രാഷ്ട്രീയ സമ്മേളനം എന്നും അറിയപ്പെടുന്നു. ⚠️</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഒറ്റയ്ക്ക് പാലത്തിൽ പ്രകാശം</strong>" (ഒറ്റപ്പാലം → ടി. പ്രകാശം).</p>
+        </div>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928):</strong> ഐക്യകേരള പ്രസ്ഥാനത്തിന്റെ ചരിത്രത്തിലെ സുപ്രധാന നാഴികക്കല്ലാണിത്. 1928-ൽ പണ്ഡിറ്റ് ജവഹർലാൽ നെഹ്‌റുവിന്റെ അധ്യക്ഷതയിൽ പയ്യന്നൂരിൽ വെച്ചുചേർന്ന കോൺഗ്രസ് സമ്മേളനമാണ് '<strong>ഐക്യകേരള പ്രമേയം</strong>' പാസാക്കിയത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഈ സമ്മേളനത്തിൽ ഭാഷാടിസ്ഥാനത്തിൽ കേരള സംസ്ഥാനം വേണമെന്ന ആവശ്യവും ഉയർന്നു. പയ്യന്നൂർ കണ്ണൂർ ജില്ലയിലാണ്. ⚠️ ഇത് നാലാമത് പ്രാദേശിക രാഷ്ട്രീയ സമ്മേളനമായി ഗൈഡുകളിൽ കാണാം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കെ.പി.സി.സി (Kerala Pradesh Congress Committee):</strong> 1920-ലെ നാഗ്പൂർ തീരുമാനപ്രകാരം രൂപീകൃതമായി. ⚠️ "ഇന്ത്യയിലെ ആദ്യത്തെ ഭാഷാടിസ്ഥാന കമ്മിറ്റി" എന്ന പ്രയോഗം എല്ലായിടത്തും ഒരുപോലെ കാണുന്നില്ല, ഉത്തരസൂചിക നോക്കുക.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>പയ്യന്നൂർ നെഹ്‌റുവിന്റെ പയ്യൻ</strong>" (പയ്യന്നൂർ → നെഹ്‌റു).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: തൃശൂർ കൺവെൻഷൻ ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ (1947 ഏപ്രിൽ)</h2>
+      <div class="section-body">
+        <p>ഐക്യകേരളത്തിന് വേണ്ടി നടന്ന ഏറ്റവും വലിയ സമ്മേളനമാണിത്.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വേദി:</strong> 1947 ഏപ്രിലിൽ തൃശൂരിലാണ് ഇത് നടന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദ്ഘാടകൻ:</strong> കൊച്ചി മഹാരാജാവായിരുന്ന <strong>കേരളവർമ്മ വലിയ തമ്പുരാൻ</strong> ആണ് ഈ കൺവെൻഷൻ ഉദ്ഘാടനം ചെയ്തത്. (ഇദ്ദേഹം '<strong>ഐക്യകേരളം തമ്പുരാൻ</strong>' എന്നറിയപ്പെടുന്നു). ⚠️ ചില ഗൈഡുകളിൽ ഈ വിശേഷണം മറ്റൊരു കൊച്ചി രാജാവിന് നൽകിക്കാണാം; ഉത്തരസൂചിക നോക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അധ്യക്ഷൻ:</strong> 'കേരള ഗാന്ധി'യായ <strong>കെ. കേളപ്പൻ</strong> ആയിരുന്നു ഈ സമ്മേളനത്തിന്റെ അധ്യക്ഷൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>തീരുമാനം:</strong> ഐക്യകേരള രൂപീകരണത്തിനായി കെ. കേളപ്പൻ പ്രസിഡന്റും കെ.എ. ദാമോദരമേനോൻ സെക്രട്ടറിയുമായി 100 അംഗങ്ങളുള്ള ഒരു '<strong>ഐക്യകേരള കമ്മിറ്റി</strong>' ഈ സമ്മേളനത്തിൽ രൂപീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> കെ. കേളപ്പൻ "കേരള ഗാന്ധി" എന്നും "ഐക്യകേരളത്തിന്റെ ശില്പി" എന്നും അറിയപ്പെടുന്നു. ⚠️ ഗുരുവായൂർ സത്യാഗ്രഹത്തിലെ നേതാവുമായിരുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>തമ്പുരാൻ തുറന്നു, കേളപ്പൻ ഭരിച്ചു, ദാമോദരൻ എഴുതി</strong>" (ഉദ്ഘാടനം, അധ്യക്ഷൻ, സെക്രട്ടറി).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: തിരു-കൊച്ചി സംയോജനം ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. തിരു-കൊച്ചി സംയോജനം (1949 ജൂലൈ 1)</h2>
+      <div class="section-body">
+        <p>ഐക്യകേരളത്തിലേക്കുള്ള ആദ്യ ചുവടുവെപ്പായി തിരുവിതാംകൂർ, കൊച്ചി എന്നീ നാട്ടുരാജ്യങ്ങളെ സംയോജിപ്പിച്ചുകൊണ്ട് 1949 ജൂലൈ 1-ന് <strong>തിരു-കൊച്ചി (Travancore-Cochin)</strong> സംസ്ഥാനം നിലവിൽ വന്നു.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> തിരു-കൊച്ചിയുടെ ആദ്യത്തെ രാജപ്രമുഖനായി തിരുവിതാംകൂർ മഹാരാജാവ് <strong>ശ്രീ ചിത്തിര തിരുനാൾ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ആദ്യത്തെ മുഖ്യമന്ത്രിയായി <strong>ടി.കെ. നാരായണ പിള്ള</strong> (പറവൂർ ടി.കെ. നാരായണ പിള്ള) അധികാരമേറ്റു.</li>
+          <li><span class="stars">⭐⭐⭐</span> തിരു-കൊച്ചിയിലെ മുഖ്യമന്ത്രിമാർ (ക്രമം): ⚠️
+            <ol>
+              <li>പറവൂർ ടി.കെ. നാരായണ പിള്ള (1949–51)</li>
+              <li>സി. കേശവൻ (1951–52)</li>
+              <li>എ.ജെ. ജോൺ (1952–54)</li>
+              <li>പട്ടം താണു പിള്ള (1954–55)</li>
+              <li>പനമ്പിള്ളി ഗോവിന്ദ മേനോൻ (1955–56)</li>
+            </ol>
+            1956 മാർച്ചിൽ രാഷ്ട്രപതി ഭരണം ഏർപ്പെടുത്തി.
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> ചിത്തിര തിരുനാൾ 1956 ഒക്ടോബർ 31 വരെ രാജപ്രമുഖനായി തുടർന്നു. ⚠️</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ടി.കെ. തുടങ്ങി, കേശവൻ കൂടി, ജോൺ ജയിച്ചു, താണു താഴ്ന്നു, ഗോവിന്ദൻ ഗോൾ</strong>" (ടി.കെ., കേശവൻ, ജോൺ, താണു, ഗോവിന്ദ മേനോൻ).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: ഫസൽ അലി കമ്മീഷൻ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ (ഫസൽ അലി കമ്മീഷൻ - 1953)</h2>
+      <div class="section-body">
+        <p>ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കുന്നതിനെക്കുറിച്ച് പഠിക്കാൻ കേന്ദ്ര സർക്കാർ 1953 ഡിസംബറിൽ 'സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷനെ' (States Reorganisation Commission - SRC) നിയമിച്ചു.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അധ്യക്ഷൻ:</strong> സയ്യിദ് ഫസൽ അലി (Fazal Ali).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അംഗങ്ങൾ:</strong> കെ.എം. പണിക്കർ (മലയാളി സാന്നിധ്യം), എച്ച്.എൻ. കുൻസ്രു (H.N. Kunzru).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഈ കമ്മീഷന്റെ ശുപാർശ പ്രകാരം 1956-ലെ സംസ്ഥാന പുനഃസംഘടനാ നിയമം (States Reorganisation Act, 1956) ഇന്ത്യൻ പാർലമെന്റ് പാസാക്കി.</li>
+          <li><span class="stars">⭐⭐⭐</span> കമ്മീഷൻ 1955 സെപ്റ്റംബർ 30-ന് റിപ്പോർട്ട് സമർപ്പിച്ചു. ⚠️ ഈ നിയമം 1956 നവംബർ 1-ന് പ്രാബല്യത്തിൽ വന്നു. ഏഴാം ഭരണഘടനാ ഭേദഗതിയും (1956) ഇതിനൊപ്പം വന്നു. ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> കമ്മീഷൻ ശുപാർശ ചെയ്ത സംസ്ഥാനങ്ങൾ 16 + 3 കേന്ദ്രഭരണ പ്രദേശങ്ങൾ എന്നായിരുന്നു. നിയമം പാസായപ്പോൾ 14 സംസ്ഥാനങ്ങൾ + 6 കേന്ദ്രഭരണ പ്രദേശങ്ങളായി. ⚠️</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഫസൽ അലി, പണിക്കർ, കുൻസ്രു (FPK).</strong>" ✔️</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: കേരളപ്പിറവി ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. കേരളപ്പിറവി (Formation of Kerala State)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>തീയതി:</strong> ഫസൽ അലി കമ്മീഷന്റെ റിപ്പോർട്ട് പ്രകാരം <strong>1956 നവംബർ 1</strong>-ന് ഇന്നത്തെ കേരള സംസ്ഥാനം നിലവിൽ വന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭൂമിശാസ്ത്രപരമായ മാറ്റങ്ങൾ:</strong>
+            <ul>
+              <li>തിരു-കൊച്ചി സംസ്ഥാനത്തോട് മദ്രാസ് പ്രസിഡൻസിയിലായിരുന്ന മലബാർ ജില്ലയും, ദക്ഷിണ കാനറയിലായിരുന്ന കാസർഗോഡ് താലൂക്കും കൂട്ടിച്ചേർത്തു.</li>
+              <li>പകരം, തിരുവിതാംകൂറിന്റെ തെക്കൻ താലൂക്കുകളായ തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട് (ഇന്നത്തെ കന്യാകുമാരി ജില്ല) എന്നിവയും, ചെങ്കോട്ടയുടെ ഒരു ഭാഗവും മദ്രാസ് സംസ്ഥാനത്തിന് (തമിഴ്നാടിന്) വിട്ടുകൊടുത്തു.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരള നിയമസഭ:</strong> ആദ്യ തിരഞ്ഞെടുപ്പ് 1957 ഫെബ്രുവരി–മാർച്ച്; ആദ്യ മുഖ്യമന്ത്രി <strong>ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</strong> (1957 ഏപ്രിൽ 5-ന് അധികാരമേറ്റു). ⚠️ ആദ്യ സ്പീക്കർ ആർ. ശങ്കരനാരായണൻ തമ്പി. ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> ആദ്യ മന്ത്രിസഭയെ 1959 ജൂലൈ 31-ന് പിരിച്ചുവിട്ടു (വിമോചന സമരത്തെ തുടർന്ന്, ആർട്ടിക്കിൾ 356). ⚠️</li>
+          <li><span class="stars">⭐⭐</span> കേരളത്തിലെ ആദ്യ ചീഫ് ജസ്റ്റിസ്: കെ.ടി. കോശി. ⚠️ (കേരള ഹൈക്കോടതി 1956 നവംബർ 1-ന് നിലവിൽ വന്നു.)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. പ്രധാന വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേരള സംസ്ഥാനം രൂപീകൃതമാകുമ്പോൾ ആകെ <strong>5 ജില്ലകൾ</strong> മാത്രമാണുണ്ടായിരുന്നത് (തിരുവനന്തപുരം, കൊല്ലം, കോട്ടയം, തൃശൂർ, മലബാർ). 1957 ജനുവരി 1-നാണ് മലബാർ ജില്ലയെ വിഭജിച്ച് കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട് ജില്ലകൾ രൂപീകരിച്ചത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ജില്ലാ രൂപീകരണ ക്രമം:</strong> ⚠️
+            <ul>
+              <li>1957 ജനുവരി 1 – കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട്</li>
+              <li>1957 ആഗസ്റ്റ് 17 – ആലപ്പുഴ</li>
+              <li>1958 ഏപ്രിൽ 1 – എറണാകുളം</li>
+              <li>1969 ജൂൺ 16 – മലപ്പുറം</li>
+              <li>1972 ജനുവരി 26 – ഇടുക്കി</li>
+              <li>1980 നവംബർ 1 – വയനാട്</li>
+              <li>1982 നവംബർ 1 – പത്തനംതിട്ട</li>
+              <li>1984 മെയ് 24 – കാസർഗോഡ്</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ക-കോ-പാലക്കാട് ('57), ആല, എറണാകുളം ('58), മലപ്പുറം ('69), ഇടുക്കി ('72)</strong>" (ക-കോ-പാ-ആ-എ-മ-ഇ).</p>
+        </div>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> കേരള സംസ്ഥാനത്തിന്റെ ആദ്യത്തെ ഗവർണ്ണർ <strong>ബി. രാമകൃഷ്ണറാവു</strong> (B. Ramakrishna Rao) ആയിരുന്നു (1956 നവംബർ 22-ന് അധികാരമേറ്റു). ⚠️ ചില സ്രോതസ്സുകളിൽ അദ്ദേഹം 1956 നവംബർ 1-ന് ചുമതലയേറ്റു എന്ന് കാണുന്നു. തീയതി ചോദ്യമായി വന്നാൽ ഉത്തരസൂചിക നോക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരളപ്പിറവിക്ക് ശേഷം നടന്ന ആദ്യ നിയമസഭാ തിരഞ്ഞെടുപ്പിലൂടെ (1957) ഇ.എം.എസ്. നമ്പൂതിരിപ്പാടിന്റെ നേതൃത്വത്തിൽ കമ്മ്യൂണിസ്റ്റ് സർക്കാർ അധികാരത്തിൽ വന്നു. ലോകത്തിൽ തന്നെ ബാലറ്റിലൂടെ അധികാരത്തിൽ വന്ന ആദ്യത്തെ കമ്മ്യൂണിസ്റ്റ് സർക്കാരാണിതെന്ന് വിശേഷിപ്പിക്കപ്പെടുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ✏️ ഇത് ഇന്ത്യയിലെ ആദ്യ കമ്മ്യൂണിസ്റ്റ് സർക്കാർ എന്ന നിലയിൽ ഉറപ്പാണ്. "ലോകത്തിലെ ആദ്യ" എന്ന പ്രയോഗം PSC-യിൽ സാധാരണമാണ്. എങ്കിലും സാൻ മറിനോയിൽ 1945-ൽ കമ്മ്യൂണിസ്റ്റ്–സോഷ്യലിസ്റ്റ് സഖ്യം തിരഞ്ഞെടുപ്പിലൂടെ അധികാരത്തിൽ വന്നിരുന്നു. അതിനാൽ ഓപ്ഷനിൽ "ഇന്ത്യയിലെ ആദ്യ" ഉണ്ടെങ്കിൽ അത് സുരക്ഷിതം.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരള ഹൈക്കോടതി 1956 നവംബർ 1-ന് നിലവിൽ വന്നു. ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിലെ ആദ്യ ഭാഷാ സംസ്ഥാനം: ആന്ധ്ര (1953 ഒക്ടോബർ 1). ഭാഷാടിസ്ഥാനത്തിൽ രൂപീകൃതമായ ആദ്യ ദക്ഷിണേന്ത്യൻ സംസ്ഥാനങ്ങൾ: ആന്ധ്ര, കേരളം, കർണാടക (മൈസൂർ) 1956-ൽ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: PSC വിശകലനം ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഫസൽ അലി കമ്മീഷനിലെ അംഗങ്ങൾ (കെ.എം പണിക്കർ, കുൻസ്രു), ഐക്യകേരളം തമ്പുരാൻ (കേരളവർമ്മ വലിയ തമ്പുരാൻ), തിരു-കൊച്ചി സംയോജന തീയതി (1949 ജൂലൈ 1).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> പയ്യന്നൂർ സമ്മേളന അധ്യക്ഷൻ (നെഹ്‌റു), തൃശൂർ കൺവെൻഷൻ അധ്യക്ഷൻ (കെ. കേളപ്പൻ), ഒറ്റപ്പാലം സമ്മേളന അധ്യക്ഷൻ (ടി. പ്രകാശം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> രൂപീകരണ സമയത്തെ ജില്ലകളുടെ എണ്ണം (5), വിട്ടുകൊടുത്ത താലൂക്കുകൾ (തോവാള, അഗസ്തീശ്വരം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പുതിയ സാധ്യത:</strong> തിരു-കൊച്ചി മുഖ്യമന്ത്രിമാർ, ജില്ലാ രൂപീകരണ വർഷങ്ങൾ, ഐക്യകേരള കമ്മിറ്റി സെക്രട്ടറി (കെ.എ. ദാമോദര മേനോൻ), ജെ.വി.പി കമ്മിറ്റി അംഗങ്ങൾ, ആദ്യ മന്ത്രിസഭ പിരിച്ചുവിട്ട വർഷം (1959).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: മുൻകാല ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കുന്നതിനായി കേന്ദ്രസർക്കാർ 1953-ൽ നിയമിച്ച സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷനിലെ (States Reorganisation Commission) മലയാളി അംഗം ആരായിരുന്നു?" (കെ.എം. പണിക്കർ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "1928-ൽ പയ്യന്നൂരിൽ വെച്ച് നടന്ന, ഐക്യകേരള പ്രമേയം പാസാക്കിയ കോൺഗ്രസ് സമ്മേളനത്തിൽ അധ്യക്ഷത വഹിച്ചത് ആരാണ്?" (ജവഹർലാൽ നെഹ്‌റു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഐക്യകേരളം തമ്പുരാൻ എന്ന് ചരിത്രത്തിൽ അറിയപ്പെടുന്ന കൊച്ചി മഹാരാജാവ് ആര്?" (കേരളവർമ്മ വലിയ തമ്പുരാൻ).</li>
+          <li><span class="stars">⭐⭐⭐</span> "കേരളം രൂപീകൃതമായ വർഷം?" (1956), "തിരു-കൊച്ചിയുടെ ആദ്യ മുഖ്യമന്ത്രി?" (ടി.കെ. നാരായണ പിള്ള), "കേരളത്തിന്റെ ആദ്യ മുഖ്യമന്ത്രി?" (ഇ.എം.എസ്.) എന്നിവയും ആവർത്തിച്ച് വരാറുണ്ട്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ഒറ്റപ്പാലം സമ്മേളനം (1921)</td>
+                <td>പയ്യന്നൂർ സമ്മേളനം (1928)</td>
+                <td>കേരളത്തിലെ ആദ്യത്തെ അഖില കേരള രാഷ്ട്രീയ സമ്മേളനം നടന്നത് ഒറ്റപ്പാലത്താണ് (അധ്യക്ഷൻ: ടി. പ്രകാശം). എന്നാൽ ഐക്യകേരള പ്രമേയം പാസാക്കിയ പ്രധാന കോൺഗ്രസ് സമ്മേളനം നടന്നത് പയ്യന്നൂരിലാണ് (അധ്യക്ഷൻ: നെഹ്‌റു).</td>
+              </tr>
+              <tr>
+                <td>തൃശൂർ കൺവെൻഷൻ അധ്യക്ഷൻ</td>
+                <td>തൃശൂർ കൺവെൻഷൻ ഉദ്ഘാടകൻ</td>
+                <td>1947-ലെ തൃശൂർ ഐക്യകേരള കൺവെൻഷനിൽ അധ്യക്ഷത വഹിച്ചത് കെ. കേളപ്പനാണ്. എന്നാൽ അത് ഉദ്ഘാടനം ചെയ്തത് കൊച്ചി മഹാരാജാവായ കേരളവർമ്മ വലിയ തമ്പുരാനാണ് (മാറിപ്പോകരുത്).</td>
+              </tr>
+              <tr>
+                <td>രാജപ്രമുഖൻ</td>
+                <td>ഗവർണ്ണർ</td>
+                <td>തിരു-കൊച്ചി സംസ്ഥാനം രൂപീകരിച്ചപ്പോൾ (1949) അവിടെ സംസ്ഥാന തലവൻ രാജപ്രമുഖൻ (ചിത്തിര തിരുനാൾ) ആയിരുന്നു. എന്നാൽ 1956-ൽ കേരള സംസ്ഥാനം രൂപീകരിച്ചപ്പോൾ ആ പദവി മാറി ഗവർണ്ണർ (ബി. രാമകൃഷ്ണറാവു) ആയി.</td>
+              </tr>
+              <tr>
+                <td>ഫസൽ അലി കമ്മീഷൻ (SRC, 1953)</td>
+                <td>ജെ.വി.പി കമ്മിറ്റി (1948)</td>
+                <td>SRC-യിൽ ഫസൽ അലി, പണിക്കർ, കുൻസ്രു. ജെ.വി.പി-യിൽ നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി സീതാരാമയ്യ.</td>
+              </tr>
+              <tr>
+                <td>ധാർ കമ്മീഷൻ (1948)</td>
+                <td>ഫസൽ അലി കമ്മീഷൻ (1953)</td>
+                <td>ധാർ കമ്മീഷൻ ഭാഷാടിസ്ഥാനത്തെ അനുകൂലിച്ചില്ല. ഫസൽ അലി കമ്മീഷൻ ഭാഷാടിസ്ഥാനത്തിൽ പുനഃസംഘടന ശുപാർശ ചെയ്തു.</td>
+              </tr>
+              <tr>
+                <td>തിരു-കൊച്ചി (1949)</td>
+                <td>കേരളം (1956)</td>
+                <td>1949-ൽ തിരുവിതാംകൂർ + കൊച്ചി മാത്രം. 1956-ൽ മലബാർ + കാസർഗോഡ് കൂടി ചേർന്നു, തെക്കൻ താലൂക്കുകൾ തമിഴ്നാടിന് പോയി.</td>
+              </tr>
+              <tr>
+                <td>മയ്യഴി (മാഹി)</td>
+                <td>കാസർഗോഡ്</td>
+                <td>കാസർഗോഡ് 1956-ൽ കേരളത്തോട് ചേർത്തു. മയ്യഴി പുതുച്ചേരിയുടെ ഭാഗമായി തുടരുന്നു (കേരളത്തിൽ ചേർത്തിട്ടില്ല).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: ഐക്യകേരള പ്രസ്ഥാനത്തിലെ പ്രധാന സമ്മേളനങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സമ്മേളനം</th><th>വർഷം</th><th>വേദി</th><th>അധ്യക്ഷൻ</th><th>പ്രധാന സംഭവം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>അഖില കേരള രാഷ്ട്രീയ സമ്മേളനം</td><td>1921</td><td>ഒറ്റപ്പാലം</td><td>ടി. പ്രകാശം</td><td>കേരളത്തിലെ ആദ്യ രാഷ്ട്രീയ സമ്മേളനം</td></tr>
+              <tr><td>കോൺഗ്രസ് സമ്മേളനം</td><td>1928</td><td>പയ്യന്നൂർ</td><td>ജവഹർലാൽ നെഹ്‌റു</td><td>ഐക്യകേരള പ്രമേയം പാസാക്കി</td></tr>
+              <tr><td>ഐക്യകേരള കൺവെൻഷൻ</td><td>1947</td><td>തൃശൂർ</td><td>കെ. കേളപ്പൻ</td><td>100 അംഗ ഐക്യകേരള കമ്മിറ്റി രൂപീകരിച്ചു</td></tr>
+              <tr><td>ഐക്യകേരള കൺവെൻഷൻ</td><td>1952 ⚠️</td><td>പാലക്കാട് ⚠️</td><td>കെ. കേളപ്പൻ</td><td>കേരള സംസ്ഥാന രൂപീകരണം വേഗത്തിലാക്കാൻ</td></tr>
+              <tr><td>നാഗ്പൂർ കോൺഗ്രസ്</td><td>1920</td><td>നാഗ്പൂർ</td><td>—</td><td>ഭാഷാടിസ്ഥാന പ്രവിശ്യാ കമ്മിറ്റികൾ, KPCC</td></tr>
+              <tr><td>തിരു-കൊച്ചി സംയോജനം</td><td>1949</td><td>—</td><td>—</td><td>ജൂലൈ 1; രാജപ്രമുഖൻ: ചിത്തിര തിരുനാൾ</td></tr>
+              <tr><td>SRC രൂപീകരണം</td><td>1953</td><td>—</td><td>ഫസൽ അലി</td><td>ഡിസംബർ; റിപ്പോർട്ട് 1955</td></tr>
+              <tr><td>കേരളപ്പിറവി</td><td>1956</td><td>—</td><td>—</td><td>നവംബർ 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ഫസൽ അലി കമ്മീഷൻ (States Reorganisation Commission - 1953)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പദവി</th><th>വ്യക്തിയുടെ പേര്</th></tr></thead>
+            <tbody>
+              <tr><td>അധ്യക്ഷൻ (Chairman)</td><td>സയ്യിദ് ഫസൽ അലി (Syed Fazal Ali)</td></tr>
+              <tr><td>അംഗം 1 (Member)</td><td>കെ.എം. പണിക്കർ (K.M. Panikkar - മലയാളി)</td></tr>
+              <tr><td>അംഗം 2 (Member)</td><td>എച്ച്.എൻ. കുൻസ്രു (H.N. Kunzru)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: 1956-ലെ അതിർത്തി മാറ്റങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കേരളത്തോട് ചേർത്തവ</th><th>തമിഴ്നാടിന് (മദ്രാസ്) നൽകിയവ</th></tr></thead>
+            <tbody>
+              <tr><td>മലബാർ ജില്ല (മദ്രാസ് പ്രസിഡൻസി)</td><td>തോവാള</td></tr>
+              <tr><td>കാസർഗോഡ് താലൂക്ക് (ദക്ഷിണ കാനറ)</td><td>അഗസ്തീശ്വരം</td></tr>
+              <tr><td></td><td>കൽക്കുളം</td></tr>
+              <tr><td></td><td>വിളവൻകോട്</td></tr>
+              <tr><td></td><td>ചെങ്കോട്ടയുടെ ഒരു ഭാഗം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 4: കമ്മിറ്റികളും കമ്മീഷനുകളും (താരതമ്യം)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പേര്</th><th>വർഷം</th><th>പ്രധാന വ്യക്തികൾ</th><th>നിലപാട്</th></tr></thead>
+            <tbody>
+              <tr><td>ധാർ കമ്മീഷൻ</td><td>1948</td><td>എസ്.കെ. ധാർ</td><td>ഭാഷാ സംസ്ഥാനത്തിന് എതിര്</td></tr>
+              <tr><td>ജെ.വി.പി കമ്മിറ്റി</td><td>1948</td><td>നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി</td><td>തൽക്കാലം ഭാഷാ സംസ്ഥാനം വേണ്ട</td></tr>
+              <tr><td>ഫസൽ അലി കമ്മീഷൻ (SRC)</td><td>1953–55</td><td>ഫസൽ അലി, പണിക്കർ, കുൻസ്രു</td><td>ഭാഷാടിസ്ഥാന പുനഃസംഘടന</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: സമയരേഖ / ഡയഗ്രം ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. സമയരേഖ / ഡയഗ്രം</h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <span class="box-label">📅 ഐക്യകേരള പ്രസ്ഥാനത്തിന്റെ സമയരേഖ</span>
+          <svg viewBox="0 0 900 200" width="100%" height="auto" role="img" aria-label="ഐക്യകേരള സമയരേഖ">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <!-- 1920 -->
+            <circle cx="80" cy="100" r="10" fill="#c62828"/>
+            <text x="80" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1920</text>
+            <text x="80" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">നാഗ്പൂർ</text>
+            <!-- 1921 -->
+            <circle cx="160" cy="100" r="10" fill="#ef6c00"/>
+            <text x="160" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1921</text>
+            <text x="160" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഒറ്റപ്പാലം</text>
+            <!-- 1928 -->
+            <circle cx="250" cy="100" r="10" fill="#2e7d32"/>
+            <text x="250" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1928</text>
+            <text x="250" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">പയ്യന്നൂർ</text>
+            <!-- 1947 -->
+            <circle cx="340" cy="100" r="10" fill="#1565c0"/>
+            <text x="340" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1947</text>
+            <text x="340" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">തൃശൂർ</text>
+            <!-- 1949 -->
+            <circle cx="430" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="430" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1949</text>
+            <text x="430" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">തിരു-കൊച്ചി</text>
+            <!-- 1953 -->
+            <circle cx="530" cy="100" r="10" fill="#b83b2c"/>
+            <text x="530" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1953</text>
+            <text x="530" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഫസൽ അലി</text>
+            <!-- 1956 -->
+            <circle cx="640" cy="100" r="10" fill="#00695c"/>
+            <text x="640" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1956</text>
+            <text x="640" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കേരളപ്പിറവി</text>
+            <!-- 1957 -->
+            <circle cx="750" cy="100" r="10" fill="#f9a825"/>
+            <text x="750" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1957</text>
+            <text x="750" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഇ.എം.എസ്.</text>
+            <!-- 1959 -->
+            <circle cx="840" cy="100" r="10" fill="#8e24aa"/>
+            <text x="840" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1959</text>
+            <text x="840" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">മന്ത്രിസഭ പിരിച്ചു</text>
+          </svg>
+          <div class="viz-caption">📅 പ്രധാന സംഭവങ്ങളുടെ കാലക്രമം (1920–1959)</div>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">🗺️ കേരളത്തിന്റെ രൂപീകരണം - ഭൂപടം</span>
+          <div class="map-container">
+            <svg viewBox="0 0 500 500" width="100%" height="auto" role="img" aria-label="കേരള മാപ്പ്">
+              <!-- Simplified Kerala outline -->
+              <path d="M220,30 L250,45 L265,80 L275,130 L285,190 L290,250 L285,310 L275,370 L260,420 L240,460 L215,485 L190,470 L165,440 L145,400 L130,350 L120,300 L115,250 L120,200 L130,150 L145,100 L165,60 L190,35 Z"
+                    fill="#e8f5e9" stroke="#4a148c" stroke-width="2"/>
+              <!-- Regions before 1956 -->
+              <text x="180" y="120" font-size="10" fill="#c62828" font-weight="bold">മലബാർ</text>
+              <text x="180" y="135" font-size="9" fill="#c62828">(മദ്രാസ്)</text>
+              <text x="200" y="260" font-size="10" fill="#1565c0" font-weight="bold">കൊച്ചി</text>
+              <text x="200" y="275" font-size="9" fill="#1565c0">(നാട്ടുരാജ്യം)</text>
+              <text x="200" y="380" font-size="10" fill="#2e7d32" font-weight="bold">തിരുവിതാംകൂർ</text>
+              <text x="200" y="395" font-size="9" fill="#2e7d32">(നാട്ടുരാജ്യം)</text>
+              <!-- Added areas -->
+              <circle cx="220" cy="60" r="5" fill="#b83b2c"/>
+              <text x="230" y="55" font-size="9" fill="#14202b">കാസർഗോഡ്</text>
+              <text x="250" y="490" text-anchor="middle" font-size="12" fill="#4a148c" font-weight="bold">1956-ലെ കേരളം</text>
+            </svg>
+          </div>
+          <div class="viz-caption">📍 1956-ൽ കേരളത്തോട് ചേർത്ത മലബാർ, കാസർഗോഡ്; വിട്ടുകൊടുത്ത തെക്കൻ താലൂക്കുകൾ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: നിനയ്ക്കാൻ എളുപ്പം ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>ഫസൽ അലി കമ്മീഷനിലെ അംഗങ്ങളെ ഓർക്കാൻ: "<strong>ഫസൽ അലിയുടെ പാൻ (Panikkar) കുന്നിൽ (Kunzru) പോയി.</strong>" ഫസൽ അലി, പണിക്കർ, കുൻസ്രു. (ചുരുക്കത്തിൽ FPK).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>വിട്ടുകൊടുത്ത താലൂക്കുകൾ ഓർക്കാൻ: "<strong>തോവാല ചുറ്റിയ അഗസ്ത്യമുനി കൽക്കുളത്തിൽ വീണു.</strong>" തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം (വിളവൻകോടും ചെങ്കോട്ടയും ഇതിനൊപ്പം). ചുരുക്കരൂപം: തോ-അ-ക-വി-ചെ.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p>സമ്മേളന അധ്യക്ഷന്മാർ: "<strong>ഒറ്റയ്ക്ക് പ്രകാശം, പയ്യൻ നെഹ്‌റു, തൃശൂർ കേളപ്പൻ</strong>" (ഒറ്റപ്പാലം–പ്രകാശം, പയ്യന്നൂർ–നെഹ്‌റു, തൃശൂർ–കേളപ്പൻ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p>ഉദ്ഘാടകൻ vs അധ്യക്ഷൻ (തൃശൂർ): "<strong>തമ്പുരാൻ തുടക്കം, കേളപ്പൻ നടത്തിപ്പ്.</strong>"</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5:</strong></span>
+          <p>തിരു-കൊച്ചി: "<strong>ചിത്തിര രാജാവ്, ടി.കെ. മുഖ്യൻ</strong>" (രാജപ്രമുഖൻ ചിത്തിര തിരുനാൾ, മുഖ്യമന്ത്രി ടി.കെ. നാരായണ പിള്ള).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6:</strong></span>
+          <p>ജില്ലകൾ (1956): "<strong>തി-കൊ-കോ-തൃ-മ</strong>" (തിരുവനന്തപുരം, കൊല്ലം, കോട്ടയം, തൃശൂർ, മലബാർ) = 5 ജില്ല.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7:</strong></span>
+          <p>1957 ജനുവരി 1: "<strong>ക-കോ-പാ</strong>" (കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട്).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8:</strong></span>
+          <p>ഭാഷാ സംസ്ഥാന ക്രമം: "<strong>ശ്രീരാമുലു മരിച്ചു → ആന്ധ്ര (1953) → SRC (1953) → കേരളം (1956).</strong>"</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 9:</strong></span>
+          <p>വർഷ ശ്രേണി: "<strong>20-21-28-47-49-53-56</strong>" = നാഗ്പൂർ, ഒറ്റപ്പാലം, പയ്യന്നൂർ, തൃശൂർ, തിരു-കൊച്ചി, SRC, കേരളപ്പിറവി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: PSC കെണികൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഐക്യകേരള പ്രമേയം പാസാക്കിയ കോൺഗ്രസ് സമ്മേളനം ഏത്?</p>
+          <p><strong>Confusing Options:</strong> ഒറ്റപ്പാലം സമ്മേളനം / പയ്യന്നൂർ സമ്മേളനം / തൃശൂർ കൺവെൻഷൻ / നാഗ്പൂർ സമ്മേളനം</p>
+          <p><strong>Fact:</strong> <strong>പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928)</strong> ആണ് ഐക്യകേരള പ്രമേയം പാസാക്കിയത്. അധ്യക്ഷൻ: ജവഹർലാൽ നെഹ്‌റു.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ ഉദ്ഘാടനം ചെയ്തത് ആര്?</p>
+          <p><strong>Confusing Options:</strong> കെ. കേളപ്പൻ / കേരളവർമ്മ വലിയ തമ്പുരാൻ / ടി. പ്രകാശം / ജവഹർലാൽ നെഹ്‌റു</p>
+          <p><strong>Fact:</strong> <strong>കേരളവർമ്മ വലിയ തമ്പുരാൻ</strong> (ഐക്യകേരളം തമ്പുരാൻ). അധ്യക്ഷൻ കെ. കേളപ്പനായിരുന്നു.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ഫസൽ അലി കമ്മീഷനിലെ അംഗങ്ങൾ ആരൊക്കെ?</p>
+          <p><strong>Confusing Options:</strong> ഫസൽ അലി, നെഹ്‌റു, പട്ടേൽ / ഫസൽ അലി, പണിക്കർ, കുൻസ്രു / ഫസൽ അലി, ധാർ, കുൻസ്രു / ഫസൽ അലി, പണിക്കർ, പട്ടാഭി</p>
+          <p><strong>Fact:</strong> <strong>ഫസൽ അലി, കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു</strong>.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> തിരു-കൊച്ചിയുടെ ആദ്യ മുഖ്യമന്ത്രി ആര്?</p>
+          <p><strong>Confusing Options:</strong> ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് / ടി.കെ. നാരായണ പിള്ള / പട്ടം താണു പിള്ള / സി. കേശവൻ</p>
+          <p><strong>Fact:</strong> <strong>ടി.കെ. നാരായണ പിള്ള</strong> (പറവൂർ ടി.കെ). ഇ.എം.എസ്. കേരളത്തിന്റെ ആദ്യ മുഖ്യമന്ത്രിയാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> 1956-ൽ കേരളത്തിന് വിട്ടുകൊടുത്ത താലൂക്കുകൾ ഏവ?</p>
+          <p><strong>Confusing Options:</strong> തോവാള, അഗസ്തീശ്വരം / കാസർഗോഡ്, മലബാർ / കണ്ണൂർ, കോഴിക്കോട് / ആലപ്പുഴ, എറണാകുളം</p>
+          <p><strong>Fact:</strong> <strong>തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട്, ചെങ്കോട്ട</strong> എന്നിവ തമിഴ്നാടിന് വിട്ടുകൊടുത്തു. കാസർഗോഡും മലബാറും കേരളത്തോട് ചേർത്തു.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. അധിക വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> കേരള സംസ്ഥാനത്തിന്റെ ആദ്യത്തെ ഗവർണ്ണർ <strong>ബി. രാമകൃഷ്ണറാവു</strong> (1956 നവംബർ 22).</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരള ഹൈക്കോടതി 1956 നവംബർ 1-ന് നിലവിൽ വന്നു; ആദ്യ ചീഫ് ജസ്റ്റിസ് കെ.ടി. കോശി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ആദ്യ നിയമസഭാ തിരഞ്ഞെടുപ്പ് 1957 ഫെബ്രുവരി–മാർച്ച്; ആദ്യ മുഖ്യമന്ത്രി ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് (1957 ഏപ്രിൽ 5). ആദ്യ സ്പീക്കർ ആർ. ശങ്കരനാരായണൻ തമ്പി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ആദ്യ മന്ത്രിസഭ 1959 ജൂലൈ 31-ന് പിരിച്ചുവിട്ടു (വിമോചന സമരം, ആർട്ടിക്കിൾ 356).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിലെ ആദ്യ ഭാഷാ സംസ്ഥാനം: ആന്ധ്ര (1953 ഒക്ടോബർ 1).</li>
+          <li><span class="stars">⭐⭐⭐</span> കെ.പി.സി.സി 1920-ലെ നാഗ്പൂർ കോൺഗ്രസ് തീരുമാനപ്രകാരം രൂപീകൃതമായി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഐക്യകേരള കമ്മിറ്റി (1947): പ്രസിഡന്റ് കെ. കേളപ്പൻ, സെക്രട്ടറി കെ.എ. ദാമോദര മേനോൻ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ജെ.വി.പി കമ്മിറ്റി (1948): നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി സീതാരാമയ്യ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ധാർ കമ്മീഷൻ (1948): എസ്.കെ. ധാർ; ഭാഷാ സംസ്ഥാനത്തിന് എതിര്.</li>
+          <li><span class="stars">⭐⭐⭐</span> മയ്യഴി (മാഹി) ഇപ്പോഴും പുതുച്ചേരിയുടെ ഭാഗമാണ്; കേരളത്തിൽ ചേർത്തിട്ടില്ല.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. 1928-ൽ പയ്യന്നൂരിൽ വെച്ച് നടന്ന കോൺഗ്രസ് സമ്മേളനത്തിലാണ് ചരിത്രപ്രസിദ്ധമായ 'ഐക്യകേരള പ്രമേയം' പാസാക്കിയത്. ഈ സമ്മേളനത്തിൽ അധ്യക്ഷത വഹിച്ചത് ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. കെ. കേളപ്പൻ</span>
+            <span data-opt="B">B. കെ.പി. കേശവമേനോൻ</span>
+            <span data-opt="C">C. ജവഹർലാൽ നെഹ്‌റു</span>
+            <span data-opt="D">D. ടി. പ്രകാശം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ജവഹർലാൽ നെഹ്‌റു</div>
+            <div class="explanation">പയ്യന്നൂരിൽ നടന്ന നാലാമത് അഖില കേരള കോൺഗ്രസ് സമ്മേളനമായിരുന്നു ഇത്. ടി. പ്രകാശം അധ്യക്ഷനായത് 1921-ലെ ഒറ്റപ്പാലം സമ്മേളനത്തിലാണ്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഐക്യകേരളം യാഥാർത്ഥ്യമാക്കാൻ 1947 ഏപ്രിലിൽ തൃശൂരിൽ ചേർന്ന ഐക്യകേരള കൺവെൻഷൻ ഉദ്ഘാടനം ചെയ്തതാര്?</div>
+          <div class="options">
+            <span data-opt="A">A. ശ്രീ ചിത്തിര തിരുനാൾ</span>
+            <span data-opt="B">B. കേരളവർമ്മ വലിയ തമ്പുരാൻ</span>
+            <span data-opt="C">C. കെ. കേളപ്പൻ</span>
+            <span data-opt="D">D. ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കേരളവർമ്മ വലിയ തമ്പുരാൻ</div>
+            <div class="explanation">സ്വന്തം രാജാധികാരം വേണ്ടെന്നുവെച്ച് ഐക്യകേരളത്തിന് പിന്തുണ പ്രഖ്യാപിച്ച ഇദ്ദേഹത്തെ 'ഐക്യകേരളം തമ്പുരാൻ' എന്ന് വിളിക്കുന്നു. ഈ സമ്മേളനത്തിന്റെ അധ്യക്ഷൻ കെ. കേളപ്പനായിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. സ്വതന്ത്ര ഇന്ത്യയിൽ ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കുന്നതിന് വേണ്ടി 1953-ൽ കേന്ദ്ര സർക്കാർ നിയമിച്ച കമ്മീഷൻ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ധാർ കമ്മീഷൻ</span>
+            <span data-opt="B">B. ജെ.വി.പി കമ്മിറ്റി</span>
+            <span data-opt="C">C. ഫസൽ അലി കമ്മീഷൻ</span>
+            <span data-opt="D">D. നാപ്പ് കമ്മീഷൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഫസൽ അലി കമ്മീഷൻ</div>
+            <div class="explanation">സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ (States Reorganisation Commission) എന്നാണ് ഇതിന്റെ ഔദ്യോഗിക പേര്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. തിരുവിതാംകൂർ, കൊച്ചി എന്നീ രണ്ട് നാട്ടുരാജ്യങ്ങളെയും സംയോജിപ്പിച്ച് തിരു-കൊച്ചി (Travancore-Cochin) സംസ്ഥാനം ഔദ്യോഗികമായി നിലവിൽ വന്ന തീയതി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1947 ആഗസ്റ്റ് 15</span>
+            <span data-opt="B">B. 1949 ജൂലൈ 1</span>
+            <span data-opt="C">C. 1956 നവംബർ 1</span>
+            <span data-opt="D">D. 1950 ജനുവരി 26</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1949 ജൂലൈ 1</div>
+            <div class="explanation">ഇതിന്റെ ആദ്യത്തെ മുഖ്യമന്ത്രി ടി.കെ. നാരായണ പിള്ളയും (പറവൂർ ടി.കെ), രാജപ്രമുഖൻ ശ്രീ ചിത്തിര തിരുനാളുമായിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഫസൽ അലി കമ്മീഷൻ (States Reorganisation Commission) അംഗങ്ങളിൽ ഉൾപ്പെടാത്ത വ്യക്തി ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. സയ്യിദ് ഫസൽ അലി</span>
+            <span data-opt="B">B. കെ.എം. പണിക്കർ</span>
+            <span data-opt="C">C. പട്ടാഭി സീതാരാമയ്യ</span>
+            <span data-opt="D">D. എച്ച്.എൻ. കുൻസ്രു</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) പട്ടാഭി സീതാരാമയ്യ</div>
+            <div class="explanation">അദ്ദേഹം ജെ.വി.പി (JVP) കമ്മിറ്റിയിലെ അംഗമായിരുന്നു. ഫസൽ അലി, പണിക്കർ, കുൻസ്രു എന്നിവരായിരുന്നു 1953-ലെ കമ്മീഷൻ അംഗങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. 1956 നവംബർ 1-ന് കേരള സംസ്ഥാനം നിലവിൽ വന്നപ്പോൾ തിരു-കൊച്ചി സംസ്ഥാനത്തിന്റെ ഭാഗമായിരുന്ന ഏത് പ്രദേശമാണ് മദ്രാസ് സംസ്ഥാനത്തിന് (തമിഴ്നാടിന്) വിട്ടുകൊടുക്കേണ്ടി വന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കാസർഗോഡ്</span>
+            <span data-opt="B">B. ഗുഡല്ലൂർ</span>
+            <span data-opt="C">C. ചെങ്കോട്ട</span>
+            <span data-opt="D">D. മയ്യഴി (മാഹി)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ചെങ്കോട്ട</div>
+            <div class="explanation">തെക്കൻ താലൂക്കുകളായ തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട് എന്നിവയ്ക്കൊപ്പമാണ് ചെങ്കോട്ടയുടെ ഒരു ഭാഗവും തമിഴ്നാടിന് വിട്ടുകൊടുത്തത്. (കാസർഗോഡ് കേരളത്തോട് ചേർത്തു. മയ്യഴി പുതുച്ചേരിയുടെ ഭാഗമാണ്.)</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: കേരള സംസ്ഥാന രൂപീകരണവുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. 1956 നവംബർ 1-ന് കേരള സംസ്ഥാനം നിലവിൽ വന്നപ്പോൾ ആകെ 5 ജില്ലകൾ മാത്രമാണുണ്ടായിരുന്നത്.<br>
+            2. കേരള സംസ്ഥാനത്തിന്റെ ആദ്യത്തെ ഗവർണ്ണർ ബി. രാമകൃഷ്ണറാവു ആയിരുന്നു.<br>
+            3. ഐക്യകേരള പ്രസ്ഥാനത്തിന് തുടക്കം കുറിക്കാൻ കാരണമായത് 1920-ൽ ഭാഷാടിസ്ഥാനത്തിൽ പ്രവിശ്യാ കമ്മിറ്റികൾ രൂപീകരിക്കാൻ തീരുമാനിച്ച നാഗ്പൂർ കോൺഗ്രസ് സമ്മേളനമാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 എന്നിവ ശരിയാണ്</div>
+            <div class="explanation">രൂപീകരണ സമയത്ത് തിരുവനന്തപുരം, കൊല്ലം, കോട്ടയം, തൃശൂർ, മലബാർ എന്നീ 5 ജില്ലകളാണുണ്ടായിരുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയിൽ ഭാഷാടിസ്ഥാനത്തിലുള്ള ആദ്യത്തെ പ്രവിശ്യാ കോൺഗ്രസ്സ് കമ്മിറ്റിയായി 'കേരള പ്രദേശ് കോൺഗ്രസ്സ് കമ്മിറ്റി' (KPCC) നിലവിൽ വന്ന വർഷം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1885</span>
+            <span data-opt="B">B. 1920</span>
+            <span data-opt="C">C. 1921</span>
+            <span data-opt="D">D. 1947</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1920</div>
+            <div class="explanation">1920-ലെ നാഗ്പൂർ എ.ഐ.സി.സി (AICC) സമ്മേളന തീരുമാനപ്രകാരമാണിത് രൂപീകരിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (സമ്മേളനങ്ങളും അധ്യക്ഷന്മാരും):<br>
+            പയ്യന്നൂർ സമ്മേളനം (1928) - a. ടി. പ്രകാശം<br>
+            തൃശൂർ കൺവെൻഷൻ (1947) - b. ജവഹർലാൽ നെഹ്‌റു<br>
+            ഒറ്റപ്പാലം സമ്മേളനം (1921) - c. കെ. കേളപ്പൻ</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-c, 3-a</span>
+            <span data-opt="B">B. 1-c, 2-a, 3-b</span>
+            <span data-opt="C">C. 1-a, 2-b, 3-c</span>
+            <span data-opt="D">D. 1-b, 2-a, 3-c</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-b, 2-c, 3-a</div>
+            <div class="explanation">പയ്യന്നൂർ (നെഹ്‌റു), തൃശൂർ (കെ. കേളപ്പൻ), ഒറ്റപ്പാലം (ടി. പ്രകാശം).</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ഐക്യകേരള പ്രസ്ഥാനത്തിന്റെ ഭാഗമായി 1956 നവംബർ 1-ന് പുതിയ കേരളം രൂപീകരിക്കപ്പെട്ടപ്പോൾ, താഴെ പറയുന്നവയിൽ മദ്രാസ് സംസ്ഥാനത്ത് നിന്നും കേരളത്തോട് കൂട്ടിച്ചേർക്കപ്പെട്ട താലൂക്ക് ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. തോവാള</span>
+            <span data-opt="B">B. കാസർഗോഡ്</span>
+            <span data-opt="C">C. കൽക്കുളം</span>
+            <span data-opt="D">D. അഗസ്തീശ്വരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കാസർഗോഡ്</div>
+            <div class="explanation">ദക്ഷിണ കാനറ (South Canara) ജില്ലയുടെ ഭാഗമായിരുന്ന കാസർഗോഡ് താലൂക്ക് കേരളത്തോട് ചേർക്കുകയും തെക്കൻ താലൂക്കുകൾ തമിഴ്നാടിന് നൽകുകയുമാണ് ചെയ്തത്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. തിരു-കൊച്ചിയുടെ ആദ്യ മുഖ്യമന്ത്രി?</div>
+          <div class="options">
+            <span data-opt="A">A. പട്ടം താണു പിള്ള</span>
+            <span data-opt="B">B. ടി.കെ. നാരായണ പിള്ള</span>
+            <span data-opt="C">C. സി. കേശവൻ</span>
+            <span data-opt="D">D. പനമ്പിള്ളി ഗോവിന്ദ മേനോൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ടി.കെ. നാരായണ പിള്ള</div>
+            <div class="explanation">പറവൂർ ടി.കെ. നാരായണ പിള്ള 1949 ജൂലൈ 1-ന് അധികാരമേറ്റു.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. ഐക്യകേരള കമ്മിറ്റിയുടെ (1947) സെക്രട്ടറി ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. കെ. കേളപ്പൻ</span>
+            <span data-opt="B">B. കെ.എ. ദാമോദര മേനോൻ</span>
+            <span data-opt="C">C. കെ.പി. കേശവ മേനോൻ</span>
+            <span data-opt="D">D. ടി. പ്രകാശം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കെ.എ. ദാമോദര മേനോൻ</div>
+            <div class="explanation">പ്രസിഡന്റ് കെ. കേളപ്പൻ, സെക്രട്ടറി കെ.എ. ദാമോദര മേനോൻ.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. 1957 ജനുവരി 1-ന് മലബാർ ജില്ല വിഭജിച്ച് രൂപീകരിച്ച ജില്ലകൾ ഏവ?</div>
+          <div class="options">
+            <span data-opt="A">A. കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട്</span>
+            <span data-opt="B">B. കണ്ണൂർ, കോഴിക്കോട്, മലപ്പുറം</span>
+            <span data-opt="C">C. കോഴിക്കോട്, പാലക്കാട്, വയനാട്</span>
+            <span data-opt="D">D. കണ്ണൂർ, മലപ്പുറം, പാലക്കാട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട്</div>
+            <div class="explanation">മലപ്പുറം 1969-ലും വയനാട് 1980-ലുമാണ് രൂപീകൃതമായത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ജെ.വി.പി (JVP) കമ്മിറ്റിയിലെ അംഗങ്ങൾ ആരൊക്കെ?</div>
+          <div class="options">
+            <span data-opt="A">A. നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി സീതാരാമയ്യ</span>
+            <span data-opt="B">B. ഫസൽ അലി, പണിക്കർ, കുൻസ്രു</span>
+            <span data-opt="C">C. നെഹ്‌റു, പണിക്കർ, പട്ടേൽ</span>
+            <span data-opt="D">D. ധാർ, നെഹ്‌റു, പട്ടേൽ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി സീതാരാമയ്യ</div>
+            <div class="explanation">J = ജവഹർലാൽ, V = വല്ലഭ്‌ഭായ്, P = പട്ടാഭി. 1948 ഡിസംബറിൽ രൂപീകരിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഇന്ത്യയിൽ ഭാഷാടിസ്ഥാനത്തിൽ ആദ്യമായി രൂപീകൃതമായ സംസ്ഥാനം?</div>
+          <div class="options">
+            <span data-opt="A">A. കേരളം</span>
+            <span data-opt="B">B. ആന്ധ്ര</span>
+            <span data-opt="C">C. കർണാടക</span>
+            <span data-opt="D">D. തമിഴ്നാട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആന്ധ്ര</div>
+            <div class="explanation">1953 ഒക്ടോബർ 1-ന്. പോറ്റി ശ്രീരാമുലുവിന്റെ നിരാഹാര സമരത്തിനും മരണത്തിനും ശേഷം.</div>
+          </div>
+        </div>
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. കേരള സംസ്ഥാനത്തിന്റെ ആദ്യ മുഖ്യമന്ത്രി?</div>
+          <div class="options">
+            <span data-opt="A">A. ടി.കെ. നാരായണ പിള്ള</span>
+            <span data-opt="B">B. പട്ടം താണു പിള്ള</span>
+            <span data-opt="C">C. ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</span>
+            <span data-opt="D">D. സി. അച്യുത മേനോൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട്</div>
+            <div class="explanation">1957 ഏപ്രിൽ 5-ന് അധികാരമേറ്റു. ടി.കെ. നാരായണ പിള്ള തിരു-കൊച്ചിയുടെ ആദ്യ മുഖ്യമന്ത്രിയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ആദ്യ ഇ.എം.എസ്. മന്ത്രിസഭയെ പിരിച്ചുവിട്ട വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1957</span>
+            <span data-opt="B">B. 1958</span>
+            <span data-opt="C">C. 1959</span>
+            <span data-opt="D">D. 1960</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1959</div>
+            <div class="explanation">1959 ജൂലൈ 31-ന് ആർട്ടിക്കിൾ 356 പ്രകാരം പിരിച്ചുവിട്ടു (വിമോചന സമരത്തെ തുടർന്ന്).</div>
+          </div>
+        </div>
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. സംസ്ഥാന പുനഃസംഘടനാ നിയമം (States Reorganisation Act) പാസാക്കിയ വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1953</span>
+            <span data-opt="B">B. 1955</span>
+            <span data-opt="C">C. 1956</span>
+            <span data-opt="D">D. 1957</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1956</div>
+            <div class="explanation">കമ്മീഷൻ നിയമിച്ചത് 1953, റിപ്പോർട്ട് 1955, നിയമം 1956.</div>
+          </div>
+        </div>
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. നാഗ്പൂർ കോൺഗ്രസ് സമ്മേളനം (ഭാഷാടിസ്ഥാന പ്രവിശ്യാ കമ്മിറ്റികൾക്ക് തീരുമാനമെടുത്തത്) നടന്ന വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1919</span>
+            <span data-opt="B">B. 1920</span>
+            <span data-opt="C">C. 1921</span>
+            <span data-opt="D">D. 1928</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1920</div>
+            <div class="explanation">ഇതിന്റെ ഫലമായാണ് KPCC രൂപീകൃതമായത്.</div>
+          </div>
+        </div>
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. 1956-ൽ മദ്രാസ് സംസ്ഥാനത്തിന് (തമിഴ്നാട്) വിട്ടുകൊടുത്ത താലൂക്കുകളിൽ ഉൾപ്പെടാത്തത്?</div>
+          <div class="options">
+            <span data-opt="A">A. തോവാള</span>
+            <span data-opt="B">B. വിളവൻകോട്</span>
+            <span data-opt="C">C. കൽക്കുളം</span>
+            <span data-opt="D">D. നെയ്യാറ്റിൻകര</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) നെയ്യാറ്റിൻകര</div>
+            <div class="explanation">നെയ്യാറ്റിൻകര കേരളത്തിൽ തന്നെ തുടർന്നു. തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട് എന്നിവയാണ് വിട്ടുകൊടുത്തത്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>11</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>12</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>13</td><td>(A)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>14</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(C)</td><td>15</td><td>(B)</td></tr>
+              <tr><td>6</td><td>(C)</td><td>16</td><td>(C)</td></tr>
+              <tr><td>7</td><td>(D)</td><td>17</td><td>(C)</td></tr>
+              <tr><td>8</td><td>(B)</td><td>18</td><td>(C)</td></tr>
+              <tr><td>9</td><td>(A)</td><td>19</td><td>(B)</td></tr>
+              <tr><td>10</td><td>(B)</td><td>20</td><td>(D)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>നാഗ്പൂർ കോൺഗ്രസ് (1920): ഭാഷാടിസ്ഥാനത്തിൽ KPCC രൂപീകരണം.</li>
+          <li>ഒറ്റപ്പാലം സമ്മേളനം (1921): ആദ്യ അഖില കേരള രാഷ്ട്രീയ സമ്മേളനം (അധ്യക്ഷൻ: ടി. പ്രകാശം).</li>
+          <li>പയ്യന്നൂർ സമ്മേളനം (1928): ഐക്യകേരള പ്രമേയം പാസാക്കി (അധ്യക്ഷൻ: നെഹ്‌റു).</li>
+          <li>തൃശൂർ കൺവെൻഷൻ (1947): ഐക്യകേരള കമ്മിറ്റി രൂപീകരിച്ചു. (ഉദ്ഘാടനം: കേരളവർമ്മ വലിയ തമ്പുരാൻ, അധ്യക്ഷൻ: കെ. കേളപ്പൻ).</li>
+          <li>തിരു-കൊച്ചി രൂപീകരണം: 1949 ജൂലൈ 1 (രാജപ്രമുഖൻ: ചിത്തിര തിരുനാൾ).</li>
+          <li>ഫസൽ അലി കമ്മീഷൻ (1953): അധ്യക്ഷൻ ഫസൽ അലി. അംഗങ്ങൾ: കെ.എം പണിക്കർ, എച്ച്.എൻ കുൻസ്രു.</li>
+          <li>കേരളപ്പിറവി: 1956 നവംബർ 1 (ആദ്യ ഗവർണ്ണർ: ബി. രാമകൃഷ്ണറാവു).</li>
+          <li>ലഭിച്ചവ: മലബാർ, കാസർഗോഡ്.</li>
+          <li>കൊടുത്തവ: തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട്, ചെങ്കോട്ടയുടെ ഒരു ഭാഗം.</li>
+          <li>ആദ്യ ജില്ലകൾ: 5 എണ്ണം മാത്രം (1956-ൽ).</li>
+          <li>തിരു-കൊച്ചിയുടെ ആദ്യ മുഖ്യമന്ത്രി: പറവൂർ ടി.കെ. നാരായണ പിള്ള.</li>
+          <li>ഐക്യകേരള കമ്മിറ്റി: പ്രസിഡന്റ് കെ. കേളപ്പൻ, സെക്രട്ടറി കെ.എ. ദാമോദര മേനോൻ.</li>
+          <li>ജെ.വി.പി: നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി (1948).</li>
+          <li>ആന്ധ്ര: ആദ്യ ഭാഷാ സംസ്ഥാനം (1953).</li>
+          <li>ആദ്യ മുഖ്യമന്ത്രി: ഇ.എം.എസ്. (1957 ഏപ്രിൽ 5). മന്ത്രിസഭ പിരിച്ചുവിട്ടത്: 1959.</li>
+          <li>1957 ജനുവരി 1: കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട്. ആലപ്പുഴ 1957, എറണാകുളം 1958, മലപ്പുറം 1969.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 20: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>The Timeline</h3>
+        <ul>
+          <li><strong>1920:</strong> Nagpur INC Session (Formation of KPCC).</li>
+          <li><strong>1921:</strong> Ottapalam Conference (T. Prakasam).</li>
+          <li><strong>1928:</strong> Payyannur Conference (Jawaharlal Nehru) → Aikya Kerala Resolution.</li>
+          <li><strong>1947 April:</strong> Thrissur Aikya Kerala Convention (Inaugurated by Kochi Maharaja, Chaired by K. Kelappan).</li>
+          <li><strong>1949 July 1:</strong> Thiru-Kochi state formed.</li>
+          <li><strong>1953:</strong> Fazal Ali Commission (SRC) formed.</li>
+          <li><strong>1956 Nov 1:</strong> State of Kerala formed.</li>
+          <li><strong>1948:</strong> Dhar Commission, JVP Committee.</li>
+          <li><strong>1953 Oct 1:</strong> Andhra (first linguistic state).</li>
+          <li><strong>1955 Sept 30:</strong> SRC report submitted. ⚠️</li>
+          <li><strong>1957 Jan 1:</strong> Kannur, Kozhikode, Palakkad districts formed. 1957 April 5: EMS ministry.</li>
+          <li><strong>1959 July 31:</strong> EMS ministry dismissed.</li>
+        </ul>
+        <h3>The State Reorganisation Commission (SRC)</h3>
+        <ul>
+          <li><strong>Chairman:</strong> Syed Fazal Ali.</li>
+          <li><strong>Members:</strong> K.M. Panikkar & H.N. Kunzru.</li>
+        </ul>
+        <h3>Geographical Changes (1956)</h3>
+        <ul>
+          <li><strong>Added to Kerala:</strong> Malabar District, Kasaragod Taluk.</li>
+          <li><strong>Given to Madras:</strong> Thovala, Agastheeswaram, Kalkulam, Vilavancode, Shenkottai (part).</li>
+          <li><strong>Districts at formation:</strong> 5 (Thiruvananthapuram, Kollam, Kottayam, Thrissur, Malabar).</li>
+        </ul>
+        <h3>Key People</h3>
+        <ul>
+          <li><strong>Ottapalam:</strong> T. Prakasam.</li>
+          <li><strong>Payyannur:</strong> Nehru.</li>
+          <li><strong>Thrissur:</strong> Kelappan (chair), Kerala Varma Valiya Thampuran (inaugural), K.A. Damodara Menon (secretary).</li>
+          <li><strong>Thiru-Kochi:</strong> Rajpramukh Chithira Thirunal, CM Parur T.K. Narayana Pillai.</li>
+          <li><strong>Kerala:</strong> Governor B. Ramakrishna Rao, CM E.M.S. Namboodiripad.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 21: ടോപ്പ് വസ്തുതകൾ ===== -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ടോപ്പ് പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഐക്യകേരള പ്രമേയം പാസാക്കിയത്: പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928).</li>
+          <li>പയ്യന്നൂർ സമ്മേളന അധ്യക്ഷൻ: ജവഹർലാൽ നെഹ്‌റു.</li>
+          <li>ഒറ്റപ്പാലം സമ്മേളനം (1921) അധ്യക്ഷൻ: ടി. പ്രകാശം.</li>
+          <li>തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ (1947) ഉദ്ഘാടനം: കേരളവർമ്മ വലിയ തമ്പുരാൻ.</li>
+          <li>തൃശൂർ കൺവെൻഷൻ അധ്യക്ഷൻ: കെ. കേളപ്പൻ.</li>
+          <li>ഐക്യകേരള കമ്മിറ്റി സെക്രട്ടറി: കെ.എ. ദാമോദര മേനോൻ.</li>
+          <li>തിരു-കൊച്ചി സംയോജനം: 1949 ജൂലൈ 1.</li>
+          <li>തിരു-കൊച്ചിയുടെ ആദ്യ മുഖ്യമന്ത്രി: ടി.കെ. നാരായണ പിള്ള.</li>
+          <li>തിരു-കൊച്ചിയുടെ രാജപ്രമുഖൻ: ശ്രീ ചിത്തിര തിരുനാൾ.</li>
+          <li>ഫസൽ അലി കമ്മീഷൻ (SRC) രൂപീകരണം: 1953.</li>
+          <li>SRC അധ്യക്ഷൻ: സയ്യിദ് ഫസൽ അലി.</li>
+          <li>SRC അംഗങ്ങൾ: കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു.</li>
+          <li>കേരളപ്പിറവി: 1956 നവംബർ 1.</li>
+          <li>കേരളത്തിന്റെ ആദ്യ ഗവർണ്ണർ: ബി. രാമകൃഷ്ണറാവു.</li>
+          <li>കേരളത്തിന്റെ ആദ്യ മുഖ്യമന്ത്രി: ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് (1957).</li>
+          <li>ആദ്യ മന്ത്രിസഭ പിരിച്ചുവിട്ടത്: 1959.</li>
+          <li>രൂപീകരണ സമയത്തെ ജില്ലകൾ: 5.</li>
+          <li>1957 ജനുവരി 1-ന് രൂപീകൃതമായ ജില്ലകൾ: കണ്ണൂർ, കോഴിക്കോട്, പാലക്കാട്.</li>
+          <li>ഇന്ത്യയിലെ ആദ്യ ഭാഷാ സംസ്ഥാനം: ആന്ധ്ര (1953).</li>
+          <li>ജെ.വി.പി കമ്മിറ്റി അംഗങ്ങൾ: നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി സീതാരാമയ്യ.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 22: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ഐക്യകേരള പ്രസ്ഥാനം മലയാളം സംസാരിക്കുന്ന ജനതയെ ഒന്നിപ്പിച്ച് കേരളം എന്ന സംസ്ഥാനം രൂപീകരിക്കാനുള്ള പോരാട്ടമായിരുന്നു.</li>
+          <li>1920-ലെ നാഗ്പൂർ കോൺഗ്രസ്, 1921-ലെ ഒറ്റപ്പാലം സമ്മേളനം, 1928-ലെ പയ്യന്നൂർ സമ്മേളനം, 1947-ലെ തൃശൂർ കൺവെൻഷൻ എന്നിവ പ്രധാന നാഴികക്കല്ലുകൾ.</li>
+          <li>1949-ൽ തിരു-കൊച്ചി സംസ്ഥാനം രൂപീകൃതമായി; 1956-ൽ മലബാർ, കാസർഗോഡ് എന്നിവ കൂടി ചേർത്ത് കേരളം രൂപീകൃതമായി.</li>
+          <li>ഫസൽ അലി കമ്മീഷന്റെ ശുപാർശ പ്രകാരം 1956 നവംബർ 1-ന് കേരളം നിലവിൽ വന്നു.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 2–3 ചോദ്യങ്ങൾ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായം കേരളത്തിന്റെ രൂപീകരണത്തിന്റെ നാൾവഴികൾ വിശദീകരിക്കുന്നു. അടുത്ത അധ്യായത്തിൽ കേരളത്തിലെ ഭരണവും വികസനവും ചർച്ച ചെയ്യും. ഈ അധ്യായം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>1.1.7 Aikya Kerala Movement</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'history-1.1.7-aikya-kerala';
-window.PART_TITLE = '1.1.7 Aikya Kerala Movement';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  // Insert toggle icons
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  // H2 click + keyboard
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () {
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  // Open first section by default
+  if (sections.length > 0) {
+    openOnly(sections[0]);
+  }
+
+  // Expand All / Collapse All
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  // IntersectionObserver for scroll spy
+  if ('IntersectionObserver' in window) {
+    var observerOptions = {
+      rootMargin: '-15% 0px -75% 0px',
+      threshold: 0
+    };
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(function (sec) {
+      observer.observe(sec);
+    });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaAikyaKeralaQ_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    // Extract correct letter
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null,
+      saved: false,
+      marked: false,
+      locked: false
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) {
+          span.classList.add('correct');
+        }
+        if (opt === state.selected && opt !== correctLetter) {
+          span.classList.add('wrong');
+        }
+      });
+    }
+
+    // Create controls
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) {
+      markBtn.classList.add('active');
+    }
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) {
+          span.classList.add('correct');
+        }
+        if (opt === state.selected && opt !== correctLetter) {
+          span.classList.add('wrong');
+        }
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) {
+          span.classList.add('locked');
+        } else {
+          span.classList.remove('locked');
+        }
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) {
+          showResult();
+        }
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) {
+          statusSpan.textContent = 'Unlocked';
+        } else {
+          showResult();
+        }
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
