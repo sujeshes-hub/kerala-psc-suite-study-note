@@ -1,105 +1,1273 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>1.2.11 Science Education Technology - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഇന്ത്യൻ ചരിത്രം – ശാസ്ത്രം, വിദ്യാഭ്യാസം, സാങ്കേതിക പുരോഗതി | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title {
+      font-size: 18px; font-weight: 700; color: var(--primary);
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
+    }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .main-container {
+      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px;
+      border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block { display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border); }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden;
+        padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">1.2.11 Science Education Technology</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. ബ്രിട്ടീഷ് വിദ്യാഭ്യാസ പരിഷ്കാരങ്ങൾ</a></li>
+      <li><a href="#sec4">4. സ്വതന്ത്ര ഇന്ത്യയിലെ കമ്മീഷനുകൾ</a></li>
+      <li><a href="#sec5">5. ദേശീയ വിദ്യാഭ്യാസ നയങ്ങൾ</a></li>
+      <li><a href="#sec6">6. ശാസ്ത്രം & സാങ്കേതികം</a></li>
+      <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. മുൻവർഷ ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec10">10. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec11">11. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec12">12. സമയരേഖ / Mnemonics</a></li>
+      <li><a href="#sec13">13. PSC കെണികൾ</a></li>
+      <li><a href="#sec14">14. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec15">15. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec16">16. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec17">17. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec18">18. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec19">19. ടോപ്പ് വസ്തുതകൾ</a></li>
+      <li><a href="#sec20">20. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ചരിത്രം | അധ്യായം 9</div>
+      <h1>ഇന്ത്യൻ ചരിത്രം – ശാസ്ത്രം, വിദ്യാഭ്യാസം, സാങ്കേതിക പുരോഗതി</h1>
+      <div class="subtitle">Science, Education, and Technological Progress | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — വുഡ്സ് ഡെസ്പാച്ച് (1854), കോത്താരി കമ്മീഷൻ (1964), NEP 2020 ന്റെ ഘടന (5+3+3+4), ആദ്യ ആണവ പരീക്ഷണം (1974), ആര്യഭട്ട (1975), ISRO സ്ഥാപകൻ (വിക്രം സാരാഭായ്)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — മക്കാളയുടെ മിനുട്സ് (1835), ഹണ്ടർ കമ്മീഷൻ (1882), രാധാകൃഷ്ണൻ കമ്മീഷൻ (1948), UGC (1953), DRDO (1958), പോഖ്റാൻ II (1998)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — വാർധാ പദ്ധതി (1937), മുദ്രലിയാർ കമ്മീഷൻ (1952), RTE Act (2009), CSIR (1942), ആദ്യ IIT (1951)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ചന്ദ്രയാൻ-3, മംഗൾയാൻ, കൽപന-1, സി.വി. രാമൻ, ഡോ. വിജയ് ഭട്കർ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ബ്രിട്ടീഷ് കാലഘട്ട വിദ്യാഭ്യാസ ചരിത്രം, നെഹ്‌റുവിന്റെ ശാസ്ത്രീയ മനോഭാവം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന്റെ പിതാവ്:</strong> മക്കാളെ (1835)</li>
+            <li><strong>വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട:</strong> വുഡ്സ് ഡെസ്പാച്ച് (1854)</li>
+            <li><strong>10+2+3 ശുപാർശ:</strong> കോത്താരി കമ്മീഷൻ (1964)</li>
+            <li><strong>NEP 2020 ഘടന:</strong> 5+3+3+4 (കസ്തൂരിരംഗൻ കമ്മിറ്റി)</li>
+            <li><strong>ബഹിരാകാശ പദ്ധതിയുടെ പിതാവ്:</strong> വിക്രം സാരാഭായ്</li>
+            <li><strong>ആണവശാസ്ത്രത്തിന്റെ പിതാവ്:</strong> ഹോമി ജെ. ഭാഭ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ബ്രിട്ടീഷ് കാലഘട്ടം മുതൽ സ്വതന്ത്ര ഇന്ത്യ വരെ വിദ്യാഭ്യാസ മേഖലയിലുണ്ടായ മാറ്റങ്ങൾ, ഇതിനായി നിയോഗിച്ച വിവിധ കമ്മീഷനുകൾ, ഒപ്പം ഇന്ത്യ കൈവരിച്ച ബഹിരാകാശ-ആണവ-സാങ്കേതിക നേട്ടങ്ങൾ എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ആധുനിക ഇന്ത്യയുടെ ശില്പികൾ എന്ന് നാം വിളിക്കുന്നത് ശാസ്ത്ര-വിദ്യാഭ്യാസ സ്ഥാപനങ്ങളെയാണ്. പുതിയ വിദ്യാഭ്യാസ നയം (NEP 2020) വരെയുള്ള സുപ്രധാന മാറ്റങ്ങൾ അറിഞ്ഞിരിക്കേണ്ടത് അനിവാര്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> വുഡ്സ് ഡെസ്പാച്ച്, കോത്താരി കമ്മീഷൻ, ഇന്ത്യയുടെ ആദ്യ ഉപഗ്രഹം, ആദ്യ ആണവ പരീക്ഷണം എന്നിവയിൽ നിന്ന് LDC മുതൽ KAS വരെയുള്ള പരീക്ഷകളിൽ എപ്പോഴും ചോദ്യങ്ങൾ വരാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> ബ്രിട്ടീഷ് കാലത്തെ വിദ്യാഭ്യാസ കമ്മീഷനുകൾ, UGC, ISRO, DRDO, ആദ്യത്തെ IIT, ദേശീയ വിദ്യാഭ്യാസ നയങ്ങൾ.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>1835 മക്കാളെ, 1854 വുഡ്സ്, 1948 രാധാകൃഷ്ണൻ, 1964 കോത്താരി</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <div class="section-body">
+        <p><strong>എങ്ങനെ ആരംഭിച്ചു (വിദ്യാഭ്യാസം)?</strong> ഇന്ത്യക്കാർക്ക് പാശ്ചാത്യ വിദ്യാഭ്യാസം നൽകിയാൽ ബ്രിട്ടീഷുകാർക്ക് വിശ്വസ്തരായ ക്ലാർക്കുമാരെ ലഭിക്കുമെന്ന ചിന്തയിൽ നിന്നാണ് ഇംഗ്ലീഷ് വിദ്യാഭ്യാസം ഇന്ത്യയിൽ ആരംഭിച്ചത് (മക്കാളെ പ്രഭു). എന്നാൽ അത് പിന്നീട് ഇന്ത്യക്കാരിൽ ദേശീയബോധം വളർത്താൻ കാരണമായി.</p>
+        <p><strong>ശാസ്ത്രം സാങ്കേതികം:</strong> സ്വാതന്ത്ര്യം ലഭിക്കുമ്പോൾ ഇന്ത്യക്ക് ഒരു സൂചി പോലും സ്വന്തമായി നിർമ്മിക്കാൻ കഴിഞ്ഞിരുന്നില്ല. എന്നാൽ ആദ്യ പ്രധാനമന്ത്രി ജവഹർലാൽ നെഹ്‌റുവിന്റെ "<strong>ശാസ്ത്രീയ മനോഭാവം</strong>" (Scientific Temper) എന്ന ദർശനമാണ് CSIR, IIT, Atomic Energy Commission തുടങ്ങിയ സ്ഥാപനങ്ങൾക്ക് അടിത്തറ പാകിയത്.</p>
+        <p><strong>ഫലങ്ങളും പ്രാധാന്യവും:</strong> വിക്രം സാരാഭായിയും ഹോമി ജെ. ഭാഭയും എ.പി.ജെ അബ്ദുൽ കലാമും ഉൾപ്പെടെയുള്ള ശാസ്ത്രജ്ഞർ ഇന്ത്യയെ ഇന്ന് ലോകത്തിലെ മികച്ച ബഹിരാകാശ-ആണവ ശക്തികളിൽ ഒന്നാക്കി മാറ്റി. വിദ്യാഭ്യാസ രംഗത്ത് സർവ്വ ശിക്ഷാ അഭിയാൻ മുതൽ NEP 2020 വരെയുള്ള പദ്ധതികൾ വലിയ മാറ്റങ്ങൾ കൊണ്ടുവന്നു.</p>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>നെഹ്‌റു = ശാസ്ത്രീയ മനോഭാവം; ഭാഭ = ആണവം; സാരാഭായ് = ബഹിരാകാശം</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: ബ്രിട്ടീഷ് വിദ്യാഭ്യാസ പരിഷ്കാരങ്ങൾ ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. ബ്രിട്ടീഷ് കാലഘട്ട വിദ്യാഭ്യാസ പരിഷ്കാരങ്ങൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മക്കാളയുടെ മിനുട്സ് (Macaulay's Minute - 1835):</strong> തോമസ് ബാബിംഗ്ടൺ മക്കാളെ ഇന്ത്യയിൽ ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന് അടിത്തറയിട്ടു. ഇത് വില്യം ബെന്റിക് പ്രഭു അംഗീകരിച്ചു. ഇന്ത്യയിലെ ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന്റെ പിതാവാണ് മക്കാളെ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വുഡ്സ് ഡെസ്പാച്ച് (Wood's Despatch - 1854):</strong> ചാൾസ് വുഡ് തയ്യാറാക്കിയ ഈ റിപ്പോർട്ട് '<strong>ഇന്ത്യൻ വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട്</strong>' (Magna Carta of English Education in India) എന്നറിയപ്പെടുന്നു. പ്രാഥമിക വിദ്യാഭ്യാസം പ്രാദേശിക ഭാഷയിലും, ഉന്നത വിദ്യാഭ്യാസം ഇംഗ്ലീഷിലും വേണമെന്ന് നിർദ്ദേശിച്ചു. ഇതിന്റെ ഫലമായാണ് 1857-ൽ കൽക്കട്ട, ബോംബെ, മദ്രാസ് സർവ്വകലാശാലകൾ സ്ഥാപിച്ചത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഹണ്ടർ കമ്മീഷൻ (Hunter Commission - 1882):</strong> പ്രാഥമിക വിദ്യാഭ്യാസത്തിന് (Primary Education) ഊന്നൽ നൽകാൻ റിപ്പൺ പ്രഭു നിയോഗിച്ച കമ്മീഷനാണിത്. ഇന്ത്യയിലെ ആദ്യത്തെ വിദ്യാഭ്യാസ കമ്മീഷൻ കൂടിയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>റാലി കമ്മീഷൻ (Raleigh Commission - 1902):</strong> കഴ്സൺ പ്രഭുവിന്റെ കാലത്ത് സർവ്വകലാശാലാ പരിഷ്കാരങ്ങൾക്കായി നിയോഗിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സാഡ്‌ലർ കമ്മീഷൻ (Sadler Commission - 1917):</strong> കൽക്കട്ട യൂണിവേഴ്സിറ്റിയിലെ പ്രശ്നങ്ങൾ പഠിക്കാൻ ചെസ്റ്റർഫീൽഡ് പ്രഭു നിയോഗിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വാർധാ പദ്ധതി (Wardha Scheme of Education - 1937):</strong> മഹാത്മാഗാന്ധിയുടെ ആശയപ്രകാരം തയ്യാറാക്കിയ അടിസ്ഥാന വിദ്യാഭ്യാസ പദ്ധതി (Basic Education / Nai Talim). തൊഴിലധിഷ്ഠിത വിദ്യാഭ്യാസത്തിന് പ്രാധാന്യം നൽകി. <strong>ഡോ. സക്കീർ ഹുസൈൻ കമ്മിറ്റി</strong>യാണ് ഇത് തയ്യാറാക്കിയത്.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick (ബ്രിട്ടീഷ് കാലഘട്ട കമ്മീഷനുകൾ):</strong></span>
+          <p>"<strong>M-W-H-R-S</strong>" — Macaulay (1835) → Wood's (1854) → Hunter (1882) → Raleigh (1902) → Sadler (1917).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: സ്വതന്ത്ര ഇന്ത്യയിലെ കമ്മീഷനുകൾ ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. സ്വതന്ത്ര ഇന്ത്യയിലെ വിദ്യാഭ്യാസ കമ്മീഷനുകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രാധാകൃഷ്ണൻ കമ്മീഷൻ (1948):</strong> സ്വതന്ത്ര ഇന്ത്യയിലെ ആദ്യത്തെ വിദ്യാഭ്യാസ കമ്മീഷൻ. ഇതിന്റെ ശുപാർശ പ്രകാരമാണ് <strong>1953-ൽ UGC (University Grants Commission) നിലവിൽ വന്നത്</strong>. (സർവ്വകലാശാലാ വിദ്യാഭ്യാസ കമ്മീഷൻ എന്നും അറിയപ്പെടുന്നു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മുദ്രലിയാർ കമ്മീഷൻ (1952):</strong> സെക്കൻഡറി വിദ്യാഭ്യാസത്തെക്കുറിച്ച് പഠിക്കാൻ ലക്ഷ്മണസ്വാമി മുദ്രലിയാരുടെ നേതൃത്വത്തിൽ രൂപീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കോത്താരി കമ്മീഷൻ (1964-66):</strong> ഡി.എസ്. കോത്താരിയുടെ നേതൃത്വത്തിൽ രൂപീകരിച്ച ഈ കമ്മീഷൻ ഇന്ത്യയിലെ മുഴുവൻ വിദ്യാഭ്യാസ മേഖലയെയും കുറിച്ച് പഠിച്ചു. <strong>10+2+3</strong> എന്ന വിദ്യാഭ്യാസ രീതി ശുപാർശ ചെയ്തത് ഇവരാണ്.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ കമ്മീഷനുകളുടെ പ്രധാന മേഖലകൾ</span>
+          <ul>
+            <li><strong>രാധാകൃഷ്ണൻ കമ്മീഷൻ:</strong> സർവ്വകലാശാലാ (ഉന്നത) വിദ്യാഭ്യാസം</li>
+            <li><strong>മുദ്രലിയാർ കമ്മീഷൻ:</strong> സെക്കൻഡറി വിദ്യാഭ്യാസം</li>
+            <li><strong>കോത്താരി കമ്മീഷൻ:</strong> സമഗ്ര വിദ്യാഭ്യാസ പഠനം</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>രാധാകൃഷ്ണൻ = യൂണിവേഴ്സിറ്റി; മുദ്രലിയാർ = സെക്കൻഡറി; കോത്താരി = 10+2+3</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: ദേശീയ വിദ്യാഭ്യാസ നയങ്ങൾ ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. ദേശീയ വിദ്യാഭ്യാസ നയങ്ങൾ (NEP)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആദ്യത്തെ NEP (1968):</strong> ഇന്ദിരാഗാന്ധിയുടെ കാലത്ത് കോത്താരി കമ്മീഷൻ റിപ്പോർട്ടിന്റെ അടിസ്ഥാനത്തിൽ കൊണ്ടുവന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>രണ്ടാമത്തെ NEP (1986):</strong> രാജീവ് ഗാന്ധിയുടെ കാലത്ത്. <strong>നവോദയ വിദ്യാലയങ്ങൾ</strong> (Navodaya Vidyalayas) ആരംഭിച്ചത് ഇതിന്റെ ഭാഗമായാണ്. 1992-ൽ ഇത് പരിഷ്കരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പുതിയ വിദ്യാഭ്യാസ നയം (NEP 2020):</strong> 34 വർഷങ്ങൾക്ക് ശേഷം <strong>കെ. കസ്തൂരിരംഗൻ</strong> (K. Kasturirangan) കമ്മിറ്റിയുടെ റിപ്പോർട്ട് പ്രകാരം പുതിയ നയം വന്നു. ഇതിലെ പുതിയ ഘടന <strong>5+3+3+4</strong> ആണ്.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ NEP 2020 ഘടന</span>
+          <ul>
+            <li><strong>5:</strong> ഫൗണ്ടേഷൻ സ്റ്റേജ് (3-8 വയസ്സ്)</li>
+            <li><strong>3:</strong> പ്രിപ്പറേറ്ററി സ്റ്റേജ് (8-11 വയസ്സ്)</li>
+            <li><strong>3:</strong> മിഡിൽ സ്റ്റേജ് (11-14 വയസ്സ്)</li>
+            <li><strong>4:</strong> സെക്കൻഡറി സ്റ്റേജ് (14-18 വയസ്സ്)</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>68-ൽ ഇന്ദിര; 86-ൽ രാജീവ്; 2020-ൽ കസ്തൂരിരംഗൻ (5+3+3+4)</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: ശാസ്ത്രം & സാങ്കേതികം ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ശാസ്ത്രം, സാങ്കേതികം, ബഹിരാകാശം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>CSIR (Council of Scientific and Industrial Research):</strong> 1942-ൽ സ്ഥാപിതമായി. ഇതിന്റെ പ്രസിഡന്റ് എപ്പോഴും ഇന്ത്യൻ പ്രധാനമന്ത്രിയായിരിക്കും. ആദ്യ ഡയറക്ടർ <strong>ശാന്തി സ്വരൂപ് ഭട്നാഗർ</strong> ആയിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആണവോർജ്ജ കമ്മീഷൻ (Atomic Energy Commission):</strong> 1948-ൽ <strong>ഹോമി ജെ. ഭാഭയുടെ</strong> (ഇന്ത്യൻ ആണവശാസ്ത്രത്തിന്റെ പിതാവ്) നേതൃത്വത്തിൽ സ്ഥാപിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ISRO (Indian Space Research Organisation):</strong> <strong>1969 ഓഗസ്റ്റ് 15</strong>-ന് നിലവിൽ വന്നു. സ്ഥാപകൻ <strong>വിക്രം സാരാഭായ്</strong> (ഇന്ത്യൻ ബഹിരാകാശ പദ്ധതിയുടെ പിതാവ്). ആസ്ഥാനം ബംഗളൂരു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>DRDO (Defence Research and Development Organisation):</strong> 1958-ൽ സ്ഥാപിതമായി. ആസ്ഥാനം ന്യൂഡൽഹി.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഭാഭ = ആണവം (Nuclear); സാരാഭായ് = ബഹിരാകാശം (Space)</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1835:</strong> ഇംഗ്ലീഷ് വിദ്യാഭ്യാസം ഇന്ത്യയിൽ ഔദ്യോഗികമായി ആരംഭിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1854:</strong> വുഡ്സ് ഡെസ്പാച്ച്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1951:</strong> ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ഐ.ടി (IIT) ഖരഗ്പൂരിൽ (പശ്ചിമ ബംഗാൾ) സ്ഥാപിതമായി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1974 മെയ് 18:</strong> ഇന്ത്യയുടെ ആദ്യത്തെ ആണവപരീക്ഷണം രാജസ്ഥാനിലെ പോഖ്റാനിൽ നടന്നു. <strong>കോഡ് നാമം: സ്മൈലിംഗ് ബുദ്ധ</strong> (Smiling Buddha).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1975 ഏപ്രിൽ 19:</strong> ഇന്ത്യയുടെ ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം <strong>ആര്യഭട്ട</strong> (Aryabhata) സോവിയറ്റ് യൂണിയന്റെ സഹായത്തോടെ വിക്ഷേപിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1998 മെയ് 11, 13:</strong> ഇന്ത്യയുടെ രണ്ടാം ആണവ പരീക്ഷണം (പോഖ്റാൻ II). <strong>കോഡ് നാമം: ഓപ്പറേഷൻ ശക്തി</strong> (Operation Shakti).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>2009:</strong> വിദ്യാഭ്യാസ അവകാശ നിയമം (RTE Act) പാസാക്കി. (2010 ഏപ്രിൽ 1-ന് നിലവിൽ വന്നു).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: PSC വിശകലനം ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> വുഡ്സ് ഡെസ്പാച്ച്, കോത്താരി കമ്മീഷൻ, NEP 2020-ന്റെ പുതിയ ഘടന (5+3+3+4), ആദ്യ ആണവ പരീക്ഷണത്തിന്റെ കോഡ് നാമങ്ങൾ, ആര്യഭട്ട.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> ISRO, DRDO എന്നിവയുടെ സ്ഥാപക വർഷങ്ങൾ, ഇന്ത്യയുടെ മാഗ്നാകാർട്ട് എന്നറിയപ്പെടുന്ന രേഖ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> വാർധാ വിദ്യാഭ്യാസ പദ്ധതി, മുദ്രലിയാർ കമ്മീഷൻ, CSIR പ്രസിഡന്റ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പുതിയ സാധ്യത:</strong> ചന്ദ്രയാൻ-3 (2023), മംഗൾയാൻ (2013), RTE Act (2009), NEP 2020 കമ്മിറ്റി ചെയർമാൻ (കസ്തൂരിരംഗൻ).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: മുൻവർഷ ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. മുൻവർഷ ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Match the Following:</strong> ഒരു വശത്ത് കമ്മീഷനുകളുടെ പേരും മറുവശത്ത് അവ പഠിച്ച വിഷയവും (ഉദാഹരണത്തിന്: രാധാകൃഷ്ണൻ കമ്മീഷൻ - സർവ്വകലാശാല, മുദ്രലിയാർ കമ്മീഷൻ - സെക്കൻഡറി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Direct Questions:</strong> "ഇന്ത്യൻ ബഹിരാകാശ ശാസ്ത്രത്തിന്റെ പിതാവ് ആര്?", "10+2+3 സിസ്റ്റം ശുപാർശ ചെയ്ത കമ്മീഷൻ ഏത്?" എന്നിവ PSC-യുടെ എവർഗ്രീൻ ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> സമീപകാല പരീക്ഷകളിൽ NEP 2020-ന്റെ ഡ്രാഫ്റ്റിംഗ് കമ്മിറ്റി ചെയർമാൻ ആര് (കെ. കസ്തൂരിരംഗൻ) എന്നത് ആവർത്തിച്ചു ചോദിക്കുന്നുണ്ട്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>രാധാകൃഷ്ണൻ കമ്മീഷൻ (1948)</strong></td>
+                <td><strong>കോത്താരി കമ്മീഷൻ (1964)</strong></td>
+                <td>രാധാകൃഷ്ണൻ കമ്മീഷൻ സർവ്വകലാശാലാ (ഉന്നത) വിദ്യാഭ്യാസത്തെക്കുറിച്ച് മാത്രം പഠിച്ചുപ്പോൾ, കോത്താരി കമ്മീഷൻ വിദ്യാഭ്യാസ മേഖലയെ മൊത്തത്തിൽ (സമഗ്രമായി) പഠിച്ചു.</td>
+              </tr>
+              <tr>
+                <td><strong>ഹോമി ജെ. ഭാഭ</strong></td>
+                <td><strong>വിക്രം സാരാഭായ്</strong></td>
+                <td>ഹോമി ജെ. ഭാഭ ഇന്ത്യൻ ആണവ ശാസ്ത്രത്തിന്റെ (Nuclear Science) പിതാവാണ്. വിക്രം സാരാഭായ് ഇന്ത്യൻ ബഹിരാകാശ പദ്ധതിയുടെ (Space Program) പിതാവാണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>ISRO രൂപീകരിച്ചത്</strong></td>
+                <td><strong>Department of Space (DoS) രൂപീകരിച്ചത്</strong></td>
+                <td>ISRO രൂപീകരിച്ചത് 1969-ലാണ്. എന്നാൽ ഇന്ത്യയിൽ പ്രത്യേകമായി ബഹിരാകാശ വകുപ്പ് (DoS) രൂപീകരിച്ചത് 1972-ലാണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>സ്മൈലിംഗ് ബുദ്ധ (1974)</strong></td>
+                <td><strong>ഓപ്പറേഷൻ ശക്തി (1998)</strong></td>
+                <td>1974-ലെ ആദ്യ പരീക്ഷണത്തിന്റെ കോഡ് നാമം സ്മൈലിംഗ് ബുദ്ധ (ഇന്ദിരാഗാന്ധി); 1998-ലെ രണ്ടാം പരീക്ഷണത്തിന്റെ കോഡ് നാമം ഓപ്പറേഷൻ ശക്തി (വാജ്‌പേയി).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>Table 1: വിദ്യാഭ്യാസ കമ്മീഷനുകൾ (ബ്രിട്ടീഷ് ഇന്ത്യ)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വർഷം</th><th>കമ്മീഷൻ / റിപ്പോർട്ട്</th><th>ആരുടെ കാലത്ത്</th><th>പ്രധാന ലക്ഷ്യം / പ്രത്യേകത</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1835</td><td>മക്കാളെ മിനുട്സ്</td><td>വില്യം ബെന്റിക്</td><td>ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന്റെ തുടക്കം</td></tr>
+              <tr><td>1854</td><td>വുഡ്സ് ഡെസ്പാച്ച്</td><td>ഡൽഹൗസി പ്രഭു</td><td>മാഗ്നാകാർട്ട്, സർവ്വകലാശാലകളുടെ സ്ഥാപനം</td></tr>
+              <tr><td>1882</td><td>ഹണ്ടർ കമ്മീഷൻ</td><td>റിപ്പൺ പ്രഭു</td><td>പ്രാഥമിക വിദ്യാഭ്യാസം</td></tr>
+              <tr><td>1902</td><td>റാലി കമ്മീഷൻ</td><td>കഴ്സൺ പ്രഭു</td><td>സർവ്വകലാശാലാ പരിഷ്കാരങ്ങൾ</td></tr>
+              <tr><td>1917</td><td>സാഡ്‌ലർ കമ്മീഷൻ</td><td>ചെസ്റ്റർഫീൽഡ് പ്രഭു</td><td>കൽക്കട്ട യൂണിവേഴ്സിറ്റിയിലെ പ്രശ്നങ്ങൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ഇന്ത്യയുടെ ആണവ പരീക്ഷണങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പരീക്ഷണം</th><th>വർഷം</th><th>കോഡ് നാമം</th><th>അന്നത്തെ പ്രധാനമന്ത്രി</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>പോഖ്റാൻ I</td><td>1974 മെയ് 18</td><td>സ്മൈലിംഗ് ബുദ്ധ</td><td>ഇന്ദിരാഗാന്ധി</td></tr>
+              <tr><td>പോഖ്റാൻ II</td><td>1998 മെയ് 11, 13</td><td>ഓപ്പറേഷൻ ശക്തി</td><td>എ.ബി. വാജ്‌പേയി</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: പ്രധാന സ്ഥാപനങ്ങളും വർഷങ്ങളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സ്ഥാപനം</th><th>വർഷം</th><th>ആസ്ഥാനം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>CSIR</td><td>1942</td><td>ന്യൂഡൽഹി</td></tr>
+              <tr><td>Atomic Energy Commission</td><td>1948</td><td>മുംബൈ</td></tr>
+              <tr><td>DRDO</td><td>1958</td><td>ന്യൂഡൽഹി</td></tr>
+              <tr><td>ISRO</td><td>1969</td><td>ബംഗളൂരു</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: സമയരേഖ / Mnemonics ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സമയരേഖയും ഓർമ്മ വഴികളും (Timeline & Mnemonics)</h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <span class="box-label">📅 വിദ്യാഭ്യാസ-ശാസ്ത്ര സമയരേഖ</span>
+          <svg viewBox="0 0 950 200" width="100%" height="auto" role="img" aria-label="വിദ്യാഭ്യാസ-ശാസ്ത്ര സമയരേഖ">
+            <line x1="40" y1="100" x2="910" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="70" cy="100" r="9" fill="#c62828"/>
+            <text x="70" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1835</text>
+            <text x="70" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">മക്കാളെ</text>
+            <circle cx="160" cy="100" r="9" fill="#ef6c00"/>
+            <text x="160" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1854</text>
+            <text x="160" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">വുഡ്സ്</text>
+            <circle cx="250" cy="100" r="9" fill="#2e7d32"/>
+            <text x="250" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1882</text>
+            <text x="250" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ഹണ്ടർ</text>
+            <circle cx="340" cy="100" r="9" fill="#1565c0"/>
+            <text x="340" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1948</text>
+            <text x="340" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">രാധാകൃഷ്ണൻ</text>
+            <circle cx="430" cy="100" r="9" fill="#6a1b9a"/>
+            <text x="430" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1951</text>
+            <text x="430" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ആദ്യ IIT</text>
+            <circle cx="520" cy="100" r="9" fill="#b83b2c"/>
+            <text x="520" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1964</text>
+            <text x="520" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">കോത്താരി</text>
+            <circle cx="610" cy="100" r="9" fill="#00695c"/>
+            <text x="610" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1969</text>
+            <text x="610" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ISRO</text>
+            <circle cx="700" cy="100" r="9" fill="#f9a825"/>
+            <text x="700" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1974</text>
+            <text x="700" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">പോഖ്റാൻ I</text>
+            <circle cx="790" cy="100" r="9" fill="#8e24aa"/>
+            <text x="790" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1998</text>
+            <text x="790" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">പോഖ്റാൻ II</text>
+            <circle cx="870" cy="100" r="9" fill="#1976d2"/>
+            <text x="870" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">2020</text>
+            <text x="870" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">NEP 2020</text>
+          </svg>
+          <div class="viz-caption">📅 1835 മുതൽ 2020 വരെയുള്ള പ്രധാന സംഭവങ്ങൾ</div>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>ബ്രിട്ടീഷ് കാലഘട്ട വിദ്യാഭ്യാസ കമ്മീഷനുകളുടെ ക്രമം: "<strong>M-W-H-R-S</strong>" — Macaulay (1835) → Wood's (1854) → Hunter (1882) → Raleigh (1902) → Sadler (1917).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>ആണവ പരീക്ഷണങ്ങളുടെ പ്രധാനമന്ത്രിമാർ: "<strong>ആദ്യത്തെ പരീക്ഷണം ബുദ്ധൻ ചിരിച്ചപ്പോൾ ഇന്ദിരയ്ക്ക് ചിരി വന്നു (സ്മൈലിംഗ് ബുദ്ധ - ഇന്ദിരാഗാന്ധി); രണ്ടാമത്തെ പരീക്ഷണത്തിന് വാജ്‌പേയി ശക്തി പ്രയോഗിച്ചു (ഓപ്പറേഷൻ ശക്തി - വാജ്‌പേയി)</strong>".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p>NEP ഘടനകൾ: "<strong>68-ൽ 10+2+3 (കോത്താരി); 2020-ൽ 5+3+3+4 (കസ്തൂരിരംഗൻ)</strong>".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p>ശാസ്ത്രജ്ഞർ: "<strong>ഭാഭ = ആണവം; സാരാഭായ് = ബഹിരാകാശം; കലാം = മിസൈൽ</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: PSC കെണികൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. സാധാരണ PSC കെണികൾ (Common Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> NEP 2020-ൽ നിർദ്ദേശിക്കുന്ന പുതിയ വിദ്യാഭ്യാസ ഘടന ഏത്?</p>
+          <p><strong>Confusing Options:</strong> 10+2+3 / 5+3+4 / 5+3+3+4</p>
+          <p><strong>Fact:</strong> കോത്താരി കമ്മീഷന്റെ 10+2+3 സിസ്റ്റം മാറ്റി <strong>5+3+3+4</strong> എന്ന പുതിയ ഘടനയാണ് കസ്തൂരിരംഗൻ കമ്മിറ്റി കൊണ്ടുവന്നത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> ഇന്ത്യയിൽ UGC (University Grants Commission) സ്ഥാപിതമായ വർഷം?</p>
+          <p><strong>Confusing Options:</strong> 1948 / 1953 / 1956</p>
+          <p><strong>Fact:</strong> 1948-ലെ കമ്മീഷന്റെ ശുപാർശപ്രകാരം <strong>1953-ൽ</strong> UGC നിലവിൽ വന്നു. എന്നാൽ ഇതിന് പാർലമെന്റ് നിയമസാധുത നൽകിയത് (Statutory Body ആയത്) 1956-ലാണ്. (തുടങ്ങിയ വർഷം ചോദിച്ചാൽ 1953).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ശാന്തി സ്വരൂപ് ഭട്നാഗർ പുരസ്കാരം ഏത് മേഖലയുമായി ബന്ധപ്പെട്ടിരിക്കുന്നു?</p>
+          <p><strong>Confusing Options:</strong> സമാധാനം / സാഹിത്യം / ശാസ്ത്രം</p>
+          <p><strong>Fact:</strong> സി.എസ്.ഐ.ആർ (CSIR) നൽകുന്ന ഈ പുരസ്കാരം <strong>ശാസ്ത്ര-സാങ്കേതിക (Science & Tech)</strong> മേഖലയുമായി ബന്ധപ്പെട്ടതാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ആദ്യത്തെ ആണവ പരീക്ഷണത്തിന്റെ കോഡ് നാമം എന്തായിരുന്നു?</p>
+          <p><strong>Confusing Options:</strong> ഓപ്പറേഷൻ ശക്തി / സ്മൈലിംഗ് ബുദ്ധ / അഗ്നി</p>
+          <p><strong>Fact:</strong> <strong>സ്മൈലിംഗ് ബുദ്ധ</strong> (1974, ഇന്ദിരാഗാന്ധി). ഓപ്പറേഷൻ ശക്തി = 1998-ലെ രണ്ടാം പരീക്ഷണം (വാജ്‌പേയി).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ഇന്ത്യയുടെ ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം ഏതാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഭാസ്കര / ആര്യഭട്ട / ഇൻസാറ്റ്</p>
+          <p><strong>Fact:</strong> <strong>ആര്യഭട്ട</strong> (1975). ഭാസ്കര = 1979-ൽ വിക്ഷേപിച്ച രണ്ടാമത്തെ ഉപഗ്രഹം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. അധിക വസ്തുതകൾ (Additional Kerala PSC Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിലെ രണ്ടാമത്തെ ഐ.ഐ.ടി (IIT) ബോംബെയിലാണ് (1958) സ്ഥാപിച്ചത്. എന്നാൽ ഏറ്റവും വലിയ കാമ്പസ് ഖരഗ്പൂരിന്റേതാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> 1854-ലെ വുഡ്സ് ഡെസ്പാച്ചിന്റെ നിർദ്ദേശപ്രകാരമാണ് 1857-ൽ കൽക്കട്ട, ബോംബെ, മദ്രാസ് എന്നീ സർവ്വകലാശാലകൾ സ്ഥാപിച്ചത് (ലണ്ടൻ യൂണിവേഴ്സിറ്റിയുടെ മാതൃകയിലായിരുന്നു ഇത്).</li>
+          <li><span class="stars">⭐⭐⭐</span> മഹാത്മാ ഗാന്ധിയുടെ വാർധാ വിദ്യാഭ്യാസ പദ്ധതിക്ക് (Nai Talim) രൂപം നൽകിയത് <strong>ഡോ. സക്കീർ ഹുസൈൻ</strong> ആണ്. അഹിംസ, മാതൃഭാഷാപഠനം, കൈത്തൊഴിൽ എന്നിവയായിരുന്നു ഇതിന്റെ അടിസ്ഥാനം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>'ഓപ്പറേഷൻ ബ്ലാക്ക് ബോർഡ്'</strong> (Operation Blackboard) എന്ന പദ്ധതി 1986-ലെ വിദ്യാഭ്യാസ നയത്തിന്റെ ഭാഗമായി പ്രൈമറി സ്കൂളുകളുടെ അടിസ്ഥാന സൗകര്യം വർദ്ധിപ്പിക്കാൻ കൊണ്ടുവന്നതാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>National Literacy Mission (NLM):</strong> ഇന്ത്യയിൽ സാക്ഷരത വർദ്ധിപ്പിക്കാൻ 1988-ൽ ആരംഭിച്ച പദ്ധതിയാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Right to Education (RTE) Act:</strong> 2009-ൽ പാസാക്കിയ ഈ നിയമപ്രകാരം 6 മുതൽ 14 വയസ്സുവരെയുള്ള കുട്ടികൾക്ക് സൗജന്യവും നിർബന്ധിതവുമായ വിദ്യാഭ്യാസം മൗലികാവകാശമായി മാറി (Article 21A).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സി.വി. രാമന്</strong> ഭൗതികശാസ്ത്രത്തിൽ നോബൽ പുരസ്കാരം ലഭിച്ചത് 1930-ലാണ് (രാമൻ ഇഫക്ട് - ഫെബ്രുവരി 28-നാണ് നമ്മൾ ദേശീയ ശാസ്ത്ര ദിനമായി ആചരിക്കുന്നത്).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയുടെ <strong>മിസൈൽ മാൻ</strong> (Missile Man of India) എന്നറിയപ്പെടുന്നത് എ.പി.ജെ അബ്ദുൽ കലാമാണ്. <strong>മിസൈൽ വുമൺ</strong> (Missile Woman) ടെസ്സി തോമസ് (മലയാളി) ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ആദ്യത്തെ ഇന്ത്യൻ ബഹിരാകാശ സഞ്ചാരി <strong>രാകേഷ് ശർമ്മ</strong>യാണ് (1984 - സല്യൂട്ട് 7 മിഷൻ).</li>
+          <li><span class="stars">⭐⭐⭐</span> ബഹിരാകാശത്ത് പോയ ആദ്യത്തെ ഇന്ത്യൻ വംശജയായ വനിത <strong>കൽപന ചൗള</strong>യാണ് (1997).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ചന്ദ്രയാൻ-3 (2023)</strong> ചന്ദ്രന്റെ ദക്ഷിണധ്രുവത്തിൽ ഇറങ്ങിയ സ്ഥലത്തിന് ഇന്ത്യ നൽകിയ പേര് <strong>'ശിവശക്തി പോയിന്റ്'</strong> (Shiv Shakti Point). ആ ദിവസം (ഓഗസ്റ്റ് 23) <strong>ദേശീയ ബഹിരാകാശ ദിനമായി</strong> ആചരിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഇന്ത്യയിലെ ആദ്യത്തെ ആണവശക്തി നിലയം</strong> (Nuclear Power Station) മഹാരാഷ്ട്രയിലെ <strong>താരാപ്പുരിലാണ്</strong> (Tarapur - 1969).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കൂടംകുളം ആണവനിലയം</strong> (തമിഴ്നാട്) റഷ്യയുടെ സഹായത്തോടെയാണ് നിർമ്മിച്ചത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയുടെ ഏറ്റവും വലിയ ആണവ ഗവേഷണ കേന്ദ്രം <strong>ബാർക്ക്</strong> (BARC - Bhabha Atomic Research Centre) ആണ്. ഇത് മഹാരാഷ്ട്രയിലെ ട്രോംബയിലാണ് സ്ഥിതി ചെയ്യുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യ സ്വന്തമായി വികസിപ്പിച്ചെടുത്ത ആദ്യത്തെ ആണവ റിയാക്ടറാണ് <strong>'അപ്സര'</strong> (Apsara - 1956).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഡി.ആർ.ഡി.ഒ (DRDO) വികസിപ്പിച്ചെടുത്ത ഇന്ത്യയുടെ പ്രധാന മിസൈലുകളാണ് അഗ്നി, പൃഥ്വി, ആകാശ്, ത്രിശൂൽ, നാഗ് (<strong>പട്ന</strong> എന്ന് ചുരുക്കി ഓർക്കാം - PATNA).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയും റഷ്യയും ചേർന്ന് വികസിപ്പിച്ചെടുത്ത സൂപ്പർസോണിക് ക്രൂയിസ് മിസൈലാണ് <strong>ബ്രഹ്മോസ്</strong> (BrahMos).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിലെ ആദ്യത്തെ സൂപ്പർ കമ്പ്യൂട്ടറാണ് <strong>പരം 8000</strong> (PARAM 8000). ഇത് വികസിപ്പിച്ചത് <strong>സി-ഡാക്</strong> (C-DAC - പുനെ) ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യൻ സൂപ്പർ കമ്പ്യൂട്ടിംഗിന്റെ പിതാവ് എന്നറിയപ്പെടുന്നത് <strong>ഡോ. വിജയ് ഭട്കർ</strong> ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> 1929-ൽ സി.വി രാമൻ കൽക്കട്ടയിൽ വെച്ചാണ് രാമൻ ഇഫക്ട് കണ്ടെത്തിയത്. ശാസ്ത്രരംഗത്ത് നോബൽ നേടുന്ന ആദ്യ ഏഷ്യക്കാരൻ അദ്ദേഹമാണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഇന്ത്യൻ ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട (Magna Carta) എന്നറിയപ്പെടുന്ന രേഖ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. മക്കാളയുടെ മിനുട്സ്</span>
+            <span data-opt="B">B. ഹണ്ടർ കമ്മീഷൻ റിപ്പോർട്ട്</span>
+            <span data-opt="C">C. വുഡ്സ് ഡെസ്പാച്ച്</span>
+            <span data-opt="D">D. രാധാകൃഷ്ണൻ കമ്മീഷൻ റിപ്പോർട്ട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) വുഡ്സ് ഡെസ്പാച്ച്</div>
+            <div class="explanation">1854-ൽ ചാൾസ് വുഡ് പുറത്തിറക്കിയ ഈ രേഖയാണ് ഇന്ത്യയിലെ ആധുനിക വിദ്യാഭ്യാസത്തിന്റെ അടിസ്ഥാനം.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. 10+2+3 എന്ന വിദ്യാഭ്യാസ ഘടന ഇന്ത്യയിൽ ശുപാർശ ചെയ്ത കമ്മീഷൻ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മുദ്രലിയാർ കമ്മീഷൻ</span>
+            <span data-opt="B">B. കോത്താരി കമ്മീഷൻ</span>
+            <span data-opt="C">C. സാഡ്‌ലർ കമ്മീഷൻ</span>
+            <span data-opt="D">D. കസ്തൂരിരംഗൻ കമ്മിറ്റി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കോത്താരി കമ്മീഷൻ</div>
+            <div class="explanation">1964-66 കാലയളവിലാണ് ഈ റിപ്പോർട്ട് സമർപ്പിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. ആദ്യത്തെ ഐ.ഐ.ടി - കാൺപൂർ</span>
+            <span data-opt="B">B. ആദ്യത്തെ ആണവ പരീക്ഷണം - ഓപ്പറേഷൻ ശക്തി</span>
+            <span data-opt="C">C. ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം - ആര്യഭട്ട</span>
+            <span data-opt="D">D. ഐ.എസ്.ആർ.ഒ സ്ഥാപകൻ - ഹോമി ജെ. ഭാഭ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം - ആര്യഭട്ട</div>
+            <div class="explanation">ഐ.ഐ.ടി ഖരഗ്പൂർ ആണ് ആദ്യം, ഓപ്പറേഷൻ ശക്തി രണ്ടാം പരീക്ഷണമാണ്, ഐ.എസ്.ആർ.ഒ സ്ഥാപകൻ സാരാഭായിയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലക്രമത്തിൽ (Chronological Order) എഴുതുക:<br>
+            1. കോത്താരി കമ്മീഷൻ<br>
+            2. ഐ.എസ്.ആർ.ഒ (ISRO) രൂപീകരണം<br>
+            3. വുഡ്സ് ഡെസ്പാച്ച്<br>
+            4. ആദ്യത്തെ ആണവ പരീക്ഷണം (പോഖ്റാൻ I)</div>
+          <div class="options">
+            <span data-opt="A">A. 3, 1, 2, 4</span>
+            <span data-opt="B">B. 1, 3, 2, 4</span>
+            <span data-opt="C">C. 3, 2, 1, 4</span>
+            <span data-opt="D">D. 1, 2, 3, 4</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 3, 1, 2, 4</div>
+            <div class="explanation">വുഡ്സ് ഡെസ്പാച്ച് (1854), കോത്താരി (1964), ഐ.എസ്.ആർ.ഒ (1969), പോഖ്റാൻ I (1974).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. പുതിയ ദേശീയ വിദ്യാഭ്യാസ നയം 2020 (NEP 2020) വിഭാവനം ചെയ്യുന്ന പുതിയ വിദ്യാഭ്യാസ ഘടന ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 5+4+3+3</span>
+            <span data-opt="B">B. 5+3+3+4</span>
+            <span data-opt="C">C. 10+2+3</span>
+            <span data-opt="D">D. 8+4+2+1</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 5+3+3+4</div>
+            <div class="explanation">ഇതാണ് കസ്തൂരിരംഗൻ കമ്മിറ്റി നിർദ്ദേശിച്ച പുതിയ ഫോർമാറ്റ്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഇന്ത്യയുടെ ബഹിരാകാശ പദ്ധതിയുടെ പിതാവ് (Father of Indian Space Program) എന്നറിയപ്പെടുന്നത് ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. എ.പി.ജെ അബ്ദുൽ കലാം</span>
+            <span data-opt="B">B. സതീഷ് ധവാൻ</span>
+            <span data-opt="C">C. ഹോമി ജെ. ഭാഭ</span>
+            <span data-opt="D">D. വിക്രം സാരാഭായ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) വിക്രം സാരാഭായ്</div>
+            <div class="explanation">ഹോമി ജെ. ഭാഭ ആണവശാസ്ത്രത്തിന്റെ പിതാവാണ്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: ഇന്ത്യയിലെ ആണവ പരീക്ഷണങ്ങളുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഇന്ത്യയുടെ ആദ്യത്തെ ആണവ പരീക്ഷണം 1974-ൽ പോഖ്റാനിൽ വെച്ചാണ് നടന്നത്.<br>
+            2. ആദ്യ പരീക്ഷണത്തിന്റെ കോഡ് നാമം 'സ്മൈലിംഗ് ബുദ്ധ' എന്നായിരുന്നു.<br>
+            3. ഈ സമയത്ത് ഇന്ത്യയുടെ പ്രധാനമന്ത്രി എ.ബി. വാജ്‌പേയി ആയിരുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">ആദ്യ പരീക്ഷണ സമയത്ത് (1974) ഇന്ദിരാഗാന്ധിയായിരുന്നു പ്രധാനമന്ത്രി. (വാജ്‌പേയി 1998-ൽ).</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയിൽ പ്രാഥമിക വിദ്യാഭ്യാസത്തിന് ഊന്നൽ നൽകിക്കൊണ്ട് റിപ്പൺ പ്രഭു 1882-ൽ നിയമിച്ച കമ്മീഷൻ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. റാലി കമ്മീഷൻ</span>
+            <span data-opt="B">B. ഹണ്ടർ കമ്മീഷൻ</span>
+            <span data-opt="C">C. സാഡ്‌ലർ കമ്മീഷൻ</span>
+            <span data-opt="D">D. മക്കാളെ കമ്മീഷൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഹണ്ടർ കമ്മീഷൻ</div>
+            <div class="explanation">ഇന്ത്യയിലെ ആദ്യത്തെ വിദ്യാഭ്യാസ കമ്മീഷൻ (1882) കൂടിയാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following:<br>
+            മക്കാളെ മിനുട്സ് - a. 1854<br>
+            വുഡ്സ് ഡെസ്പാച്ച് - b. 1969<br>
+            ISRO രൂപീകരണം - c. 1835<br>
+            ആര്യഭട്ട വിക്ഷേപണം - d. 1975</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-c, 3-d, 4-a</span>
+            <span data-opt="B">B. 1-c, 2-a, 3-b, 4-d</span>
+            <span data-opt="C">C. 1-a, 2-b, 3-c, 4-d</span>
+            <span data-opt="D">D. 1-c, 2-d, 3-a, 4-b</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1-c, 2-a, 3-b, 4-d</div>
+            <div class="explanation">കൃത്യമായ വർഷങ്ങളുടെ ചേർച്ച.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. മഹാത്മാഗാന്ധിയുടെ ആശയപ്രകാരം തയ്യാറാക്കിയ 'വാർധാ വിദ്യാഭ്യാസ പദ്ധതി' (1937) രൂപീകരിച്ച കമ്മിറ്റിയുടെ തലവൻ ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ഡോ. സക്കീർ ഹുസൈൻ</span>
+            <span data-opt="B">B. സർവേപ്പള്ളി രാധാകൃഷ്ണൻ</span>
+            <span data-opt="C">C. ഡി.എസ്. കോത്താരി</span>
+            <span data-opt="D">D. കെ. കസ്തൂരിരംഗൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ഡോ. സക്കീർ ഹുസൈൻ</div>
+            <div class="explanation">അടിസ്ഥാന വിദ്യാഭ്യാസം (Basic Education) എന്നതായിരുന്നു ഇതിന്റെ ലക്ഷ്യം.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. സർവ്വകലാശാലാ വിദ്യാഭ്യാസ കമ്മീഷൻ (University Education Commission - 1948) എന്നറിയപ്പെടുന്നത് താഴെ പറയുന്നവയിൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മുദ്രലിയാർ കമ്മീഷൻ</span>
+            <span data-opt="B">B. രാധാകൃഷ്ണൻ കമ്മീഷൻ</span>
+            <span data-opt="C">C. കോത്താരി കമ്മീഷൻ</span>
+            <span data-opt="D">D. സാഡ്‌ലർ കമ്മീഷൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) രാധാകൃഷ്ണൻ കമ്മീഷൻ</div>
+            <div class="explanation">ഇതിന്റെ ശുപാർശ പ്രകാരമാണ് UGC നിലവിൽ വന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): വുഡ്സ് ഡെസ്പാച്ചിനെ ഇന്ത്യൻ വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട് എന്ന് വിളിക്കുന്നു.<br>
+            Reason (R): ഇന്ത്യയിലെ വിദ്യാഭ്യാസ സംസ്ഥാനത്തെക്കുറിച്ച് സമഗ്രമായ ഒരു പദ്ധതി ആദ്യമായി അവതരിപ്പിച്ചത് ഈ രേഖയിലാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">ഇന്ത്യയിലെ ആധുനിക വിദ്യാഭ്യാസത്തിന്റെ അടിസ്ഥാനം ഈ രേഖയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. സി.എസ്.ഐ.ആർ (CSIR) നൽകുന്ന പരമോന്നത ശാസ്ത്ര പുരസ്കാരം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭാരത് രത്ന</span>
+            <span data-opt="B">B. ശാന്തി സ്വരൂപ് ഭട്നാഗർ പുരസ്കാരം</span>
+            <span data-opt="C">C. കലാം പുരസ്കാരം</span>
+            <span data-opt="D">D. രാമാനുജൻ പുരസ്കാരം</span>
+          </div>
+          <div class="answer-label" style="display:none">ശരിയുത്തരം: (B) ശാന്തി സ്വരൂപ് ഭട്നാഗർ പുരസ്കാരം</div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ശാന്തി സ്വരൂപ് ഭട്നാഗർ പുരസ്കാരം</div>
+            <div class="explanation">CSIR-ന്റെ ആദ്യ ഡയറക്ടറുടെ പേരിലാണ് ഈ പുരസ്കാരം.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ഐ.ടി (IIT) സ്ഥാപിക്കപ്പെട്ടത് എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മദ്രാസ്</span>
+            <span data-opt="B">B. കാൺപൂർ</span>
+            <span data-opt="C">C. ഖരഗ്പൂർ</span>
+            <span data-opt="D">D. ഡൽഹി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഖരഗ്പൂർ</div>
+            <div class="explanation">പശ്ചിമ ബംഗാളിലെ ഖരഗ്പൂരിൽ 1951-ലാണ് ആദ്യത്തെ IIT സ്ഥാപിതമായത്.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. വിദ്യാഭ്യാസ അവകാശ നിയമം (RTE Act) ഇന്ത്യൻ പാർലമെന്റ് പാസാക്കിയ വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 2005</span>
+            <span data-opt="B">B. 2009</span>
+            <span data-opt="C">C. 2010</span>
+            <span data-opt="D">D. 2012</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 2009</div>
+            <div class="explanation">പാസാക്കിയത് 2009-ലാണെങ്കിലും നിലവിൽ വന്നത് 2010 ഏപ്രിൽ 1-നാണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>9</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>10</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>11</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>12</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>6</td><td>(D)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>7</td><td>(A)</td><td>15</td><td>(B)</td></tr>
+              <tr><td>8</td><td>(B)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന്റെ പിതാവ്:</strong> മക്കാളെ (1835).</li>
+          <li><strong>വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട:</strong> വുഡ്സ് ഡെസ്പാച്ച് (1854).</li>
+          <li><strong>പ്രാഥമിക വിദ്യാഭ്യാസ കമ്മീഷൻ:</strong> ഹണ്ടർ കമ്മീഷൻ (1882).</li>
+          <li><strong>സർവ്വകലാശാലാ കമ്മീഷൻ:</strong> രാധാകൃഷ്ണൻ കമ്മീഷൻ (1948).</li>
+          <li><strong>സെക്കൻഡറി വിദ്യാഭ്യാസ കമ്മീഷൻ:</strong> മുദ്രലിയാർ കമ്മീഷൻ (1952).</li>
+          <li><strong>10+2+3 സിസ്റ്റം കൊണ്ടുവന്നത്:</strong> കോത്താരി കമ്മീഷൻ (1964).</li>
+          <li><strong>NEP 2020-ന്റെ പുതിയ ഘടന:</strong> 5+3+3+4 (കസ്തൂരിരംഗൻ കമ്മിറ്റി).</li>
+          <li><strong>ആദ്യ ഐ.ഐ.ടി:</strong> ഖരഗ്പൂർ (1951).</li>
+          <li><strong>യു.ജി.സി (UGC) സ്ഥാപിതമായത്:</strong> 1953 (നിയമം 1956).</li>
+          <li><strong>വിദ്യാഭ്യാസ അവകാശ നിയമം (RTE Act):</strong> 2009.</li>
+          <li><strong>CSIR രൂപീകരിച്ചത്:</strong> 1942 (പ്രസിഡന്റ്: പ്രധാനമന്ത്രി).</li>
+          <li><strong>ISRO രൂപീകരിച്ചത്:</strong> 1969 ഓഗസ്റ്റ് 15.</li>
+          <li><strong>DRDO രൂപീകരിച്ചത്:</strong> 1958.</li>
+          <li><strong>ബഹിരാകാശ പദ്ധതിയുടെ പിതാവ്:</strong> വിക്രം സാരാഭായ്.</li>
+          <li><strong>ആണവശാസ്ത്രത്തിന്റെ പിതാവ്:</strong> ഹോമി ജെ. ഭാഭ.</li>
+          <li><strong>ആദ്യത്തെ കൃത്രിമ ഉപഗ്രഹം:</strong> ആര്യഭട്ട (1975).</li>
+          <li><strong>ആദ്യത്തെ ആണവ പരീക്ഷണം:</strong> പോഖ്റാൻ I (1974).</li>
+          <li><strong>ആദ്യ പരീക്ഷണത്തിന്റെ കോഡ്:</strong> സ്മൈലിംഗ് ബുദ്ധ.</li>
+          <li><strong>രണ്ടാം ആണവ പരീക്ഷണം:</strong> പോഖ്റാൻ II (1998).</li>
+          <li><strong>രണ്ടാം പരീക്ഷണത്തിന്റെ കോഡ്:</strong> ഓപ്പറേഷൻ ശക്തി.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>വിദ്യാഭ്യാസ കമ്മീഷനുകൾ</h3>
+        <ul>
+          <li><strong>1835:</strong> മക്കാളെ (ഇംഗ്ലീഷ് തുടക്കം).</li>
+          <li><strong>1854:</strong> വുഡ്സ് ഡെസ്പാച്ച് (മാഗ്നാകാർട്ട).</li>
+          <li><strong>1882:</strong> ഹണ്ടർ (പ്രൈമറി).</li>
+          <li><strong>1937:</strong> വാർധാ പദ്ധതി (ഗാന്ധിജി / സക്കീർ ഹുസൈൻ).</li>
+          <li><strong>1948:</strong> രാധാകൃഷ്ണൻ (യൂണിവേഴ്സിറ്റി / UGC).</li>
+          <li><strong>1952:</strong> മുദ്രലിയാർ (സെക്കൻഡറി).</li>
+          <li><strong>1964:</strong> കോത്താരി (10+2+3 സമഗ്ര പഠനം).</li>
+          <li><strong>2020:</strong> NEP 2020 (5+3+3+4 / കസ്തൂരിരംഗൻ).</li>
+        </ul>
+        <h3>ശാസ്ത്ര-സാങ്കേതിക നേട്ടങ്ങൾ</h3>
+        <ul>
+          <li><strong>ISRO:</strong> 1969 രൂപീകരിച്ചു (വിക്രം സാരാഭായ്).</li>
+          <li><strong>DRDO:</strong> 1958 രൂപീകരിച്ചു.</li>
+          <li><strong>ആദ്യ ഉപഗ്രഹം:</strong> ആര്യഭട്ട (1975).</li>
+          <li><strong>ആദ്യ ഐ.ഐ.ടി:</strong> ഖരഗ്പൂർ (1951).</li>
+          <li><strong>പോഖ്റാൻ I:</strong> 1974 (സ്മൈലിംഗ് ബുദ്ധ - ഇന്ദിരാഗാന്ധി).</li>
+          <li><strong>പോഖ്റാൻ II:</strong> 1998 (ഓപ്പറേഷൻ ശക്തി - വാജ്‌പേയി).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ടോപ്പ് വസ്തുതകൾ ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ടോപ്പ് പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഇന്ത്യയിലെ ആദ്യത്തെ വിദ്യാഭ്യാസ മന്ത്രി <strong>മൗലാന അബുൽ കലാം ആസാദ്</strong> ആണ് (അദ്ദേഹത്തിന്റെ ജന്മദിനമായ നവംബർ 11 ആണ് ദേശീയ വിദ്യാഭ്യാസ ദിനം).</li>
+          <li>മക്കാളെ പ്രഭു ഇംഗ്ലീഷ് വിദ്യാഭ്യാസം നടപ്പിലാക്കുമ്പോൾ ഇന്ത്യയുടെ ഗവർണർ ജനറൽ <strong>വില്യം ബെന്റിക്</strong> ആയിരുന്നു.</li>
+          <li>1857-ൽ കൽക്കട്ട, ബോംബെ, മദ്രാസ് സർവ്വകലാശാലകൾ സ്ഥാപിക്കുമ്പോൾ വൈസ്രോയി <strong>കാനിങ് പ്രഭു</strong> ആയിരുന്നു. (വുഡ്സ് ഡെസ്പാച്ച് ഡൽഹൗസിയുടെ കാലത്താണ് വന്നത്).</li>
+          <li>വിദ്യാഭ്യാസ അവകാശ നിയമം (RTE) ഭരണഘടനയുടെ <strong>Article 21A</strong>-യിലാണ് ഉൾപ്പെടുത്തിയിരിക്കുന്നത് (86-ാം ഭേദഗതി - 2002).</li>
+          <li>1976-ലെ <strong>42-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെയാണ്</strong> വിദ്യാഭ്യാസത്തെ സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്നും <strong>കൺകറന്റ് ലിസ്റ്റിലേക്ക്</strong> (Concurrent List) മാറ്റിയത്.</li>
+          <li><strong>ഇന്ദിരാഗാന്ധി ഓപ്പൺ യൂണിവേഴ്സിറ്റി (IGNOU)</strong> സ്ഥാപിക്കപ്പെട്ടത് 1985-ലാണ്.</li>
+          <li>ഇന്ത്യൻ വിദ്യാഭ്യാസ സ്ഥാപനങ്ങൾക്ക് റാങ്കിംഗ് നൽകുന്ന <strong>നാഷണൽ ഇൻസ്റ്റിറ്റ്യൂഷണൽ റാങ്കിംഗ് ഫ്രെയിംവർക്ക് (NIRF)</strong> ആരംഭിച്ചത് 2015-ലാണ്.</li>
+          <li>ISRO-യുടെ ആദ്യത്തെ സാറ്റലൈറ്റ് ലോഞ്ച് വെഹിക്കിൾ ആണ് <strong>SLV-3</strong>. ഇത് വിജയകരമായി വിക്ഷേപിച്ചപ്പോൾ പ്രോജക്ട് ഡയറക്ടർ എ.പി.ജെ അബ്ദുൽ കലാം ആയിരുന്നു.</li>
+          <li>ഐ.എസ്.ആർ.ഒ-യുടെ വാണിജ്യ വിഭാഗത്തിന്റെ (Commercial Arm) പുതിയ പേരാണ് <strong>ന്യൂസ്പേസ് ഇന്ത്യ ലിമിറ്റഡ് (NSIL)</strong> (പഴയത് ആന്റ്രിക്സ് കോർപ്പറേഷൻ).</li>
+          <li>ഇന്ത്യയുടെ ആദ്യത്തെ വാർത്താവിനിമയ ഉപഗ്രഹം (Communication Satellite) <strong>ആപ്പിൾ</strong> (APPLE - 1981) ആണ്.</li>
+          <li>ഇന്ത്യയുടെ ആദ്യത്തെ കാലാവസ്ഥാ ഉപഗ്രഹം (Meteorological Satellite) <strong>കൽപന-1</strong> (Kalpana-1) ആണ് (പഴയ പേര് METSAT-1).</li>
+          <li>ചന്ദ്രയാൻ-1 (2008) വിക്ഷേപിക്കുമ്പോൾ ഐ.എസ്.ആർ.ഒ ചെയർമാൻ <strong>ജി. മാധവൻ നായർ</strong> (മലയാളി) ആയിരുന്നു.</li>
+          <li>മംഗൾയാൻ (2013) വിക്ഷേപിക്കുമ്പോൾ ഐ.എസ്.ആർ.ഒ ചെയർമാൻ <strong>കെ. രാധാകൃഷ്ണൻ</strong> (മലയാളി) ആയിരുന്നു.</li>
+          <li>ചന്ദ്രയാൻ-3 (2023) ചന്ദ്രന്റെ ദക്ഷിണധ്രുവത്തിൽ ഇറങ്ങിയ സ്ഥലത്തിന് ഇന്ത്യ നൽകിയ പേര് <strong>'ശിവശക്തി പോയിന്റ്'</strong> (Shiv Shakti Point) എന്നാണ്. ആ ദിവസം (ഓഗസ്റ്റ് 23) ദേശീയ ബഹിരാകാശ ദിനമായി ആചരിക്കുന്നു.</li>
+          <li>തിരുവനന്തപുരത്തെ <strong>വിക്രം സാരാഭായ് സ്പേസ് സെന്റർ (VSSC)</strong> റോക്കറ്റുകൾ നിർമ്മിക്കുന്ന കേന്ദ്രമാണ്.</li>
+          <li>ഉപഗ്രഹങ്ങൾ വിക്ഷേപിക്കുന്ന <strong>സതീഷ് ധവാൻ സ്പേസ് സെന്റർ (SDSC)</strong> ആന്ധ്രാപ്രദേശിലെ ശ്രീഹരിക്കോട്ടയിലാണ്.</li>
+          <li>ഇന്ത്യയിലെ ആദ്യത്തെ ആണവശക്തി നിലയം (Nuclear Power Station) മഹാരാഷ്ട്രയിലെ <strong>താരാപ്പുരിലാണ്</strong> (Tarapur - 1969).</li>
+          <li><strong>കൂടംകുളം ആണവനിലയം</strong> (തമിഴ്നാട്) റഷ്യയുടെ സഹായത്തോടെയാണ് നിർമ്മിച്ചത്.</li>
+          <li>ഇന്ത്യയുടെ ഏറ്റവും വലിയ ആണവ ഗവേഷണ കേന്ദ്രം <strong>ബാർക്ക്</strong> (BARC - Bhabha Atomic Research Centre) ആണ്. ഇത് മഹാരാഷ്ട്രയിലെ ട്രോംബയിലാണ് സ്ഥിതി ചെയ്യുന്നത്.</li>
+          <li>ഇന്ത്യ സ്വന്തമായി വികസിപ്പിച്ചെടുത്ത ആദ്യത്തെ ആണവ റിയാക്ടറാണ് <strong>'അപ്സര'</strong> (Apsara - 1956).</li>
+          <li>ഡി.ആർ.ഡി.ഒ (DRDO) വികസിപ്പിച്ചെടുത്ത ഇന്ത്യയുടെ പ്രധാന മിസൈലുകളാണ് അഗ്നി, പൃഥ്വി, ആകാശ്, ത്രിശൂൽ, നാഗ് (<strong>പട്ന</strong> എന്ന് ചുരുക്കി ഓർക്കാം - PATNA).</li>
+          <li>ഇന്ത്യയും റഷ്യയും ചേർന്ന് വികസിപ്പിച്ചെടുത്ത സൂപ്പർസോണിക് ക്രൂയിസ് മിസൈലാണ് <strong>ബ്രഹ്മോസ്</strong> (BrahMos).</li>
+          <li>ഇന്ത്യയിലെ ആദ്യത്തെ സൂപ്പർ കമ്പ്യൂട്ടറാണ് <strong>പരം 8000</strong> (PARAM 8000). ഇത് വികസിപ്പിച്ചത് <strong>സി-ഡാക്</strong> (C-DAC - പുനെ) ആണ്.</li>
+          <li>ഇന്ത്യൻ സൂപ്പർ കമ്പ്യൂട്ടിംഗിന്റെ പിതാവ് എന്നറിയപ്പെടുന്നത് <strong>ഡോ. വിജയ് ഭട്കർ</strong> ആണ്.</li>
+          <li>1929-ൽ സി.വി രാമൻ കൽക്കട്ടയിൽ വെച്ചാണ് രാമൻ ഇഫക്ട് കണ്ടെത്തിയത്. ശാസ്ത്രരംഗത്ത് നോബൽ നേടുന്ന ആദ്യ ഏഷ്യക്കാരൻ അദ്ദേഹമാണ്.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 20: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ഇരുളടഞ്ഞ ഒരു കൊളോണിയൽ ഭൂതകാലത്തിൽ നിന്ന്, വിദ്യാഭ്യാസത്തിലൂടെയും ശാസ്ത്ര-സാങ്കേതിക വിദ്യയിലൂടെയും ആധുനിക ലോകത്തിന്റെ നെറുകയിലേക്ക് കുതിക്കുന്ന ഇന്ത്യയുടെ ചരിത്രമാണ് ഈ അധ്യായത്തിൽ നാം കണ്ടത്.</li>
+          <li>ബ്രിട്ടീഷുകാർ ക്ലാർക്കുമാരെ സൃഷ്ടിക്കാൻ കൊണ്ടുവന്ന വുഡ്സ് ഡെസ്പാച്ചിൽ തുടങ്ങി, കോത്താരി കമ്മീഷനിലൂടെ വളർന്ന് NEP 2020-ൽ എത്തിനിൽക്കുന്ന വിദ്യാഭ്യാസ രംഗവും; ഹോമി ഭാഭയും വിക്രം സാരാഭായിയും ഇട്ട അടിത്തറയിൽ ആര്യഭട്ടയും ചന്ദ്രയാനും വരെ എത്തിയ ശാസ്ത്ര നേട്ടങ്ങളും പരീക്ഷയിലെ പ്രധാന ഭാഗങ്ങളാണ്.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1 മുതൽ 2 ചോദ്യങ്ങൾ വരെ കൃത്യമായി പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഇനി നാം പോകുന്നത് ഇന്ത്യൻ ചരിത്രത്തിലെ അവസാന അധ്യായമായ 'വിദേശനയം' (Foreign Policy) എന്ന ഭാഗത്തേക്കാണ്. ഇന്ത്യ ലോകരാജ്യങ്ങളുമായി എങ്ങനെ ബന്ധം സ്ഥാപിച്ചു എന്ന് അവിടെ പഠിക്കാം. ഈ നോട്ട് നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>1.2.11 Science Education Technology</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'history-1.2.11-science-education-tech';
-window.PART_TITLE = '1.2.11 Science Education Technology';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaScienceEducation9Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>

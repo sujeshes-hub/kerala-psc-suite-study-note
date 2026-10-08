@@ -1,105 +1,1574 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>1.2.10 States Reorganisation - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഇന്ത്യൻ ചരിത്രം – സംസ്ഥാനങ്ങളുടെ പുനഃസംഘടന | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">1.2.10 States Reorganisation</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. കമ്മീഷനുകൾ</a></li>
+      <li><a href="#sec4">4. പുനഃസംഘടനാ നിയമം 1956</a></li>
+      <li><a href="#sec5">5. പുതിയ സംസ്ഥാനങ്ങൾ</a></li>
+      <li><a href="#sec6">6. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec7">7. PSC വിശകലനം</a></li>
+      <li><a href="#sec8">8. മുൻകാല ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec9">9. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec10">10. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec11">11. സമയരേഖ / ട്രിക്കുകൾ</a></li>
+      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
+      <li><a href="#sec13">13. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec14">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec15">15. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec16">16. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec17">17. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec18">18. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec19">19. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ചരിത്രം | അധ്യായം 8</div>
+      <h1>ഇന്ത്യൻ ചരിത്രം – സംസ്ഥാനങ്ങളുടെ പുനഃസംഘടന</h1>
+      <div class="subtitle">Reorganization of States | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഫസൽ അലി കമ്മീഷൻ (1953), ആദ്യ ഭാഷാ സംസ്ഥാനം ആന്ധ്ര (1953), സംസ്ഥാന പുനഃസംഘടനാ നിയമം (1956), 7-ാം ഭരണഘടനാ ഭേദഗതി, JVP കമ്മിറ്റി</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — എസ്.കെ. ധർ കമ്മീഷൻ (1948), പോറ്റി ശ്രീരാമുലു (58 ദിവസം നിരാഹാരം), ഗുജറാത്ത് (1960, 15-ാമത്), നാഗാലാൻഡ് (1963, 16-ാമത്)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — 2000-ൽ രൂപീകരിച്ച 3 സംസ്ഥാനങ്ങൾ (ഛത്തീസ്ഗഡ്, ഉത്തരാഖണ്ഡ്, ജാർഖണ്ഡ്), തെലങ്കാന (2014, 29-ാമത്), സിക്കിം (1975, 22-ാമത്)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ഗോവ (1987, 25-ാമത്), ജമ്മു-കാശ്മീർ പുനഃസംഘടന (2019)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — പാർട്ട് A, B, C, D വിഭജനം, 1956-ലെ 14 സംസ്ഥാനങ്ങൾ</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ആദ്യ ഭാഷാ സംസ്ഥാനം:</strong> ആന്ധ്ര (1953 ഒക്ടോബർ 1)</li>
+            <li><strong>ഫസൽ അലി കമ്മീഷൻ അംഗങ്ങൾ:</strong> ഫസൽ അലി, കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു</li>
+            <li><strong>1956-ൽ:</strong> 14 സംസ്ഥാനങ്ങൾ + 6 കേന്ദ്രഭരണ പ്രദേശങ്ങൾ</li>
+            <li><strong>നിലവിൽ:</strong> 28 സംസ്ഥാനങ്ങൾ + 8 കേന്ദ്രഭരണ പ്രദേശങ്ങൾ</li>
+            <li><strong>ഏറ്റവും പുതിയ സംസ്ഥാനം:</strong> തെലങ്കാന (2014 ജൂൺ 2, 29-ാമത്)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> സ്വാതന്ത്ര്യം ലഭിക്കുമ്പോൾ ഇന്ത്യയിലെ സംസ്ഥാനങ്ങൾ ഇന്നത്തെപ്പോലെ ആയിരുന്നില്ല. ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങളെ പുനഃസംഘടിപ്പിക്കുന്നതിനായി നിയോഗിച്ച വിവിധ കമ്മീഷനുകൾ, അവയുടെ റിപ്പോർട്ടുകൾ, പുതിയ സംസ്ഥാനങ്ങളുടെ രൂപീകരണം എന്നിവയാണ് ഈ അധ്യായത്തിൽ ചർച്ച ചെയ്യുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> വിവിധ സംസ്കാരങ്ങളും ഭാഷകളുമുള്ള ഇന്ത്യയെ ഒന്നിപ്പിച്ച് നിർത്തുന്നതിൽ ഭാഷാടിസ്ഥാന സംസ്ഥാന രൂപീകരണം വലിയ പങ്കുവഹിച്ചു. നമ്മുടെ സംസ്ഥാനമായ കേരളം ഉൾപ്പെടെ രൂപപ്പെട്ടത് ഈ പ്രക്രിയയിലൂടെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> കമ്മീഷനുകൾ, അംഗങ്ങൾ, ആദ്യത്തെ ഭാഷാ സംസ്ഥാനം, സംസ്ഥാനങ്ങൾ രൂപീകരിച്ച വർഷങ്ങൾ എന്നിവയിൽ നിന്ന് ഏത് പരീക്ഷയിലും ചോദ്യങ്ങൾ പ്രതീക്ഷിക്കാം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> ഫസൽ അലി കമ്മീഷൻ, JVP കമ്മിറ്റി, എസ്.കെ. ധർ കമ്മീഷൻ, സംസ്ഥാനങ്ങൾ രൂപീകരിച്ച കാലക്രമം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> 1947-ൽ സ്വാതന്ത്ര്യം ലഭിച്ചപ്പോൾ ഇന്ത്യയിലെ സംസ്ഥാനങ്ങളെ പാർട്ട് A, പാർട്ട് B, പാർട്ട് C, പാർട്ട് D എന്നിങ്ങനെ നാലായി തിരിച്ചിരുന്നു. എന്നാൽ തങ്ങളുടെ മാതൃഭാഷ സംസാരിക്കുന്നവർക്ക് സ്വന്തമായി ഒരു സംസ്ഥാനം വേണമെന്ന ആവശ്യം രാജ്യത്തുടനീളം ഉയർന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ടാണ് ആരംഭിച്ചത്?</strong> ഒരേ സംസ്ഥാനത്ത് പല ഭാഷകൾ സംസാരിക്കുന്നവർ ഉള്ളത് ഭരണനിർവ്വഹണത്തിന് തടസ്സമായി. പ്രത്യേകിച്ചും മദ്രാസ് സംസ്ഥാനത്ത് (തമിഴ് സംസാരിക്കുന്നവരും തെലുങ്ക് സംസാരിക്കുന്നവരും തമ്മിൽ) വലിയ പ്രശ്നങ്ങൾ ഉണ്ടായി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആരാണ് നേതൃത്വം നൽകിയത്?</strong> തെലുങ്ക് സംസാരിക്കുന്നവർക്ക് വേണ്ടി 'ആന്ധ്രാ' സംസ്ഥാനം ആവശ്യപ്പെട്ട് <strong>പോറ്റി ശ്രീരാമുലു</strong> (Potti Sreeramulu) 58 ദിവസം നിരാഹാരം കിടന്ന് രക്തസാക്ഷിയായി. ഇത് പ്രക്ഷോഭം ആളിക്കത്തിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഫലങ്ങളും പ്രാധാന്യവും:</strong> ഈ സംഭവത്തോടെ <strong>1953</strong>-ൽ ഇന്ത്യയിലെ ആദ്യത്തെ ഭാഷാടിസ്ഥാനത്തിലുള്ള സംസ്ഥാനമായ <strong>ആന്ധ്രാ</strong> നിലവിൽ വന്നു. തുടർന്ന് ഇന്ത്യയൊട്ടാകെ ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങളെ പുനഃസംഘടിപ്പിക്കാൻ <strong>ഫസൽ അലി കമ്മീഷനെ</strong> നിയോഗിക്കുകയും <strong>1956</strong>-ലെ നിയമപ്രകാരം <strong>14 സംസ്ഥാനങ്ങളും 6 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</strong> രൂപീകരിക്കുകയും ചെയ്തു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>58 ദിവസം നിരാഹാരം → ആന്ധ്ര → 14 + 6</strong>" (പോറ്റി ശ്രീരാമുലു → ആദ്യ ഭാഷാ സംസ്ഥാനം → 1956-ലെ എണ്ണം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: കമ്മീഷനുകൾ ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. ഭാഷാടിസ്ഥാനത്തിലുള്ള സംസ്ഥാന രൂപീകരണ കമ്മീഷനുകൾ</h2>
+      <div class="section-body">
+        <h3>1. എസ്.കെ. ധർ കമ്മീഷൻ (S.K. Dhar Commission - 1948 ജൂൺ)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കണമെന്ന ആവശ്യത്തെക്കുറിച്ച് പഠിക്കാൻ നിയോഗിച്ച <strong>ആദ്യത്തെ കമ്മീഷൻ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>റിപ്പോർട്ട്:</strong> ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കുന്നത് രാജ്യത്തിന്റെ ഐക്യത്തെ ബാധിക്കുമെന്നും, <strong>ഭരണസൗകര്യം</strong> (Administrative convenience) അടിസ്ഥാനമാക്കി വേണം സംസ്ഥാനങ്ങൾ രൂപീകരിക്കാനെന്നും ഈ കമ്മീഷൻ നിർദ്ദേശിച്ചു.</li>
+        </ul>
+
+        <h3>2. JVP കമ്മിറ്റി (JVP Committee - 1948 ഡിസംബർ)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ധർ കമ്മീഷൻ റിപ്പോർട്ട് ജനങ്ങളെ നിരാശരാക്കിയപ്പോൾ കോൺഗ്രസ്സ് നിയോഗിച്ച മുന്നംഗ കമ്മിറ്റി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അംഗങ്ങൾ:</strong> ജവഹർലാൽ നെഹ്‌റു (J), വല്ലഭ്‌ഭായി പട്ടേൽ (V), പട്ടാഭി സീതാരാമയ്യ (P).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>റിപ്പോർട്ട്:</strong> ഈ കമ്മിറ്റിയും ഭാഷാടിസ്ഥാനത്തിലുള്ള സംസ്ഥാന രൂപീകരണം തള്ളിക്കളഞ്ഞു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>JVP = Nehru, Patel, Pattabhi</strong>" (J-നെഹ്‌റു, V-പട്ടേൽ, P-പട്ടാഭി).</p>
+        </div>
+
+        <h3>3. ഫസൽ അലി കമ്മീഷൻ അഥവാ സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ (Fazl Ali Commission / SRC - 1953 ഡിസംബർ)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പോറ്റി ശ്രീരാമുലുവിന്റെ മരണത്തിനും ആന്ധ്രാ സംസ്ഥാനത്തിന്റെ രൂപീകരണത്തിനും ശേഷം നിയോഗിക്കപ്പെട്ട കമ്മീഷൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അധ്യക്ഷൻ:</strong> ഫസൽ അലി (Fazl Ali).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അംഗങ്ങൾ:</strong> കെ.എം. പണിക്കർ (മലയാളി), എച്ച്.എൻ. കുൻസ്രു (H.N. Kunzru).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>റിപ്പോർട്ട്:</strong> ഭാഷയെ സംസ്ഥാന രൂപീകരണത്തിനുള്ള അടിസ്ഥാനമായി ഇവർ അംഗീകരിച്ചു. എന്നാൽ "<strong>ഒരു ഭാഷ, ഒരു സംസ്ഥാനം</strong>" (One language, One state) എന്ന വാദം തള്ളിക്കളഞ്ഞു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>കെ.എഫ്.എച്ച് (K-F-H)</strong>" = K.M. Panikkar, Fazl Ali, H.N. Kunzru. "PSC-യിൽ ഏറ്റവും കൂടുതൽ ചോദിക്കുന്നത്: ഫസൽ അലി കമ്മീഷനിലെ <strong>മലയാളി</strong> = കെ.എം. പണിക്കർ".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: പുനഃസംഘടനാ നിയമം 1956 ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. സംസ്ഥാന പുനഃസംഘടനാ നിയമം (State Reorganization Act - 1956)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഫസൽ അലി കമ്മീഷൻ റിപ്പോർട്ടിന്റെ അടിസ്ഥാനത്തിൽ ഇന്ത്യൻ പാർലമെന്റ് പാസാക്കിയ നിയമമാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇതിനായി ഭരണഘടനയിൽ <strong>7-ാം ഭേദഗതി (7th Amendment Act, 1956)</strong> കൊണ്ടുവന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> നിലവിലുണ്ടായിരുന്ന <strong>പാർട്ട് A, B, C, D</strong> വിഭജനം നീക്കി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1956 നവംബർ 1</strong>-ന് ഇന്ത്യയിൽ <strong>14 സംസ്ഥാനങ്ങളും 6 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</strong> നിലവിൽ വന്നു.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ 1956-ലെ 14 സംസ്ഥാനങ്ങൾ</span>
+          <p>ആന്ധ്രാപ്രദേശ്, അസം, ബിഹാർ, ബോംബെ, ജമ്മു-കാശ്മീർ, കേരളം, മധ്യപ്രദേശ്, മദ്രാസ്, മൈസൂർ, ഒറീസ, പഞ്ചാബ്, രാജസ്ഥാൻ, ഉത്തർപ്രദേശ്, പശ്ചിമ ബംഗാൾ.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ 1956-ലെ 6 കേന്ദ്രഭരണ പ്രദേശങ്ങൾ</span>
+          <p>ആൻഡമാൻ-നിക്കോബാർ, ഡൽഹി, ഹിമാചൽ പ്രദേശ്, ലക്ഷദ്വീപ്-മിനിക്കോയ്-അമിന്ദീവി ദ്വീപുകൾ, മണിപ്പൂർ, ത്രിപുര. (ഇവയിൽ ചിലത് പിന്നീട് സംസ്ഥാനങ്ങളായി).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>1956 = 14 + 6; 7-ാം ഭേദഗതി; നവംബർ 1 (കേരളപ്പിറവി)</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: പുതിയ സംസ്ഥാനങ്ങൾ ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. പുതിയ സംസ്ഥാനങ്ങളുടെ രൂപീകരണം (1956-ന് ശേഷം)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1960:</strong> ബോംബെ സംസ്ഥാനം വിഭജിച്ച് <strong>മഹാരാഷ്ട്ര</strong> (മറാത്തി), <strong>ഗുജറാത്ത്</strong> (ഗുജറാത്തി) എന്നിവ രൂപീകരിച്ചു (ഗുജറാത്ത് ഇന്ത്യയുടെ <strong>15-ാമത്തെ സംസ്ഥാനമായി</strong>).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1963:</strong> <strong>നാഗാലാൻഡ്</strong> (16-ാമത് സംസ്ഥാനം).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1966:</strong> പഞ്ചാബ് വിഭജിച്ച് പഞ്ചാബ് (പഞ്ചാബി), <strong>ഹരിയാന</strong> (ഹിന്ദി) എന്നിവ രൂപീകരിച്ചു. ചണ്ഡീഗഡ് കേന്ദ്രഭരണ പ്രദേശമായി.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>1971:</strong> <strong>ഹിമാചൽ പ്രദേശ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>1972:</strong> <strong>മണിപ്പൂർ, മേഘാലയ, ത്രിപുര</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1975:</strong> <strong>സിക്കിം</strong> (ഇന്ത്യയുടെ <strong>22-ാമത്തെ സംസ്ഥാനമായി</strong>).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1987:</strong> <strong>മിസോറം, അരുണാചൽ പ്രദേശ്, ഗോവ</strong> (ഗോവ <strong>25-ാമത് സംസ്ഥാനം</strong>).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>2000:</strong> <strong>ഛത്തീസ്ഗഡ്</strong> (മധ്യപ്രദേശിൽ നിന്ന്), <strong>ഉത്തരാഖണ്ഡ്</strong> (യു.പി യിൽ നിന്ന്), <strong>ജാർഖണ്ഡ്</strong> (ബിഹാറിൽ നിന്ന്).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>2014:</strong> <strong>തെലങ്കാന</strong> (ആന്ധ്രാപ്രദേശിൽ നിന്ന് - <strong>29-ാമത് സംസ്ഥാനമായി</strong> രൂപീകരിച്ചു - ജൂൺ 2).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>2019:</strong> ജമ്മു കാശ്മീർ സംസ്ഥാനത്തെ വിഭജിച്ച് <strong>ജമ്മു-കാശ്മീർ, ലഡാക്ക്</strong> എന്നീ രണ്ട് കേന്ദ്രഭരണ പ്രദേശങ്ങളാക്കി (ഒക്ടോബർ 31).</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📌 നിലവിലെ അവസ്ഥ</span>
+          <p>(നിലവിൽ ഇന്ത്യയിൽ <strong>28 സംസ്ഥാനങ്ങളും 8 കേന്ദ്രഭരണ പ്രദേശങ്ങളുമാണുള്ളത്</strong>).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>60-ഗുജറാത്ത്, 63-നാഗാലാൻഡ്, 66-ഹരിയാന, 71-ഹിമാചൽ, 72-മണിപ്പൂർ/മേഘാലയ, 75-സിക്കിം, 87-ഗോവ/മിസോറം, 2000-മൂന്ന്, 2014-തെലങ്കാന</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1948:</strong> ധർ കമ്മീഷൻ, JVP കമ്മിറ്റി രൂപീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1952 ഡിസംബർ 15:</strong> പോറ്റി ശ്രീരാമുലു അന്തരിച്ചു (58 ദിവസത്തെ നിരാഹാരം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1953 ഒക്ടോബർ 1:</strong> ആന്ധ്രാ സംസ്ഥാനം രൂപീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1953 ഡിസംബർ 22:</strong> ഫസൽ അലി കമ്മീഷനെ നിയോഗിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1956 നവംബർ 1:</strong> സംസ്ഥാന പുനഃസംഘടനാ നിയമം പ്രാബല്യത്തിൽ വന്നു (കേരളപ്പിറവി).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കർണൂൽ (Kurnool):</strong> ആദ്യത്തെ ആന്ധ്രാ സംസ്ഥാനത്തിന്റെ തലസ്ഥാനം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ടി. പ്രകാശം (T. Prakasam):</strong> ആന്ധ്രാ സംസ്ഥാനത്തിന്റെ ആദ്യ മുഖ്യമന്ത്രി ('ആന്ധ്രാ കേസരി' എന്നറിയപ്പെടുന്നു).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: PSC വിശകലനം ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഫസൽ അലി കമ്മീഷൻ അംഗങ്ങൾ, JVP കമ്മിറ്റി അംഗങ്ങൾ, ആദ്യത്തെ ഭാഷാ സംസ്ഥാനം, 1956-ൽ ഉണ്ടായിരുന്ന സംസ്ഥാനങ്ങളുടെ എണ്ണം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> പുതിയ സംസ്ഥാനങ്ങൾ രൂപീകരിച്ച വർഷങ്ങൾ (പ്രത്യേകിച്ച് ഗോവ, സിക്കിം, തെലങ്കാന), 7-ാം ഭരണഘടനാ ഭേദഗതി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ധർ കമ്മീഷൻ റിപ്പോർട്ട്, പോറ്റി ശ്രീരാമുലുവിന്റെ നിരാഹാര ദിവസങ്ങൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: മുൻകാല ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Chronological Order:</strong> ഗുജറാത്ത്, നാഗാലാൻഡ്, ഹരിയാന, ഗോവ തുടങ്ങിയ സംസ്ഥാനങ്ങൾ രൂപീകരിച്ച വർഷങ്ങൾ ക്രമീകരിക്കാനുള്ള ചോദ്യങ്ങൾ LDC, Degree നിലവാരങ്ങളിൽ സ്ഥിരമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഫസൽ അലി കമ്മീഷനിലെ മലയാളി സാന്നിധ്യം (കെ.എം. പണിക്കർ) എപ്പോഴും PSC ചോദിക്കുന്നതാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭാഷാടിസ്ഥാനത്തിലുള്ള പുനഃസംഘടനയുമായി ബന്ധപ്പെട്ട ഭരണഘടനാ ഭേദഗതി (7th Amendment) മറ്റൊരു പ്രധാന ചോദ്യമാണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ആന്ധ്രാ സംസ്ഥാനം</td>
+                <td>ആന്ധ്രാപ്രദേശ്</td>
+                <td>ഭാഷാടിസ്ഥാനത്തിൽ രൂപീകരിച്ച ആദ്യ സംസ്ഥാനമായ 'ആന്ധ്രാ' രൂപീകരിച്ചത് <strong>1953</strong>-ലാണ്. എന്നാൽ ഹൈദരാബാദ് കൂടി കൂടിച്ചേർത്ത് 'ആന്ധ്രാപ്രദേശ്' ആയത് <strong>1956</strong>-ലാണ്.</td>
+              </tr>
+              <tr>
+                <td>ധർ കമ്മീഷൻ</td>
+                <td>ഫസൽ അലി കമ്മീഷൻ</td>
+                <td>ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കുന്നതിനെ ധർ കമ്മീഷൻ എതിർത്തു. എന്നാൽ ഫസൽ അലി കമ്മീഷൻ ഭാഷ ഒരു അടിസ്ഥാനമായി അംഗീകരിച്ചു.</td>
+              </tr>
+              <tr>
+                <td>ഫസൽ അലി</td>
+                <td>സയ്യിദ് ഫസൽ അലി</td>
+                <td>അധ്യക്ഷന്റെ പൂർണ്ണനാമം <strong>സയ്യിദ് ഫസൽ അലി</strong> എന്നാണ്. അദ്ദേഹം സുപ്രീം കോടതി റിട്ടയേർഡ് ജഡ്ജിയായിരുന്നു.</td>
+              </tr>
+              <tr>
+                <td>സംസ്ഥാന പുനഃസംഘടന (1956)</td>
+                <td>ജമ്മു-കാശ്മീർ പുനഃസംഘടന (2019)</td>
+                <td>2019-ൽ ജമ്മു-കാശ്മീർ സംസ്ഥാനത്തെ രണ്ട് കേന്ദ്രഭരണ പ്രദേശങ്ങളാക്കി; അതോടെ സംസ്ഥാനങ്ങളുടെ എണ്ണം 29-ൽ നിന്ന് 28 ആയി കുറഞ്ഞു.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>Table 1: പുനഃസംഘടനാ കമ്മീഷനുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>കമ്മീഷൻ</th><th>രൂപീകരിച്ച വർഷം</th><th>അംഗങ്ങൾ</th><th>പ്രധാന കണ്ടെത്തൽ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ധർ കമ്മീഷൻ</td><td>1948 ജൂൺ</td><td>എസ്.കെ. ധർ (അധ്യക്ഷൻ)</td><td>ഭാഷാടിസ്ഥാനം പാടില്ല, ഭരണസൗകര്യം മാത്രം.</td></tr>
+              <tr><td>JVP കമ്മിറ്റി</td><td>1948 ഡിസംബർ</td><td>നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി</td><td>ഭാഷാടിസ്ഥാനം തള്ളിക്കളഞ്ഞു.</td></tr>
+              <tr><td>ഫസൽ അലി കമ്മീഷൻ</td><td>1953 ഡിസംബർ</td><td>ഫസൽ അലി, കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു</td><td>ഭാഷാടിസ്ഥാനം അംഗീകരിച്ചു (എന്നാൽ ഒരു ഭാഷ ഒരു സംസ്ഥാനം പാടില്ല).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: 2000-ൽ രൂപീകരിച്ച സംസ്ഥാനങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പുതിയ സംസ്ഥാനം</th><th>മാതൃസംസ്ഥാനം</th><th>രൂപീകരിച്ച തിയതി (2000-ൽ)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ഛത്തീസ്ഗഡ് (26-ാമത്)</td><td>മധ്യപ്രദേശ്</td><td>നവംബർ 1</td></tr>
+              <tr><td>ഉത്തരാഖണ്ഡ് (27-ാമത്)</td><td>ഉത്തർപ്രദേശ്</td><td>നവംബർ 9</td></tr>
+              <tr><td>ജാർഖണ്ഡ് (28-ാമത്)</td><td>ബിഹാർ</td><td>നവംബർ 15</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>C.U.J</strong>" = Chattisgarh (Nov 1), Uttarakhand (Nov 9), Jharkhand (Nov 15).</p>
+        </div>
+
+        <h3>➕ Table 3: പ്രധാന സംസ്ഥാനങ്ങളും രൂപീകരണ വർഷവും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സംസ്ഥാനം</th><th>വർഷം</th><th>ക്രമ നമ്പർ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ആന്ധ്ര (ആദ്യ ഭാഷാ സംസ്ഥാനം)</td><td>1953</td><td>—</td></tr>
+              <tr><td>ഗുജറാത്ത്</td><td>1960</td><td>15-ാമത്</td></tr>
+              <tr><td>നാഗാലാൻഡ്</td><td>1963</td><td>16-ാമത്</td></tr>
+              <tr><td>ഹരിയാന</td><td>1966</td><td>17-ാമത്</td></tr>
+              <tr><td>ഹിമാചൽ പ്രദേശ്</td><td>1971</td><td>18-ാമത്</td></tr>
+              <tr><td>മണിപ്പൂർ, മേഘാലയ, ത്രിപുര</td><td>1972</td><td>19, 20, 21</td></tr>
+              <tr><td>സിക്കിം</td><td>1975</td><td>22-ാമത്</td></tr>
+              <tr><td>ഗോവ</td><td>1987</td><td>25-ാമത്</td></tr>
+              <tr><td>ഛത്തീസ്ഗഡ്, ഉത്തരാഖണ്ഡ്, ജാർഖണ്ഡ്</td><td>2000</td><td>26, 27, 28</td></tr>
+              <tr><td>തെലങ്കാന</td><td>2014</td><td>29-ാമത്</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: സമയരേഖ / ട്രിക്കുകൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. സമയരേഖയും ഓർമ്മ വഴികളും (Timeline & Mnemonics)</h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <span class="box-label">📅 സംസ്ഥാന പുനഃസംഘടന സമയരേഖ</span>
+          <svg viewBox="0 0 950 200" width="100%" height="auto" role="img" aria-label="സംസ്ഥാന പുനഃസംഘടന സമയരേഖ">
+            <line x1="40" y1="100" x2="910" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="80" cy="100" r="9" fill="#c62828"/>
+            <text x="80" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1948</text>
+            <text x="80" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ധർ/JVP</text>
+            <circle cx="165" cy="100" r="9" fill="#ef6c00"/>
+            <text x="165" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1953</text>
+            <text x="165" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ആന്ധ്ര/ഫസൽ അലി</text>
+            <circle cx="260" cy="100" r="9" fill="#2e7d32"/>
+            <text x="260" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1956</text>
+            <text x="260" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">14+6</text>
+            <circle cx="350" cy="100" r="9" fill="#1565c0"/>
+            <text x="350" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1960</text>
+            <text x="350" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ഗുജറാത്ത്</text>
+            <circle cx="440" cy="100" r="9" fill="#6a1b9a"/>
+            <text x="440" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1966</text>
+            <text x="440" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ഹരിയാന</text>
+            <circle cx="530" cy="100" r="9" fill="#b83b2c"/>
+            <text x="530" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1975</text>
+            <text x="530" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">സിക്കിം</text>
+            <circle cx="620" cy="100" r="9" fill="#00695c"/>
+            <text x="620" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">1987</text>
+            <text x="620" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">ഗോവ</text>
+            <circle cx="720" cy="100" r="9" fill="#f9a825"/>
+            <text x="720" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">2000</text>
+            <text x="720" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">3 സംസ്ഥാനങ്ങൾ</text>
+            <circle cx="820" cy="100" r="9" fill="#8e24aa"/>
+            <text x="820" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">2014</text>
+            <text x="820" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">തെലങ്കാന</text>
+            <circle cx="890" cy="100" r="9" fill="#1976d2"/>
+            <text x="890" y="80" text-anchor="middle" font-size="10" font-weight="bold" fill="#14202b">2019</text>
+            <text x="890" y="130" text-anchor="middle" font-size="8" fill="#4a5f72">J&K</text>
+          </svg>
+          <div class="viz-caption">📅 1948 മുതൽ 2019 വരെയുള്ള പ്രധാന സംഭവങ്ങൾ</div>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>JVP കമ്മിറ്റി അംഗങ്ങൾ: "<strong>JVP</strong>" = Jawaharlal Nehru, Vallabhbhai Patel, Pattabhi Sitaramayya.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>ഫസൽ അലി കമ്മീഷൻ അംഗങ്ങൾ: "<strong>K-F-H</strong>" = K.M. Panikkar, Fazl Ali, H.N. Kunzru.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p>2000-ൽ രൂപീകരിച്ച സംസ്ഥാനങ്ങൾ: "<strong>C.U.J</strong>" = Chattisgarh (Nov 1), Uttarakhand (Nov 9), Jharkhand (Nov 15).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p>വർഷ ശ്രേണി: "<strong>48-53-56-60-63-66-71-72-75-87-2000-2014</strong>" = ധർ/ആന്ധ്ര/14+6/ഗുജറാത്ത്/നാഗാലാൻഡ്/ഹരിയാന/ഹിമാചൽ/മണിപ്പൂർ-മേഘാലയ/സിക്കിം/ഗോവ/മൂന്ന്/തെലങ്കാന.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5:</strong></span>
+          <p>"<strong>58 ദിവസം നിരാഹാരം → ആന്ധ്ര (1953) → ഫസൽ അലി (1953) → 14+6 (1956)</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: PSC കെണികൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സാധാരണ PSC കെണികൾ (Common Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിക്കാൻ നിയമിച്ച ആദ്യത്തെ കമ്മീഷൻ ഏത്?</p>
+          <p><strong>Confusing Options:</strong> ഫസൽ അലി കമ്മീഷൻ / JVP കമ്മിറ്റി / എസ്.കെ. ധർ കമ്മീഷൻ</p>
+          <p><strong>Fact:</strong> ആദ്യത്തെ കമ്മീഷൻ <strong>1948-ലെ എസ്.കെ. ധർ കമ്മീഷൻ</strong> ആണ്. ഫസൽ അലി കമ്മീഷനാണ് ഒടുവിൽ പുനഃസംഘടനയ്ക്ക് നേതൃത്വം നൽകിയത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> ഇന്ത്യയുടെ 15-ാമത്തെ സംസ്ഥാനം ഏത്?</p>
+          <p><strong>Confusing Options:</strong> മഹാരാഷ്ട്ര / ഗുജറാത്ത് / നാഗാലാൻഡ്</p>
+          <p><strong>Fact:</strong> 1956-ൽ 14 സംസ്ഥാനങ്ങളാണുണ്ടായിരുന്നത്. 1960-ൽ ബോംബെ വിഭജിച്ച് <strong>ഗുജറാത്ത് 15-ാമതായി</strong> രൂപീകരിച്ചു.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> 2019-ൽ ജമ്മു കാശ്മീർ പുനഃസംഘടിപ്പിച്ചപ്പോൾ ഇന്ത്യയിലെ ആകെ സംസ്ഥാനങ്ങളുടെ എണ്ണം?</p>
+          <p><strong>Confusing Options:</strong> 29 / 28 / 27</p>
+          <p><strong>Fact:</strong> തെലങ്കാന വന്നപ്പോൾ 29 ആയി. എന്നാൽ ജമ്മു കാശ്മീരിന്റെ സംസ്ഥാനപദവി പോയപ്പോൾ അത് <strong>28</strong> ആയി കുറഞ്ഞു.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ഇന്ത്യയുടെ 22-ാമത്തെ സംസ്ഥാനം ഏതാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഹരിയാന / സിക്കിം / ഗോവ / മണിപ്പൂർ</p>
+          <p><strong>Fact:</strong> <strong>സിക്കിം (1975)</strong> ആണ് 22-ാമത് സംസ്ഥാനം. ഗോവ 25-ാമത് (1987).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> സംസ്ഥാന പുനഃസംഘടനാ നിയമത്തിന് സാധുത നൽകിയ ഭരണഘടനാ ഭേദഗതി?</p>
+          <p><strong>Confusing Options:</strong> 1-ാം ഭേദഗതി / 7-ാം ഭേദഗതി / 42-ാം ഭേദഗതി / 101-ാം ഭേദഗതി</p>
+          <p><strong>Fact:</strong> <strong>7-ാം ഭരണഘടനാ ഭേദഗതി (1956)</strong>. ഇതിലൂടെ പാർട്ട് A, B, C, D വിഭജനം റദ്ദാക്കി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>1956-ൽ രൂപീകരിച്ച 14 സംസ്ഥാനങ്ങൾ:</strong> ആന്ധ്രാപ്രദേശ്, അസം, ബിഹാർ, ബോംബെ, ജമ്മു-കാശ്മീർ, കേരളം, മധ്യപ്രദേശ്, മദ്രാസ്, മൈസൂർ, ഒറീസ, പഞ്ചാബ്, രാജസ്ഥാൻ, ഉത്തർപ്രദേശ്, പശ്ചിമ ബംഗാൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>1956-ലെ 6 കേന്ദ്രഭരണ പ്രദേശങ്ങൾ:</strong> ആൻഡമാൻ നിക്കോബാർ, ഡൽഹി, ഹിമാചൽ പ്രദേശ്, ലക്ഷദ്വീപ്-മിനിക്കോയ്-അമിന്ദീവി ദ്വീപുകൾ, മണിപ്പൂർ, ത്രിപുര.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഫസൽ അലി കമ്മീഷനെ <strong>സ്റ്റേറ്റ്സ് റീ ഓർഗനൈസേഷൻ കമ്മീഷൻ (SRC)</strong> എന്നും വിളിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> സ്വാതന്ത്ര്യത്തിന് മുൻപ് (1920-ൽ തന്നെ) നാഗ്പൂർ സമ്മേളനത്തിൽ ഭാഷാടിസ്ഥാനത്തിൽ പ്രവിശ്യാ കോൺഗ്രസ്സ് കമ്മിറ്റികൾക്ക് ഐ.എൻ.സി രൂപം നൽകിയിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ദാദ്ര-നഗർ ഹവേലിയും ദാമൻ-ദിയുവും ഒന്നിപ്പിച്ച് ഒറ്റ കേന്ദ്രഭരണ പ്രദേശമാക്കിയത് <strong>2020 ജനുവരി 26</strong> നാണ്.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ Top 25 Facts - അധികം</span>
+          <ul>
+            <li><strong>1950-ൽ:</strong> പാർട്ട് A (9), പാർട്ട് B (9), പാർട്ട് C (10), പാർട്ട് D (1) — ആകെ 29 സംസ്ഥാനങ്ങൾ.</li>
+            <li><strong>കെ.എം. പണിക്കർ:</strong> ജനനം ആലപ്പുഴ ജില്ലയിലെ കാവാലം.</li>
+            <li><strong>ഷാ കമ്മീഷൻ (1966):</strong> പഞ്ചാബ് പുനഃസംഘടനയ്ക്കായി നിയോഗിച്ചത്; ഹരിയാന രൂപീകരണത്തിന് കാരണമായി.</li>
+            <li><strong>സിക്കിം:</strong> സംസ്ഥാനമാകുന്നതിന് മുൻപ് 'അസോസിയേറ്റ് സ്റ്റേറ്റ്' ആയിരുന്നു (35-ാം ഭേദഗതി); 36-ാം ഭേദഗതിയിലൂടെ (1975) പൂർണ്ണ സംസ്ഥാനമായി.</li>
+            <li><strong>ചോഗ്യാൽ (Chogyal):</strong> സിക്കിമിലെ രാജവംശം.</li>
+            <li><strong>ഉത്തരാഖണ്ഡിന്റെ പഴയ പേര്:</strong> 'ഉത്തരാഞ്ചൽ' (2007-ൽ പേരുമാറ്റി).</li>
+            <li><strong>ഛത്തീസ്ഗഡ്:</strong> മധ്യപ്രദേശിലെ 16 ജില്ലകൾ ചേർത്ത്.</li>
+            <li><strong>ഉത്തരാഖണ്ഡ്:</strong> യു.പിയിലെ 13 മലയോര ജില്ലകൾ ചേർത്ത്.</li>
+            <li><strong>ജാർഖണ്ഡ്:</strong> ബിഹാറിലെ 18 തെക്കൻ ജില്ലകൾ ചേർത്ത്.</li>
+            <li><strong>തെലങ്കാന:</strong> ബി.എൻ. ശ്രീകൃഷ്ണ കമ്മീഷന്റെ ശുപാർശ പ്രകാരം; ആന്ധ്രാപ്രദേശ് മുഖ്യമന്ത്രി കിരൺ കുമാർ രാജിവെച്ചു.</li>
+            <li><strong>ഡൽഹി:</strong> 'നാഷണൽ ക്യാപിറ്റൽ ടെറിട്ടറി' ആക്കി മാറ്റിയത് 69-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെ (1991).</li>
+            <li><strong>നിയമസഭയുള്ള UT-കൾ:</strong> പുതുച്ചേരി, ഡൽഹി, ജമ്മു-കാശ്മീർ.</li>
+            <li><strong>ഏറ്റവും വലിയ UT:</strong> ലഡാക്ക്; ഏറ്റവും ചെറിയ UT: ലക്ഷദ്വീപ്.</li>
+            <li><strong>ഭരണഘടനയുടെ ഒന്നാം ഭാഗം (Part I: Articles 1-4):</strong> സംസ്ഥാനങ്ങളുടെ രൂപീകരണവും പേരുമാറ്റവും സംബന്ധിച്ച കാര്യങ്ങൾ.</li>
+            <li><strong>പുതിയ സംസ്ഥാനം രൂപീകരിക്കാൻ:</strong> പാർലമെന്റിൽ ലളിതമായ ഭൂരിപക്ഷം മതി.</li>
+            <li><strong>1969:</strong> മദ്രാസിനെ 'തമിഴ്നാട്' എന്നാക്കി മാറ്റി.</li>
+            <li><strong>1973:</strong> മൈസൂരിനെ 'കർണാടക', ലക്ഷദ്വീപ്-മിനിക്കോയ്-അമിന്ദീവി ദ്വീപുകളെ 'ലക്ഷദ്വീപ്' എന്നും പേരുമാറ്റി.</li>
+            <li><strong>2011:</strong> ഒറീസയെ 'ഒഡിഷ' എന്നാക്കി മാറ്റി (96-ാം ഭേദഗതി).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഭാഷാടിസ്ഥാനത്തിൽ രൂപീകരിക്കപ്പെട്ട ഇന്ത്യയിലെ ആദ്യത്തെ സംസ്ഥാനം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കേരളം</span>
+            <span data-opt="B">B. തമിഴ്നാട്</span>
+            <span data-opt="C">C. ആന്ധ്രാ</span>
+            <span data-opt="D">D. കർണാടക</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആന്ധ്രാ</div>
+            <div class="explanation">1953 ഒക്ടോബർ 1-നാണ് തെലുങ്ക് സംസാരിക്കുന്നവർക്കായി ഈ സംസ്ഥാനം രൂപീകരിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഫസൽ അലി കമ്മീഷനിലെ മലയാളി സാന്നിധ്യം ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ഡോ. ജോൺ മത്തായി</span>
+            <span data-opt="B">B. കെ.എം. പണിക്കർ</span>
+            <span data-opt="C">C. വി.പി. മേനോൻ</span>
+            <span data-opt="D">D. കെ.പി.എസ് മേനോൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കെ.എം. പണിക്കർ</div>
+            <div class="explanation">അദ്ദേഹം കൂടാതെ എച്ച്.എൻ. കുൻസ്രുവും കമ്മീഷൻ അംഗമായിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. ധർ കമ്മീഷൻ - 1953</span>
+            <span data-opt="B">B. ഫസൽ അലി കമ്മീഷൻ - 1948</span>
+            <span data-opt="C">C. സംസ്ഥാന പുനഃസംഘടനാ നിയമം - 1956</span>
+            <span data-opt="D">D. JVP കമ്മിറ്റി - 1953</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സംസ്ഥാന പുനഃസംഘടനാ നിയമം - 1956</div>
+            <div class="explanation">ധർ (1948), ഫസൽ അലി (1953), JVP (1948) എന്നിങ്ങനെയാണ് ശരിയായ വർഷങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലക്രമത്തിൽ (Chronological Order) എഴുതുക (സംസ്ഥാനങ്ങൾ രൂപീകരിച്ചത്):<br>
+            • നാഗാലാൻഡ്<br>
+            • ഗുജറാത്ത്<br>
+            • തെലങ്കാന<br>
+            • സിക്കിം</div>
+          <div class="options">
+            <span data-opt="A">A. 2, 1, 4, 3</span>
+            <span data-opt="B">B. 1, 2, 4, 3</span>
+            <span data-opt="C">C. 2, 4, 1, 3</span>
+            <span data-opt="D">D. 1, 4, 2, 3</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 2, 1, 4, 3</div>
+            <div class="explanation">ഗുജറാത്ത് (1960), നാഗാലാൻഡ് (1963), സിക്കിം (1975), തെലങ്കാന (2014).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. 1956 നവംബർ 1-ന് നിലവിൽ വന്ന സംസ്ഥാനങ്ങളുടെയും കേന്ദ്രഭരണ പ്രദേശങ്ങളുടെയും എണ്ണം യഥാക്രമം എന്ത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 14 സംസ്ഥാനങ്ങളും 6 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</span>
+            <span data-opt="B">B. 16 സംസ്ഥാനങ്ങളും 3 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</span>
+            <span data-opt="C">C. 28 സംസ്ഥാനങ്ങളും 8 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</span>
+            <span data-opt="D">D. 15 സംസ്ഥാനങ്ങളും 5 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 14 സംസ്ഥാനങ്ങളും 6 കേന്ദ്രഭരണ പ്രദേശങ്ങളും</div>
+            <div class="explanation">ഇതിൽ കേരളവും ഉൾപ്പെടുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. താഴെപ്പറയുന്നവരിൽ JVP കമ്മിറ്റിയിൽ ഉൾപ്പെടാത്തത് ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജവഹർലാൽ നെഹ്‌റു</span>
+            <span data-opt="B">B. വല്ലഭ്‌ഭായി പട്ടേൽ</span>
+            <span data-opt="C">C. പട്ടാഭി സീതാരാമയ്യ</span>
+            <span data-opt="D">D. ഡോ. രാജേന്ദ്ര പ്രസാദ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഡോ. രാജേന്ദ്ര പ്രസാദ്</div>
+            <div class="explanation">നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി എന്നിവരായിരുന്നു അംഗങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: സംസ്ഥാന പുനഃസംഘടനയുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഭരണസൗകര്യം അടിസ്ഥാനമാക്കി സംസ്ഥാനങ്ങൾ രൂപീകരിക്കണമെന്നാണ് ധർ കമ്മീഷൻ നിർദ്ദേശിച്ചത്.<br>
+            2. ഫസൽ അലി കമ്മീഷൻ "ഒരു ഭാഷ, ഒരു സംസ്ഥാനം" എന്ന നയം അംഗീകരിച്ചു.<br>
+            3. പുതിയ സംസ്ഥാന രൂപീകരണത്തിനായുള്ള പോരാട്ടത്തിലാണ് പോറ്റി ശ്രീരാമുലു രക്തസാക്ഷിയായത്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">ഫസൽ അലി കമ്മീഷൻ "ഒരു ഭാഷ, ഒരു സംസ്ഥാനം" എന്ന നയം തള്ളിക്കളയുകയാണ് ചെയ്തത്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയുടെ 15-ാമത്തെ സംസ്ഥാനമായി രൂപീകരിക്കപ്പെട്ടത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. മഹാരാഷ്ട്ര</span>
+            <span data-opt="B">B. ഗുജറാത്ത്</span>
+            <span data-opt="C">C. ഗോവ</span>
+            <span data-opt="D">D. ഹരിയാന</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഗുജറാത്ത്</div>
+            <div class="explanation">ബോംബെ വിഭജിച്ചാണ് 1960-ൽ ഗുജറാത്ത് രൂപീകരിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (2000-ൽ രൂപീകരിച്ച സംസ്ഥാനങ്ങളും രൂപീകരിച്ച തീയതിയും):<br>
+            ഛത്തീസ്ഗഡ് - a. നവംബർ 15<br>
+            ഉത്തരാഖണ്ഡ് - b. നവംബർ 9<br>
+            ജാർഖണ്ഡ് - c. നവംബർ 1</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-c, 3-a</span>
+            <span data-opt="B">B. 1-c, 2-a, 3-b</span>
+            <span data-opt="C">C. 1-c, 2-b, 3-a</span>
+            <span data-opt="D">D. 1-a, 2-b, 3-c</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1-c, 2-b, 3-a</div>
+            <div class="explanation">ഛത്തീസ്ഗഡ് (Nov 1), ഉത്തരാഖണ്ഡ് (Nov 9), ജാർഖണ്ഡ് (Nov 15).</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. സംസ്ഥാന പുനഃസംഘടനാ നിയമത്തിന് സാധുത നൽകിയ ഭരണഘടനാ ഭേദഗതി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1-ാം ഭേദഗതി (1951)</span>
+            <span data-opt="B">B. 7-ാം ഭേദഗതി (1956)</span>
+            <span data-opt="C">C. 24-ാം ഭേദഗതി (1971)</span>
+            <span data-opt="D">D. 42-ാം ഭേദഗതി (1976)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 7-ാം ഭേദഗതി (1956)</div>
+            <div class="explanation">ഇതിലൂടെയാണ് പാർട്ട് എ, ബി, സി, ഡി എന്ന വിഭജനം റദ്ദാക്കിയത്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. മധ്യപ്രദേശ് വിഭജിച്ച് രൂപീകരിച്ച സംസ്ഥാനം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഛത്തീസ്ഗഡ്</span>
+            <span data-opt="B">B. ഉത്തരാഖണ്ഡ്</span>
+            <span data-opt="C">C. ജാർഖണ്ഡ്</span>
+            <span data-opt="D">D. തെലങ്കാന</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ഛത്തീസ്ഗഡ്</div>
+            <div class="explanation">ഉത്തരാഖണ്ഡ് യു.പിയിൽ നിന്നും, ജാർഖണ്ഡ് ബിഹാറിൽ നിന്നുമാണ് വേർതിരിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): 1953-ൽ ഇന്ത്യാ ഗവൺമെന്റ് ഫസൽ അലി കമ്മീഷനെ നിയമിച്ചു.<br>
+            Reason (R): ആന്ധ്രാ സംസ്ഥാന രൂപീകരണത്തോടെ മറ്റ് പ്രദേശങ്ങളിലും ഭാഷാടിസ്ഥാനത്തിലുള്ള സംസ്ഥാനങ്ങൾക്കായി ശക്തമായ പ്രക്ഷോഭങ്ങൾ ഉണ്ടായി.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">ആന്ധ്രാ രൂപീകരണത്തിന് ശേഷമുള്ള പ്രക്ഷോഭങ്ങളാണ് ഫസൽ അലി കമ്മീഷന് വഴിവെച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ഇന്ത്യയുടെ ഏറ്റവും പുതിയ (29-ാമതായി രൂപീകരിക്കപ്പെട്ട) സംസ്ഥാനമായ തെലങ്കാന നിലവിൽ വന്ന തീയതി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 2014 ജൂൺ 2</span>
+            <span data-opt="B">B. 2014 നവംബർ 1</span>
+            <span data-opt="C">C. 2015 ജനുവരി 1</span>
+            <span data-opt="D">D. 2013 ഒക്ടോബർ 2</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 2014 ജൂൺ 2</div>
+            <div class="explanation">ആന്ധ്രാപ്രദേശിൽ നിന്നുമാണ് തെലങ്കാന രൂപീകരിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. 1953-ൽ രൂപീകരിച്ച ആദ്യത്തെ ആന്ധ്രാ സംസ്ഥാനത്തിന്റെ തലസ്ഥാനം ഏതായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. അമരാവതി</span>
+            <span data-opt="B">B. ഹൈദരാബാദ്</span>
+            <span data-opt="C">C. കർണൂൽ</span>
+            <span data-opt="D">D. വിശാഖപട്ടണം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കർണൂൽ</div>
+            <div class="explanation">1956-ൽ ആന്ധ്രാപ്രദേശ് ആയപ്പോഴാണ് ഹൈദരാബാദ് തലസ്ഥാനമായത്.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ജമ്മു കാശ്മീർ സംസ്ഥാനത്തെ വിഭജിച്ച് രണ്ട് കേന്ദ്രഭരണ പ്രദേശങ്ങളാക്കി മാറ്റിയ വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 2018</span>
+            <span data-opt="B">B. 2019</span>
+            <span data-opt="C">C. 2020</span>
+            <span data-opt="D">D. 2021</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 2019</div>
+            <div class="explanation">2019 ഒക്ടോബർ 31-നാണ് ജമ്മു-കാശ്മീർ, ലഡാക്ക് എന്നിവ കേന്ദ്രഭരണ പ്രദേശങ്ങളായത്.</div>
+          </div>
+        </div>
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. പോറ്റി ശ്രീരാമുലു എത്ര ദിവസം നിരാഹാരം അനുഷ്ഠിച്ചു?</div>
+          <div class="options">
+            <span data-opt="A">A. 48 ദിവസം</span>
+            <span data-opt="B">B. 58 ദിവസം</span>
+            <span data-opt="C">C. 68 ദിവസം</span>
+            <span data-opt="D">D. 38 ദിവസം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 58 ദിവസം</div>
+            <div class="explanation">1952 ഒക്ടോബറിൽ ആരംഭിച്ച നിരാഹാരം 1952 ഡിസംബർ 15-ന് അദ്ദേഹത്തിന്റെ മരണത്തിൽ കലാശിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ഇന്ത്യയുടെ 22-ാമത്തെ സംസ്ഥാനം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹരിയാന</span>
+            <span data-opt="B">B. സിക്കിം</span>
+            <span data-opt="C">C. ഗോവ</span>
+            <span data-opt="D">D. മണിപ്പൂർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സിക്കിം</div>
+            <div class="explanation">1975-ൽ 36-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെ സിക്കിം പൂർണ്ണ സംസ്ഥാനമായി.</div>
+          </div>
+        </div>
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ഇന്ത്യയുടെ 25-ാമത്തെ സംസ്ഥാനം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മിസോറം</span>
+            <span data-opt="B">B. ഗോവ</span>
+            <span data-opt="C">C. അരുണാചൽ പ്രദേശ്</span>
+            <span data-opt="D">D. നാഗാലാൻഡ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഗോവ</div>
+            <div class="explanation">1987 മെയ് 30-ന് ഗോവ 25-ാമത് സംസ്ഥാനമായി. മിസോറം, അരുണാചൽ പ്രദേശ് എന്നിവ 1987 ഫെബ്രുവരി 20-ന് സംസ്ഥാനങ്ങളായി.</div>
+          </div>
+        </div>
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. ഫസൽ അലി കമ്മീഷന്റെ പൂർണ്ണനാമം എന്താണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ (SRC)</span>
+            <span data-opt="B">B. അതിർത്തി കമ്മീഷൻ</span>
+            <span data-opt="C">C. ഭാഷാ കമ്മീഷൻ</span>
+            <span data-opt="D">D. ഭരണ പരിഷ്കരണ കമ്മീഷൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ (SRC)</div>
+            <div class="explanation">States Reorganisation Commission (SRC) എന്നും അറിയപ്പെടുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ആന്ധ്രാ സംസ്ഥാനത്തിന്റെ ആദ്യ മുഖ്യമന്ത്രി ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. ടി. പ്രകാശം</span>
+            <span data-opt="B">B. എൻ.ടി. രാമ റാവു</span>
+            <span data-opt="C">C. ചന്ദ്രബാബു നായിഡു</span>
+            <span data-opt="D">D. കിരൺ കുമാർ റെഡ്ഡി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ടി. പ്രകാശം</div>
+            <div class="explanation">'ആന്ധ്രാ കേസരി' എന്നറിയപ്പെടുന്ന ടി. പ്രകാശം ആയിരുന്നു ആദ്യ മുഖ്യമന്ത്രി.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>11</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>12</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>13</td><td>(A)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(A)</td><td>15</td><td>(B)</td></tr>
+              <tr><td>6</td><td>(D)</td><td>16</td><td>(B)</td></tr>
+              <tr><td>7</td><td>(B)</td><td>17</td><td>(B)</td></tr>
+              <tr><td>8</td><td>(B)</td><td>18</td><td>(B)</td></tr>
+              <tr><td>9</td><td>(C)</td><td>19</td><td>(A)</td></tr>
+              <tr><td>10</td><td>(B)</td><td>20</td><td>(A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>ആദ്യ ഭാഷാ കമ്മീഷൻ:</strong> എസ്.കെ. ധർ കമ്മീഷൻ (1948).</li>
+          <li><strong>JVP കമ്മിറ്റി (1948):</strong> നെഹ്‌റു, പട്ടേൽ, പട്ടാഭി.</li>
+          <li><strong>ആന്ധ്രയ്ക്കായി മരിച്ച സമരനായകൻ:</strong> പോറ്റി ശ്രീരാമുലു (58 ദിവസം നിരാഹാരം).</li>
+          <li><strong>ആദ്യത്തെ ഭാഷാ സംസ്ഥാനം:</strong> ആന്ധ്രാ (1953 ഒക്ടോബർ 1).</li>
+          <li><strong>ആന്ധ്രയുടെ ആദ്യ തലസ്ഥാനം:</strong> കർണൂൽ.</li>
+          <li><strong>സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ:</strong> ഫസൽ അലി കമ്മീഷൻ (1953).</li>
+          <li><strong>ഫസൽ അലി കമ്മീഷൻ അംഗങ്ങൾ:</strong> ഫസൽ അലി, കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു.</li>
+          <li><strong>സംസ്ഥാന പുനഃസംഘടനാ നിയമം:</strong> 1956 നവംബർ 1.</li>
+          <li><strong>1956-ലെ ഭരണഘടനാ ഭേദഗതി:</strong> 7-ാം ഭേദഗതി.</li>
+          <li><strong>1956-ൽ നിലവിൽ വന്നത്:</strong> 14 സംസ്ഥാനം, 6 UT.</li>
+          <li><strong>15-ാമത് സംസ്ഥാനം:</strong> ഗുജറാത്ത് (1960).</li>
+          <li><strong>ഇന്ത്യയുടെ 22-ാമത് സംസ്ഥാനം:</strong> സിക്കിം (1975).</li>
+          <li><strong>25-ാമത് സംസ്ഥാനം:</strong> ഗോവ (1987).</li>
+          <li><strong>2000-ൽ രൂപീകരിച്ചവ:</strong> ഛത്തീസ്ഗഡ്, ഉത്തരാഖണ്ഡ്, ജാർഖണ്ഡ്.</li>
+          <li><strong>29-ാമതായി രൂപീകരിച്ചത്:</strong> തെലങ്കാന (2014 ജൂൺ 2).</li>
+          <li><strong>ജമ്മു കാശ്മീർ പുനഃസംഘടന:</strong> 2019.</li>
+          <li><strong>നിലവിലെ സംസ്ഥാനങ്ങൾ:</strong> 28.</li>
+          <li><strong>നിലവിലെ കേന്ദ്രഭരണ പ്രദേശങ്ങൾ:</strong> 8.</li>
+          <li>'ഒരു ഭാഷ ഒരു സംസ്ഥാനം' എന്ന നയം ഫസൽ അലി കമ്മീഷൻ തള്ളിക്കളഞ്ഞു.</li>
+          <li>ദാദ്ര-നഗർ ഹവേലി, ദാമൻ-ദിയു എന്നിവ ലയിപ്പിച്ചത്: 2020.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>കമ്മീഷനുകൾ</h3>
+        <ul>
+          <li><strong>ധർ കമ്മീഷൻ (1948):</strong> ഭാഷാടിസ്ഥാനത്തെ എതിർത്തു. ഭരണസൗകര്യം മതിയെന്ന് പറഞ്ഞു.</li>
+          <li><strong>JVP കമ്മിറ്റി (1948):</strong> ഭാഷാടിസ്ഥാനത്തെ തള്ളിക്കളഞ്ഞു.</li>
+          <li><strong>ഫസൽ അലി കമ്മീഷൻ (1953):</strong> ഭാഷ ഒരു അടിസ്ഥാനമായി അംഗീകരിച്ചു (കെ.എം. പണിക്കർ അംഗമായിരുന്നു).</li>
+        </ul>
+        <h3>പ്രധാന വർഷങ്ങൾ & സംസ്ഥാനങ്ങൾ</h3>
+        <ul>
+          <li><strong>1953:</strong> ആന്ധ്രാ (ആദ്യത്തേത്).</li>
+          <li><strong>1956:</strong> 14 സംസ്ഥാനങ്ങൾ, 6 UTs (7th Amendment).</li>
+          <li><strong>1960:</strong> ഗുജറാത്ത് (15-ാമത്), മഹാരാഷ്ട്ര.</li>
+          <li><strong>1963:</strong> നാഗാലാൻഡ്.</li>
+          <li><strong>1966:</strong> ഹരിയാന, പഞ്ചാബ്.</li>
+          <li><strong>1971:</strong> ഹിമാചൽ പ്രദേശ്.</li>
+          <li><strong>1975:</strong> സിക്കിം.</li>
+          <li><strong>1987:</strong> ഗോവ, മിസോറം, അരുണാചൽ.</li>
+          <li><strong>2000:</strong> ഛത്തീസ്ഗഡ്, ഉത്തരാഖണ്ഡ്, ജാർഖണ്ഡ്.</li>
+          <li><strong>2014:</strong> തെലങ്കാന.</li>
+          <li><strong>2019:</strong> ജമ്മു-കാശ്മീർ, ലഡാക്ക് (UTs ആയി).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: ടോപ്പ് 25 വസ്തുതകൾ ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഭരണഘടന രൂപീകരിക്കുന്ന സമയത്ത് (1950) ഇന്ത്യയിലെ സംസ്ഥാനങ്ങളെ പാർട്ട് A (9 എണ്ണം), പാർട്ട് B (9 എണ്ണം), പാർട്ട് C (10 എണ്ണം), പാർട്ട് D (1 എണ്ണം - ആൻഡമാൻ) എന്നിങ്ങനെയാണ് തിരിച്ചിരുന്നത്.</li>
+          <li>മദ്രാസ് സംസ്ഥാനത്ത് നിന്ന് തെലുങ്ക് സംസാരിക്കുന്ന പ്രദേശങ്ങൾ വേർപെടുത്തിയാണ് ആദ്യത്തെ ആന്ധ്രാ സംസ്ഥാനം ഉണ്ടാക്കിയത്.</li>
+          <li>അന്ന് ആന്ധ്രയുടെ ഭാഗമല്ലാതിരുന്ന ഹൈദരാബാദിനെക്കൂടി ചേർത്ത് 'ആന്ധ്രാപ്രദേശ്' എന്ന വിശാല സംസ്ഥാനം രൂപീകരിച്ചത് ഫസൽ അലി കമ്മീഷന്റെ നിർദ്ദേശപ്രകാരമാണ് (1956).</li>
+          <li>ഫസൽ അലി കമ്മീഷൻ സമർപ്പിച്ച റിപ്പോർട്ടിൽ 16 സംസ്ഥാനങ്ങളും 3 കേന്ദ്രഭരണ പ്രദേശങ്ങളും രൂപീകരിക്കാനാണ് നിർദ്ദേശിച്ചത്. എന്നാൽ ഗവൺമെന്റ് ഇത് ഭേദഗതി ചെയ്ത് 14 സംസ്ഥാനങ്ങളും 6 UT-കളും ആക്കി.</li>
+          <li>ഫസൽ അലി കമ്മീഷനിലെ അംഗമായിരുന്ന കെ.എം. പണിക്കരുടെ ജനനം ആലപ്പുഴ ജില്ലയിലെ കാവാലത്താണ്.</li>
+          <li>ബോംബെ വിഭജിക്കപ്പെട്ടപ്പോൾ മറാത്തി സംസാരിക്കുന്നവർക്ക് മഹാരാഷ്ട്രയും ഗുജറാത്തി സംസാരിക്കുന്നവർക്ക് ഗുജറാത്തും ലഭിച്ചു. ബോംബെ സിറ്റി മഹാരാഷ്ട്രയ്ക്ക് നൽകി.</li>
+          <li>പഞ്ചാബ് പുനഃസംഘടനയ്ക്കായി (1966) നിയമിച്ച കമ്മീഷനാണ് ഷാ കമ്മീഷൻ (Shah Commission). ഇതിന്റെ പ്രകാരമാണ് ഹരിയാന രൂപീകരിച്ചത്.</li>
+          <li>ഹിമാചൽ പ്രദേശ്, മണിപ്പൂർ, ത്രിപുര, മിസോറം, അരുണാചൽ പ്രദേശ്, ഗോവ എന്നിവയെല്ലാം സംസ്ഥാനങ്ങളാകുന്നതിന് മുൻപ് കേന്ദ്രഭരണ പ്രദേശങ്ങളായിരുന്നു (UTs).</li>
+          <li>സിക്കിം പൂർണ്ണ സംസ്ഥാനമാകുന്നതിന് മുൻപ് ഒരു 'അസോസിയേറ്റ് സ്റ്റേറ്റ്' (Associate State) ആയിരുന്നു (35-ാം ഭേദഗതി). പിന്നീട് 36-ാം ഭേദഗതിയിലൂടെ (1975) പൂർണ്ണ സംസ്ഥാനമായി.</li>
+          <li>സിക്കിം സംസ്ഥാനം രൂപീകരിക്കുമ്പോൾ അവിടെ ഭരിച്ചിരുന്ന രാജവംശമാണ് ചോഗ്യാൽ (Chogyal).</li>
+          <li>മിസോറം, അരുണാചൽ പ്രദേശ് എന്നിവ സംസ്ഥാനങ്ങളായത് 1987 ഫെബ്രുവരി 20-നാണ്. ഗോവ സംസ്ഥാനമായത് 1987 മെയ് 30-നാണ്.</li>
+          <li>ഉത്തരാഖണ്ഡിന്റെ പഴയ പേര് 'ഉത്തരാഞ്ചൽ' എന്നായിരുന്നു. (2007-ൽ പേരുമാറ്റി).</li>
+          <li>മധ്യപ്രദേശിലെ 16 ജില്ലകൾ ചേർത്താണ് ഛത്തീസ്ഗഡ് രൂപീകരിച്ചത്.</li>
+          <li>യു.പിയിലെ 13 മലയോര ജില്ലകൾ ചേർത്താണ് ഉത്തരാഖണ്ഡ് രൂപീകരിച്ചത്.</li>
+          <li>ബിഹാറിലെ 18 തെക്കൻ ജില്ലകൾ ചേർത്താണ് ജാർഖണ്ഡ് രൂപീകരിച്ചത്.</li>
+          <li>തെലങ്കാന സംസ്ഥാനം രൂപീകരിക്കാൻ ശുപാർശ ചെയ്ത കമ്മീഷനാണ് ബി.എൻ. ശ്രീകൃഷ്ണ കമ്മീഷൻ.</li>
+          <li>തെലങ്കാന രൂപീകരിക്കുമ്പോൾ ആന്ധ്രാപ്രദേശിന്റെ മുഖ്യമന്ത്രി കിരൺ കുമാർ രെഡ്ഡിയായിരുന്നു.</li>
+          <li>ഡൽഹിയെ 'നാഷണൽ ക്യാപിറ്റൽ ടെറിട്ടറി' (NCT of Delhi) ആക്കി മാറ്റിയത് 69-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെയാണ് (1991).</li>
+          <li>പുതുച്ചേരി, ഡൽഹി, ജമ്മു കാശ്മീർ എന്നീ മൂന്ന് കേന്ദ്രഭരണ പ്രദേശങ്ങൾക്ക് മാത്രമേ സ്വന്തമായി നിയമസഭയുള്ളൂ (Legislative Assembly).</li>
+          <li>ഇന്ത്യയിലെ ഏറ്റവും വലിയ കേന്ദ്രഭരണ പ്രദേശം നിലവിൽ ലഡാക്ക് ആണ്. ഏറ്റവും ചെറിയ കേന്ദ്രഭരണ പ്രദേശം ലക്ഷദ്വീപാണ്.</li>
+          <li>ഭരണഘടനയുടെ ഒന്നാം ഭാഗത്താണ് (Part I: Articles 1 to 4) സംസ്ഥാനങ്ങളുടെ രൂപീകരണവും പേരുമാറ്റവും സംബന്ധിച്ച കാര്യങ്ങൾ പറയുന്നത്.</li>
+          <li>പുതിയൊരു സംസ്ഥാനം രൂപീകരിക്കാൻ ഇന്ത്യൻ പാർലമെന്റിന്റെ ലളിതമായ ഭൂരിപക്ഷം (Simple Majority) മാത്രം മതിയാകും.</li>
+          <li>സംസ്ഥാനങ്ങളുടെ പേര് മാറ്റാനുള്ള അധികാരം പാർലമെന്റിനാണ്. ഉദാഹരണത്തിന് 1969-ൽ മദ്രാസിനെ 'തമിഴ്‌നാട്' ആക്കി മാറ്റി.</li>
+          <li>അതുപോലെ 1973-ൽ മൈസൂരിനെ 'കർണാടക' എന്നും, ലക്ഷദ്വീപ്-മിനിക്കോയ്-അമിന്ദീവി ദ്വീപുകളെ 'ലക്ഷദ്വീപ്' എന്നും പേരുമാറ്റി.</li>
+          <li>2011-ൽ ഒറീസയുടെ (Orissa) പേര് 'ഒഡിഷ' (Odisha) എന്ന് മാറ്റി (96th Amendment).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>വൈവിധ്യങ്ങൾ നിറഞ്ഞ ഇന്ത്യയെ വിഭജിക്കാതെ നിലനിർത്തുക എന്നത് വലിയ വെല്ലുവിളിയായിരുന്നു.</li>
+          <li>ഭാഷാടിസ്ഥാനത്തിൽ സംസ്ഥാനങ്ങൾ രൂപീകരിച്ചാൽ രാജ്യം ഹിന്ദുമത ഭരണത്തിലാകുമെന്ന് ആദ്യ കമ്മീഷനുകൾ (ധർ, JVP) ഭയന്നു.</li>
+          <li>എന്നാൽ പോറ്റി ശ്രീരാമുലുവിന്റെ രക്തസാക്ഷിത്വം ആ ചിന്താഗതി തിരുത്തി.</li>
+          <li>ഫസൽ അലി കമ്മീഷനിലൂടെ ഇന്ത്യയുടെ രാഷ്ട്രീയ ഭൂപടം പുനർനിർമ്മിക്കപ്പെട്ടു. 14 സംസ്ഥാനങ്ങളിൽ നിന്ന് തുടങ്ങി ഇന്ന് 28 സംസ്ഥാനങ്ങളിൽ നാം എത്തിനിൽക്കുന്നു.</li>
+          <li>ഇത് ഇന്ത്യൻ ജനാധിപത്യത്തിന്റെ വലിയ വിജയമാണ്.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1 മുതൽ 2 ചോദ്യങ്ങൾ വരെ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഇനി നാം പോകുന്നത് ഇന്ത്യൻ ചരിത്രത്തിലെ അടുത്ത ഭാഗത്തേക്കാണ് - 'ഇന്ത്യൻ ചരിത്രം - ശാസ്ത്രവും വിദ്യാഭ്യാസവും സാങ്കേതിക പുരോഗതിയും'. ഈ നോട്ട് നന്നായി പഠിച്ചുറപ്പിക്കുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>1.2.10 States Reorganisation</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'history-1.2.10-states-reorganisation';
-window.PART_TITLE = '1.2.10 States Reorganisation';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaStateReorg8Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
