@@ -1,105 +1,1801 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>4.7 Central Government - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഇന്ത്യൻ ഭരണഘടന – കേന്ദ്ര ഗവൺമെന്റ് | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">4.7 Central Government</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. കേന്ദ്ര എക്സിക്യൂട്ടീവ്</a></li>
+      <li><a href="#sec4">4. രാഷ്ട്രപതി</a></li>
+      <li><a href="#sec5">5. ഉപരാഷ്ട്രപതി</a></li>
+      <li><a href="#sec6">6. പ്രധാനമന്ത്രിയും മന്ത്രിസഭയും</a></li>
+      <li><a href="#sec7">7. പാർലമെന്റ് – രാജ്യസഭ</a></li>
+      <li><a href="#sec8">8. പാർലമെന്റ് – ലോക്സഭ</a></li>
+      <li><a href="#sec9">9. യൂണിയൻ ജുഡീഷ്യറി</a></li>
+      <li><a href="#sec10">10. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec11">11. PSC വിശകലനം</a></li>
+      <li><a href="#sec12">12. മുൻവർഷ ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec13">13. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec14">14. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec15">15. നിനയ്ക്കാൻ എളുപ്പം</a></li>
+      <li><a href="#sec16">16. PSC കെണികൾ</a></li>
+      <li><a href="#sec17">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec18">18. അധിക പ്രാക്ടീസ് MCQs</a></li>
+      <li><a href="#sec19">19. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec20">20. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec21">21. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec22">22. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec23">23. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec24">24. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 100</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – കേന്ദ്ര ഗവൺമെന്റ് (Central Government)</h1>
+      <div class="subtitle">Indian Constitution – Central Government | Kerala PSC Rank File</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആർട്ടിക്കിൾ 79 (പാർലമെന്റ്), 61 (ഇംപീച്ച്മെന്റ്), 72 (മാപ്പ്), 108 (ജോയിന്റ് സിറ്റിംഗ്), 110 (മണി ബിൽ), 124 (സുപ്രീം കോടതി), പ്രായപരിധികൾ</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഉപരാഷ്ട്രപതി (Art 63-64), കൗൺസിൽ ഓഫ് മിനിസ്റ്റേഴ്സ് (Art 74-75), 91-ാം ഭേദഗതി (15% മന്ത്രിമാർ), ആർട്ടിക്കിൾ 123 (ഓർഡിനൻസ്)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — അധികാര വിഭജനം (L-E-J), കടമെടുത്ത സവിശേഷതകൾ, ആർട്ടിക്കിൾ 143 (Presidential Reference)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — രാജിക്കത്ത് ശൃംഖല, വനിതാ ആദ്യങ്ങൾ, CAG (Art 148), AG (Art 76)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — Montesquieu, Ram Jawaya Kapur case, 2025-ലെ സുപ്രീം കോടതി ഉപദേശക അഭിപ്രായം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>Part V:</strong> ആർട്ടിക്കിൾ 52–151 (ഏകദേശം 100 ആർട്ടിക്കിളുകൾ)</li>
+            <li><strong>രാഷ്ട്രപതി:</strong> 35 വയസ്സ്, 5 വർഷം, പരോക്ഷ തിരഞ്ഞെടുപ്പ്</li>
+            <li><strong>ഉപരാഷ്ട്രപതി:</strong> 35 വയസ്സ്, 5 വർഷം, രാജ്യസഭാ ചെയർമാൻ</li>
+            <li><strong>ലോക്സഭ:</strong> 25 വയസ്സ്, 5 വർഷം, പരമാവധി 550</li>
+            <li><strong>രാജ്യസഭ:</strong> 30 വയസ്സ്, 6 വർഷം (അംഗം), പരമാവധി 250</li>
+            <li><strong>സുപ്രീം കോടതി ജഡ്ജി:</strong> 65 വയസ്സ് വിരമിക്കൽ</li>
+            <li><strong>ഹൈക്കോടതി ജഡ്ജി:</strong> 62 വയസ്സ് വിരമിക്കൽ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ അഞ്ചാം ഭാഗത്തിൽ (Part V) പ്രതിപാദിക്കുന്ന കേന്ദ്ര ഗവൺമെന്റിന്റെ പ്രധാന ഘടകങ്ങളായ <strong>എക്സിക്യൂട്ടീവ്</strong> (രാഷ്ട്രപതി, ഉപരാഷ്ട്രപതി, പ്രധാനമന്ത്രി, മന്ത്രിസഭ), <strong>ലെജിസ്ലേച്ചർ</strong> (പാർലമെന്റ് - ലോക്സഭ, രാജ്യസഭ), <strong>യൂണിയൻ ജുഡീഷ്യറി</strong> (സുപ്രീം കോടതി) എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>Part V-ന്റെ പൂർണ്ണ ഘടന (Art 52–151):</strong> Chapter I – എക്സിക്യൂട്ടീവ് (52–78) · Chapter II – പാർലമെന്റ് (79–122) · Chapter III – രാഷ്ട്രപതിയുടെ നിയമനിർമ്മാണ അധികാരം/ഓർഡിനൻസ് (123) · Chapter IV – യൂണിയൻ ജുഡീഷ്യറി (124–147) · Chapter V – CAG (148–151).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഇന്ത്യ എന്ന ജനാധിപത്യ രാജ്യത്തിന്റെ ഭരണം എങ്ങനെ നടക്കുന്നു എന്ന് മനസ്സിലാക്കാൻ ഇത് അത്യന്താപേക്ഷിതമാണ്. ഭരണഘടനയിലെ ഏറ്റവും വലിയ ഭാഗമായ ഇതിൽ നിന്നാണ് പരീക്ഷകളിൽ ഏറ്റവും കൂടുതൽ ചോദ്യങ്ങൾ വരുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> രാഷ്ട്രപതിയുടെ ഇംപീച്ച്മെന്റ് ആർട്ടിക്കിൾ (61), പാർലമെന്റിന്റെ ഘടന (ആർട്ടിക്കിൾ 79), സുപ്രീം കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം, രാജ്യസഭയിലെയും ലോക്സഭയിലെയും അംഗങ്ങളുടെ പ്രായപരിധി എന്നിവ PSC പരീക്ഷകളിലെ 'എവർഗ്രീൻ' ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> മാപ്പുനൽകാനുള്ള അധികാരം (ആർട്ടിക്കിൾ 72), ജോയിന്റ് സിറ്റിംഗ്, മണി ബിൽ.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>Part V ചട്ടക്കൂട്: <strong>52 (രാഷ്ട്രപതി) → 151 (CAG റിപ്പോർട്ട്)</strong>. ഈ ഇടയിൽ: 52–78 ഭരണം, 79–122 പാർലമെന്റ്, 123 ഓർഡിനൻസ്, 124–147 കോടതി, 148–151 CAG.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അധികാര വിഭജനം (Separation of Powers):</strong> ഒരു വ്യക്തിയിലോ ഗ്രൂപ്പിലോ അധികാരം കേന്ദ്രീകരിക്കാതിരിക്കാൻ, ഭരണഘടനാ ശില്പികൾ ഗവൺമെന്റിനെ മൂന്നായി തിരിച്ചു.</li>
+        </ul>
+        <ol>
+          <li><strong>നിയമ നിർമ്മാണ സഭ (Legislature):</strong> നിയമങ്ങൾ ഉണ്ടാക്കുന്നു (പാർലമെന്റ്).</li>
+          <li><strong>കാര്യനിർവ്വഹണ വിഭാഗം (Executive):</strong> നിയമങ്ങൾ നടപ്പിലാക്കുന്നു (പ്രസിഡന്റ്, പ്രധാനമന്ത്രി).</li>
+          <li><strong>നീതിന്യായ വിഭാഗം (Judiciary):</strong> നിയമങ്ങൾ വ്യാഖ്യാനിക്കുകയും നീതി ഉറപ്പാക്കുകയും ചെയ്യുന്നു (സുപ്രീം കോടതി).</li>
+        </ol>
+        <div class="added-fact">
+          <span class="box-label">➕ ഇന്ത്യയിലെ പ്രത്യേകത</span>
+          <p>ഇന്ത്യയിൽ അധികാര വിഭജനം <strong>കർശനമല്ല (not rigid)</strong>; പരസ്പര നിയന്ത്രണവും സന്തുലനവും (checks and balances) ആണ് ഉള്ളത്. ഉദാ: മന്ത്രിമാർ ലെജിസ്ലേച്ചറിലും അംഗങ്ങൾ. (Ram Jawaya Kapur v. State of Punjab, 1955). സിദ്ധാന്തം നൽകിയത് Montesquieu (ഫ്രഞ്ച് ചിന്തകൻ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>L-E-J</strong> = Legislature (നിർമ്മിക്കുന്നു) → Executive (നടപ്പാക്കുന്നു) → Judiciary (വ്യാഖ്യാനിക്കുന്നു): "നിർമ്മാണം → നടത്തിപ്പ് → നീതി".</p>
+        </div>
+
+        <h3>പാർലമെന്ററി സമ്പ്രദായം</h3>
+        <p>നമ്മൾ ബ്രിട്ടനിൽ നിന്നാണ് പാർലമെന്ററി സമ്പ്രദായം കടമെടുത്തത്. ഇതനുസരിച്ച് രാഷ്ട്രപതി വെറുമൊരു നാമമാത്ര തലവൻ (Titular Head) മാത്രമാണ്. യഥാർത്ഥ അധികാരം (De-facto executive) ജനങ്ങൾ തിരഞ്ഞെടുത്ത പ്രധാനമന്ത്രിക്കും മന്ത്രിസഭയ്ക്കുമാണ്.</p>
+        <div class="added-fact">
+          <span class="box-label">➕ Head of State vs Head of Government</span>
+          <p>രാഷ്ട്രപതി = Head of State (നാമമാത്ര/de-jure) · പ്രധാനമന്ത്രി = Head of Government (യഥാർത്ഥ/de-facto). Art 74 പ്രകാരം രാഷ്ട്രപതി മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരം പ്രവർത്തിക്കണം (42-ാം ഭേദഗതി 1976 ഇത് നിർബന്ധമാക്കി; 44-ാം ഭേദഗതി 1978 ഉപദേശം ഒരു തവണ പുനഃപരിശോധനയ്ക്ക് തിരിച്ചയയ്ക്കാൻ അനുമതി നൽകി).</p>
+        </div>
+
+        <h3>ഇന്ത്യ കടമെടുത്ത പ്രധാന സവിശേഷതകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>രാജ്യം</th><th>കടമെടുത്തത്</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ബ്രിട്ടൻ</td><td>പാർലമെന്ററി സമ്പ്രദായം, കാബിനറ്റ് സമ്പ്രദായം, നിയമവാഴ്ച, സ്പീക്കർ പദവി, ഏകപൗരത്വം</td></tr>
+              <tr><td>അമേരിക്ക</td><td>മൗലികാവകാശങ്ങൾ, ജുഡീഷ്യൽ റിവ്യൂ, രാഷ്ട്രപതിയുടെ ഇംപീച്ച്മെന്റ്, ഉപരാഷ്ട്രപതി = രാജ്യസഭാ ചെയർമാൻ, ജഡ്ജിമാരെ നീക്കൽ</td></tr>
+              <tr><td>അയർലൻഡ്</td><td>നിർദ്ദേശക തത്ത്വങ്ങൾ, രാജ്യസഭയിലേക്ക് നാമനിർദ്ദേശം, രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പ് രീതി</td></tr>
+              <tr><td>ഓസ്ട്രേലിയ</td><td>കൺകറന്റ് ലിസ്റ്റ്, ഇരുസഭകളുടെ സംയുക്ത സമ്മേളനം</td></tr>
+              <tr><td>കാനഡ</td><td>ശക്തമായ കേന്ദ്രമുള്ള ഫെഡറേഷൻ, അവശിഷ്ടാധികാരം കേന്ദ്രത്തിന്</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>സംയുക്ത സമ്മേളനം = ഓസ്ട്രേലിയ</strong>" · "<strong>ഉപരാഷ്ട്രപതിയും ഇംപീച്ച്മെന്റും = അമേരിക്ക</strong>" · "<strong>നാമനിർദ്ദേശം, DPSP = അയർലൻഡ്</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: കേന്ദ്ര എക്സിക്യൂട്ടീവ് ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. കേന്ദ്ര എക്സിക്യൂട്ടീവ് (The Union Executive: Art 52-78)</h2>
+      <div class="section-body">
+        <p>ഭരണഘടനയുടെ <strong>ഭാഗം 5-ൽ (Part V)</strong>, ആർട്ടിക്കിൾ <strong>52 മുതൽ 151 വരെയാണ്</strong> കേന്ദ്ര ഗവൺമെന്റിനെക്കുറിച്ച് പറയുന്നത്.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രാഷ്ട്രപതി:</strong> ഇന്ത്യയുടെ പ്രഥമ പൗരൻ, രാഷ്ട്രത്തലവൻ (Head of State), സായുധ സേനകളുടെ സർവ്വസൈന്യാധിപൻ. (Art 52-62)</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉപരാഷ്ട്രപതി:</strong> രാജ്യസഭയുടെ എക്സ്-ഒഫീഷ്യോ ചെയർമാൻ. (Art 63-71)</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാനമന്ത്രിയും മന്ത്രിസഭയും:</strong> യഥാർത്ഥ ഭരണം നടത്തുന്നത്. (Art 74-78)</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>52 (രാഷ്ട്രപതി) → 78 (പ്രധാനമന്ത്രിയുടെ കടമകൾ)</strong>" — Union Executive മുഴുവൻ ഈ ശ്രേണിയിലാണ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: രാഷ്ട്രപതി ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. രാഷ്ട്രപതി (The President)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യയുടെ പ്രഥമ പൗരൻ, രാഷ്ട്രത്തലവൻ, സായുധ സേനകളുടെ സർവ്വസൈന്യാധിപൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 52:</strong> ഇന്ത്യയ്ക്കൊരു രാഷ്ട്രപതി ഉണ്ടായിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 53: കേന്ദ്ര എക്സിക്യൂട്ടീവ് അധികാരം രാഷ്ട്രപതിയിൽ നിക്ഷിപ്തം; സർവ്വസൈന്യാധിപൻ പദവിയും Art 53(2) ആണ്.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>രാഷ്ട്രപതിയുടെ "ജീവിതചക്രം" Art 52 → 62: <strong>52 ഉണ്ടാകണം → 53 അധികാരം → 54 തിരഞ്ഞെടുപ്പ് → 55 തിരഞ്ഞെടുപ്പ് രീതി → 56 കാലാവധി (5 വർഷം) → 57 വീണ്ടും മത്സരിക്കാം → 58 യോഗ്യത → 59 പദവിയുടെ നിബന്ധനകൾ → 60 സത്യപ്രതിജ്ഞ → 61 ഇംപീച്ച്മെന്റ് → 62 തിരഞ്ഞെടുപ്പ് സമയം</strong>. (65: ഒഴിവിൽ ഉപരാഷ്ട്രപതി ചുമതല വഹിക്കും; 71: തിരഞ്ഞെടുപ്പ് തർക്കം സുപ്രീം കോടതിക്ക്.)</p>
+        </div>
+
+        <h3>യോഗ്യത</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യക്കാരനായിരിക്കണം, കുറഞ്ഞത് <strong>35 വയസ്സ്</strong> പൂർത്തിയായിരിക്കണം, ലോക്സഭാംഗമാകാൻ യോഗ്യതയുണ്ടായിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 58: ലാഭകരമായ പദവി (office of profit) വഹിക്കരുത്. ഇന്ത്യൻ പൗരൻ ആയിരിക്കണം.</li>
+        </ul>
+
+        <h3>തിരഞ്ഞെടുപ്പ്</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പരോക്ഷ തിരഞ്ഞെടുപ്പാണ്. പാർലമെന്റിലെയും സംസ്ഥാന നിയമസഭകളിലെയും തിരഞ്ഞെടുക്കപ്പെട്ട (Elected) അംഗങ്ങൾ അടങ്ങുന്ന <strong>ഇലക്ടറൽ കോളേജ്</strong> (Electoral College) ആണ് രാഷ്ട്രപതിയെ തിരഞ്ഞെടുക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ➕ ★★★ Art 54: ഇലക്ടറൽ കോളേജ് = ലോക്സഭ + രാജ്യസഭ + സംസ്ഥാന നിയമസഭകളിലെ <strong>തിരഞ്ഞെടുക്കപ്പെട്ട</strong> അംഗങ്ങൾ. ഡൽഹി (NCT), പുതുച്ചേരി എന്നിവയും ഉൾപ്പെടും (70-ാം ഭേദഗതി). <strong>നാമനിർദ്ദേശം ചെയ്യപ്പെട്ട അംഗങ്ങളും നിയമനിർമ്മാണ കൗൺസിൽ (MLC) അംഗങ്ങളും വോട്ട് ചെയ്യില്ല.</strong></li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 55: ആനുപാതിക പ്രാതിനിധ്യം, ഒറ്റ മാറ്റാവുന്ന വോട്ട് (Single Transferable Vote), രഹസ്യ ബാലറ്റ്. തിരഞ്ഞെടുപ്പ് നടത്തുന്നത് തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ. (Art 71: തർക്കം തീർപ്പാക്കുന്നത് സുപ്രീം കോടതി.)</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>വോട്ട് ചെയ്യാത്തവർ = നാമനിർദ്ദേശക്കാരും കൗൺസിലുകാരും" (Nominated + MLC).</strong></p>
+        </div>
+
+        <h3>സത്യപ്രതിജ്ഞ</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസ് (CJI) ആണ് സത്യവാചകം ചൊല്ലിക്കൊടുക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 60: CJI ഇല്ലെങ്കിൽ സുപ്രീം കോടതിയിലെ ഏറ്റവും സീനിയർ ജഡ്ജി. <strong>ചീഫ് ജസ്റ്റിസിന് സത്യവാചകം ചൊല്ലിക്കൊടുക്കുന്നത് രാഷ്ട്രപതിയാണ്</strong> (മാറിപ്പോകരുത്).</li>
+        </ul>
+
+        <h3>മാപ്പുനൽകാനുള്ള അധികാരം (Pardoning Power)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> വധശിക്ഷ ഉൾപ്പെടെയുള്ള ശിക്ഷകൾ ഇളവുചെയ്യാനോ മാപ്പുനൽകാനോ രാഷ്ട്രപതിക്ക് അധികാരമുണ്ട് <strong>(ആർട്ടിക്കിൾ 72)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ ★★★ Art 72-ലെ ആറ് അധികാരങ്ങൾ: <strong>Pardon</strong> (ശിക്ഷയും കുറ്റവും പൂർണ്ണമായി ഒഴിവാക്കൽ) · <strong>Commutation</strong> (ശിക്ഷ ലഘുവായ തരത്തിലേക്ക് മാറ്റൽ; ഉദാ: വധശിക്ഷ → ജീവപര്യന്തം) · <strong>Remission</strong> (ശിക്ഷയുടെ സ്വഭാവം മാറ്റാതെ കാലയളവ് കുറയ്ക്കൽ) · <strong>Respite</strong> (ഗർഭം, ശാരീരിക അവശത തുടങ്ങിയ പ്രത്യേക കാരണത്താൽ കുറഞ്ഞ ശിക്ഷ) · <strong>Reprieve</strong> (ശിക്ഷ താൽക്കാലികമായി നിർത്തിവയ്ക്കൽ) · <strong>Suspension</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ ബാധകമാകുന്നത്: കോർട്ട് മാർഷൽ ശിക്ഷ, കേന്ദ്ര നിയമപ്രകാരമുള്ള കുറ്റങ്ങൾ, വധശിക്ഷ. മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരമാണ് ഇത് പ്രയോഗിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ <strong>ഗവർണർ (Art 161):</strong> കോർട്ട് മാർഷൽ ശിക്ഷയിൽ അധികാരമില്ല; വധശിക്ഷ പൂർണ്ണമായി മാപ്പാക്കാനും കഴിയില്ല (ലഘൂകരിക്കാം/ഇളവ് നൽകാം/നീട്ടിവയ്ക്കാം).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>P-C-R-R-R (+S):</strong> Pardon, Commutation, Remission, Respite, Reprieve (+Suspension).</p>
+        </div>
+
+        <h3>രാജി</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> രാജിക്കത്ത് നൽകേണ്ടത് ഉപരാഷ്ട്രപതിക്കാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 56(1)(a): രാജി സ്വീകരിച്ച വിവരം ഉപരാഷ്ട്രപതി ഉടൻ ലോക്സഭാ സ്പീക്കറെ അറിയിക്കും. കാലാവധി 5 വർഷം (Art 56), പിൻഗാമി ചുമതലയേൽക്കുംവരെ തുടരും; വീണ്ടും മത്സരിക്കാം (Art 57).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ ★★★ <strong>ഇംപീച്ച്മെന്റ് (Art 61):</strong> കാരണം "ഭരണഘടനാ ലംഘനം (violation of the Constitution)". ഏതെങ്കിലും ഒരു സഭയിൽ ആരംഭിക്കാം · ആ സഭയിലെ <strong>1/4 അംഗങ്ങൾ ഒപ്പിട്ട 14 ദിവസത്തെ നോട്ടീസ്</strong> · സഭയുടെ <strong>ആകെ അംഗസംഖ്യയുടെ 2/3 ഭൂരിപക്ഷം</strong> · തുടർന്ന് രണ്ടാം സഭ കുറ്റാരോപണങ്ങൾ അന്വേഷിക്കും · അവിടെയും 2/3 ഭൂരിപക്ഷം ലഭിച്ചാൽ നീക്കം ചെയ്യപ്പെടും. രാജ്യസഭയിലെ നാമനിർദ്ദേശം ചെയ്യപ്പെട്ട അംഗങ്ങൾക്കും പങ്കെടുക്കാം. <strong>ഇതുവരെ ഒരു രാഷ്ട്രപതിയും ഇംപീച്ച് ചെയ്യപ്പെട്ടിട്ടില്ല.</strong></li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>61 = "14 + 1/4 + 2/3"</strong> (14 ദിവസം, നാലിലൊന്ന് ഒപ്പ്, മൂന്നിൽ രണ്ട് ഭൂരിപക്ഷം).</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">🔄 നിലവിലെ രാഷ്ട്രപതി</span>
+          <p>ദ്രൗപദി മുർമു (15-ാമത്, 2022 ജൂലൈ 25 മുതൽ; ആദ്യ ആദിവാസി വനിത; കാലാവധി 2027 ജൂലൈയിൽ അവസാനിക്കും).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: ഉപരാഷ്ട്രപതി ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. ഉപരാഷ്ട്രപതി (The Vice-President)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 63:</strong> ഇന്ത്യയ്ക്കൊരു ഉപരാഷ്ട്രപതി ഉണ്ടായിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പ്രായപരിധി: കുറഞ്ഞത് <strong>35 വയസ്സ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ യോഗ്യത: ഇന്ത്യൻ പൗരൻ, 35 വയസ്സ്, <strong>രാജ്യസഭാംഗമാകാൻ യോഗ്യത</strong>, ലാഭകരമായ പദവി പാടില്ല. നാമനിർദ്ദേശത്തിന് 20 നിർദ്ദേശകരും 20 പിന്താങ്ങുന്നവരും.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> തിരഞ്ഞെടുപ്പ്: പാർലമെന്റിലെ (ലോക്സഭ + രാജ്യസഭ) എല്ലാ അംഗങ്ങളും ചേർന്നാണ് തിരഞ്ഞെടുക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 66: നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവർ ഉൾപ്പെടെ ഇരുസഭകളിലെയും എല്ലാ അംഗങ്ങൾ; <strong>നിയമസഭാംഗങ്ങൾക്ക് പങ്കില്ല</strong> (രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പിൽ നിന്ന് വ്യത്യാസം). STV, രഹസ്യ ബാലറ്റ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പ്രത്യേകത: ഇദ്ദേഹം രാജ്യസഭയുടെ എക്സ്-ഒഫീഷ്യോ ചെയർമാൻ (Ex-officio Chairman) ആയിരിക്കും <strong>(ആർട്ടിക്കിൾ 64)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ ഉപരാഷ്ട്രപതി ഒരു സഭയിലും അംഗമല്ല (Art 66(4)). വോട്ടില്ല; സമനില (tie) വന്നാൽ <strong>casting vote</strong> മാത്രം. രാഷ്ട്രപതി പദവി ഒഴിവായാൽ ചുമതല വഹിക്കും (Art 65); അപ്പോൾ ചെയർമാൻ ചുമതല നിർവഹിക്കില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> രാജി: രാജിക്കത്ത് നൽകേണ്ടത് രാഷ്ട്രപതിക്കാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ <strong>നീക്കം ചെയ്യൽ (Art 67(b)):</strong> രാജ്യസഭ അതിലെ അന്നത്തെ ആകെ അംഗങ്ങളുടെ ഭൂരിപക്ഷത്തോടെ പ്രമേയം പാസാക്കണം; ലോക്സഭ സാധാരണ ഭൂരിപക്ഷത്തോടെ അംഗീകരിക്കണം; 14 ദിവസത്തെ നോട്ടീസ്. കാലാവധി 5 വർഷം (Art 67).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>രാഷ്ട്രപതി നീക്കം = ഇംപീച്ച്മെന്റ് (ഇരുസഭയിലും 2/3)</strong>" · "<strong>ഉപരാഷ്ട്രപതി നീക്കം = പ്രമേയം (RS ആദ്യം, ഭൂരിപക്ഷം)</strong>". "രാഷ്ട്രപതിക്ക് ഇംപീച്ച്, ഉപരാഷ്ട്രപതിക്ക് പ്രമേയം".</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">🔄 നിലവിലെ ഉപരാഷ്ട്രപതി</span>
+          <p>സി.പി. രാധാകൃഷ്ണൻ (15-ാമത്; 2025 സെപ്റ്റംബർ 9-ന് തിരഞ്ഞെടുക്കപ്പെട്ടു, സെപ്റ്റംബർ 12-ന് സത്യപ്രതിജ്ഞ ചെയ്തു). മുൻഗാമി ജഗ്ദീപ് ധൻഖർ 2025 ജൂലൈയിൽ രാജിവെച്ചു. ആദ്യ ഉപരാഷ്ട്രപതി ഡോ. എസ്. രാധാകൃഷ്ണൻ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: പ്രധാനമന്ത്രിയും മന്ത്രിസഭയും ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. പ്രധാനമന്ത്രിയും മന്ത്രിസഭയും (PM & Council of Ministers)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 74:</strong> രാഷ്ട്രപതിയെ സഹായിക്കാനും ഉപദേശിക്കാനും പ്രധാനമന്ത്രി തലവനായുള്ള ഒരു മന്ത്രിസഭ ഉണ്ടായിരിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ രാഷ്ട്രപതി ഈ ഉപദേശപ്രകാരം പ്രവർത്തിക്കണം (42-ാം ഭേദഗതി); ഒരു തവണ പുനഃപരിശോധനയ്ക്ക് തിരിച്ചയയ്ക്കാം (44-ാം ഭേദഗതി). Art 77: എക്സിക്യൂട്ടീവ് നടപടികൾ രാഷ്ട്രപതിയുടെ പേരിലാണ്. Art 78: ഭരണ തീരുമാനങ്ങൾ രാഷ്ട്രപതിയെ അറിയിക്കാൻ പ്രധാനമന്ത്രിക്ക് കടമ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പ്രധാനമന്ത്രിയെ നിയമിക്കുന്നത് രാഷ്ട്രപതിയാണ് <strong>(ആർട്ടിക്കിൾ 75)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ ★★★ Art 75: മറ്റ് മന്ത്രിമാരെ നിയമിക്കുന്നത് പ്രധാനമന്ത്രിയുടെ ഉപദേശപ്രകാരം. <strong>മന്ത്രിസഭയ്ക്ക് ലോക്സഭയോട് കൂട്ടുത്തരവാദിത്തം</strong> (75(3)). മന്ത്രിമാർ രാഷ്ട്രപതിയുടെ ഇഷ്ടകാലം വരെ (pleasure) പദവിയിൽ. അംഗമല്ലാത്ത മന്ത്രി <strong>6 മാസത്തിനകം</strong> ഏതെങ്കിലും സഭയിൽ അംഗമാകണം (75(5)).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ ★★★ <strong>91-ാം ഭേദഗതി (2003):</strong> മന്ത്രിസഭയുടെ ആകെ എണ്ണം ലോക്സഭാ അംഗബലത്തിന്റെ <strong>15%-ൽ കൂടരുത്</strong> (Art 75(1A)); സംസ്ഥാനത്ത് ഇത് നിയമസഭാ അംഗബലത്തിന്റെ 15%, കുഞ്ഞത് 12 മന്ത്രിമാർ (Art 164(1A)).</li>
+          <li><span class="stars">⭐⭐⭐</span> പ്രായപരിധി: ലോക്സഭാംഗമാണെങ്കിൽ 25 വയസ്സ്, രാജ്യസഭാംഗമാണെങ്കിൽ 30 വയസ്സ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ <strong>Art 76 അറ്റോർണി ജനറൽ:</strong> രാഷ്ട്രപതി നിയമിക്കുന്നു; സുപ്രീം കോടതി ജഡ്ജിയാകാൻ യോഗ്യത വേണം; ഇരുസഭകളിലും സംസാരിക്കാം, വോട്ടില്ല (Art 88).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>പ്രധാനമന്ത്രി = ഒരേ പദവിയുള്ളവരിൽ ഒന്നാമൻ (primus inter pares)</strong>". "91 → 15%".</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">🔄 നിലവിലെ പ്രധാനമന്ത്രി</span>
+          <p>നരേന്ദ്ര മോദി (2024 ജൂൺ 9 മുതൽ മൂന്നാം ടേം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പാർലമെന്റ് – രാജ്യസഭ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പാർലമെന്റ് – രാജ്യസഭ (Rajya Sabha)</h2>
+      <div class="section-body">
+        <p>ഇന്ത്യൻ പാർലമെന്റ് എന്നത് <strong>രാഷ്ട്രപതി, രാജ്യസഭ, ലോക്സഭ</strong> എന്നിവ ചേർന്നതാണ് <strong>(ആർട്ടിക്കിൾ 79)</strong>.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 85: സമ്മേളനം വിളിക്കൽ, നീട്ടിവയ്ക്കൽ (prorogue), ലോക്സഭ പിരിച്ചുവിടൽ രാഷ്ട്രപതിയുടെ അധികാരം; രണ്ട് സമ്മേളനങ്ങൾക്കിടയിൽ <strong>6 മാസത്തിൽ കൂടുതൽ ഇടവേള പാടില്ല</strong>. Art 87: രാഷ്ട്രപതിയുടെ പ്രത്യേക അഭിസംബോധന (ഓരോ വർഷത്തെയും ആദ്യ സമ്മേളനം, പൊതുതിരഞ്ഞെടുപ്പിന് ശേഷമുള്ള ആദ്യ സമ്മേളനം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 80:</strong> പാർലമെന്റിന്റെ ഉപരിസഭ (Upper House) അഥവാ സ്ഥിരം സഭ (Permanent House). ഇത് ഒരിക്കലും പിരിച്ചുവിടാൻ കഴിയില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പരമാവധി അംഗങ്ങൾ: <strong>250</strong> (238 പേർ സംസ്ഥാനങ്ങളിൽ നിന്നും + 12 പേരെ രാഷ്ട്രപതി നാമനിർദ്ദേശം ചെയ്യുന്നു).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ Art 80(3): നാമനിർദ്ദേശം ചെയ്യുന്നത് <strong>സാഹിത്യം, ശാസ്ത്രം, കല, സാമൂഹിക സേവനം</strong> എന്നീ മേഖലകളിലെ പ്രത്യേക അറിവുള്ളവരെ. 🧠 <strong>LASS</strong> = Literature, Art, Science, Social service. (അയർലൻഡിൽ നിന്ന് കടമെടുത്തത്.)</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> യോഗ്യത: കുഞ്ഞത് <strong>30 വയസ്സ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാലാവധി: രാജ്യസഭാംഗത്തിന്റെ കാലാവധി <strong>6 വർഷമാണ്</strong>. (സഭയ്ക്ക് കാലാവധിയില്ല). ഓരോ 2 വർഷം കൂടുമ്പോഴും മൂന്നിലൊന്ന് (1/3) അംഗങ്ങൾ വിരമിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ തിരഞ്ഞെടുപ്പ്: സംസ്ഥാന നിയമസഭകളിലെ തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ വഴി, ഒറ്റ മാറ്റാവുന്ന വോട്ട് (STV) രീതിയിൽ. ഡെപ്യൂട്ടി ചെയർമാനെ അംഗങ്ങൾ സ്വയം തിരഞ്ഞെടുക്കുന്നു (Art 89). 🔄 ★★ ഏറ്റവും കൂടുതൽ സീറ്റ്: ഉത്തർപ്രദേശ് (31); കേരളം 9.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അധ്യക്ഷൻ: ഉപരാഷ്ട്രപതി.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഉപരിസഭകൾക്ക് 6</strong>": രാജ്യസഭാംഗം 6 വർഷം, നിയമനിർമ്മാണ കൗൺസിൽ (MLC) അംഗവും 6 വർഷം; ബാക്കി (LS, MLA, രാഷ്ട്രപതി, VP) എല്ലാം 5.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: പാർലമെന്റ് – ലോക്സഭ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. പാർലമെന്റ് – ലോക്സഭ (Lok Sabha)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 81:</strong> പാർലമെന്റിന്റെ അധോസഭ (Lower House). ജനങ്ങൾ നേരിട്ട് പ്രതിനിധികളെ തിരഞ്ഞെടുക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പരമാവധി അംഗങ്ങൾ: <strong>552</strong> (നിലവിൽ ആംഗ്ലോ-ഇന്ത്യൻ നോമിനേഷൻ നിർത്തലാക്കിയതിനാൽ ഇത് 550 എന്ന് കണക്കാക്കാം). നിലവിൽ 543 അംഗങ്ങളാണുള്ളത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ <strong>വ്യക്തത:</strong> Art 81 പ്രകാരം പരമാവധി <strong>550 = 530 (സംസ്ഥാനങ്ങൾ) + 20 (കേന്ദ്രഭരണപ്രദേശങ്ങൾ)</strong>. ആംഗ്ലോ-ഇന്ത്യൻ നാമനിർദ്ദേശം (Art 331) 2 പേർ കൂടി ചേർത്താണ് 552 ആയിരുന്നത്. <strong>104-ാം ഭേദഗതി (2019; 2020 ജനുവരി 25 മുതൽ)</strong> ഈ നാമനിർദ്ദേശം ഒഴിവാക്കി. ഇപ്പോൾ തിരഞ്ഞെടുക്കപ്പെട്ടവർ 543 = 530 + 13 (UT).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 82: ഓരോ സെൻസസിനുശേഷവും സീറ്റ് പുനഃക്രമീകരണം (delimitation).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> യോഗ്യത: കുഞ്ഞത് <strong>25 വയസ്സ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാലാവധി: <strong>5 വർഷം</strong> (രാഷ്ട്രപതിക്ക് ഇതിന് മുൻപും സഭ പിരിച്ചുവിടാം).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 83(2): ആദ്യ യോഗത്തീയതി മുതൽ 5 വർഷം. ദേശീയ അടിയന്തരാവസ്ഥയിൽ പാർലമെന്റിന് ഒരു വർഷം വീതം നീട്ടാം (അടിയന്തരാവസ്ഥ തീർന്ന് 6 മാസത്തിനപ്പുറം പാടില്ല). Art 85: രാഷ്ട്രപതി പിരിച്ചുവിടൽ നടത്തുന്നത് പ്രധാനമന്ത്രിയുടെ/മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> അധ്യക്ഷൻ: <strong>സ്പീക്കർ</strong> (Speaker).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ Art 93: സ്പീക്കറും ഡെപ്യൂട്ടി സ്പീക്കറും ലോക്സഭാംഗങ്ങൾ തന്നെ തിരഞ്ഞെടുക്കുന്നു. സ്പീക്കർ രാജിക്കത്ത് നൽകുന്നത് ഡെപ്യൂട്ടി സ്പീക്കർക്ക് (Art 94). ആദ്യ സ്പീക്കർ ജി.വി. മാവ്ലങ്കർ; ആദ്യ വനിതാ സ്പീക്കർ മീരാ കുമാർ (15-ാം ലോക്സഭ). 🔄 നിലവിലെ സ്പീക്കർ: ഓം ബിർള (18-ാം ലോക്സഭ, 2024 ജൂൺ 26 മുതൽ).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>543 = 530 + 13 · 550 = 530 + 20.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: യൂണിയൻ ജുഡീഷ്യറി ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. യൂണിയൻ ജുഡീഷ്യറി (The Union Judiciary: Art 124-147)</h2>
+      <div class="section-body">
+        <h3>സുപ്രീം കോടതി (Supreme Court)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 124:</strong> ഇന്ത്യയിലെ ഏറ്റവും ഉയർന്ന നീതിന്യായ കോടതി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ ആസ്ഥാനം ന്യൂഡൽഹി (Art 130). അംഗസംഖ്യ നിലവിൽ <strong>34 (CJI ഉൾപ്പെടെ)</strong> (2019-ലെ ഭേദഗതി നിയമം). യോഗ്യത (Art 124(3)): ഹൈക്കോടതി ജഡ്ജിയായി 5 വർഷം, അല്ലെങ്കിൽ ഹൈക്കോടതി അഭിഭാഷകനായി 10 വർഷം, അല്ലെങ്കിൽ രാഷ്ട്രപതിയുടെ അഭിപ്രായത്തിൽ വിശിഷ്ട നിയമജ്ഞൻ (distinguished jurist).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം (Retirement Age): <strong>65 വയസ്സ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> നിയമനം: സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസിനെയും (CJI) മറ്റ് ജഡ്ജിമാരെയും നിയമിക്കുന്നത് രാഷ്ട്രപതിയാണ് (കൊളീജിയം സമ്പ്രദായം വഴി).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★ കൊളീജിയം ഭരണഘടനയിൽ എഴുതിയിട്ടില്ല; ജഡ്ജസ് കേസുകളിലൂടെ (1981, 1993, 1998) രൂപപ്പെട്ടതാണ്. സുപ്രീം കോടതി കൊളീജിയം = CJI + 4 സീനിയർ ജഡ്ജിമാർ. NJAC (99-ാം ഭേദഗതി) 2015-ൽ സുപ്രീം കോടതി റദ്ദാക്കി. 🔄 ★★ നിലവിലെ CJI: ജസ്റ്റിസ് സൂര്യകാന്ത് (53-ാമത്; 2025 നവംബർ 24 മുതൽ, 2027 ഫെബ്രുവരി 9-ന് വിരമിക്കും).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> രാജിക്കത്ത്: ജഡ്ജിമാർ രാജിക്കത്ത് നൽകേണ്ടത് രാഷ്ട്രപതിക്കാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ <strong>നീക്കം ചെയ്യൽ (Art 124(4)):</strong> തെളിയിക്കപ്പെട്ട ദുർനടപ്പ് (misbehaviour) / കഴിവില്ലായ്മ (incapacity); ഇരുസഭകളും <strong>പ്രത്യേക ഭൂരിപക്ഷത്തിൽ</strong> (ആകെ അംഗങ്ങളുടെ ഭൂരിപക്ഷം + ഹാജരായി വോട്ട് ചെയ്യുന്നവരുടെ 2/3) പ്രമേയം പാസാക്കണം; Judges (Inquiry) Act 1968. ഇതുവരെ ഒരു ജഡ്ജിയും നീക്കപ്പെട്ടിട്ടില്ല (ജസ്റ്റിസ് വി. രാമസ്വാമി 1993-ൽ ലോക്സഭയിൽ പ്രമേയം പരാജയപ്പെട്ടു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 137:</strong> സുപ്രീം കോടതിക്ക് സ്വന്തം വിധികൾ പുനഃപരിശോധിക്കാൻ (Judicial Review) അധികാരമുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ <strong>സുപ്രീം കോടതിയുടെ മറ്റ് പ്രധാന അധികാരങ്ങൾ:</strong> Art 32 (മൗലികാവകാശ സംരക്ഷണം, റിട്ടുകൾ) · Art 129 (Court of Record) · Art 131 (ഒറിജിനൽ അധികാരപരിധി) · Art 136 (പ്രത്യേക അനുമതി ഹർജി, SLP) · Art 141 (സുപ്രീം കോടതി നിയമം എല്ലാ കോടതികൾക്കും ബാധകം) · Art 142 (സമ്പൂർണ്ണ നീതി) · Art 143 (രാഷ്ട്രപതിക്ക് ഉപദേശം നൽകൽ - Advisory).</li>
+        </ul>
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p><strong>Art 137 = സ്വന്തം വിധി പുനഃപരിശോധിക്കാനുള്ള അധികാരം (Review Jurisdiction / റിവ്യൂ പെറ്റീഷൻ).</strong> <strong>Judicial Review</strong> (നിയമങ്ങളുടെ ഭരണഘടനാ സാധുത പരിശോധിക്കൽ) വേറെ ആശയമാണ്; അത് Art 13, 32, 226 മുതലായവയിൽ നിന്ന് ഉരുത്തിരിയുന്നു. ➕ ★★ ഇതിനുശേഷമുള്ള അവസാന മാർഗ്ഗം "ക്യൂറേറ്റീവ് പെറ്റീഷൻ" (Rupa Ashok Hurra കേസ്, 2002).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>32 → 131 → 136 → 137 → 141 → 142 → 143:</strong> "സംരക്ഷണം, തർക്കം, അപ്പീൽ, റിവ്യൂ, ബാധകം, നീതി, ഉപദേശം".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മണി ബിൽ (Money Bill)</strong> ആണോ അല്ലയോ എന്ന് തീരുമാനിക്കാനുള്ള പരമാധികാരം ലോക്സഭാ സ്പീക്കർക്കാണ് <strong>(ആർട്ടിക്കിൾ 110)</strong>. മണി ബിൽ ലോക്സഭയിൽ മാത്രമേ ആദ്യം അവതരിപ്പിക്കാൻ കഴിയൂ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ Art 109: ലോക്സഭ പാസാക്കിയ മണി ബിൽ രാജ്യസഭയിലേക്ക് അയയ്ക്കും; രാജ്യസഭയ്ക്ക് <strong>ശുപാർശകൾ മാത്രം</strong> (recommendations) നൽകാം, <strong>14 ദിവസത്തിനകം</strong> തിരിച്ചയയ്ക്കണം; ശുപാർശ സ്വീകരിക്കണോ എന്ന് ലോക്സഭ തീരുമാനിക്കും; 14 ദിവസത്തിനകം തിരിച്ചില്ലെങ്കിൽ പാസായതായി കണക്കാക്കും. അവതരിപ്പിക്കാൻ രാഷ്ട്രപതിയുടെ ശുപാർശ വേണം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പാർലമെന്റിന്റെ സംയുക്ത സമ്മേളനം (Joint Sitting) വിളിച്ചുകൂട്ടുന്നത് രാഷ്ട്രപതിയാണ് <strong>(ആർട്ടിക്കിൾ 108)</strong>. എന്നാൽ ഈ സമ്മേളനത്തിൽ അധ്യക്ഷത വഹിക്കുന്നത് <strong>ലോക്സഭാ സ്പീക്കർ</strong> ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ സാധാരണ ബില്ലിൽ ഇരുസഭകളും തമ്മിൽ തർക്കം വന്നാൽ (ഒരു സഭ നിരസിച്ചാൽ, ഭേദഗതിയിൽ യോജിക്കാതിരുന്നാൽ, 6 മാസത്തിലധികം പാസാക്കാതിരുന്നാൽ) ഉപയോഗിക്കുന്നു. <strong>മണി ബില്ലിനും ഭരണഘടനാ ഭേദഗതി ബില്ലിനും ബാധകമല്ല.</strong> തീരുമാനം ഹാജരുള്ള അംഗങ്ങളുടെ ലളിത ഭൂരിപക്ഷത്തിൽ. സ്പീക്കർ ഇല്ലെങ്കിൽ ഡെപ്യൂട്ടി സ്പീക്കർ, തുടർന്ന് രാജ്യസഭാ ഡെപ്യൂട്ടി ചെയർമാൻ. ഇതുവരെ <strong>3 തവണ</strong> മാത്രം: <strong>1961 (സ്ത്രീധന നിരോധന ബിൽ), 1978 (ബാങ്കിങ് സർവീസ് കമ്മീഷൻ റദ്ദാക്കൽ ബിൽ), 2002 (പോട്ട - POTA)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഒരു ബിൽ നിയമമാകണമെങ്കിൽ ഇരുസഭകളും പാസാക്കിയ ശേഷം <strong>രാഷ്ട്രപതി ഒപ്പുവെക്കണം (ആർട്ടിക്കിൾ 111)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ <strong>രാഷ്ട്രപതിയുടെ വീറ്റോ അധികാരങ്ങൾ:</strong> രാഷ്ട്രപതിക്ക് ബിൽ (1) അംഗീകരിക്കാം (Absolute Veto), (2) അംഗീകാരം തടഞ്ഞുവയ്ക്കാം (Pocket Veto), (3) പുനഃപരിശോധനയ്ക്ക് തിരിച്ചയയ്ക്കാം (Suspensive Veto - <strong>മണി ബില്ലിൽ ഇത് പറ്റില്ല</strong>). പാർലമെന്റ് ബിൽ വീണ്ടും പാസാക്കിയാൽ മാത്രമേ അംഗീകരിക്കാൻ ബാധ്യതയുള്ളൂ. ഭരണഘടനാ ഭേദഗതി ബില്ലിൽ രാഷ്ട്രപതി അംഗീകരിക്കണം (24-ാം ഭേദഗതി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> പാർലമെന്റ് സമ്മേളിക്കാത്ത സമയത്ത് അടിയന്തര നിയമങ്ങൾ കൊണ്ടുവരാൻ രാഷ്ട്രപതിക്ക് ഓർഡിനൻസ് (Ordinance) പുറപ്പെടുവിക്കാം <strong>(ആർട്ടിക്കിൾ 123)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ★★★ ഓർഡിനൻസ് പാർലമെന്റ് വീണ്ടും ചേർന്ന് <strong>6 ആഴ്ചയ്ക്കകം</strong> അംഗീകരിക്കണം, ഇല്ലെങ്കിൽ റദ്ദാകും. (പരമാവധി ആയുസ്സ് ഏകദേശം 6 മാസം + 6 ആഴ്ച.) ഇരുസഭകളും സമ്മേളിക്കുന്ന സമയത്ത് പുറപ്പെടുവിക്കാൻ പറ്റില്ല. ഗവർണറുടെ ഓർഡിനൻസ് = Art 213.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>മണി ബിൽ = "ലോ-ടു-RS-14-ലോ"</strong>: ലോക്സഭ → RS (ശുപാർശ മാത്രം, 14 ദിവസം) → വീണ്ടും ലോക്സഭ തീരുമാനം. <strong>61-78-02 = "ഡി-ബി-പി"</strong> (Dowry, Banking, POTA). <strong>വിളിക്കുന്നവൻ P (President), ഇരിക്കുന്നവൻ S (Speaker).</strong> <strong>രാഷ്ട്രപതി ↔ ഗവർണർ ഇരട്ട ആർട്ടിക്കിളുകൾ:</strong> മാപ്പ് 72 ↔ 161 · ഓർഡിനൻസ് 123 ↔ 213.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: PSC വിശകലനം ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ആർട്ടിക്കിൾ 61 (ഇംപീച്ച്മെന്റ്), ആർട്ടിക്കിൾ 72 (മാപ്പുനൽകൽ), ജോയിന്റ് സിറ്റിങ്ങിൽ അധ്യക്ഷത വഹിക്കുന്നതാര്, രാജ്യസഭാംഗത്തിന്റെ പ്രായപരിധി (30).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> സുപ്രീം കോടതി ജഡ്ജിയുടെ വിരമിക്കൽ പ്രായം (65), ഉപരാഷ്ട്രപതി ഏത് സഭയുടെ അധ്യക്ഷനാണ്, പാർലമെന്റ് ഏതൊക്കെ ഘടകങ്ങൾ ചേർന്നതാണ് (Art 79).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ആർട്ടിക്കിൾ 108, മണി ബിൽ തീരുമാനിക്കുന്നതാര്, രാജ്യസഭയിലെ നോമിനേറ്റഡ് അംഗങ്ങൾ (12).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രവചനം (Prediction):</strong> Art 54/55 (ഇലക്ടറൽ കോളേജ്), Art 67(b), Art 75 (91-ാം ഭേദഗതി, 6 മാസം), Art 123 (6 ആഴ്ച), Art 137 vs Judicial Review, നിലവിലെ ഉപരാഷ്ട്രപതി/CJI.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: മുൻവർഷ ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. മുൻവർഷ ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് രാഷ്ട്രപതിക്ക് മാപ്പുനൽകാനുള്ള അധികാരമുള്ളത്?" (ആർട്ടിക്കിൾ 72).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ലോക്സഭാംഗമാകാൻ വേണ്ട കുഞ്ഞത് പ്രായം എത്ര?" (25 വയസ്സ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "രാജ്യസഭയുടെ എക്സ്-ഒഫീഷ്യോ ചെയർമാൻ ആരാണ്?" (ഉപരാഷ്ട്രപതി).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ജോയിന്റ് സിറ്റിംഗ് വിളിക്കുന്നത്: രാഷ്ട്രപതി</td>
+                <td>അധ്യക്ഷത വഹിക്കുന്നത്: സ്പീക്കർ</td>
+                <td>പാർലമെന്റിന്റെ സംയുക്ത സമ്മേളനം വിളിച്ചുകൂട്ടാൻ അധികാരമുള്ളത് <strong>രാഷ്ട്രപതിക്കാണ്</strong>. എന്നാൽ സമ്മേളനം നടക്കുമ്പോൾ അധ്യക്ഷക്കസേരയിൽ ഇരിക്കുന്നത് <strong>ലോക്സഭാ സ്പീക്കർ</strong> ആയിരിക്കും.</td>
+              </tr>
+              <tr>
+                <td>രാജ്യസഭയുടെ കാലാവധി: ഇല്ല</td>
+                <td>രാജ്യസഭാംഗത്തിന്റെ കാലാവധി: 6 വർഷം</td>
+                <td>രാജ്യസഭ ഒരു സ്ഥിരം സഭയായതിനാൽ അതിന് <strong>കാലാവധിയില്ല</strong> (പിരിച്ചുവിടാൻ കഴിയില്ല). എന്നാൽ സഭയിലെ ഓരോ <strong>അംഗത്തിന്റെയും (MP)</strong> കാലാവധി <strong>6 വർഷമാണ്</strong>.</td>
+              </tr>
+              <tr>
+                <td>സുപ്രീം കോടതി ജഡ്ജി: 65 വയസ്സ്</td>
+                <td>ഹൈക്കോടതി ജഡ്ജി: 62 വയസ്സ്</td>
+                <td>സുപ്രീം കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം <strong>65 വയസ്സാണ്</strong>. എന്നാൽ സംസ്ഥാന ഹൈക്കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം <strong>62 വയസ്സാണ്</strong>.</td>
+              </tr>
+              <tr>
+                <td>Art 137</td>
+                <td>Judicial Review</td>
+                <td>Art 137 = സ്വന്തം വിധിയുടെ റിവ്യൂ. Judicial Review = നിയമം ഭരണഘടനയ്ക്ക് വിരുദ്ധമാണോ എന്ന പരിശോധന (Art 13, 32, 226).</td>
+              </tr>
+              <tr>
+                <td>രാഷ്ട്രപതിക്ക് ഇംപീച്ച്മെന്റ് (Art 61)</td>
+                <td>ഉപരാഷ്ട്രപതിക്ക് നീക്കൽ പ്രമേയം (Art 67(b))</td>
+                <td>രാഷ്ട്രപതി: ഇരുസഭകളിലും ആകെ അംഗസംഖ്യയുടെ 2/3. ഉപരാഷ്ട്രപതി: രാജ്യസഭയിൽ ആകെ അംഗങ്ങളുടെ ഭൂരിപക്ഷം, ലോക്സഭയിൽ ലളിത ഭൂരിപക്ഷം.</td>
+              </tr>
+              <tr>
+                <td>രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പ്: നിയമസഭാംഗങ്ങൾ വോട്ട് ചെയ്യും</td>
+                <td>ഉപരാഷ്ട്രപതി തിരഞ്ഞെടുപ്പ്: നിയമസഭാംഗങ്ങൾ വോട്ട് ചെയ്യില്ല</td>
+                <td>VP-ക്ക് ഇരുസഭകളിലെയും എല്ലാ അംഗങ്ങൾ (നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവരും); രാഷ്ട്രപതിക്ക് തിരഞ്ഞെടുക്കപ്പെട്ട MP + MLA (നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവർ ഇല്ല).</td>
+              </tr>
+              <tr>
+                <td>രാഷ്ട്രപതി: മാപ്പ് Art 72</td>
+                <td>ഗവർണർ: Art 161</td>
+                <td>ഗവർണർക്ക് വധശിക്ഷ മാപ്പാക്കാനും കോർട്ട് മാർഷൽ ശിക്ഷയിൽ ഇടപെടാനും അധികാരമില്ല.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>Table 1: പ്രായപരിധിയും കാലാവധിയും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പദവി</th><th>കുഞ്ഞത് പ്രായപരിധി</th><th>കാലാവധി</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>രാഷ്ട്രപതി (President)</td><td>35 വയസ്സ്</td><td>5 വർഷം</td></tr>
+              <tr><td>ഉപരാഷ്ട്രപതി (Vice-President)</td><td>35 വയസ്സ്</td><td>5 വർഷം</td></tr>
+              <tr><td>ഗവർണ്ണർ (Governor)</td><td>35 വയസ്സ്</td><td>5 വർഷം</td></tr>
+              <tr><td>ലോക്സഭാംഗം (MP Lok Sabha)</td><td>25 വയസ്സ്</td><td>5 വർഷം</td></tr>
+              <tr><td>രാജ്യസഭാംഗം (MP Rajya Sabha)</td><td>30 വയസ്സ്</td><td>6 വർഷം</td></tr>
+              <tr><td>എം.എൽ.എ (MLA - നിയമസഭ)</td><td>25 വയസ്സ്</td><td>5 വർഷം</td></tr>
+              <tr><td>പഞ്ചായത്ത് അംഗം</td><td>21 വയസ്സ്</td><td>5 വർഷം</td></tr>
+              <tr><td>MLC (നിയമനിർമ്മാണ കൗൺസിൽ അംഗം)</td><td>30 വയസ്സ്</td><td>6 വർഷം</td></tr>
+              <tr><td>വോട്ടർ</td><td>18 വയസ്സ്</td><td>-</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>25-30-35 "അഞ്ചിന്റെ പടികൾ":</strong> ലോക്സഭ 25 → രാജ്യസഭ 30 → രാഷ്ട്രപതി/VP/ഗവർണർ 35. പഞ്ചായത്ത് 21, വോട്ട് 18. <strong>6 വർഷം = രാജ്യസഭ, MLC (ഉപരിസഭകൾ)</strong>.</p>
+        </div>
+
+        <h3>Table 2: ലോക്സഭയും രാജ്യസഭയും തമ്മിലുള്ള വ്യത്യാസം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>ലോക്സഭ (Lok Sabha)</th><th>രാജ്യസഭ (Rajya Sabha)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>മറ്റ് പേരുകൾ</td><td>അധോസഭ (Lower House), House of People</td><td>ഉപരിസഭ (Upper House), Council of States</td></tr>
+              <tr><td>സ്വഭാവം</td><td>5 വർഷം കൂടുമ്പോൾ പിരിച്ചുവിടുന്നു</td><td>സ്ഥിരം സഭ (പിരിച്ചുവിടില്ല)</td></tr>
+              <tr><td>പരമാവധി അംഗങ്ങൾ</td><td>552 (നിലവിൽ ആംഗ്ലോ ഇന്ത്യൻ ഇല്ല → 550)</td><td>250</td></tr>
+              <tr><td>തിരഞ്ഞെടുപ്പ്</td><td>ജനങ്ങൾ നേരിട്ട് (Direct)</td><td>എം.എൽ.എമാർ വഴി പരോക്ഷമായി (Indirect)</td></tr>
+              <tr><td>മണി ബിൽ</td><td>ആദ്യം ഇവിടെ മാത്രമേ അവതരിപ്പിക്കാനാവൂ</td><td>14 ദിവസത്തിനകം പാസാക്കി തിരികെ നൽകണം</td></tr>
+              <tr><td>അധ്യക്ഷൻ</td><td>സ്പീക്കർ (സഭാംഗം)</td><td>ഉപരാഷ്ട്രപതി (സഭാംഗമല്ല)</td></tr>
+              <tr><td>കുഞ്ഞത് പ്രായം / അംഗ കാലാവധി</td><td>25 / 5 വർഷം</td><td>30 / 6 വർഷം</td></tr>
+              <tr><td>അവിശ്വാസ പ്രമേയം</td><td>ലോക്സഭയിൽ മാത്രം</td><td>കൊണ്ടുവരാൻ കഴിയില്ല</td></tr>
+              <tr><td>നിലവിലെ അംഗബലം</td><td>543</td><td>245 (233 + 12)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p><strong>മണി ബിൽ ഭാഗം:</strong> രാജ്യസഭ മണി ബിൽ "പാസാക്കുകയല്ല" ചെയ്യുന്നത്; <strong>ശുപാർശകൾ മാത്രം നൽകി 14 ദിവസത്തിനകം തിരിച്ചയയ്ക്കുകയാണ്</strong> (തള്ളാനോ ഭേദഗതി വരുത്താനോ അധികാരമില്ല).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: നിനയ്ക്കാൻ എളുപ്പം ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>പാർലമെന്റിന്റെ ഘടനയുടെ ആർട്ടിക്കിളുകൾ ഓർക്കാൻ (79, 80, 81): "<strong>സ-ര-ല</strong>" (സരള). <strong>സ</strong> → സൻസദ് (Parliament) = Art <strong>79</strong>. <strong>ര</strong> → രാജ്യസഭ (Rajya Sabha) = Art <strong>80</strong>. <strong>ല</strong> → ലോക്സഭ (Lok Sabha) = Art <strong>81</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>രാഷ്ട്രപതിയുടെ "ജീവിതചക്രം" <strong>Art 52 → 62</strong>: 52 ഉണ്ടാകണം → 53 അധികാരം → 54 തിരഞ്ഞെടുപ്പ് → 55 തിരഞ്ഞെടുപ്പ് രീതി → 56 കാലാവധി → 57 വീണ്ടും മത്സരിക്കാം → 58 യോഗ്യത → 59 നിബന്ധനകൾ → 60 സത്യപ്രതിജ്ഞ → 61 ഇംപീച്ച്മെന്റ് → 62 തിരഞ്ഞെടുപ്പ് സമയം.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p><strong>61 = "14 + 1/4 + 2/3"</strong> (14 ദിവസം, നാലിലൊന്ന് ഒപ്പ്, മൂന്നിൽ രണ്ട് ഭൂരിപക്ഷം).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p><strong>LASS</strong> = Literature, Art, Science, Social service (രാജ്യസഭയിലെ 12 നാമനിർദ്ദേശം).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5:</strong></span>
+          <p><strong>543 = 530 + 13, 550 = 530 + 20.</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6:</strong></span>
+          <p><strong>P-C-R-R-R (+S):</strong> Pardon, Commutation, Remission, Respite, Reprieve (+Suspension).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7:</strong></span>
+          <p><strong>61-78-02 = "ഡി-ബി-പി"</strong> (Dowry, Banking, POTA). <strong>വിളിക്കുന്നവൻ P (President), ഇരിക്കുന്നവൻ S (Speaker).</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8:</strong></span>
+          <p><strong>രാഷ്ട്രപതി ↔ ഗവർണർ ഇരട്ട ആർട്ടിക്കിളുകൾ:</strong> മാപ്പ് 72 ↔ 161 · ഓർഡിനൻസ് 123 ↔ 213.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 9:</strong></span>
+          <p><strong>32 → 131 → 136 → 137 → 141 → 142 → 143:</strong> "സംരക്ഷണം, തർക്കം, അപ്പീൽ, റിവ്യൂ, ബാധകം, നീതി, ഉപദേശം".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 10:</strong></span>
+          <p><strong>രാജിക്കത്ത് ശൃംഖല (Resignation chain):</strong> രാഷ്ട്രപതി → ഉപരാഷ്ട്രപതി; ഉപരാഷ്ട്രപതി → രാഷ്ട്രപതി; സ്പീക്കർ → ഡെപ്യൂട്ടി സ്പീക്കർ; ഡെപ്യൂട്ടി സ്പീക്കർ → സ്പീക്കർ; രാജ്യസഭാ ഡെപ്യൂട്ടി ചെയർമാൻ → ചെയർമാൻ; <strong>ബാക്കി എല്ലാവരും</strong> (PM, SC/HC ജഡ്ജി, ഗവർണർ, CAG, AG) → <strong>രാഷ്ട്രപതിക്ക്</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: PSC കെണികൾ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. സാധാരണ PSC കെണികൾ (Common PSC Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഇന്ത്യൻ പാർലമെന്റ് അടങ്ങിയിരിക്കുന്നത് താഴെ പറയുന്നവയിൽ ഏതൊക്കെ ചേർന്നതാണ്?</p>
+          <p><strong>Confusing Options:</strong> ലോക്സഭയും രാജ്യസഭയും മാത്രം / ലോക്സഭ, രാജ്യസഭ, പ്രധാനമന്ത്രി / ലോക്സഭ, രാജ്യസഭ, രാഷ്ട്രപതി</p>
+          <p><strong>Fact:</strong> ആർട്ടിക്കിൾ 79 പ്രകാരം ഇന്ത്യൻ പാർലമെന്റ് എന്നാൽ <strong>രാഷ്ട്രപതി, ലോക്സഭ, രാജ്യസഭ</strong> എന്നിവ മൂന്നും ചേർന്നതാണ്. (രാഷ്ട്രപതി പാർലമെന്റിന്റെ അവിഭാജ്യ ഘടകമാണ്).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> ഉപരാഷ്ട്രപതി തന്റെ രാജിക്കത്ത് (Resignation letter) ആർക്കാണ് നൽകേണ്ടത്?</p>
+          <p><strong>Confusing Options:</strong> സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസ് / പ്രധാനമന്ത്രി / ലോക്സഭാ സ്പീക്കർ / രാഷ്ട്രപതി</p>
+          <p><strong>Fact:</strong> രാഷ്ട്രപതി രാജിക്കത്ത് നൽകുന്നത് ഉപരാഷ്ട്രപതിക്കാണ്, തിരിച്ച് <strong>ഉപരാഷ്ട്രപതി രാജിക്കത്ത് നൽകുന്നത് രാഷ്ട്രപതിക്കാണ്</strong>. (അന്യോന്യമാണ് കൈമാറുന്നത്).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> "Judicial Review അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ 137"</p>
+          <p><strong>Fact:</strong> തെറ്റ്. Art 137 = Review (സ്വന്തം വിധി പുനഃപരിശോധന). Judicial Review = നിയമങ്ങളുടെ ഭരണഘടനാ സാധുത പരിശോധിക്കൽ (Art 13, 32, 226).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> "രാജ്യസഭ മണി ബിൽ പാസാക്കണം/തള്ളാം"</p>
+          <p><strong>Fact:</strong> തെറ്റ്. ശുപാർശ മാത്രം, 14 ദിവസം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> "ലോക്സഭയുടെ പരമാവധി അംഗസംഖ്യ 543"</p>
+          <p><strong>Fact:</strong> തെറ്റ്. 543 = നിലവിൽ തിരഞ്ഞെടുക്കപ്പെട്ടവർ; ഭരണഘടനാപരമായ പരമാവധി 550.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6</span>
+          <p><strong>Question:</strong> "CJI-ക്ക് സത്യവാചകം ചൊല്ലിക്കൊടുക്കുന്നത് ചീഫ് ജസ്റ്റിസ്"</p>
+          <p><strong>Fact:</strong> തെറ്റ്. CJI-ക്ക് രാഷ്ട്രപതി; രാഷ്ട്രപതിക്ക് CJI.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7</span>
+          <p><strong>Question:</strong> "ഉപരാഷ്ട്രപതി രാജ്യസഭാംഗമാണ്"</p>
+          <p><strong>Fact:</strong> തെറ്റ്. അദ്ദേഹം ഒരു സഭയിലും അംഗമല്ല (ചെയർമാൻ മാത്രം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8</span>
+          <p><strong>Question:</strong> "രാഷ്ട്രപതി ബിൽ ഒപ്പിടാൻ ബാധ്യസ്ഥൻ"</p>
+          <p><strong>Fact:</strong> ഭാഗികമായി തെറ്റ്; പുനഃപരിശോധനയ്ക്ക് തിരിച്ചയച്ച ബിൽ വീണ്ടും പാസായാൽ മാത്രം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് പാർലമെന്റ് രൂപീകരിച്ചിട്ടുള്ളത് (പാർലമെന്റിന്റെ ഘടന)?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 76</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 81</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 79</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 110</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആർട്ടിക്കിൾ 79</div>
+            <div class="explanation">ഇതനുസരിച്ച് രാഷ്ട്രപതിയും ലോക്സഭയും രാജ്യസഭയും ചേർന്നതാണ് പാർലമെന്റ്. 76 = അറ്റോർണി ജനറൽ · 81 = ലോക്സഭ · 110 = മണി ബില്ലിന്റെ നിർവചനം.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഇന്ത്യൻ ഭരണഘടനാ വ്യവസ്ഥകൾ ലംഘിക്കുന്ന പക്ഷം രാഷ്ട്രപതിയെ ഇംപീച്ച് (Impeachment) ചെയ്യാനുള്ള നടപടിക്രമങ്ങൾ പ്രതിപാദിക്കുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 72</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 61</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 54</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 356</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 61</div>
+            <div class="explanation">ഇംപീച്ച്മെന്റ് നടപടികൾ പാർലമെന്റിന്റെ ഏത് സഭയിലും ആരംഭിക്കാവുന്നതാണ്. ഇതിന് 14 ദിവസത്തെ മുൻകൂർ നോട്ടീസ് നൽകണം. 72 = മാപ്പ് · 54 = രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പ് · 356 = രാഷ്ട്രപതി ഭരണം.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക (പദവിയും വിരമിക്കൽ പ്രായവും):</div>
+          <div class="options">
+            <span data-opt="A">A. ഹൈക്കോടതി ജഡ്ജി - 65 വയസ്സ്</span>
+            <span data-opt="B">B. സുപ്രീം കോടതി ജഡ്ജി - 62 വയസ്സ്</span>
+            <span data-opt="C">C. സുപ്രീം കോടതി ജഡ്ജി - 65 വയസ്സ്</span>
+            <span data-opt="D">D. സി.എ.ജി (CAG) - 60 വയസ്സ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സുപ്രീം കോടതി ജഡ്ജി - 65 വയസ്സ്</div>
+            <div class="explanation">ഹൈക്കോടതി ജഡ്ജിക്ക് 62 വയസ്സും, സുപ്രീം കോടതി ജഡ്ജിക്ക് 65 വയസ്സുമാണ് വിരമിക്കൽ പ്രായം. CAG = 65 വയസ്സ് അല്ലെങ്കിൽ 6 വർഷം, ഏതാണോ ആദ്യം.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. ആരോഹണ ക്രമത്തിൽ (Age limit അടിസ്ഥാനത്തിൽ ചെറിയ പ്രായം മുതൽ വലിയ പ്രായം വരെ) ശരിയായി ക്രമീകരിച്ചിരിക്കുന്നത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. രാജ്യസഭാംഗം, ലോക്സഭാംഗം, രാഷ്ട്രപതി</span>
+            <span data-opt="B">B. ലോക്സഭാംഗം, രാജ്യസഭാംഗം, രാഷ്ട്രപതി</span>
+            <span data-opt="C">C. രാഷ്ട്രപതി, രാജ്യസഭാംഗം, ലോക്സഭാംഗം</span>
+            <span data-opt="D">D. ലോക്സഭാംഗം, രാഷ്ട്രപതി, രാജ്യസഭാംഗം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ലോക്സഭാംഗം, രാജ്യസഭാംഗം, രാഷ്ട്രപതി</div>
+            <div class="explanation">ലോക്സഭ (25 വയസ്സ്), രാജ്യസഭ (30 വയസ്സ്), രാഷ്ട്രപതി (35 വയസ്സ്). 🧠 25 → 30 → 35 (+5 പടികൾ).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. പാർലമെന്റിന്റെ സംയുക്ത സമ്മേളനം (Joint Sitting) വിളിച്ചുകൂട്ടാൻ (Summon) അധികാരമുള്ളത് ആർക്കാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ലോക്സഭാ സ്പീക്കർ</span>
+            <span data-opt="B">B. ഉപരാഷ്ട്രപതി</span>
+            <span data-opt="C">C. പ്രധാനമന്ത്രി</span>
+            <span data-opt="D">D. രാഷ്ട്രപതി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) രാഷ്ട്രപതി</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 108 പ്രകാരം രാഷ്ട്രപതിയാണ് ഇത് വിളിച്ചുകൂട്ടുന്നത്, എന്നാൽ അധ്യക്ഷത വഹിക്കുന്നത് ലോക്സഭാ സ്പീക്കറാണ്. A = അധ്യക്ഷത വഹിക്കുന്നയാൾ (കെണി) · B = രാജ്യസഭാ അധ്യക്ഷൻ · C = മന്ത്രിസഭാ തലവൻ, ഈ അധികാരമില്ല.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഒരു ബിൽ മണി ബിൽ (Money Bill) ആണോ അല്ലയോ എന്ന് തീരുമാനിക്കാനുള്ള പരമാധികാരം ആർക്കാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ധനകാര്യ മന്ത്രി</span>
+            <span data-opt="B">B. രാഷ്ട്രപതി</span>
+            <span data-opt="C">C. ലോക്സഭാ സ്പീക്കർ</span>
+            <span data-opt="D">D. രാജ്യസഭാ ചെയർമാൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ലോക്സഭാ സ്പീക്കർ</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 110 പ്രകാരം സ്പീക്കറുടെ തീരുമാനമാണ് അന്തിമം. മണി ബിൽ രാജ്യസഭയിൽ അവതരിപ്പിക്കാൻ കഴിയില്ല.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: രാജ്യസഭയുമായി (Rajya Sabha) ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഇതൊരു സ്ഥിരം സഭയാണ് (Permanent House), ഇത് പിരിച്ചുവിടാൻ കഴിയില്ല.<br>
+            2. രാജ്യസഭാംഗത്തിന്റെ കാലാവധി 6 വർഷമാണ്.<br>
+            3. രാജ്യസഭയിലേക്ക് രാഷ്ട്രപതി 12 പേരെ നാമനിർദ്ദേശം ചെയ്യുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 എന്നിവ ശരിയാണ്</div>
+            <div class="explanation">മൂന്ന് പ്രസ്താവനകളും രാജ്യസഭയെക്കുറിച്ചുള്ള ഏറ്റവും പ്രധാനപ്പെട്ട വസ്തുതകളാണ്. കെണി: "സഭയ്ക്ക് 6 വർഷം" എന്ന് മാറ്റി ചോദിച്ചാൽ തെറ്റ്; 6 വർഷം അംഗത്തിന്റെ കാലാവധിയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. മരണശിക്ഷ ഇളവുചെയ്യാനോ, കുറ്റവാളികൾക്ക് പൂർണ്ണമായി മാപ്പുനൽകാനോ (Pardoning Power) രാഷ്ട്രപതിക്ക് അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 74</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 123</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 61</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 72</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ആർട്ടിക്കിൾ 72</div>
+            <div class="explanation">ഗവർണ്ണർക്ക് ആർട്ടിക്കിൾ 161 പ്രകാരം അധികാരമുണ്ടെങ്കിലും മരണശിക്ഷ പൂർണ്ണമായി ഒഴിവാക്കാൻ (Pardon) രാഷ്ട്രപതിക്ക് മാത്രമേ കഴിയൂ. 74 = മന്ത്രിസഭ · 123 = ഓർഡിനൻസ് · 61 = ഇംപീച്ച്മെന്റ്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (പദവികളും പ്രായപരിധിയും):<br>
+            1. രാഷ്ട്രപതി - a. 25 വയസ്സ്<br>
+            2. രാജ്യസഭാംഗം - b. 21 വയസ്സ്<br>
+            3. ലോക്സഭാംഗം - c. 35 വയസ്സ്<br>
+            4. പഞ്ചായത്ത് അംഗം - d. 30 വയസ്സ്</div>
+          <div class="options">
+            <span data-opt="A">A. 1-c, 2-d, 3-a, 4-b</span>
+            <span data-opt="B">B. 1-b, 2-a, 3-d, 4-c</span>
+            <span data-opt="C">C. 1-c, 2-a, 3-d, 4-b</span>
+            <span data-opt="D">D. 1-d, 2-c, 3-a, 4-b</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-c, 2-d, 3-a, 4-b</div>
+            <div class="explanation">രാഷ്ട്രപതി/ഗവർണ്ണർ (35), രാജ്യസഭ (30), ലോക്സഭ/MLA (25), പഞ്ചായത്ത് (21).</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. രാജ്യസഭയുടെ എക്സ്-ഒഫീഷ്യോ ചെയർമാൻ (Ex-officio Chairman) ആയി പ്രവർത്തിക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സ്പീക്കർ</span>
+            <span data-opt="B">B. സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="C">C. ഉപരാഷ്ട്രപതി</span>
+            <span data-opt="D">D. പാർലമെന്ററി കാര്യ മന്ത്രി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഉപരാഷ്ട്രപതി</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 64 പ്രകാരം ഉപരാഷ്ട്രപതിയാണ് ഈ പദവി വഹിക്കുന്നത്. സഭയിലെ അംഗമല്ലാത്ത ഒരേയൊരു അധ്യക്ഷനും ഇദ്ദേഹമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. രാഷ്ട്രപതി തന്റെ രാജിക്കത്ത് (Resignation letter) സമർപ്പിക്കേണ്ടത് ആർക്കാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പ്രധാനമന്ത്രിക്ക്</span>
+            <span data-opt="B">B. സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസിന്</span>
+            <span data-opt="C">C. ഉപരാഷ്ട്രപതിക്ക്</span>
+            <span data-opt="D">D. ലോക്സഭാ സ്പീക്കർക്ക്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഉപരാഷ്ട്രപതിക്ക്</div>
+            <div class="explanation">ഉപരാഷ്ട്രപതിക്ക് രാജിക്കത്ത് നൽകിയ ശേഷം ഈ വിവരം ഉപരാഷ്ട്രപതി ലോക്സഭാ സ്പീക്കറെ അറിയിക്കേണ്ടതുണ്ട്. (Art 56(1)(a)).</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): ഇന്ത്യയിൽ രാഷ്ട്രപതി വെറുമൊരു നാമമാത്ര ഭരണത്തലവൻ (Titular head) മാത്രമാണ്.<br>
+            Reason (R): ഇന്ത്യൻ ഭരണഘടന പാർലമെന്ററി സമ്പ്രദായമാണ് സ്വീകരിച്ചിരിക്കുന്നത്. അതിനാൽ ആർട്ടിക്കിൾ 74 പ്രകാരം യഥാർത്ഥ അധികാരം (De-facto executive) പ്രധാനമന്ത്രി തലവനായുള്ള മന്ത്രിസഭയ്ക്കാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">അമേരിക്കൻ പ്രസിഡൻഷ്യൽ സിസ്റ്റത്തിൽ നിന്ന് ഇന്ത്യൻ സിസ്റ്റം വ്യത്യാസപ്പെടുന്നത് ഇവിടുത്തെ ഈ രീതി കാരണമാണ്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ലോക്സഭയുടെ (House of the People) പരമാവധി അംഗസംഖ്യ (Maximum Strength) ഭരണഘടന പ്രകാരം എത്രയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. 543</span>
+            <span data-opt="B">B. 552 (നിലവിൽ 550)</span>
+            <span data-opt="C">C. 250</span>
+            <span data-opt="D">D. 500</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 552 (നിലവിൽ 550)</div>
+            <div class="explanation">മുമ്പ് 2 ആംഗ്ലോ-ഇന്ത്യൻ നോമിനേഷൻ ഉൾപ്പെടെ 552 ആയിരുന്നു. 104-ാം ഭേദഗതി പ്രകാരം നോമിനേഷൻ ഒഴിവാക്കിയതിനാൽ ഇത് 550 ആയി കണക്കാക്കാം. 543 = നിലവിൽ തിരഞ്ഞെടുക്കപ്പെട്ട സീറ്റ് · 250 = രാജ്യസഭ.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. സുപ്രീം കോടതി ജഡ്ജിമാരെ നിയമിക്കുന്നതിനുള്ള അധികാരം ആർക്കാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പ്രധാനമന്ത്രി</span>
+            <span data-opt="B">B. പാർലമെന്റ്</span>
+            <span data-opt="C">C. നിയമ മന്ത്രി</span>
+            <span data-opt="D">D. രാഷ്ട്രപതി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) രാഷ്ട്രപതി</div>
+            <div class="explanation">സുപ്രീം കോടതിയിലെ കൊളീജിയത്തിന്റെ (Collegium) ശുപാർശ പ്രകാരം രാഷ്ട്രപതിയാണ് നിയമനം നടത്തുന്നത്. (Art 124(2)).</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. പാർലമെന്റിന്റെ ഒരു സഭയിലും അംഗമല്ലാത്ത ഒരാളെ മന്ത്രിയായി നിയമിച്ചാൽ, എത്ര കാലത്തിനുള്ളിൽ അദ്ദേഹം ഏതെങ്കിലും ഒരു സഭയിൽ അംഗമായിരിക്കണം?</div>
+          <div class="options">
+            <span data-opt="A">A. 3 മാസം</span>
+            <span data-opt="B">B. 6 മാസം</span>
+            <span data-opt="C">C. 1 വർഷം</span>
+            <span data-opt="D">D. അംഗമാകേണ്ടതില്ല</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 6 മാസം</div>
+            <div class="explanation">ഇത് ആർട്ടിക്കിൾ 75 പ്രകാരമുള്ള വ്യവസ്ഥയാണ് (Art 75(5)). 6 മാസത്തിനുള്ളിൽ എം.പിയായി തിരഞ്ഞെടുക്കപ്പെട്ടില്ലെങ്കിൽ മന്ത്രിസ്ഥാനം നഷ്ടമാകും. സംസ്ഥാനത്ത് ഇതേ വ്യവസ്ഥ Art 164(4).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: അധിക പ്രാക്ടീസ് MCQs ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. അധിക പ്രാക്ടീസ് MCQs (Additional Practice)</h2>
+      <div class="section-body">
+        <!-- N1 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">N1. രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പിലെ ഇലക്ടറൽ കോളേജിൽ ഉൾപ്പെടാത്തവർ ആരെല്ലാം?</div>
+          <div class="options">
+            <span data-opt="A">A. കേരള നിയമസഭയിലെ എം.എൽ.എമാർ</span>
+            <span data-opt="B">B. രാജ്യസഭയിലെ നാമനിർദ്ദേശം ചെയ്യപ്പെട്ട അംഗങ്ങൾ</span>
+            <span data-opt="C">C. ഡൽഹി നിയമസഭയിലെ തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ</span>
+            <span data-opt="D">D. ലോക്സഭയിലെ തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) രാജ്യസഭയിലെ നാമനിർദ്ദേശം ചെയ്യപ്പെട്ട അംഗങ്ങൾ</div>
+            <div class="explanation">Art 54: തിരഞ്ഞെടുക്കപ്പെട്ട MP/MLA മാത്രം; നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവരും MLC-മാരും ഇല്ല. A, D = ഉൾപ്പെടും; C = ഡൽഹി (NCT) 70-ാം ഭേദഗതി പ്രകാരം ഉൾപ്പെടും.</div>
+          </div>
+        </div>
+        <!-- N2 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">N2. പാർലമെന്റിന്റെ സംയുക്ത സമ്മേളനത്തിലൂടെ പാസാക്കിയ ബിൽ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. GST ഭരണഘടനാ ഭേദഗതി ബിൽ</span>
+            <span data-opt="B">B. വിവരാവകാശ ബിൽ</span>
+            <span data-opt="C">C. വനിതാ സംവരണ ബിൽ</span>
+            <span data-opt="D">D. സ്ത്രീധന നിരോധന ബിൽ (1961)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) സ്ത്രീധന നിരോധന ബിൽ (1961)</div>
+            <div class="explanation">1961 (സ്ത്രീധന നിരോധനം), 1978 (ബാങ്കിങ് സർവീസ് കമ്മീഷൻ റദ്ദാക്കൽ), 2002 (POTA). 🧠 ഡി-ബി-പി.</div>
+          </div>
+        </div>
+        <!-- N3 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">N3. ഉപരാഷ്ട്രപതിയെ നീക്കം ചെയ്യാനുള്ള പ്രമേയം ആദ്യം പാസാക്കേണ്ടത് ഏത് സഭയിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ലോക്സഭ</span>
+            <span data-opt="B">B. രാജ്യസഭ</span>
+            <span data-opt="C">C. സംയുക്ത സമ്മേളനം</span>
+            <span data-opt="D">D. സുപ്രീം കോടതി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) രാജ്യസഭ</div>
+            <div class="explanation">Art 67(b): രാജ്യസഭയിൽ ആകെ അംഗങ്ങളുടെ ഭൂരിപക്ഷം, തുടർന്ന് ലോക്സഭയുടെ അംഗീകാരം. സംയുക്ത സമ്മേളനം ബാധകമല്ല.</div>
+          </div>
+        </div>
+        <!-- N4 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">N4. സുപ്രീം കോടതിയിലെ നിലവിലെ ആകെ ജഡ്ജിമാരുടെ എണ്ണം (CJI ഉൾപ്പെടെ)?</div>
+          <div class="options">
+            <span data-opt="A">A. 34</span>
+            <span data-opt="B">B. 31</span>
+            <span data-opt="C">C. 33</span>
+            <span data-opt="D">D. 35</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 34</div>
+            <div class="explanation">2019-ലെ ഭേദഗതി നിയമപ്രകാരം 34 (CJI + 33). 31 = 2009-ലെ എണ്ണം; 8 = 1950-ലെ ആദ്യ എണ്ണം.</div>
+          </div>
+        </div>
+        <!-- N5 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">N5. പാർലമെന്റ് വീണ്ടും സമ്മേളിച്ചതിന് ശേഷം, ഒരു ഓർഡിനൻസ് എത്ര ആഴ്ചയ്ക്കകം അംഗീകരിക്കണം?</div>
+          <div class="options">
+            <span data-opt="A">A. 2 ആഴ്ച</span>
+            <span data-opt="B">B. 4 ആഴ്ച</span>
+            <span data-opt="C">C. 6 ആഴ്ച</span>
+            <span data-opt="D">D. 8 ആഴ്ച</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 6 ആഴ്ച</div>
+            <div class="explanation">Art 123(2). ഇല്ലെങ്കിൽ റദ്ദാകും. ഗവർണറുടെ ഓർഡിനൻസിനും (Art 213) ഇതേ 6 ആഴ്ച.</div>
+          </div>
+        </div>
+        <!-- N6 -->
+        <div class="question-item" data-qindex="20">
+          <div class="q-text">N6. ഇന്ത്യയിലെ ആദ്യ വനിതാ ഹൈക്കോടതി ജഡ്ജി ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. അന്ന ചാണ്ടി</span>
+            <span data-opt="B">B. ഫാത്തിമ ബീവി</span>
+            <span data-opt="C">C. ലീലാ സേത്ത്</span>
+            <span data-opt="D">D. സുജാത മനോഹർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) അന്ന ചാണ്ടി</div>
+            <div class="explanation">കേരള ഹൈക്കോടതി, 1959. B = ആദ്യ വനിതാ SC ജഡ്ജി; C = ആദ്യ വനിതാ ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്.</div>
+          </div>
+        </div>
+        <!-- N7 -->
+        <div class="question-item" data-qindex="21">
+          <div class="q-text">N7. കേന്ദ്ര മന്ത്രിസഭയിലെ ആകെ മന്ത്രിമാരുടെ എണ്ണം ലോക്സഭാ അംഗബലത്തിന്റെ എത്ര ശതമാനത്തിൽ കൂടരുത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 10%</span>
+            <span data-opt="B">B. 12%</span>
+            <span data-opt="C">C. 20%</span>
+            <span data-opt="D">D. 15%</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 15%</div>
+            <div class="explanation">91-ാം ഭേദഗതി (2003), Art 75(1A). 🧠 "91 → 15%".</div>
+          </div>
+        </div>
+        <!-- N8 -->
+        <div class="question-item" data-qindex="22">
+          <div class="q-text">N8. നിലവിലെ (2026 ഒക്ടോബർ) ഉപരാഷ്ട്രപതിയും രാജ്യസഭാ ചെയർമാനും ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജഗ്ദീപ് ധൻഖർ</span>
+            <span data-opt="B">B. എം. വെങ്കയ്യ നായിഡു</span>
+            <span data-opt="C">C. സി.പി. രാധാകൃഷ്ണൻ</span>
+            <span data-opt="D">D. ഹമീദ് അൻസാരി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സി.പി. രാധാകൃഷ്ണൻ</div>
+            <div class="explanation">15-ാമത്. A = 2025 ജൂലൈയിൽ രാജിവച്ച മുൻഗാമി; B, D = മുൻ ഉപരാഷ്ട്രപതിമാർ.</div>
+          </div>
+        </div>
+        <!-- N9 -->
+        <div class="question-item" data-qindex="23">
+          <div class="q-text">N9. സുപ്രീം കോടതിക്ക് സ്വന്തം വിധി പുനഃപരിശോധിക്കാൻ അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 131</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 137</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 136</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 143</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 137</div>
+            <div class="explanation">131 = ഒറിജിനൽ അധികാരപരിധി; 136 = SLP; 143 = ഉപദേശക അധികാരപരിധി.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>9</td><td>(A)</td><td>17 (N3)</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>10</td><td>(C)</td><td>18 (N4)</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>11</td><td>(C)</td><td>19 (N5)</td><td>(C)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>12</td><td>(A)</td><td>20 (N6)</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(D)</td><td>13</td><td>(B)</td><td>21 (N7)</td><td>(D)</td></tr>
+              <tr><td>6</td><td>(C)</td><td>14</td><td>(D)</td><td>22 (N8)</td><td>(C)</td></tr>
+              <tr><td>7</td><td>(D)</td><td>15</td><td>(B)</td><td>23 (N9)</td><td>(B)</td></tr>
+              <tr><td>8</td><td>(D)</td><td>16 (N2)</td><td>(D)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 20: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>പാർലമെന്റ് (Art 79): രാഷ്ട്രപതി + ലോക്സഭ + രാജ്യസഭ.</li>
+          <li>രാജ്യസഭ (Art 80): ഉപരിസഭ. സ്ഥിരം സഭ. പരമാവധി 250 പേർ.</li>
+          <li>രാജ്യസഭാംഗം: 30 വയസ്സ് വേണം. 6 വർഷം കാലാവധി.</li>
+          <li>ലോക്സഭ (Art 81): അധോസഭ. 5 വർഷം കാലാവധി. പരമാവധി 552 (550).</li>
+          <li>ലോക്സഭാംഗം: 25 വയസ്സ് വേണം.</li>
+          <li>രാഷ്ട്രപതി/ഉപരാഷ്ട്രപതി/ഗവർണ്ണർ: 35 വയസ്സ് വേണം.</li>
+          <li>രാഷ്ട്രപതി ഇംപീച്ച്മെന്റ്: ആർട്ടിക്കിൾ 61.</li>
+          <li>രാഷ്ട്രപതിയുടെ മാപ്പുനൽകൽ: ആർട്ടിക്കിൾ 72.</li>
+          <li>രാജ്യസഭാ ചെയർമാൻ: ഉപരാഷ്ട്രപതി (Art 64).</li>
+          <li>സംയുക്ത സമ്മേളനം (Joint Sitting): വിളിക്കുന്നത് രാഷ്ട്രപതി (Art 108). അധ്യക്ഷത വഹിക്കുന്നത് സ്പീക്കർ.</li>
+          <li>മണി ബിൽ തീരുമാനിക്കുന്നത്: ലോക്സഭാ സ്പീക്കർ (Art 110).</li>
+          <li>സുപ്രീം കോടതി (Art 124): ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം 65 വയസ്സ്.</li>
+          <li>ഹൈക്കോടതി: ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം 62 വയസ്സ്.</li>
+          <li>രാജിക്കത്ത്: രാഷ്ട്രപതി ↔ ഉപരാഷ്ട്രപതി (അന്യോന്യം).</li>
+          <li>യഥാർത്ഥ ഭരണത്തലവൻ: പ്രധാനമന്ത്രി. നാമമാത്ര തലവൻ: രാഷ്ട്രപതി (ആർട്ടിക്കിൾ 52).</li>
+          <li>Art 137 = സ്വന്തം വിധിയുടെ റിവ്യൂ (Judicial Review അല്ല).</li>
+          <li>മണി ബിൽ: ലോക്സഭ → RS (ശുപാർശ മാത്രം, 14 ദിവസം).</li>
+          <li>ഓർഡിനൻസ് Art 123: പാർലമെന്റ് ചേർന്ന് 6 ആഴ്ച.</li>
+          <li>മന്ത്രിസഭ ≤ ലോക്സഭാ അംഗബലത്തിന്റെ 15% (91-ാം ഭേദഗതി); അംഗമല്ലാത്ത മന്ത്രി 6 മാസത്തിനകം അംഗമാകണം.</li>
+          <li>🔄 രാഷ്ട്രപതി ദ്രൗപദി മുർമു · ഉപരാഷ്ട്രപതി സി.പി. രാധാകൃഷ്ണൻ · CJI സൂര്യകാന്ത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 21: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>ആർട്ടിക്കിളുകൾ (Articles of Part V)</h3>
+        <ul>
+          <li><strong>52:</strong> രാഷ്ട്രപതി. <strong>61:</strong> ഇംപീച്ച്മെന്റ്. <strong>63:</strong> ഉപരാഷ്ട്രപതി. <strong>72:</strong> മാപ്പുനൽകൽ. <strong>74:</strong> മന്ത്രിസഭ. <strong>76:</strong> അറ്റോർണി ജനറൽ.</li>
+          <li><strong>79:</strong> പാർലമെന്റ്. <strong>80:</strong> രാജ്യസഭ. <strong>81:</strong> ലോക്സഭ. <strong>108:</strong> സംയുക്ത സമ്മേളനം. <strong>110:</strong> മണി ബിൽ. <strong>124:</strong> സുപ്രീം കോടതി.</li>
+          <li>➕ <strong>54</strong> രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പ് · <strong>64</strong> രാജ്യസഭാ ചെയർമാൻ · <strong>67(b)</strong> VP നീക്കൽ · <strong>75</strong> പ്രധാനമന്ത്രി/മന്ത്രിമാർ · <strong>93</strong> സ്പീക്കർ · <strong>109</strong> മണി ബിൽ നടപടി · <strong>111</strong> ബില്ലിന് അനുമതി · <strong>123</strong> ഓർഡിനൻസ് · <strong>131</strong> ഒറിജിനൽ അധികാരപരിധി · <strong>137</strong> റിവ്യൂ · <strong>143</strong> ഉപദേശക അധികാരപരിധി · <strong>148</strong> CAG.</li>
+        </ul>
+        <h3>പ്രായപരിധികൾ (Age Limits)</h3>
+        <ul>
+          <li><strong>35 Years:</strong> President, Vice-President, Governor.</li>
+          <li><strong>30 Years:</strong> Rajya Sabha, Legislative Council (MLC).</li>
+          <li><strong>25 Years:</strong> Lok Sabha, Legislative Assembly (MLA).</li>
+          <li><strong>21 Years:</strong> Panchayat. <strong>18 Years:</strong> Voting.</li>
+        </ul>
+        <h3>വിരമിക്കൽ പ്രായം (Retirement Age)</h3>
+        <ul>
+          <li><strong>Supreme Court Judge:</strong> 65 Years.</li>
+          <li><strong>High Court Judge:</strong> 62 Years.</li>
+          <li>➕ <strong>CAG:</strong> 65 വയസ്സ് അല്ലെങ്കിൽ 6 വർഷം (ഏതാണോ ആദ്യം).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 22: ടോപ്പ് 25 വസ്തുതകൾ ===== -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഇന്ത്യയിൽ ഏറ്റവും കൂടുതൽ ലോക്സഭാ സീറ്റുകളുള്ള സംസ്ഥാനം ഉത്തർപ്രദേശാണ് (80 സീറ്റുകൾ). രാജ്യസഭാ സീറ്റും അവിടെത്തന്നെ കൂടുതൽ (31).</li>
+          <li>കേരളത്തിന് ലോക്സഭയിൽ 20 സീറ്റുകളും, രാജ്യസഭയിൽ 9 സീറ്റുകളുമാണുള്ളത്.</li>
+          <li>ലോക്സഭാ സ്പീക്കർ തന്റെ രാജിക്കത്ത് നൽകേണ്ടത് ഡെപ്യൂട്ടി സ്പീക്കർക്കാണ്.</li>
+          <li>രാജ്യസഭയിലെ ഒരു ബിൽ പാസാക്കുന്നതിൽ സമനില (Tie) വന്നാൽ, നിർണ്ണായക വോട്ട് (Casting Vote) ചെയ്യാൻ ഉപരാഷ്ട്രപതിക്ക് (ചെയർമാൻ) അധികാരമുണ്ട്.</li>
+          <li>ആർട്ടിക്കിൾ 123 പ്രകാരം പാർലമെന്റ് സമ്മേളിക്കാത്ത സമയത്ത് അടിയന്തര നിയമങ്ങൾ കൊണ്ടുവരാൻ രാഷ്ട്രപതിക്ക് 'ഓർഡിനൻസ്' (Ordinance) പുറപ്പെടുവിക്കാം.</li>
+          <li>സുപ്രീം കോടതിയുടെ ആദ്യത്തെ വനിതാ ജഡ്ജിയാണ് ഫാത്തിമ ബീവി. (ഇന്ത്യൻ ചരിത്രത്തിൽ ഇതുവരെ ഒരു വനിതാ ചീഫ് ജസ്റ്റിസ് / CJI ഉണ്ടായിട്ടില്ല).</li>
+          <li>ഹൈക്കോടതിയിലെ ആദ്യത്തെ വനിതാ ചീഫ് ജസ്റ്റിസാണ് ലീലാ സേത്ത് (Leela Seth - ഹിമാചൽ പ്രദേശ്). അന്നാ ചാണ്ടി ആദ്യ വനിതാ ഹൈക്കോടതി ജഡ്ജിയാണ്.</li>
+          <li>പ്രസിഡന്റ് തിരഞ്ഞെടുപ്പിൽ മത്സരിക്കാൻ കുഞ്ഞത് 50 ഇലക്ടർമാരുടെ (എം.പി/എം.എൽ.എ) പിന്തുണയും (Proposers) 50 പേരുടെ പിന്താങ്ങലും (Seconders) ആവശ്യമാണ്.</li>
+          <li>രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പിലെ തർക്കങ്ങൾ പരിഹരിക്കാനുള്ള പൂർണ്ണ അധികാരം സുപ്രീം കോടതിക്ക് മാത്രമാണ് (ആർട്ടിക്കിൾ 71).</li>
+          <li>മന്ത്രിസഭയ്ക്ക് (Council of Ministers) ലോക്സഭയോട് കൂട്ടുത്തരവാദിത്തം (Collective responsibility) ഉണ്ടായിരിക്കും. ഇത് പാർലമെന്ററി ജനാധിപത്യത്തിന്റെ പ്രധാന സവിശേഷതയാണ്.</li>
+          <li>ഒരു മന്ത്രിസഭയെ താഴെയിറക്കാൻ പ്രതിപക്ഷത്തിന് ലോക്സഭയിൽ 'അവിശ്വാസ പ്രമേയം' (No-confidence motion) കൊണ്ടുവരാം. ഇത് പാസായാൽ സർക്കാർ രാജിവെക്കണം.</li>
+          <li>ഒരു സാമ്പത്തിക വർഷത്തെ ബജറ്റ് (Annual Financial Statement) അവതരിപ്പിക്കുന്നതിന് മുൻപ് സാമ്പത്തിക സർവ്വേ (Economic Survey) പാർലമെന്റിൽ വെക്കാറുണ്ട്.</li>
+          <li>പാർലമെന്റ് യോഗം ചേരാൻ വേണ്ട ഏറ്റവും കുറഞ്ഞ അംഗസംഖ്യയെ ക്വാറം (Quorum) എന്ന് വിളിക്കുന്നു. ഇത് ആകെ അംഗസംഖ്യയുടെ പത്തിലൊന്ന് (1/10) ആണ്.</li>
+          <li>അറ്റോർണി ജനറലിന് (Attorney General) പാർലമെന്റിന്റെ ഇരുസഭകളിലും പങ്കെടുക്കാം, സംസാരിക്കാം. എന്നാൽ വോട്ട് ചെയ്യാൻ അവകാശമില്ല (ആർട്ടിക്കിൾ 88).</li>
+          <li>സി.എ.ജി (Comptroller and Auditor General) യെ നിയമിക്കുന്നത് രാഷ്ട്രപതിയാണ്. ഇദ്ദേഹത്തിന്റെ വിരമിക്കൽ പ്രായം 65 വയസ്സ് അല്ലെങ്കിൽ 6 വർഷം (ഏതാണോ ആദ്യം വരുന്നത്) ആണ്. (ആർട്ടിക്കിൾ 148).</li>
+          <li>സുപ്രീം കോടതിക്ക് സ്വന്തം വിധികൾ പുനഃപരിശോധിക്കാൻ (Review) അധികാരമുണ്ട് (ആർട്ടിക്കിൾ 137).</li>
+          <li>ജനറൽ ഇലക്ഷന് ശേഷം രൂപീകരിക്കുന്ന പുതിയ ലോക്സഭയിലെ അംഗങ്ങൾക്ക് സത്യപ്രതിജ്ഞ ചൊല്ലിക്കൊടുക്കുന്നത് സ്പീക്കർ അല്ലാത്ത, മുതിർന്ന അംഗമായ 'പ്രോ-ടേം സ്പീക്കർ' (Pro-tem Speaker) ആണ്.</li>
+          <li>പൂജ്യ സമയം (Zero Hour) എന്നത് പാർലമെന്റിലെ ഒരു ഇന്ത്യൻ കണ്ടുപിടുത്തമാണ്. ചോദ്യോത്തര വേളയ്ക്ക് (Question Hour) തൊട്ടുപിന്നാലെ വരുന്ന സമയമാണിത്. മുൻകൂർ നോട്ടീസില്ലാതെ പ്രധാന പ്രശ്നങ്ങൾ ഉന്നയിക്കാം.</li>
+          <li>പാർലമെന്റ് പാസാക്കുന്ന ബില്ലുകൾക്ക് രാഷ്ട്രപതിക്ക് അനുമതി നിഷേധിക്കുകയോ വൈകിപ്പിക്കുകയോ ചെയ്യാം. ഈ അധികാരത്തെ വീറ്റോ പവർ (Veto Power) എന്ന് വിളിക്കുന്നു. (പോക്കറ്റ് വീറ്റോ ഇതിലൊന്നാണ്).</li>
+          <li>ഗവർണ്ണർക്ക് ഓർഡിനൻസ് പുറപ്പെടുവിക്കാനുള്ള അധികാരം നൽകുന്നത് ആർട്ടിക്കിൾ 213 ആണ്.</li>
+          <li>സ്വതന്ത്ര ഇന്ത്യയുടെ ആദ്യത്തെ ചീഫ് ജസ്റ്റിസ് (CJI) ഹരിലാൽ ജെ. കനിയ (H.J. Kania) ആണ്.</li>
+          <li>ഇന്ത്യയിലെ ചില സംസ്ഥാനങ്ങളിൽ നിയമസഭയ്ക്ക് പുറമെ ഉപരിസഭയായ നിയമനിർമ്മാണ കൗൺസിൽ (Legislative Council) കൂടിയുണ്ട് (ഉദാഹരണത്തിന് യു.പി, മഹാരാഷ്ട്ര). കേരളത്തിൽ അതില്ല.</li>
+          <li>രാഷ്ട്രപതിയുടെ ശമ്പളം കേന്ദ്ര സർക്കാരിന്റെ സഞ്ചിത നിധിയിൽ (Consolidated Fund of India) നിന്നാണ് നൽകുന്നത്.</li>
+          <li>സുപ്രീം കോടതി ആസ്ഥാനം ന്യൂഡൽഹിയാണ്. എന്നാൽ രാഷ്ട്രപതിയുടെ അനുമതിയോടെ ചീഫ് ജസ്റ്റിസിന് ഇന്ത്യയിലെവിടെയും സുപ്രീം കോടതിയുടെ സിറ്റിംഗ് മാറ്റാവുന്നതാണ്.</li>
+          <li>ഇന്ത്യയുടെ പരമോന്നത നീതിപീഠമായ സുപ്രീം കോടതിക്ക് ഒറിജിനൽ അധികാരപരിധി (Original Jurisdiction) നൽകുന്നത് ആർട്ടിക്കിൾ 131 ആണ്.</li>
+        </ol>
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ (26–30)</span>
+          <ul>
+            <li>(26) ആദ്യ ലോക്സഭാ സ്പീക്കർ ജി.വി. മാവ്ലങ്കർ.</li>
+            <li>(27) ആദ്യ ഉപരാഷ്ട്രപതി ഡോ. എസ്. രാധാകൃഷ്ണൻ (പിന്നീട് രാഷ്ട്രപതി).</li>
+            <li>(28) ആദ്യ രാഷ്ട്രപതി ഡോ. രാജേന്ദ്ര പ്രസാദ് - രണ്ട് തവണ തിരഞ്ഞെടുക്കപ്പെട്ട ഏക വ്യക്തി.</li>
+            <li>(29) പദവിയിലിരിക്കെ മരിച്ച രാഷ്ട്രപതിമാർ: സാക്കിർ ഹുസൈൻ (1969), ഫഖ്റുദ്ദീൻ അലി അഹമ്മദ് (1977).</li>
+            <li>(30) ഇന്ത്യൻ പാർലമെന്റിന്റെ ആദ്യ യോഗം 1952 മേയ് 13 (ലോക്സഭയും രാജ്യസഭയും).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 23: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">23. അധിക വെരിഫൈഡ് വസ്തുതകളും പുതിയ അപ്ഡേറ്റുകളും</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>#</th><th>വിവരം</th><th>പ്രാധാന്യം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>🔄 രാഷ്ട്രപതി: ദ്രൗപദി മുർമു (15-ാമത്, 2022 ജൂലൈ 25 മുതൽ; കാലാവധി 2027 ജൂലൈയിൽ അവസാനിക്കും)</td><td>★★★</td></tr>
+              <tr><td>2</td><td>🔄 ഉപരാഷ്ട്രപതി: സി.പി. രാധാകൃഷ്ണൻ (15-ാമത്, 2025 സെപ്റ്റംബർ 12-ന് സത്യപ്രതിജ്ഞ)</td><td>★★★</td></tr>
+              <tr><td>3</td><td>🔄 ചീഫ് ജസ്റ്റിസ്: ജസ്റ്റിസ് സൂര്യകാന്ത് (53-ാമത്, 2025 നവംബർ 24 മുതൽ; 2027 ഫെബ്രുവരി 9-ന് വിരമിക്കും). മുൻഗാമി: ബി.ആർ. ഗവായ്</td><td>★★★</td></tr>
+              <tr><td>4</td><td>🔄 പ്രധാനമന്ത്രി: നരേന്ദ്ര മോദി (2024 ജൂൺ 9 മുതൽ); ലോക്സഭാ സ്പീക്കർ: ഓം ബിർള (2024 ജൂൺ 26 മുതൽ)</td><td>★★</td></tr>
+              <tr><td>5</td><td>CJI-ക്ക് സത്യപ്രതിജ്ഞ ചൊല്ലിക്കൊടുക്കുന്നത് രാഷ്ട്രപതി; രാഷ്ട്രപതിക്ക് CJI</td><td>★★★</td></tr>
+              <tr><td>6</td><td>സുപ്രീം കോടതി അംഗസംഖ്യ 34 (CJI ഉൾപ്പെടെ)</td><td>★★</td></tr>
+              <tr><td>7</td><td>Art 148: CAG - രാഷ്ട്രപതി നിയമിക്കുന്നു; 6 വർഷം/65 വയസ്സ്; സുപ്രീം കോടതി ജഡ്ജിയെപ്പോലെ മാത്രമേ നീക്കാനാവൂ. Art 149-151: ചുമതലകൾ, റിപ്പോർട്ടുകൾ</td><td>★★</td></tr>
+              <tr><td>8</td><td>Art 88: AG ഉൾപ്പെടെ മന്ത്രിമാർക്ക് ഇരുസഭകളിലും സംസാരിക്കാം; Art 100: ഹാജരുള്ള അംഗങ്ങളുടെ ഭൂരിപക്ഷം, ക്വാറം 1/10</td><td>★★</td></tr>
+              <tr><td>9</td><td>Art 101-102: സഭാംഗത്വത്തിന് അയോഗ്യത; <strong>10-ാം ഷെഡ്യൂൾ = കൂറുമാറ്റ നിരോധനം (52-ാം ഭേദഗതി, 1985)</strong></td><td>★★★</td></tr>
+              <tr><td>10</td><td>Art 112 വാർഷിക ധനകാര്യ പ്രസ്താവന (ബജറ്റ്); Art 114 ധനവിനിയോഗ ബിൽ; Art 116 വോട്ട്-ഓൺ-അക്കൗണ്ട്</td><td>★★</td></tr>
+              <tr><td>11</td><td>രാഷ്ട്രപതിയുടെ ശമ്പളം ₹5 ലക്ഷം/മാസം, ഉപരാഷ്ട്രപതി ₹4 ലക്ഷം, ഗവർണർ ₹3.5 ലക്ഷം (ഇന്ത്യയുടെ സഞ്ചിത നിധിയിൽ നിന്ന്; രാഷ്ട്രപതിയുടേത് Art 112(3))</td><td>★</td></tr>
+              <tr><td>12</td><td>2025 നവംബർ 20: 16-ാമത് Presidential Reference (Art 143) - ഗവർണർ/രാഷ്ട്രപതിക്ക് ബിൽ തീരുമാനത്തിന് കോടതി സമയപരിധി നിശ്ചയിക്കാനാവില്ല, deemed assent ഇല്ല</td><td>★★</td></tr>
+              <tr><td>13</td><td>106-ാം ഭേദഗതി (2023): വനിതാ സംവരണം 33%; പ്രാബല്യം സെൻസസ് + മണ്ഡല പുനർനിർണ്ണയത്തിന് ശേഷം</td><td>★★</td></tr>
+              <tr><td>14</td><td>ഫാത്തിമ ബീവി: ആദ്യ വനിതാ SC ജഡ്ജി (1989), പിന്നീട് തമിഴ്നാട് ഗവർണർ · ലീലാ സേത്ത്: ആദ്യ വനിതാ ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് (ഹിമാചൽ, 1991) · അന്ന ചാണ്ടി: ആദ്യ വനിതാ ഹൈക്കോടതി ജഡ്ജി (കേരളം, 1959)</td><td>★★★</td></tr>
+              <tr><td>15</td><td>❓ ഇതുവരെ വനിതാ CJI ഉണ്ടായിട്ടില്ല. സീനിയോറിറ്റി പ്രകാരം ജസ്റ്റിസ് ബി.വി. നാഗരത്ന 2027-ൽ ആദ്യ വനിതാ CJI ആകാമെന്നാണ് റിപ്പോർട്ടുകൾ</td><td>★★</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 24: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec24">
+      <h2 role="button" tabindex="0" aria-expanded="false">24. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ഇന്ത്യൻ ഭരണഘടനയുടെ അഞ്ചാം ഭാഗം (Part V) കേന്ദ്ര ഗവൺമെന്റിന്റെ മൂന്ന് ശാഖകളെ — എക്സിക്യൂട്ടീവ്, ലെജിസ്ലേച്ചർ, ജുഡീഷ്യറി — വിശദമായി ചർച്ച ചെയ്യുന്നു.</li>
+          <li>രാഷ്ട്രപതി രാഷ്ട്രത്തലവൻ (നാമമാത്ര) ആണെങ്കിലും, യഥാർത്ഥ ഭരണം പ്രധാനമന്ത്രിയുടെ നേതൃത്വത്തിലുള്ള മന്ത്രിസഭയാണ് നടത്തുന്നത്.</li>
+          <li>പാർലമെന്റ് = രാഷ്ട്രപതി + രാജ്യസഭ + ലോക്സഭ. മണി ബിൽ, ജോയിന്റ് സിറ്റിംഗ്, ബില്ലിന് അനുമതി എന്നിവയിലെ വ്യത്യാസങ്ങൾ PSC-ക്ക് നിർണ്ണായകം.</li>
+          <li>സുപ്രീം കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം 65, ഹൈക്കോടതി ജഡ്ജിമാരുടേത് 62 — ഇത് എപ്പോഴും ചോദിക്കപ്പെടുന്നു.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 3–5 ചോദ്യങ്ങൾ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായം ഇന്ത്യൻ ഭരണഘടനയുടെ കാതലാണ്. അധികാര വിഭജനം, പാർലമെന്റിന്റെ ഘടന, ജുഡീഷ്യറിയുടെ സ്വാതന്ത്ര്യം എന്നിവ കൃത്യമായി പഠിക്കുക. അടുത്ത അധ്യായത്തിൽ സംസ്ഥാന ഗവൺമെന്റും ഫെഡറൽ ഘടനയും ചർച്ച ചെയ്യും.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>4.7 Central Government</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'constitution-4.7-central-government';
-window.PART_TITLE = '4.7 Central Government';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaCentralGovt100Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
