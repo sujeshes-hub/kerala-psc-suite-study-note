@@ -6,7 +6,8 @@
    ---------------------------------------------------------------------
    Exposes:
      window.KPSC_SYLLABUS  → nested API (flatten, forExam, onlyIn, find,
-                             MARKS, EXAMS, PARTS, FILES, CHAPTER_FILES, TITLE_ML)
+                             MARKS, EXAMS, PARTS, FILES, CHAPTER_FILES,
+                             TITLE_ML, QUESTION_PAPERS)
      window.Syllabus       → legacy API (getSubject, getAllSubjects, load)
    ===================================================================== */
 (function () {
@@ -46,10 +47,9 @@
   };
 
   /* -----------------------------------------------------------------
-     TITLE_ML — Malayalam name for every node (subject / chapter / topic)
+     TITLE_ML — Malayalam name for every node
      ----------------------------------------------------------------- */
   const TITLE_ML = {
-    /* HISTORY */
     "1": "ചരിത്രം",
     "1.1": "കേരള ചരിത്രം",
     "1.1.1": "കേരളത്തിലെ യൂറോപ്യന്മാരുടെ വരവ്",
@@ -82,8 +82,6 @@
     "1.3.6": "രണ്ടാം ലോകമഹായുദ്ധാനന്തര ചരിത്രം",
     "1.3.7": "ഐക്യരാഷ്ട്രസഭ",
     "1.3.8": "പ്രധാന അന്താരാഷ്ട്ര സംഘടനകൾ",
-
-    /* GEOGRAPHY */
     "2": "ഭൂമിശാസ്ത്രം",
     "2.1": "അടിസ്ഥാന ഭൂമിശാസ്ത്രം",
     "2.1.1": "ഭൂമിശാസ്ത്രത്തിന്റെ അടിസ്ഥാന തത്വങ്ങൾ",
@@ -141,8 +139,6 @@
     "2.3.13": "ജല ഗതാഗതം",
     "2.3.14": "റെയിൽവേ",
     "2.3.15": "വ്യോമ ഗതാഗതം",
-
-    /* ECONOMICS */
     "3": "സാമ്പത്തികം",
     "3.1": "ഇന്ത്യൻ സാമ്പത്തിക വ്യവസ്ഥ",
     "3.2": "പഞ്ചവത്സര പദ്ധതികൾ",
@@ -156,8 +152,6 @@
     "3.10": "നേരിട്ടുള്ള നികുതികൾ",
     "3.11": "പരോക്ഷ നികുതികൾ",
     "3.12": "ഇന്ത്യയിൽ ജി.എസ്.ടി",
-
-    /* CONSTITUTION */
     "4": "ഇന്ത്യൻ ഭരണഘടന",
     "4.1": "ഭരണഘടനാ നിർമ്മാണ സഭ",
     "4.2": "ആമുഖം",
@@ -196,8 +190,6 @@
     "4.35": "പ്രാദേശിക ഭാഷകൾ",
     "4.36": "സുപ്രീംകോടതി-ഹൈക്കോടതി ഭാഷ",
     "4.37": "ഭാഷയെ സംബന്ധിച്ച പ്രത്യേക നിർദ്ദേശങ്ങൾ",
-
-    /* KERALA ADMINISTRATION */
     "5": "കേരള ഭരണം",
     "5.1": "കേരള സ്റ്റേറ്റ് സിവിൽ സർവീസ്",
     "5.2": "ഭരണഘടനാ സ്ഥാപനങ്ങൾ",
@@ -228,8 +220,6 @@
     "5.27": "ഭരണപരമായ വിവേചനാധികാരം",
     "5.28": "ഭരണപരമായ വിധിന്യായം",
     "5.29": "നൈസർഗ്ഗിക നീതിയുടെ തത്വങ്ങൾ",
-
-    /* BIOLOGY */
     "6": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
     "6.1": "മനുഷ്യ ശരീരം",
     "6.2": "വിറ്റാമിനുകളും ധാതുക്കളും",
@@ -239,8 +229,6 @@
     "6.6": "അടിസ്ഥാന ആരോഗ്യം",
     "6.7": "പരിസ്ഥിതി",
     "6.8": "പരിസ്ഥിതി അപകടങ്ങൾ",
-
-    /* PHYSICS */
     "7": "ഭൗതികശാസ്ത്രം",
     "7.1": "അടിസ്ഥാന ഭൗതികശാസ്ത്രം",
     "7.2": "ചലനം",
@@ -251,8 +239,6 @@
     "7.7": "താപം",
     "7.8": "പ്രവൃത്തി, ഊർജ്ജം, പവർ",
     "7.9": "ഇലക്ട്രോണിക്സ്",
-
-    /* CHEMISTRY */
     "8": "രസതന്ത്രം",
     "8.1": "ആറ്റം",
     "8.2": "തന്മാത്ര",
@@ -273,15 +259,11 @@
     "8.17": "ബേസുകൾ / ക്ഷാരങ്ങൾ",
     "8.18": "pH",
     "8.19": "ആൽക്കലോയിഡുകൾ",
-
-    /* ART / SPORTS / LITERATURE */
     "9": "കല, കായികം, സാഹിത്യം, സംസ്കാരം",
     "9.1": "കലയും സംസ്കാരവും",
     "9.2": "കായികം",
     "9.3": "സാഹിത്യം",
     "9.4": "സംസ്കാരം",
-
-    /* COMPUTER */
     "10": "കമ്പ്യൂട്ടർ",
     "10.1": "ഹാർഡ്‌വെയർ",
     "10.2": "സോഫ്റ്റ്‌വെയറും ഓ.എസും",
@@ -289,8 +271,6 @@
     "10.4": "ഇന്റർനെറ്റ്",
     "10.5": "HTML, മറ്റുള്ളവ",
     "10.6": "സൈബർ കുറ്റകൃത്യങ്ങളും നിയമങ്ങളും",
-
-    /* ARITHMETIC */
     "11": "ലഘു ഗണിതം",
     "11.1": "സംഖ്യകൾ",
     "11.2": "ഭിന്നസംഖ്യകൾ",
@@ -311,8 +291,6 @@
     "11.17": "ശ്രേണികൾ",
     "11.20": "ജ്യാമിതി",
     "11.21": "ത്രികോണമിതി",
-
-    /* MENTAL ABILITY */
     "12": "മാനസിക നൈപുണ്യവും നിരീക്ഷണവും",
     "12.1": "സംഖ്യാ ശ്രേണി",
     "12.2": "അക്ഷര ശ്രേണി",
@@ -330,8 +308,6 @@
     "12.14": "കണ്ണാടി പ്രതിബിംബം",
     "12.15": "കലണ്ടറും തീയതികളും",
     "12.16": "ക്ലാർക്കൽ കഴിവ്",
-
-    /* ENGLISH */
     "13": "ഇംഗ്ലീഷ്",
     "13.1": "വ്യാകരണം",
     "13.1.1": "വാക്യങ്ങളുടെ തരങ്ങൾ",
@@ -367,8 +343,6 @@
     "13.2.12": "ആശയക്കുഴപ്പമുള്ള വാക്കുകൾ",
     "13.2.13": "അക്ഷരവിന്യാസം",
     "13.2.14": "ശൈലികൾ",
-
-    /* MALAYALAM */
     "14": "മലയാളം",
     "14.2": "പദശുദ്ധി",
     "14.3": "വാക്യശുദ്ധി",
@@ -384,8 +358,6 @@
     "14.13": "പുല്ലിംഗം",
     "14.14": "വചനം",
     "14.15": "പിരിച്ചെഴുതൽ",
-
-    /* CURRENT AFFAIRS */
     "15": "നിലവിലെ കാര്യങ്ങൾ",
     "15.1": "നിലവിലെ കാര്യങ്ങൾ",
     "15.1.1": "ദേശീയ കാര്യങ്ങൾ",
@@ -394,8 +366,6 @@
     "15.1.4": "ശാസ്ത്ര-സാങ്കേതികവിദ്യ",
     "15.1.5": "അവാർഡുകൾ / കായികം / സംസ്കാരം",
     "15.1.6": "പ്രധാന സർക്കാർ പദ്ധതികൾ",
-
-    /* IMPORTANT ACTS */
     "16": "പ്രധാന നിയമങ്ങൾ",
     "16.1": "വിവരാവകാശം",
     "16.1.1": "RTI നിയമം, 2005",
@@ -457,8 +427,6 @@
     "16.9.1": "ഭരണപരമായ ട്രിബ്യൂണൽ നിയമം, 1985",
     "16.9.2": "കേന്ദ്ര ഭരണ ട്രിബ്യൂണൽ",
     "16.9.3": "കേരള ഭരണ ട്രിബ്യൂണൽ",
-
-    /* LEGAL METROLOGY */
     "17": "ലീഗൽ മെട്രോളജി",
     "17.1": "ലീഗൽ മെട്രോളജിയുടെ അടിസ്ഥാനങ്ങൾ",
     "17.1.1": "അന്താരാഷ്ട്ര-ദേശീയ മാനദണ്ഡങ്ങൾ",
@@ -497,7 +465,6 @@
      FILES — topic id → published topic page
      ----------------------------------------------------------------- */
   const FILES = {
-    /* HISTORY */
     "1.1.1": { file: "topics/history/1.1.1-europeans-in-kerala.html", key: "history-1.1.1-europeans-in-kerala", qs: 0 },
     "1.1.2": { file: "topics/history/1.1.2-travancore-history.html",  key: "history-1.1.2-travancore-history",  qs: 0 },
     "1.1.3": { file: "topics/history/1.1.3-social-reform-movements.html", key: "history-1.1.3-social-reform-movements", qs: 0 },
@@ -527,7 +494,6 @@
     "1.3.7": { file: "topics/history/1.3.7-united-nations.html",      key: "history-1.3.7-united-nations",      qs: 0 },
     "1.3.8": { file: "topics/history/1.3.8-international-organisations.html", key: "history-1.3.8-international-organisations", qs: 0 },
 
-    /* GEOGRAPHY — BASIC */
     "2.1.1":  { file: "topics/geography/2.1.1-basic-principles.html",    key: "geography-2.1.1-basic-principles",    qs: 0 },
     "2.1.2":  { file: "topics/geography/2.1.2-structure-of-earth.html",  key: "geography-2.1.2-structure-of-earth",  qs: 0 },
     "2.1.3":  { file: "topics/geography/2.1.3-atmosphere.html",          key: "geography-2.1.3-atmosphere",          qs: 0 },
@@ -550,7 +516,6 @@
     "2.1.20": { file: "topics/geography/2.1.20-continents.html",         key: "geography-2.1.20-continents",         qs: 0 },
     "2.1.21": { file: "topics/geography/2.1.21-world-countries.html",    key: "geography-2.1.21-world-countries",    qs: 0 },
 
-    /* GEOGRAPHY — INDIA */
     "2.2.1":  { file: "topics/geography/2.2.1-india-physiography.html",   key: "geography-2.2.1-india-physiography",   qs: 0 },
     "2.2.2":  { file: "topics/geography/2.2.2-states-features.html",      key: "geography-2.2.2-states-features",      qs: 0 },
     "2.2.3":  { file: "topics/geography/2.2.3-northern-mountains.html",   key: "geography-2.2.3-northern-mountains",   qs: 0 },
@@ -569,7 +534,6 @@
     "2.2.16": { file: "topics/geography/2.2.16-india-railway.html",       key: "geography-2.2.16-india-railway",       qs: 0 },
     "2.2.17": { file: "topics/geography/2.2.17-india-air.html",           key: "geography-2.2.17-india-air",           qs: 0 },
 
-    /* GEOGRAPHY — KERALA */
     "2.3.1":  { file: "topics/geography/2.3.1-physiography.html",           key: "geography-2.3.1-physiography",           qs: 15 },
     "2.3.2":  { file: "topics/geography/2.3.2-districts.html",              key: "geography-2.3.2-districts",              qs: 20 },
     "2.3.3":  { file: "topics/geography/2.3.3-kerala-rivers.html",          key: "geography-2.3.3-kerala-rivers",          qs: 0 },
@@ -586,7 +550,6 @@
     "2.3.14": { file: "topics/geography/2.3.14-kerala-railway.html",        key: "geography-2.3.14-kerala-railway",        qs: 0 },
     "2.3.15": { file: "topics/geography/2.3.15-kerala-air-transport.html",  key: "geography-2.3.15-kerala-air-transport",  qs: 0 },
 
-    /* ECONOMICS */
     "3.1":  { file: "topics/economics/3.1-economic-system.html",       key: "economics-3.1-economic-system",       qs: 0 },
     "3.2":  { file: "topics/economics/3.2-five-year-plans.html",       key: "economics-3.2-five-year-plans",       qs: 0 },
     "3.3":  { file: "topics/economics/3.3-planning-commission.html",   key: "economics-3.3-planning-commission",   qs: 0 },
@@ -600,7 +563,6 @@
     "3.11": { file: "topics/economics/3.11-indirect-taxes.html",       key: "economics-3.11-indirect-taxes",       qs: 0 },
     "3.12": { file: "topics/economics/3.12-gst-in-india.html",         key: "economics-3.12-gst-in-india",         qs: 0 },
 
-    /* CONSTITUTION */
     "4.1":  { file: "topics/constitution/4.1-constituent-assembly.html",           key: "constitution-4.1-constituent-assembly",           qs: 0 },
     "4.2":  { file: "topics/constitution/4.2-preamble.html",                       key: "constitution-4.2-preamble",                       qs: 0 },
     "4.3":  { file: "topics/constitution/4.3-citizenship.html",                    key: "constitution-4.3-citizenship",                    qs: 0 },
@@ -639,7 +601,6 @@
     "4.36": { file: "topics/constitution/4.36-sc-hc-language.html",                key: "constitution-4.36-sc-hc-language",                qs: 0 },
     "4.37": { file: "topics/constitution/4.37-special-directives-languages.html",  key: "constitution-4.37-special-directives-languages",  qs: 0 },
 
-    /* KERALA ADMINISTRATION */
     "5.1":  { file: "topics/kerala-administration/5.1-kerala-civil-service.html",     key: "kerala-administration-5.1-kerala-civil-service",     qs: 0 },
     "5.2":  { file: "topics/kerala-administration/5.2-constitutional-institutions-kerala.html", key: "kerala-administration-5.2-constitutional-institutions-kerala", qs: 0 },
     "5.3":  { file: "topics/kerala-administration/5.3-various-commissions.html",      key: "kerala-administration-5.3-various-commissions",      qs: 0 },
@@ -670,7 +631,6 @@
     "5.28": { file: "topics/kerala-administration/5.28-administrative-adjudication.html", key: "kerala-administration-5.28-administrative-adjudication", qs: 0 },
     "5.29": { file: "topics/kerala-administration/5.29-natural-justice.html",         key: "kerala-administration-5.29-natural-justice",         qs: 0 },
 
-    /* BIOLOGY */
     "6.1": { file: "topics/biology/6.1-human-body.html",             key: "biology-6.1-human-body",             qs: 0 },
     "6.2": { file: "topics/biology/6.2-vitamins-minerals.html",      key: "biology-6.2-vitamins-minerals",      qs: 0 },
     "6.3": { file: "topics/biology/6.3-communicable-diseases.html",  key: "biology-6.3-communicable-diseases",  qs: 0 },
@@ -680,7 +640,6 @@
     "6.7": { file: "topics/biology/6.7-environment.html",            key: "biology-6.7-environment",            qs: 0 },
     "6.8": { file: "topics/biology/6.8-environmental-hazards.html",  key: "biology-6.8-environmental-hazards",  qs: 0 },
 
-    /* PHYSICS */
     "7.1": { file: "topics/physics/7.1-basic-physics.html",    key: "physics-7.1-basic-physics",    qs: 0 },
     "7.2": { file: "topics/physics/7.2-motion.html",           key: "physics-7.2-motion",           qs: 0 },
     "7.3": { file: "topics/physics/7.3-light.html",            key: "physics-7.3-light",            qs: 0 },
@@ -691,7 +650,6 @@
     "7.8": { file: "topics/physics/7.8-work-energy-power.html", key: "physics-7.8-work-energy-power", qs: 0 },
     "7.9": { file: "topics/physics/7.9-electronics.html",      key: "physics-7.9-electronics",      qs: 0 },
 
-    /* CHEMISTRY */
     "8.1":  { file: "topics/chemistry/8.1-atom.html",                  key: "chemistry-8.1-atom",                  qs: 0 },
     "8.2":  { file: "topics/chemistry/8.2-molecule.html",              key: "chemistry-8.2-molecule",              qs: 0 },
     "8.3":  { file: "topics/chemistry/8.3-states-of-matter.html",      key: "chemistry-8.3-states-of-matter",      qs: 0 },
@@ -712,13 +670,11 @@
     "8.18": { file: "topics/chemistry/8.18-ph.html",                   key: "chemistry-8.18-ph",                   qs: 0 },
     "8.19": { file: "topics/chemistry/8.19-alkaloids.html",            key: "chemistry-8.19-alkaloids",            qs: 0 },
 
-    /* ART / SPORTS / LITERATURE */
     "9.1": { file: "topics/art-sports-literature/9.1-art-culture.html",  key: "art-sports-literature-9.1-art-culture",  qs: 0 },
     "9.2": { file: "topics/art-sports-literature/9.2-sports.html",       key: "art-sports-literature-9.2-sports",       qs: 0 },
     "9.3": { file: "topics/art-sports-literature/9.3-literature.html",   key: "art-sports-literature-9.3-literature",   qs: 0 },
     "9.4": { file: "topics/art-sports-literature/9.4-culture.html",      key: "art-sports-literature-9.4-culture",      qs: 0 },
 
-    /* COMPUTER */
     "10.1": { file: "topics/computer/10.1-hardware.html",       key: "computer-10.1-hardware",       qs: 0 },
     "10.2": { file: "topics/computer/10.2-software-os.html",    key: "computer-10.2-software-os",    qs: 0 },
     "10.3": { file: "topics/computer/10.3-networks.html",       key: "computer-10.3-networks",       qs: 0 },
@@ -726,7 +682,6 @@
     "10.5": { file: "topics/computer/10.5-html-other.html",     key: "computer-10.5-html-other",     qs: 0 },
     "10.6": { file: "topics/computer/10.6-cyber-crimes.html",   key: "computer-10.6-cyber-crimes",   qs: 0 },
 
-    /* ARITHMETIC */
     "11.1":  { file: "topics/arithmetic/11.1-numbers.html",             key: "arithmetic-11.1-numbers",             qs: 0 },
     "11.2":  { file: "topics/arithmetic/11.2-fractions.html",           key: "arithmetic-11.2-fractions",           qs: 0 },
     "11.3":  { file: "topics/arithmetic/11.3-decimals.html",            key: "arithmetic-11.3-decimals",            qs: 0 },
@@ -747,7 +702,6 @@
     "11.20": { file: "topics/arithmetic/11.20-geometry.html",           key: "arithmetic-11.20-geometry",           qs: 0 },
     "11.21": { file: "topics/arithmetic/11.21-trigonometry.html",       key: "arithmetic-11.21-trigonometry",       qs: 0 },
 
-    /* MENTAL ABILITY */
     "12.1":  { file: "topics/mental-ability/12.1-number-series.html",      key: "mental-ability-12.1-number-series",      qs: 0 },
     "12.2":  { file: "topics/mental-ability/12.2-alphabet-series.html",    key: "mental-ability-12.2-alphabet-series",    qs: 0 },
     "12.3":  { file: "topics/mental-ability/12.3-mathematical-signs.html", key: "mental-ability-12.3-mathematical-signs", qs: 0 },
@@ -765,7 +719,6 @@
     "12.15": { file: "topics/mental-ability/12.15-calendar.html",          key: "mental-ability-12.15-calendar",          qs: 0 },
     "12.16": { file: "topics/mental-ability/12.16-clerical-ability.html",  key: "mental-ability-12.16-clerical-ability",  qs: 0 },
 
-    /* ENGLISH */
     "13.1.1":  { file: "topics/english/13.1.1-types-of-sentences.html",       key: "english-13.1.1-types-of-sentences",       qs: 0 },
     "13.1.2":  { file: "topics/english/13.1.2-interchange.html",              key: "english-13.1.2-interchange",              qs: 0 },
     "13.1.3":  { file: "topics/english/13.1.3-parts-of-speech.html",          key: "english-13.1.3-parts-of-speech",          qs: 0 },
@@ -799,7 +752,6 @@
     "13.2.13": { file: "topics/english/13.2.13-spelling.html",                key: "english-13.2.13-spelling",                qs: 0 },
     "13.2.14": { file: "topics/english/13.2.14-idioms.html",                  key: "english-13.2.14-idioms",                  qs: 0 },
 
-    /* MALAYALAM */
     "14.2":  { file: "topics/malayalam/14.2-padashuddhi.html",        key: "malayalam-14.2-padashuddhi",        qs: 0 },
     "14.3":  { file: "topics/malayalam/14.3-vakyashuddhi.html",       key: "malayalam-14.3-vakyashuddhi",       qs: 0 },
     "14.4":  { file: "topics/malayalam/14.4-paribhasha.html",         key: "malayalam-14.4-paribhasha",         qs: 0 },
@@ -815,7 +767,6 @@
     "14.14": { file: "topics/malayalam/14.14-vachanam.html",          key: "malayalam-14.14-vachanam",          qs: 0 },
     "14.15": { file: "topics/malayalam/14.15-pirichezhuthal.html",    key: "malayalam-14.15-pirichezhuthal",    qs: 0 },
 
-    /* CURRENT AFFAIRS */
     "15.1.1": { file: "topics/current-affairs/15.1.1-national-affairs.html",     key: "current-affairs-15.1.1-national-affairs",     qs: 0 },
     "15.1.2": { file: "topics/current-affairs/15.1.2-international-affairs.html", key: "current-affairs-15.1.2-international-affairs", qs: 0 },
     "15.1.3": { file: "topics/current-affairs/15.1.3-kerala-affairs.html",        key: "current-affairs-15.1.3-kerala-affairs",        qs: 0 },
@@ -823,7 +774,6 @@
     "15.1.5": { file: "topics/current-affairs/15.1.5-awards-sports.html",        key: "current-affairs-15.1.5-awards-sports",        qs: 0 },
     "15.1.6": { file: "topics/current-affairs/15.1.6-govt-schemes.html",         key: "current-affairs-15.1.6-govt-schemes",         qs: 0 },
 
-    /* IMPORTANT ACTS */
     "16.1.1": { file: "topics/important-acts/16.1.1-rti-act-2005.html",              key: "important-acts-16.1.1-rti-act-2005",              qs: 0 },
     "16.1.2": { file: "topics/important-acts/16.1.2-rti-definitions.html",           key: "important-acts-16.1.2-rti-definitions",           qs: 0 },
     "16.1.3": { file: "topics/important-acts/16.1.3-exempted-information.html",      key: "important-acts-16.1.3-exempted-information",      qs: 0 },
@@ -876,7 +826,6 @@
     "16.9.2": { file: "topics/important-acts/16.9.2-cat.html",                       key: "important-acts-16.9.2-cat",                       qs: 0 },
     "16.9.3": { file: "topics/important-acts/16.9.3-kat.html",                       key: "important-acts-16.9.3-kat",                       qs: 0 },
 
-    /* SPECIAL TOPICS — LEGAL METROLOGY */
     "17.1.1": { file: "topics/special-topics/17.1.1-intl-national-standards.html",     key: "special-topics-17.1.1-intl-national-standards",     qs: 0 },
     "17.1.2": { file: "topics/special-topics/17.1.2-intl-organisations-labs.html",     key: "special-topics-17.1.2-intl-organisations-labs",     qs: 0 },
     "17.1.3": { file: "topics/special-topics/17.1.3-measuring-equipment.html",         key: "special-topics-17.1.3-measuring-equipment",         qs: 0 },
@@ -944,6 +893,34 @@
     "17.3": "chapters/special-topics/17.3-packaged-commodity-rules.html",
     "17.4": "chapters/special-topics/17.4-kerala-enforcement-rules.html"
   };
+
+  /* -----------------------------------------------------------------
+     QUESTION_PAPERS — full-length mock tests
+     ----------------------------------------------------------------- */
+  const QUESTION_PAPERS = [
+    {
+      id: "qp-001",
+      title: "Full Length Mock Test 1",
+      titleMl: "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 1",
+      desc: "All subjects · 100 questions · 75 min",
+      file: "question-papers/qp-001-full-mock-1.html",
+      key: "qp-001",
+      qs: 100,
+      duration: 75,
+      tag: "BOTH"
+    },
+    {
+      id: "qp-002",
+      title: "Full Length Mock Test 2",
+      titleMl: "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 2",
+      desc: "All subjects · 100 questions · 75 min",
+      file: "question-papers/qp-002-full-mock-2.html",
+      key: "qp-002",
+      qs: 100,
+      duration: 75,
+      tag: "BOTH"
+    }
+  ];
 
   /* =================================================================
      MASTER SYLLABUS (nested)
@@ -1562,6 +1539,7 @@
     FILES: FILES,
     CHAPTER_FILES: CHAPTER_FILES,
     TITLE_ML: TITLE_ML,
+    QUESTION_PAPERS: QUESTION_PAPERS,
     flatten: flatten,
     forExam: forExam,
     onlyIn: onlyIn,

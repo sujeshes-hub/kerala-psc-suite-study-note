@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>573/2025 Mock Tests — Kerala PSC</title>
+<link rel="stylesheet" href="../assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <button class="back-btn" type="button" onclick="location.href='../index.html'">← Back</button>
+  <h1>📄 573/2025 Mock Tests</h1>
+  <p>573/2025 മോക്ക് ടെസ്റ്റുകൾ</p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../index.html">🏠 Home</a> ›
+    <span>573/2025 Mock Tests</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Papers</h2>
+      <button class="btn ghost" id="refreshPapers" type="button">↻ Refresh list</button>
+    </div>
+    <div class="grid" id="paperGrid">
+      <p class="empty">Loading…</p>
+    </div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite · Works fully offline</footer>
+
+<script>
+(function () {
+  var EXAM_CODE = "573";
+  var FOLDER    = "question-papers/573";
+  var BASE_PATH = "../question-papers/573/";
+  var CACHE_KEY = "kpsc_qp_" + EXAM_CODE + "_v2";
+  var CACHE_TTL = 1000 * 60 * 30;   /* 30 minutes */
+
+  var grid = document.getElementById("paperGrid");
+  var refreshBtn = document.getElementById("refreshPapers");
+
+  /* -------- detect repo from location -------- */
+  function detectRepo() {
+    var host = location.hostname;
+    var parts = location.pathname.split("/").filter(Boolean);
+    if (!host.endsWith(".github.io") || parts.length < 1) return null;
+    return { owner: host.replace(".github.io", ""), repo: parts[0] };
+  }
+
+  /* -------- cache -------- */
+  function readCache() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      if (!o || !o.ts || (Date.now() - o.ts) > CACHE_TTL) return null;
+      return o.items || null;
+    } catch (e) { return null; }
+  }
+  function saveCache(items) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items }));
+    } catch (e) {}
+  }
+
+  /* -------- GitHub API: folder contents -------- */
+  async function fetchFolderList() {
+    var repo = detectRepo();
+    if (!repo) throw new Error("Not on GitHub Pages — folder listing unavailable.");
+
+    var url = "https://api.github.com/repos/" + repo.owner + "/" + repo.repo +
+              "/contents/" + FOLDER + "?ref=main";
+
+    var res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+    if (!res.ok) throw new Error("GitHub API: HTTP " + res.status);
+
+    var files = await res.json();
+    if (!Array.isArray(files)) throw new Error("Unexpected API response");
+
+    return files.filter(function (f) {
+      return f.type === "file" &&
+             /\.html?$/i.test(f.name) &&
+             f.name.toLowerCase() !== "index.html";
+    });
+  }
+
+  /* -------- read meta tags of one paper -------- */
+  async function readMeta(filename) {
+    try {
+      var res = await fetch(BASE_PATH + filename, { cache: "force-cache" });
+      if (!res.ok) return {};
+      var text = await res.text();
+      var doc  = new DOMParser().parseFromString(text, "text/html");
+
+      function meta(name) {
+        var el = doc.querySelector('meta[name="' + name + '"]');
+        return el ? el.getAttribute("content") : "";
+      }
+
+      return {
+        title:    meta("mock:title")    || "",
+        titleMl:  meta("mock:title-ml") || "",
+        desc:     meta("mock:desc")     || "",
+        duration: parseInt(meta("mock:duration"), 10) || 0,
+        qs:       parseInt(meta("mock:qs"), 10)       || 0,
+        tag:      meta("mock:tag")      || EXAM_CODE,
+        key:      meta("mock:key")      || ""
+      };
+    } catch (e) { return {}; }
+  }
+
+  function titleFromFilename(name) {
+    return name
+      .replace(/\.html?$/i, "")
+      .replace(/^qp-\d+-/, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
+  function render(items) {
+    if (!items.length) {
+      grid.innerHTML = '<p class="empty">No papers found in <code>' + FOLDER + '</code>.</p>';
+      return;
+    }
+    grid.innerHTML = items.map(function (p) {
+      var badgeCls = p.tag === "573" ? "c573" : p.tag === "883" ? "c883" : "";
+      var badgeTxt = p.tag === "573" ? "573 only" : p.tag === "883" ? "883 only" : "BOTH";
+      var title    = p.title || titleFromFilename(p.file);
+      var key      = p.key || p.file.replace(/\.html?$/i, "");
+      return '<a href="' + BASE_PATH + p.file + '" class="card" data-part="' + key + '" data-total="' + p.qs + '">' +
+        '<span class="badge ' + badgeCls + '">' + (p.qs || 0) + ' Qs</span>' +
+        '<h3>📄 ' + title + '</h3>' +
+        '<p class="desc">' + (p.titleMl || "") + (p.desc ? "<br>" + p.desc : "") + '</p>' +
+        '<div class="meta">' +
+          (p.duration ? '<span>⏱ ' + p.duration + ' min</span>' : '') +
+          '<span>' + badgeTxt + '</span>' +
+        '</div>' +
+        '<div class="bar"><i style="width:0%"></i></div>' +
+        '<div class="progressline"><span class="status">Not started</span><span class="score"></span></div>' +
+      '</a>';
+    }).join("");
+
+    var s = document.createElement("script");
+    s.src = "../assets/js/sections.js";
+    document.body.appendChild(s);
+  }
+
+  async function load(force) {
+    grid.innerHTML = '<p class="empty">Loading…</p>';
+
+    if (!force) {
+      var cached = readCache();
+      if (cached && cached.length) { render(cached); return; }
+    }
+
+    try {
+      var files = await fetchFolderList();
+      if (!files.length) { render([]); return; }
+
+      var metas = await Promise.all(files.map(function (f) { return readMeta(f.name); }));
+
+      var items = files.map(function (f, i) {
+        var m = metas[i] || {};
+        return {
+          file:     f.name,
+          title:    m.title,
+          titleMl:  m.titleMl,
+          desc:     m.desc,
+          duration: m.duration,
+          qs:       m.qs,
+          tag:      m.tag,
+          key:      m.key
+        };
+      });
+
+      items.sort(function (a, b) { return a.file.localeCompare(b.file); });
+
+      saveCache(items);
+      render(items);
+
+    } catch (err) {
+      console.warn("Auto-list failed:", err.message);
+      grid.innerHTML = '<p class="empty">' +
+        '⚠️ Could not auto-load the paper list.<br>' +
+        '<small>' + err.message + '</small><br><br>' +
+        'If you are viewing this file locally (file://), open the site through ' +
+        '<a href="https://sujeshes-hub.github.io/kerala-psc-suite/">GitHub Pages</a> instead.' +
+      '</p>';
+    }
+  }
+
+  if (refreshBtn) refreshBtn.addEventListener("click", function () {
+    try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+    load(true);
+  });
+
+  load(false);
+})();
+</script>
+
+</body>
+</html>
