@@ -1,105 +1,1467 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>1.2.4 Swadeshi Movement - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഇന്ത്യൻ ചരിത്രം – സ്വദേശി പ്രസ്ഥാനം | Kerala PSC</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">1.2.4 Swadeshi Movement</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. ബംഗാൾ വിഭജനം</a></li>
+      <li><a href="#sec4">4. സ്വദേശി പ്രസ്ഥാനം</a></li>
+      <li><a href="#sec5">5. സൂറത്ത് പിളർപ്പ്</a></li>
+      <li><a href="#sec6">6. മിന്റോ-മോർലി</a></li>
+      <li><a href="#sec7">7. വിഭജനം റദ്ദാക്കൽ</a></li>
+      <li><a href="#sec8">8. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec9">9. PSC വിശകലനം</a></li>
+      <li><a href="#sec10">10. മുൻവർഷ ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec11">11. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec12">12. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec13">13. സമയരേഖ</a></li>
+      <li><a href="#sec14">14. നിനയ്ക്കാൻ എളുപ്പം</a></li>
+      <li><a href="#sec15">15. PSC കെണികൾ</a></li>
+      <li><a href="#sec16">16. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec17">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec18">18. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec19">19. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec21">21. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec22">22. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ചരിത്രം | അധ്യായം 5</div>
+      <h1>ഇന്ത്യൻ ചരിത്രം – സ്വദേശി പ്രസ്ഥാനം</h1>
+      <div class="subtitle">Swadeshi Movement | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ബംഗാൾ വിഭജനം (1905 ഒക്ടോബർ 16), സ്വദേശി പ്രസ്ഥാനം, സൂറത്ത് പിളർപ്പ് (1907), മിന്റോ-മോർലി പരിഷ്കാരം (1909), വിഭജനം റദ്ദാക്കൽ (1911)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — കഴ്സൺ പ്രഭു, ഹാർഡിഞ്ച് II, റാഷ് ബിഹാരി ഘോഷ്, ഗോഖലെ, ലാൽ-ബാൽ-പാൽ, വന്ദേമാതരം</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — അരബിന്ദോ ഘോഷ് (ബംഗാൾ നാഷണൽ കോളേജ്), സുജാത ബന്ധബ് സമിതി, ബംഗാൾ കെമിക്കൽസ്</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ഡൽഹി തലസ്ഥാനം, ജോർജ് V ദിളി ദർബാർ, കമ്മ്യൂണൽ ഇലക്ടറേറ്റ്</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — 1905 മുതൽ 1911 വരെയുള്ള കാലഘട്ടം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ബംഗാൾ വിഭജനം പ്രഖ്യാപിച്ചത്:</strong> 1905 ജൂലൈ 20 (കഴ്സൺ പ്രഭു)</li>
+            <li><strong>നിലവിൽ വന്നത്:</strong> 1905 ഒക്ടോബർ 16 (വിലാപ ദിനം)</li>
+            <li><strong>റദ്ദാക്കിയത്:</strong> 1911 ഡിസംബർ 12 (ഹാർഡിഞ്ച് II)</li>
+            <li><strong>സൂറത്ത് പിളർപ്പ്:</strong> 1907 (റാഷ് ബിഹാരി ഘോഷ്)</li>
+            <li><strong>മിന്റോ-മോർലി:</strong> 1909 (കമ്മ്യൂണൽ ഇലക്ടറേറ്റ്)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> 1905-ൽ കഴ്സൺ പ്രഭു ബംഗാളിനെ രണ്ടായി വിഭജിച്ചതും, അതിനെതിരെ ഇന്ത്യയിലൊട്ടാകെ ആഞ്ഞടിച്ച പ്രതിഷേധമായ 'സ്വദേശി പ്രസ്ഥാന'വും. 1905 മുതൽ 1911 വരെയുള്ള കാലഘട്ടം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഇന്ത്യൻ ദേശീയ പ്രസ്ഥാനത്തിലെ ആദ്യത്തെ ജനകീയ മുന്നേറ്റം. മിതവാദികളിൽ നിന്ന് തീവ്രവാദികളിലേക്ക് INC നേതൃത്വം മാറ്റുന്ന കാലഘട്ടം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ഇന്ത്യൻ സ്വാതന്ത്ര്യ സമര ചരിത്രത്തിൽ നിന്ന് കുറഞ്ഞത് ഒരു ചോദ്യമെങ്കിലും ഉറപ്പ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> ബംഗാൾ വിഭജന തീയതികൾ, കഴ്സൺ, സൂറത്ത് പിളർപ്പ്, വന്ദേമാതരം, തലസ്ഥാന മാറ്റം.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>05-ൽ വിഭജനം, 07-ൽ പിളർപ്പ്, 09-ൽ മിന്റോ, 11-ൽ റദ്ദ്</strong>" — പ്രധാന വർഷങ്ങൾ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: പിന്നാമ്പുറ കഥ ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പിന്നാമ്പുറ കഥ (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> ബംഗാൾ ഇന്ത്യൻ ദേശീയതയുടെ ഞരമ്പായിരുന്നു. ഹിന്ദു-മുസ്ലീം ഐക്യം തകർക്കുക എന്നതായിരുന്നു ലക്ഷ്യം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട്?</strong> ഔദ്യോഗിക കാരണം 'ഭരണപരമായ സൗകര്യം' എന്നായിരുന്നു. യഥാർത്ഥ ലക്ഷ്യം 'ഭിന്നിപ്പിച്ച് ഭരിക്കുക' (Divide and Rule).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാന സംഭവവികാസങ്ങൾ:</strong> വിദേശ വസ്ത്രങ്ങൾ കത്തിച്ചു, സ്വദേശി ഉൽപന്നങ്ങൾ പ്രോത്സാഹിപ്പിച്ചു. ടാഗോറിന്റെ നേതൃത്വത്തിൽ രാഖി ബന്ധനം. 'അമർ സോനാർ ബംഗ' ഗാനം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഫലം:</strong> ബ്രിട്ടീഷുകാർ വഴങ്ങി. 1911-ൽ വിഭജനം റദ്ദാക്കി. ഇന്ത്യക്കാരുടെ ആത്മവിശ്വാസം ഉയർന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഭിന്നിപ്പിച്ച് ഭരിക്കുക (Divide and Rule) → ബംഗാൾ വിഭജനം → സ്വദേശി പ്രസ്ഥാനം → റദ്ദാക്കൽ</strong>" — ശൃംഖല.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: ബംഗാൾ വിഭജനം ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. ബംഗാൾ വിഭജനം (Partition of Bengal - 1905)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വൈസ്രോയി:</strong> കഴ്സൺ പ്രഭു (Lord Curzon).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഭജനം:</strong> കിഴക്കൻ ബംഗാൾ (മുസ്ലീം ഭൂരിപക്ഷം), പശ്ചിമ ബംഗാൾ (ഹിന്ദു ഭൂരിപക്ഷം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രഖ്യാപനം:</strong> <strong>1905 ജൂലൈ 20</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നടപ്പിലാക്കിയത്:</strong> <strong>1905 ഒക്ടോബർ 16</strong> (വിലാപ ദിനം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഔദ്യോഗിക കാരണം:</strong> ഭരണപരമായ സൗകര്യം. യഥാർത്ഥ കാരണം: ഭിന്നിപ്പിച്ച് ഭരിക്കുക.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>20-ന് പറഞ്ഞു, 16-ന് പിരിച്ചു</strong>" — ജൂലൈ 20-ന് പ്രഖ്യാപനം, ഒക്ടോബർ 16-ന് നിലവിൽ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: സ്വദേശി പ്രസ്ഥാനം ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. സ്വദേശി പ്രസ്ഥാനം (Swadeshi Movement)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ലക്ഷ്യം:</strong> വിദേശ വസ്തു ബഹിഷ്കരണം, ആഭ്യന്തര വ്യവസായ-ദേശീയ വിദ്യാഭ്യാസ പ്രോത്സാഹനം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>തീം സോംഗ്:</strong> 'വന്ദേമാതരം' (ബങ്കിം ചന്ദ്ര ചാറ്റർജി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>നേതാക്കൾ:</strong> അരബിന്ദോ ഘോഷ്, തിലകൻ, ലാലാ ലജ്പത് റായ്, ബിപിൻ ചന്ദ്ര പാൽ (ലാൽ-ബാൽ-പാൽ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാന പ്രവർത്തനങ്ങൾ:</strong> വിദേശ വസ്ത്രങ്ങൾ കത്തിക്കൽ, സ്വദേശി ഉൽപന്നങ്ങളുടെ പ്രോത്സാഹനം, രാഖി ബന്ധനം, ദേശീയ വിദ്യാഭ്യാസം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ബഹിഷ്കരണം ആദ്യം നിർദ്ദേശിച്ച പത്രം:</strong> സഞ്ചീവനി.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>അമർ സോനാർ ബംഗ:</strong> ടാഗോറിന്റെ പ്രതിഷേധ ഗാനം (പിന്നീട് ബംഗ്ലാദേശിന്റെ ദേശീയ ഗാനം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ബംഗാൾ നാഷണൽ കോളേജ്:</strong> അരബിന്ദോ ഘോഷ് ആദ്യ പ്രിൻസിപ്പാൾ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ബംഗാൾ കെമിക്കൽസ്:</strong> പി.സി. റോയ് സ്ഥാപിച്ചു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ലാൽ-ബാൽ-പാൽ = തീവ്രവാദ ത്രിമൂർത്തികൾ</strong>" — ലാലാ ലജ്പത് റായ്, ബാലഗംഗാധര തിലകൻ, ബിപിൻ ചന്ദ്ര പാൽ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: സൂറത്ത് പിളർപ്പ് ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. സൂറത്ത് പിളർപ്പ് (Surat Split - 1907)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കോൺഗ്രസ് മിതവാദികളും തീവ്രവാദികളുമായി പിളർന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സൂറത്ത് സമ്മേളന അധ്യക്ഷൻ:</strong> റാഷ് ബിഹാരി ഘോഷ് (Rash Behari Ghosh).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സ്ഥലം:</strong> സൂറത്ത് (ഗുജറാത്ത്), താപ്തി നദീതീരത്ത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കാരണം:</strong> സമരരീതിയിലും ലക്ഷ്യത്തിലും ഉണ്ടായ ഭിന്നത.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഫലം:</strong> 1916 ലഖ്നൗ സമ്മേളനത്തിൽ വീണ്ടും ഒന്നിച്ചു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>സൂറത്തിൽ പിളർന്നു (1907), ലഖ്നൗവിൽ ഒന്നിച്ചു (1916)</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: മിന്റോ-മോർലി ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. മിന്റോ-മോർലി ഭരണപരിഷ്കാരം (1909)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വൈസ്രോയി:</strong> മിന്റോ പ്രഭു (Lord Minto) + സെക്രട്ടറി ഓഫ് സ്റ്റേറ്റ്: മോർലി (John Morley).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാന വ്യവസ്ഥ:</strong> മുസ്ലീങ്ങൾക്ക് പ്രത്യേക നിയോജകമണ്ഡലം (Separate Electorate).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>അറിയപ്പെടുന്നത്:</strong> ഇന്ത്യൻ കൗൺസിൽ ആക്ട് 1909.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പ്രാധാന്യം:</strong> വിഭജന രാഷ്ട്രീയത്തിന്റെ വിത്ത് പാകി. കമ്മ്യൂണൽ ഇലക്ടറേറ്റിന്റെ പിതാവ്: മിന്റോ പ്രഭു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>മിന്റോ-മോർലി = മുസ്ലീം പ്രത്യേക മണ്ഡലം</strong>" — 'മ' എന്ന അക്ഷരം ഓർക്കുക.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: വിഭജനം റദ്ദാക്കൽ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. ബംഗാൾ വിഭജനം റദ്ദാക്കൽ (1911)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ജോർജ് അഞ്ചാമൻ</strong> ദിളി ദർബാറിൽ (Delhi Durbar) വെച്ച് റദ്ദാക്കി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>തീയതി:</strong> <strong>1911 ഡിസംബർ 12</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വൈസ്രോയി:</strong> ഹാർഡിഞ്ച് II (Lord Hardinge II).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>തലസ്ഥാനം:</strong> കൽക്കട്ടയിൽ നിന്ന് ഡൽഹിയിലേക്ക് മാറ്റാൻ പ്രഖ്യാപനം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>അധിക പ്രഖ്യാപനങ്ങൾ:</strong> ബിഹാർ, ഒറീസ്സ പുതിയ പ്രവിശ്യകൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഗേറ്റ് വേ ഓഫ് ഇന്ത്യ:</strong> ജോർജ് V-ന്റെ സ്വാഗതാർത്ഥം നിർമ്മിച്ചത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഡൽഹി തലസ്ഥാന നഗരിയുടെ ശിൽപി:</strong> എഡ്വിൻ ലൂട്ടൻസ് (Edwin Lutyens).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>1911-ൽ ദിളി ദർബാർ: വിഭജനം റദ്ദ് + ഡൽഹി തലസ്ഥാനം</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കഴ്സൺ പ്രഭു:</strong> ബംഗാൾ വിഭജിച്ചു (1905).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഹാർഡിഞ്ച് II:</strong> വിഭജനം റദ്ദാക്കി (1911).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1905 ഒക്ടോബർ 16:</strong> വിഭജനം നിലവിൽ വന്നു (വിലാപ ദിനം).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അമർ സോനാർ ബംഗ:</strong> ടാഗോറിന്റെ പ്രതിഷേധ ഗാനം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പി.സി. റോയ്:</strong> ബംഗാൾ കെമിക്കൽസ് സ്ഥാപിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>അരബിന്ദോ ഘോഷ്:</strong> ബംഗാൾ നാഷണൽ കോളേജിന്റെ ആദ്യ പ്രിൻസിപ്പാൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സുദേശ് ബന്ധബ് സമിതി:</strong> അശ്വിനി കുമാർ ദത്ത് സ്ഥാപിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>'ഇന്ത്യയിലെ ഔറംഗസേബ്':</strong> എന്ന് വിളിച്ചത് ഗോപാലകൃഷ്ണ ഗോഖലെ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: PSC വിശകലനം ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ബംഗാൾ വിഭജന വർഷം, വൈസ്രോയിമാർ, സൂറത്ത് പിളർപ്പ്, മിന്റോ-മോർലി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിപ്പ്:</strong> തീവ്രവാദി നേതാക്കൾ, ഡൽഹി തലസ്ഥാനം, അമർ സോനാർ ബംഗ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> INC പ്രസിഡന്റ്, തീയതികളുടെ വ്യത്യാസം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: മുൻവർഷ ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. മുൻവർഷ ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> വൈസ്രോയിമാരെ മാറ്റിപ്പോകാതിരിക്കാൻ PSC പ്രത്യേകം ശ്രദ്ധിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> Statement ചോദ്യങ്ങളിൽ മിന്റോ-മോർലി വ്യവസ്ഥകൾ സ്ഥിരം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കാലക്രമ ചോദ്യങ്ങളും പ്രധാനം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>വിഭജനം പ്രഖ്യാപിച്ചത്</td>
+                <td>വിഭജനം നടപ്പിലായത്</td>
+                <td>1905 ജൂലൈ 20 (പ്രഖ്യാപനം) vs 1905 ഒക്ടോബർ 16 (നടപ്പിൽ).</td>
+              </tr>
+              <tr>
+                <td>വിഭജിച്ച വൈസ്രോയി</td>
+                <td>റദ്ദാക്കിയ വൈസ്രോയി</td>
+                <td>കഴ്സൺ പ്രഭു vs ഹാർഡിഞ്ച് II.</td>
+              </tr>
+              <tr>
+                <td>റാഷ് ബിഹാരി ഘോഷ്</td>
+                <td>റാഷ് ബിഹാരി ബോസ്</td>
+                <td>സൂറത്ത് സമ്മേളന അധ്യക്ഷൻ ഘോഷ്; ബോസ് വിപ്ലവകാരി.</td>
+              </tr>
+              <tr>
+                <td>മിന്റോ (വൈസ്രോയി)</td>
+                <td>മോർലി (സെക്രട്ടറി ഓഫ് സ്റ്റേറ്റ്)</td>
+                <td>രണ്ടും വ്യത്യസ്ത വ്യക്തികൾ; ഒരുമിച്ച് 1909-ലെ പരിഷ്കാരം.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <div class="section-body">
+        <h3>കോൺഗ്രസിലെ പിളർപ്പ് (1907)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പ്രത്യേകത</th><th>മിതവാദികൾ</th><th>തീവ്രവാദികൾ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>സമരരീതി</td><td>അപേക്ഷ, പ്രമേയം</td><td>ബഹിഷ്കരണം, ഹർത്താൽ</td></tr>
+              <tr><td>നേതാക്കൾ</td><td>ഗോഖലെ, നവറോജി</td><td>ലാൽ-ബാൽ-പാൽ</td></tr>
+              <tr><td>ലക്ഷ്യം</td><td>ഭരണപരിഷ്കാരം</td><td>പൂർണ്ണ സ്വരാജ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>പ്രധാന വൈസ്രോയിമാരും സംഭവങ്ങളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വൈസ്രോയി</th><th>സംഭവം</th><th>വർഷം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>കഴ്സൺ പ്രഭു</td><td>ബംഗാൾ വിഭജനം</td><td>1905</td></tr>
+              <tr><td>മിന്റോ പ്രഭു</td><td>മിന്റോ-മോർലി പരിഷ്കാരം</td><td>1909</td></tr>
+              <tr><td>ഹാർഡിഞ്ച് II</td><td>വിഭജനം റദ്ദാക്കൽ</td><td>1911</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: സമയരേഖ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. സമയരേഖ (Timeline)</h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <span class="box-label">📅 സ്വദേശി പ്രസ്ഥാനത്തിന്റെ സമയരേഖ</span>
+          <svg viewBox="0 0 900 200" width="100%" height="auto" role="img" aria-label="സ്വദേശി പ്രസ്ഥാന സമയരേഖ">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="90" cy="100" r="10" fill="#c62828"/>
+            <text x="90" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1905</text>
+            <text x="90" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ജൂലൈ 20</text>
+            <text x="90" y="145" text-anchor="middle" font-size="9" fill="#4a5f72">പ്രഖ്യാപനം</text>
+            <circle cx="210" cy="100" r="10" fill="#ef6c00"/>
+            <text x="210" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1905</text>
+            <text x="210" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഒക്ടോ. 16</text>
+            <text x="210" y="145" text-anchor="middle" font-size="9" fill="#4a5f72">നിലവിൽ</text>
+            <circle cx="340" cy="100" r="10" fill="#2e7d32"/>
+            <text x="340" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1906</text>
+            <text x="340" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">മുസ്ലിം ലീഗ്</text>
+            <circle cx="460" cy="100" r="10" fill="#1565c0"/>
+            <text x="460" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1907</text>
+            <text x="460" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">സൂറത്ത് പിളർപ്പ്</text>
+            <circle cx="590" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="590" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1909</text>
+            <text x="590" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">മിന്റോ-മോർലി</text>
+            <circle cx="730" cy="100" r="10" fill="#b83b2c"/>
+            <text x="730" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1911</text>
+            <text x="730" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">റദ്ദാക്കൽ, ഡൽഹി</text>
+            <circle cx="830" cy="100" r="10" fill="#00695c"/>
+            <text x="830" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1916</text>
+            <text x="830" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ലഖ്നൗ ലയനം</text>
+          </svg>
+          <div class="viz-caption">📅 1905 മുതൽ 1916 വരെയുള്ള പ്രധാന സംഭവങ്ങൾ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: നിനയ്ക്കാൻ എളുപ്പം ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>തീവ്രവാദി നേതാക്കൾ: "<strong>Lal-Bal-Pal-Ar</strong>" → ലാലാ ലജ്പത് റായ്, ബാലഗംഗാധര തിലകൻ, ബിപിൻ ചന്ദ്ര പാൽ, അരബിന്ദോ ഘോഷ്.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>1905-1911 ക്രമം: "<strong>ബംഗാളിനെ (1905) ലീഗ് (1906) സൂറത്തിൽ (1907) വെച്ച് മിന്റോയ്ക്ക് (1909) നൽകി തലസ്ഥാനം മാറ്റി (1911)</strong>".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p>"<strong>20-ന് പറഞ്ഞു, 16-ന് പിരിച്ചു</strong>" — ജൂലൈ 20 (പ്രഖ്യാപനം), ഒക്ടോബർ 16 (നിലവിൽ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p>"<strong>മിന്റോ-മോർലി = മുസ്ലീം പ്രത്യേക മണ്ഡലം</strong>" — 'മ' എന്ന അക്ഷരം ഓർക്കുക.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5:</strong></span>
+          <p>"<strong>കഴ്സൺ കീറി, ഹാർഡിഞ്ച് ഒട്ടിച്ചു</strong>" — കഴ്സൺ വിഭജിച്ചു, ഹാർഡിഞ്ച് റദ്ദാക്കി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: PSC കെണികൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. സാധാരണ PSC കെണികൾ (Common PSC Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> 1905-ലെ INC പ്രസിഡന്റ് ആരായിരുന്നു?</p>
+          <p><strong>Confusing Options:</strong> ദാദാഭായ് നവറോജി / ഗോപാലകൃഷ്ണ ഗോഖലെ / റാഷ് ബിഹാരി ഘോഷ് / ലാലാ ലജ്പത് റായ്</p>
+          <p><strong>Fact:</strong> <strong>ഗോപാലകൃഷ്ണ ഗോഖലെ</strong> (1905 ബനാറസ് സമ്മേളനം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> മിന്റോ-മോർലി പരിഷ്കാരത്തിലെ 'മിന്റോ' ആരായിരുന്നു?</p>
+          <p><strong>Confusing Options:</strong> സെക്രട്ടറി ഓഫ് സ്റ്റേറ്റ് / വൈസ്രോയി / ഗവർണർ ജനറൽ / INC പ്രസിഡന്റ്</p>
+          <p><strong>Fact:</strong> <strong>വൈസ്രോയി</strong> (Lord Minto). മോർലി = സെക്രട്ടറി ഓഫ് സ്റ്റേറ്റ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> സൂറത്ത് സമ്മേളന അധ്യക്ഷൻ ആരായിരുന്നു?</p>
+          <p><strong>Confusing Options:</strong> റാഷ് ബിഹാരി ബോസ് / റാഷ് ബിഹാരി ഘോഷ് / ദാദാഭായ് നവറോജി / ഗോഖലെ</p>
+          <p><strong>Fact:</strong> <strong>റാഷ് ബിഹാരി ഘോഷ്</strong> (Rash Behari Ghosh). റാഷ് ബിഹാരി ബോസ് = വിപ്ലവകാരി (ഹാർഡിഞ്ച് ബോംബാക്രമണം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> വിഭജനം റദ്ദാക്കിയ വൈസ്രോയി ആരായിരുന്നു?</p>
+          <p><strong>Confusing Options:</strong> കഴ്സൺ / മിന്റോ / ഹാർഡിഞ്ച് II / റിപ്പൺ</p>
+          <p><strong>Fact:</strong> <strong>ഹാർഡിഞ്ച് II</strong> (1911). കഴ്സൺ = വിഭജിച്ചയാൾ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> 'ഇന്ത്യയിലെ ഔറംഗസേബ്' എന്ന് വിളിച്ചത് ആരെയാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഗാന്ധി / തിലകൻ / ഗോഖലെ / നെഹ്റു</p>
+          <p><strong>Fact:</strong> <strong>ഗോപാലകൃഷ്ണ ഗോഖലെ</strong> — കഴ്സണെ ഈ പേരിൽ വിളിച്ചത് ഗോഖലെയാണ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. അധിക വസ്തുതകൾ (Additional Kerala PSC Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സുദേശ് ബന്ധബ് സമിതി:</strong> അശ്വിനി കുമാർ ദത്ത് (Ashwini Kumar Dutt) സ്ഥാപിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കഴ്സണെ 'ഇന്ത്യയിലെ ഔറംഗസേബ്' എന്ന് വിളിച്ചത്:</strong> ഗോപാലകൃഷ്ണ ഗോഖലെ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഡൽഹി തലസ്ഥാന നഗരിയുടെ ശിൽപി:</strong> എഡ്വിൻ ലൂട്ടൻസ് (Edwin Lutyens).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>'ബഹിഷ്കരണം' ആദ്യം നിർദ്ദേശിച്ച പത്രം:</strong> സഞ്ചീവനി (Sanjivani).</li>
+          <li><span class="stars">⭐⭐</span> <strong>തിലകൻ:</strong> ശിവാജി-ഗണേശ ഉത്സവങ്ങൾ ജനകീയമാക്കി.</li>
+          <li><span class="stars">⭐⭐</span> <strong>മദ്രാസിൽ നേതൃത്വം:</strong> ചിദംബരം പിള്ള (V.O.C).</li>
+          <li><span class="stars">⭐⭐</span> <strong>പഞ്ചാബിൽ നേതൃത്വം:</strong> ലാലാ ലജ്പത് റായ്.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ദേശീയ വിദ്യാഭ്യാസ കൗൺസിൽ:</strong> 1906-ൽ സ്ഥാപിച്ചു.</li>
+          <li><span class="stars">⭐⭐</span> <strong>'സ്വരാജ്' ആദ്യം INC വേദിയിൽ:</strong> ദാദാഭായ് നവറോജി (1906, കൽക്കട്ട).</li>
+          <li><span class="stars">⭐⭐</span> <strong>വന്ദേമാതരം പത്രം:</strong> അരബിന്ദോ ഘോഷ്.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇന്ത്യൻ പതാക വിദേശത്ത് ആദ്യം ഉയർത്തിയത്:</strong> മാഡം ഭിക്കാജി കാമ (1907).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇന്ത്യൻ ദേശീയതയുടെ പ്രവാചകൻ:</strong> അരബിന്ദോ ഘോഷ്.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഹാർഡിഞ്ച് ബോംബാക്രമണം (1912):</strong> റാഷ് ബിഹാരി ബോസ്, സച്ചിൻ സന്യാൽ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>സ്വദേശി സ്റ്റീം നാവിഗേഷൻ കമ്പനി:</strong> V.O.C. ചിദംബരം പിള്ള.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ബംഗാൾ വിഭജനം നിലവിൽ വന്നത് എന്ന്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1905 ജൂലൈ 20</span>
+            <span data-opt="B">B. 1905 ഓഗസ്റ്റ് 7</span>
+            <span data-opt="C">C. 1905 ഒക്ടോബർ 16</span>
+            <span data-opt="D">D. 1905 ഡിസംബർ 12</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1905 ഒക്ടോബർ 16</div>
+            <div class="explanation">ഈ ദിവസം 'വിലാപ ദിനം' ആയി ആചരിക്കപ്പെട്ടു. പ്രഖ്യാപനം 1905 ജൂലൈ 20-നായിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. സ്വദേശി പ്രസ്ഥാനത്തിന്റെ പ്രധാന ഗാനം?</div>
+          <div class="options">
+            <span data-opt="A">A. ജനഗണമന</span>
+            <span data-opt="B">B. വന്ദേമാതരം</span>
+            <span data-opt="C">C. സാരേ ജഹാൻ സേ അച്ചാ</span>
+            <span data-opt="D">D. അമർ സോനാർ ബംഗ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) വന്ദേമാതരം</div>
+            <div class="explanation">ബങ്കിം ചന്ദ്ര ചാറ്റർജി രചിച്ച ഈ ഗാനം സ്വദേശി പ്രസ്ഥാനത്തിന്റെ തീം സോംഗ് ആയിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക:</div>
+          <div class="options">
+            <span data-opt="A">A. ബംഗാൾ വിഭജിച്ചത് - ഹാർഡിഞ്ച് II</span>
+            <span data-opt="B">B. ബംഗാൾ വിഭജിച്ചത് - കഴ്സൺ പ്രഭു</span>
+            <span data-opt="C">C. സൂറത്ത് പിളർപ്പ് അധ്യക്ഷൻ - റാഷ് ബിഹാരി ബോസ്</span>
+            <span data-opt="D">D. വിഭജനം റദ്ദാക്കിയത് - മിന്റോ പ്രഭു</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ബംഗാൾ വിഭജിച്ചത് - കഴ്സൺ പ്രഭു</div>
+            <div class="explanation">കഴ്സൺ പ്രഭു 1905-ൽ വിഭജിച്ചു; ഹാർഡിഞ്ച് II 1911-ൽ റദ്ദാക്കി; സൂറത്ത് അധ്യക്ഷൻ റാഷ് ബിഹാരി ഘോഷ്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലക്രമം: 1. സൂറത്ത് 2. ബംഗാൾ വിഭജനം 3. മുസ്ലിം ലീഗ് 4. മിന്റോ-മോർലി</div>
+          <div class="options">
+            <span data-opt="A">A. 2,3,1,4</span>
+            <span data-opt="B">B. 2,1,3,4</span>
+            <span data-opt="C">C. 3,2,1,4</span>
+            <span data-opt="D">D. 1,2,4,3</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 2,3,1,4</div>
+            <div class="explanation">ബംഗാൾ വിഭജനം (1905), മുസ്ലിം ലീഗ് (1906), സൂറത്ത് (1907), മിന്റോ-മോർലി (1909).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ലാൽ-ബാൽ-പാൽ ത്രയത്തിൽ ഇല്ലാത്തത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ലാലാ ലജ്പത് റായ്</span>
+            <span data-opt="B">B. ബാലഗംഗാധര തിലകൻ</span>
+            <span data-opt="C">C. ബിപിൻ ചന്ദ്ര പാൽ</span>
+            <span data-opt="D">D. അരബിന്ദോ ഘോഷ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) അരബിന്ദോ ഘോഷ്</div>
+            <div class="explanation">ലാൽ-ബാൽ-പാൽ = ലാലാ ലജ്പത് റായ്, ബാലഗംഗാധര തിലകൻ, ബിപിൻ ചന്ദ്ര പാൽ. അരബിന്ദോ ഘോഷ് പ്രമുഖനാണെങ്കിലും ത്രയത്തിൽ ഉൾപ്പെടുന്നില്ല.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. മുസ്ലിങ്ങൾക്ക് പ്രത്യേക നിയോജകമണ്ഡലം നൽകിയ നിയമം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1892 കൗൺസിൽ ആക്ട്</span>
+            <span data-opt="B">B. 1909 മിന്റോ-മോർലി പരിഷ്കാരം</span>
+            <span data-opt="C">C. 1919 മോണ്ടേഗ്-ചെംസ്ഫോർഡ്</span>
+            <span data-opt="D">D. 1935 ഗവൺമെന്റ് ഓഫ് ഇന്ത്യ ആക്ട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1909 മിന്റോ-മോർലി പരിഷ്കാരം</div>
+            <div class="explanation">ഇത് കമ്മ്യൂണൽ ഇലക്ടറേറ്റിന്റെ തുടക്കമായിരുന്നു. മിന്റോ പ്രഭുവിനെ കമ്മ്യൂണൽ ഇലക്ടറേറ്റിന്റെ പിതാവ് എന്ന് വിളിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement: ബംഗാൾ വിഭജനവുമായി ശരിയായത്?<br>
+            1. ഔദ്യോഗിക കാരണം ഭരണസൗകര്യം<br>
+            2. രാഖി ബന്ധനം പ്രതിഷേധ മാർഗമായിരുന്നു<br>
+            3. 1911 ദിളി ദർബാറിൽ റദ്ദാക്കി</div>
+          <div class="options">
+            <span data-opt="A">A. 1,2</span>
+            <span data-opt="B">B. 1,3</span>
+            <span data-opt="C">C. 2,3</span>
+            <span data-opt="D">D. 1,2,3</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 1,2,3</div>
+            <div class="explanation">മൂന്ന് പ്രസ്താവനകളും ശരിയാണ്. ടാഗോറിന്റെ നേതൃത്വത്തിൽ രാഖി ബന്ധനം പ്രതിഷേധ മാർഗമായിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. തലസ്ഥാനം കൽക്കട്ടയിൽ നിന്ന് ഡൽഹിയിലേക്ക് മാറ്റാൻ തീരുമാനിച്ച വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1905</span>
+            <span data-opt="B">B. 1909</span>
+            <span data-opt="C">C. 1911</span>
+            <span data-opt="D">D. 1916</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1911</div>
+            <div class="explanation">1911 ഡിസംബർ 12-ന് ജോർജ് V ദിളി ദർബാറിൽ വെച്ച് പ്രഖ്യാപിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match: 1. സ്വദേശി 2. സൂറത്ത് 3. മുസ്ലിം ലീഗ് 4. മിന്റോ-മോർലി<br>
+            a.1909 b.1906 c.1905 d.1907</div>
+          <div class="options">
+            <span data-opt="A">A. 1-c,2-d,3-b,4-a</span>
+            <span data-opt="B">B. 1-c,2-b,3-d,4-a</span>
+            <span data-opt="C">C. 1-d,2-c,3-a,4-b</span>
+            <span data-opt="D">D. 1-b,2-a,3-c,4-d</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-c,2-d,3-b,4-a</div>
+            <div class="explanation">സ്വദേശി (1905), സൂറത്ത് (1907), മുസ്ലിം ലീഗ് (1906), മിന്റോ-മോർലി (1909).</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ബംഗാൾ നാഷണൽ കോളേജിന്റെ ആദ്യ പ്രിൻസിപ്പാൾ?</div>
+          <div class="options">
+            <span data-opt="A">A. ടാഗോർ</span>
+            <span data-opt="B">B. അരബിന്ദോ ഘോഷ്</span>
+            <span data-opt="C">C. ബാനർജി</span>
+            <span data-opt="D">D. പി.സി. റോയ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) അരബിന്ദോ ഘോഷ്</div>
+            <div class="explanation">1906-ൽ സ്ഥാപിതമായ ബംഗാൾ നാഷണൽ കോളേജിന്റെ ആദ്യ പ്രിൻസിപ്പാൾ അരബിന്ദോ ഘോഷ് ആയിരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. കഴ്സണെ 'ഇന്ത്യയിലെ ഔറംഗസേബ്' എന്ന് വിളിച്ചത് ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഗാന്ധി</span>
+            <span data-opt="B">B. തിലകൻ</span>
+            <span data-opt="C">C. ഗോപാലകൃഷ്ണ ഗോഖലെ</span>
+            <span data-opt="D">D. നെഹ്റു</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഗോപാലകൃഷ്ണ ഗോഖലെ</div>
+            <div class="explanation">ഗോഖലെയാണ് കഴ്സണെ 'ഇന്ത്യയിലെ ഔറംഗസേബ്' എന്ന് വിളിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): 1907-ൽ INC പിളർന്നു.<br>
+            Reason (R): സമരരീതികളിൽ ഭിന്നത.</div>
+          <div class="options">
+            <span data-opt="A">A. A,R ശരി, R വിശദീകരണം</span>
+            <span data-opt="B">B. A,R ശരി, R അല്ല</span>
+            <span data-opt="C">C. A ശരി, R തെറ്റ്</span>
+            <span data-opt="D">D. A തെറ്റ്, R ശരി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A,R ശരി, R വിശദീകരണം</div>
+            <div class="explanation">1907-ലെ സൂറത്ത് സമ്മേളനത്തിൽ മിതവാദികളും തീവ്രവാദികളും സമരരീതിയിലും ലക്ഷ്യത്തിലും ഉണ്ടായ ഭിന്നത കാരണം പിളർന്നു.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. 'ബഹിഷ്കരണം' ആദ്യം നിർദ്ദേശിച്ച പത്രം?</div>
+          <div class="options">
+            <span data-opt="A">A. സഞ്ചീവനി</span>
+            <span data-opt="B">B. കേസരി</span>
+            <span data-opt="C">C. വന്ദേമാതരം</span>
+            <span data-opt="D">D. യുഗാന്തർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) സഞ്ചീവനി</div>
+            <div class="explanation">സഞ്ചീവനി പത്രമാണ് ആദ്യം ബഹിഷ്കരണം എന്ന ആശയം നിർദ്ദേശിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ടാഗോർ രചിച്ച പ്രതിഷേധ ഗാനം?</div>
+          <div class="options">
+            <span data-opt="A">A. ജനഗണമന</span>
+            <span data-opt="B">B. അമർ സോനാർ ബംഗ</span>
+            <span data-opt="C">C. സാരേ ജഹാൻ സേ അച്ചാ</span>
+            <span data-opt="D">D. ആനന്ദമഠം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) അമർ സോനാർ ബംഗ</div>
+            <div class="explanation">രവീന്ദ്രനാഥ ടാഗോർ രചിച്ച 'അമർ സോനാർ ബംഗ' പ്രതിഷേധ ഗാനമായിരുന്നു. ഇത് പിന്നീട് ബംഗ്ലാദേശിന്റെ ദേശീയ ഗാനമായി.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. 'ഭിന്നിപ്പിച്ച് ഭരിക്കുക' നയത്തിന്റെ ഔദ്യോഗിക തുടക്കം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1857 അടിച്ചമർത്തൽ</span>
+            <span data-opt="B">B. INC രൂപീകരണം</span>
+            <span data-opt="C">C. ബംഗാൾ വിഭജനം</span>
+            <span data-opt="D">D. ജാലിയൻവാലാബാഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ബംഗാൾ വിഭജനം</div>
+            <div class="explanation">1905-ലെ ബംഗാൾ വിഭജനം 'ഭിന്നിപ്പിച്ച് ഭരിക്കുക' നയത്തിന്റെ ഔദ്യോഗിക തുടക്കമായിരുന്നു.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>9</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>10</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>12</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(D)</td><td>13</td><td>(A)</td></tr>
+              <tr><td>6</td><td>(B)</td><td>14</td><td>(B)</td></tr>
+              <tr><td>7</td><td>(D)</td><td>15</td><td>(C)</td></tr>
+              <tr><td>8</td><td>(C)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>1905:</strong> ബംഗാൾ വിഭജനം (കഴ്സൺ).</li>
+          <li><strong>1905 ഒക്ടോബർ 16:</strong> വിലാപ ദിനം.</li>
+          <li><strong>തീം സോംഗ്:</strong> വന്ദേമാതരം.</li>
+          <li><strong>ബഹിഷ്കരണം:</strong> സഞ്ചീവനി.</li>
+          <li><strong>രാഖി ബന്ധനം:</strong> ടാഗോർ.</li>
+          <li><strong>അമർ സോനാർ ബംഗ:</strong> ടാഗോർ.</li>
+          <li><strong>1907:</strong> സൂറത്ത് പിളർപ്പ് (ഘോഷ്).</li>
+          <li><strong>1909:</strong> മിന്റോ-മോർലി (പ്രത്യേക നിയോജകമണ്ഡലം).</li>
+          <li><strong>1911:</strong> വിഭജനം റദ്ദാക്കി (ഹാർഡിഞ്ച് II).</li>
+          <li><strong>1911:</strong> തലസ്ഥാനം ഡൽഹി.</li>
+          <li><strong>ബംഗാൾ നാഷണൽ കോളേജ്:</strong> അരബിന്ദോ ഘോഷ്.</li>
+          <li><strong>സുദേശ് ബന്ധബ് സമിതി:</strong> അശ്വിനി കുമാർ ദത്ത്.</li>
+          <li><strong>കഴ്സണെ ഔറംഗസേബിനോട് ഉപമിച്ചത്:</strong> ഗോഖലെ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 20: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>വർഷങ്ങൾ</h3>
+        <ul>
+          <li><strong>1905 ജൂലൈ 20:</strong> പ്രഖ്യാപനം</li>
+          <li><strong>1905 ഒക്ടോബർ 16:</strong> നിലവിൽ</li>
+          <li><strong>1907:</strong> സൂറത്ത്</li>
+          <li><strong>1909:</strong> മിന്റോ-മോർലി</li>
+          <li><strong>1911:</strong> റദ്ദാക്കൽ & ഡൽഹി തലസ്ഥാനം</li>
+        </ul>
+        <h3>പ്രധാന വ്യക്തികൾ</h3>
+        <ul>
+          <li>കഴ്സൺ, ഹാർഡിഞ്ച് II, റാഷ് ബിഹാരി ഘോഷ്, ഗോഖലെ, ജോർജ് V</li>
+          <li>അരബിന്ദോ ഘോഷ്, ടാഗോർ, ലാൽ-ബാൽ-പാൽ</li>
+        </ul>
+        <h3>പ്രധാന സ്ഥാപനങ്ങൾ</h3>
+        <ul>
+          <li>ബംഗാൾ നാഷണൽ കോളേജ്</li>
+          <li>ബംഗാൾ കെമിക്കൽസ്</li>
+          <li>സുദേശ് ബന്ധബ് സമിതി</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 21: ടോപ്പ് 25 വസ്തുതകൾ ===== -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>സ്വദേശി പ്രസ്ഥാനം INC നയിച്ച ആദ്യ ജനകീയ പ്രസ്ഥാനം.</li>
+          <li>ബംഗാൾ വിഭജന ഔദ്യോഗിക ലക്ഷ്യം 'ഭരണപരമായ സൗകര്യം'.</li>
+          <li>വന്ദേമാതരം ആനന്ദമഠത്തിൽ നിന്ന്.</li>
+          <li>തിലകൻ ശിവാജി-ഗണേശ ഉത്സവങ്ങൾ ജനകീയമാക്കി.</li>
+          <li>പഞ്ചാബിൽ നേതൃത്വം: ലാലാ ലജ്പത് റായ്.</li>
+          <li>മദ്രാസിൽ: ചിദംബരം പിള്ള (V.O.C).</li>
+          <li>ടാഗോറിന്റെ ഗാനം: അമർ സോനാർ ബംഗ.</li>
+          <li>വിഭജന ദിവസം അടുപ്പിൽ തീ കത്തിക്കാതെ വിലാപ ദിനം.</li>
+          <li>സൂറത്ത് പിളർപ്പ് താപ്തി നദീതീരത്ത്.</li>
+          <li>തീവ്രവാദികളുടെ ലക്ഷ്യം മിതവാദികളെ പുറത്താക്കുക, സംഭവിച്ചത് മറിച്ച്.</li>
+          <li>മിന്റോ-മോർലി = 1909 ഇന്ത്യൻ കൗൺസിൽ ആക്ട്.</li>
+          <li>കമ്മ്യൂണൽ ഇലക്ടറേറ്റിന്റെ പിതാവ്: മിന്റോ പ്രഭു.</li>
+          <li>1911 ദിളി ദർബാർ സമയത്ത് കോൺഗ്രസ് അധ്യക്ഷൻ: ബിഷൻ നാരായൺ ദാർ.</li>
+          <li>ഗേറ്റ് വേ ഓഫ് ഇന്ത്യ ജോർജ് V സ്വാഗതാർത്ഥം.</li>
+          <li>1911-ൽ ബിഹാർ, ഒറീസ്സ പുതിയ പ്രവിശ്യകൾ.</li>
+          <li>ഹാർഡിഞ്ച് ബോംബാക്രമണം (1912): റാഷ് ബിഹാരി ബോസ്, സച്ചിൻ സന്യാൽ.</li>
+          <li>സ്വദേശി സ്റ്റീം നാവിഗേഷൻ കമ്പനി: V.O.C.</li>
+          <li>ദേശീയ വിദ്യാഭ്യാസ കൗൺസിൽ: 1906.</li>
+          <li>'സ്വരാജ്' ആദ്യം INC വേദിയിൽ: ദാദാഭായ് നവറോജി (1906).</li>
+          <li>വന്ദേമാതരം പത്രം: അരബിന്ദോ ഘോഷ്.</li>
+          <li>ഇന്ത്യൻ പതാക വിദേശത്ത് ആദ്യം: മാഡം ഭിക്കാജി കാമ (1907).</li>
+          <li>കാർലൈൽ സർക്കുലർ വിദ്യാർത്ഥികളെ നിയന്ത്രിക്കാൻ.</li>
+          <li>ഡോൺ സൊസൈറ്റി: സതീഷ് ചന്ദ്ര മുഖർജി.</li>
+          <li>ഇന്ത്യൻ ദേശീയതയുടെ പ്രവാചകൻ: അരബിന്ദോ ഘോഷ്.</li>
+          <li>1916 ലഖ്നൗ പാക്ടിൽ മിതവാദികളും തീവ്രവാദികളും ഒന്നിച്ചു.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 22: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">22. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ബംഗാൾ വിഭജനം ഭിന്നിപ്പിച്ച് ഭരിക്കലിന്റെ ഏറ്റവും വലിയ ഉദാഹരണം.</li>
+          <li>ഇതിനെതിരായ പ്രതിഷേധം സ്വദേശി പ്രസ്ഥാനമായി.</li>
+          <li>കോൺഗ്രസ് പിളർപ്പ് (1907) കൊണ്ട് ഇന്ത്യൻ ദേശീയ പ്രസ്ഥാനം ശക്തി പ്രാപിച്ചു.</li>
+          <li>ബ്രിട്ടീഷുകാർ 1911-ൽ വിഭജനം റദ്ദാക്കി.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1-2 ചോദ്യങ്ങൾ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായം ഇന്ത്യൻ ദേശീയ പ്രസ്ഥാനത്തിന്റെ ആദ്യ ജനകീയ മുന്നേറ്റത്തെക്കുറിച്ചുള്ളതാണ്. അടുത്ത അധ്യായത്തിൽ ഹോം റൂൾ പ്രസ്ഥാനവും ഗാന്ധിയൻ യുഗവും ചർച്ച ചെയ്യും. ഈ അധ്യായം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>1.2.4 Swadeshi Movement</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'history-1.2.4-swadeshi-movement';
-window.PART_TITLE = '1.2.4 Swadeshi Movement';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaSwadeshiMovementQ_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>

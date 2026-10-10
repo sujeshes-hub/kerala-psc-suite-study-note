@@ -1,105 +1,1669 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>4.8 State Government - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ഇന്ത്യൻ ഭരണഘടന – സംസ്ഥാന ഗവൺമെന്റ് | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">4.8 State Government</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ഗവർണ്ണർ</a></li>
+      <li><a href="#sec3">3. മുഖ്യമന്ത്രിയും മന്ത്രിസഭയും</a></li>
+      <li><a href="#sec4">4. അഡ്വക്കേറ്റ് ജനറൽ</a></li>
+      <li><a href="#sec5">5. നിയമസഭയും കൗൺസിലും</a></li>
+      <li><a href="#sec6">6. ഹൈക്കോടതി</a></li>
+      <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec10">10. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec11">11. സമയരേഖ / ട്രിക്കുകൾ</a></li>
+      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
+      <li><a href="#sec13">13. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec14">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec15">15. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec16">16. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec17">17. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec18">18. ടോപ്പ് വസ്തുതകൾ</a></li>
+      <li><a href="#sec19">19. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 101</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – സംസ്ഥാന ഗവൺമെന്റ്</h1>
+      <div class="subtitle">State Government | Kerala PSC Study Notes – Complete Verified</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഗവർണ്ണറുടെ ഓർഡിനൻസ് (213), അഡ്വക്കേറ്റ് ജനറൽ (165), ഹൈക്കോടതി ജഡ്ജിയുടെ വിരമിക്കൽ പ്രായം (62), ആർട്ടിക്കിൾ 177, ആർട്ടിക്കിൾ 226</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഗവർണ്ണറുടെ മാപ്പുനൽകൽ (161), കൗൺസിൽ രൂപീകരണം (169), ആദ്യ വനിതകൾ (അന്ന, ലീല, ഫാത്തിമ), കേരള ഹൈക്കോടതി</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — മന്ത്രിസഭയുടെ 15% പരിധി, MLA/MLC പ്രായം, ആർട്ടിക്കിൾ 200, കൗൺസിൽ ഉള്ള സംസ്ഥാനങ്ങൾ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — കേരളത്തിലെ ആദ്യങ്ങൾ, ആദ്യ ഗവർണ്ണർ/CM</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ആർട്ടിക്കിൾ ഘടന, പശ്ചാത്തലം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ഗവർണ്ണർ:</strong> ആർട്ടിക്കിൾ 153, 35 വയസ്സ്, രാഷ്ട്രപതി നിയമിക്കുന്നു</li>
+            <li><strong>അഡ്വക്കേറ്റ് ജനറൽ:</strong> ആർട്ടിക്കിൾ 165, ഗവർണ്ണർ നിയമിക്കുന്നു, പ്രായപരിധി ഇല്ല</li>
+            <li><strong>ഹൈക്കോടതി:</strong> ആർട്ടിക്കിൾ 214, റിട്ട് 226, വിരമിക്കൽ 62</li>
+            <li><strong>ഓർഡിനൻസ്:</strong> ആർട്ടിക്കിൾ 213, 6 ആഴ്ച</li>
+            <li><strong>മന്ത്രിസഭ:</strong> 15% പരിധി, കുറഞ്ഞത് 12</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ ആറാം ഭാഗത്തിൽ (Part VI) പ്രതിപാദിക്കുന്ന സംസ്ഥാന ഗവൺമെന്റിന്റെ ഘടകങ്ങളായ <strong>ഗവർണ്ണർ, മുഖ്യമന്ത്രിയും മന്ത്രിസഭയും, സംസ്ഥാന നിയമനിർമ്മാണ സഭ (നിയമസഭയും നിയമനിർമ്മാണ കൗൺസിലും), ഹൈക്കോടതി, അഡ്വക്കേറ്റ് ജനറൽ</strong> എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രാധാന്യം:</strong> കേന്ദ്ര ഗവൺമെന്റിന് സമാനമായ ഘടനയാണ് സംസ്ഥാനങ്ങൾക്കുമുള്ളത്. അതിനാൽ കേന്ദ്രം പഠിച്ചവർക്ക് സംസ്ഥാനം പഠിക്കാൻ വളരെ എളുപ്പമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ഗവർണ്ണറുടെ ഓർഡിനൻസ് ഇറക്കാനുള്ള അധികാരം (ആർട്ടിക്കിൾ 213), അഡ്വക്കേറ്റ് ജനറൽ (ആർട്ടിക്കിൾ 165), ഹൈക്കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം (62 വയസ്സ്), കേരളത്തിലെ ആദ്യത്തെ വനിതാ ഹൈക്കോടതി ജഡ്ജി എന്നിവ PSC പരീക്ഷകളിലെ സ്ഥിരം ചോദ്യങ്ങളാണ്.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📌 ഒറ്റനോട്ടത്തിൽ</span>
+          <p>ഗവർണ്ണർ <strong>153</strong> · മന്ത്രിസഭ <strong>163</strong> · മുഖ്യമന്ത്രി <strong>164</strong> · അഡ്വക്കേറ്റ് ജനറൽ <strong>165</strong> · ഓർഡിനൻസ് <strong>213</strong> · ഹൈക്കോടതി <strong>214</strong> · റിട്ട് <strong>226</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>ക്രമം ഓർക്കാൻ: <strong>153 (G) → 163 (C: Council) → 165 (A: Advocate General)</strong> = "<strong>G-C-A</strong>" (ഗവർണ്ണർ-കൗൺസിൽ-അഡ്വക്കേറ്റ്). 213 (ഓർഡിനൻസ്) → 214 (ഹൈക്കോടതി) അടുത്തടുത്ത് ✓.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ഗവർണ്ണർ ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ഗവർണ്ണർ (The Governor)</h2>
+      <div class="section-body">
+        <p>ഭരണഘടനയുടെ <strong>ഭാഗം 6-ൽ (Part VI)</strong>, ആർട്ടിക്കിൾ <strong>152 മുതൽ 237 വരെയാണ്</strong> സംസ്ഥാന ഗവൺമെന്റിനെക്കുറിച്ച് പറയുന്നത്.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാനത്തിന്റെ ഭരണത്തലവനും കേന്ദ്ര സർക്കാരിന്റെ പ്രതിനിധിയുമാണ് ഗവർണ്ണർ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 153:</strong> ഓരോ സംസ്ഥാനത്തിനും ഒരു ഗവർണ്ണർ ഉണ്ടായിരിക്കണം. (ഒന്നിൽ കൂടുതൽ സംസ്ഥാനങ്ങൾക്ക് ഒരു ഗവർണ്ണർ ആകാം).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ഒന്നിലധികം സംസ്ഥാനങ്ങൾക്ക് ഒരു ഗവർണ്ണർ എന്ന വ്യവസ്ഥ 7-ാം ഭേദഗതിയിലൂടെ (1956) ചേർത്തതാണ്. <strong>ആർട്ടിക്കിൾ 154:</strong> സംസ്ഥാനത്തിന്റെ എക്സിക്യൂട്ടീവ് അധികാരം ഗവർണ്ണറിൽ നിക്ഷിപ്തമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> ഗവർണ്ണറെ നിയമിക്കുന്നത് <strong>രാഷ്ട്രപതിയാണ്</strong> (ആർട്ടിക്കിൾ 155).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ രാഷ്ട്രപതി തന്റെ ഒപ്പും മുദ്രയുമുള്ള വാറന്റ് വഴിയാണ് നിയമിക്കുന്നത്. ഗവർണ്ണർ തിരഞ്ഞെടുക്കപ്പെടുകയല്ല, <strong>നിയമിക്കപ്പെടുകയാണ്</strong> (കനേഡിയൻ മാതൃക).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>യോഗ്യത:</strong> ഇന്ത്യക്കാരനായിരിക്കണം, കുറഞ്ഞത് <strong>35 വയസ്സ്</strong> പൂർത്തിയായിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 157:</strong> യോഗ്യതകൾ. <strong>ആർട്ടിക്കിൾ 158:</strong> പാർലമെന്റിലോ നിയമസഭയിലോ അംഗമാകരുത്, ലാഭകരമായ പദവി (office of profit) വഹിക്കരുത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കാലാവധി:</strong> സാധാരണയായി 5 വർഷമാണ് കാലാവധി. എങ്കിലും രാഷ്ട്രപതിക്ക് താല്പര്യമുള്ളിടത്തോളം കാലം (During the pleasure of the President) മാത്രമേ ഗവർണ്ണർക്ക് പദവിയിൽ തുടരാനാകൂ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 156.</strong> രാജി നൽകേണ്ടത് രാഷ്ട്രപതിക്ക്. ഗവർണ്ണറെ ഇംപീച്ച് ചെയ്യുന്ന വ്യവസ്ഥ ഇല്ല. <strong>സത്യപ്രതിജ്ഞ ചെയ്യിക്കുന്നത് ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസാണ്</strong> (ആർട്ടിക്കിൾ 159).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മാപ്പുനൽകാനുള്ള അധികാരം:</strong> സംസ്ഥാന നിയമങ്ങൾ ലംഘിച്ചാലുള്ള ശിക്ഷകൾ ഇളവുചെയ്യാനോ മാപ്പുനൽകാനോ ഗവർണ്ണർക്ക് അധികാരമുണ്ട് <strong>(ആർട്ടിക്കിൾ 161)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഓർഡിനൻസ് (Ordinance):</strong> നിയമസഭ സമ്മേളിക്കാത്ത സമയത്ത് അടിയന്തരമായി നിയമങ്ങൾ കൊണ്ടുവരാൻ ഗവർണ്ണർക്ക് ഓർഡിനൻസ് പുറപ്പെടുവിക്കാം <strong>(ആർട്ടിക്കിൾ 213)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ഓർഡിനൻസ് നിയമസഭ വീണ്ടും സമ്മേളിച്ച് <strong>ആറ് ആഴ്ചയ്ക്കുള്ളിൽ</strong> അംഗീകരിക്കണം; ഇല്ലെങ്കിൽ ആ കാലാവധി കഴിയുമ്പോൾ അസാധുവാകും.</li>
+        </ul>
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p>ഗവർണ്ണർക്ക് <strong>മരണശിക്ഷ മാപ്പാക്കാൻ (pardon) കഴിയില്ല</strong>; എന്നാൽ മരണശിക്ഷ <strong>നീട്ടിവയ്ക്കാനും (suspend), കുറയ്ക്കാനും (remit), ലഘൂകരിക്കാനും (commute)</strong> കഴിയും. <strong>പട്ടാളക്കോടതി (Court-martial) ശിക്ഷയിൽ ഗവർണ്ണർക്ക് അധികാരമേയില്ല.</strong> ഇതെല്ലാം <strong>രാഷ്ട്രപതിക്ക്</strong> (ആർട്ടിക്കിൾ 72).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>മരണശിക്ഷ: രാഷ്ട്രപതി മാപ്പ്, ഗവർണ്ണർ ഇളവ്</strong>" — ഗവർണ്ണർക്ക് 'മാപ്പ്' ഇല്ല, 'ഇളവ്' മാത്രം. പട്ടാളക്കോടതി → <strong>രാഷ്ട്രപതി മാത്രം</strong>. 72 = രാഷ്ട്രപതി, 161 = ഗവർണ്ണർ.</p>
+          <p>"<strong>123 രാഷ്ട്രപതി ↔ 213 ഗവർണ്ണർ</strong>" (അക്കങ്ങൾ മാറ്റിയെഴുതിയത്).</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ബില്ലുകൾക്ക് അനുമതി (ആർട്ടിക്കിൾ 200)</span>
+          <p>നിയമസഭ പാസാക്കിയ ബിൽ ലഭിക്കുമ്പോൾ ഗവർണ്ണർക്ക് <strong>അനുമതി നൽകാം, അനുമതി തടഞ്ഞുവയ്ക്കാം (തിരിച്ചയയ്ക്കാം), രാഷ്ട്രപതിയുടെ പരിഗണനയ്ക്കായി മാറ്റിവയ്ക്കാം</strong>. ✔️ 2025 ഏപ്രിലിലെ തമിഴ്നാട് vs ഗവർണ്ണർ വിധി ഗവർണ്ണർക്ക്/രാഷ്ട്രപതിക്ക് സമയപരിധി നിശ്ചയിച്ചു. എന്നാൽ 2025 നവംബർ 20-ലെ സുപ്രീം കോടതി (ആർട്ടിക്കിൾ 143) അഭിപ്രായം: <strong>കോടതിക്ക് സമയപരിധി നിശ്ചയിക്കാൻ കഴിയില്ല, "deemed assent" (അനുമതി ലഭിച്ചതായി കണക്കാക്കൽ) ഇല്ല</strong>. ⚠️</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഗവർണ്ണറുടെ വിവേചനാധികാരം</span>
+          <p><strong>ആർട്ടിക്കിൾ 163(2).</strong> <strong>ആർട്ടിക്കിൾ 174:</strong> സഭ വിളിക്കൽ/പിരിച്ചുവിടൽ. <strong>175/176:</strong> സഭയെ അഭിസംബോധന ചെയ്യൽ.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ കേരളം</span>
+          <p>ആദ്യ ഗവർണ്ണർ <strong>ബുർഗുല രാമകൃഷ്ണ റാവു</strong> (1956). <strong>ജ്യോതി വെങ്കിടാചലം</strong> കേരളത്തിലെ ആദ്യ വനിതാ ഗവർണ്ണർ ⚠️. ഇന്ത്യയിലെ ആദ്യ വനിതാ ഗവർണ്ണർ: <strong>സരോജിനി നായിഡു</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: മുഖ്യമന്ത്രിയും മന്ത്രിസഭയും ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. മുഖ്യമന്ത്രിയും മന്ത്രിസഭയും</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 163:</strong> ഗവർണ്ണറെ സഹായിക്കാനും ഉപദേശിക്കാനും മുഖ്യമന്ത്രി തലവനായുള്ള ഒരു മന്ത്രിസഭ ഉണ്ടായിരിക്കും. യഥാർത്ഥ ഭരണാധികാരി മുഖ്യമന്ത്രിയാണ് (Real Executive).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 164:</strong> മുഖ്യമന്ത്രിയെ നിയമിക്കുന്നത് ഗവർണ്ണറാണ്. മറ്റ് മന്ത്രിമാരെ മുഖ്യമന്ത്രിയുടെ ഉപദേശപ്രകാരം ഗവർണ്ണർ നിയമിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> നിയമസഭയിൽ അംഗമല്ലാത്ത ഒരാളെ മന്ത്രിയോ മുഖ്യമന്ത്രിയോ ആക്കിയാൽ <strong>6 മാസത്തിനുള്ളിൽ</strong> അദ്ദേഹം സഭയിൽ അംഗമായിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 164(2):</strong> മന്ത്രിസഭയ്ക്ക് <strong>നിയമസഭയോട് കൂട്ടുത്തരവാദിത്തം</strong> (Collective Responsibility). <strong>164(1):</strong> ഓരോ മന്ത്രിയും ഗവർണ്ണറുടെ താൽപര്യമുള്ള കാലം വരെ (individual responsibility).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>91-ാം ഭേദഗതി (2003):</strong> മന്ത്രിസഭയുടെ ആകെ അംഗസംഖ്യ നിയമസഭാ അംഗസംഖ്യയുടെ <strong>15%-ൽ കൂടരുത്</strong>; <strong>കുറഞ്ഞത് 12 മന്ത്രിമാർ</strong> (മുഖ്യമന്ത്രി ഉൾപ്പെടെ). (ആർട്ടിക്കിൾ 164(1A)). <strong>കേരളം:</strong> 140-ന്റെ 15% = <strong>21</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 166:</strong> സർക്കാർ പ്രവർത്തനങ്ങൾ ഗവർണ്ണറുടെ പേരിൽ. <strong>ആർട്ടിക്കിൾ 167:</strong> ഭരണ തീരുമാനങ്ങൾ ഗവർണ്ണറെ അറിയിക്കേണ്ടത് മുഖ്യമന്ത്രിയുടെ ചുമതല.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>164 = മുഖ്യമന്ത്രി, 6 മാസം, 15%, 12</strong>" — "164 → 6-ഉം 15-ഉം 12-ഉം".</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ കേരളം</span>
+          <p>കേരളത്തിലെ <strong>ആദ്യ മുഖ്യമന്ത്രി: ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് (1957)</strong>. ഇന്ത്യയിലെ ആദ്യ വനിതാ മുഖ്യമന്ത്രി: <strong>സുചേതാ കൃപലാനി</strong> (ഉത്തർപ്രദേശ്, 1963).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: അഡ്വക്കേറ്റ് ജനറൽ ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. അഡ്വക്കേറ്റ് ജനറൽ (Advocate General)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാന സർക്കാരിന്റെ മുഖ്യ നിയമ ഉപദേഷ്ടാവും (Highest Law Officer of the State) സംസ്ഥാനത്തെ പ്രഥമ നിയമ ഉദ്യോഗസ്ഥനുമാണ് അഡ്വക്കേറ്റ് ജനറൽ. (കേന്ദ്രത്തിലെ അറ്റോർണി ജനറലിന് തുല്യമായ പദവി).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 165:</strong> അഡ്വക്കേറ്റ് ജനറലിനെക്കുറിച്ച് പ്രതിപാദിക്കുന്ന വകുപ്പാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> ഗവർണ്ണറാണ് നിയമിക്കുന്നത്. ഗവർണ്ണർക്ക് താല്പര്യമുള്ളിടത്തോളം കാലം പദവിയിൽ തുടരാം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>യോഗ്യത:</strong> ഹൈക്കോടതി ജഡ്ജിയാകാനുള്ള യോഗ്യതകൾ ഉണ്ടായിരിക്കണം.</li>
+        </ul>
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p>യോഗ്യത = <strong>ഇന്ത്യൻ പൗരൻ + (10 വർഷം ജുഡീഷ്യൽ പദവി അല്ലെങ്കിൽ ഹൈക്കോടതിയിൽ 10 വർഷം അഭിഭാഷകൻ)</strong>. ഭരണഘടന <strong>"പരമാവധി പ്രായം 62" എന്ന് പറയുന്നില്ല</strong>; എ.ജിക്ക് <strong>നിശ്ചിത കാലാവധിയോ വിരമിക്കൽ പ്രായമോ ഇല്ല</strong> (ഗവർണ്ണറുടെ താല്പര്യം വരെ). 62 വയസ്സ് ഹൈക്കോടതി <strong>ജഡ്ജിമാരുടെ</strong> വിരമിക്കൽ പ്രായമാണ്.</p>
+        </div>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ➕ രാജി ഗവർണ്ണർക്ക്; വേതനം ഗവർണ്ണർ നിശ്ചയിക്കുന്നു. അദ്ദേഹത്തിന് സ്വകാര്യ പ്രാക്ടീസിന് വിലക്കില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രത്യേക അധികാരം (ആർട്ടിക്കിൾ 177):</strong> സംസ്ഥാന നിയമസഭയുടെ സമ്മേളനങ്ങളിൽ പങ്കെടുക്കാനും സംസാരിക്കാനും അഡ്വക്കേറ്റ് ജനറലിന് അധികാരമുണ്ട്. എന്നാൽ സഭയിൽ <strong>വോട്ട് ചെയ്യാൻ അവകാശമില്ല</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ആർട്ടിക്കിൾ 177 <strong>മന്ത്രിമാർക്കും</strong> (സഭയിൽ അംഗമല്ലെങ്കിലും) ബാധകമാണ്; സഭാ കമ്മിറ്റികളിലും പങ്കെടുക്കാം. കേന്ദ്രത്തിൽ ഇത് <strong>ആർട്ടിക്കിൾ 88</strong>.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>AG: പ്രായ പരിധി ഇല്ല; HC ജഡ്ജി: 62; SC ജഡ്ജി: 65; ഗവർണ്ണർ/എ.ജി: 'താൽപര്യം വരെ'</strong>".</p>
+          <p>"<strong>177 = സംസാരിക്കാം, വോട്ടില്ല</strong>" (88 കേന്ദ്രത്തിൽ). 165 (AG) → 177 (അവകാശം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: നിയമസഭയും കൗൺസിലും ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. സംസ്ഥാന നിയമനിർമ്മാണ സഭ (State Legislature)</h2>
+      <div class="section-body">
+        <p>ഒരു സംസ്ഥാന നിയമനിർമ്മാണ സഭ ഗവർണ്ണറും നിയമസഭയും (ചിലയിടത്ത് നിയമനിർമ്മാണ കൗൺസിലും) ചേർന്നതാണ്.</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 168:</strong> സംസ്ഥാന നിയമനിർമ്മാണ സഭയുടെ ഘടന. <strong>ഗവർണ്ണർ സഭയുടെ ഭാഗമാണ്</strong> (പക്ഷേ അംഗമല്ല).</li>
+        </ul>
+
+        <h3>1. നിയമസഭ (Legislative Assembly / Vidhan Sabha)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാനത്തെ അധോസഭ (Lower House). ജനങ്ങൾ നേരിട്ട് പ്രതിനിധികളെ (MLA) തിരഞ്ഞെടുക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അംഗസംഖ്യ:</strong> പരമാവധി അംഗങ്ങൾ <strong>500</strong>, കുറഞ്ഞ അംഗങ്ങൾ <strong>60</strong> (ചില ചെറിയ സംസ്ഥാനങ്ങൾക്ക് ഇളവുണ്ട്). കേരള നിയമസഭയിൽ <strong>140</strong> അംഗങ്ങളാണുള്ളത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 170.</strong> ഇളവുള്ള സംസ്ഥാനങ്ങൾ: സിക്കിം (32), ഗോവ (40), മിസോറം (40). ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ കേരള നിയമസഭ: <strong>140 അംഗങ്ങൾ</strong>. ആംഗ്ലോ-ഇന്ത്യൻ നാമനിർദ്ദേശ വ്യവസ്ഥ <strong>104-ാം ഭേദഗതിയിലൂടെ (2019) നിർത്തലാക്കി</strong> (2020 ജനുവരി 25 മുതൽ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രായപരിധി:</strong> നിയമസഭാംഗമാകാൻ കുറഞ്ഞത് <strong>25 വയസ്സ്</strong> തികഞ്ഞിരിക്കണം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 173.</strong> വോട്ടർ പ്രായം 18 (61-ാം ഭേദഗതി 1988).</li>
+          <li><span class="stars">⭐⭐⭐</span> കാലാവധി 5 വർഷമാണ്. മണി ബിൽ (Money Bill) ആദ്യം നിയമസഭയിൽ മാത്രമേ അവതരിപ്പിക്കാൻ സാധിക്കൂ <strong>(ആർട്ടിക്കിൾ 198, 199)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 172:</strong> കാലാവധി. <strong>199:</strong> മണി ബിൽ നിർവചനം; <strong>198:</strong> മണി ബിൽ നടപടിക്രമം. മണി ബിൽ അവതരിപ്പിക്കാൻ <strong>ഗവർണ്ണറുടെ ശുപാർശ</strong> ആവശ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 178:</strong> സ്പീക്കറും ഡെപ്യൂട്ടി സ്പീക്കറും. കേരളത്തിലെ ആദ്യ സ്പീക്കർ: <strong>ആർ. ശങ്കരനാരായണൻ തമ്പി (1957)</strong> ⚠️.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>MLA 25, MLC 30, വോട്ടർ 18</strong>" — 25 → 30 (അഞ്ച് കൂട്ടി).</p>
+        </div>
+
+        <h3>2. നിയമനിർമ്മാണ കൗൺസിൽ (Legislative Council / Vidhan Parishad)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാനത്തെ ഉപരിസഭ (Upper House) ആണിത്. ഇത് രൂപീകരിക്കാനോ പിരിച്ചുവിടാനോ ഉള്ള അധികാരം പാർലമെന്റിനാണ് <strong>(ആർട്ടിക്കിൾ 169)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ഇതിന് <strong>സംസ്ഥാന നിയമസഭ പ്രത്യേക ഭൂരിപക്ഷത്തോടെ പ്രമേയം പാസാക്കണം</strong> (സഭയിലെ ആകെ അംഗങ്ങളുടെ ഭൂരിപക്ഷം + ഹാജരായി വോട്ട് ചെയ്യുന്നവരുടെ മൂന്നിൽ രണ്ട്). പാർലമെന്റ് <strong>സാധാരണ ഭൂരിപക്ഷത്തോടെ</strong> നിയമം പാസാക്കും.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> എല്ലാ സംസ്ഥാനങ്ങൾക്കും ഇതില്ല (ഉദാഹരണത്തിന് കേരളത്തിന് കൗൺസിലില്ല). നിലവിൽ <strong>6 സംസ്ഥാനങ്ങൾക്ക്</strong> മാത്രമേ കൗൺസിലുള്ളൂ (യു.പി, ബീഹാർ, മഹാരാഷ്ട്ര, കർണാടക, ആന്ധ്രാപ്രദേശ്, തെലങ്കാന).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അംഗസംഖ്യ:</strong> നിയമസഭയിലെ ആകെ അംഗങ്ങളുടെ മൂന്നിലൊന്നിൽ (1/3) കൂടാൻ പാടില്ല, 40-ൽ കുറയാനും പാടില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രായപരിധി:</strong> അംഗമാകാൻ കുറഞ്ഞത് <strong>30 വയസ്സ്</strong> തികഞ്ഞിരിക്കണം. ഇതൊരു സ്ഥിരം സഭയാണ് (കാലാവധി 6 വർഷം).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 171 (ഘടന):</strong> 1/3 തദ്ദേശ സ്ഥാപനങ്ങൾ, 1/3 നിയമസഭാംഗങ്ങൾ, 1/12 ബിരുദധാരികൾ, 1/12 അധ്യാപകർ, 1/6 <strong>ഗവർണ്ണർ നാമനിർദ്ദേശം ചെയ്യുന്നവർ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 172:</strong> 6 വർഷം; <strong>ഓരോ 2 വർഷത്തിലും 1/3 പേർ വിരമിക്കും</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ കൗൺസിലിന്റെ അധികാരം പരിമിതം: സാധാരണ ബില്ലിൽ ആദ്യം <strong>3 മാസം</strong>, രണ്ടാമത് <strong>1 മാസം</strong> വരെ താമസിപ്പിക്കാം (ആർട്ടിക്കിൾ 197); മണി ബില്ലിൽ <strong>14 ദിവസം</strong> (ആർട്ടിക്കിൾ 198). സംസ്ഥാനത്ത് ജോയിന്റ് സിറ്റിങ് ഇല്ല.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>6 കൗൺസിൽ സംസ്ഥാനങ്ങൾ — "യു-ബി-മ-ക-ആ-തെ"</strong>: യു.പി, ബീഹാർ, മഹാരാഷ്ട്ര, കർണാടക, ആന്ധ്ര, തെലങ്കാന.</p>
+          <p>"<strong>കൗൺസിൽ = 1/3 · 40 · 30 വയസ്സ് · 6 വർഷം · 2 വർഷത്തിൽ 1/3 വിരമിക്കൽ</strong>".</p>
+          <p>ഘടന (171): "<strong>മൂന്ന്-മൂന്ന്-പന്ത്രണ്ട്-പന്ത്രണ്ട്-ആറ്</strong>" = 1/3 + 1/3 + 1/12 + 1/12 + 1/6.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: ഹൈക്കോടതി ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ഹൈക്കോടതി (High Court)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 214:</strong> ഓരോ സംസ്ഥാനത്തിനും ഒരു ഹൈക്കോടതി ഉണ്ടായിരിക്കണം എന്ന് വ്യവസ്ഥ ചെയ്യുന്നു. രണ്ടോ അതിലധികമോ സംസ്ഥാനങ്ങൾക്കും കേന്ദ്രഭരണ പ്രദേശങ്ങൾക്കും ചേർന്ന് ഒരു പൊതുവായ ഹൈക്കോടതി സ്ഥാപിക്കാൻ പാർലമെന്റിന് അധികാരമുണ്ട് <strong>(ആർട്ടിക്കിൾ 231)</strong> (ഉദാഹരണത്തിന് കേരളത്തിനും ലക്ഷദ്വീപിനും കൂടി കേരള ഹൈക്കോടതി).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ഇന്ത്യയിൽ ആകെ <strong>25 ഹൈക്കോടതികൾ</strong> (2019-ൽ ആന്ധ്രാപ്രദേശിന് പ്രത്യേക ഹൈക്കോടതി വന്നതോടെ) ⚠️. പഞ്ചാബ്-ഹരിയാന-ചണ്ഡീഗഢിന് ഒരു പൊതു ഹൈക്കോടതി. ഏറ്റവും പഴയ ഹൈക്കോടതികൾ: <strong>കൽക്കത്ത, ബോംബെ, മദ്രാസ് (1862)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ <strong>കേരള ഹൈക്കോടതി:</strong> ആസ്ഥാനം <strong>എറണാകുളം (കൊച്ചി)</strong>; 1956-ൽ നിലവിൽ വന്നു; അധികാര പരിധി കേരളവും ലക്ഷദ്വീപും. ആദ്യ ചീഫ് ജസ്റ്റിസ്: കെ.ടി. കോശി ⚠️.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 215:</strong> ഹൈക്കോടതി <strong>Court of Record</strong>. <strong>ആർട്ടിക്കിൾ 227:</strong> കീഴ്കോടതികളുടെ മേൽ മേൽനോട്ട (superintendence) അധികാരം. <strong>ആർട്ടിക്കിൾ 233:</strong> ജില്ലാ ജഡ്ജിമാരെ നിയമിക്കുന്നത് <strong>ഗവർണ്ണർ</strong>, ഹൈക്കോടതിയുമായി ആലോചിച്ച്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസിനെയും മറ്റ് ജഡ്ജിമാരെയും നിയമിക്കുന്നത് <strong>രാഷ്ട്രപതിയാണ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>ആർട്ടിക്കിൾ 217.</strong> നിയമനത്തിന് ഇന്ത്യയുടെ ചീഫ് ജസ്റ്റിസ്, ഗവർണ്ണർ, ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് എന്നിവരുമായി ആലോചന. <strong>യോഗ്യത:</strong> ഇന്ത്യൻ പൗരൻ + 10 വർഷം ജുഡീഷ്യൽ പദവി അല്ലെങ്കിൽ ഹൈക്കോടതിയിൽ 10 വർഷം അഭിഭാഷകൻ. <strong>സത്യപ്രതിജ്ഞ ചെയ്യിക്കുന്നത് ഗവർണ്ണർ</strong> (ആർട്ടിക്കിൾ 219).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിരമിക്കൽ പ്രായം:</strong> ഹൈക്കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം <strong>62 വയസ്സാണ്</strong>. (15-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെയാണ് ഇത് 60-ൽ നിന്ന് 62 ആയി ഉയർത്തിയത്).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>സുപ്രീം കോടതി ജഡ്ജി = 65</strong>. ഹൈക്കോടതി ജഡ്ജിയെ നീക്കുന്നത് <strong>പാർലമെന്റിന്റെ ഇംപീച്ച്മെന്റ്</strong> വഴിയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>റിട്ട് അധികാരം (Writ Jurisdiction):</strong> മൗലികാവകാശങ്ങൾ സംരക്ഷിക്കാൻ റിട്ടുകൾ പുറപ്പെടുവിക്കാൻ ഹൈക്കോടതിക്ക് അധികാരം നൽകുന്നത് <strong>ആർട്ടിക്കിൾ 226</strong> ആണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ ആർട്ടിക്കിൾ 226 പ്രകാരം ഹൈക്കോടതിക്ക് മൗലികാവകാശങ്ങൾക്ക് മാത്രമല്ല, <strong>മറ്റ് നിയമപരമായ അവകാശങ്ങൾക്കും</strong> റിട്ട് നൽകാം; അതിനാൽ ഹൈക്കോടതിയുടെ റിട്ട് പരിധി സുപ്രീം കോടതിയുടേതിനേക്കാൾ വിശാലമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>5 റിട്ടുകൾ:</strong> ഹേബിയസ് കോർപ്പസ്, മാൻഡമസ്, പ്രൊഹിബിഷൻ, സെർഷിയോറാറി, ക്വോ വാറന്റോ.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>HC 62, SC 65</strong>" — <strong>6-2</strong> (ആറ് രണ്ട്) → ഹൈക്കോടതി; <strong>6-5</strong> → സുപ്രീം കോടതി.</p>
+          <p>"<strong>32 = SC, 226 = HC</strong>" (മൂന്ന്-രണ്ട് → രണ്ട്-രണ്ട്-ആറ്: HC വിശാലം).</p>
+          <p>"<strong>HM-PCQ</strong>": <strong>H</strong>abeas Corpus – <strong>M</strong>andamus – <strong>P</strong>rohibition – <strong>C</strong>ertiorari – <strong>Q</strong>uo Warranto.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ (Kerala PSC)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിൽ ഒരു ഹൈക്കോടതിയുടെ ചീഫ് ജസ്റ്റിസ് പദവിയിലെത്തിയ ആദ്യത്തെ വനിത: <strong>ലീലാ സേത്ത് (Leela Seth)</strong> - ഹിമാചൽ പ്രദേശ് ഹൈക്കോടതി (1991).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിൽ ഹൈക്കോടതി ജഡ്ജിയായ ആദ്യത്തെ വനിത: <strong>അന്നാ ചാണ്ടി (Anna Chandy)</strong> - കേരള ഹൈക്കോടതി (1959).</li>
+          <li><span class="stars">⭐⭐⭐</span> സുപ്രീം കോടതിയിലെ ആദ്യത്തെ വനിതാ ജഡ്ജി: <strong>ഫാത്തിമ ബീവി (Fathima Beevi)</strong> - കേരളം (1989).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിലെ ആദ്യത്തെ പേപ്പർലെസ് ഹൈക്കോടതി: <strong>കേരള ഹൈക്കോടതി</strong> (2022).</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യയിലെ ആദ്യത്തെ സമ്പൂർണ്ണ ഡിജിറ്റൽ കോടതി: <strong>കൊല്ലം</strong> (NI Act കേസുകൾക്കായുള്ള പ്രത്യേക ഡിജിറ്റൽ കോടതി, 2024).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>കേരള ഹൈക്കോടതിയിലെ ആദ്യ വനിതാ ചീഫ് ജസ്റ്റിസ്: കെ.കെ. ഉഷ (2000)</strong> ⚠️.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>കേരളത്തിന്റെ ആദ്യ ഗവർണ്ണർ:</strong> ബുർഗുല രാമകൃഷ്ണ റാവു · <strong>ആദ്യ മുഖ്യമന്ത്രി:</strong> ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് (1957) · <strong>ഇന്ത്യയിലെ ആദ്യ വനിതാ ഗവർണ്ണർ:</strong> സരോജിനി നായിഡു · <strong>ആദ്യ വനിതാ മുഖ്യമന്ത്രി:</strong> സുചേതാ കൃപലാനി.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"ആദ്യ വനിതകൾ — ജഡ്ജി → ചീഫ് ജസ്റ്റിസ് → സുപ്രീം കോടതി":</strong> <strong>A</strong>nna Chandy (HC ജഡ്ജി, കേരളം) → <strong>L</strong>eela Seth (HC ചീഫ് ജസ്റ്റിസ്, ഹിമാചൽ) → <strong>F</strong>athima Beevi (SC ജഡ്ജി, കേരളം) = "<strong>ALF</strong>": "ആദ്യം അന്ന, പിന്നെ ലീല, പിന്നെ ഫാത്തിമ".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: PSC വിശകലനം ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഗവർണ്ണറുടെ ഓർഡിനൻസ് ഇറക്കാനുള്ള ആർട്ടിക്കിൾ (213), അഡ്വക്കേറ്റ് ജനറൽ (165), ഹൈക്കോടതി ജഡ്ജിയുടെ വിരമിക്കൽ പ്രായം (62 വയസ്സ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> അഡ്വക്കേറ്റ് ജനറലിന് സഭയിൽ സംസാരിക്കാനുള്ള ആർട്ടിക്കിൾ (177), ഇന്ത്യയിലെ ആദ്യ വനിതാ ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് (ലീലാ സേത്ത്), എം.എൽ.എ ആകാനുള്ള പ്രായം (25 വയസ്സ്).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> നിയമനിർമ്മാണ കൗൺസിൽ രൂപീകരിക്കുന്ന ആർട്ടിക്കിൾ (169), ഗവർണ്ണറുടെ മാപ്പുനൽകൽ (161), ഹൈക്കോടതി റിട്ട് അധികാരം (226).</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📌 സ്കെയിൽ അനുസരിച്ചുള്ള അടയാളപ്പെടുത്തൽ</span>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr><th>മുൻഗണന</th><th>വിഷയം</th><th>ഉത്തരം / ഓർമ്മ സൂചന</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>★★★</td><td>ഗവർണ്ണറുടെ ഓർഡിനൻസ്</td><td>213 (രാഷ്ട്രപതി 123)</td></tr>
+                <tr><td>★★★</td><td>അഡ്വക്കേറ്റ് ജനറൽ</td><td>165, ഗവർണ്ണർ നിയമിക്കുന്നു, 177-ൽ സംസാരം, വോട്ടില്ല</td></tr>
+                <tr><td>★★★</td><td>ഹൈക്കോടതി ജഡ്ജി</td><td>വിരമിക്കൽ 62; SC 65</td></tr>
+                <tr><td>★★★</td><td>ഹൈക്കോടതി</td><td>214; റിട്ട് 226; കൊളീജിയം/രാഷ്ട്രപതി നിയമനം</td></tr>
+                <tr><td>★★★</td><td>ആദ്യ വനിതകൾ</td><td>അന്ന ചാണ്ടി, ലീലാ സേത്ത്, ഫാത്തിമ ബീവി</td></tr>
+                <tr><td>★★★</td><td>ഗവർണ്ണർ</td><td>153; 35 വയസ്സ്; രാഷ്ട്രപതി നിയമിക്കുന്നു; കാലാവധി 5 വർഷം</td></tr>
+                <tr><td>★★★</td><td>മന്ത്രിസഭ</td><td>163, 164; 6 മാസം; 15%, കുറഞ്ഞത് 12; നിയമസഭയോട് കൂട്ടുത്തരവാദിത്തം</td></tr>
+                <tr><td>★★★</td><td>മാപ്പ്</td><td>161 (ഗവർണ്ണർ); മരണശിക്ഷ: ഇളവ് മാത്രം, മാപ്പ് ഇല്ല</td></tr>
+                <tr><td>★★</td><td>നിയമസഭ/കൗൺസിൽ</td><td>MLA 25, MLC 30; 169; കൗൺസിൽ ഉള്ള 6 സംസ്ഥാനങ്ങൾ</td></tr>
+                <tr><td>★★</td><td>ആർട്ടിക്കിൾ 200</td><td>ഗവർണ്ണറുടെ ബിൽ അനുമതി; 2025 കോടതി നിലപാട്</td></tr>
+                <tr><td>★</td><td>കേരള ആദ്യങ്ങൾ</td><td>ആദ്യ ഗവർണ്ണർ, ആദ്യ CM (ഇ.എം.എസ്.), ആദ്യ സ്പീക്കർ</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ പ്രതീക്ഷിക്കുന്ന ചോദ്യ മേഖലകൾ</span>
+          <p>ആർട്ടിക്കിൾ നമ്പർ ജോടികൾ (123/213, 72/161, 76/165, 88/177, 32/226), യോഗ്യതാ പ്രായം (25/30/35), വിരമിക്കൽ പ്രായം (62/65), ആദ്യ വനിതകൾ, കൗൺസിൽ ഉള്ള സംസ്ഥാനങ്ങൾ, മന്ത്രിസഭയുടെ 15% പരിധി.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ സാധാരണ കെണികൾ</span>
+          <ul>
+            <li>ഹൈക്കോടതി ജഡ്ജിയെ നിയമിക്കുന്നത് ഗവർണ്ണറല്ല, <strong>രാഷ്ട്രപതി</strong>.</li>
+            <li>ഗവർണ്ണറെ നിയമിക്കുന്നത് മുഖ്യമന്ത്രിയല്ല, <strong>രാഷ്ട്രപതി</strong>.</li>
+            <li>എ.ജിക്ക് വിരമിക്കൽ പ്രായം 62 <strong>അല്ല</strong> (നിശ്ചിത കാലാവധി ഇല്ല).</li>
+            <li>ഗവർണ്ണർക്ക് മരണശിക്ഷ <strong>മാപ്പാക്കാൻ</strong> കഴിയില്ല.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>സുപ്രീം കോടതി ജഡ്ജി: 65 വയസ്സ്</strong></td>
+                <td><strong>ഹൈക്കോടതി ജഡ്ജി: 62 വയസ്സ്</strong></td>
+                <td>സുപ്രീം കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം <strong>65 വയസ്സാണ്</strong>. എന്നാൽ സംസ്ഥാന ഹൈക്കോടതി ജഡ്ജിമാരുടെ വിരമിക്കൽ പ്രായം <strong>62 വയസ്സാണ്</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>അറ്റോർണി ജനറൽ (ആർട്ടിക്കിൾ 76)</strong></td>
+                <td><strong>അഡ്വക്കേറ്റ് ജനറൽ (ആർട്ടിക്കിൾ 165)</strong></td>
+                <td>കേന്ദ്ര ഗവൺമെന്റിന്റെ നിയമ ഉപദേഷ്ടാവ് <strong>അറ്റോർണി ജനറൽ</strong> (Art 76) ആണ് (രാഷ്ട്രപതി നിയമിക്കുന്നു). സംസ്ഥാന സർക്കാരിന്റെ നിയമ ഉപദേഷ്ടാവ് <strong>അഡ്വക്കേറ്റ് ജനറൽ</strong> (Art 165) ആണ് (ഗവർണ്ണർ നിയമിക്കുന്നു).</td>
+              </tr>
+              <tr>
+                <td><strong>രാഷ്ട്രപതി ഓർഡിനൻസ് (123)</strong></td>
+                <td><strong>ഗവർണ്ണർ ഓർഡിനൻസ് (213)</strong></td>
+                <td>പാർലമെന്റ് ഇല്ലാത്തപ്പോൾ രാഷ്ട്രപതി ഓർഡിനൻസ് ഇറക്കുന്നത് <strong>ആർട്ടിക്കിൾ 123</strong> പ്രകാരമാണ്. നിയമസഭ ഇല്ലാത്തപ്പോൾ ഗവർണ്ണർ ഓർഡിനൻസ് ഇറക്കുന്നത് <strong>ആർട്ടിക്കിൾ 213</strong> പ്രകാരമാണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>ലീലാ സേത്ത്</strong></td>
+                <td><strong>അന്നാ ചാണ്ടി</strong></td>
+                <td>ഇന്ത്യയിലെ ആദ്യ ഹൈക്കോടതി <strong>ചീഫ് ജസ്റ്റിസ് (വനിത)</strong> ഹിമാചൽ പ്രദേശിലെ <strong>ലീലാ സേത്ത്</strong> ആണ്. എന്നാൽ ആദ്യ ഹൈക്കോടതി <strong>ജഡ്ജി (വനിത)</strong> കേരളത്തിലെ <strong>അന്നാ ചാണ്ടി</strong> ആണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>രാഷ്ട്രപതിയുടെ മാപ്പ് (72)</strong></td>
+                <td><strong>ഗവർണ്ണറുടെ മാപ്പ് (161)</strong></td>
+                <td>രാഷ്ട്രപതിക്ക്: മരണശിക്ഷ മാപ്പ് + പട്ടാളക്കോടതി ശിക്ഷ. ഗവർണ്ണർക്ക്: മരണശിക്ഷ <strong>ഇളവ് മാത്രം</strong> (മാപ്പില്ല); പട്ടാളക്കോടതിയിൽ അധികാരമില്ല; സംസ്ഥാന നിയമത്തിലെ കുറ്റങ്ങൾ മാത്രം.</td>
+              </tr>
+              <tr>
+                <td><strong>ആർട്ടിക്കിൾ 88</strong></td>
+                <td><strong>ആർട്ടിക്കിൾ 177</strong></td>
+                <td>88: പാർലമെന്റിൽ മന്ത്രിമാരുടെയും അറ്റോർണി ജനറലിന്റെയും അവകാശം; 177: സംസ്ഥാന നിയമസഭയിൽ മന്ത്രിമാരുടെയും അഡ്വക്കേറ്റ് ജനറലിന്റെയും അവകാശം. രണ്ടിലും വോട്ടില്ല.</td>
+              </tr>
+              <tr>
+                <td><strong>ആർട്ടിക്കിൾ 32</strong></td>
+                <td><strong>ആർട്ടിക്കിൾ 226</strong></td>
+                <td>32 (സുപ്രീം കോടതി): മൗലികാവകാശങ്ങൾക്ക് മാത്രം, അതുതന്നെ ഒരു മൗലികാവകാശം. 226 (ഹൈക്കോടതി): മൗലികാവകാശങ്ങൾക്കും മറ്റ് നിയമപരമായ അവകാശങ്ങൾക്കും.</td>
+              </tr>
+              <tr>
+                <td><strong>എം.എൽ.എ (25)</strong></td>
+                <td><strong>എം.എൽ.സി (30)</strong></td>
+                <td>നിയമസഭ 25; കൗൺസിൽ 30 (ലോക്സഭ 25, രാജ്യസഭ 30 എന്ന പോലെ). ഗവർണ്ണർക്കും രാഷ്ട്രപതിക്കും 35.</td>
+              </tr>
+              <tr>
+                <td><strong>ഗവർണ്ണർ: സത്യപ്രതിജ്ഞ</strong></td>
+                <td><strong>ഹൈക്കോടതി ജഡ്ജി: സത്യപ്രതിജ്ഞ</strong></td>
+                <td>ഗവർണ്ണറെ സത്യപ്രതിജ്ഞ ചെയ്യിക്കുന്നത് <strong>ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</strong>; ഹൈക്കോടതി ജഡ്ജിയെ ചെയ്യിക്കുന്നത് <strong>ഗവർണ്ണർ</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>കൗൺസിൽ രൂപീകരണം (169)</strong></td>
+                <td><strong>ഭരണഘടനാ ഭേദഗതി (368)</strong></td>
+                <td>169 പ്രകാരമുള്ള നിയമം 368 പ്രകാരമുള്ള ഭേദഗതിയായി കണക്കാക്കില്ല; സാധാരണ ഭൂരിപക്ഷം മതി (പ്രമേയം മാത്രം പ്രത്യേക ഭൂരിപക്ഷം).</td>
+              </tr>
+              <tr>
+                <td><strong>ഗവർണ്ണർ നിയമിക്കുന്നവർ</strong></td>
+                <td><strong>രാഷ്ട്രപതി നിയമിക്കുന്നവർ</strong></td>
+                <td>ഗവർണ്ണർ: മുഖ്യമന്ത്രി, മന്ത്രിമാർ, അഡ്വക്കേറ്റ് ജനറൽ, ജില്ലാ ജഡ്ജിമാർ (233), PSC അംഗങ്ങൾ. രാഷ്ട്രപതി: ഗവർണ്ണർ, ഹൈക്കോടതി ജഡ്ജിമാർ.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>കൺഫ്യൂഷൻ തീർക്കാൻ:</strong></span>
+          <p>"<strong>വലിയ പദവി → വലിയ സംഖ്യ</strong>: SC ജഡ്ജി 65 > HC ജഡ്ജി 62"; "<strong>കേന്ദ്രം ↔ സംസ്ഥാനം: 76↔165, 123↔213, 72↔161, 88↔177, 32↔226, 74↔163</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: കേന്ദ്രവും സംസ്ഥാനവും തമ്മിലുള്ള പ്രധാന ആർട്ടിക്കിളുകളുടെ താരതമ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വിഷയം</th><th>കേന്ദ്ര ഗവൺമെന്റ് (Union)</th><th>സംസ്ഥാന ഗവൺമെന്റ് (State)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ഭരണത്തലവൻ</td><td>രാഷ്ട്രപതി (Art 52)</td><td>ഗവർണ്ണർ (Art 153)</td></tr>
+              <tr><td>നിയമ ഉപദേഷ്ടാവ്</td><td>അറ്റോർണി ജനറൽ (Art 76)</td><td>അഡ്വക്കേറ്റ് ജനറൽ (Art 165)</td></tr>
+              <tr><td>ഓർഡിനൻസ് അധികാരം</td><td>ആർട്ടിക്കിൾ 123</td><td>ആർട്ടിക്കിൾ 213</td></tr>
+              <tr><td>മാപ്പുനൽകാനുള്ള അധികാരം</td><td>ആർട്ടിക്കിൾ 72</td><td>ആർട്ടിക്കിൾ 161</td></tr>
+              <tr><td>റിട്ട് പുറപ്പെടുവിക്കാൻ</td><td>സുപ്രീം കോടതി (Art 32)</td><td>ഹൈക്കോടതി (Art 226)</td></tr>
+              <tr><td>മന്ത്രിസഭാ ഉപദേശം</td><td>ആർട്ടിക്കിൾ 74</td><td>ആർട്ടിക്കിൾ 163</td></tr>
+              <tr><td>തലവനെ നിയമിക്കുന്നത്</td><td>തിരഞ്ഞെടുപ്പ് (ഇലക്ടറൽ കോളേജ്)</td><td>രാഷ്ട്രപതി (Art 155)</td></tr>
+              <tr><td>കുറഞ്ഞ പ്രായം</td><td>രാഷ്ട്രപതി 35</td><td>ഗവർണ്ണർ 35</td></tr>
+              <tr><td>കാലാവധി</td><td>5 വർഷം (ഇംപീച്ച്മെന്റ് Art 61)</td><td>5 വർഷം (രാഷ്ട്രപതിയുടെ താൽപര്യം വരെ; ഇംപീച്ച്മെന്റ് ഇല്ല)</td></tr>
+              <tr><td>സത്യപ്രതിജ്ഞ ചെയ്യിക്കുന്നത്</td><td>സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസ്</td><td>ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് (Art 159)</td></tr>
+              <tr><td>ഭരണ തലവന്റെ വിവേചനാധികാരം</td><td>Art 74</td><td>Art 163(2)</td></tr>
+              <tr><td>സഭയിലെ മന്ത്രി/നിയമോപദേഷ്ടാവ് അവകാശം</td><td>Art 88</td><td>Art 177</td></tr>
+              <tr><td>കൂട്ടുത്തരവാദിത്തം</td><td>ലോക്സഭയോട് (Art 75(3))</td><td>നിയമസഭയോട് (Art 164(2))</td></tr>
+              <tr><td>മന്ത്രിസഭാ വലുപ്പം</td><td>ലോക്സഭയുടെ 15% (Art 75(1A))</td><td>നിയമസഭയുടെ 15% (Art 164(1A)); കുറഞ്ഞത് 12</td></tr>
+              <tr><td>ബിൽ അനുമതി</td><td>രാഷ്ട്രപതി (Art 111)</td><td>ഗവർണ്ണർ (Art 200)</td></tr>
+              <tr><td>ഉന്നത കോടതി വിരമിക്കൽ</td><td>SC ജഡ്ജി 65</td><td>HC ജഡ്ജി 62</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: സംസ്ഥാന നിയമസഭയും കൗൺസിലും (Assembly vs Council)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>നിയമസഭ (Legislative Assembly)</th><th>നിയമനിർമ്മാണ കൗൺസിൽ (Legislative Council)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>മറ്റ് പേരുകൾ</td><td>അധോസഭ (Lower House)</td><td>ഉപരിസഭ (Upper House)</td></tr>
+              <tr><td>അംഗമാകാനുള്ള പ്രായം</td><td>25 വയസ്സ്</td><td>30 വയസ്സ്</td></tr>
+              <tr><td>തിരഞ്ഞെടുപ്പ് രീതി</td><td>ജനങ്ങൾ നേരിട്ട്</td><td>പരോക്ഷ തിരഞ്ഞെടുപ്പ് & നോമിനേഷൻ</td></tr>
+              <tr><td>കാലാവധി</td><td>5 വർഷം</td><td>6 വർഷം (സ്ഥിരം സഭ)</td></tr>
+              <tr><td>അംഗസംഖ്യ</td><td>60–500 (ഇളവുകൾ ഉണ്ട്; കേരളം 140)</td><td>നിയമസഭയുടെ 1/3-ൽ കൂടരുത്; 40-ൽ കുറയരുത്</td></tr>
+              <tr><td>പിരിച്ചുവിടൽ</td><td>പിരിച്ചുവിടാം (dissolution)</td><td>പിരിച്ചുവിടാൻ കഴിയില്ല; 1/3 പേർ ഓരോ 2 വർഷത്തിലും വിരമിക്കും</td></tr>
+              <tr><td>അധ്യക്ഷൻ</td><td>സ്പീക്കർ (Art 178)</td><td>ചെയർമാൻ</td></tr>
+              <tr><td>മണി ബിൽ</td><td>അവതരിപ്പിക്കുന്നത് ഇവിടെ മാത്രം</td><td>14 ദിവസം വരെ താമസിപ്പിക്കാം; ശുപാർശ മാത്രം</td></tr>
+              <tr><td>സാധാരണ ബിൽ</td><td>നിർണ്ണായക അധികാരം</td><td>ആദ്യം 3 മാസം, രണ്ടാമത് 1 മാസം താമസിപ്പിക്കാം; ജോയിന്റ് സിറ്റിങ് ഇല്ല</td></tr>
+              <tr><td>മന്ത്രിസഭയുടെ ഉത്തരവാദിത്തം</td><td>ഇവിടെ (കൂട്ടുത്തരവാദിത്തം)</td><td>ഇല്ല</td></tr>
+              <tr><td>രൂപീകരണം</td><td>എല്ലാ സംസ്ഥാനങ്ങളിലും</td><td>6 സംസ്ഥാനങ്ങളിൽ മാത്രം (Art 169)</td></tr>
+              <tr><td>ഗവർണ്ണറുടെ നാമനിർദ്ദേശം</td><td>ആംഗ്ലോ-ഇന്ത്യൻ വ്യവസ്ഥ 2020-ൽ നിർത്തലാക്കി</td><td>1/6 അംഗങ്ങൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>ഓർമ്മിക്കാൻ:</strong></span>
+          <p>"<strong>നിയമസഭ = ജനം, 25, 5 വർഷം, പിരിച്ചുവിടാം; കൗൺസിൽ = പരോക്ഷം, 30, 6 വർഷം, 1/3 വിരമിക്കൽ, പിരിച്ചുവിടാനാവില്ല</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: സമയരേഖ / ട്രിക്കുകൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. സമയരേഖയും ട്രിക്കുകളും</h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <span class="box-label">📅 സംസ്ഥാന ഗവൺമെന്റ് – ആർട്ടിക്കിൾ ഘടന</span>
+          <svg viewBox="0 0 900 200" width="100%" height="auto" role="img" aria-label="ആർട്ടിക്കിൾ ഘടന">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="100" r="10" fill="#c62828"/>
+            <text x="100" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">153</text>
+            <text x="100" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഗവർണ്ണർ</text>
+            <circle cx="220" cy="100" r="10" fill="#ef6c00"/>
+            <text x="220" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">163</text>
+            <text x="220" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">മന്ത്രിസഭ</text>
+            <circle cx="340" cy="100" r="10" fill="#2e7d32"/>
+            <text x="340" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">165</text>
+            <text x="340" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">AG</text>
+            <circle cx="460" cy="100" r="10" fill="#1565c0"/>
+            <text x="460" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">169</text>
+            <text x="460" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കൗൺസിൽ</text>
+            <circle cx="580" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="580" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">213</text>
+            <text x="580" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഓർഡിനൻസ്</text>
+            <circle cx="700" cy="100" r="10" fill="#b83b2c"/>
+            <text x="700" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">214</text>
+            <text x="700" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">ഹൈക്കോടതി</text>
+            <circle cx="820" cy="100" r="10" fill="#00695c"/>
+            <text x="820" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">226</text>
+            <text x="820" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">റിട്ട്</text>
+          </svg>
+          <div class="viz-caption">📅 പ്രധാന ആർട്ടിക്കിളുകളുടെ ക്രമം (153–226)</div>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p>"<strong>153, 35 വയസ്സ്</strong>" (ഗവർണ്ണർ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p>"<strong>123 ↔ 213</strong>" (ഓർഡിനൻസ്).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p>"<strong>72 ↔ 161</strong>" (മാപ്പ്).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p>"<strong>76 ↔ 165</strong>" (നിയമ ഉപദേഷ്ടാവ്).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5:</strong></span>
+          <p>"<strong>88 ↔ 177</strong>" (സഭയിൽ സംസാരം).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6:</strong></span>
+          <p>"<strong>32 ↔ 226</strong>" (റിട്ട്).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7:</strong></span>
+          <p>"<strong>HC 62, SC 65</strong>" (വിരമിക്കൽ പ്രായം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: PSC കെണികൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. PSC കെണികൾ (Common Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് സംസ്ഥാനത്തെ നിയമസഭ സമ്മേളിക്കാത്ത സമയത്ത് അടിയന്തര നിയമങ്ങൾ കൊണ്ടുവരാൻ ഗവർണ്ണർക്ക് ഓർഡിനൻസ് പുറപ്പെടുവിക്കാൻ അധികാരമുള്ളത്?</p>
+          <p><strong>Confusing Options:</strong> ആർട്ടിക്കിൾ 123 / ആർട്ടിക്കിൾ 213 / ആർട്ടിക്കിൾ 161 / ആർട്ടിക്കിൾ 153</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>ആർട്ടിക്കിൾ 213</strong>. ആർട്ടിക്കിൾ 123 രാഷ്ട്രപതിയുടെ ഓർഡിനൻസ്; 161 ഗവർണ്ണറുടെ മാപ്പുനൽകൽ; 153 ഗവർണ്ണർ പദവി.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> സംസ്ഥാന സർക്കാരിന്റെ മുഖ്യ നിയമ ഉപദേഷ്ടാവായ അഡ്വക്കേറ്റ് ജനറലിനെ നിയമിക്കുന്നത് ആരാണ്?</p>
+          <p><strong>Confusing Options:</strong> മുഖ്യമന്ത്രി / ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് / രാഷ്ട്രപതി / സംസ്ഥാന ഗവർണ്ണർ</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>സംസ്ഥാന ഗവർണ്ണർ</strong> (ആർട്ടിക്കിൾ 165). രാഷ്ട്രപതി നിയമിക്കുന്നത് അറ്റോർണി ജനറലിനെ (ആർട്ടിക്കിൾ 76).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ഹൈക്കോടതി ജഡ്ജിയുടെ വിരമിക്കൽ പ്രായം?</p>
+          <p><strong>Confusing Options:</strong> 60 / 62 / 65 / 70</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>62 വയസ്സ്</strong>. സുപ്രീം കോടതി ജഡ്ജി 65. (15-ാം ഭേദഗതിയിലൂടെ 60-ൽ നിന്ന് 62 ആയി).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> ഗവർണ്ണർക്ക് മരണശിക്ഷയിൽ എന്ത് അധികാരമുണ്ട്?</p>
+          <p><strong>Confusing Options:</strong> മാപ്പ് / പൂർണ്ണ ഇളവ് / ലഘൂകരണം (commute) / പട്ടാളക്കോടതി ശിക്ഷ ഇളവ്</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>ലഘൂകരണം (commute)</strong>. ഗവർണ്ണർക്ക് മരണശിക്ഷ <strong>മാപ്പാക്കാൻ കഴിയില്ല</strong>; പട്ടാളക്കോടതിയിൽ അധികാരമില്ല. അത് രാഷ്ട്രപതിക്ക് മാത്രം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ഇന്ത്യയിൽ ഒരു ഹൈക്കോടതിയുടെ ചീഫ് ജസ്റ്റിസ് പദവിയിലെത്തിയ ആദ്യത്തെ വനിത?</p>
+          <p><strong>Confusing Options:</strong> അന്നാ ചാണ്ടി / ഫാത്തിമ ബീവി / ലീലാ സേത്ത് / റൂമ പാൽ</p>
+          <p><strong>Fact:</strong> ഉത്തരം <strong>ലീലാ സേത്ത്</strong> (ഹിമാചൽ പ്രദേശ്). അന്നാ ചാണ്ടി ആദ്യ ഹൈക്കോടതി ജഡ്ജിയാണ്; ഫാത്തിമ ബീവി ആദ്യ വനിതാ സുപ്രീം കോടതി ജഡ്ജി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. അധിക വസ്തുതകൾ (Additional Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 200:</strong> നിയമസഭ പാസാക്കിയ ബിൽ ഗവർണ്ണർക്ക് അനുമതി നൽകാം, തടഞ്ഞുവയ്ക്കാം, രാഷ്ട്രപതിയുടെ പരിഗണനയ്ക്കായി മാറ്റിവയ്ക്കാം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 174:</strong> ഗവർണ്ണർ സഭ വിളിക്കൽ/പിരിച്ചുവിടൽ. <strong>175/176:</strong> സഭയെ അഭിസംബോധന ചെയ്യൽ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 215:</strong> ഹൈക്കോടതി Court of Record. <strong>227:</strong> കീഴ്കോടതികളുടെ മേൽ മേൽനോട്ട അധികാരം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 233:</strong> ജില്ലാ ജഡ്ജിമാരെ നിയമിക്കുന്നത് ഗവർണ്ണർ, ഹൈക്കോടതിയുമായി ആലോചിച്ച്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 217:</strong> ഹൈക്കോടതി ജഡ്ജിമാരുടെ നിയമനം. യോഗ്യത: ഇന്ത്യൻ പൗരൻ + 10 വർഷം ജുഡീഷ്യൽ പദവി അല്ലെങ്കിൽ 10 വർഷം അഭിഭാഷകൻ. സത്യപ്രതിജ്ഞ: ഗവർണ്ണർ (219).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 219:</strong> ഹൈക്കോടതി ജഡ്ജിമാരുടെ സത്യപ്രതിജ്ഞ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 171:</strong> നിയമനിർമ്മാണ കൗൺസിലിന്റെ ഘടന. <strong>172:</strong> 6 വർഷം, 2 വർഷത്തിൽ 1/3 വിരമിക്കൽ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 198/199:</strong> മണി ബിൽ നടപടിക്രമം/നിർവചനം. ഗവർണ്ണറുടെ ശുപാർശ ആവശ്യം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 168:</strong> സംസ്ഥാന നിയമനിർമ്മാണ സഭയുടെ ഘടന. <strong>178:</strong> സ്പീക്കർ/ഡെപ്യൂട്ടി സ്പീക്കർ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ആർട്ടിക്കിൾ 156:</strong> ഗവർണ്ണറുടെ കാലാവധി. <strong>157:</strong> യോഗ്യത. <strong>158:</strong> വ്യവസ്ഥകൾ. <strong>159:</strong> സത്യപ്രതിജ്ഞ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ആർട്ടിക്കിൾ 164(1A):</strong> മന്ത്രിസഭാ വലുപ്പം 15%. <strong>164(2):</strong> കൂട്ടുത്തരവാദിത്തം. <strong>166:</strong> സർക്കാർ പ്രവർത്തനങ്ങൾ. <strong>167:</strong> മുഖ്യമന്ത്രിയുടെ ചുമതല.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ആർട്ടിക്കിൾ 163(2):</strong> ഗവർണ്ണറുടെ വിവേചനാധികാരം. <strong>74:</strong> കേന്ദ്ര മന്ത്രിസഭാ ഉപദേശം. <strong>75(3):</strong> കേന്ദ്ര കൂട്ടുത്തരവാദിത്തം. <strong>75(1A):</strong> കേന്ദ്ര മന്ത്രിസഭാ വലുപ്പം.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ആർട്ടിക്കിൾ 111:</strong> രാഷ്ട്രപതിയുടെ ബിൽ അനുമതി. <strong>61:</strong> രാഷ്ട്രപതിയുടെ ഇംപീച്ച്മെന്റ്. <strong>52:</strong> രാഷ്ട്രപതി പദവി.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ആർട്ടിക്കിൾ 231:</strong> രണ്ടോ അതിലധികമോ സംസ്ഥാനങ്ങൾക്ക് പൊതു ഹൈക്കോടതി.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ആർട്ടിക്കിൾ 316:</strong> സംസ്ഥാന PSC അംഗങ്ങളെ നിയമിക്കുന്നത് ഗവർണ്ണർ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് സംസ്ഥാനത്തെ നിയമസഭ സമ്മേളിക്കാത്ത സമയത്ത് അടിയന്തര നിയമങ്ങൾ കൊണ്ടുവരാൻ ഗവർണ്ണർക്ക് ഓർഡിനൻസ് പുറപ്പെടുവിക്കാൻ അധികാരമുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 123</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 213</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 161</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 153</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 213</div>
+            <div class="explanation">രാഷ്ട്രപതിയുടെ ഓർഡിനൻസ് അധികാരം ആർട്ടിക്കിൾ 123 ആണ്. സംസ്ഥാന ഗവർണ്ണർക്ക് ഇത് 213 ആണ്. ഓർഡിനൻസ് സഭ വീണ്ടും സമ്മേളിച്ച് 6 ആഴ്ചയ്ക്കുള്ളിൽ അംഗീകരിക്കണം.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. സംസ്ഥാന സർക്കാരിന്റെ മുഖ്യ നിയമ ഉപദേഷ്ടാവായ അഡ്വക്കേറ്റ് ജനറലിനെ നിയമിക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മുഖ്യമന്ത്രി</span>
+            <span data-opt="B">B. ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="C">C. രാഷ്ട്രപതി</span>
+            <span data-opt="D">D. സംസ്ഥാന ഗവർണ്ണർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) സംസ്ഥാന ഗവർണ്ണർ</div>
+            <div class="explanation">ഭരണഘടനയുടെ ആർട്ടിക്കിൾ 165 പ്രകാരം ഗവർണ്ണറാണ് ഈ നിയമനം നടത്തുന്നത്. രാഷ്ട്രപതി നിയമിക്കുന്നത് അറ്റോർണി ജനറലിനെ (ആർട്ടിക്കിൾ 76).</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക (പദവിയും വിരമിക്കൽ പ്രായവും):</div>
+          <div class="options">
+            <span data-opt="A">A. സുപ്രീം കോടതി ജഡ്ജി - 62 വയസ്സ്</span>
+            <span data-opt="B">B. ഗവർണ്ണർ - 65 വയസ്സ്</span>
+            <span data-opt="C">C. അഡ്വക്കേറ്റ് ജനറൽ - 65 വയസ്സ്</span>
+            <span data-opt="D">D. ഹൈക്കോടതി ജഡ്ജി - 62 വയസ്സ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഹൈക്കോടതി ജഡ്ജി - 62 വയസ്സ്</div>
+            <div class="explanation">സുപ്രീം കോടതി ജഡ്ജിക്ക് 65 വയസ്സാണ്. ഗവർണ്ണർക്ക് വിരമിക്കൽ പ്രായമില്ല (5 വർഷം / രാഷ്ട്രപതിയുടെ താൽപര്യം). അഡ്വക്കേറ്റ് ജനറലിനും പ്രായപരിധിയില്ല.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് സംസ്ഥാന നിയമസഭയിൽ അംഗമല്ലാത്ത ഒരാൾക്ക് (ഉദാഹരണത്തിന് അഡ്വക്കേറ്റ് ജനറൽ) സഭയിൽ വോട്ട് ചെയ്യാനുള്ള അവകാശമില്ലാതെ തന്നെ സഭാ നടപടികളിൽ പങ്കെടുക്കാനും സംസാരിക്കാനും അധികാരമുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 165</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 177</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 214</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 163</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 177</div>
+            <div class="explanation">അഡ്വക്കേറ്റ് ജനറലിന്റെ പ്രത്യേക അധികാരമാണിത്. കേന്ദ്രത്തിൽ അറ്റോർണി ജനറലിന് ഇത് നൽകുന്നത് ആർട്ടിക്കിൾ 88 ആണ്.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഇന്ത്യയിലെ ഏതെങ്കിലും ഒരു സംസ്ഥാനത്ത് ഹൈക്കോടതിയുടെ ചീഫ് ജസ്റ്റിസ് പദവിയിലെത്തിയ ആദ്യത്തെ വനിത ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. അന്നാ ചാണ്ടി</span>
+            <span data-opt="B">B. ഫാത്തിമ ബീവി</span>
+            <span data-opt="C">C. ലീലാ സേത്ത്</span>
+            <span data-opt="D">D. റൂമ പാൽ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ലീലാ സേത്ത്</div>
+            <div class="explanation">ഹിമാചൽ പ്രദേശ് ഹൈക്കോടതിയിലാണ് ഇവർ ആദ്യമായി ചീഫ് ജസ്റ്റിസായത്. അന്നാ ചാണ്ടി ആദ്യ ഹൈക്കോടതി ജഡ്ജിയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഒരു സംസ്ഥാനത്ത് നിയമനിർമ്മാണ കൗൺസിൽ (Legislative Council / ഉപരിസഭ) രൂപീകരിക്കാനോ പിരിച്ചുവിടാനോ പാർലമെന്റിന് അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 169</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 226</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 153</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 214</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ആർട്ടിക്കിൾ 169</div>
+            <div class="explanation">സംസ്ഥാന നിയമസഭ മൂന്നിൽ രണ്ട് ഭൂരിപക്ഷത്തോടെ പാസാക്കുന്ന പ്രമേയത്തിന്റെ അടിസ്ഥാനത്തിലാണ് പാർലമെന്റ് കൗൺസിൽ രൂപീകരിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: സംസ്ഥാന ഗവർണ്ണറുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഗവർണ്ണറെ നിയമിക്കുന്നത് ഇന്ത്യയുടെ രാഷ്ട്രപതിയാണ്.<br>
+            2. ഗവർണ്ണർക്ക് മാപ്പുനൽകാനുള്ള അധികാരം ആർട്ടിക്കിൾ 161 പ്രകാരമാണ്.<br>
+            3. പട്ടാളക്കോടതികൾ നൽകുന്ന ശിക്ഷകളും മരണശിക്ഷയും പൂർണ്ണമായി ഇളവുചെയ്യാൻ ഗവർണ്ണർക്ക് അധികാരമുണ്ട്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്; കാരണം മരണശിക്ഷയും പട്ടാളക്കോടതി ശിക്ഷയും ഇളവുചെയ്യാൻ ഗവർണ്ണർക്ക് അധികാരമില്ല (അത് രാഷ്ട്രപതിക്ക് മാത്രമേയുള്ളൂ).</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയിലെ ഓരോ സംസ്ഥാനത്തിനും ഒരു ഹൈക്കോടതി ഉണ്ടായിരിക്കണമെന്ന് പ്രതിപാദിക്കുന്ന ഭരണഘടനാ വകുപ്പ് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 124</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 214</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 165</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 226</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 214</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 124 സുപ്രീം കോടതിയെക്കുറിച്ചാണ് പറയുന്നത്. പൊതു ഹൈക്കോടതി → ആർട്ടിക്കിൾ 231.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. മൗലികാവകാശങ്ങൾ സംരക്ഷിക്കുന്നതിനായി റിട്ടുകൾ (Writs) പുറപ്പെടുവിക്കാൻ ഹൈക്കോടതികൾക്ക് അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 32</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 226</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 161</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 148</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 226</div>
+            <div class="explanation">മൗലികാവകാശങ്ങൾക്ക് പുറമെ മറ്റ് നിയമപരമായ അവകാശങ്ങൾക്കും റിട്ട് നൽകാൻ ആർട്ടിക്കിൾ 226 പ്രകാരം ഹൈക്കോടതികൾക്ക് കഴിയും.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. സംസ്ഥാനത്തെ ഒരു മന്ത്രിസഭയ്ക്ക് (Council of Ministers) ആർക്കാണ് കൂട്ടുത്തരവാദിത്തം (Collective responsibility) ഉള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഗവർണ്ണർക്ക്</span>
+            <span data-opt="B">B. ഹൈക്കോടതിക്ക്</span>
+            <span data-opt="C">C. സംസ്ഥാന നിയമസഭയ്ക്ക്</span>
+            <span data-opt="D">D. രാജ്യസഭയ്ക്ക്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സംസ്ഥാന നിയമസഭയ്ക്ക്</div>
+            <div class="explanation">മന്ത്രിസഭ അധികാരത്തിൽ തുടരുന്നത് നിയമസഭയിൽ ഭൂരിപക്ഷം ഉള്ളിടത്തോളം കാലം മാത്രമാണ്. ആർട്ടിക്കിൾ 164(2).</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. സംസ്ഥാന മന്ത്രിസഭയിലെ ആകെ അംഗസംഖ്യ നിയമസഭയുടെ അംഗസംഖ്യയുടെ എത്ര ശതമാനത്തിൽ കൂടരുത് എന്നാണ് ഭരണഘടന വ്യവസ്ഥ ചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 10%</span>
+            <span data-opt="B">B. 12%</span>
+            <span data-opt="C">C. 15%</span>
+            <span data-opt="D">D. 20%</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 15%</div>
+            <div class="explanation">91-ാം ഭേദഗതി (2003), ആർട്ടിക്കിൾ 164(1A). കുറഞ്ഞത് 12 മന്ത്രിമാർ (മുഖ്യമന്ത്രി ഉൾപ്പെടെ). കേരളത്തിൽ 140-ന്റെ 15% = 21.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. സംസ്ഥാന ഗവർണ്ണർക്ക് സത്യപ്രതിജ്ഞ ചെയ്തുകൊടുക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. രാഷ്ട്രപതി</span>
+            <span data-opt="B">B. ഇന്ത്യയുടെ ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="C">C. ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="D">D. നിയമസഭാ സ്പീക്കർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 159. രാഷ്ട്രപതിയെ നിയമിക്കുന്നെങ്കിലും സത്യപ്രതിജ്ഞ അല്ല. രാഷ്ട്രപതിക്ക് സത്യപ്രതിജ്ഞ ചെയ്യിക്കുന്നത് CJI.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ആർട്ടിക്കിൾ 161 പ്രകാരം ഒരു സംസ്ഥാന ഗവർണ്ണർക്ക് കഴിയുന്നത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. മരണശിക്ഷ മാപ്പാക്കാൻ</span>
+            <span data-opt="B">B. പട്ടാളക്കോടതി ശിക്ഷ ഇളവ് ചെയ്യാൻ</span>
+            <span data-opt="C">C. മരണശിക്ഷ ലഘൂകരിക്കാൻ (commute)</span>
+            <span data-opt="D">D. സുപ്രീം കോടതി ശിക്ഷ ഇളവ് ചെയ്യാൻ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) മരണശിക്ഷ ലഘൂകരിക്കാൻ (commute)</div>
+            <div class="explanation">ഗവർണ്ണർക്ക് മരണശിക്ഷ മാപ്പാക്കാൻ കഴിയില്ല, പട്ടാളക്കോടതിയിൽ അധികാരമില്ല; സംസ്ഥാന നിയമത്തിലെ കുറ്റങ്ങളിൽ ലഘൂകരിക്കാൻ കഴിയും.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഇന്ത്യയിൽ നിലവിൽ (2026) നിയമനിർമ്മാണ കൗൺസിലുകൾ ഉള്ള സംസ്ഥാനങ്ങളുടെ എണ്ണം എത്ര?</div>
+          <div class="options">
+            <span data-opt="A">A. 4</span>
+            <span data-opt="B">B. 5</span>
+            <span data-opt="C">C. 6</span>
+            <span data-opt="D">D. 7</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 6</div>
+            <div class="explanation">യു.പി, ബീഹാർ, മഹാരാഷ്ട്ര, കർണാടക, ആന്ധ്രാപ്രദേശ്, തെലങ്കാന. കേരളത്തിന് കൗൺസിൽ ഇല്ല.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഗവർണ്ണർ പുറപ്പെടുവിക്കുന്ന ഓർഡിനൻസ് നിയമസഭ വീണ്ടും സമ്മേളിച്ചതിന് ശേഷം എത്ര കാലത്തിനുള്ളിൽ അംഗീകരിക്കപ്പെടണം?</div>
+          <div class="options">
+            <span data-opt="A">A. 2 ആഴ്ച</span>
+            <span data-opt="B">B. 4 ആഴ്ച</span>
+            <span data-opt="C">C. 6 ആഴ്ച</span>
+            <span data-opt="D">D. 6 മാസം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 6 ആഴ്ച</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 213; അംഗീകരിക്കാത്ത പക്ഷം ഓർഡിനൻസ് 6 ആഴ്ച കഴിയുമ്പോൾ അസാധുവാകും.</div>
+          </div>
+        </div>
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ഭരണഘടനയുടെ ആർട്ടിക്കിൾ 200 പ്രകാരം നിയമസഭ പാസാക്കിയ ബില്ലിൽ ഗവർണ്ണർക്കുള്ള മാർഗങ്ങളിൽ ഉൾപ്പെടാത്തത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. അനുമതി നൽകുക</span>
+            <span data-opt="B">B. അനുമതി തടഞ്ഞുവയ്ക്കുക</span>
+            <span data-opt="C">C. രാഷ്ട്രപതിയുടെ പരിഗണനയ്ക്കായി മാറ്റിവയ്ക്കുക</span>
+            <span data-opt="D">D. ബിൽ സ്വയം ഭേദഗതി ചെയ്ത് നിയമമാക്കുക</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D)</div>
+            <div class="explanation">ഗവർണ്ണർക്ക് ബിൽ സ്വയം ഭേദഗതി ചെയ്യാൻ കഴിയില്ല; ഭേദഗതി നിർദ്ദേശിച്ച് തിരിച്ചയയ്ക്കാൻ മാത്രം കഴിയും.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ഇന്ത്യയിലെ ആദ്യത്തെ വനിതാ സുപ്രീം കോടതി ജഡ്ജി ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. അന്നാ ചാണ്ടി</span>
+            <span data-opt="B">B. ലീലാ സേത്ത്</span>
+            <span data-opt="C">C. ഫാത്തിമ ബീവി</span>
+            <span data-opt="D">D. സുജാത മനോഹർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഫാത്തിമ ബീവി (1989, കേരളം)</div>
+            <div class="explanation">അന്നാ ചാണ്ടി ആദ്യ വനിതാ HC ജഡ്ജി. ലീലാ സേത്ത് ആദ്യ വനിതാ HC ചീഫ് ജസ്റ്റിസ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>10</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(D)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(D)</td><td>12</td><td>(C)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>13</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(C)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>6</td><td>(A)</td><td>15</td><td>(C)</td></tr>
+              <tr><td>7</td><td>(A)</td><td>16</td><td>(D)</td></tr>
+              <tr><td>8</td><td>(B)</td><td>17</td><td>(C)</td></tr>
+              <tr><td>9</td><td>(B)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>ഗവർണ്ണർ: ആർട്ടിക്കിൾ 153. പ്രായം 35 വയസ്സ്. നിയമിക്കുന്നത് രാഷ്ട്രപതി.</li>
+          <li>ഗവർണ്ണറുടെ ഓർഡിനൻസ്: ആർട്ടിക്കിൾ 213. മാപ്പുനൽകൽ: 161.</li>
+          <li>അഡ്വക്കേറ്റ് ജനറൽ: ആർട്ടിക്കിൾ 165. നിയമിക്കുന്നത് ഗവർണ്ണർ.</li>
+          <li>അഡ്വക്കേറ്റ് ജനറൽ സഭയിൽ സംസാരിക്കുന്നത്: ആർട്ടിക്കിൾ 177 (വോട്ട് അവകാശമില്ല).</li>
+          <li>എം.എൽ.എ ആകാനുള്ള പ്രായം: 25 വയസ്സ്.</li>
+          <li>എം.എൽ.സി ആകാനുള്ള പ്രായം: 30 വയസ്സ്.</li>
+          <li>നിയമനിർമ്മാണ കൗൺസിൽ രൂപീകരണം: ആർട്ടിക്കിൾ 169.</li>
+          <li>ഹൈക്കോടതി: ആർട്ടിക്കിൾ 214. റിട്ട് അധികാരം: ആർട്ടിക്കിൾ 226.</li>
+          <li>ഹൈക്കോടതി ജഡ്ജി വിരമിക്കൽ പ്രായം: 62 വയസ്സ്.</li>
+          <li>ആദ്യ വനിതാ ചീഫ് ജസ്റ്റിസ് (HC): ലീലാ സേത്ത്. ആദ്യ വനിതാ ജഡ്ജി: അന്നാ ചാണ്ടി. ആദ്യ സുപ്രീം കോടതി ജഡ്ജി: ഫാത്തിമ ബീവി.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക ഒറ്റവരി വസ്തുതകൾ</span>
+          <ul>
+            <li>ഗവർണ്ണർ: 5 വർഷം, രാഷ്ട്രപതിയുടെ താൽപര്യം വരെ; ഇംപീച്ച്മെന്റ് ഇല്ല; സത്യപ്രതിജ്ഞ → ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് (159).</li>
+            <li>ഗവർണ്ണർ (161): മരണശിക്ഷയിൽ <strong>ഇളവ് മാത്രം, മാപ്പ് ഇല്ല</strong>; പട്ടാളക്കോടതിയിൽ <strong>അധികാരമില്ല</strong>.</li>
+            <li>മുഖ്യമന്ത്രി: 164; മന്ത്രി 6 മാസത്തിനുള്ളിൽ സഭാംഗമാകണം; മന്ത്രിസഭ ≤ 15%, കുറഞ്ഞത് 12 (91-ാം ഭേദഗതി, 2003); കേരളത്തിൽ പരമാവധി 21.</li>
+            <li>കൂട്ടുത്തരവാദിത്തം: നിയമസഭയോട് (164(2)).</li>
+            <li>AG: പ്രായപരിധി/നിശ്ചിത കാലാവധി ഇല്ല; യോഗ്യത = HC ജഡ്ജിയാകാനുള്ളത്.</li>
+            <li>കൗൺസിൽ: 6 സംസ്ഥാനങ്ങൾ; ≤ 1/3 അംഗങ്ങൾ, ≥ 40; 30 വയസ്സ്; 6 വർഷം, ഓരോ 2 വർഷത്തിലും 1/3 വിരമിക്കൽ; പിരിച്ചുവിടാനാവില്ല.</li>
+            <li>ഹൈക്കോടതി: ആർട്ടിക്കിൾ 214; 231 (പൊതു HC); 215 (Court of Record); 227 (മേൽനോട്ടം); 233 (ജില്ലാ ജഡ്ജിമാരെ ഗവർണ്ണർ നിയമിക്കുന്നു); 226 (റിട്ട്).</li>
+            <li>HC 62, SC 65; HC ജഡ്ജിയെ നിയമിക്കുന്നത് രാഷ്ട്രപതി (കൊളീജിയം ശുപാർശ).</li>
+            <li>ആർട്ടിക്കിൾ ജോടികൾ: 52↔153 · 76↔165 · 123↔213 · 72↔161 · 74↔163 · 88↔177 · 32↔226.</li>
+            <li>ആർട്ടിക്കിൾ 200: ഗവർണ്ണർക്ക് 3 വഴികൾ; 2025 നവംബർ: സമയപരിധിയില്ല, deemed assent ഇല്ല ⚠️.</li>
+            <li>കേരള ഹൈക്കോടതി: എറണാകുളം; ലക്ഷദ്വീപ് കൂടി; ആദ്യ പേപ്പർലെസ് സംരംഭം (2022); കൊല്ലം: NI Act ഡിജിറ്റൽ കോടതി (2024).</li>
+            <li>⚠️ "ആദ്യ മലയാളി ഹൈക്കോടതി ജഡ്ജി" — സ്ഥിരീകരിച്ചിട്ടില്ല.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>ഗവർണ്ണർ</h3>
+        <ul>
+          <li><strong>ആർട്ടിക്കിൾ 153:</strong> ഓരോ സംസ്ഥാനത്തിനും ഒരു ഗവർണ്ണർ</li>
+          <li><strong>ആർട്ടിക്കിൾ 155:</strong> രാഷ്ട്രപതി നിയമിക്കുന്നു</li>
+          <li><strong>ആർട്ടിക്കിൾ 157:</strong> 35 വയസ്സ്</li>
+          <li><strong>ആർട്ടിക്കിൾ 159:</strong> ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് സത്യപ്രതിജ്ഞ</li>
+          <li><strong>ആർട്ടിക്കിൾ 161:</strong> മാപ്പുനൽകൽ (മരണശിക്ഷ: ഇളവ് മാത്രം)</li>
+          <li><strong>ആർട്ടിക്കിൾ 200:</strong> ബിൽ അനുമതി</li>
+          <li><strong>ആർട്ടിക്കിൾ 213:</strong> ഓർഡിനൻസ്</li>
+        </ul>
+        <h3>മുഖ്യമന്ത്രിയും മന്ത്രിസഭയും</h3>
+        <ul>
+          <li><strong>ആർട്ടിക്കിൾ 163:</strong> മന്ത്രിസഭാ ഉപദേശം</li>
+          <li><strong>ആർട്ടിക്കിൾ 164:</strong> മുഖ്യമന്ത്രി, 6 മാസം, 15%, കുറഞ്ഞത് 12</li>
+          <li><strong>കൂട്ടുത്തരവാദിത്തം:</strong> നിയമസഭയോട്</li>
+        </ul>
+        <h3>അഡ്വക്കേറ്റ് ജനറൽ</h3>
+        <ul>
+          <li><strong>ആർട്ടിക്കിൾ 165:</strong> ഗവർണ്ണർ നിയമിക്കുന്നു; പ്രായപരിധി ഇല്ല</li>
+          <li><strong>ആർട്ടിക്കിൾ 177:</strong> സഭയിൽ സംസാരം, വോട്ടില്ല</li>
+        </ul>
+        <h3>നിയമസഭയും കൗൺസിലും</h3>
+        <ul>
+          <li><strong>നിയമസഭ:</strong> 25 വയസ്സ്, 5 വർഷം, പിരിച്ചുവിടാം</li>
+          <li><strong>കൗൺസിൽ:</strong> 30 വയസ്സ്, 6 വർഷം, 1/3 വിരമിക്കൽ, പിരിച്ചുവിടാനാവില്ല</li>
+          <li><strong>ആർട്ടിക്കിൾ 169:</strong> കൗൺസിൽ രൂപീകരണം (6 സംസ്ഥാനങ്ങൾ)</li>
+        </ul>
+        <h3>ഹൈക്കോടതി</h3>
+        <ul>
+          <li><strong>ആർട്ടിക്കിൾ 214:</strong> ഹൈക്കോടതി</li>
+          <li><strong>ആർട്ടിക്കിൾ 226:</strong> റിട്ട് അധികാരം</li>
+          <li><strong>വിരമിക്കൽ:</strong> 62 വയസ്സ്</li>
+          <li><strong>ആദ്യ വനിതകൾ:</strong> അന്ന (HC ജഡ്ജി), ലീല (HC CJ), ഫാത്തിമ (SC ജഡ്ജി)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: ടോപ്പ് വസ്തുതകൾ ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. ടോപ്പ് പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>ഗവർണ്ണർ: ആർട്ടിക്കിൾ 153, 35 വയസ്സ്, രാഷ്ട്രപതി നിയമിക്കുന്നു.</li>
+          <li>ഗവർണ്ണറുടെ ഓർഡിനൻസ്: ആർട്ടിക്കിൾ 213 (രാഷ്ട്രപതി 123).</li>
+          <li>ഗവർണ്ണറുടെ മാപ്പുനൽകൽ: ആർട്ടിക്കിൾ 161 (രാഷ്ട്രപതി 72).</li>
+          <li>ഗവർണ്ണറുടെ സത്യപ്രതിജ്ഞ: ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ് (159).</li>
+          <li>അഡ്വക്കേറ്റ് ജനറൽ: ആർട്ടിക്കിൾ 165, ഗവർണ്ണർ നിയമിക്കുന്നു.</li>
+          <li>അഡ്വക്കേറ്റ് ജനറൽ സഭയിൽ സംസാരം: ആർട്ടിക്കിൾ 177 (വോട്ടില്ല).</li>
+          <li>അറ്റോർണി ജനറൽ: ആർട്ടിക്കിൾ 76, രാഷ്ട്രപതി നിയമിക്കുന്നു.</li>
+          <li>കേന്ദ്ര സഭയിൽ സംസാരം: ആർട്ടിക്കിൾ 88.</li>
+          <li>എം.എൽ.എ പ്രായം: 25 വയസ്സ്.</li>
+          <li>എം.എൽ.സി പ്രായം: 30 വയസ്സ്.</li>
+          <li>നിയമനിർമ്മാണ കൗൺസിൽ: ആർട്ടിക്കിൾ 169; 6 സംസ്ഥാനങ്ങൾ.</li>
+          <li>ഹൈക്കോടതി: ആർട്ടിക്കിൾ 214; റിട്ട്: ആർട്ടിക്കിൾ 226.</li>
+          <li>ഹൈക്കോടതി ജഡ്ജി വിരമിക്കൽ: 62 വയസ്സ്.</li>
+          <li>സുപ്രീം കോടതി ജഡ്ജി വിരമിക്കൽ: 65 വയസ്സ്.</li>
+          <li>ആദ്യ വനിതാ HC ജഡ്ജി: അന്നാ ചാണ്ടി (കേരളം, 1959).</li>
+          <li>ആദ്യ വനിതാ HC ചീഫ് ജസ്റ്റിസ്: ലീലാ സേത്ത് (ഹിമാചൽ).</li>
+          <li>ആദ്യ വനിതാ SC ജഡ്ജി: ഫാത്തിമ ബീവി (കേരളം, 1989).</li>
+          <li>മന്ത്രിസഭാ വലുപ്പം: 15%, കുറഞ്ഞത് 12 (91-ാം ഭേദഗതി, 2003).</li>
+          <li>കൂട്ടുത്തരവാദിത്തം: നിയമസഭയോട് (164(2)).</li>
+          <li>ആദ്യ പേപ്പർലെസ് HC: കേരളം (2022).</li>
+          <li>ആദ്യ ഡിജിറ്റൽ കോടതി: കൊല്ലം (NI Act, 2024).</li>
+          <li>കേരള ഹൈക്കോടതി: എറണാകുളം; ലക്ഷദ്വീപും ഉൾപ്പെടും.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>സംസ്ഥാന ഗവൺമെന്റിന്റെ ഘടന കേന്ദ്ര ഗവൺമെന്റിന് സമാനമാണ്; എന്നാൽ ചില വ്യത്യാസങ്ങളും ഉണ്ട് (ഗവർണ്ണർ നിയമിക്കപ്പെടുന്നു, ഇംപീച്ച്മെന്റ് ഇല്ല, HC ജഡ്ജി 62 vs SC ജഡ്ജി 65).</li>
+          <li>ഗവർണ്ണർ, മുഖ്യമന്ത്രി, മന്ത്രിസഭ, നിയമസഭ, കൗൺസിൽ, ഹൈക്കോടതി, അഡ്വക്കേറ്റ് ജനറൽ എന്നിവയുടെ ഭരണഘടനാ വ്യവസ്ഥകൾ PSC പരീക്ഷകളിൽ സ്ഥിരം ചോദ്യങ്ങളാണ്.</li>
+          <li>ആർട്ടിക്കിൾ നമ്പറുകൾ, യോഗ്യതകൾ, കാലാവധി, അധികാരങ്ങൾ എന്നിവ കൃത്യമായി ഓർക്കുക.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 2–4 ചോദ്യങ്ങൾ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായം ഇന്ത്യൻ ഭരണഘടനയുടെ സംസ്ഥാന ഗവൺമെന്റ് ഭാഗം വിശദീകരിക്കുന്നു. കേന്ദ്ര-സംസ്ഥാന ബന്ധങ്ങൾ, അടിയന്തരാവസ്ഥ, തദ്ദേശ സ്വയംഭരണം എന്നിവ അടുത്ത അധ്യായങ്ങളിൽ ചർച്ച ചെയ്യും. ഈ അധ്യായം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>4.8 State Government</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'constitution-4.8-state-government';
-window.PART_TITLE = '4.8 State Government';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'stateGovernmentConstitutionQ_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
