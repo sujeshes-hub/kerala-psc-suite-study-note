@@ -1,105 +1,1988 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.3.10 Kerala Industries - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരളം – വ്യവസായങ്ങൾ | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.3.10 Kerala Industries</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. പരമ്പരാഗത വ്യവസായങ്ങൾ</a></li>
+      <li><a href="#sec4">4. പൊതുമേഖലാ സ്ഥാപനങ്ങൾ</a></li>
+      <li><a href="#sec5">5. ഐ.ടി വ്യവസായം</a></li>
+      <li><a href="#sec6">6. വികസന ഏജൻസികൾ</a></li>
+      <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. മുൻവർഷ ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec10">10. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec11">11. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec12">12. സമയരേഖ</a></li>
+      <li><a href="#sec13">13. നിനയ്ക്കാൻ എളുപ്പം</a></li>
+      <li><a href="#sec14">14. PSC കെണികൾ</a></li>
+      <li><a href="#sec15">15. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec16">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec17">17. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec18">18. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec19">19. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
+      <li><a href="#sec21">21. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരളം | അധ്യായം 50</div>
+      <h1>കേരളം – വ്യവസായങ്ങൾ (Industries in Kerala)</h1>
+      <div class="subtitle">Kerala PSC Rank File – Complete Verified Notes (Part 1 & 2)</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — പരമ്പരാഗത വ്യവസായങ്ങൾ (കയർ-ആലപ്പുഴ, കശുവണ്ടി-കൊല്ലം, കൈത്തറി/ബീഡി-കണ്ണൂർ), PSU ആസ്ഥാനങ്ങൾ (KSDP-കലവൂർ, മലബാർ സിമന്റ്സ്-വാളയാർ, ഓഷധി-തൃശൂർ), ഐ.ടി പാർക്കുകൾ</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — FACT (ഉദ്യോഗമണ്ഡൽ), KELTRON (1973, തിരുവനന്തപുരം), HNL/KPPL (വെള്ളൂർ), ട്രാവൻകൂർ സിമന്റ്സ് (നാട്ടകം), KSIDC (1961), KINFRA (1993)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — കൊച്ചിൻ ഷിപ്പ്‌യാർഡ് (INS വിക്രാന്ത്), GAIL പൈപ്പ് ലൈൻ, KAMCO (അത്താണി), KMML vs TTPL</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — കേന്ദ്ര vs സംസ്ഥാന PSU, ബോർഡുകളുടെ ആസ്ഥാനങ്ങൾ, വർഷങ്ങൾ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — സി.പി. രാമസ്വാമി അയ്യർ, ബാസൽ മിഷൻ, ജെയിംസ് ഡാറ</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>കയർ വ്യവസായം:</strong> ആലപ്പുഴ (1859, ജെയിംസ് ഡാറ)</li>
+            <li><strong>കശുവണ്ടി വ്യവസായം:</strong> കൊല്ലം</li>
+            <li><strong>കൈത്തറി/ബീഡി:</strong> കണ്ണൂർ</li>
+            <li><strong>FACT:</strong> ഉദ്യോഗമണ്ഡൽ (1943)</li>
+            <li><strong>KELTRON:</strong> തിരുവനന്തപുരം (1973)</li>
+            <li><strong>ടെക്നോപാർക്ക്:</strong> കഴക്കൂട്ടം, തിരുവനന്തപുരം (1990)</li>
+            <li><strong>KSIDC:</strong> 1961; <strong>KINFRA:</strong> 1993</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> കേരളത്തിലെ പരമ്പരാഗത വ്യവസായങ്ങൾ (കയർ, കശുവണ്ടി, കൈത്തറി), സംസ്ഥാന-കേന്ദ്ര സർക്കാരുകളുടെ കീഴിലുള്ള പ്രധാന പൊതുമേഖലാ സ്ഥാപനങ്ങൾ (PSUs), ഐ.ടി പാർക്കുകൾ, കാർഷികാധിഷ്ഠിത വ്യവസായങ്ങൾ എന്നിവയെക്കുറിച്ചാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> പരിസ്ഥിതിലോല പ്രദേശമായ കേരളത്തിൽ വൻകിട വ്യവസായങ്ങളെക്കാൾ ചെറുകിട-ഇടത്തരം വ്യവസായങ്ങൾക്കും പരമ്പരാഗത വ്യവസായങ്ങൾക്കുമാണ് പ്രാധാന്യം. കേരള സമ്പദ്‌വ്യവസ്ഥയുടെ അടിത്തറ മനസ്സിലാക്കാൻ ഇത് സഹായിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> വ്യവസായ സ്ഥാപനങ്ങളുടെയും കോർപ്പറേഷനുകളുടെയും ആസ്ഥാനങ്ങൾ (ഉദ്: KSFE, മലബാർ സിമന്റ്സ്, KSDP, ഓഷധി) LDC, 10th Level, Degree പരീക്ഷകളിലെ വളരെ പ്രധാനപ്പെട്ട (സ്കോറിങ്) ഭാഗമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സാധാരണ ചോദിക്കുന്ന മേഖലകൾ:</strong> സ്ഥാപനങ്ങളും ജില്ലകളും തമ്മിലുള്ള ചേരുംപടി ചേർക്കൽ, ടെക്നോപാർക്ക്, ഫാക്ട് (FACT), കശുവണ്ടി വ്യവസായത്തിന്റെ കേന്ദ്രം.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ പഠിക്കാനുള്ള രീതി</span>
+          <p>ഈ അധ്യായം 3 ചോദ്യങ്ങളായി ചുരുക്കി ഓർക്കുക: <strong>എന്ത് (ഉൽപ്പന്നം) – എവിടെ (സ്ഥലം/ജില്ല) – ആര് (കേന്ദ്രം/സംസ്ഥാനം).</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഉൽപ്പന്നം → സ്ഥലം → ജില്ല</strong>" എന്ന ക്രമത്തിൽ ഓരോ സ്ഥാപനവും മൂന്നു വാക്കിൽ പഠിക്കുക (ഉദ്: മരുന്ന് → കലവൂർ → ആലപ്പുഴ).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: പിന്നാമ്പുറ കഥ ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പിന്നാമ്പുറ കഥ (Behind the Story)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> കേരളത്തിൽ വ്യവസായങ്ങൾക്ക് തുടക്കം കുറിച്ചത് പരമ്പരാഗത മേഖലയിലാണ്. ആലപ്പുഴയിലെ കയറും കൊല്ലത്തെ കശുവണ്ടിയും കണ്ണൂരിലെ കൈത്തറിയും ലക്ഷക്കണക്കിന് ആളുകൾക്ക് തൊഴിൽ നൽകി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആധുനിക വ്യവസായങ്ങൾ:</strong> തിരുവിതാംകൂർ ദിവാൻ സി.പി. രാമസ്വാമി അയ്യരുടെ കാലത്താണ് ആധുനിക വ്യവസായങ്ങൾക്ക് കേരളത്തിൽ തറക്കല്ലിട്ടത്. 1943-ൽ ഏലൂരിൽ (ഉദ്യോഗമണ്ഡൽ) സ്ഥാപിച്ച 'ഫാക്ട്' (FACT) ഇന്ത്യയിലെ തന്നെ ആദ്യത്തെ വലിയ രാസവള നിർമ്മാണ ശാലയായിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വികസനം:</strong> പിന്നീട് കെൽട്രോൺ (KELTRON) പോലെയുള്ള ഇലക്ട്രോണിക്സ് സ്ഥാപനങ്ങളും, 1990-ൽ ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ടി പാർക്കായ ടെക്നോപാർക്കും സ്ഥാപിതമായതോടെ കേരളം വ്യാവസായിക-സാങ്കേതിക ഭൂപടത്തിൽ സ്വന്തം ഇടം കണ്ടെത്തി.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ സി.പി. രാമസ്വാമി അയ്യരുടെ കാലത്തെ (1936–47) മറ്റു സ്ഥാപനങ്ങൾ</span>
+          <p>FACT (1943), ട്രാവൻകൂർ ടൈറ്റാനിയം (TTPL), ട്രാവൻകൂർ റയോൺസ് (പെരുമ്പാവൂർ), ട്രാവൻകൂർ സിമന്റ്സ് (1946), ഇന്ത്യൻ അലുമിനിയം കമ്പനി (ആലുവ).</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ സ്വാതന്ത്ര്യാനന്തരം</span>
+          <p>1961-ൽ KSIDC, 1973-ൽ KELTRON, 1993-ൽ KINFRA എന്നിവ രൂപീകൃതമായി. ഇതാണ് ഈ അധ്യായത്തിലെ വർഷ-ചോദ്യങ്ങളുടെ നട്ടെല്ല്.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>61-ൽ KSIDC, 73-ൽ KELTRON, 90-ൽ ടെക്നോ, 93-ൽ KINFRA</strong>" (61 – 73 – 90 – 93).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: പരമ്പരാഗത വ്യവസായങ്ങൾ ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. പരമ്പരാഗത വ്യവസായങ്ങൾ</h2>
+      <div class="section-body">
+        <p>കേരളത്തിൽ ഏറ്റവും കൂടുതൽ ആളുകൾക്ക് തൊഴിൽ നൽകുന്ന മേഖലയാണിത്.</p>
+
+        <h3>1. കയർ വ്യവസായം (Coir Industry)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കേരളത്തിലെ ഏറ്റവും പഴയതും ഏറ്റവും കൂടുതൽ പേർക്ക് തൊഴിൽ നൽകുന്നതുമായ പരമ്പരാഗത വ്യവസായം. <strong>ആലപ്പുഴ</strong> ആണ് ഇതിന്റെ ആസ്ഥാനം. (കയർ ബോർഡിന്റെ ആസ്ഥാനം കൊച്ചിയാണ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> 1859-ൽ <strong>ജെയിംസ് ഡാറ</strong> (James Darragh) എന്ന ഐറിഷുകാരനാണ് ആലപ്പുഴയിൽ ആദ്യ കയർ ഫാക്ടറി സ്ഥാപിച്ചത് (Darragh Smail & Co).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ കയർ ബോർഡ് 1953-ലെ Coir Industry Act പ്രകാരം രൂപീകരിച്ചു. ആസ്ഥാനം കൊച്ചി (കലൂർ).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ കയർഫെഡ്, സംസ്ഥാന കയർ കോർപ്പറേഷൻ എന്നിവ ആലപ്പുഴയിൽ. കേന്ദ്ര കയർ ഗവേഷണ സ്ഥാപനം (CCRI) കലവൂർ (ആലപ്പുഴ) ⚠️ NCRMI തിരുവനന്തപുരം.</li>
+          <li><span class="stars">⭐⭐</span> ➕ ആലപ്പുഴ "കിഴക്കിന്റെ വെനീസ്" എന്നറിയപ്പെടുന്നു. കയർ ഭൂവസ്ത്രം (Coir Geotextiles) മണ്ണൊലിപ്പ് തടയാൻ ഉപയോഗിക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ബോർഡ് കൊച്ചി കലൂരിൽ, ഗവേഷണം ആലപ്പുഴ കലവൂരിൽ</strong>."</p>
+        </div>
+
+        <h3>2. കശുവണ്ടി വ്യവസായം (Cashew Industry)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> വിദേശനാണ്യം നേടിത്തരുന്ന പ്രധാന വ്യവസായം. <strong>കൊല്ലം</strong> ജില്ലയാണ് ഇതിന്റെ കേന്ദ്രം. (കശുവണ്ടി വികസന കോർപ്പറേഷന്റെ ആസ്ഥാനം കൊല്ലം).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ KSCDC (Kerala State Cashew Development Corporation) 1969-ൽ രൂപീകരിച്ചു. <strong>CAPEX</strong> (കശുവണ്ടി തൊഴിലാളി അപെക്സ് സഹകരണ സംഘം) ആസ്ഥാനവും കൊല്ലം.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>കശു = കൊല്ലം = കോർപ്പറേഷനും കാപെക്സും</strong>."</p>
+        </div>
+
+        <h3>3. കൈത്തറി വ്യവസായം (Handloom)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കേരളത്തിൽ <strong>കണ്ണൂർ</strong> ജില്ലയാണ് തറികൾക്കും തിറകൾക്കും പ്രസിദ്ധം. ഹാന്റക്സ് (Hantex) ആണ് കൈത്തറി ഉൽപ്പന്നങ്ങളുടെ വിപണന ഏജൻസി. കേരളത്തിലെ കൈത്തറി വ്യവസായത്തിന്റെ ആസ്ഥാനം തിരുവനന്തപുരമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ പ്രശസ്ത കൈത്തറി കേന്ദ്രങ്ങൾ: <strong>ബാലരാമപുരം</strong> (തിരുവനന്തപുരം), <strong>ചേന്ദമംഗലം</strong> (എറണാകുളം), <strong>കുത്താമ്പുള്ളി</strong> (പാലക്കാട്), കണ്ണൂർ. കണ്ണൂരിൽ <strong>ഹാൻവീവ്</strong> (Hanveev) പ്രവർത്തിക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ബാല-ചേന്ദ-കുത്താ = തിരു-എറണാ-പാലക്കാട്</strong>."</p>
+        </div>
+
+        <h3>4. ബീഡി വ്യവസായം (Beedi Industry)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേരളത്തിലെ പ്രശസ്തമായ <strong>ദിനേശ് ബീഡി</strong> (Dinesh Beedi) സഹകരണ സംഘം <strong>കണ്ണൂർ</strong> ജില്ലയിലാണ് പ്രവർത്തിക്കുന്നത്. 1969-ൽ ആരംഭിച്ചു. തൊഴിലാളി സഹകരണ പ്രസ്ഥാനത്തിന്റെ മാതൃകയായി അറിയപ്പെടുന്നു.</li>
+        </ul>
+
+        <h3>5. ഓട് വ്യവസായം (Tile Industry)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ✏️ കേരളത്തിലെ ആദ്യത്തെ ഓട് ഫാക്ടറി ബാസൽ മിഷന്റെ നേതൃത്വത്തിൽ <strong>കോഴിക്കോട് മേഖലയിൽ (ഫറോക്ക്/കല്ലായി), 1873-ൽ</strong> ആരംഭിച്ചു എന്നതാണ് സാധാരണ PSC ഉത്തരം. (ഇന്ത്യയിലെ ആദ്യ ഓട് ഫാക്ടറി മംഗലാപുരത്ത്, 1865.)</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>തൃശൂർ ജില്ലയിലെ പുതുക്കാട്</strong> ഓട് വ്യവസായത്തിന് പ്രശസ്തമാണ്. <strong>കോഴിക്കോട് ജില്ലയിലെ ഫറോക്ക്</strong> ഓട് വ്യവസായത്തിന് പ്രശസ്തമാണ്.</li>
+          <li><span class="stars">⭐⭐</span> ⚠️ ആദ്യ ഫാക്ടറിയുടെ സ്ഥലം ചോദ്യപേപ്പറിൽ വരുമ്പോൾ ഓപ്ഷനുകളിൽ ഫറോക്കും പുതുക്കാടും ഒരുമിച്ചുണ്ടെങ്കിൽ, പഴയ PSC ഉത്തരസൂചിക ഒന്ന് നോക്കി ഉറപ്പിക്കുക.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ബാസൽ മിഷൻ ഫറോക്കിൽ ഓടിട്ടു – 1873</strong>."</p>
+        </div>
+
+        <h3>6. ഖാദി വ്യവസായം (Khadi Industry)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> കേരളത്തിൽ ഖാദി വ്യവസായത്തിന് വലിയ പ്രാധാന്യമുണ്ട്. കേരള ഖാദി ആൻഡ് വില്ലേജ് ഇൻഡസ്ട്രീസ് ബോർഡിന്റെ ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+        </ul>
+
+        <h3>7. കരകൗശല വ്യവസായം (Handicrafts)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> കേരളത്തിലെ കരകൗശല വസ്തുക്കളുടെ വിപണനത്തിനായി <strong>സർഗ്ഗാലയ</strong>, <strong>കൈരളി</strong> എന്നിവ പ്രവർത്തിക്കുന്നു. ➕ സർഗ്ഗാലയ ആർട്ട് & ക്രാഫ്റ്റ് വില്ലേജ് <strong>ഇരിങ്ങൽ (കോഴിക്കോട്)</strong> സ്ഥിതിചെയ്യുന്നു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: പൊതുമേഖലാ സ്ഥാപനങ്ങൾ ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. പ്രധാന പൊതുമേഖലാ സ്ഥാപനങ്ങൾ (PSUs)</h2>
+      <div class="section-body">
+        <p>സംസ്ഥാന-കേന്ദ്ര സർക്കാരുകളുടെ കീഴിലുള്ള പ്രധാന ഫാക്ടറികൾ:</p>
+
+        <h3>1. ഫാക്ട് (FACT - Fertilisers and Chemicals Travancore)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> 1943-ൽ എറണാകുളം ജില്ലയിലെ <strong>ഉദ്യോഗമണ്ഡലിൽ (ഏലൂർ)</strong> സ്ഥാപിച്ച ഇന്ത്യയിലെ ആദ്യത്തെ വലിയ രാസവള ശാല. അമോണിയം സൾഫേറ്റ് ആണ് പ്രധാന ഉൽപ്പന്നം. ✏️ <strong>കേന്ദ്ര പൊതുമേഖലാ സ്ഥാപനമാണ്</strong> ഇത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ "ഫാക്ടിന്റെ പിതാവ്" എന്നറിയപ്പെടുന്നത് <strong>ഡോ. വിശ്വേശ്വരയ്യ</strong> എന്ന് ചില ഗൈഡുകളിൽ കാണാം. ⚠️</li>
+        </ul>
+
+        <h3>2. കെൽട്രോൺ (KELTRON)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> 1973-ൽ <strong>കെ.പി.പി നമ്പ്യാർ</strong>ന്റെ നേതൃത്വത്തിൽ <strong>തിരുവനന്തപുരത്ത്</strong> (വെള്ളയമ്പലം) സ്ഥാപിച്ചു. ഇന്ത്യയിലെ ആദ്യത്തെ സംസ്ഥാന ഇലക്ട്രോണിക്സ് കോർപ്പറേഷനാണിത്.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>K.P.P.</strong> നമ്പ്യാർ = <strong>K</strong>eltron <strong>P</strong>ioneer, <strong>P</strong>resident of state electronics."</p>
+        </div>
+
+        <h3>3. KSDP (Kerala State Drugs and Pharmaceuticals)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കേരള സർക്കാരിന്റെ അലോപ്പതി മരുന്ന് നിർമ്മാണ ശാല. ആലപ്പുഴയിലെ <strong>കലവൂരിലാണ്</strong> ഇത് സ്ഥിതിചെയ്യുന്നത്. ➕ 1971-ൽ സ്ഥാപിതം.</li>
+        </ul>
+
+        <h3>4. മലബാർ സിമന്റ്സ് (Malabar Cements)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പാലക്കാട് ജില്ലയിലെ <strong>വാളയാർ (Walayar)</strong> ൽ സ്ഥിതിചെയ്യുന്നു. (ചുണ്ണാമ്പുകല്ല് ഇവിടെ ധാരാളമുള്ളതുകൊണ്ട്). ➕ 1978-ൽ സ്ഥാപിതം.</li>
+        </ul>
+
+        <h3>5. എച്ച്.എൻ.എൽ (Hindustan Newsprint Limited)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പത്രക്കടലാസ് നിർമ്മിക്കുന്ന ഫാക്ടറി. കോട്ടയം ജില്ലയിലെ <strong>വെള്ളൂരിൽ (Velloor)</strong> സ്ഥിതിചെയ്യുന്നു. ഇപ്പോൾ ഇത് കേരള സർക്കാർ ഏറ്റെടുത്ത് <strong>KPPL (Kerala Paper Products Limited)</strong> എന്നാക്കി മാറ്റി.</li>
+        </ul>
+
+        <h3>6. ട്രാവൻകൂർ സിമന്റ്സ് (Travancore Cements)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> കോട്ടയം ജില്ലയിലെ <strong>നാട്ടകത്ത് (Nattakom)</strong> സ്ഥിതിചെയ്യുന്നു. വൈറ്റ് സിമന്റ് നിർമ്മാണത്തിന് പ്രശസ്തം. 1946-ൽ സ്ഥാപിതമായി. കക്ക (Shells) ഉപയോഗിച്ചാണ് ഇവിടെ വൈറ്റ് സിമന്റ് നിർമ്മിക്കുന്നത്.</li>
+        </ul>
+
+        <h3>7. KAMCO (Kerala Agro Machinery Corporation)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> കാർഷിക യന്ത്രങ്ങൾ നിർമ്മിക്കുന്ന സ്ഥാപനം. ആസ്ഥാനം <strong>അത്താണി (എറണാകുളം)</strong>. ✏️ <strong>പവർ ടില്ലറുകൾ</strong> ഉൾപ്പെടെയുള്ള കാർഷിക യന്ത്രങ്ങൾ ഇവിടെ നിർമ്മിക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>അത്താണിയിൽ ടില്ലർ ഉഴുന്നു (KAMCO)</strong>."</p>
+        </div>
+
+        <h3>8. ITI (Indian Telephone Industries)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> പാലക്കാട് ജില്ലയിലെ <strong>കഞ്ചിക്കോട് (Kanjikode)</strong> സ്ഥിതിചെയ്യുന്നു. ടെലികമ്മ്യൂണിക്കേഷൻ ഉപകരണങ്ങൾ നിർമ്മിക്കുന്നു. ➕ കേന്ദ്ര PSU.</li>
+        </ul>
+
+        <h3>9. HMT (Hindustan Machine Tools)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> എറണാകുളം ജില്ലയിലെ <strong>കളമശ്ശേരി (Kalamassery)</strong> സ്ഥിതിചെയ്യുന്നു. ✏️ <strong>മെഷീൻ ടൂളുകൾ</strong> നിർമ്മിക്കുന്നു. ➕ കേന്ദ്ര PSU.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>HMT = Hand Machine Tool – കളമശ്ശേരി</strong>."</p>
+        </div>
+
+        <h3>10. BHEL-EML</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ✏️ <strong>Electrical Machines Limited (EML)</strong>, ബഹുഭൂരിപക്ഷവും ഇപ്പോൾ BHEL-ന്റെ കീഴിൽ. <strong>കാസർഗോഡ് ജില്ലയിലെ കാഞ്ഞങ്ങാട് (Kanhangad)</strong> സ്ഥിതിചെയ്യുന്നു. ഇലക്ട്രിക്കൽ മെഷീനുകൾ നിർമ്മിക്കുന്നു.</li>
+        </ul>
+
+        <h3>11. KAL (Kerala Automobiles Limited)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> തിരുവനന്തപുരം ജില്ലയിലെ <strong>നെയ്യാറ്റിൻകര (ആറാലുംമൂട്)</strong> സ്ഥിതിചെയ്യുന്നു. ഇലക്ട്രിക് ഓട്ടോറിക്ഷയായ 'കേരള നീം-ജി' (Kerala Neem-G) നിർമ്മിക്കുന്നത് ഇവിടെയാണ്.</li>
+        </ul>
+
+        <h3>12. TCC (Travancore Cochin Chemicals)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> എറണാകുളം ജില്ലയിലെ <strong>ഉദ്യോഗമണ്ഡൽ</strong> സ്ഥിതിചെയ്യുന്നു. കോസ്റ്റിക് സോഡയാണ് പ്രധാന ഉൽപ്പന്നം.</li>
+        </ul>
+
+        <h3>13. Kerala Wood Industries</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ✏️ <strong>മലപ്പുറം</strong> ജില്ലയിലെ <strong>നിലമ്പൂർ</strong> സ്ഥിതിചെയ്യുന്നു. തേക്ക് തടികൾക്ക് പ്രശസ്തം. ➕ നിലമ്പൂർ തേക്ക് മ്യൂസിയവും (Teak Museum) കനോലി പ്ലോട്ടും (ലോകത്തിലെ ഏറ്റവും പഴക്കമുള്ള തേക്ക് തോട്ടം) ഇവിടെയാണ്.</li>
+        </ul>
+
+        <h3>14. SILK (Steel Industries Kerala Limited)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ആസ്ഥാനം <strong>തൃശൂർ</strong>.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ മറ്റ് പ്രധാന സ്ഥാപനങ്ങൾ</span>
+          <ul>
+            <li><strong>കൊച്ചിൻ ഷിപ്പ്‌യാർഡ് (CSL):</strong> കൊച്ചി, 1972 (കേന്ദ്ര PSU). ഇന്ത്യയുടെ ആദ്യ തദ്ദേശീയ വിമാനവാഹിനി <strong>INS വിക്രാന്ത്</strong> ഇവിടെ നിർമ്മിച്ചു (2022-ൽ കമ്മീഷൻ ചെയ്തു).</li>
+            <li><strong>IREL (Indian Rare Earths Limited):</strong> ചവറ (കൊല്ലം), ഉദ്യോഗമണ്ഡൽ (എറണാകുളം). അപൂർവ ധാതുക്കൾ (കേന്ദ്ര PSU).</li>
+            <li><strong>HOCL (Hindustan Organic Chemicals):</strong> അമ്പലമുകൾ (കൊച്ചി), കേന്ദ്ര PSU.</li>
+            <li><strong>KEL (Kerala Electrical & Allied Engineering Company):</strong> കുണ്ടറ (കൊല്ലം).</li>
+            <li><strong>Kerala Soaps & Oils Ltd (KSOIL):</strong> ആസ്ഥാനം കോഴിക്കോട്.</li>
+            <li><strong>Kerala State Bamboo Corporation:</strong> ആസ്ഥാനം അങ്കമാലി.</li>
+            <li><strong>KMML</strong> (Kerala Minerals and Metals Ltd), <strong>KCL</strong> (Kerala Ceramics Ltd) എന്നിവ കൊല്ലം ജില്ലയിൽ ആണ് (ചവറ, കുണ്ടറ).</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick – കേന്ദ്രം vs സംസ്ഥാനം:</strong></span>
+          <p><strong>കേന്ദ്ര PSU:</strong> FACT, BPCL, CSL, HMT, ITI, IREL, HOCL → "<strong>ഫാക്ടറി ബിപിസിഎൽ കപ്പലും HMT-ITI-യും കേന്ദ്രത്തിന്റെ</strong>".</p>
+          <p><strong>സംസ്ഥാന PSU:</strong> KSDP, KELTRON, KAMCO, KAL, KMML, KCL, TCC, TTPL, മലബാർ & ട്രാവൻകൂർ സിമന്റ്സ്, KSFE, ഓഷധി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: ഐ.ടി വ്യവസായം ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. ഐ.ടി വ്യവസായം (IT Industry)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ടെക്നോപാർക്ക് (Technopark):</strong> 1990-ൽ <strong>തിരുവനന്തപുരത്ത് (കഴക്കൂട്ടം)</strong> ആരംഭിച്ച ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ടി പാർക്ക്. ഇന്ത്യയിലെ ഏറ്റവും വലിയ ഐ.ടി പാർക്കുകളിലൊന്നാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ 1990-ൽ തറക്കല്ലിട്ടു, 1991-ൽ ഉദ്ഘാടനം ചെയ്തു. PSC-യിൽ സാധാരണ ഉത്തരം <strong>1990</strong>. കെ.പി.പി. നമ്പ്യാർ ആണ് സ്ഥാപകൻ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഇൻഫോപാർക്ക് (Infopark):</strong> എറണാകുളം ജില്ലയിലെ <strong>കാക്കനാട്</strong> സ്ഥിതിചെയ്യുന്നു (2004 ൽ ആരംഭിച്ചു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സൈബർപാർക്ക് (Cyberpark):</strong> <strong>കോഴിക്കോട്</strong> ജില്ലയിൽ സ്ഥിതിചെയ്യുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>കിൻഫ്ര ടെക്നോപാർക്ക് (KINFRA Technopark):</strong> എറണാകുളം ജില്ലയിലെ കാക്കനാട് സ്ഥിതിചെയ്യുന്നു. ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>സ്മാർട്ട് സിറ്റി (Smart City):</strong> എറണാകുളത്തെ കാക്കനാട് സ്ഥിതിചെയ്യുന്നു. കേരളത്തിലെ ആദ്യ സ്മാർട്ട് സിറ്റി ഐ.ടി പദ്ധതി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>മേക്കർ വില്ലേജ് (Maker Village):</strong> എറണാകുളത്തെ <strong>കളമശ്ശേരി</strong> സ്ഥിതിചെയ്യുന്നു. ഹാർഡ്വെയർ സ്റ്റാർട്ടപ്പുകൾക്കുള്ള കേന്ദ്രം. 2016-ൽ ആരംഭിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>KSUM (Kerala Startup Mission):</strong> കേരളത്തിലെ സ്റ്റാർട്ടപ്പുകളെ പ്രോത്സാഹിപ്പിക്കുന്ന സർക്കാർ ഏജൻസി. ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐</span> ➕ <strong>Cochin Special Economic Zone (CSEZ):</strong> കാക്കനാട് (എറണാകുളം).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ടെക്നോ തിരുവിൽ, ഇൻഫോ കാക്കനാട്ടിൽ, സൈബർ കോഴിക്കോട്ടിൽ</strong>."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: വികസന ഏജൻസികൾ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. വ്യവസായ വികസന ഏജൻസികൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>KSIDC (Kerala State Industrial Development Corporation):</strong> 1961-ൽ തിരുവനന്തപുരം ആസ്ഥാനമായി രൂപീകരിച്ചു. വൻകിട-ഇടത്തരം വ്യവസായങ്ങളെ സഹായിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>KINFRA (Kerala Industrial Infrastructure Development Corporation):</strong> 1993-ൽ രൂപീകരിച്ചു (ആസ്ഥാനം തിരുവനന്തപുരം). വ്യവസായ പാർക്കുകൾ (Industrial Parks) നിർമ്മിക്കുകയാണ് പ്രധാന ലക്ഷ്യം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>KITCO (Kerala Industrial Technical Consultancy Organisation):</strong> വ്യവസായ സാങ്കേതിക കൺസൾട്ടൻസി സ്ഥാപനം. ആസ്ഥാനം <strong>കൊച്ചി</strong>. 1972-ൽ സ്ഥാപിതം.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>RIAB (Restructuring and Internal Audit Board):</strong> പൊതുമേഖലാ വ്യവസായങ്ങളെ പുനരുജ്ജീവിപ്പിക്കാൻ രൂപീകരിച്ച ബോർഡ്. ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>K-BIP (Kerala Bureau of Industrial Promotion):</strong> വ്യവസായ നിക്ഷേപ പ്രോത്സാഹന ഏജൻസി. ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>K-SWIFT:</strong> വ്യവസായ സംരംഭകർക്ക് ഒറ്റ ജാലക സംവിധാനത്തിലൂടെ (Single Window System) അനുമതി നൽകാൻ ആരംഭിച്ച പോർട്ടൽ.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ ബോർഡുകളുടെ ആസ്ഥാനം</span>
+          <p>റബ്ബർ ബോർഡ് – <strong>കോട്ടയം</strong>. സ്‌പൈസസ് ബോർഡ് – <strong>കൊച്ചി</strong>. കയർ ബോർഡ് – <strong>കൊച്ചി</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>റബ്ബർ കോട്ടയത്ത്, സ്‌പൈസും കയറും കൊച്ചിയിൽ</strong>."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> കെ.എസ്.എഫ്.ഇ (KSFE - 1969) ആസ്ഥാനം: <strong>തൃശൂർ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഓഷധി (Oushadhi - ആയുർവേദ മരുന്ന്) ആസ്ഥാനം: <strong>തൃശൂർ (കുട്ടനെല്ലൂർ)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> മിൽമ (MILMA) ആസ്ഥാനം: <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> കെ.എസ്.ആർ.ടി.സി (KSRTC - 1965) ആസ്ഥാനം: <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇന്ത്യയിലെ ആദ്യത്തെ റബ്ബർ പാർക്ക്: <strong>ഐരാപുരം (എറണാകുളം)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കേരളത്തിലെ ആദ്യ പേപ്പർ മിൽ:</strong> <strong>പുനലൂർ പേപ്പർ മിൽ (1888)</strong> – കൊല്ലം ജില്ല. ഈറ്റ (Reed) ഉപയോഗിച്ചാണ് പേപ്പർ ഉണ്ടാക്കിയിരുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കൊച്ചിൻ റിഫൈനറി (BPCL):</strong> എറണാകുളം ജില്ലയിലെ <strong>അമ്പലമുകളിൽ (Ambalamugal)</strong> സ്ഥിതിചെയ്യുന്നു. കേരളത്തിലെ ഏക എണ്ണ ശുദ്ധീകരണ ശാല.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>മദ്രാസ് റബ്ബർ ഫാക്ടറി (MRF):</strong> കോട്ടയം ജില്ലയിലെ <strong>വടവാതൂരിൽ (Vadavathoor)</strong> പ്രധാന പ്ലാന്റ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ചിത്രഞ്ജലി സ്റ്റുഡിയോ (KSFDC):</strong> തിരുവനന്തപുരം ജില്ലയിലെ <strong>തിരുവല്ലം</strong> സ്ഥിതിചെയ്യുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരള ലൈവ്‌സ്റ്റോക്ക് ഡെവലപ്മെന്റ് ബോർഡ് (KLDB):</strong> ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരള സ്റ്റേറ്റ് വുഡ് ഇൻഡസ്ട്രീസ്:</strong> ✏️ <strong>മലപ്പുറം</strong> ജില്ലയിലെ <strong>നിലമ്പൂർ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>KMML (Kerala Minerals and Metals Ltd):</strong> കൊല്ലം ജില്ലയിലെ <strong>ചവറ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരള സെറാമിക്സ് ലിമിറ്റഡ് (KCL):</strong> കൊല്ലം ജില്ലയിലെ <strong>കുണ്ടറ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ട്രാവൻകൂർ ടൈറ്റാനിയം പ്രൊഡക്ട്സ് (TTPL):</strong> തിരുവനന്തപുരം ജില്ലയിലെ <strong>കൊച്ചുവേളി</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ <strong>കൊച്ചി LNG ടെർമിനൽ:</strong> <strong>പുതുവൈപ്പ് (എറണാകുളം)</strong>. ഇവിടെനിന്ന് മംഗലാപുരത്തേക്കുള്ള GAIL പ്രകൃതിവാതക പൈപ്പ് ലൈൻ 2021 ജനുവരി 5-ന് രാജ്യത്തിന് സമർപ്പിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ➕ <strong>KMML vs TTPL:</strong> KMML (ചവറ) → <strong>ക്ലോറൈഡ്</strong> റൂട്ട്; TTPL (കൊച്ചുവേളി) → <strong>സൾഫേറ്റ്</strong> റൂട്ട്. 🧠 "<strong>C</strong>havara – <strong>C</strong>hloride."</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ <strong>KSEB:</strong> ആസ്ഥാനം തിരുവനന്തപുരം (വൈദ്യുതി ഭവൻ, പട്ടം). ⚠️</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: PSC വിശകലനം ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഫാക്ടറികളുടെയും കോർപ്പറേഷനുകളുടെയും ആസ്ഥാനങ്ങൾ (ഉദ്: KSDP-കലവൂർ, മലബാർ സിമന്റ്സ്-വാളയാർ), ഐ.ടി പാർക്കുകൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> പരമ്പരാഗത വ്യവസായങ്ങളും ജില്ലകളും (കയർ-ആലപ്പുഴ, കശുവണ്ടി-കൊല്ലം), കെൽട്രോണിന്റെ സ്ഥാപകൻ, ഫാക്ട് (FACT) എവിടെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ട്രാവൻകൂർ സിമന്റ്സ്, KINFRA, KSIDC രൂപീകരിച്ച വർഷങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പുതിയ ട്രെൻഡ്:</strong> കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്/INS വിക്രാന്ത്, GAIL പൈപ്പ് ലൈൻ, മേക്കർ വില്ലേജ്, K-SWIFT തുടങ്ങിയ സമീപകാല വിഷയങ്ങൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: മുൻവർഷ ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. മുൻവർഷ ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "കേരള സ്റ്റേറ്റ് ഡ്രഗ്സ് ആൻഡ് ഫാർമസ്യൂട്ടിക്കൽസ് (KSDP) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?" (കലവൂർ - ആലപ്പുഴ) എന്നത് LDC പരീക്ഷകളിലെ സ്ഥിരം ചോദ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "ഹിന്ദുസ്ഥാൻ ന്യൂസ് പ്രിന്റ് ഫാക്ടറി എവിടെയാണ്?" (വെള്ളൂർ - കോട്ടയം) എന്ന് നിരന്തരം ചോദിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> Match the Following ആയി ബോർഡുകളും സ്ഥാപനങ്ങളും അവയുടെ ആസ്ഥാനങ്ങളുമായി ബന്ധിപ്പിക്കാൻ എപ്പോഴും വരും (ഉദ്: KSFE → തൃശൂർ, മിൽമ → തിരുവനന്തപുരം).</li>
+          <li><span class="stars">⭐⭐⭐</span> ➕ "ഇന്ത്യയിലെ ആദ്യ ഐ.ടി പാർക്ക്?" (ടെക്നോപാർക്ക്), "കേരളത്തിലെ ഏക എണ്ണ ശുദ്ധീകരണ ശാല?" (കൊച്ചിൻ റിഫൈനറി) എന്നിവയും ആവർത്തിച്ച് വരാറുണ്ട്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>മലബാർ സിമന്റ്സ്</td>
+                <td>ട്രാവൻകൂർ സിമന്റ്സ്</td>
+                <td>മലബാർ സിമന്റ്സ് പാലക്കാട് ജില്ലയിലെ <strong>വാളയാറിലാണ്</strong>. എന്നാൽ ട്രാവൻകൂർ സിമന്റ്സ് കോട്ടയം ജില്ലയിലെ <strong>നാട്ടകത്താണ്</strong>.</td>
+              </tr>
+              <tr>
+                <td>കയർ വ്യവസായ കേന്ദ്രം</td>
+                <td>കയർ ബോർഡ്</td>
+                <td>കയർ വ്യവസായം ഏറ്റവും കൂടുതലുള്ളത് <strong>ആലപ്പുഴ</strong> ജില്ലയിലാണ്. എന്നാൽ കേന്ദ്ര കയർ ബോർഡിന്റെ ആസ്ഥാനം <strong>കൊച്ചിയിലാണ്</strong>.</td>
+              </tr>
+              <tr>
+                <td>KSDP (കലവൂർ)</td>
+                <td>ഓഷധി (തൃശൂർ)</td>
+                <td>അലോപ്പതി മരുന്നുകൾ ഉണ്ടാക്കുന്നത് <strong>KSDP (കലവൂർ)</strong>. ആയുർവേദ മരുന്നുകൾ ഉണ്ടാക്കുന്നത് <strong>ഓഷധി (തൃശൂർ)</strong>.</td>
+              </tr>
+              <tr>
+                <td>പുനലൂർ പേപ്പർ മിൽ</td>
+                <td>HNL/KPPL (വെള്ളൂർ)</td>
+                <td>പുനലൂർ പേപ്പർ മിൽ <strong>കേരളത്തിലെ ആദ്യ പേപ്പർ മിൽ</strong> (1888) ആണ്. HNL/KPPL <strong>പത്രക്കടലാസ് (Newsprint)</strong> നിർമ്മിക്കുന്നത് കോട്ടയം ജില്ലയിലെ വെള്ളൂരിൽ.</td>
+              </tr>
+              <tr>
+                <td>KMML (ചവറ)</td>
+                <td>TTPL (കൊച്ചുവേളി)</td>
+                <td>രണ്ടും ടൈറ്റാനിയം ഡയോക്സൈഡ് ഉൽപ്പാദകർ. KMML = കൊല്ലം, ക്ലോറൈഡ് റൂട്ട്. TTPL = തിരുവനന്തപുരം, സൾഫേറ്റ് റൂട്ട്.</td>
+              </tr>
+              <tr>
+                <td>കയർ ഗവേഷണം (CCRI, കലവൂർ)</td>
+                <td>കയർ ബോർഡ് (കൊച്ചി)</td>
+                <td>ഗവേഷണ സ്ഥാപനം ആലപ്പുഴ ജില്ലയിലെ കലവൂരിൽ. ബോർഡ് ആസ്ഥാനം കൊച്ചിയിൽ.</td>
+              </tr>
+              <tr>
+                <td>KAMCO (അത്താണി)</td>
+                <td>HMT (കളമശ്ശേരി)</td>
+                <td>KAMCO = കാർഷിക യന്ത്രങ്ങൾ / പവർ ടില്ലർ (സംസ്ഥാന PSU). HMT = മെഷീൻ ടൂൾ (കേന്ദ്ര PSU). രണ്ടും എറണാകുളം ജില്ലയിൽ.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: പ്രധാന വ്യവസായ ശാലകളും ആസ്ഥാനങ്ങളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സ്ഥാപനത്തിന്റെ പേര്</th><th>ഉൽപ്പന്നം / മേഖല</th><th>സ്ഥിതിചെയ്യുന്ന സ്ഥലം (ജില്ല)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FACT</td><td>രാസവളം (Fertilizer)</td><td>ഉദ്യോഗമണ്ഡൽ / ഏലൂർ (എറണാകുളം)</td></tr>
+              <tr><td>KSDP</td><td>അലോപ്പതി മരുന്നുകൾ</td><td>കലവൂർ (ആലപ്പുഴ)</td></tr>
+              <tr><td>ഓഷധി (Oushadhi)</td><td>ആയുർവേദ മരുന്നുകൾ</td><td>തൃശൂർ</td></tr>
+              <tr><td>മലബാർ സിമന്റ്സ്</td><td>സിമന്റ്</td><td>വാളയാർ (പാലക്കാട്)</td></tr>
+              <tr><td>ട്രാവൻകൂർ സിമന്റ്സ്</td><td>വൈറ്റ് സിമന്റ്</td><td>നാട്ടകം (കോട്ടയം)</td></tr>
+              <tr><td>HNL (ഇപ്പോൾ KPPL)</td><td>പത്രക്കടലാസ് (Newsprint)</td><td>വെള്ളൂർ (കോട്ടയം)</td></tr>
+              <tr><td>KAMCO</td><td>കാർഷിക യന്ത്രങ്ങൾ / പവർ ടില്ലർ</td><td>അത്താണി (എറണാകുളം)</td></tr>
+              <tr><td>ട്രാവൻകൂർ ടൈറ്റാനിയം (TTPL)</td><td>ടൈറ്റാനിയം ഡയോക്സൈഡ്</td><td>കൊച്ചുവേളി (തിരുവനന്തപുരം)</td></tr>
+              <tr><td>KMML</td><td>കരിമണൽ ധാതുക്കൾ</td><td>ചവറ (കൊല്ലം)</td></tr>
+              <tr><td>കേരള സെറാമിക്സ് (KCL)</td><td>കളിമൺ പാത്രങ്ങൾ / ടൈൽസ്</td><td>കുണ്ടറ (കൊല്ലം)</td></tr>
+              <tr><td>ITI</td><td>ടെലികമ്മ്യൂണിക്കേഷൻ</td><td>കഞ്ചിക്കോട് (പാലക്കാട്)</td></tr>
+              <tr><td>HMT</td><td>മെഷീൻ ടൂൾ</td><td>കളമശ്ശേരി (എറണാകുളം)</td></tr>
+              <tr><td>BHEL-EML</td><td>ഇലക്ട്രിക്കൽ മെഷീൻ</td><td>കാഞ്ഞങ്ങാട് (കാസർഗോഡ്)</td></tr>
+              <tr><td>KAL</td><td>ഓട്ടോമൊബൈൽ (ഇ-ഓട്ടോ)</td><td>നെയ്യാറ്റിൻകര (തിരുവനന്തപുരം)</td></tr>
+              <tr><td>TCC</td><td>കോസ്റ്റിക് സോഡ</td><td>ഉദ്യോഗമണ്ഡൽ (എറണാകുളം)</td></tr>
+              <tr><td>Kerala Wood Industries</td><td>തടി, ഫർണിച്ചർ</td><td>നിലമ്പൂർ (മലപ്പുറം)</td></tr>
+              <tr><td>SILK</td><td>സ്റ്റീൽ</td><td>തൃശൂർ</td></tr>
+              <tr><td>MRF</td><td>ടയർ, റബ്ബർ ഉൽപ്പന്നങ്ങൾ</td><td>വടവാതൂർ (കോട്ടയം)</td></tr>
+              <tr><td>BPCL കൊച്ചിൻ റിഫൈനറി</td><td>പെട്രോളിയം ശുദ്ധീകരണം</td><td>അമ്പലമുകൾ (എറണാകുളം)</td></tr>
+              <tr><td>ചിത്രഞ്ജലി സ്റ്റുഡിയോ</td><td>സിനിമ പോസ്റ്റ്-പ്രൊഡക്ഷൻ</td><td>തിരുവല്ലം (തിരുവനന്തപുരം)</td></tr>
+              <tr><td>കൊച്ചിൻ ഷിപ്പ്‌യാർഡ് (CSL)</td><td>കപ്പൽ നിർമ്മാണം (INS വിക്രാന്ത്)</td><td>കൊച്ചി (എറണാകുളം)</td></tr>
+              <tr><td>IREL</td><td>അപൂർവ ധാതുക്കൾ</td><td>ചവറ (കൊല്ലം), ഉദ്യോഗമണ്ഡൽ (എറണാകുളം)</td></tr>
+              <tr><td>HOCL</td><td>ജൈവ രാസവസ്തുക്കൾ</td><td>അമ്പലമുകൾ (എറണാകുളം)</td></tr>
+              <tr><td>KEL</td><td>ഇലക്ട്രിക്കൽ ഉപകരണങ്ങൾ</td><td>കുണ്ടറ (കൊല്ലം)</td></tr>
+              <tr><td>KSOIL</td><td>സോപ്പ്, എണ്ണ</td><td>കോഴിക്കോട്</td></tr>
+              <tr><td>Bamboo Corporation</td><td>മുള ഉൽപ്പന്നങ്ങൾ</td><td>അങ്കമാലി (എറണാകുളം)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: കോർപ്പറേഷനുകളും ഫെഡറേഷനുകളും ആസ്ഥാനങ്ങളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സ്ഥാപനം</th><th>ആസ്ഥാനം</th><th>പ്രത്യേകത</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>മിൽമ (MILMA)</td><td>തിരുവനന്തപുരം</td><td>പാൽ ഉൽപ്പാദന സഹകരണ സംഘം</td></tr>
+              <tr><td>കെ.എസ്.എഫ്.ഇ (KSFE)</td><td>തൃശൂർ</td><td>ചിട്ടി ഫണ്ട് / ധനകാര്യ സ്ഥാപനം</td></tr>
+              <tr><td>ഹോർട്ടികോർപ്പ് (HORTICORP)</td><td>തിരുവനന്തപുരം</td><td>പച്ചക്കറി വിതരണം</td></tr>
+              <tr><td>മത്സ്യഫെഡ് (Matsyafed)</td><td>തിരുവനന്തപുരം</td><td>മത്സ്യത്തൊഴിലാളി ക്ഷേമം</td></tr>
+              <tr><td>കേരഫെഡ് (Kerafed)</td><td>തിരുവനന്തപുരം</td><td>വെളിച്ചെണ്ണ (കേര) ഉൽപ്പാദനം</td></tr>
+              <tr><td>മാർക്കറ്റ്ഫെഡ് (Marketfed)</td><td>കൊച്ചി</td><td>നാണ്യവിളകളുടെ വിപണനം ⚠️</td></tr>
+              <tr><td>കെൽട്രോൺ (KELTRON)</td><td>തിരുവനന്തപുരം</td><td>ഇലക്ട്രോണിക്സ് കോർപ്പറേഷൻ</td></tr>
+              <tr><td>ഖാദി ബോർഡ്</td><td>തിരുവനന്തപുരം</td><td>ഖാദി, ഗ്രാമവ്യവസായം</td></tr>
+              <tr><td>KLDB</td><td>തിരുവനന്തപുരം</td><td>കന്നുകാലി വികസനം</td></tr>
+              <tr><td>KITCO</td><td>കൊച്ചി</td><td>വ്യവസായ കൺസൾട്ടൻസി</td></tr>
+              <tr><td>RIAB</td><td>തിരുവനന്തപുരം</td><td>PSU പുനരുജ്ജീവനം</td></tr>
+              <tr><td>K-BIP</td><td>തിരുവനന്തപുരം</td><td>വ്യവസായ നിക്ഷേപ പ്രോത്സാഹനം</td></tr>
+              <tr><td>റബ്ബർ ബോർഡ്</td><td>കോട്ടയം</td><td>റബ്ബർ വികസനം (കേന്ദ്രം)</td></tr>
+              <tr><td>സ്‌പൈസസ് ബോർഡ്</td><td>കൊച്ചി</td><td>സുഗന്ധവ്യഞ്ജന വികസനം (കേന്ദ്രം)</td></tr>
+              <tr><td>കയർ ബോർഡ്</td><td>കൊച്ചി</td><td>കയർ വ്യവസായ വികസനം (കേന്ദ്രം)</td></tr>
+              <tr><td>KSCDC</td><td>കൊല്ലം</td><td>കശുവണ്ടി വികസന കോർപ്പറേഷൻ (1969)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: പരമ്പരാഗത വ്യവസായങ്ങളും ജില്ലകളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വ്യവസായം</th><th>പ്രധാന ജില്ല</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>കയർ (Coir)</td><td>ആലപ്പുഴ</td></tr>
+              <tr><td>കശുവണ്ടി (Cashew)</td><td>കൊല്ലം</td></tr>
+              <tr><td>കൈത്തറി (Handloom)</td><td>കണ്ണൂർ (ബാലരാമപുരം–തിരുവനന്തപുരം, ചേന്ദമംഗലം–എറണാകുളം, കുത്താമ്പുള്ളി–പാലക്കാട്)</td></tr>
+              <tr><td>ബീഡി (Beedi)</td><td>കണ്ണൂർ</td></tr>
+              <tr><td>ഓട് (Tile)</td><td>കോഴിക്കോട് (ഫറോക്ക്; ആദ്യ ഫാക്ടറി, 1873), തൃശൂർ (പുതുക്കാട്; പ്രശസ്ത കേന്ദ്രം)</td></tr>
+              <tr><td>ഖാദി (Khadi)</td><td>തിരുവനന്തപുരം (ബോർഡ്)</td></tr>
+              <tr><td>കരകൗശലം (Sargaalaya)</td><td>ഇരിങ്ങൽ (കോഴിക്കോട്)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: സമയരേഖ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സമയരേഖ (Timeline)</h2>
+      <div class="section-body">
+        <ul>
+          <li><strong>1859:</strong> ജെയിംസ് ഡാറ ആലപ്പുഴയിൽ ആദ്യ കയർ ഫാക്ടറി സ്ഥാപിച്ചു.</li>
+          <li><strong>1873:</strong> ബാസൽ മിഷൻ കോഴിക്കോട് മേഖലയിൽ ഓട് ഫാക്ടറി ആരംഭിച്ചു. ⚠️</li>
+          <li><strong>1888:</strong> പുനലൂർ പേപ്പർ മിൽ ആരംഭിച്ചു (കേരളത്തിലെ ആദ്യ പേപ്പർ മിൽ).</li>
+          <li><strong>1932:</strong> എഫ്.എക്സ് പെരേര ആൻഡ് സൺസ് ചവറയിൽ ആരംഭിച്ചു. ⚠️</li>
+          <li><strong>1943:</strong> ഏലൂരിൽ FACT (ഫാക്ട്) സ്ഥാപിതമായി.</li>
+          <li><strong>1946:</strong> ട്രാവൻകൂർ സിമന്റ്സ് (നാട്ടകം) സ്ഥാപിതമായി.</li>
+          <li><strong>1953:</strong> Coir Industry Act (കയർ ബോർഡ്).</li>
+          <li><strong>1956:</strong> സംസ്ഥാന സർക്കാർ പെരേര കമ്പനി ഏറ്റെടുത്തു. ⚠️</li>
+          <li><strong>1961:</strong> വ്യവസായ വികസനത്തിനായി KSIDC രൂപീകരിച്ചു.</li>
+          <li><strong>1965:</strong> കെ.എസ്.ആർ.ടി.സി (KSRTC) രൂപീകരിച്ചു.</li>
+          <li><strong>1969:</strong> തൃശൂരിൽ KSFE (ചിട്ടി ഫണ്ട്) രൂപീകരിച്ചു.</li>
+          <li><strong>1969:</strong> KSCDC (കശുവണ്ടി വികസന കോർപ്പറേഷൻ), ദിനേശ് ബീഡി.</li>
+          <li><strong>1971:</strong> KSDP സ്ഥാപിതമായി.</li>
+          <li><strong>1972:</strong> KMML (Kerala Minerals and Metals Ltd) രൂപീകരിച്ചു.</li>
+          <li><strong>1972:</strong> കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്, KITCO.</li>
+          <li><strong>1973:</strong> തിരുവനന്തപുരത്ത് കെൽട്രോൺ (KELTRON) സ്ഥാപിച്ചു.</li>
+          <li><strong>1978:</strong> മലബാർ സിമന്റ്സ് സ്ഥാപിതമായി.</li>
+          <li><strong>1980:</strong> മിൽമ (MILMA) രൂപീകൃതമായി.</li>
+          <li><strong>1984:</strong> KMML ക്ലോറൈഡ് സാങ്കേതികവിദ്യ വഴി ടൈറ്റാനിയം ഡയോക്സൈഡ് ഉൽപ്പാദനം ആരംഭിച്ചു.</li>
+          <li><strong>1990:</strong> ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ടി പാർക്കായ ടെക്നോപാർക്ക് (Technopark) തിരുവനന്തപുരത്ത് ആരംഭിച്ചു. (ഉദ്ഘാടനം 1991).</li>
+          <li><strong>1993:</strong> വ്യാവസായിക അടിസ്ഥാന സൗകര്യങ്ങൾക്കായി KINFRA രൂപീകരിച്ചു.</li>
+          <li><strong>2004:</strong> ഇൻഫോപാർക്ക് കാക്കനാട് ആരംഭിച്ചു.</li>
+          <li><strong>2011:</strong> KMML ൽ ഇന്ത്യയിലെ ആദ്യത്തെ ടൈറ്റാനിയം സ്പോഞ്ച് പ്ലാന്റ് (TSP) ഉദ്ഘാടനം ചെയ്തു.</li>
+          <li><strong>2016:</strong> മേക്കർ വില്ലേജ്, കളമശ്ശേരി.</li>
+          <li><strong>2021:</strong> കൊച്ചി–മംഗലാപുരം GAIL പ്രകൃതിവാതക പൈപ്പ് ലൈൻ സമർപ്പിച്ചു.</li>
+          <li><strong>2022:</strong> INS വിക്രാന്ത് (കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്) കമ്മീഷൻ ചെയ്തു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>വർഷ ട്രിക്ക്:</strong></span>
+          <p>"<strong>43-ൽ ഫാക്ട്, 46-ൽ സിമന്റ്, 61-ൽ KSIDC, 69-ൽ KSFE, 73-ൽ കെൽട്രോൺ, 90-ൽ ടെക്നോ, 93-ൽ കിൻഫ്ര.</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: നിനയ്ക്കാൻ എളുപ്പം ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1:</strong></span>
+          <p><strong>ആലപ്പുഴയിലെ സ്ഥാപനങ്ങൾ:</strong> "ആലപ്പുഴയിലെ കലവറയിൽ മരുന്ന് വെച്ചു" → <strong>കലവൂർ</strong> = മരുന്ന് (KSDP). കലവൂരിൽ തന്നെ CCRI (കയർ ഗവേഷണം) ഉണ്ട്.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2:</strong></span>
+          <p><strong>സിമന്റ് ഫാക്ടറികൾ:</strong> "മലബാർ സിമന്റ് വാളുകൊണ്ട് വെട്ടി, ട്രാവൻകൂർ സിമന്റ് നാട്ടിൽ വിറ്റു." → മലബാർ സിമന്റ്സ് = <strong>വാളയാർ</strong>, ട്രാവൻകൂർ സിമന്റ്സ് = <strong>നാട്ടകം</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3:</strong></span>
+          <p><strong>എറണാകുളത്തെ വ്യവസായങ്ങൾ:</strong> "അത്താണിയിൽ ടില്ലർ ഉഴുന്നു (KAMCO)." → <strong>അത്താണി</strong> = KAMCO (കാർഷിക യന്ത്രങ്ങൾ, പവർ ടില്ലർ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4:</strong></span>
+          <p><strong>ഐ.ടി പാർക്കുകൾ:</strong> "<strong>ടെ</strong>ക്നോ <strong>തിരു</strong>വിൽ, <strong>ഇൻ</strong>ഫോ <strong>കാ</strong>ക്കനാട്ടിൽ, <strong>സൈ</strong>ബർ <strong>കോഴി</strong>ക്കോട്ടിൽ." ടെക്നോപാർക്ക് = തിരുവനന്തപുരം, ഇൻഫോപാർക്ക് = കാക്കനാട്, സൈബർപാർക്ക് = കോഴിക്കോട്.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5:</strong></span>
+          <p><strong>പരമ്പരാഗത വ്യവസായങ്ങൾ:</strong> "<strong>കയ</strong>ർ <strong>ആല</strong>പ്പുഴ, <strong>കശു</strong> <strong>കൊ</strong>ല്ലം, <strong>കൈ</strong>ത്തറി <strong>കണ്ണൂ</strong>ർ, <strong>ബീ</strong>ഡി <strong>കണ്ണൂ</strong>ർ."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6:</strong></span>
+          <p><strong>PSU-കളും ഉൽപ്പന്നങ്ങളും:</strong> "<strong>ഫാ</strong>ക്ട് വളം, <strong>കെ</strong>ൽട്രോൺ ഇലക്ട്രോണിക്സ്, <strong>കെ</strong>എസ്ഡിപി മരുന്ന്, <strong>മ</strong>ലബാർ സിമന്റ്, <strong>എ</strong>ച്ച്എൻഎൽ പേപ്പർ, <strong>കെ</strong>എംഎംഎൽ ടൈറ്റാനിയം."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7:</strong></span>
+          <p><strong>ആസ്ഥാനങ്ങൾ:</strong> "<strong>തിരു</strong>വിൽ മിൽമ, കേരഫെഡ്, ഹോർട്ടികോർപ്പ്, മത്സ്യഫെഡ്; <strong>തൃശൂ</strong>രിൽ KSFE, ഓഷധി; <strong>കൊച്ചി</strong>യിൽ മാർക്കറ്റ്ഫെഡ്." ⚠️ മാർക്കറ്റ്ഫെഡ് ആസ്ഥാനം ഉറപ്പാക്കുക.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8:</strong></span>
+          <p><strong>കൊല്ലം:</strong> "<strong>ചവറ</strong>യിൽ ടൈറ്റാനിയം, <strong>കുണ്ടറ</strong>യിൽ സെറാമിക്സ്, <strong>പുനലൂരിൽ</strong> പേപ്പർ" → KMML, KCL, പുനലൂർ പേപ്പർ മിൽ.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 9:</strong></span>
+          <p><strong>കോട്ടയം:</strong> "<strong>വെ</strong>ള്ളൂർ പേപ്പർ, <strong>നാ</strong>ട്ടകം സിമന്റ്, <strong>വ</strong>ടവാതൂർ ടയർ" (വെ-നാ-വ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 10:</strong></span>
+          <p><strong>കേന്ദ്ര PSU:</strong> "ഫാക്ടറി ബിപിസിഎൽ കപ്പലും HMT-ITI-യും കേന്ദ്രത്തിന്റെ" (FACT, BPCL, CSL, HMT, ITI).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 11:</strong></span>
+          <p><strong>വർഷങ്ങൾ:</strong> "<strong>43 ഫാക്ട്, 46 സിമന്റ്, 61 KSIDC, 69 KSFE, 73 കെൽട്രോൺ, 90 ടെക്നോ, 93 കിൻഫ്ര.</strong>"</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 12:</strong></span>
+          <p><strong>KMML vs TTPL:</strong> "<strong>C</strong>havara – <strong>C</strong>hloride" (KMML ചവറ, ക്ലോറൈഡ്). TTPL = കൊച്ചുവേളി, സൾഫേറ്റ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: PSC കെണികൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. സാധാരണ PSC കെണികൾ (Common Traps)</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഇന്ത്യയിലെ പ്രശസ്തമായ പത്രക്കടലാസ് നിർമ്മാണ ശാലയായ HNL (ഇപ്പോഴത്തെ KPPL) സ്ഥിതിചെയ്യുന്നത് എവിടെയാണ്?</p>
+          <p><strong>Confusing Options:</strong> പുനലൂർ / കുണ്ടറ / വെള്ളൂർ / കലവൂർ</p>
+          <p><strong>Fact:</strong> കോട്ടയം ജില്ലയിലെ <strong>വെള്ളൂരിലാണ് (Velloor)</strong> ഇത് സ്ഥിതിചെയ്യുന്നത്. പുനലൂർ പേപ്പർ മിൽ കേരളത്തിലെ ആദ്യത്തെ പേപ്പർ മിൽ ആണ്, എന്നാൽ അത് പത്രക്കടലാസല്ല.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> കേരഫെഡ് (Kerafed), മാർക്കറ്റ്ഫെഡ് (Marketfed) എന്നിവയുടെ ആസ്ഥാനങ്ങൾ എവിടെയാണ്?</p>
+          <p><strong>Confusing Options:</strong> കൊച്ചി / തിരുവനന്തപുരം / കോഴിക്കോട്</p>
+          <p><strong>Fact:</strong> മിക്ക 'ഫെഡ്' കളുടെയും (മിൽമ, മത്സ്യഫെഡ്, കേരഫെഡ്) ആസ്ഥാനം <strong>തിരുവനന്തപുരത്താണ്</strong>. എന്നാൽ മാർക്കറ്റ്ഫെഡ് <strong>കൊച്ചിയിലാണ് (എറണാകുളം)</strong>.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> കേരളത്തിലെ ആദ്യത്തെ ഓട് ഫാക്ടറി എവിടെയാണ്?</p>
+          <p><strong>Confusing Options:</strong> ഫറോക്ക് / പുതുക്കാട് / കുണ്ടറ / വാളയാർ</p>
+          <p><strong>Fact:</strong> ഭൂരിഭാഗം PSC ഗൈഡുകളിലും ഉത്തരം <strong>കോഴിക്കോട് (ഫറോക്ക്), ബാസൽ മിഷൻ, 1873</strong> എന്നാണ്. <strong>പുതുക്കാട് (തൃശൂർ)</strong> ഓട് വ്യവസായത്തിന് പ്രശസ്തമാണ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> TTPL vs KMML:</p>
+          <p><strong>Confusing Options:</strong> രണ്ടും ഒരേ സ്ഥലത്താണോ?</p>
+          <p><strong>Fact:</strong> TTPL = <strong>കൊച്ചുവേളി (തിരുവനന്തപുരം)</strong> – സൾഫേറ്റ് റൂട്ട്. KMML = <strong>ചവറ (കൊല്ലം)</strong> – ക്ലോറൈഡ് റൂട്ട്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> KAMCO vs HMT:</p>
+          <p><strong>Fact:</strong> KAMCO (അത്താണി) = കാർഷിക യന്ത്രങ്ങൾ/പവർ ടില്ലർ. HMT (കളമശ്ശേരി) = മെഷീൻ ടൂൾ. രണ്ടും എറണാകുളം ജില്ലയിൽ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6</span>
+          <p><strong>Question:</strong> കയർ:</p>
+          <p><strong>Fact:</strong> കയർ വ്യവസായ കേന്ദ്രം = ആലപ്പുഴ. കയർ ബോർഡ് ആസ്ഥാനം = <strong>കൊച്ചി</strong>. CCRI (ഗവേഷണം) = കലവൂർ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7</span>
+          <p><strong>Question:</strong> GAIL:</p>
+          <p><strong>Fact:</strong> പൈപ്പ് ലൈൻ <strong>കൊച്ചി (പുതുവൈപ്പ് LNG) → മംഗലാപുരം</strong>. "കാക്കിനാട (ആന്ധ്ര) → കേരളം" എന്നത് തെറ്റ്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8</span>
+          <p><strong>Question:</strong> Wood Industries:</p>
+          <p><strong>Fact:</strong> നിലമ്പൂർ = <strong>മലപ്പുറം</strong> ജില്ല (തൃശൂർ അല്ല).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 9</span>
+          <p><strong>Question:</strong> കേന്ദ്രം vs സംസ്ഥാനം:</p>
+          <p><strong>Fact:</strong> FACT കേന്ദ്ര PSU ആണ്. KSDP, KELTRON, KAMCO, KAL, KMML, KCL, TCC, TTPL സംസ്ഥാന PSU-കൾ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 10</span>
+          <p><strong>Question:</strong> KSIDC vs KINFRA:</p>
+          <p><strong>Fact:</strong> KSIDC = 1961 (വൻകിട/ഇടത്തരം വ്യവസായ സഹായം). KINFRA = 1993 (വ്യവസായ പാർക്ക്/അടിസ്ഥാന സൗകര്യം). ആസ്ഥാനം രണ്ടും തിരുവനന്തപുരം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> കേരളത്തിലെ ആദ്യത്തെ കയർ ഫാക്ടറി 1859-ൽ ജെയിംസ് ഡാറ (James Darragh) എന്ന ഐറിഷുകാരൻ <strong>ആലപ്പുഴയിലാണ്</strong> സ്ഥാപിച്ചത് (Darragh Smail & Co).</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരള ലൈവ്‌സ്റ്റോക്ക് ഡെവലപ്മെന്റ് ബോർഡിന്റെ (KLDB) ആസ്ഥാനം <strong>തിരുവനന്തപുരത്താണ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ✏️ കേരള സ്റ്റേറ്റ് വുഡ് ഇൻഡസ്ട്രീസ് (Kerala Wood Industries) സ്ഥിതിചെയ്യുന്നത് <strong>മലപ്പുറം</strong> ജില്ലയിലെ <strong>നിലമ്പൂരിലാണ്</strong> (തേക്ക് തടികൾക്ക് പ്രശസ്തം). ➕ നിലമ്പൂരിലെ <strong>കനോലി പ്ലോട്ട്</strong> ലോകത്തിലെ ഏറ്റവും പഴക്കമുള്ള തേക്ക് തോട്ടമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ട്രാവൻകൂർ കൊച്ചിൻ കെമിക്കൽസ് (TCC) ഉദ്യോഗമണ്ഡലിലാണ് (എറണാകുളം) സ്ഥിതിചെയ്യുന്നത്. കോസ്റ്റിക് സോഡയാണ് പ്രധാന ഉൽപ്പന്നം.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരളത്തിലെ ആദ്യത്തെ സ്മാർട്ട് സിറ്റി (Smart City) ഐ.ടി പദ്ധതി എറണാകുളത്തെ കാക്കനാടാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരള ഓട്ടോമൊബൈൽസ് ലിമിറ്റഡ് (KAL) തിരുവനന്തപുരത്തെ <strong>നെയ്യാറ്റിൻകരയിലാണ് (ആറാലുംമൂട്)</strong>. ഇലക്ട്രിക് ഓട്ടോറിക്ഷയായ 'കേരള നീം-ജി' (Kerala Neem-G) നിർമ്മിക്കുന്നത് ഇവിടെയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> സ്റ്റീൽ ഇൻഡസ്ട്രീസ് കേരള ലിമിറ്റഡ് (SILK) ആസ്ഥാനം തൃശൂരിലാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇന്ത്യൻ ടെലിഫോൺ ഇൻഡസ്ട്രീസ് (ITI) പാലക്കാട് ജില്ലയിലെ <strong>കഞ്ചിക്കോട് (Kanjikode)</strong> ആണ് സ്ഥിതിചെയ്യുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> മദ്രാസ് റബ്ബർ ഫാക്ടറി (MRF) യുടെ കേരളത്തിലെ പ്രധാന പ്ലാന്റ് കോട്ടയം ജില്ലയിലെ <strong>വടവാതൂരിലാണ് (Vadavathoor)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> ചിത്രഞ്ജലി സ്റ്റുഡിയോ (KSFDC - ഫിലിം ഡെവലപ്മെന്റ് കോർപ്പറേഷൻ) തിരുവനന്തപുരത്തെ <strong>തിരുവല്ലത്താണ്</strong> സ്ഥിതിചെയ്യുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> തിരുവിതാംകൂറിലെ ആദ്യത്തെ പേപ്പർ മിൽ (Kerala's first paper mill) കൊല്ലം ജില്ലയിലെ <strong>പുനലൂരിലാണ് (Punalur Paper Mill - 1888)</strong> സ്ഥാപിച്ചത്. ഈറ്റ (Reed) ഉപയോഗിച്ചാണ് ഇവിടെ പേപ്പർ ഉണ്ടാക്കിയിരുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> കൊച്ചിയിലെ അമ്പലമുകളിൽ (Ambalamugal) പ്രവർത്തിക്കുന്ന ബി.പി.സി.എൽ (BPCL) ന്റെ എണ്ണ ശുദ്ധീകരണ ശാലയാണ് കൊച്ചിൻ റിഫൈനറി (Kochi Refinery). കേരളത്തിലെ ഏക എണ്ണ ശുദ്ധീകരണ ശാല.</li>
+          <li><span class="stars">⭐⭐</span> കേരള സർക്കാരിന്റെ പുതിയ വ്യാവസായിക നയം 2023 (New Industrial Policy) പ്രധാനമായും ഊന്നൽ നൽകുന്നത് പരിസ്ഥിതി സൗഹൃദമായ 'ഗ്രീൻ ഇൻഡസ്ട്രി', നിർമ്മിത ബുദ്ധി (AI), നാനോ ടെക്നോളജി എന്നീ മേഖലകൾക്കാണ്. ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരളത്തിലെ വ്യവസായ വകുപ്പ് മന്ത്രിയുടെ കീഴിലുള്ള വ്യവസായ വാണിജ്യ ഡയറക്ടറേറ്റ് (Directorate of Industries and Commerce) ആണ് എം.എസ്.എം.ഇ (MSME) കളുടെ വികസനത്തിനായി പ്രവർത്തിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരള സ്റ്റേറ്റ് ഇൻഡസ്ട്രിയൽ ഡെവലപ്മെന്റ് കോർപ്പറേഷൻ (KSIDC) 1961-ൽ സ്ഥാപിതമായി. ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരള ഇൻഡസ്ട്രിയൽ ഇൻഫ്രാസ്ട്രക്ചർ ഡെവലപ്മെന്റ് കോർപ്പറേഷൻ (KINFRA) 1993-ൽ സ്ഥാപിതമായി. ആസ്ഥാനം <strong>തിരുവനന്തപുരം</strong>.</li>
+          <li><span class="stars">⭐⭐</span> കിൻഫ്ര അപ്പാരൽ പാർക്ക് – <strong>തുമ്പ (തിരുവനന്തപുരം)</strong>.</li>
+          <li><span class="stars">⭐⭐</span> കിൻഫ്ര ഫിലിം ആൻഡ് വീഡിയോ പാർക്ക് – <strong>കഴക്കൂട്ടം (തിരുവനന്തപുരം)</strong>.</li>
+          <li><span class="stars">⭐⭐</span> മെഗാ ഫുഡ് പാർക്കുകൾ – <strong>ചേർത്തല, പാലക്കാട്, കോഴിക്കോട്</strong>. ⚠️</li>
+          <li><span class="stars">⭐⭐</span> റബ്ബർ അധിഷ്ഠിത വ്യവസായങ്ങൾക്കായി <strong>റബ്കോ (Rubco)</strong> – ചങ്ങനാശ്ശേരി (കോട്ടയം). ⚠️</li>
+          <li><span class="stars">⭐⭐</span> ഗ്വാളിയോർ റയോൺസ് (Gwalior Rayons) – <strong>മാവൂർ (കോഴിക്കോട്)</strong> – പരിസ്ഥിതി പ്രശ്നങ്ങൾ കാരണം അടച്ചുപൂട്ടി. ➕ 1985-ൽ അടച്ചു. ⚠️</li>
+          <li><span class="stars">⭐⭐</span> കേരളത്തിലെ പൊതുമേഖലാ വ്യവസായങ്ങളെ പുനരുജ്ജീവിപ്പിക്കാൻ <strong>RIAB (Restructuring and Internal Audit Board)</strong>.</li>
+          <li><span class="stars">⭐⭐</span> തൃശൂർ ജില്ലയിലെ <strong>ചേർപ്പ് (Cherpu)</strong> മരപ്പണിക്കും ഫർണിച്ചർ വ്യവസായത്തിനും പ്രശസ്തം. ⚠️</li>
+          <li><span class="stars">⭐⭐</span> ബ്രൈറ്റ് ബ്രദേഴ്സ് ഫാക്ടറി (പഴയ BPL) – <strong>പാലോട് (തിരുവനന്തപുരം)</strong>. ⚠️</li>
+          <li><span class="stars">⭐⭐</span> കേരള സ്റ്റേറ്റ് ഐ.ടി ഇൻഫ്രാസ്ട്രക്ചർ ലിമിറ്റഡ് (KSITIL) – ഐ.ടി കമ്പനികൾക്ക് പശ്ചാത്തല സൗകര്യങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐</span> ✏️ ഗെയിൽ (GAIL) പൈപ്പ് ലൈൻ പദ്ധതി – <strong>കൊച്ചി (പുതുവൈപ്പ് LNG ടെർമിനൽ) മുതൽ മംഗലാപുരം വരെ</strong> പ്രകൃതിവാതകം. 2021 ജനുവരി 5-ന് രാജ്യത്തിന് സമർപ്പിച്ചു.</li>
+          <li><span class="stars">⭐⭐</span> മേക്കർ വില്ലേജ് (Maker Village) – <strong>കളമശ്ശേരി (എറണാകുളം)</strong> – ഹാർഡ്വെയർ സ്റ്റാർട്ടപ്പുകൾ.</li>
+          <li><span class="stars">⭐⭐</span> KSUM (Kerala Startup Mission) – <strong>തിരുവനന്തപുരം</strong> – സ്റ്റാർട്ടപ്പ് പ്രോത്സാഹനം.</li>
+          <li><span class="stars">⭐⭐</span> സർഗ്ഗാലയ, കൈരളി – കരകൗശല വസ്തുക്കളുടെ വിപണനം. ➕ സർഗ്ഗാലയ = ഇരിങ്ങൽ (കോഴിക്കോട്).</li>
+          <li><span class="stars">⭐⭐</span> ഹാന്റക്സ് (Hantex) – കൈത്തറി ഉൽപ്പന്നങ്ങളുടെ വിപണനം.</li>
+          <li><span class="stars">⭐⭐</span> ഖാദി ആൻഡ് വില്ലേജ് ഇൻഡസ്ട്രീസ് ബോർഡ് – <strong>തിരുവനന്തപുരം</strong>.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ പുതിയ അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li><strong>കൊച്ചിൻ ഷിപ്പ്‌യാർഡ് (CSL):</strong> കൊച്ചി, 1972, കേന്ദ്ര PSU. ഇന്ത്യയുടെ ആദ്യ തദ്ദേശീയ വിമാനവാഹിനി INS വിക്രാന്ത് (2022) ഇവിടെ നിർമ്മിച്ചു.</li>
+            <li><strong>IREL:</strong> ചവറ (കൊല്ലം), ഉദ്യോഗമണ്ഡൽ (എറണാകുളം). <strong>HOCL:</strong> അമ്പലമുകൾ. <strong>KEL:</strong> കുണ്ടറ.</li>
+            <li><strong>KSCDC (കശുവണ്ടി വികസന കോർപ്പറേഷൻ):</strong> 1969, കൊല്ലം. <strong>CAPEX:</strong> കൊല്ലം.</li>
+            <li><strong>ദിനേശ് ബീഡി:</strong> 1969, കണ്ണൂർ, തൊഴിലാളി സഹകരണ സംഘം.</li>
+            <li><strong>ബോർഡുകൾ:</strong> റബ്ബർ ബോർഡ് – കോട്ടയം. സ്‌പൈസസ് ബോർഡ് – കൊച്ചി. കയർ ബോർഡ് – കൊച്ചി (1953-ലെ Coir Industry Act).</li>
+            <li><strong>KITCO:</strong> കൊച്ചി, 1972. <strong>Cochin SEZ:</strong> കാക്കനാട്.</li>
+            <li><strong>കൽക്കരി/ഖനനം ഇല്ല:</strong> കേരളത്തിലെ പ്രധാന ധാതുക്കൾ ബീച്ച് സാൻഡ് (ചവറ), ചൈനാ ക്ലേ (കുണ്ടറ), സിലിക്ക മണൽ, ചുണ്ണാമ്പുകല്ല് (വാളയാർ).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. കേരള സംസ്ഥാന ഡ്രഗ്സ് ആൻഡ് ഫാർമസ്യൂട്ടിക്കൽസ് (KSDP) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. പുനലൂർ</span>
+            <span data-opt="B">B. കലവൂർ</span>
+            <span data-opt="C">C. കുണ്ടറ</span>
+            <span data-opt="D">D. വാളയാർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കലവൂർ</div>
+            <div class="explanation">ആലപ്പുഴ ജില്ലയിലെ കലവൂരിലാണ് കേരള സർക്കാരിന്റെ ഈ മരുന്ന് നിർമ്മാണ ശാല പ്രവർത്തിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. കേരളത്തിൽ കശുവണ്ടി വ്യവസായത്തിന്റെ കേന്ദ്രം എന്നറിയപ്പെടുന്ന ജില്ല ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആലപ്പുഴ</span>
+            <span data-opt="B">B. കോഴിക്കോട്</span>
+            <span data-opt="C">C. കൊല്ലം</span>
+            <span data-opt="D">D. എറണാകുളം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കൊല്ലം</div>
+            <div class="explanation">കേരള സ്റ്റേറ്റ് കാഷ്യൂ ഡെവലപ്മെന്റ് കോർപ്പറേഷന്റെ ആസ്ഥാനവും കൊല്ലത്താണ്.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക (പൊതുമേഖലാ സ്ഥാപനങ്ങളും ആസ്ഥാനങ്ങളും):</div>
+          <div class="options">
+            <span data-opt="A">A. കെ.എസ്.എഫ്.ഇ (KSFE) - തിരുവനന്തപുരം</span>
+            <span data-opt="B">B. ഓഷധി (Oushadhi) - തൃശൂർ</span>
+            <span data-opt="C">C. മിൽമ (MILMA) - കൊച്ചി</span>
+            <span data-opt="D">D. മലബാർ സിമന്റ്സ് - കോട്ടയം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഓഷധി (Oushadhi) - തൃശൂർ</div>
+            <div class="explanation">KSFE (തൃശൂർ), മിൽമ (തിരുവനന്തപുരം), മലബാർ സിമന്റ്സ് (വാളയാർ, പാലക്കാട്) എന്നിങ്ങനെയാണ് ശരിയായ ആസ്ഥാനങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കാലക്രമത്തിൽ (Chronological Order) എഴുതുക (കേരളത്തിലെ വ്യവസായ സ്ഥാപനങ്ങൾ):<br>
+            1. ടെക്നോപാർക്ക് ആരംഭിച്ചു<br>
+            2. കെൽട്രോൺ (KELTRON) സ്ഥാപിച്ചു<br>
+            3. കിൻഫ്ര (KINFRA) രൂപീകരിച്ചു<br>
+            4. ഫാക്ട് (FACT) ഉദ്യോഗമണ്ഡലിൽ സ്ഥാപിച്ചു</div>
+          <div class="options">
+            <span data-opt="A">A. 4, 2, 1, 3</span>
+            <span data-opt="B">B. 2, 4, 1, 3</span>
+            <span data-opt="C">C. 4, 1, 2, 3</span>
+            <span data-opt="D">D. 1, 4, 2, 3</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 4, 2, 1, 3</div>
+            <div class="explanation">FACT (1943), കെൽട്രോൺ (1973), ടെക്നോപാർക്ക് (1990), KINFRA (1993).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. പത്രക്കടലാസ് നിർമ്മിക്കുന്ന പ്രശസ്തമായ ഹിന്ദുസ്ഥാൻ ന്യൂസ് പ്രിന്റ് ലിമിറ്റഡ് (ഇപ്പോഴത്തെ KPPL) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. പുനലൂർ</span>
+            <span data-opt="B">B. വെള്ളൂർ</span>
+            <span data-opt="C">C. മാവൂർ</span>
+            <span data-opt="D">D. കുണ്ടറ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) വെള്ളൂർ</div>
+            <div class="explanation">കോട്ടയം ജില്ലയിലെ വെള്ളൂരിലാണ് ഇത് സ്ഥിതിചെയ്യുന്നത്. പുനലൂർ പേപ്പർ മിൽ ആണ്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. കാർഷിക യന്ത്രങ്ങൾ നിർമ്മിക്കുന്ന കേരള സർക്കാരിന്റെ സ്ഥാപനമായ കാംകോ (KAMCO) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. അത്താണി (എറണാകുളം)</span>
+            <span data-opt="B">B. കഞ്ചിക്കോട്</span>
+            <span data-opt="C">C. മാടക്കത്തറ</span>
+            <span data-opt="D">D. കലവൂർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) അത്താണി (എറണാകുളം)</div>
+            <div class="explanation">നെടുമ്പാശ്ശേരി എയർപോർട്ടിനടുത്തുള്ള അത്താണിയിലാണ് കേരള ആഗ്രോ മെഷിനറി കോർപ്പറേഷൻ സ്ഥിതിചെയ്യുന്നത്. പവർ ടില്ലർ ഉൾപ്പെടെയുള്ള കാർഷിക യന്ത്രങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: കേരളത്തിലെ ഐ.ടി വ്യവസായവുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ടി പാർക്ക് തിരുവനന്തപുരത്തെ ടെക്നോപാർക്കാണ്.<br>
+            2. എറണാകുളത്തെ കാക്കനാട് സ്ഥിതിചെയ്യുന്ന ഐ.ടി പാർക്കാണ് ഇൻഫോപാർക്ക്.<br>
+            3. കോഴിക്കോട് ജില്ലയിൽ ഐ.ടി പാർക്കുകൾ നിലവിലില്ല.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്; കാരണം കോഴിക്കോട് ജില്ലയിൽ 'സൈബർപാർക്ക്' എന്ന പേരിൽ സർക്കാർ ഐ.ടി പാർക്ക് പ്രവർത്തിക്കുന്നുണ്ട്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇലക്ട്രോണിക്സ് ഉൽപ്പന്നങ്ങൾ നിർമ്മിക്കുന്നതിനായി 1973-ൽ തിരുവനന്തപുരത്ത് ആരംഭിച്ച കേരള സർക്കാരിന്റെ സ്ഥാപനം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കെ.എസ്.ഇ.ബി (KSEB)</span>
+            <span data-opt="B">B. കെൽട്രോൺ (KELTRON)</span>
+            <span data-opt="C">C. ബി.എസ്.എൻ.എൽ (BSNL)</span>
+            <span data-opt="D">D. സി-ഡാക് (C-DAC)</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കെൽട്രോൺ (KELTRON)</div>
+            <div class="explanation">കെ.പി.പി നമ്പ്യാരുടെ നേതൃത്വത്തിലാണ് ഈ സ്ഥാപനം ആരംഭിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (സ്ഥാപനങ്ങളും സ്ഥലങ്ങളും):<br>
+            1. മലബാർ സിമന്റ്സ് - a. കുണ്ടറ<br>
+            2. ട്രാവൻകൂർ സിമന്റ്സ് - b. വാളയാർ<br>
+            3. കേരള സെറാമിക്സ് (KCL) - c. ഏലൂർ (ഉദ്യോഗമണ്ഡൽ)<br>
+            4. ഫാക്ട് (FACT) - d. നാട്ടകം</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-d, 3-a, 4-c</span>
+            <span data-opt="B">B. 1-d, 2-b, 3-a, 4-c</span>
+            <span data-opt="C">C. 1-b, 2-a, 3-d, 4-c</span>
+            <span data-opt="D">D. 1-c, 2-d, 3-b, 4-a</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-b, 2-d, 3-a, 4-c</div>
+            <div class="explanation">കൃത്യമായ ഫാക്ടറികളും അവ സ്ഥിതിചെയ്യുന്ന സ്ഥലങ്ങളും.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ഇന്ത്യയിലെ ആദ്യത്തെ റബ്ബർ പാർക്ക് കേരളത്തിൽ എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കോട്ടയം</span>
+            <span data-opt="B">B. പാലാ</span>
+            <span data-opt="C">C. ഐരാപുരം</span>
+            <span data-opt="D">D. പുനലൂർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഐരാപുരം</div>
+            <div class="explanation">എറണാകുളം ജില്ലയിലെ ഐരാപുരത്താണ് റബ്ബർ പാർക്ക് ഇന്ത്യ പ്രൈവറ്റ് ലിമിറ്റഡ് സ്ഥിതിചെയ്യുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. കേരളത്തിലെ കർഷകരിൽ നിന്ന് നാളികേരം സംഭരിച്ച് വെളിച്ചെണ്ണ ഉൽപ്പാദിപ്പിക്കുന്ന കേരള സർക്കാരിന്റെ സ്ഥാപനമായ കേരഫെഡിന്റെ (Kerafed) ആസ്ഥാനം എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. കൊച്ചി</span>
+            <span data-opt="B">B. കോഴിക്കോട്</span>
+            <span data-opt="C">C. തിരുവനന്തപുരം</span>
+            <span data-opt="D">D. ആലപ്പുഴ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) തിരുവനന്തപുരം</div>
+            <div class="explanation">കേരഫെഡ്, മിൽമ, ഹോർട്ടികോർപ്പ് എന്നിവയുടെ ആസ്ഥാനം തിരുവനന്തപുരത്താണ്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. Assertion (A): കേരളത്തിൽ വൻകിട വ്യവസായങ്ങളെക്കാൾ ചെറുകിട-ഇടത്തരം വ്യവസായങ്ങൾക്കാണ് (MSME) കൂടുതൽ പ്രാധാന്യം.<br>
+            Reason (R): കേരളത്തിലെ ഉയർന്ന ജനസാന്ദ്രത, ഭൂമിയുടെ ദൗർലഭ്യം, കർശനമായ പരിസ്ഥിതി നിയമങ്ങൾ എന്നിവ വൻകിട വ്യവസായങ്ങൾ സ്ഥാപിക്കുന്നതിന് വലിയ വെല്ലുവിളിയാകുന്നു.</div>
+          <div class="options">
+            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
+            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
+            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
+            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
+            <div class="explanation">ഇതുകൊണ്ടാണ് കേരളം ഐ.ടി, ടൂറിസം തുടങ്ങിയ മലിനീകരണമില്ലാത്ത സർവീസ് സെക്ടറുകൾക്ക് കൂടുതൽ ഊന്നൽ നൽകുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. കേരളത്തിലെ ഏറ്റവും പഴയ പരമ്പരാഗത വ്യവസായമായ കയർ (Coir) വ്യവസായത്തിന്റെ സിരാകേന്ദ്രം ഏത് ജില്ലയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. കൊല്ലം</span>
+            <span data-opt="B">B. എറണാകുളം</span>
+            <span data-opt="C">C. ആലപ്പുഴ</span>
+            <span data-opt="D">D. തിരുവനന്തപുരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആലപ്പുഴ</div>
+            <div class="explanation">1859-ൽ ജെയിംസ് ഡാറ ആദ്യത്തെ കയർ ഫാക്ടറി സ്ഥാപിച്ചതും ഇവിടെത്തന്നെയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. വൈദ്യുത വാഹനങ്ങൾ പ്രോത്സാഹിപ്പിക്കുന്നതിന്റെ ഭാഗമായി ഇലക്ട്രിക് ഓട്ടോറിക്ഷയായ 'കേരള നീം-ജി' (Kerala Neem-G) നിർമ്മിക്കുന്ന കേരള ഓട്ടോമൊബൈൽസ് ലിമിറ്റഡ് (KAL) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കാക്കനാട്</span>
+            <span data-opt="B">B. അത്താണി</span>
+            <span data-opt="C">C. നെയ്യാറ്റിൻകര</span>
+            <span data-opt="D">D. പാലക്കാട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) നെയ്യാറ്റിൻകര</div>
+            <div class="explanation">തിരുവനന്തപുരം ജില്ലയിലെ നെയ്യാറ്റിൻകരയിലുള്ള ആറാലുംമൂടിലാണ് ഇത് പ്രവർത്തിക്കുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. കേരളത്തിലെ വ്യവസായ പാർക്കുകൾ (Industrial Parks) വികസിപ്പിക്കുക എന്ന ലക്ഷ്യത്തോടെ 1993-ൽ രൂപീകരിച്ച സർക്കാർ ഏജൻസി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. KINFRA</span>
+            <span data-opt="B">B. KSIDC</span>
+            <span data-opt="C">C. SIDBI</span>
+            <span data-opt="D">D. KELTRON</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) KINFRA</div>
+            <div class="explanation">Kerala Industrial Infrastructure Development Corporation എന്നാണ് പൂർണ്ണരൂപം. കിൻഫ്ര അപ്പാരൽ പാർക്ക് (തുമ്പ), കിൻഫ്ര ഫിലിം ആൻഡ് വീഡിയോ പാർക്ക് (കഴക്കൂട്ടം) എന്നിവ ഇതിന് ഉദാഹരണങ്ങളാണ്.</div>
+          </div>
+        </div>
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. കേരളത്തിലെ ആദ്യത്തെ പേപ്പർ മിൽ ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. HNL, വെള്ളൂർ</span>
+            <span data-opt="B">B. പുനലൂർ പേപ്പർ മിൽ</span>
+            <span data-opt="C">C. KPPL, വെള്ളൂർ</span>
+            <span data-opt="D">D. കേരള പേപ്പർ മിൽ, കുണ്ടറ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) പുനലൂർ പേപ്പർ മിൽ</div>
+            <div class="explanation">1888-ൽ കൊല്ലം ജില്ലയിലെ പുനലൂരിൽ സ്ഥാപിച്ചു. ഈറ്റ (Reed) ഉപയോഗിച്ചാണ് പേപ്പർ ഉണ്ടാക്കിയിരുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. കൊച്ചിൻ റിഫൈനറി (BPCL) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കാക്കനാട്</span>
+            <span data-opt="B">B. അമ്പലമുകൾ (എറണാകുളം)</span>
+            <span data-opt="C">C. ഉദ്യോഗമണ്ഡൽ</span>
+            <span data-opt="D">D. കളമശ്ശേരി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) അമ്പലമുകൾ (എറണാകുളം)</div>
+            <div class="explanation">കേരളത്തിലെ ഏക എണ്ണ ശുദ്ധീകരണ ശാല.</div>
+          </div>
+        </div>
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. മേക്കർ വില്ലേജ് (Maker Village) എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. കഴക്കൂട്ടം</span>
+            <span data-opt="B">B. കാക്കനാട്</span>
+            <span data-opt="C">C. കളമശ്ശേരി (എറണാകുളം)</span>
+            <span data-opt="D">D. തുമ്പ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കളമശ്ശേരി (എറണാകുളം)</div>
+            <div class="explanation">ഹാർഡ്വെയർ സ്റ്റാർട്ടപ്പുകൾക്കുള്ള കേന്ദ്രം.</div>
+          </div>
+        </div>
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. കേരളത്തിലെ ആദ്യത്തെ ഐ.ടി പാർക്ക് ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഇൻഫോപാർക്ക്</span>
+            <span data-opt="B">B. സൈബർപാർക്ക്</span>
+            <span data-opt="C">C. ടെക്നോപാർക്ക്</span>
+            <span data-opt="D">D. സ്മാർട്ട് സിറ്റി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ടെക്നോപാർക്ക്</div>
+            <div class="explanation">1990-ൽ തിരുവനന്തപുരത്ത് (കഴക്കൂട്ടം) ആരംഭിച്ചു. ഇന്ത്യയിലെ ആദ്യത്തെ ഐ.ടി പാർക്കാണിത്.</div>
+          </div>
+        </div>
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. KSFE (Kerala State Financial Enterprises) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. തിരുവനന്തപുരം</span>
+            <span data-opt="B">B. കൊച്ചി</span>
+            <span data-opt="C">C. തൃശൂർ</span>
+            <span data-opt="D">D. കോഴിക്കോട്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) തൃശൂർ</div>
+            <div class="explanation">1969-ൽ സ്ഥാപിതമായി. ചിട്ടി ഫണ്ട്, ധനകാര്യ സ്ഥാപനം.</div>
+          </div>
+        </div>
+        <!-- Q21 -->
+        <div class="question-item" data-qindex="20">
+          <div class="q-text">21. ഓഷധി (Oushadhi) എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കോട്ടയം</span>
+            <span data-opt="B">B. തൃശൂർ (കുട്ടനെല്ലൂർ)</span>
+            <span data-opt="C">C. പാലക്കാട്</span>
+            <span data-opt="D">D. ആലപ്പുഴ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) തൃശൂർ (കുട്ടനെല്ലൂർ)</div>
+            <div class="explanation">കേരള സർക്കാരിന്റെ ആയുർവേദ മരുന്ന് നിർമ്മാണ ശാല.</div>
+          </div>
+        </div>
+        <!-- Q22 -->
+        <div class="question-item" data-qindex="21">
+          <div class="q-text">22. കേരള സ്റ്റേറ്റ് ഇൻഡസ്ട്രിയൽ ഡെവലപ്മെന്റ് കോർപ്പറേഷൻ (KSIDC) ഏത് വർഷമാണ് സ്ഥാപിതമായത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1956</span>
+            <span data-opt="B">B. 1961</span>
+            <span data-opt="C">C. 1965</span>
+            <span data-opt="D">D. 1973</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1961</div>
+            <div class="explanation">തിരുവനന്തപുരം ആസ്ഥാനമായി രൂപീകരിച്ചു. വൻകിട-ഇടത്തരം വ്യവസായങ്ങളെ സഹായിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q23 -->
+        <div class="question-item" data-qindex="22">
+          <div class="q-text">23. കേരളത്തിലെ ആദ്യത്തെ കയർ ഫാക്ടറി എവിടെയാണ് സ്ഥാപിച്ചത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കൊല്ലം</span>
+            <span data-opt="B">B. ആലപ്പുഴ</span>
+            <span data-opt="C">C. കണ്ണൂർ</span>
+            <span data-opt="D">D. എറണാകുളം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആലപ്പുഴ</div>
+            <div class="explanation">1859-ൽ ജെയിംസ് ഡാറ (James Darragh) എന്ന ഐറിഷുകാരൻ സ്ഥാപിച്ചു (Darragh Smail & Co).</div>
+          </div>
+        </div>
+        <!-- Q24 -->
+        <div class="question-item" data-qindex="23">
+          <div class="q-text">24. ഇന്ത്യയുടെ ആദ്യ തദ്ദേശീയ വിമാനവാഹിനിക്കപ്പൽ INS വിക്രാന്ത് നിർമ്മിച്ച കേരളത്തിലെ സ്ഥാപനം?</div>
+          <div class="options">
+            <span data-opt="A">A. HMT</span>
+            <span data-opt="B">B. കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്</span>
+            <span data-opt="C">C. BPCL</span>
+            <span data-opt="D">D. FACT</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്</div>
+            <div class="explanation">1972-ൽ സ്ഥാപിച്ച കേന്ദ്ര PSU. കൊച്ചിയിൽ സ്ഥിതിചെയ്യുന്നു. 2022-ൽ വിക്രാന്ത് കമ്മീഷൻ ചെയ്തു.</div>
+          </div>
+        </div>
+        <!-- Q25 -->
+        <div class="question-item" data-qindex="24">
+          <div class="q-text">25. കയർ ബോർഡിന്റെ ആസ്ഥാനം എവിടെ?</div>
+          <div class="options">
+            <span data-opt="A">A. ആലപ്പുഴ</span>
+            <span data-opt="B">B. കൊല്ലം</span>
+            <span data-opt="C">C. കൊച്ചി</span>
+            <span data-opt="D">D. കണ്ണൂർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കൊച്ചി</div>
+            <div class="explanation">കയർ വ്യവസായ കേന്ദ്രം ആലപ്പുഴ. ബോർഡ് ആസ്ഥാനം കൊച്ചി (കലൂർ).</div>
+          </div>
+        </div>
+        <!-- Q26 -->
+        <div class="question-item" data-qindex="25">
+          <div class="q-text">26. കൊച്ചി–മംഗലാപുരം പ്രകൃതിവാതക പൈപ്പ് ലൈൻ നിർമ്മിച്ച സ്ഥാപനം?</div>
+          <div class="options">
+            <span data-opt="A">A. BPCL</span>
+            <span data-opt="B">B. GAIL</span>
+            <span data-opt="C">C. KSEB</span>
+            <span data-opt="D">D. FACT</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) GAIL</div>
+            <div class="explanation">പുതുവൈപ്പ് LNG ടെർമിനലിൽ നിന്ന് മംഗലാപുരത്തേക്ക്. 2021 ജനുവരിയിൽ രാജ്യത്തിന് സമർപ്പിച്ചു.</div>
+          </div>
+        </div>
+        <!-- Q27 -->
+        <div class="question-item" data-qindex="26">
+          <div class="q-text">27. ലോകത്തിലെ ഏറ്റവും പഴക്കമുള്ള തേക്ക് തോട്ടമായ കനോലി പ്ലോട്ട് ഏത് ജില്ലയിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. വയനാട്</span>
+            <span data-opt="B">B. മലപ്പുറം</span>
+            <span data-opt="C">C. പാലക്കാട്</span>
+            <span data-opt="D">D. ഇടുക്കി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) മലപ്പുറം</div>
+            <div class="explanation">നിലമ്പൂർ. Kerala Wood Industries-ഉം ഇവിടെയാണ്.</div>
+          </div>
+        </div>
+        <!-- Q28 -->
+        <div class="question-item" data-qindex="27">
+          <div class="q-text">28. ക്ലോറൈഡ് സാങ്കേതികവിദ്യ ഉപയോഗിച്ച് ടൈറ്റാനിയം ഡയോക്സൈഡ് നിർമ്മിക്കുന്ന സ്ഥാപനം?</div>
+          <div class="options">
+            <span data-opt="A">A. TTPL</span>
+            <span data-opt="B">B. KMML</span>
+            <span data-opt="C">C. FACT</span>
+            <span data-opt="D">D. TCC</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) KMML</div>
+            <div class="explanation">KMML = ചവറ (കൊല്ലം), ക്ലോറൈഡ് റൂട്ട്. TTPL = കൊച്ചുവേളി, സൾഫേറ്റ് റൂട്ട്.</div>
+          </div>
+        </div>
+        <!-- Q29 -->
+        <div class="question-item" data-qindex="28">
+          <div class="q-text">29. ITI (Indian Telephone Industries) കേരളത്തിൽ എവിടെയാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. കഞ്ചിക്കോട്</span>
+            <span data-opt="B">B. ആലുവ</span>
+            <span data-opt="C">C. കളമശ്ശേരി</span>
+            <span data-opt="D">D. വാളയാർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) കഞ്ചിക്കോട്</div>
+            <div class="explanation">പാലക്കാട് ജില്ല. കേന്ദ്ര PSU.</div>
+          </div>
+        </div>
+        <!-- Q30 -->
+        <div class="question-item" data-qindex="29">
+          <div class="q-text">30. കൈത്തറി ഉൽപ്പന്നങ്ങളുടെ വിപണനത്തിനായുള്ള സംസ്ഥാന ഏജൻസി?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹാന്റക്സ് (Hantex)</span>
+            <span data-opt="B">B. ഹോർട്ടികോർപ്പ്</span>
+            <span data-opt="C">C. കയർഫെഡ്</span>
+            <span data-opt="D">D. സർഗ്ഗാലയ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ഹാന്റക്സ് (Hantex)</div>
+            <div class="explanation">ആസ്ഥാനം തിരുവനന്തപുരം. സർഗ്ഗാലയ കരകൗശല വസ്തുക്കളുമായി ബന്ധപ്പെട്ടതാണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>11</td><td>(C)</td><td>21</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>12</td><td>(A)</td><td>22</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>13</td><td>(C)</td><td>23</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>14</td><td>(C)</td><td>24</td><td>(B)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>15</td><td>(A)</td><td>25</td><td>(C)</td></tr>
+              <tr><td>6</td><td>(A)</td><td>16</td><td>(B)</td><td>26</td><td>(B)</td></tr>
+              <tr><td>7</td><td>(A)</td><td>17</td><td>(B)</td><td>27</td><td>(B)</td></tr>
+              <tr><td>8</td><td>(B)</td><td>18</td><td>(C)</td><td>28</td><td>(B)</td></tr>
+              <tr><td>9</td><td>(A)</td><td>19</td><td>(C)</td><td>29</td><td>(A)</td></tr>
+              <tr><td>10</td><td>(C)</td><td>20</td><td>(C)</td><td>30</td><td>(A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>കയർ വ്യവസായം: ആലപ്പുഴ.</li>
+          <li>കശുവണ്ടി വ്യവസായം: കൊല്ലം.</li>
+          <li>കൈത്തറി, ബീഡി (ദിനേശ്): കണ്ണൂർ.</li>
+          <li>ആദ്യത്തെ ഓട് ഫാക്ടറി: ഫറോക്ക് (കോഴിക്കോട്), 1873 ⚠️. പുതുക്കാട് (തൃശൂർ): ഓട് വ്യവസായത്തിന് പ്രശസ്തം.</li>
+          <li>FACT (രാസവളം): ഉദ്യോഗമണ്ഡൽ / ഏലൂർ (എറണാകുളം).</li>
+          <li>KELTRON (ഇലക്ട്രോണിക്സ്): തിരുവനന്തപുരം (1973).</li>
+          <li>KSDP (മരുന്ന്): കലവൂർ (ആലപ്പുഴ).</li>
+          <li>ഓഷധി (ആയുർവേദം): തൃശൂർ.</li>
+          <li>മലബാർ സിമന്റ്സ്: വാളയാർ (പാലക്കാട്).</li>
+          <li>ട്രാവൻകൂർ സിമന്റ്സ് (വൈറ്റ് സിമന്റ്): നാട്ടകം (കോട്ടയം).</li>
+          <li>HNL / KPPL (പത്രക്കടലാസ്): വെള്ളൂർ (കോട്ടയം).</li>
+          <li>KAMCO (കാർഷിക യന്ത്രം/പവർ ടില്ലർ): അത്താണി (എറണാകുളം).</li>
+          <li>KMML (ടൈറ്റാനിയം): ചവറ (കൊല്ലം).</li>
+          <li>കേരള സെറാമിക്സ് (കളിമണ്ണ്): കുണ്ടറ (കൊല്ലം).</li>
+          <li>KSFE (ചിട്ടി): തൃശൂർ.</li>
+          <li>മിൽമ, കേരഫെഡ്, ഹോർട്ടികോർപ്പ്: തിരുവനന്തപുരം.</li>
+          <li>മാർക്കറ്റ്ഫെഡ്: കൊച്ചി ⚠️.</li>
+          <li>ടെക്നോപാർക്ക്: തിരുവനന്തപുരം (ആദ്യ ഐ.ടി പാർക്ക്).</li>
+          <li>ഇൻഫോപാർക്ക്: കാക്കനാട് (എറണാകുളം).</li>
+          <li>കേരള നീം-ജി (ഇ-ഓട്ടോ): KAL, നെയ്യാറ്റിൻകര.</li>
+          <li>പുനലൂർ പേപ്പർ മിൽ: കേരളത്തിലെ ആദ്യ പേപ്പർ മിൽ (1888).</li>
+          <li>കൊച്ചിൻ റിഫൈനറി: അമ്പലമുകൾ (എറണാകുളം).</li>
+          <li>ITI: കഞ്ചിക്കോട് (പാലക്കാട്).</li>
+          <li>HMT (മെഷീൻ ടൂൾ): കളമശ്ശേരി (എറണാകുളം).</li>
+          <li>KINFRA: 1993 (തിരുവനന്തപുരം).</li>
+          <li>KSIDC: 1961 (തിരുവനന്തപുരം).</li>
+          <li>KITCO: കൊച്ചി.</li>
+          <li>RIAB: തിരുവനന്തപുരം.</li>
+          <li>K-BIP: തിരുവനന്തപുരം.</li>
+          <li>KAL: നെയ്യാറ്റിൻകര (ആറാലുംമൂട്).</li>
+          <li>കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്: കൊച്ചി (INS വിക്രാന്ത്, കേന്ദ്ര PSU).</li>
+          <li>കയർ ബോർഡ്: കൊച്ചി. റബ്ബർ ബോർഡ്: കോട്ടയം. സ്‌പൈസസ് ബോർഡ്: കൊച്ചി.</li>
+          <li>GAIL പൈപ്പ് ലൈൻ: പുതുവൈപ്പ് (കൊച്ചി) → മംഗലാപുരം (2021).</li>
+          <li>IREL: ചവറ, ഉദ്യോഗമണ്ഡൽ.</li>
+          <li>Kerala Wood Industries / കനോലി പ്ലോട്ട്: നിലമ്പൂർ (മലപ്പുറം).</li>
+          <li>ഹാന്റക്സ്: തിരുവനന്തപുരം.</li>
+          <li>KSCDC, CAPEX: കൊല്ലം.</li>
+          <li>BHEL-EML: കാഞ്ഞങ്ങാട് (കാസർഗോഡ്).</li>
+          <li>KMML = ക്ലോറൈഡ് റൂട്ട്, TTPL = സൾഫേറ്റ് റൂട്ട്.</li>
+          <li>മേക്കർ വില്ലേജ്: കളമശ്ശേരി.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>വ്യവസായ സ്ഥാപനങ്ങളും സ്ഥലങ്ങളും (PSUs)</h3>
+        <ul>
+          <li><strong>Alappuzha:</strong> KSDP (കലവൂർ - മരുന്ന്). ➕ CCRI (കലവൂർ), കയർഫെഡ്, ആദ്യ കയർ ഫാക്ടറി (1859).</li>
+          <li><strong>Kollam:</strong> KMML (ചവറ - ടൈറ്റാനിയം), KCL (കുണ്ടറ - സെറാമിക്സ്), പുനലൂർ പേപ്പർ മിൽ. ➕ KSCDC, CAPEX, IREL (ചവറ), KEL (കുണ്ടറ).</li>
+          <li><strong>Kottayam:</strong> HNL/KPPL (വെള്ളൂർ - ന്യൂസ് പ്രിന്റ്), ട്രാവൻകൂർ സിമന്റ്സ് (നാട്ടകം), MRF (വടവാതൂർ). ➕ റബ്ബർ ബോർഡ്, റബ്കോ ⚠️.</li>
+          <li><strong>Ernakulam:</strong> FACT (ഉദ്യോഗമണ്ഡൽ), KAMCO (അത്താണി), മാർക്കറ്റ്ഫെഡ് (കൊച്ചി), ഇൻഫോപാർക്ക് (കാക്കനാട്), HMT (കളമശ്ശേരി), TCC (ഉദ്യോഗമണ്ഡൽ), BPCL (അമ്പലമുകൾ), മേക്കർ വില്ലേജ് (കളമശ്ശേരി). ➕ കൊച്ചിൻ ഷിപ്പ്‌യാർഡ്, IREL (ഉദ്യോഗമണ്ഡൽ), HOCL, KITCO, കയർ ബോർഡ്, സ്‌പൈസസ് ബോർഡ്, റബ്ബർ പാർക്ക് (ഐരാപുരം), ചേന്ദമംഗലം കൈത്തറി.</li>
+          <li><strong>Thrissur:</strong> KSFE, ഓഷധി (കുട്ടനെല്ലൂർ), SILK. ➕ പുതുക്കാട് (ഓട്).</li>
+          <li><strong>Palakkad:</strong> മലബാർ സിമന്റ്സ് (വാളയാർ), ITI (കഞ്ചിക്കോട്). ➕ കുത്താമ്പുള്ളി (കൈത്തറി).</li>
+          <li><strong>Trivandrum:</strong> KELTRON, MILMA, KERAFED, HORTICORP, KAL (നെയ്യാറ്റിൻകര), ടെക്നോപാർക്ക്, TTPL (കൊച്ചുവേളി), KSUM, RIAB, K-BIP, KSIDC, KINFRA, ചിത്രഞ്ജലി സ്റ്റുഡിയോ (തിരുവല്ലം). ➕ ഖാദി ബോർഡ്, KLDB, ഹാന്റക്സ്, ബാലരാമപുരം (കൈത്തറി), NCRMI ⚠️.</li>
+          <li><strong>Kozhikode:</strong> സൈബർപാർക്ക്. ➕ ഫറോക്ക് (ഓട്), KSOIL, സർഗ്ഗാലയ (ഇരിങ്ങൽ), ഗ്വാളിയോർ റയോൺസ് (മാവൂർ, അടച്ചു).</li>
+          <li><strong>Kannur:</strong> ➕ ദിനേശ് ബീഡി, കൈത്തറി (ഹാൻവീവ്).</li>
+          <li><strong>Kasaragod:</strong> BHEL-EML (കാഞ്ഞങ്ങാട്).</li>
+          <li><strong>Malappuram:</strong> Kerala Wood Industries (നിലമ്പൂർ). ➕ കനോലി പ്ലോട്ട്, തേക്ക് മ്യൂസിയം.</li>
+        </ul>
+        <h3>പരമ്പരാഗത വ്യവസായങ്ങൾ</h3>
+        <ul>
+          <li>കയർ (ആലപ്പുഴ), കശുവണ്ടി (കൊല്ലം), കൈത്തറി (കണ്ണൂർ), ബീഡി (കണ്ണൂർ), ഓട് (ഫറോക്ക് ആദ്യം / പുതുക്കാട് പ്രശസ്തം).</li>
+        </ul>
+        <h3>➕ കേന്ദ്ര PSU vs സംസ്ഥാന PSU</h3>
+        <ul>
+          <li><strong>കേന്ദ്ര PSU:</strong> FACT, BPCL, CSL, HMT, ITI, IREL, HOCL.</li>
+          <li><strong>സംസ്ഥാന PSU:</strong> KSDP, KELTRON, KAMCO, KAL, KMML, KCL, TCC, TTPL, മലബാർ & ട്രാവൻകൂർ സിമന്റ്സ്, KSFE, ഓഷധി.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 20: ടോപ്പ് 25 വസ്തുതകൾ ===== -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ol>
+          <li>കേരളത്തിലെ ആദ്യത്തെ സിമന്റ് ഫാക്ടറിയാണ് കോട്ടയം ജില്ലയിലെ നാട്ടകത്തുള്ള ട്രാവൻകൂർ സിമന്റ്സ് (1946 ൽ തുടങ്ങി). കക്ക (Shells) ഉപയോഗിച്ചാണ് ഇവിടെ വൈറ്റ് സിമന്റ് നിർമ്മിക്കുന്നത്. ⚠️</li>
+          <li>വ്യവസായ സംരംഭകർക്ക് ഒറ്റ ജാലക സംവിധാനത്തിലൂടെ (Single Window System) അനുമതി നൽകാൻ കേരള സർക്കാർ ആരംഭിച്ച പോർട്ടലാണ് കെ-സ്വിഫ്റ്റ് (K-SWIFT).</li>
+          <li>കേരളത്തിലെ പരമ്പരാഗത വ്യവസായങ്ങളെ സഹായിക്കാൻ സർക്കാർ രൂപീകരിച്ച പ്രധാന ബോർഡുകളാണ് ഖാദി ആൻഡ് വില്ലേജ് ഇൻഡസ്ട്രീസ് ബോർഡ് (തിരുവനന്തപുരം), കയർ ബോർഡ് തുടങ്ങിയവ. ➕ കയർ ബോർഡ് കൊച്ചിയിൽ.</li>
+          <li>കൈത്തറി ഉൽപ്പന്നങ്ങളുടെ വിപണനത്തിനായി പ്രവർത്തിക്കുന്ന സംസ്ഥാന സർക്കാരിന്റെ ഏജൻസിയാണ് ഹാന്റക്സ് (Hantex). കരകൗശല വസ്തുക്കൾക്കായി സർഗ്ഗാലയ, കൈരളി എന്നിവയുമുണ്ട്.</li>
+          <li>എറണാകുളം ജില്ലയിലെ കളമശ്ശേരി (Kalamassery) എച്ച്.എം.ടി (HMT - Hindustan Machine Tools) യുടെ പ്രശസ്തമായ ഒരു പ്ലാന്റിന് പേരുകേട്ടതാണ്. ✏️ മെഷീൻ ടൂളുകൾ ഇവിടെ നിർമ്മിക്കുന്നു.</li>
+          <li>തിരുവനന്തപുരത്തെ പാലോടുള്ള ബ്രൈറ്റ് ബ്രദേഴ്സ് ഫാക്ടറിയിൽ (പഴയ ബി.പി.എൽ) നിന്ന് ഇപ്പോൾ ഇലക്ട്രോണിക്സ് ഉപകരണങ്ങൾ നിർമ്മിക്കുന്നുണ്ട്. ⚠️</li>
+          <li>കാസർഗോഡ് ജില്ലയിലെ ഭെൽ-ഇ.എം.എൽ (BHEL-EML) ഇലക്ട്രിക്കൽ മെഷീനുകൾ നിർമ്മിക്കുന്ന ഒരു പ്രമുഖ സ്ഥാപനമാണ്. ✏️ EML = Electrical Machines Limited.</li>
+          <li>തൃശൂർ ജില്ലയിലെ ചേർപ്പിൽ (Cherpu) മരപ്പണിക്കും (Carpentry) ഫർണിച്ചർ വ്യവസായത്തിനും വളരെ പ്രശസ്തമായ ഒരു കേന്ദ്രമുണ്ട്. ⚠️</li>
+          <li>എറണാകുളത്തെ അമ്പലമുകളിലുള്ള ബി.പി.സി.എൽ (BPCL Kochi Refinery) കേരളത്തിലെ ഏക എണ്ണ ശുദ്ധീകരണ ശാലയാണ്.</li>
+          <li>ഐ.ടി കമ്പനികൾക്ക് പശ്ചാത്തല സൗകര്യങ്ങൾ ഒരുക്കുന്ന കേരള സർക്കാരിന്റെ നോഡൽ ഏജൻസിയാണ് കേരള സ്റ്റേറ്റ് ഐ.ടി ഇൻഫ്രാസ്ട്രക്ചർ ലിമിറ്റഡ് (KSITIL).</li>
+          <li>കാർഷിക ഉൽപ്പന്നങ്ങൾ കേടുകൂടാതെ സൂക്ഷിക്കാനും മൂല്യവർദ്ധിത ഉൽപ്പന്നങ്ങളാക്കാനും കിൻഫ്ര (KINFRA) വികസിപ്പിച്ചെടുത്ത സ്പെഷ്യൽ പാർക്കുകളാണ് മെഗാ ഫുഡ് പാർക്കുകൾ (ഉദാ: ചേർത്തല, പാലക്കാട്, കോഴിക്കോട്). ⚠️</li>
+          <li>റബ്ബർ അധിഷ്ഠിത വ്യവസായങ്ങളെ പ്രോത്സാഹിപ്പിക്കാൻ കോട്ടയം ജില്ലയിലെ ചങ്ങനാശ്ശേരിയിൽ (Rubco) റബ്കോയുടെ ഒരു വലിയ പ്ലാന്റ് പ്രവർത്തിക്കുന്നുണ്ട്. ⚠️</li>
+          <li>കോഴിക്കോട് ജില്ലയിലെ മാവൂർ (Mavoor) പണ്ട് ഗ്വാളിയോർ റയോൺസ് (Gwalior Rayons) എന്ന ബിർളയുടെ വൻകിട ഫാക്ടറിക്ക് പേരുകേട്ടതായിരുന്നു. പരിസ്ഥിതി പ്രശ്നങ്ങൾ കാരണം ഇത് അടച്ചുപൂട്ടി.</li>
+          <li>കേരളത്തിലെ പൊതുമേഖലാ വ്യവസായങ്ങളെ പുനരുജ്ജീവിപ്പിക്കാൻ സർക്കാർ രൂപീകരിച്ച ഒരു പ്രത്യേക ബോർഡാണ് റിയാബ് (RIAB - Restructuring and Internal Audit Board).</li>
+          <li>✏️ <strong>മലപ്പുറം</strong> ജില്ലയിലെ നിലമ്പൂരിലുള്ള കേരള സ്റ്റേറ്റ് വുഡ് ഇൻഡസ്ട്രീസ് തടി ഫർണിച്ചറുകൾക്ക് പ്രശസ്തമാണ്.</li>
+          <li>ആലപ്പുഴയിലെ ചേർത്തലയിൽ പണ്ട് പ്രവർത്തിച്ചിരുന്ന എക്സെൽ ഗ്ലാസ്സസ് (Excel Glasses) സിലിക്ക മണൽ ഉപയോഗിച്ചുള്ള ഗ്ലാസ് നിർമ്മാണത്തിന് പേരുകേട്ടതായിരുന്നു. ⚠️</li>
+          <li>✏️ കൊച്ചി (പുതുവൈപ്പ് LNG ടെർമിനൽ) മുതൽ മംഗലാപുരം വരെയുള്ള ഗെയിൽ (GAIL) പൈപ്പ് ലൈൻ പദ്ധതി 2021-ൽ രാജ്യത്തിന് സമർപ്പിച്ചു.</li>
+          <li>കേരളത്തിലെ സ്റ്റാർട്ടപ്പുകളെ (Startups) പ്രോത്സാഹിപ്പിക്കുന്നതിനായി കൊച്ചിയിലെ കളമശ്ശേരിയിൽ തുടങ്ങിയ മികച്ച സംവിധാനമാണ് മേക്കർ വില്ലേജ് (Maker Village) ഉം സ്റ്റാർട്ടപ്പ് മിഷനും (KSUM).</li>
+          <li>ടെക്നോപാർക്കിൽ സ്ഥിതിചെയ്യുന്ന ഒരു പ്രശസ്തമായ ബഹിരാകാശ സംരംഭമാണ് വി.എസ്.എസ്.സി യുടെ അടുത്തുള്ള സ്വകാര്യ സ്റ്റാർട്ടപ്പുകൾ. ⚠️</li>
+          <li>കൊല്ലം ജില്ലയിലെ പുനലൂർ പേപ്പർ മിൽ 1888-ൽ ആരംഭിച്ച ഈറ്റ (Reed) ഉപയോഗിച്ചുള്ള പേപ്പർ മിൽ ആണ്. ✏️ "കേരളത്തിലെ ആദ്യ പേപ്പർ മിൽ" എന്നതാണ് ഉറപ്പുള്ള പ്രയോഗം.</li>
+          <li>തിരുവനന്തപുരം ജില്ലയിലെ ചിത്രാഞ്ജലി സ്റ്റുഡിയോ (Chitranjali Studio - KSFDC) തിരുവല്ലത്താണ് സ്ഥിതിചെയ്യുന്നത്.</li>
+          <li>റബ്ബർ ഉൽപ്പന്നങ്ങൾ നിർമ്മിക്കുന്ന സ്വകാര്യ വമ്പനായ മദ്രാസ് റബ്ബർ ഫാക്ടറിയുടെ (MRF) പ്രധാന പ്ലാന്റ് കോട്ടയത്തെ വടവാതൂരിലാണ് (Vadavathoor).</li>
+          <li>കേരളത്തിലെ കയർ ഉൽപ്പന്നങ്ങൾ അന്താരാഷ്ട്ര വിപണിയിൽ പ്രശസ്തമാകാൻ കാരണം ആലപ്പുഴയുടെ (കിഴക്കിന്റെ വെനീസ്) തുറമുഖ സൗകര്യങ്ങളാണ്. കയർ ഭൂവസ്ത്രം (Coir Geotextiles) മണ്ണൊലിപ്പ് തടയാൻ ഇപ്പോൾ വ്യാപകമായി ഉപയോഗിക്കുന്നു.</li>
+          <li>കേരള സർക്കാരിന്റെ പുതിയ വ്യാവസായിക നയം 2023 (New Industrial Policy) പ്രധാനമായും ഊന്നൽ നൽകുന്നത് പരിസ്ഥിതി സൗഹൃദമായ 'ഗ്രീൻ ഇൻഡസ്ട്രി', നിർമ്മിത ബുദ്ധി (AI), നാനോ ടെക്നോളജി എന്നീ മേഖലകൾക്കാണ്. ⚠️</li>
+          <li>കേരളത്തിലെ വ്യവസായ വകുപ്പ് മന്ത്രിയുടെ കീഴിലുള്ള വ്യവസായ വാണിജ്യ ഡയറക്ടറേറ്റ് (Directorate of Industries and Commerce) ആണ് എം.എസ്.എം.ഇ (MSME) കളുടെ വികസനത്തിനായി പ്രവർത്തിക്കുന്നത്.</li>
+        </ol>
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക Top Facts (26–30)</span>
+          <ul>
+            <li>26. ഇന്ത്യയുടെ ആദ്യ തദ്ദേശീയ വിമാനവാഹിനി INS വിക്രാന്ത് നിർമ്മിച്ചത് <strong>കൊച്ചിൻ ഷിപ്പ്‌യാർഡിൽ</strong> (2022).</li>
+            <li>27. <strong>KMML</strong> (ചവറ) ക്ലോറൈഡ് റൂട്ട്; <strong>TTPL</strong> (കൊച്ചുവേളി) സൾഫേറ്റ് റൂട്ട്.</li>
+            <li>28. <strong>FACT</strong> കേന്ദ്ര PSU; KSDP, KELTRON, KAMCO, KAL, KMML സംസ്ഥാന PSU.</li>
+            <li>29. <strong>61-ൽ KSIDC, 73-ൽ KELTRON, 90-ൽ ടെക്നോപാർക്ക്, 93-ൽ KINFRA.</strong></li>
+            <li>30. <strong>റബ്ബർ ബോർഡ് കോട്ടയം; സ്‌പൈസസ് ബോർഡും കയർ ബോർഡും കൊച്ചി.</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 21: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">21. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>വലിയ പുകക്കുഴലുകളുള്ള വൻകിട വ്യവസായങ്ങൾക്ക് പകരം സാങ്കേതികവിദ്യയിലും പരമ്പരാഗത തനിമയിലും ഊന്നിയുള്ളതാണ് കേരളത്തിന്റെ വ്യവസായ മേഖല.</li>
+          <li>എറണാകുളത്തെ ഫാക്ട് (FACT) തൊട്ട് ഐ.ടി മേഖലയുടെ തലസ്ഥാനമായ തിരുവനന്തപുരത്തെ ടെക്നോപാർക്ക് വരെ നാം കണ്ടു.</li>
+          <li>പരീക്ഷയ്ക്ക് തയ്യാറെടുക്കുമ്പോൾ സ്ഥാപനങ്ങളും അവയുടെ സ്ഥലവും (ഉദാ: KSDP → കലവൂർ, മലബാർ സിമന്റ്സ് → വാളയാർ, ഓഷധി → തൃശൂർ) ഒരു മാച്ച് ദി ഫോളോയിങ് ചോദ്യത്തിനായി എപ്പോഴും മനസ്സിൽ സൂക്ഷിക്കുക.</li>
+          <li>PSC പരീക്ഷകളിൽ കേരള ഭൂമിശാസ്ത്രം/സമ്പദ്‌വ്യവസ്ഥ ഭാഗങ്ങളിൽ നിന്ന് ഈ അധ്യായത്തിൽ നിന്നും <strong>1 മുതൽ 2 ചോദ്യങ്ങൾ വരെ</strong> ഉറപ്പായും ചോദിക്കാറുണ്ട്.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഈ അധ്യായം കേരളത്തിന്റെ വ്യാവസായിക ഭൂപടം വിശദീകരിക്കുന്നു. അടുത്ത അധ്യായത്തിൽ കേരളത്തിന്റെ കൃഷിയും കാർഷിക മേഖലയും ചർച്ച ചെയ്യും. ഈ അധ്യായം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.3.10 Kerala Industries</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'geography-2.3.10-kerala-industries';
-window.PART_TITLE = '2.3.10 Kerala Industries';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaIndustries50Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button'; saveBtn.className = 'btn-save'; saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button'; showBtn.className = 'btn-show'; showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button'; markBtn.className = 'btn-mark'; markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button'; lockBtn.className = 'btn-lock'; lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status'; statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) statusSpan.textContent = '✅ Correct';
+      else statusSpan.textContent = '❌ Wrong';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) { s.classList.remove('selected', 'correct', 'wrong'); });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) { statusSpan.textContent = 'Select an option'; return; }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
