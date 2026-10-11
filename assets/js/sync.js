@@ -17,16 +17,15 @@
   if (window.KPSC_Sync && window.KPSC_Sync.__version === 3) return;
 
   /* =================================================================
-     ▼▼▼  FIREBASE CONFIG — paste your project values  ▼▼▼
-     (leave the placeholder as-is if you haven't set up Firebase yet)
+     FIREBASE CONFIG — already filled in for kerala-psc-suite
      ================================================================= */
   var FIREBASE_CONFIG = {
-    apiKey:            "PASTE_YOUR_API_KEY",
-    authDomain:        "PASTE_YOUR_PROJECT.firebaseapp.com",
-    projectId:         "PASTE_YOUR_PROJECT_ID",
-    storageBucket:     "PASTE_YOUR_PROJECT.appspot.com",
-    messagingSenderId: "PASTE_YOUR_SENDER_ID",
-    appId:             "PASTE_YOUR_APP_ID"
+    apiKey:            "AIzaSyAG6V1Iqcve3I7pEbj5VWsFNidiDVsymaA",
+    authDomain:        "kerala-psc-suite.firebaseapp.com",
+    projectId:         "kerala-psc-suite",
+    storageBucket:     "kerala-psc-suite.firebasestorage.app",
+    messagingSenderId: "53850748882",
+    appId:             "1:53850748882:web:2c5002a9b4a4491a663a0b"
   };
 
   var ENABLE_FIREBASE = FIREBASE_CONFIG.apiKey &&
@@ -347,7 +346,7 @@
   }
 
   /* =================================================================
-     AUTO-SYNC  (this is the important part)
+     AUTO-SYNC
      ================================================================= */
   function pushNow() {
     if (currentUser) return firebasePush();
@@ -364,7 +363,6 @@
     }, SAVE_DEBOUNCE);
   }
 
-  /* Intercept every write to localStorage so we react instantly */
   (function interceptSetItem() {
     var orig = localStorage.setItem;
     localStorage.setItem = function (key, value) {
@@ -378,7 +376,6 @@
     };
   })();
 
-  /* Flush immediately when the page is hidden or closed */
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       clearTimeout(pushTimer);
@@ -390,7 +387,6 @@
     pushNow().catch(function () {});
   });
 
-  /* Pull once per browser session (silent) */
   function autoPullOnLoad() {
     if (sessionStorage.getItem(PULLED_SS) === "1") return;
 
@@ -576,8 +572,7 @@
       '    <div id="kpscLoggedOut">',
       '      <div class="kpsc-note info" id="kpscNotConfiguredNote" style="display:none">',
       '        <b>&#9888;&#65039; Login is not configured yet.</b>',
-      '        Add your Firebase config to <code>sync.js</code>. ' +
-      '        Meanwhile you can use <b>Export</b>, <b>Import</b> or <b>Gist</b> tabs.',
+      '        Add your Firebase config to <code>sync.js</code>.',
       '      </div>',
       '      <button type="button" class="kpsc-google" id="kpscGoogleBtn">',
       '        <svg viewBox="0 0 48 48" aria-hidden="true">',
@@ -598,14 +593,13 @@
       '      <div class="kpsc-note" id="kpscAuthNote" style="display:none"></div>',
       '      <div class="kpsc-note info" style="margin-top:14px">',
       '        <b>&#8505;&#65039; What gets saved?</b>',
-      '        Your answers, bookmarks and scores. Nothing personal. ' +
-      'Only you can read this data.',
+      '        Your answers, bookmarks and scores. Nothing personal.',
       '      </div>',
       '    </div>',
       '  </div>',
 
       '  <div class="kpsc-panel hidden" data-panel="export">',
-      '    <p>Copy this code and paste into the Import tab on another device. Works without login.</p>',
+      '    <p>Copy this code and paste into the Import tab on another device.</p>',
       '    <textarea class="kpsc-code" id="kpscExportCode" readonly></textarea>',
       '    <div class="kpsc-actions">',
       '      <button type="button" id="kpscCopyBtn" class="primary">&#128203; Copy</button>',
