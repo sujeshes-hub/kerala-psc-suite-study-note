@@ -1,23 +1,21 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 3
+   Version: 4
 
-   Auto-saves whenever ANY part of the site writes to localStorage
-   (kpsc_mock_* or kpsc_summaries_v1). Syncs to:
-     • Firebase Firestore  — when signed in with Google / email
-     • GitHub Gist         — when connected via token
-   Fallback: Export / Import code.
-
-   Loaded site-wide by a small loader appended to sections.js and engine.js.
+   Changes vs v3:
+     • Pulls from cloud every page load AND every time the tab regains focus
+     • No more sessionStorage guard (which caused stale data on desktop)
+     • Prevents pull loops with a `pulling` flag
+     • Reloads the page only when NEW data actually arrived
    ===================================================================== */
 (function () {
   "use strict";
 
-  if (window.KPSC_Sync && window.KPSC_Sync.__version === 3) return;
+  if (window.KPSC_Sync && window.KPSC_Sync.__version === 4) return;
 
   /* =================================================================
-     FIREBASE CONFIG — already filled in for kerala-psc-suite
+     ▼▼▼  FIREBASE CONFIG — your project values  ▼▼▼
      ================================================================= */
   var FIREBASE_CONFIG = {
     apiKey:            "AIzaSyAG6V1Iqcve3I7pEbj5VWsFNidiDVsymaA",
@@ -38,13 +36,13 @@
   var TOKEN_KEY     = "kpsc_gh_token";
   var GIST_KEY      = "kpsc_gh_gist_id";
   var LASTS_KEY     = "kpsc_last_sync";
-  var PULLED_SS     = "kpsc_pulled_this_session";
 
   var GIST_FILE     = "kerala-psc-progress.json";
   var FIRESTORE_COL = "users";
 
   /* ---------- timing ---------- */
-  var SAVE_DEBOUNCE = 900;   /* ms after last write before we push */
+  var SAVE_DEBOUNCE = 900;
+  var PULL_THROTTLE = 2500;   /* min ms between auto-pulls */
 
   /* ---------- runtime state ---------- */
   var firebaseApp   = null;
@@ -54,6 +52,8 @@
   var currentUser   = null;
 
   var pushing   = false;
+  var pulling   = false;
+  var lastPull  = 0;
   var pushTimer = null;
   var syncing   = false;
   var fbSDKPromise = null;
@@ -114,10 +114,13 @@
         var mergedAnswers   = Object.assign({}, other.answers   || {}, base.answers   || {});
         var mergedBookmarks = Object.assign({}, other.bookmarks || {}, base.bookmarks || {});
         var mergedSettings  = Object.assign({}, other.settings  || {}, base.settings  || {});
-        addedAnswers += Math.max(0, Object.keys(mergedAnswers).length - localN);
-        localStorage.setItem(k, JSON.stringify({
-          answers: mergedAnswers, bookmarks: mergedBookmarks, settings: mergedSettings
-        }));
+        var newOnes = Math.max(0, Object.keys(mergedAnswers).length - localN);
+        addedAnswers += newOnes;
+        if (newOnes > 0) {
+          localStorage.setItem(k, JSON.stringify({
+            answers: mergedAnswers, bookmarks: mergedBookmarks, settings: mergedSettings
+          }));
+        }
       } catch (e) {
         localStorage.setItem(k, JSON.stringify(remote));
       }
@@ -126,12 +129,14 @@
     try {
       var localSum  = JSON.parse(localStorage.getItem("kpsc_summaries_v1") || "{}");
       var remoteSum = payload.summaries || {};
+      var changed = false;
       Object.keys(remoteSum).forEach(function (k) {
         if (!localSum[k] || (remoteSum[k].attempted || 0) > (localSum[k].attempted || 0)) {
           localSum[k] = remoteSum[k];
+          changed = true;
         }
       });
-      localStorage.setItem("kpsc_summaries_v1", JSON.stringify(localSum));
+      if (changed) localStorage.setItem("kpsc_summaries_v1", JSON.stringify(localSum));
     } catch (e) {}
 
     return { addedMock: addedMock, addedAnswers: addedAnswers };
@@ -168,11 +173,18 @@
       firebaseApp  = window.firebase.initializeApp(FIREBASE_CONFIG);
       firebaseAuth = window.firebase.auth();
       firestoreDb  = window.firebase.firestore();
+
+      /* Persist login across sessions */
+      try {
+        firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
+      } catch (e) {}
+
       firebaseReady = true;
       return new Promise(function (resolve) {
         firebaseAuth.onAuthStateChanged(function (user) {
           currentUser = user;
           updateAccountUI();
+          if (user) autoPullOnLoad();
           resolve(user);
         });
       });
@@ -363,6 +375,7 @@
     }, SAVE_DEBOUNCE);
   }
 
+  /* Intercept every write to localStorage */
   (function interceptSetItem() {
     var orig = localStorage.setItem;
     localStorage.setItem = function (key, value) {
@@ -376,39 +389,56 @@
     };
   })();
 
+  /* Flush pending write when page hides/closes */
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       clearTimeout(pushTimer);
       pushNow().catch(function () {});
+    } else {
+      /* Tab became visible → pull fresh data */
+      autoPullOnLoad();
     }
   });
   window.addEventListener("pagehide", function () {
     clearTimeout(pushTimer);
     pushNow().catch(function () {});
   });
+  window.addEventListener("focus", function () {
+    /* Window regained focus → pull */
+    autoPullOnLoad();
+  });
 
+  /* Pull from cloud — silent, throttled, loop-safe */
   function autoPullOnLoad() {
-    if (sessionStorage.getItem(PULLED_SS) === "1") return;
+    if (pulling) return;
+    if (!currentUser && !isGistConnected()) return;
 
+    var now = Date.now();
+    if (now - lastPull < PULL_THROTTLE) return;
+    lastPull = now;
+
+    pulling = true;
     var doPull = null;
     if (firebaseReady && currentUser) {
       doPull = firebasePull();
-    } else if (isGistConnected()) {
-      doPull = pullGist();
     } else {
-      return;
+      doPull = pullGist();
     }
 
-    sessionStorage.setItem(PULLED_SS, "1");
     doPull
       .then(function (remote) {
+        pulling = false;
         if (!remote) return null;
         var added = applyPayload(remote);
         if (added.addedMock > 0 || added.addedAnswers > 0) {
-          setTimeout(function () { location.reload(); }, 150);
+          console.log("sync: pulled new data", added);
+          setTimeout(function () { location.reload(); }, 200);
         }
       })
-      .catch(function (e) { console.warn("auto-pull:", e); });
+      .catch(function (e) {
+        pulling = false;
+        console.warn("auto-pull:", e);
+      });
   }
 
   /* =================================================================
@@ -566,13 +596,15 @@
       '      <div class="kpsc-note" id="kpscAccountNote" style="display:none"></div>',
       '      <div class="kpsc-note info">',
       '        <b>&#8505;&#65039; Auto-save is on.</b>',
-      '        Every answer you give is saved to the cloud within a second.',
+      '        Every answer you give is saved to the cloud within a second. ',
+      '        Switching to another device and back pulls changes automatically.',
       '      </div>',
       '    </div>',
       '    <div id="kpscLoggedOut">',
       '      <div class="kpsc-note info" id="kpscNotConfiguredNote" style="display:none">',
       '        <b>&#9888;&#65039; Login is not configured yet.</b>',
-      '        Add your Firebase config to <code>sync.js</code>.',
+      '        Add your Firebase config to <code>sync.js</code>. ',
+      '        Meanwhile you can use <b>Export</b>, <b>Import</b> or <b>Gist</b> tabs.',
       '      </div>',
       '      <button type="button" class="kpsc-google" id="kpscGoogleBtn">',
       '        <svg viewBox="0 0 48 48" aria-hidden="true">',
@@ -593,13 +625,14 @@
       '      <div class="kpsc-note" id="kpscAuthNote" style="display:none"></div>',
       '      <div class="kpsc-note info" style="margin-top:14px">',
       '        <b>&#8505;&#65039; What gets saved?</b>',
-      '        Your answers, bookmarks and scores. Nothing personal.',
+      '        Your answers, bookmarks and scores. Nothing personal. ',
+      '        Only you can read this data.',
       '      </div>',
       '    </div>',
       '  </div>',
 
       '  <div class="kpsc-panel hidden" data-panel="export">',
-      '    <p>Copy this code and paste into the Import tab on another device.</p>',
+      '    <p>Copy this code and paste into the Import tab on another device. Works without login.</p>',
       '    <textarea class="kpsc-code" id="kpscExportCode" readonly></textarea>',
       '    <div class="kpsc-actions">',
       '      <button type="button" id="kpscCopyBtn" class="primary">&#128203; Copy</button>',
@@ -797,7 +830,6 @@
   function doSignOut() {
     if (!confirm("Sign out? Local progress stays on this device.")) return;
     signOut().then(function () {
-      sessionStorage.removeItem(PULLED_SS);
       updateAccountUI();
       flash("kpscAuthNote", "warn", "Signed out", "");
     });
@@ -1070,7 +1102,7 @@
   }
 
   window.KPSC_Sync = {
-    __version: 3,
+    __version: 4,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
