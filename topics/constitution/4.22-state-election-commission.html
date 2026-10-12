@@ -1,105 +1,1473 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>4.22 State Election Commission - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ | അധ്യായം 116</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    /* ========== LISTS ========== */
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">4.22 State Election Commission</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. ആമുഖം</a></li>
+      <li><a href="#sec2">2. ഭരണഘടനാ വ്യവസ്ഥകൾ</a></li>
+      <li><a href="#sec3">3. ഘടന, നിയമനം, നീക്കം</a></li>
+      <li><a href="#sec4">4. ചുമതലകളും അധികാരങ്ങളും</a></li>
+      <li><a href="#sec5">5. കേരള SEC</a></li>
+      <li><a href="#sec6">6. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec7">7. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec10">10. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec11">11. Mnemonics</a></li>
+      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
+      <li><a href="#sec13">13. Quick Revision</a></li>
+      <li><a href="#sec14">14. One-Page Revision</a></li>
+      <li><a href="#sec15">15. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 116</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (State Election Commission)</h1>
+      <div class="subtitle">State Election Commission | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആർട്ടിക്കിൾ 243K (പഞ്ചായത്ത് SEC), ആർട്ടിക്കിൾ 243ZA (മുനിസിപ്പാലിറ്റി SEC), ഏകാംഗ കമ്മീഷൻ, ഗവർണ്ണർ നിയമനം, ഹൈക്കോടതി ജഡ്ജിയെപ്പോലെ നീക്കം</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — കേരള SEC (1993 ഡിസംബർ 3), കൂറുമാറ്റ നിയമം (SEC തീരുമാനിക്കുന്നു), 73/74 ഭേദഗതികൾ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ECI vs SEC താരതമ്യം, വോട്ടർ പട്ടിക (ECI vs SEC), 11/12 ഷെഡ്യൂളുകൾ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — കിഷൻസിങ് തോമർ കേസ് (2006), ആദ്യ കമ്മീഷണർ (⚠️), കേരളത്തിലെ തദ്ദേശ എണ്ണം</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — 243O/243ZG (കോടതി ഇടപെടൽ വിലക്ക്)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>SEC = ഏകാംഗം</strong> (1 കമ്മീഷണർ); ECI = 3 അംഗം</li>
+            <li><strong>നിയമനം:</strong> ഗവർണ്ണർ; <strong>നീക്കം:</strong> രാഷ്ട്രപതി (HC ജഡ്ജിയെപ്പോലെ)</li>
+            <li><strong>243K = പഞ്ചായത്ത്, 243ZA = മുനിസിപ്പാലിറ്റി</strong></li>
+            <li><strong>കേരള SEC:</strong> 1993 ഡിസംബർ 3; HQ തിരുവനന്തപുരം</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. ആമുഖം (Introduction)</h2>
+      <div class="section-body">
+        <p>ഇന്ത്യൻ ഭരണഘടനയുടെ <strong>ഒൻപതാം ഭാഗത്തിൽ (Part IX)</strong>, പഞ്ചായത്തീരാജ് സംവിധാനങ്ങളുമായി ബന്ധപ്പെട്ടാണ് സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനെക്കുറിച്ച് (SEC) പ്രതിപാദിക്കുന്നത്.</p>
+
+        <div class="correction">
+          <span class="box-label">✏️ വ്യക്തത</span>
+          <p>ഒൻപതാം ഭാഗം (Part IX, ആർട്ടിക്കിൾ 243–243O) <strong>പഞ്ചായത്തുകളെ</strong> സംബന്ധിച്ചതാണ്. <strong>മുനിസിപ്പാലിറ്റികളെ</strong> സംബന്ധിച്ച വ്യവസ്ഥകൾ <strong>ഒൻപത് എ ഭാഗത്തിൽ (Part IXA, ആർട്ടിക്കിൾ 243P–243ZG)</strong> ആണ്. ആർട്ടിക്കിൾ 243ZA ഈ ഭാഗത്തിലാണ്.</p>
+        </div>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷന് കീഴിലല്ല, മറിച്ച് <strong>സ്വതന്ത്രമായി</strong> പ്രവർത്തിക്കുന്ന ഒരു ഭരണഘടനാ സ്ഥാപനമാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങളിലെ (പഞ്ചായത്ത്, മുൻസിപ്പാലിറ്റി) വോട്ടെടുപ്പ് നിഷ്പക്ഷമായി നടത്തുന്നതിനാണ് ഇത് രൂപീകരിച്ചിരിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഉറവിടം:</strong> 73-ാം ഭേദഗതി (1992, പ്രാബല്യം 1993 ഏപ്രിൽ 24) പഞ്ചായത്തുകൾക്കും, 74-ാം ഭേദഗതി (1992, പ്രാബല്യം 1993 ജൂൺ 1) മുനിസിപ്പാലിറ്റികൾക്കും ഭരണഘടനാ പദവി നൽകി.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഷെഡ്യൂളുകൾ:</strong> 11-ാം ഷെഡ്യൂൾ = പഞ്ചായത്ത് (29 വിഷയങ്ങൾ). 12-ാം ഷെഡ്യൂൾ = മുനിസിപ്പാലിറ്റി (18 വിഷയങ്ങൾ).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>73 ഗ്രാമം (പഞ്ചായത്ത്), 74 പട്ടണം (മുനിസിപ്പാലിറ്റി)</strong>"; "<strong>ഭാഗം 9 = ഗ്രാമം, ഭാഗം 9A = അർബൻ</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ഭരണഘടനാ വ്യവസ്ഥകൾ ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പ്രധാന ഭരണഘടനാ വ്യവസ്ഥകൾ</h2>
+      <div class="section-body">
+        <h3>ആർട്ടിക്കിളുകൾ (Articles - Very Important)</h3>
+        <p>സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനെക്കുറിച്ച് രണ്ട് ആർട്ടിക്കിളുകളിൽ പ്രതിപാദിക്കുന്നുണ്ട്:</p>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Article 243 K:</strong> ഗ്രാമപ്രദേശങ്ങളിലെ <strong>പഞ്ചായത്തുകളിലേക്കുള്ള</strong> തിരഞ്ഞെടുപ്പ് നടത്തുന്നതിനായി സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനെ നിയമിക്കുന്നതിനെക്കുറിച്ച് ഈ ആർട്ടിക്കിളിൽ പറയുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Article 243 ZA:</strong> നഗരപ്രദേശങ്ങളിലെ <strong>മുൻസിപ്പാലിറ്റികളിലേക്കും കോർപ്പറേഷനുകളിലേക്കുമുള്ള</strong> തിരഞ്ഞെടുപ്പ് നടത്തുന്നതിനായി സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷന് അധികാരം നൽകുന്നത് ഈ ആർട്ടിക്കിളാണ്.</li>
+        </ul>
+
+        <p><em>(ചുരുക്കത്തിൽ: 243 K ഗ്രാമങ്ങൾക്കും, 243 ZA നഗരങ്ങൾക്കും).</em></p>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അനുബന്ധ ആർട്ടിക്കിളുകൾ</span>
+          <ul>
+            <li><strong>243E / 243U:</strong> പഞ്ചായത്ത്/മുനിസിപ്പാലിറ്റിയുടെ കാലാവധി 5 വർഷം. കാലാവധി തീരുംമുമ്പ് തിരഞ്ഞെടുപ്പ് നടത്തണം. പിരിച്ചുവിട്ടാൽ 6 മാസത്തിനകം.</li>
+            <li><strong>243I / 243Y:</strong> സംസ്ഥാന ധനകാര്യ കമ്മീഷൻ (ഗവർണ്ണർ നിയമിക്കുന്നു, ഓരോ 5 വർഷത്തിലും).</li>
+            <li><strong>243O / 243ZG:</strong> തിരഞ്ഞെടുപ്പ് വിഷയങ്ങളിൽ കോടതികളുടെ ഇടപെടലിന് വിലക്ക് (Bar to interference by courts).</li>
+            <li><strong>ആർട്ടിക്കിൾ 243K(4):</strong> പഞ്ചായത്ത് തിരഞ്ഞെടുപ്പിനെക്കുറിച്ച് സംസ്ഥാന നിയമസഭയ്ക്ക് നിയമം നിർമ്മിക്കാം. 243ZA-യിലും ഇതേ വ്യവസ്ഥ.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>K = കർഷകർ → ഗ്രാമം/പഞ്ചായത്ത്; ZA = 'Z മുതൽ A വരെ' വളർന്ന നഗരം → മുനിസിപ്പാലിറ്റി</strong>"; "<strong>243K = പഞ്ചായത്ത് (ഭാഗം 9), 243ZA = നഗരം (ഭാഗം 9A)</strong>".</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 243K vs 243ZA ഘടന</span>
+          <svg viewBox="0 0 700 200" width="100%" height="auto" role="img" aria-label="243K vs 243ZA">
+            <rect x="20" y="40" width="310" height="140" rx="10" fill="#00695c" opacity="0.9"/>
+            <text x="175" y="70" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">ആർട്ടിക്കിൾ 243 K</text>
+            <text x="175" y="95" text-anchor="middle" fill="#ffd54f" font-size="13">പഞ്ചായത്ത്</text>
+            <text x="175" y="118" text-anchor="middle" fill="#fff" font-size="11">ഭാഗം 9 (Part IX)</text>
+            <text x="175" y="140" text-anchor="middle" fill="#fff" font-size="11">73-ാം ഭേദഗതി</text>
+            <text x="175" y="162" text-anchor="middle" fill="#fff" font-size="11">11-ാം ഷെഡ്യൂൾ (29 വിഷയങ്ങൾ)</text>
+
+            <rect x="370" y="40" width="310" height="140" rx="10" fill="#1565c0" opacity="0.9"/>
+            <text x="525" y="70" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">ആർട്ടിക്കിൾ 243 ZA</text>
+            <text x="525" y="95" text-anchor="middle" fill="#ffd54f" font-size="13">മുനിസിപ്പാലിറ്റി</text>
+            <text x="525" y="118" text-anchor="middle" fill="#fff" font-size="11">ഭാഗം 9A (Part IXA)</text>
+            <text x="525" y="140" text-anchor="middle" fill="#fff" font-size="11">74-ാം ഭേദഗതി</text>
+            <text x="525" y="162" text-anchor="middle" fill="#fff" font-size="11">12-ാം ഷെഡ്യൂൾ (18 വിഷയങ്ങൾ)</text>
+
+            <text x="350" y="25" text-anchor="middle" fill="#4a148c" font-size="14" font-weight="bold">SEC-യുടെ രണ്ട് ആർട്ടിക്കിളുകൾ</text>
+          </svg>
+          <div class="viz-caption">📊 243K (പഞ്ചായത്ത്) vs 243ZA (മുനിസിപ്പാലിറ്റി)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: ഘടന, നിയമനം, നീക്കം ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. ഘടന, നിയമനം, നീക്കം ചെയ്യൽ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഘടന:</strong> കേന്ദ്ര ഇലക്ഷൻ കമ്മീഷൻ ഒരു മൂന്നംഗ സമിതിയാണെങ്കിൽ, സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ എപ്പോഴും ഒരു <strong>ഏകാംഗ സമിതിയാണ് (Single-member body)</strong>. അതായത് ഒരു 'സ്റ്റേറ്റ് ഇലക്ഷൻ കമ്മീഷണർ' മാത്രമേ ഉണ്ടായിരിക്കുകയുള്ളൂ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷണറെ നിയമിക്കുന്നത് <strong>ഗവർണ്ണറാണ്</strong> (Governor).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സേവന വ്യവസ്ഥകൾ:</strong> കമ്മീഷണറുടെ സേവന വ്യവസ്ഥകളും കാലാവധിയും നിശ്ചയിക്കുന്നത് ഗവർണ്ണറാണ്. നിയമനത്തിന് ശേഷം അദ്ദേഹത്തിന് ദോഷകരമാകുന്ന രീതിയിൽ ഈ വ്യവസ്ഥകൾ മാറ്റാൻ കഴിയില്ല.
+            <div class="correction">
+              <span class="box-label">✏️ വ്യക്തത</span>
+              <p>ഇത് സംസ്ഥാന നിയമസഭ നിർമ്മിക്കുന്ന നിയമത്തിന് വിധേയമായി ഗവർണ്ണർ ചട്ടങ്ങളിലൂടെ (Rules) നിശ്ചയിക്കുന്നതാണ്.</p>
+            </div>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നീക്കം ചെയ്യൽ (Removal):</strong> ഗവർണ്ണറാണ് നിയമിക്കുന്നതെങ്കിലും ഗവർണ്ണർക്ക് കമ്മീഷണറെ മാറ്റാൻ കഴിയില്ല. ഒരു <strong>ഹൈക്കോടതി ജഡ്ജിയെ പദവിയിൽ നിന്ന് നീക്കം ചെയ്യുന്ന അതേ നടപടിക്രമങ്ങളിലൂടെ (ഇംപീച്ച്മെന്റ് വഴി രാഷ്ട്രപതിക്ക്)</strong> മാത്രമേ സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷണറെ പുറത്താക്കാൻ സാധിക്കൂ. (ഇത് കമ്മീഷന്റെ സ്വാതന്ത്ര്യം ഉറപ്പാക്കുന്നു).
+            <div class="correction">
+              <span class="box-label">✏️ വ്യക്തത</span>
+              <p>"ഇംപീച്ച്മെന്റ്" എന്നത് സാധാരണ പ്രയോഗമാണ്. ഹൈക്കോടതി ജഡ്ജിയെ നീക്കം ചെയ്യുന്ന രീതി = <strong>പാർലമെന്റിന്റെ ഇരുസഭകളുടെയും പ്രമേയത്തെ (address) തുടർന്ന് രാഷ്ട്രപതി നീക്കം ചെയ്യുന്നത്</strong> (ആർട്ടിക്കിൾ 217). കാരണങ്ങൾ: തെളിയിക്കപ്പെട്ട ദുഷ്പെരുമാറ്റം/കഴിവില്ലായ്മ.</p>
+            </div>
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ജീവനക്കാർ:</strong> സംസ്ഥാന കമ്മീഷൻ ആവശ്യപ്പെട്ടാൽ ഗവർണ്ണർ ആവശ്യമായ ജീവനക്കാരെ ലഭ്യമാക്കണം (243K(3)).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഉദ്യോഗത്തിന്റെ സ്വാതന്ത്ര്യം:</strong> കേന്ദ്ര CEC-യെപ്പോലെ <strong>സുപ്രീം കോടതി ജഡ്ജിയെ</strong> അല്ല, <strong>ഹൈക്കോടതി ജഡ്ജിയെ</strong> നീക്കുന്ന രീതിയാണ് SEC-ക്ക്.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>സംസ്ഥാനത്തിന് ഹൈക്കോടതി, കേന്ദ്രത്തിന് സുപ്രീം കോടതി</strong>" (SEC → HC judge, CEC → SC judge).</p>
+          <p>"<strong>ഗവർണ്ണർ നിയമിക്കും, ഗവർണ്ണർ മാറ്റില്ല</strong>".</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 ECI vs SEC - നിയമനവും നീക്കവും</span>
+          <svg viewBox="0 0 700 200" width="100%" height="auto" role="img" aria-label="ECI vs SEC">
+            <rect x="20" y="40" width="310" height="140" rx="10" fill="#4a148c" opacity="0.9"/>
+            <text x="175" y="70" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">ECI (കേന്ദ്രം)</text>
+            <text x="175" y="95" text-anchor="middle" fill="#ffd54f" font-size="12">3 അംഗം</text>
+            <text x="175" y="118" text-anchor="middle" fill="#fff" font-size="11">നിയമനം: രാഷ്ട്രപതി</text>
+            <text x="175" y="140" text-anchor="middle" fill="#fff" font-size="11">നീക്കം: SC ജഡ്ജിയെപ്പോലെ</text>
+            <text x="175" y="162" text-anchor="middle" fill="#fff" font-size="11">കാലാവധി: 6 വർഷം/65</text>
+
+            <rect x="370" y="40" width="310" height="140" rx="10" fill="#00695c" opacity="0.9"/>
+            <text x="525" y="70" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">SEC (സംസ്ഥാനം)</text>
+            <text x="525" y="95" text-anchor="middle" fill="#ffd54f" font-size="12">1 അംഗം (ഏകാംഗം)</text>
+            <text x="525" y="118" text-anchor="middle" fill="#fff" font-size="11">നിയമനം: ഗവർണ്ണർ</text>
+            <text x="525" y="140" text-anchor="middle" fill="#fff" font-size="11">നീക്കം: HC ജഡ്ജിയെപ്പോലെ</text>
+            <text x="525" y="162" text-anchor="middle" fill="#fff" font-size="11">കാലാവധി: 5/65 (കേരളം ⚠️)</text>
+
+            <text x="350" y="25" text-anchor="middle" fill="#4a148c" font-size="14" font-weight="bold">ECI vs SEC താരതമ്യം</text>
+          </svg>
+          <div class="viz-caption">📊 "സംസ്ഥാനത്തിന് HC, കേന്ദ്രത്തിന് SC"</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: ചുമതലകളും അധികാരങ്ങളും ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. പ്രധാന ചുമതലകളും അധികാരങ്ങളും (Functions)</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാനത്തെ ഗ്രാമപഞ്ചായത്തുകൾ, ബ്ലോക്ക് പഞ്ചായത്തുകൾ, ജില്ലാ പഞ്ചായത്തുകൾ, മുൻസിപ്പാലിറ്റികൾ, കോർപ്പറേഷനുകൾ എന്നിവയിലേക്കുള്ള (തദ്ദേശ സ്വയംഭരണ തിരഞ്ഞെടുപ്പുകൾ) വോട്ടെടുപ്പ് നടത്തുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഈ തിരഞ്ഞെടുപ്പുകൾക്കായുള്ള <strong>വോട്ടർ പട്ടിക (Electoral rolls) തയ്യാറാക്കുക</strong>. (കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷന്റെ വോട്ടർ പട്ടിക തദ്ദേശ തിരഞ്ഞെടുപ്പുകൾക്ക് നേരിട്ട് ഉപയോഗിക്കാൻ കഴിയില്ല; സംസ്ഥാന കമ്മീഷൻ വാർഡ് അടിസ്ഥാനത്തിൽ പുതിയ പട്ടിക തയ്യാറാക്കണം).
+            <p>⚠️ ഇത് കേരളത്തിലെ രീതിയാണ്. ചില സംസ്ഥാനങ്ങൾ നിയമസഭാ വോട്ടർ പട്ടിക തദ്ദേശ തിരഞ്ഞെടുപ്പിന് സ്വീകരിക്കാറുണ്ട്.</p>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐</span> തദ്ദേശ സ്ഥാപനങ്ങളിലെ വാർഡുകൾ വിഭജിക്കുക (Delimitation of wards). ⚠️ കേരളത്തിൽ വാർഡ് വിഭജനം നടത്തുന്നത് ആരാണെന്ന് (ഡീലിമിറ്റേഷൻ കമ്മീഷൻ / SEC) നിങ്ങളുടെ ഗൈഡിൽ ഉറപ്പാക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> തദ്ദേശ തിരഞ്ഞെടുപ്പുകളിൽ മത്സരിക്കുന്ന സ്ഥാനാർത്ഥികൾക്ക് തിരഞ്ഞെടുപ്പ് ചിഹ്നങ്ങൾ അനുവദിക്കുക.</li>
+        </ol>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഭരണഘടനാ വാക്യം</span>
+          <p>വോട്ടർ പട്ടിക തയ്യാറാക്കലിന്റെയും എല്ലാ തിരഞ്ഞെടുപ്പുകളുടെയും <strong>മേൽനോട്ടം, നിർദ്ദേശം, നിയന്ത്രണം (Superintendence, Direction and Control)</strong> SEC-യിൽ നിക്ഷിപ്തമാണ് (243K(1), 243ZA(1)).</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ചെയ്യാത്തത്</span>
+          <p>ലോക്സഭ, നിയമസഭ, രാജ്യസഭ, രാഷ്ട്രപതി, ഉപരാഷ്ട്രപതി തിരഞ്ഞെടുപ്പുകൾ SEC നടത്തുന്നില്ല. അവ കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (ആർട്ടിക്കിൾ 324).</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ കേസ് (ചോദ്യ സാധ്യത കുറവ്)</span>
+          <p><strong>കിഷൻസിങ് തോമർ കേസ് (2006)</strong> – SEC-യുടെ അധികാരങ്ങളും സ്വാതന്ത്ര്യവും.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>SEC = ലോക്കൽ (ഗ്രാമം + നഗരം)</strong>, <strong>ECI = ലോക്സഭ + നിയമസഭ + രാഷ്ട്രപതി</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: കേരള SEC ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. കേരള സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (Kerala SEC)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രൂപീകരണം:</strong> 73-ാം ഭരണഘടനാ ഭേദഗതിയുടെയും കേരള പഞ്ചായത്തീരാജ് നിയമത്തിന്റെയും അടിസ്ഥാനത്തിൽ <strong>1993 ഡിസംബർ 3-നാണ്</strong> കേരള സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ നിലവിൽ വന്നത്.
+            <p>⚠️ കേരള പഞ്ചായത്തീരാജ് ആക്ടും മുനിസിപ്പാലിറ്റി ആക്ടും 1994-ലേതാണ്. തീയതി (1993 ഡിസംബർ 3) നിങ്ങളുടെ ഗൈഡുമായി ഒത്തുനോക്കുക.</p>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആസ്ഥാനം:</strong> തിരുവനന്തപുരം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കാലാവധി:</strong> കേരളത്തിൽ സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷണറുടെ കാലാവധി <strong>5 വർഷം അല്ലെങ്കിൽ 65 വയസ്സ്</strong> ആണ്. ⚠️ (കാലാവധി സംസ്ഥാന നിയമം/ചട്ടം അനുസരിച്ചാണ്; കേന്ദ്ര CEC-ക്ക് 6 വർഷം/65.)</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കൂറുമാറ്റ നിരോധന നിയമം (Anti-Defection Law):</strong> കേരളത്തിൽ തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങളിലെ അംഗങ്ങളുടെ കൂറുമാറ്റവുമായി ബന്ധപ്പെട്ട പരാതികളിൽ അന്തിമ തീരുമാനമെടുക്കുന്നത് സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനാണ് (ഇതൊരു സവിശേഷ അധികാരമാണ്).
+            <ul>
+              <li>➕ ഇതിനുള്ള നിയമം: <strong>Kerala Local Authorities (Prohibition of Defection) Act, 1999</strong>. ⚠️ (കേരളത്തിന്റെ സവിശേഷത; നിയമസഭ/പാർലമെന്റിലെ കൂറുമാറ്റം തീരുമാനിക്കുന്നത് സ്പീക്കർ/ചെയർമാൻ, 10-ാം ഷെഡ്യൂൾ.)</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐</span> <strong>ആദ്യ കമ്മീഷണർ:</strong> എം.എസ്.കെ. രാമസ്വാമി. ⚠️ ഉറപ്പാക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരളത്തിലെ തദ്ദേശ സ്ഥാപനങ്ങൾ (ഏകദേശം):</strong> ഗ്രാമപഞ്ചായത്ത് 941, ബ്ലോക്ക് പഞ്ചായത്ത് 152, ജില്ലാ പഞ്ചായത്ത് 14, മുനിസിപ്പാലിറ്റി 87, കോർപ്പറേഷൻ 6 (തിരുവനന്തപുരം, കൊല്ലം, കൊച്ചി, തൃശൂർ, കോഴിക്കോട്, കണ്ണൂർ). ⚠️ ആകെ ഏകദേശം 1200. വാർഡ് വിഭജനത്തിന് ശേഷം എണ്ണം മാറാം, ഗൈഡ് നോക്കുക.</li>
+          <li><span class="stars">⭐⭐</span> <strong>കേരളത്തിന്റെ ത്രിതല പഞ്ചായത്ത്:</strong> ഗ്രാമം → ബ്ലോക്ക് → ജില്ല.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>കേരള SEC = 93 ഡിസംബർ 3, തിരുവനന്തപുരത്ത്</strong>";</p>
+          <p>"<strong>കൂറുമാറ്റം: കേരള തദ്ദേശത്തിൽ SEC, നിയമസഭയിൽ സ്പീക്കർ</strong>."</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📅 കേരള SEC സമയരേഖ</span>
+          <svg viewBox="0 0 900 180" width="100%" height="auto" role="img" aria-label="കേരള SEC ചരിത്രം">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="120" cy="100" r="10" fill="#c62828"/>
+            <text x="120" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1992</text>
+            <text x="120" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">73/74 ഭേദഗതി</text>
+
+            <circle cx="300" cy="100" r="10" fill="#ef6c00"/>
+            <text x="300" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1993 ഏപ്രിൽ 24</text>
+            <text x="300" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">73-ാം ഭേദഗതി പ്രാബല്യം</text>
+
+            <circle cx="480" cy="100" r="10" fill="#2e7d32"/>
+            <text x="480" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1993 ഡിസംബർ 3</text>
+            <text x="480" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കേരള SEC രൂപീകരണം</text>
+
+            <circle cx="660" cy="100" r="10" fill="#1565c0"/>
+            <text x="660" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1994</text>
+            <text x="660" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കേരള പഞ്ചായത്ത് ആക്ട്</text>
+
+            <circle cx="820" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="820" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1999</text>
+            <text x="820" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കൂറുമാറ്റ നിയമം</text>
+          </svg>
+          <div class="viz-caption">📅 കേരള SEC-യുടെ പരിണാമം</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഇന്ത്യയിലെ തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങളിലേക്കുള്ള (Panchayats) തിരഞ്ഞെടുപ്പുകൾ നടത്തുന്നതിന് ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (State Election Commission) രൂപീകരിച്ചിട്ടുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 324</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 243 I</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 243 K</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 280</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആർട്ടിക്കിൾ 243 K</div>
+            <div class="explanation">324 = കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ. 243I = സംസ്ഥാന ധനകാര്യ കമ്മീഷൻ. 280 = കേന്ദ്ര ധനകാര്യ കമ്മീഷൻ.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷണറെ (State Election Commissioner) നിയമിക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. രാഷ്ട്രപതി</span>
+            <span data-opt="B">B. മുഖ്യമന്ത്രി</span>
+            <span data-opt="C">C. ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="D">D. സംസ്ഥാന ഗവർണ്ണർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) സംസ്ഥാന ഗവർണ്ണർ</div>
+            <div class="explanation">കേന്ദ്ര CEC-യെ നിയമിക്കുന്നത് രാഷ്ട്രപതി. SEC-യെ ഗവർണ്ണർ.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ഒരു സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷണറെ തന്റെ പദവിയിൽ നിന്ന് നീക്കം ചെയ്യുന്നതിനുള്ള (Removal) നടപടിക്രമം താഴെ പറയുന്നവയിൽ ഏതിന് സമാനമാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സംസ്ഥാന ഗവർണ്ണറെ നീക്കം ചെയ്യുന്നതിന് സമാനം</span>
+            <span data-opt="B">B. ഹൈക്കോടതി ജഡ്ജിയെ നീക്കം ചെയ്യുന്നതിന് സമാനം</span>
+            <span data-opt="C">C. മുഖ്യമന്ത്രിയെ മാറ്റുന്നതിന് സമാനം</span>
+            <span data-opt="D">D. അഡ്വക്കേറ്റ് ജനറലിനെ മാറ്റുന്നതിന് സമാനം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഹൈക്കോടതി ജഡ്ജിയെ നീക്കം ചെയ്യുന്നതിന് സമാനം</div>
+            <div class="explanation">രാഷ്ട്രപതിക്ക് മാത്രമേ മാറ്റാൻ കഴിയൂ. അഡ്വക്കേറ്റ് ജനറൽ ഗവർണ്ണറുടെ ഇഷ്ടപ്രകാരം തുടരുന്നു (അങ്ങനെ പിരിച്ചുവിടാം). SEC-ക്ക് ആ പരിരക്ഷയില്ല, അതാണ് സ്വാതന്ത്ര്യം.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കേരള സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (Kerala SEC) രൂപീകൃതമായ വർഷം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1950</span>
+            <span data-opt="B">B. 1992</span>
+            <span data-opt="C">C. 1993</span>
+            <span data-opt="D">D. 2001</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1993 (December 3, 1993)</div>
+            <div class="explanation">1950 = കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ. 1992 = 73-ാം/74-ാം ഭേദഗതി പാസായ വർഷം.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. Statement Question: സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവന ഏത്?<br>
+            1. നിയമസഭാ തിരഞ്ഞെടുപ്പിനുള്ള വോട്ടർ പട്ടിക തയ്യാറാക്കുന്നത് സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനാണ്.<br>
+            2. സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ എപ്പോഴും ഒരു ഏകാംഗ കമ്മീഷനായിരിക്കും.<br>
+            3. കേരളത്തിൽ തദ്ദേശ സ്ഥാപനങ്ങളിലെ കൂറുമാറ്റവുമായി ബന്ധപ്പെട്ട പരാതികളിൽ തീർപ്പുകൽപ്പിക്കുന്നത് സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 2, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 1 തെറ്റാണ്, കാരണം നിയമസഭാ തിരഞ്ഞെടുപ്പിന്റെ വോട്ടർ പട്ടിക തയ്യാറാക്കുന്നത് കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷനാണ്.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷന് മുനിസിപ്പാലിറ്റി/കോർപ്പറേഷൻ തിരഞ്ഞെടുപ്പുകളുടെ ചുമതല നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 243 K</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 243 ZA</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 243 I</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 243 Y</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 243 ZA</div>
+            <div class="explanation">243K പഞ്ചായത്ത്. 243I, 243Y സംസ്ഥാന ധനകാര്യ കമ്മീഷനുകൾ.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. പഞ്ചായത്തുകളെക്കുറിച്ച് പ്രതിപാദിക്കുന്ന ഭരണഘടനയുടെ ഭാഗം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭാഗം VIII</span>
+            <span data-opt="B">B. ഭാഗം X</span>
+            <span data-opt="C">C. ഭാഗം IX</span>
+            <span data-opt="D">D. ഭാഗം IXA</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഭാഗം IX</div>
+            <div class="explanation">73-ാം ഭേദഗതിയിലൂടെ ചേർത്തത്. മുനിസിപ്പാലിറ്റി = ഭാഗം IXA (74-ാം ഭേദഗതി).</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. 74-ാം ഭരണഘടനാ ഭേദഗതി (1992) ഭരണഘടനയിൽ കൂട്ടിച്ചേർത്ത ഭാഗം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭാഗം IX</span>
+            <span data-opt="B">B. ഭാഗം IXB</span>
+            <span data-opt="C">C. ഭാഗം X</span>
+            <span data-opt="D">D. ഭാഗം IXA</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഭാഗം IXA</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 243P മുതൽ 243ZG വരെ. 12-ാം ഷെഡ്യൂളും ഇതുമായി ബന്ധപ്പെട്ടത്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. കേരളത്തിൽ തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങളിലെ അംഗങ്ങളുടെ കൂറുമാറ്റ പരാതികളിൽ തീർപ്പുകൽപ്പിക്കുന്ന അധികാരി ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹൈക്കോടതി</span>
+            <span data-opt="B">B. സ്പീക്കർ</span>
+            <span data-opt="C">C. സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ</span>
+            <span data-opt="D">D. ഗവർണ്ണർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ</div>
+            <div class="explanation">നിയമസഭാംഗങ്ങളുടെ കൂറുമാറ്റം സ്പീക്കർ തീരുമാനിക്കുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷനിലെ അംഗങ്ങളുടെ എണ്ണം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1</span>
+            <span data-opt="B">B. 2</span>
+            <span data-opt="C">C. 3</span>
+            <span data-opt="D">D. 5</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1</div>
+            <div class="explanation">SEC ഏകാംഗ കമ്മീഷനാണ്. കേന്ദ്ര ECI-ൽ 3 അംഗങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. കേന്ദ്ര ചീഫ് ഇലക്ഷൻ കമ്മീഷണറെ പദവിയിൽ നിന്ന് നീക്കം ചെയ്യുന്നത് ആരെ നീക്കം ചെയ്യുന്ന രീതിയിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹൈക്കോടതി ജഡ്ജി</span>
+            <span data-opt="B">B. സുപ്രീം കോടതി ജഡ്ജി</span>
+            <span data-opt="C">C. ജില്ലാ ജഡ്ജി</span>
+            <span data-opt="D">D. ഗവർണ്ണർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സുപ്രീം കോടതി ജഡ്ജി</div>
+            <div class="explanation">SEC-യെ ഹൈക്കോടതി ജഡ്ജിയെപ്പോലെ.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. 11-ാം ഷെഡ്യൂളിൽ (പഞ്ചായത്തുകൾ) ഉൾപ്പെടുത്തിയിട്ടുള്ള വിഷയങ്ങളുടെ എണ്ണം?</div>
+          <div class="options">
+            <span data-opt="A">A. 18</span>
+            <span data-opt="B">B. 36</span>
+            <span data-opt="C">C. 24</span>
+            <span data-opt="D">D. 29</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 29</div>
+            <div class="explanation">12-ാം ഷെഡ്യൂളിൽ (മുനിസിപ്പാലിറ്റി) 18 വിഷയങ്ങൾ.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. മുനിസിപ്പാലിറ്റികളെക്കുറിച്ചുള്ള 12-ാം ഷെഡ്യൂളിൽ എത്ര വിഷയങ്ങളാണുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 29</span>
+            <span data-opt="B">B. 18</span>
+            <span data-opt="C">C. 24</span>
+            <span data-opt="D">D. 12</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 18</div>
+            <div class="explanation">74-ാം ഭേദഗതിയിലൂടെ കൂട്ടിച്ചേർത്തത്.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ദേശീയ പഞ്ചായത്തീരാജ് ദിനമായി ആചരിക്കുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഏപ്രിൽ 24</span>
+            <span data-opt="B">B. ജനുവരി 25</span>
+            <span data-opt="C">C. ഒക്ടോബർ 2</span>
+            <span data-opt="D">D. ഡിസംബർ 3</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ഏപ്രിൽ 24</div>
+            <div class="explanation">73-ാം ഭേദഗതി പ്രാബല്യത്തിൽ വന്ന ദിവസം (1993). ജനുവരി 25 ദേശീയ വോട്ടർ ദിനം.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. തിരഞ്ഞെടുപ്പ് വിഷയങ്ങളിൽ (പഞ്ചായത്ത്) കോടതികളുടെ ഇടപെടൽ വിലക്കുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 243 K</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 243 O</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 243 E</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 243 I</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 243 O</div>
+            <div class="explanation">മുനിസിപ്പാലിറ്റിക്ക് 243ZG.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>6</td><td>(B)</td><td>11</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(D)</td><td>7</td><td>(C)</td><td>12</td><td>(D)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>8</td><td>(D)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(C)</td><td>14</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(A)</td><td>15</td><td>(B)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: PSC വിശകലനം ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം & മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ആർട്ടിക്കിൾ 243K (പഞ്ചായത്ത്), 243ZA (മുനിസിപ്പാലിറ്റി); SEC-യെ നിയമിക്കുന്നത് ഗവർണ്ണർ; നീക്കം ചെയ്യുന്ന രീതി (ഹൈക്കോടതി ജഡ്ജിയെപ്പോലെ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> SEC ഏകാംഗ കമ്മീഷൻ, കേരള SEC രൂപീകരണം (1993 ഡിസംബർ 3), കേരളത്തിലെ കൂറുമാറ്റ പരാതികൾ (SEC).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> CEC vs SEC താരതമ്യം, വോട്ടർ പട്ടിക (ECI vs SEC), 73/74-ാം ഭേദഗതി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>Previous Question Trend:</strong> "സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷണറെ നിയമിക്കുന്നത്?" (ഗവർണ്ണർ), "ആർട്ടിക്കിൾ 243K ഏത് തിരഞ്ഞെടുപ്പുമായി ബന്ധപ്പെട്ടത്?" (പഞ്ചായത്ത്), "കേരള SEC രൂപീകരിച്ച വർഷം?" (1993) എന്നിവ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (ആർട്ടിക്കിൾ 324)</strong></td><td><strong>സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (243K / 243ZA)</strong></td><td>ECI: ലോക്സഭ, രാജ്യസഭ, നിയമസഭ, രാഷ്ട്രപതി, ഉപരാഷ്ട്രപതി. SEC: പഞ്ചായത്ത്, മുനിസിപ്പാലിറ്റി, കോർപ്പറേഷൻ.</td></tr>
+              <tr><td><strong>CEC: 3 അംഗം, രാഷ്ട്രപതി നിയമിക്കും, SC ജഡ്ജിയെപ്പോലെ നീക്കം</strong></td><td><strong>SEC: 1 അംഗം, ഗവർണ്ണർ നിയമിക്കും, HC ജഡ്ജിയെപ്പോലെ നീക്കം</strong></td><td>നിയമിക്കുന്നതും നീക്കുന്നതും വ്യത്യസ്ത അധികാരികളാണ് (SEC: നിയമനം ഗവർണ്ണർ, നീക്കം രാഷ്ട്രപതി).</td></tr>
+              <tr><td><strong>ആർട്ടിക്കിൾ 243K</strong></td><td><strong>ആർട്ടിക്കിൾ 243ZA</strong></td><td>243K = പഞ്ചായത്ത് (ഭാഗം 9). 243ZA = മുനിസിപ്പാലിറ്റി (ഭാഗം 9A).</td></tr>
+              <tr><td><strong>ആർട്ടിക്കിൾ 243K (SEC)</strong></td><td><strong>ആർട്ടിക്കിൾ 243I (സംസ്ഥാന ധനകാര്യ കമ്മീഷൻ)</strong></td><td>243I പഞ്ചായത്തുകളുടെ സാമ്പത്തിക സ്ഥിതി പരിശോധിക്കുന്ന ധനകാര്യ കമ്മീഷൻ. മുനിസിപ്പാലിറ്റിക്ക് 243Y.</td></tr>
+              <tr><td><strong>ECI വോട്ടർ പട്ടിക (നിയമസഭ/പാർലമെന്റ്)</strong></td><td><strong>SEC വോട്ടർ പട്ടിക (തദ്ദേശ)</strong></td><td>കേരളത്തിൽ രണ്ടും വെവ്വേറെ പട്ടികകൾ.</td></tr>
+              <tr><td><strong>കേരള തദ്ദേശ കൂറുമാറ്റം: SEC</strong></td><td><strong>നിയമസഭ/പാർലമെന്റ് കൂറുമാറ്റം: സ്പീക്കർ/ചെയർമാൻ</strong></td><td>10-ാം ഷെഡ്യൂൾ പ്രകാരം സഭാംഗങ്ങളുടെ കൂറുമാറ്റം സഭാധ്യക്ഷൻ തീരുമാനിക്കുന്നു. കേരള തദ്ദേശത്തിൽ SEC.</td></tr>
+              <tr><td><strong>SEC കാലാവധി (കേരളം): 5 വർഷം/65 വയസ്സ്</strong></td><td><strong>CEC കാലാവധി: 6 വർഷം/65 വയസ്സ്</strong></td><td>SEC-ക്ക് സംസ്ഥാന നിയമം/ചട്ടം അനുസരിച്ചാണ്. ⚠️</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: കേന്ദ്ര vs സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>കേന്ദ്ര തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (ECI)</th><th>സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (SEC)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ആർട്ടിക്കിൾ</td><td>324 (ഭാഗം 15)</td><td>243K (ഭാഗം 9), 243ZA (ഭാഗം 9A)</td></tr>
+              <tr><td>അംഗങ്ങൾ</td><td>CEC + 2 EC (3 അംഗം)</td><td>1 (ഏകാംഗം)</td></tr>
+              <tr><td>നിയമിക്കുന്നത്</td><td>രാഷ്ട്രപതി</td><td>ഗവർണ്ണർ</td></tr>
+              <tr><td>നീക്കം ചെയ്യുന്ന രീതി</td><td>CEC: സുപ്രീം കോടതി ജഡ്ജിയെപ്പോലെ</td><td>ഹൈക്കോടതി ജഡ്ജിയെപ്പോലെ</td></tr>
+              <tr><td>തിരഞ്ഞെടുപ്പുകൾ</td><td>ലോക്സഭ, രാജ്യസഭ, നിയമസഭ, രാഷ്ട്രപതി, ഉപരാഷ്ട്രപതി</td><td>പഞ്ചായത്ത്, മുനിസിപ്പാലിറ്റി, കോർപ്പറേഷൻ</td></tr>
+              <tr><td>കാലാവധി</td><td>6 വർഷം/65 വയസ്സ്</td><td>സംസ്ഥാന നിയമം/ചട്ടം (കേരളം: 5 വർഷം/65 ⚠️)</td></tr>
+              <tr><td>ആസ്ഥാനം</td><td>ന്യൂഡൽഹി (നിർവാചൻ സദൻ)</td><td>സംസ്ഥാന തലസ്ഥാനം (കേരളം: തിരുവനന്തപുരം)</td></tr>
+              <tr><td>രൂപീകരണം</td><td>1950 ജനുവരി 25</td><td>കേരളം: 1993 ഡിസംബർ 3</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: പഞ്ചായത്ത് vs മുനിസിപ്പാലിറ്റി വ്യവസ്ഥകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>പഞ്ചായത്ത്</th><th>മുനിസിപ്പാലിറ്റി</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ഭേദഗതി</td><td>73-ാം (1992)</td><td>74-ാം (1992)</td></tr>
+              <tr><td>ഭരണഘടനാ ഭാഗം</td><td>ഭാഗം 9 (243–243O)</td><td>ഭാഗം 9A (243P–243ZG)</td></tr>
+              <tr><td>SEC ആർട്ടിക്കിൾ</td><td>243K</td><td>243ZA</td></tr>
+              <tr><td>ഷെഡ്യൂൾ</td><td>11-ാം (29 വിഷയങ്ങൾ)</td><td>12-ാം (18 വിഷയങ്ങൾ)</td></tr>
+              <tr><td>ധനകാര്യ കമ്മീഷൻ</td><td>243I</td><td>243Y</td></tr>
+              <tr><td>കാലാവധി</td><td>5 വർഷം (243E)</td><td>5 വർഷം (243U)</td></tr>
+              <tr><td>കോടതി ഇടപെടൽ വിലക്ക്</td><td>243O</td><td>243ZG</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: Mnemonics ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. Mnemonics (ഓർമ്മ തന്ത്രങ്ങൾ)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1 (243K vs 243ZA):</strong></span>
+          <p>"<strong>K = കർഷകർ → ഗ്രാമം/പഞ്ചായത്ത്; ZA = 'Z മുതൽ A വരെ' വളർന്ന നഗരം → മുനിസിപ്പാലിറ്റി</strong>." (ചുരുക്കത്തിൽ: 243 K ഗ്രാമങ്ങൾക്കും, 243 ZA നഗരങ്ങൾക്കും.)</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2 (നിയമനവും നീക്കവും):</strong></span>
+          <p>"<strong>CEC → രാഷ്ട്രപതി നിയമിക്കും, സുപ്രീം കോടതി ജഡ്ജിയെപ്പോലെ മാറ്റും</strong>."</p>
+          <p>"<strong>SEC → ഗവർണ്ണർ നിയമിക്കും, ഹൈക്കോടതി ജഡ്ജിയെപ്പോലെ മാറ്റും</strong>." ("സംസ്ഥാനത്തിന് ഹൈക്കോടതി, കേന്ദ്രത്തിന് സുപ്രീം കോടതി").</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3 (ഏകാംഗം):</strong></span>
+          <p>"<strong>S for Single = S for State</strong>" (State Election Commission = Single member).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4 (ഭാഗങ്ങൾ):</strong></span>
+          <p>"<strong>9 = ഗ്രാമം (Part IX), 9A = അർബൻ (Part IXA)</strong>"; "<strong>73 ഗ്രാമം, 74 പട്ടണം</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5 (ഷെഡ്യൂൾ):</strong></span>
+          <p>"<strong>11-ൽ ഗ്രാമം (29 വിഷയം), 12-ൽ നഗരം (18 വിഷയം)</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6 (കേരള SEC):</strong></span>
+          <p>"<strong>93 ഡിസംബർ 3, തിരുവനന്തപുരം</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7 (കൂറുമാറ്റം):</strong></span>
+          <p>"<strong>തദ്ദേശത്തിൽ SEC, സഭയിൽ സ്പീക്കർ</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8 (കോടതി ഇടപെടൽ):</strong></span>
+          <p>"<strong>243O പഞ്ചായത്തിൽ 'ഒ' (ഓഫ്) — കോടതി ഓഫ്</strong>" (243O = പഞ്ചായത്ത്, 243ZG = മുനിസിപ്പാലിറ്റി).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: PSC കെണികൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 (നിയമനം vs നീക്കം)</span>
+          <p><strong>Question:</strong> SEC-യെ നിയമിക്കുന്നത്? / SEC-യെ നീക്കം ചെയ്യുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> ഗവർണ്ണർ / രാഷ്ട്രപതി / മുഖ്യമന്ത്രി / HC ചീഫ് ജസ്റ്റിസ്</p>
+          <p><strong>Fact:</strong> <strong>നിയമനം → ഗവർണ്ണർ. നീക്കം → രാഷ്ട്രപതി</strong> (HC ജഡ്ജിയെപ്പോലെ). ഗവർണ്ണർക്ക് നീക്കാനാവില്ല.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 (243K vs 243ZA vs 243I vs 324)</span>
+          <p><strong>Question:</strong> മുനിസിപ്പാലിറ്റി തിരഞ്ഞെടുപ്പ് ഏത് ആർട്ടിക്കിൾ?</p>
+          <p><strong>Confusing Options:</strong> 243K / 243ZA / 243I / 324</p>
+          <p><strong>Fact:</strong> <strong>243ZA</strong> (മുനിസിപ്പാലിറ്റി). 243K = പഞ്ചായത്ത്; 243I = ധനകാര്യ കമ്മീഷൻ; 324 = ECI.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 (ഏകാംഗം vs മൂന്നംഗം)</span>
+          <p><strong>Question:</strong> SEC-ൽ എത്ര അംഗങ്ങൾ?</p>
+          <p><strong>Confusing Options:</strong> 1 / 2 / 3 / 5</p>
+          <p><strong>Fact:</strong> <strong>1 (ഏകാംഗം)</strong>. ECI = 3 അംഗം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 (SEC vs ECI ചുമതല)</span>
+          <p><strong>Question:</strong> ലോക്സഭ തിരഞ്ഞെടുപ്പ് നടത്തുന്നത് ആര്?</p>
+          <p><strong>Confusing Options:</strong> SEC / ECI / ഗവർണ്ണർ / രാഷ്ട്രപതി</p>
+          <p><strong>Fact:</strong> <strong>ECI (Art 324)</strong>. SEC ലോക്സഭ/നിയമസഭാ തിരഞ്ഞെടുപ്പുകൾ നടത്തുന്നില്ല. SEC-യുടെ വോട്ടർ പട്ടിക തദ്ദേശ തിരഞ്ഞെടുപ്പിന് മാത്രം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 (CEC vs SEC നീക്കം)</span>
+          <p><strong>Question:</strong> CEC-യെ നീക്കം ചെയ്യുന്ന രീതി?</p>
+          <p><strong>Confusing Options:</strong> HC ജഡ്ജിയെപ്പോലെ / SC ജഡ്ജിയെപ്പോലെ / ഗവർണ്ണറുടെ ഇഷ്ടം / പ്രധാനമന്ത്രിയുടെ ഉപദേശം</p>
+          <p><strong>Fact:</strong> <strong>SC ജഡ്ജിയെപ്പോലെ</strong>. SEC = HC ജഡ്ജിയെപ്പോലെ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 (ഭാഗം 9 vs 9A)</span>
+          <p><strong>Question:</strong> 74-ാം ഭേദഗതി ഏത് ഭാഗം ചേർത്തു?</p>
+          <p><strong>Confusing Options:</strong> ഭാഗം 9 / ഭാഗം 9A / ഭാഗം 9B / ഭാഗം 10</p>
+          <p><strong>Fact:</strong> <strong>ഭാഗം 9A (Part IXA)</strong> = മുനിസിപ്പാലിറ്റി. ഭാഗം 9 = പഞ്ചായത്ത് (73-ാം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 (കാലാവധി)</span>
+          <p><strong>Question:</strong> കേരള SEC കാലാവധി?</p>
+          <p><strong>Confusing Options:</strong> 5 വർഷം/65 / 6 വർഷം/65 / 5 വർഷം/62 / 3 വർഷം</p>
+          <p><strong>Fact:</strong> കേരളത്തിൽ <strong>5 വർഷം/65</strong> ⚠️; CEC = 6 വർഷം/65.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 (കൂറുമാറ്റം)</span>
+          <p><strong>Question:</strong> കേരള തദ്ദേശ സ്ഥാപനങ്ങളിലെ കൂറുമാറ്റ പരാതികൾ തീരുമാനിക്കുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> സ്പീക്കർ / SEC / ഹൈക്കോടതി / ഗവർണ്ണർ</p>
+          <p><strong>Fact:</strong> <strong>SEC</strong> (Kerala Local Authorities Prohibition of Defection Act 1999). എം.എൽ.എ/എം.പി = സ്പീക്കർ/ചെയർമാൻ (10-ാം ഷെഡ്യൂൾ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 9 (വാർഡ് വിഭജനം)</span>
+          <p><strong>Question:</strong> ലോക്സഭ/നിയമസഭാ മണ്ഡല പുനർനിർണ്ണയം ആര്?</p>
+          <p><strong>Confusing Options:</strong> SEC / ഡീലിമിറ്റേഷൻ കമ്മീഷൻ / ഗവർണ്ണർ / ECI</p>
+          <p><strong>Fact:</strong> <strong>ഡീലിമിറ്റേഷൻ കമ്മീഷൻ</strong> (Art 82, 170). തദ്ദേശ വാർഡ് വിഭജനം ⚠️ വേറെ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 10 (ഷെഡ്യൂളുകൾ)</span>
+          <p><strong>Question:</strong> കൂറുമാറ്റ നിരോധനം ഏത് ഷെഡ്യൂൾ?</p>
+          <p><strong>Confusing Options:</strong> 10-ാം / 11-ാം / 12-ാം / 5-ാം</p>
+          <p><strong>Fact:</strong> <strong>10-ാം ഷെഡ്യൂൾ</strong> (കൂറുമാറ്റ നിരോധനം). 11 = പഞ്ചായത്ത് (29); 12 = മുനിസിപ്പാലിറ്റി (18).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: Quick Revision ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>SEC:</strong> ആർട്ടിക്കിൾ 243K (പഞ്ചായത്ത്, ഭാഗം 9), 243ZA (മുനിസിപ്പാലിറ്റി, ഭാഗം 9A).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഘടന:</strong> ഏകാംഗം (ഒരു കമ്മീഷണർ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> ഗവർണ്ണർ. <strong>നീക്കം:</strong> ഹൈക്കോടതി ജഡ്ജിയെപ്പോലെ (രാഷ്ട്രപതി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ചുമതല:</strong> തദ്ദേശ തിരഞ്ഞെടുപ്പ്, വോട്ടർ പട്ടിക, (വാർഡ് വിഭജനം ⚠️), ചിഹ്നം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വോട്ടർ പട്ടിക:</strong> തദ്ദേശത്തിന് SEC; നിയമസഭ/ലോക്സഭയ്ക്ക് ECI.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കേരള SEC:</strong> 1993 ഡിസംബർ 3, തിരുവനന്തപുരം, കാലാവധി 5 വർഷം/65 (⚠️), ആദ്യ കമ്മീഷണർ എം.എസ്.കെ. രാമസ്വാമി (⚠️).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കൂറുമാറ്റം (കേരള തദ്ദേശം):</strong> SEC തീരുമാനിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>73-ാം ഭേദഗതി:</strong> പഞ്ചായത്ത്, ഭാഗം 9, 11-ാം ഷെഡ്യൂൾ (29). <strong>74-ാം:</strong> മുനിസിപ്പാലിറ്റി, ഭാഗം 9A, 12-ാം ഷെഡ്യൂൾ (18).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ECI vs SEC:</strong> 324 vs 243K/ZA; 3 അംഗം vs 1; രാഷ്ട്രപതി vs ഗവർണ്ണർ; SC ജഡ്ജി vs HC ജഡ്ജി.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കോടതി ഇടപെടൽ വിലക്ക്:</strong> 243O (പഞ്ചായത്ത്), 243ZG (മുനിസിപ്പാലിറ്റി).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: One-Page Revision ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. One-Page Revision Sheet</h2>
+      <div class="section-body">
+        <h3>Provisions</h3>
+        <ul>
+          <li><strong>Art 243K:</strong> SEC for Panchayats (Part IX, 73rd Amendment).</li>
+          <li><strong>Art 243ZA:</strong> SEC for Municipalities (Part IXA, 74th Amendment).</li>
+        </ul>
+
+        <h3>Structure & Appointment</h3>
+        <ul>
+          <li><strong>Single-member body.</strong></li>
+          <li><strong>Appointed by:</strong> Governor.</li>
+          <li><strong>Removed:</strong> Like a High Court judge (by President; after Parliament's address). Governor cannot remove.</li>
+          <li><strong>Conditions of service:</strong> By Governor's rules (subject to State law); can't be varied to disadvantage after appointment.</li>
+        </ul>
+
+        <h3>Functions</h3>
+        <ul>
+          <li>Superintendence, direction and control of elections to Panchayats & Municipalities.</li>
+          <li>Preparation of electoral rolls (for local body elections in Kerala).</li>
+          <li>Allotment of symbols; (Delimitation of wards ⚠️).</li>
+        </ul>
+
+        <h3>Kerala SEC</h3>
+        <ul>
+          <li>Formed 3 December 1993; HQ Thiruvananthapuram.</li>
+          <li>Tenure 5 years / 65 years ⚠️. First Commissioner: M.S.K. Ramaswamy ⚠️.</li>
+          <li>Decides defection cases of local body members (1999 Act).</li>
+        </ul>
+
+        <h3>CEC vs SEC</h3>
+        <ul>
+          <li><strong>ECI:</strong> Art 324; 3 members; President; removed like SC judge; Parliament, Assembly, President, VP elections.</li>
+          <li><strong>SEC:</strong> Art 243K/ZA; 1 member; Governor; removed like HC judge; local body elections.</li>
+        </ul>
+
+        <h3>Related</h3>
+        <ul>
+          <li>11th Schedule: 29 subjects (Panchayat). 12th Schedule: 18 subjects (Municipality).</li>
+          <li>State Finance Commission: Art 243I (Panchayat), 243Y (Municipality) – Governor appoints, every 5 years.</li>
+          <li>Bar on court interference: 243O, 243ZG.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (SEC) തദ്ദേശ തിരഞ്ഞെടുപ്പുകൾ നടത്തുന്ന സ്വതന്ത്ര ഭരണഘടനാ സ്ഥാപനമാണ്.</li>
+          <li>ആർട്ടിക്കിൾ 243K (പഞ്ചായത്ത്), 243ZA (മുനിസിപ്പാലിറ്റി).</li>
+          <li>ഏകാംഗ കമ്മീഷൻ; ഗവർണ്ണർ നിയമിക്കും; രാഷ്ട്രപതി HC ജഡ്ജിയെപ്പോലെ നീക്കും.</li>
+          <li>കേരള SEC: 1993 ഡിസംബർ 3; HQ തിരുവനന്തപുരം.</li>
+          <li>കേരളത്തിൽ തദ്ദേശ കൂറുമാറ്റ പരാതികൾ SEC തീരുമാനിക്കുന്നു.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 2–3 ചോദ്യങ്ങൾ ഉറപ്പായും പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>SEC-യുടെ ആർട്ടിക്കിളുകളും ചുമതലകളും കൃത്യമായി ഓർക്കുക. ECI vs SEC താരതമ്യവും 243K vs 243ZA വ്യത്യാസവും PSC-യുടെ പ്രിയപ്പെട്ട ചോദ്യങ്ങളാണ്. "ഏകാംഗം" എന്നതും "ഗവർണ്ണർ നിയമിക്കും, രാഷ്ട്രപതി നീക്കും" എന്നതും ശ്രദ്ധിക്കുക. അടുത്ത അധ്യായം: കേന്ദ്ര-സംസ്ഥാന ബന്ധങ്ങൾ.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>4.22 State Election Commission</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'constitution-4.22-state-election-commission';
-window.PART_TITLE = '4.22 State Election Commission';
-window.QUESTIONS  = [];
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaSEC116Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
 </script>
-<script src="../../assets/js/engine.js"></script>
 
 </body>
 </html>
