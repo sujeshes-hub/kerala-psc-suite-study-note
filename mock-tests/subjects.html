@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subject-wise Mock Tests — Kerala PSC</title>
+<link rel="stylesheet" href="../assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <button class="back-btn" type="button" onclick="location.href='../index.html'">← Back</button>
+  <h1>📚 Subject-wise Mock Tests</h1>
+  <p>വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ</p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../index.html">🏠 Home</a> ›
+    <span>Subject-wise Mock Tests</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Papers by Subject</h2>
+      <button class="btn ghost" id="refreshPapers" type="button">↻ Refresh list</button>
+    </div>
+    <div id="subjectHost">
+      <p class="empty">Loading…</p>
+    </div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite · Works fully offline</footer>
+
+<style>
+  .subj-block{margin-bottom:28px}
+  .subj-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+    padding-bottom:8px;border-bottom:2px solid var(--line);
+  }
+  .subj-head h3{
+    margin:0;font-size:1.05rem;color:var(--brand);font-weight:800;
+  }
+  .subj-head .cnt{
+    background:#e3f0ff;color:#0b4a8a;font-size:.72rem;font-weight:800;
+    padding:2px 10px;border-radius:999px;margin-left:auto;
+  }
+  .subj-head .ico{
+    font-size:1.35rem;line-height:1;
+  }
+  .subj-head .ml{
+    color:var(--muted);font-size:.82rem;font-weight:600;
+  }
+  .empty-msg{
+    padding:20px;text-align:center;color:var(--muted);font-size:.9rem;
+    background:#f7fafc;border:1px dashed var(--line);border-radius:12px;
+  }
+  .empty-msg code{
+    background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:.82rem;
+  }
+</style>
+
+<script>
+(function () {
+  /* ================= CONFIG ================= */
+  var FOLDER    = "question-papers/subjects";
+  var BASE_PATH = "../question-papers/subjects/";
+  var CACHE_KEY = "kpsc_subject_papers_v1";
+  var CACHE_TTL = 1000 * 60 * 30;
+
+  /* Subject metadata — icon + Malayalam name keyed by English name.
+     Add new subjects here so they get an icon and proper ordering. */
+  var SUBJECT_META = {
+    "History":         { icon: "📜", ml: "ചരിത്രം",                order: 1 },
+    "Geography":       { icon: "🌍", ml: "ഭൂമിശാസ്ത്രം",           order: 2 },
+    "Economics":       { icon: "💰", ml: "സാമ്പത്തിക ശാസ്ത്രം",     order: 3 },
+    "Constitution":    { icon: "🏛️", ml: "ഭരണഘടന",                 order: 4 },
+    "Kerala Admin":    { icon: "🏢", ml: "കേരള ഭരണം",              order: 5 },
+    "Biology":         { icon: "🔬", ml: "ജീവശാസ്ത്രം",            order: 6 },
+    "Physics":         { icon: "⚛️", ml: "ഭൗതികശാസ്ത്രം",           order: 7 },
+    "Chemistry":       { icon: "🧪", ml: "രസതന്ത്രം",              order: 8 },
+    "Arts & Sports":   { icon: "🎭", ml: "കലയും കായികവും",          order: 9 },
+    "Computer":        { icon: "💻", ml: "കമ്പ്യൂട്ടർ",             order: 10 },
+    "Arithmetic":      { icon: "🔢", ml: "ലഘുഗണിതം",               order: 11 },
+    "Mental Ability":  { icon: "🧠", ml: "മാനസിക ശേഷി",           order: 12 },
+    "English":         { icon: "📖", ml: "ഇംഗ്ലീഷ്",               order: 13 },
+    "Malayalam":       { icon: "✍️", ml: "മലയാളം",                 order: 14 },
+    "Current Affairs": { icon: "📰", ml: "കറന്റ് അഫയേഴ്സ്",         order: 15 },
+    "Important Acts":  { icon: "⚖️", ml: "പ്രധാന നിയമങ്ങൾ",        order: 16 },
+    "Legal Metrology": { icon: "📐", ml: "ലീഗൽ മെട്രോളജി",         order: 17 }
+  };
+
+  var host = document.getElementById("subjectHost");
+  var refreshBtn = document.getElementById("refreshPapers");
+
+  /* ================= UTIL ================= */
+  function detectRepo() {
+    var hostName = location.hostname;
+    var parts = location.pathname.split("/").filter(Boolean);
+    if (!hostName.endsWith(".github.io") || parts.length < 1) return null;
+    return { owner: hostName.replace(".github.io", ""), repo: parts[0] };
+  }
+
+  function readCache() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      if (!o || !o.ts || (Date.now() - o.ts) > CACHE_TTL) return null;
+      return o.items || null;
+    } catch (e) { return null; }
+  }
+  function saveCache(items) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items })); } catch (e) {}
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  /* ================= FETCH ================= */
+  async function fetchFolderList() {
+    var repo = detectRepo();
+    if (!repo) throw new Error("Not on GitHub Pages — folder listing unavailable.");
+    var url = "https://api.github.com/repos/" + repo.owner + "/" + repo.repo +
+              "/contents/" + FOLDER + "?ref=main";
+    var res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+    if (!res.ok) throw new Error("GitHub API: HTTP " + res.status);
+    var files = await res.json();
+    if (!Array.isArray(files)) throw new Error("Unexpected API response");
+    return files.filter(function (f) {
+      return f.type === "file" &&
+             /\.html?$/i.test(f.name) &&
+             f.name.toLowerCase() !== "index.html";
+    });
+  }
+
+  async function readMeta(filename) {
+    try {
+      var res = await fetch(BASE_PATH + filename, { cache: "force-cache" });
+      if (!res.ok) return {};
+      var text = await res.text();
+      var doc  = new DOMParser().parseFromString(text, "text/html");
+      function meta(name) {
+        var el = doc.querySelector('meta[name="' + name + '"]');
+        return el ? el.getAttribute("content") : "";
+      }
+      return {
+        title:    meta("mock:title")    || "",
+        titleMl:  meta("mock:title-ml") || "",
+        desc:     meta("mock:desc")     || "",
+        duration: parseInt(meta("mock:duration"), 10) || 0,
+        qs:       parseInt(meta("mock:qs"), 10)       || 0,
+        tag:      meta("mock:tag")      || "BOTH",
+        key:      meta("mock:key")      || "",
+        subject:  meta("mock:subject")  || "Uncategorised"
+      };
+    } catch (e) { return {}; }
+  }
+
+  function titleFromFilename(name) {
+    return name
+      .replace(/\.html?$/i, "")
+      .replace(/^qp-[a-z]+-/, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
+  /* ================= RENDER ================= */
+  function render(items) {
+    if (!items.length) {
+      host.innerHTML =
+        '<div class="empty-msg">' +
+        'No subject-wise papers yet.<br><br>' +
+        'Save your subject mock tests inside <code>question-papers/subjects/</code> — they appear here automatically.' +
+        '</div>';
+      return;
+    }
+
+    /* Group by subject */
+    var groups = {};
+    items.forEach(function (p) {
+      var subj = p.subject || "Uncategorised";
+      if (!groups[subj]) groups[subj] = [];
+      groups[subj].push(p);
+    });
+
+    /* Sort groups by configured order, then alphabetically */
+    var sortedSubjects = Object.keys(groups).sort(function (a, b) {
+      var oa = (SUBJECT_META[a] && SUBJECT_META[a].order) || 999;
+      var ob = (SUBJECT_META[b] && SUBJECT_META[b].order) || 999;
+      if (oa !== ob) return oa - ob;
+      return a.localeCompare(b);
+    });
+
+    var html = "";
+    sortedSubjects.forEach(function (subj) {
+      var meta = SUBJECT_META[subj] || { icon: "📄", ml: "" };
+      var papers = groups[subj].sort(function (a, b) {
+        return a.file.localeCompare(b.file);
+      });
+
+      html +=
+        '<div class="subj-block">' +
+          '<div class="subj-head">' +
+            '<span class="ico">' + meta.icon + '</span>' +
+            '<h3>' + esc(subj) + '</h3>' +
+            (meta.ml ? '<span class="ml">· ' + esc(meta.ml) + '</span>' : '') +
+            '<span class="cnt">' + papers.length + ' paper' + (papers.length === 1 ? '' : 's') + '</span>' +
+          '</div>' +
+          '<div class="grid">' +
+            papers.map(function (p) {
+              var badgeCls = p.tag === "573" ? "c573" : p.tag === "883" ? "c883" : "";
+              var badgeTxt = p.tag === "573" ? "573 only" : p.tag === "883" ? "883 only" : "BOTH";
+              var title = p.title || titleFromFilename(p.file);
+              var key = p.key || p.file.replace(/\.html?$/i, "");
+              return '<a href="' + BASE_PATH + p.file + '" class="card" data-part="' + esc(key) + '" data-total="' + p.qs + '">' +
+                '<span class="badge ' + badgeCls + '">' + (p.qs || 0) + ' Qs</span>' +
+                '<h3>📄 ' + esc(title) + '</h3>' +
+                '<p class="desc">' + esc(p.titleMl || "") + (p.desc ? "<br>" + esc(p.desc) : "") + '</p>' +
+                '<div class="meta">' +
+                  (p.duration ? '<span>⏱ ' + p.duration + ' min</span>' : '') +
+                  '<span>' + badgeTxt + '</span>' +
+                '</div>' +
+                '<div class="bar"><i style="width:0%"></i></div>' +
+                '<div class="progressline"><span class="status">Not started</span><span class="score"></span></div>' +
+              '</a>';
+            }).join("") +
+          '</div>' +
+        '</div>';
+    });
+
+    host.innerHTML = html;
+
+    /* Load progress reader */
+    var s = document.createElement("script");
+    s.src = "../assets/js/sections.js";
+    document.body.appendChild(s);
+  }
+
+  /* ================= LOAD ================= */
+  async function load(force) {
+    host.innerHTML = '<p class="empty">Loading…</p>';
+    if (!force) {
+      var cached = readCache();
+      if (cached) { render(cached); return; }
+    }
+
+    try {
+      var files = await fetchFolderList();
+      if (!files.length) { render([]); return; }
+
+      var metas = await Promise.all(files.map(function (f) { return readMeta(f.name); }));
+
+      var items = files.map(function (f, i) {
+        var m = metas[i] || {};
+        return {
+          file:     f.name,
+          title:    m.title,
+          titleMl:  m.titleMl,
+          desc:     m.desc,
+          duration: m.duration,
+          qs:       m.qs,
+          tag:      m.tag,
+          key:      m.key,
+          subject:  m.subject || "Uncategorised"
+        };
+      });
+
+      saveCache(items);
+      render(items);
+
+    } catch (err) {
+      console.warn("Subject list failed:", err.message);
+      host.innerHTML =
+        '<div class="empty-msg">' +
+        '⚠️ Could not auto-load the paper list.<br>' +
+        '<small>' + esc(err.message) + '</small><br><br>' +
+        'If you are viewing this locally (file://), open the site on ' +
+        '<a href="https://sujeshes-hub.github.io/kerala-psc-suite/">GitHub Pages</a> instead.' +
+        '</div>';
+    }
+  }
+
+  if (refreshBtn) refreshBtn.addEventListener("click", function () {
+    try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+    load(true);
+  });
+
+  load(false);
+})();
+</script>
+
+</body>
+</html>

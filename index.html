@@ -67,7 +67,7 @@
   <div class="howto">
     <h3>How to use</h3>
     <ul>
-      <li>Tap <b>📄 Mock Tests</b> → choose <b>573</b> or <b>883</b> to see that exam's papers.</li>
+      <li>Tap <b>📄 Mock Tests</b> → choose <b>573</b>, <b>883</b> or <b>Subject-wise</b>.</li>
       <li>Tap any <b>subject</b> to see its chapters.</li>
       <li>Tap a <b>chapter</b> to see its topics.</li>
       <li>Tap a <b>topic</b> to open notes + mock test.</li>
@@ -84,7 +84,7 @@
 (async () => {
   await Syllabus.load();
 
-  /* ---------- Mock Tests (two exam cards) ---------- */
+  /* ---------- Mock Tests (three cards) ---------- */
   const mtGrid = document.getElementById('mtGrid');
   const EXAMS = [
     {
@@ -102,12 +102,22 @@
       desc: "Inspecting Assistant (Legal Metrology)",
       file: "mock-tests/883.html",
       tag: "883"
+    },
+    {
+      code: "SUB",
+      title: "Subject-wise Mock Tests",
+      titleMl: "വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ",
+      desc: "Chapter mock tests grouped by subject",
+      file: "mock-tests/subjects.html",
+      tag: "BOTH"
     }
   ];
 
   mtGrid.innerHTML = EXAMS.map(e => {
-    const cls = e.tag === "573" ? "c573" : "c883";
-    const txt = e.tag === "573" ? "573 only" : "883 only";
+    let cls = "", txt = "";
+    if (e.tag === "573")      { cls = "c573"; txt = "573 only"; }
+    else if (e.tag === "883") { cls = "c883"; txt = "883 only"; }
+    else                      { cls = "";     txt = "BOTH"; }
     return '<a href="' + e.file + '" class="card">' +
       '<span class="badge ' + cls + '">' + txt + '</span>' +
       '<h3>📄 ' + e.title + '</h3>' +
