@@ -1,25 +1,15 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 5
-
-   Auto-detects ANY progress key in localStorage — no per-file edits.
-   Syncs to:
-     • Firebase Firestore — when signed in with Google / email
-     • GitHub Gist       — when connected via token
-   Fallback: Export / Import code.
-
-   Skips only these keys:
-     kpsc_gh_token, kpsc_gh_gist_id, kpsc_last_sync,
-     kpsc_pulled_this_session, kp-theme
+   Version: 5.1  — fixes reload-loop on mobile
    ===================================================================== */
 (function () {
   "use strict";
 
-  if (window.KPSC_Sync && window.KPSC_Sync.__version === 5) return;
+  if (window.KPSC_Sync && window.KPSC_Sync.__version === 5.1) return;
 
   /* =================================================================
-     ▼▼▼  FIREBASE CONFIG — paste your project values  ▼▼▼
+     ▼▼▼  FIREBASE CONFIG  ▼▼▼
      ================================================================= */
   var FIREBASE_CONFIG = {
     apiKey:            "AIzaSyAG6V1Iqcve3I7pEbj5VWsFNidiDVsymaA",
@@ -33,44 +23,27 @@
   var ENABLE_FIREBASE = FIREBASE_CONFIG.apiKey &&
                         FIREBASE_CONFIG.apiKey.indexOf("PASTE_") !== 0;
 
-  /* ---------- storage keys ---------- */
   var PREFIX        = "KPS1.";
   var APP_ID        = "kerala-psc-suite";
-
   var TOKEN_KEY     = "kpsc_gh_token";
   var GIST_KEY      = "kpsc_gh_gist_id";
   var LASTS_KEY     = "kpsc_last_sync";
   var PULLED_SS     = "kpsc_pulled_this_session";
-
   var GIST_FILE     = "kerala-psc-progress.json";
   var FIRESTORE_COL = "users";
-
-  /* ---------- timing ---------- */
   var SAVE_DEBOUNCE = 900;
   var PULL_THROTTLE = 2500;
 
-  /* ---------- keys we never sync ---------- */
   var SKIP_KEYS = {
-    "kpsc_gh_token": 1,
-    "kpsc_gh_gist_id": 1,
-    "kpsc_last_sync": 1,
-    "kpsc_pulled_this_session": 1,
+    "kpsc_gh_token": 1, "kpsc_gh_gist_id": 1,
+    "kpsc_last_sync": 1, "kpsc_pulled_this_session": 1,
     "kp-theme": 1
   };
 
-  /* ---------- runtime state ---------- */
-  var firebaseApp   = null;
-  var firebaseAuth  = null;
-  var firestoreDb   = null;
-  var firebaseReady = false;
-  var currentUser   = null;
-
-  var pushing   = false;
-  var pulling   = false;
-  var lastPull  = 0;
-  var pushTimer = null;
-  var syncing   = false;
-  var fbSDKPromise = null;
+  var firebaseApp = null, firebaseAuth = null, firestoreDb = null;
+  var firebaseReady = false, currentUser = null;
+  var pushing = false, pulling = false, lastPull = 0;
+  var pushTimer = null, syncing = false, fbSDKPromise = null;
 
   /* =================================================================
      KEY DETECTION
@@ -80,21 +53,15 @@
     if (SKIP_KEYS[k]) return false;
     if (k.indexOf("firebase") === 0) return false;
     if (k.indexOf("__") === 0) return false;
-
-    /* Known prefixes — always tracked */
-    if (k.indexOf("kpsc_") === 0)   return true;
-    if (k.indexOf("kerala") === 0)  return true;
-    if (k.indexOf("quiz") === 0)    return true;
-    if (k.indexOf("mock") === 0)    return true;
-
-    /* Auto-detect by value shape: JSON object or array */
+    if (k.indexOf("kpsc_") === 0)  return true;
+    if (k.indexOf("kerala") === 0) return true;
+    if (k.indexOf("quiz") === 0)   return true;
+    if (k.indexOf("mock") === 0)   return true;
     if (typeof v === "string" && v.length > 8) {
       var first = v.charAt(0);
       if (first === "{" || first === "[") {
-        try {
-          var parsed = JSON.parse(v);
-          return parsed && typeof parsed === "object";
-        } catch (e) { return false; }
+        try { var p = JSON.parse(v); return p && typeof p === "object"; }
+        catch (e) { return false; }
       }
     }
     return false;
@@ -105,33 +72,23 @@
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
       if (!k) continue;
-      var v = localStorage.getItem(k);
-      if (isTrackedKey(k, v)) out.push(k);
+      if (isTrackedKey(k, localStorage.getItem(k))) out.push(k);
     }
     return out;
   }
 
   /* =================================================================
-     PAYLOAD — packs every tracked key into a single object
+     PAYLOAD
      ================================================================= */
   function collectPayload() {
     var keys = scanTrackedKeys();
     var stores = {};
     for (var i = 0; i < keys.length; i++) {
       var k = keys[i];
-      try {
-        var raw = localStorage.getItem(k);
-        stores[k] = JSON.parse(raw);
-      } catch (e) {
-        try { stores[k] = localStorage.getItem(k); } catch (e2) {}
-      }
+      try { stores[k] = JSON.parse(localStorage.getItem(k)); }
+      catch (e) { try { stores[k] = localStorage.getItem(k); } catch (e2) {} }
     }
-    return {
-      v: 2,
-      ts: Date.now(),
-      app: APP_ID,
-      stores: stores
-    };
+    return { v: 2, ts: Date.now(), app: APP_ID, stores: stores };
   }
 
   function encode(payload) {
@@ -153,53 +110,72 @@
   }
 
   /* =================================================================
-     DEEP MERGE — safe combine of two localStorage values
+     DEEP MERGE
      ================================================================= */
   function deepMerge(local, remote) {
-    /* If types differ, remote wins */
     if (typeof local !== typeof remote) return remote;
     if (local === null || remote === null) return remote;
     if (typeof local !== "object") return remote;
-
-    /* Arrays: whichever is longer */
     if (Array.isArray(local) || Array.isArray(remote)) {
       if (!Array.isArray(local)) return remote;
       if (!Array.isArray(remote)) return local;
-      /* Merge index-wise; remote wins on fill */
       var len = Math.max(local.length, remote.length);
       var merged = new Array(len);
       for (var i = 0; i < len; i++) {
         var l = local[i], r = remote[i];
         if (r === undefined) merged[i] = l;
         else if (l === undefined) merged[i] = r;
-        else if (typeof l === "object" && typeof r === "object" && l && r) {
-          merged[i] = deepMerge(l, r);
-        } else {
-          merged[i] = r;
-        }
+        else if (typeof l === "object" && typeof r === "object" && l && r) merged[i] = deepMerge(l, r);
+        else merged[i] = r;
       }
       return merged;
     }
-
-    /* Plain objects: recursive merge, remote wins on conflicts */
-    var out = {};
-    var k;
+    var out = {}, k;
     for (k in local) if (Object.prototype.hasOwnProperty.call(local, k)) out[k] = local[k];
     for (k in remote) if (Object.prototype.hasOwnProperty.call(remote, k)) {
-      if (Object.prototype.hasOwnProperty.call(out, k)) {
-        out[k] = deepMerge(out[k], remote[k]);
-      } else {
-        out[k] = remote[k];
-      }
+      if (Object.prototype.hasOwnProperty.call(out, k)) out[k] = deepMerge(out[k], remote[k]);
+      else out[k] = remote[k];
     }
     return out;
+  }
+
+  /* =================================================================
+     HAS NEW DATA — order-independent check
+     Returns true only if remote contains something local does NOT.
+     This prevents false-positive reloads from key-order differences.
+     ================================================================= */
+  function hasNewData(local, remote) {
+    if (remote === undefined) return false;
+    if (local === undefined) return true;
+
+    if (Array.isArray(remote)) {
+      if (!Array.isArray(local)) return true;
+      if (remote.length > local.length) return true;
+      for (var i = 0; i < remote.length; i++) {
+        if (hasNewData(local[i], remote[i])) return true;
+      }
+      return false;
+    }
+
+    if (typeof remote === "object" && remote !== null) {
+      if (typeof local !== "object" || local === null) return true;
+      var keys = Object.keys(remote);
+      for (var j = 0; j < keys.length; j++) {
+        var k = keys[j];
+        if (!(k in local)) return true;
+        if (hasNewData(local[k], remote[k])) return true;
+      }
+      return false;
+    }
+
+    /* Primitive: only count as "new" if local is missing entirely */
+    return false;
   }
 
   /* =================================================================
      APPLY PAYLOAD
      ================================================================= */
   function applyPayload(payload) {
-    /* v2 — stores-based */
     if (payload.stores && typeof payload.stores === "object") {
       var addedKeys = 0, changedKeys = 0;
 
@@ -220,23 +196,17 @@
           return;
         }
 
-        /* Deep merge */
+        /* Only rewrite if remote actually has something new */
+        if (!hasNewData(local, remote)) return;
+
         var merged = deepMerge(local, remote);
-
-        /* Only rewrite if the merged value actually differs */
-        var mergedStr, localStr;
-        try { mergedStr = JSON.stringify(merged); localStr = JSON.stringify(local); }
-        catch (e) { return; }
-
-        if (mergedStr !== localStr) {
-          try { localStorage.setItem(k, mergedStr); changedKeys++; } catch (e) {}
-        }
+        try { localStorage.setItem(k, JSON.stringify(merged)); changedKeys++; } catch (e) {}
       });
 
       return { addedMock: addedKeys, addedAnswers: changedKeys };
     }
 
-    /* v1 legacy — mock key-based payloads (old codes) */
+    /* Legacy v1 payload */
     var addedMock = 0, addedAnswers = 0;
     Object.keys(payload.mock || {}).forEach(function (k) {
       var remote = payload.mock[k] || {};
@@ -247,21 +217,12 @@
       }
       try {
         var local = JSON.parse(localRaw);
+        if (!hasNewData(local, remote)) return;
         var merged = deepMerge(local, remote);
         localStorage.setItem(k, JSON.stringify(merged));
         addedAnswers++;
-      } catch (e) {
-        try { localStorage.setItem(k, JSON.stringify(remote)); } catch (e2) {}
-      }
+      } catch (e) {}
     });
-
-    try {
-      var localSum  = JSON.parse(localStorage.getItem("kpsc_summaries_v1") || "{}");
-      var remoteSum = payload.summaries || {};
-      var outSum = deepMerge(localSum, remoteSum);
-      localStorage.setItem("kpsc_summaries_v1", JSON.stringify(outSum));
-    } catch (e) {}
-
     return { addedMock: addedMock, addedAnswers: addedAnswers };
   }
 
@@ -274,13 +235,8 @@
 
     fbSDKPromise = new Promise(function (resolve, reject) {
       var base = "https://www.gstatic.com/firebasejs/10.12.0/";
-      var files = [
-        "firebase-app-compat.js",
-        "firebase-auth-compat.js",
-        "firebase-firestore-compat.js"
-      ];
+      var files = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"];
       var loaded = 0;
-
       files.forEach(function (f) {
         var s = document.createElement("script");
         s.src = base + f;
@@ -293,9 +249,7 @@
       firebaseApp  = window.firebase.initializeApp(FIREBASE_CONFIG);
       firebaseAuth = window.firebase.auth();
       firestoreDb  = window.firebase.firestore();
-
       try { firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL); } catch (e) {}
-
       firebaseReady = true;
       return new Promise(function (resolve) {
         firebaseAuth.onAuthStateChanged(function (user) {
@@ -343,10 +297,7 @@
     syncing = true;
     updateStatusUI("wait", "Syncing…");
     return firebasePull()
-      .then(function (remote) {
-        if (!remote) return { addedMock: 0, addedAnswers: 0 };
-        return applyPayload(remote);
-      })
+      .then(function (remote) { return remote ? applyPayload(remote) : { addedMock: 0, addedAnswers: 0 }; })
       .then(function (added) {
         return firebasePush().then(function () {
           syncing = false;
@@ -362,17 +313,14 @@
   }
 
   function signInGoogle() {
-    if (!firebaseReady) return Promise.reject(new Error("Not ready"));
     var provider = new window.firebase.auth.GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
     return firebaseAuth.signInWithPopup(provider);
   }
   function signInEmail(email, password) {
-    if (!firebaseReady) return Promise.reject(new Error("Not ready"));
     return firebaseAuth.signInWithEmailAndPassword(email, password);
   }
   function signUpEmail(email, password) {
-    if (!firebaseReady) return Promise.reject(new Error("Not ready"));
     return firebaseAuth.createUserWithEmailAndPassword(email, password);
   }
   function signOut() {
@@ -478,18 +426,14 @@
     }, SAVE_DEBOUNCE);
   }
 
-  /* Intercept every write — auto-detect by key/value */
   (function interceptSetItem() {
     var orig = localStorage.setItem;
     localStorage.setItem = function (key, value) {
       orig.apply(localStorage, arguments);
-      try {
-        if (isTrackedKey(key, value)) schedulePush();
-      } catch (e) {}
+      try { if (isTrackedKey(key, value)) schedulePush(); } catch (e) {}
     };
   })();
 
-  /* Flush pending write when page hides/closes */
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       clearTimeout(pushTimer);
@@ -502,11 +446,8 @@
     clearTimeout(pushTimer);
     pushNow().catch(function () {});
   });
-  window.addEventListener("focus", function () {
-    autoPullOnLoad();
-  });
+  window.addEventListener("focus", function () { autoPullOnLoad(); });
 
-  /* Pull from cloud — silent, throttled, loop-safe */
   function autoPullOnLoad() {
     if (pulling) return;
     if (!currentUser && !isGistConnected()) return;
@@ -517,11 +458,8 @@
 
     pulling = true;
     var doPull = null;
-    if (firebaseReady && currentUser) {
-      doPull = firebasePull();
-    } else {
-      doPull = pullGist();
-    }
+    if (firebaseReady && currentUser) doPull = firebasePull();
+    else doPull = pullGist();
 
     doPull
       .then(function (remote) {
@@ -529,8 +467,9 @@
         if (!remote) return null;
         var added = applyPayload(remote);
         if (added.addedMock > 0 || added.addedAnswers > 0) {
-          console.log("sync: pulled new data", added);
-          setTimeout(function () { location.reload(); }, 200);
+          /* Only reload when new data actually merged */
+          console.log("sync: pulled", added, "— reloading");
+          setTimeout(function () { location.reload(); }, 300);
         }
       })
       .catch(function (e) { pulling = false; console.warn("auto-pull:", e); });
@@ -595,8 +534,7 @@
     ".kpsc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}" +
     ".kpsc-actions button{flex:1 1 auto;padding:10px 14px;border-radius:10px;" +
       "border:1px solid #dde4ee;background:#f7fafc;color:#16223a;" +
-      "font-family:inherit;font-weight:700;font-size:.85rem;cursor:pointer;" +
-      "min-width:110px;}" +
+      "font-family:inherit;font-weight:700;font-size:.85rem;cursor:pointer;min-width:110px;}" +
     ".kpsc-actions button:hover{background:#eef2f7;}" +
     ".kpsc-actions button.primary{background:#0b5d63;color:#fff;border-color:#0b5d63;}" +
     ".kpsc-actions button.primary:hover{background:#0a4f54;}" +
@@ -610,8 +548,7 @@
     ".kpsc-google svg{width:18px;height:18px;}" +
 
     ".kpsc-userbox{padding:14px;border-radius:12px;background:#eefaf4;" +
-      "border:1px solid #a8e0c0;display:flex;gap:12px;align-items:center;" +
-      "margin-bottom:12px;}" +
+      "border:1px solid #a8e0c0;display:flex;gap:12px;align-items:center;margin-bottom:12px;}" +
     ".kpsc-userbox img{width:44px;height:44px;border-radius:50%;border:2px solid #fff;}" +
     ".kpsc-userbox .info{flex:1;min-width:0;}" +
     ".kpsc-userbox .name{font-weight:800;font-size:.95rem;color:#0f7a4f;}" +
@@ -648,7 +585,7 @@
   }
 
   /* =================================================================
-     UI — modal
+     MODAL
      ================================================================= */
   function buildModal() {
     var m = document.createElement("div");
@@ -690,15 +627,13 @@
       '      <div class="kpsc-note" id="kpscAccountNote" style="display:none"></div>',
       '      <div class="kpsc-note info">',
       '        <b>&#8505;&#65039; Auto-save is on.</b>',
-      '        Every answer you give is saved to the cloud within a second. ',
-      '        Switching to another device and back pulls changes automatically.',
+      '        Every answer you give is saved to the cloud within a second.',
       '      </div>',
       '    </div>',
       '    <div id="kpscLoggedOut">',
       '      <div class="kpsc-note info" id="kpscNotConfiguredNote" style="display:none">',
       '        <b>&#9888;&#65039; Login is not configured yet.</b>',
-      '        Add your Firebase config to <code>sync.js</code>. ',
-      '        Meanwhile you can use <b>Export</b>, <b>Import</b> or <b>Gist</b> tabs.',
+      '        Add your Firebase config to <code>sync.js</code>.',
       '      </div>',
       '      <button type="button" class="kpsc-google" id="kpscGoogleBtn">',
       '        <svg viewBox="0 0 48 48" aria-hidden="true">',
@@ -717,15 +652,10 @@
       '        <button type="button" id="kpscSignUpBtn">Create account</button>',
       '      </div>',
       '      <div class="kpsc-note" id="kpscAuthNote" style="display:none"></div>',
-      '      <div class="kpsc-note info" style="margin-top:14px">',
-      '        <b>&#8505;&#65039; What gets saved?</b>',
-      '        Your answers, bookmarks and scores. Nothing personal. ',
-      '        Only you can read this data.',
-      '      </div>',
       '    </div>',
       '  </div>',
       '  <div class="kpsc-panel hidden" data-panel="export">',
-      '    <p>Copy this code and paste into the Import tab on another device. Works without login.</p>',
+      '    <p>Copy this code and paste into the Import tab on another device.</p>',
       '    <textarea class="kpsc-code" id="kpscExportCode" readonly></textarea>',
       '    <div class="kpsc-actions">',
       '      <button type="button" id="kpscCopyBtn" class="primary">&#128203; Copy</button>',
@@ -771,9 +701,6 @@
     return m;
   }
 
-  /* =================================================================
-     UI — actions
-     ================================================================= */
   function $(id) { return document.getElementById(id); }
   function qs(sel) { return document.querySelector(sel); }
 
@@ -811,11 +738,6 @@
         "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230b5d63'/></svg>";
       var btn = qs(".kpsc-sync-btn");
       if (btn) btn.classList.add("connected");
-      var ls = $("kpscLastSync");
-      if (ls) {
-        var t = localStorage.getItem(LASTS_KEY);
-        ls.textContent = t ? new Date(Number(t)).toLocaleString() : "never";
-      }
     } else {
       if ($("kpscLoggedIn"))  $("kpscLoggedIn").style.display  = "none";
       if ($("kpscLoggedOut")) $("kpscLoggedOut").style.display = "";
@@ -882,10 +804,7 @@
 
   function doSignOut() {
     if (!confirm("Sign out? Local progress stays on this device.")) return;
-    signOut().then(function () {
-      updateAccountUI();
-      flash("kpscAuthNote", "warn", "Signed out", "");
-    });
+    signOut().then(function () { updateAccountUI(); flash("kpscAuthNote", "warn", "Signed out", ""); });
   }
 
   function doSyncNow() {
@@ -934,8 +853,7 @@
         .then(function (gist) {
           localStorage.setItem(TOKEN_KEY, token);
           localStorage.setItem(GIST_KEY, gist.id);
-          flash("kpscSetupNote", "", "Gist created",
-            "Gist ID: <code>" + gist.id + "</code><br>Use this on other devices.");
+          flash("kpscSetupNote", "", "Gist created", "Gist ID: <code>" + gist.id + "</code>");
           updateAccountUI();
         })
         .catch(function (err) { flash("kpscSetupNote", "err", "Could not create Gist", err.message); });
@@ -956,8 +874,7 @@
       .then(function (added) {
         return pushGist().then(function () {
           if (added && (added.addedMock || added.addedAnswers)) {
-            flash("kpscSetupNote", "", "Merged",
-              added.addedMock + " key(s), " + added.addedAnswers + " update(s).");
+            flash("kpscSetupNote", "", "Merged", added.addedMock + " key(s), " + added.addedAnswers + " update(s).");
             setTimeout(function () { location.reload(); }, 1000);
           }
         });
@@ -1042,7 +959,6 @@
     var m = $("kpscSyncModal");
     if (!m || m.dataset.bound) return;
     m.dataset.bound = "1";
-
     m.querySelector(".kpsc-close").addEventListener("click", closeModal);
     m.addEventListener("click", function (e) { if (e.target === m) closeModal(); });
     m.querySelectorAll(".kpsc-tabs button").forEach(function (b) {
@@ -1080,15 +996,11 @@
     document.body.appendChild(btn);
   }
 
-  /* =================================================================
-     INIT
-     ================================================================= */
   function init() {
     injectCSS();
     injectButton();
     buildModal();
     bindEvents();
-
     if (ENABLE_FIREBASE) {
       loadFirebaseSDK()
         .then(function () { updateAccountUI(); autoPullOnLoad(); })
@@ -1110,7 +1022,7 @@
   }
 
   window.KPSC_Sync = {
-    __version: 5,
+    __version: 5.1,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
