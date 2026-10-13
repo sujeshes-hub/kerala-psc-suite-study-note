@@ -1,21 +1,25 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 4
+   Version: 5
 
-   Changes vs v3:
-     • Pulls from cloud every page load AND every time the tab regains focus
-     • No more sessionStorage guard (which caused stale data on desktop)
-     • Prevents pull loops with a `pulling` flag
-     • Reloads the page only when NEW data actually arrived
+   Auto-detects ANY progress key in localStorage — no per-file edits.
+   Syncs to:
+     • Firebase Firestore — when signed in with Google / email
+     • GitHub Gist       — when connected via token
+   Fallback: Export / Import code.
+
+   Skips only these keys:
+     kpsc_gh_token, kpsc_gh_gist_id, kpsc_last_sync,
+     kpsc_pulled_this_session, kp-theme
    ===================================================================== */
 (function () {
   "use strict";
 
-  if (window.KPSC_Sync && window.KPSC_Sync.__version === 4) return;
+  if (window.KPSC_Sync && window.KPSC_Sync.__version === 5) return;
 
   /* =================================================================
-     ▼▼▼  FIREBASE CONFIG — your project values  ▼▼▼
+     ▼▼▼  FIREBASE CONFIG — paste your project values  ▼▼▼
      ================================================================= */
   var FIREBASE_CONFIG = {
     apiKey:            "AIzaSyAG6V1Iqcve3I7pEbj5VWsFNidiDVsymaA",
@@ -36,13 +40,23 @@
   var TOKEN_KEY     = "kpsc_gh_token";
   var GIST_KEY      = "kpsc_gh_gist_id";
   var LASTS_KEY     = "kpsc_last_sync";
+  var PULLED_SS     = "kpsc_pulled_this_session";
 
   var GIST_FILE     = "kerala-psc-progress.json";
   var FIRESTORE_COL = "users";
 
   /* ---------- timing ---------- */
   var SAVE_DEBOUNCE = 900;
-  var PULL_THROTTLE = 2500;   /* min ms between auto-pulls */
+  var PULL_THROTTLE = 2500;
+
+  /* ---------- keys we never sync ---------- */
+  var SKIP_KEYS = {
+    "kpsc_gh_token": 1,
+    "kpsc_gh_gist_id": 1,
+    "kpsc_last_sync": 1,
+    "kpsc_pulled_this_session": 1,
+    "kp-theme": 1
+  };
 
   /* ---------- runtime state ---------- */
   var firebaseApp   = null;
@@ -59,19 +73,65 @@
   var fbSDKPromise = null;
 
   /* =================================================================
-     PAYLOAD
+     KEY DETECTION
      ================================================================= */
-  function collectPayload() {
-    var mock = {};
-    for (var i = 0; i < localStorage.length; i++) {
-      var k = localStorage.key(i);
-      if (k && k.indexOf("kpsc_mock_") === 0) {
-        try { mock[k] = JSON.parse(localStorage.getItem(k)); } catch (e) {}
+  function isTrackedKey(k, v) {
+    if (!k || typeof k !== "string") return false;
+    if (SKIP_KEYS[k]) return false;
+    if (k.indexOf("firebase") === 0) return false;
+    if (k.indexOf("__") === 0) return false;
+
+    /* Known prefixes — always tracked */
+    if (k.indexOf("kpsc_") === 0)   return true;
+    if (k.indexOf("kerala") === 0)  return true;
+    if (k.indexOf("quiz") === 0)    return true;
+    if (k.indexOf("mock") === 0)    return true;
+
+    /* Auto-detect by value shape: JSON object or array */
+    if (typeof v === "string" && v.length > 8) {
+      var first = v.charAt(0);
+      if (first === "{" || first === "[") {
+        try {
+          var parsed = JSON.parse(v);
+          return parsed && typeof parsed === "object";
+        } catch (e) { return false; }
       }
     }
-    var summaries = {};
-    try { summaries = JSON.parse(localStorage.getItem("kpsc_summaries_v1") || "{}"); } catch (e) {}
-    return { v: 1, ts: Date.now(), app: APP_ID, mock: mock, summaries: summaries };
+    return false;
+  }
+
+  function scanTrackedKeys() {
+    var out = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (!k) continue;
+      var v = localStorage.getItem(k);
+      if (isTrackedKey(k, v)) out.push(k);
+    }
+    return out;
+  }
+
+  /* =================================================================
+     PAYLOAD — packs every tracked key into a single object
+     ================================================================= */
+  function collectPayload() {
+    var keys = scanTrackedKeys();
+    var stores = {};
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      try {
+        var raw = localStorage.getItem(k);
+        stores[k] = JSON.parse(raw);
+      } catch (e) {
+        try { stores[k] = localStorage.getItem(k); } catch (e2) {}
+      }
+    }
+    return {
+      v: 2,
+      ts: Date.now(),
+      app: APP_ID,
+      stores: stores
+    };
   }
 
   function encode(payload) {
@@ -92,51 +152,114 @@
     return obj;
   }
 
-  function applyPayload(payload) {
-    var addedMock = 0, addedAnswers = 0;
+  /* =================================================================
+     DEEP MERGE — safe combine of two localStorage values
+     ================================================================= */
+  function deepMerge(local, remote) {
+    /* If types differ, remote wins */
+    if (typeof local !== typeof remote) return remote;
+    if (local === null || remote === null) return remote;
+    if (typeof local !== "object") return remote;
 
+    /* Arrays: whichever is longer */
+    if (Array.isArray(local) || Array.isArray(remote)) {
+      if (!Array.isArray(local)) return remote;
+      if (!Array.isArray(remote)) return local;
+      /* Merge index-wise; remote wins on fill */
+      var len = Math.max(local.length, remote.length);
+      var merged = new Array(len);
+      for (var i = 0; i < len; i++) {
+        var l = local[i], r = remote[i];
+        if (r === undefined) merged[i] = l;
+        else if (l === undefined) merged[i] = r;
+        else if (typeof l === "object" && typeof r === "object" && l && r) {
+          merged[i] = deepMerge(l, r);
+        } else {
+          merged[i] = r;
+        }
+      }
+      return merged;
+    }
+
+    /* Plain objects: recursive merge, remote wins on conflicts */
+    var out = {};
+    var k;
+    for (k in local) if (Object.prototype.hasOwnProperty.call(local, k)) out[k] = local[k];
+    for (k in remote) if (Object.prototype.hasOwnProperty.call(remote, k)) {
+      if (Object.prototype.hasOwnProperty.call(out, k)) {
+        out[k] = deepMerge(out[k], remote[k]);
+      } else {
+        out[k] = remote[k];
+      }
+    }
+    return out;
+  }
+
+  /* =================================================================
+     APPLY PAYLOAD
+     ================================================================= */
+  function applyPayload(payload) {
+    /* v2 — stores-based */
+    if (payload.stores && typeof payload.stores === "object") {
+      var addedKeys = 0, changedKeys = 0;
+
+      Object.keys(payload.stores).forEach(function (k) {
+        if (SKIP_KEYS[k]) return;
+        var remote = payload.stores[k];
+        var localRaw = localStorage.getItem(k);
+
+        if (localRaw === null) {
+          try { localStorage.setItem(k, JSON.stringify(remote)); addedKeys++; } catch (e) {}
+          return;
+        }
+
+        var local;
+        try { local = JSON.parse(localRaw); }
+        catch (e) {
+          try { localStorage.setItem(k, JSON.stringify(remote)); changedKeys++; } catch (e2) {}
+          return;
+        }
+
+        /* Deep merge */
+        var merged = deepMerge(local, remote);
+
+        /* Only rewrite if the merged value actually differs */
+        var mergedStr, localStr;
+        try { mergedStr = JSON.stringify(merged); localStr = JSON.stringify(local); }
+        catch (e) { return; }
+
+        if (mergedStr !== localStr) {
+          try { localStorage.setItem(k, mergedStr); changedKeys++; } catch (e) {}
+        }
+      });
+
+      return { addedMock: addedKeys, addedAnswers: changedKeys };
+    }
+
+    /* v1 legacy — mock key-based payloads (old codes) */
+    var addedMock = 0, addedAnswers = 0;
     Object.keys(payload.mock || {}).forEach(function (k) {
       var remote = payload.mock[k] || {};
       var localRaw = localStorage.getItem(k);
-
       if (!localRaw) {
-        localStorage.setItem(k, JSON.stringify(remote));
-        addedMock++;
-        addedAnswers += Object.keys(remote.answers || {}).length;
+        try { localStorage.setItem(k, JSON.stringify(remote)); addedMock++; } catch (e) {}
         return;
       }
       try {
-        var local   = JSON.parse(localRaw);
-        var localN  = Object.keys(local.answers  || {}).length;
-        var remoteN = Object.keys(remote.answers || {}).length;
-        var base  = remoteN > localN ? remote : local;
-        var other = remoteN > localN ? local  : remote;
-        var mergedAnswers   = Object.assign({}, other.answers   || {}, base.answers   || {});
-        var mergedBookmarks = Object.assign({}, other.bookmarks || {}, base.bookmarks || {});
-        var mergedSettings  = Object.assign({}, other.settings  || {}, base.settings  || {});
-        var newOnes = Math.max(0, Object.keys(mergedAnswers).length - localN);
-        addedAnswers += newOnes;
-        if (newOnes > 0) {
-          localStorage.setItem(k, JSON.stringify({
-            answers: mergedAnswers, bookmarks: mergedBookmarks, settings: mergedSettings
-          }));
-        }
+        var local = JSON.parse(localRaw);
+        var merged = deepMerge(local, remote);
+        localStorage.setItem(k, JSON.stringify(merged));
+        addedAnswers++;
       } catch (e) {
-        localStorage.setItem(k, JSON.stringify(remote));
+        try { localStorage.setItem(k, JSON.stringify(remote)); } catch (e2) {}
       }
     });
 
     try {
       var localSum  = JSON.parse(localStorage.getItem("kpsc_summaries_v1") || "{}");
       var remoteSum = payload.summaries || {};
-      var changed = false;
-      Object.keys(remoteSum).forEach(function (k) {
-        if (!localSum[k] || (remoteSum[k].attempted || 0) > (localSum[k].attempted || 0)) {
-          localSum[k] = remoteSum[k];
-          changed = true;
-        }
-      });
-      if (changed) localStorage.setItem("kpsc_summaries_v1", JSON.stringify(localSum));
+      var outSum = deepMerge(localSum, remoteSum);
+      localStorage.setItem("kpsc_summaries_v1", JSON.stringify(outSum));
     } catch (e) {}
 
     return { addedMock: addedMock, addedAnswers: addedAnswers };
@@ -161,10 +284,7 @@
       files.forEach(function (f) {
         var s = document.createElement("script");
         s.src = base + f;
-        s.onload = function () {
-          loaded++;
-          if (loaded === files.length) resolve();
-        };
+        s.onload = function () { loaded++; if (loaded === files.length) resolve(); };
         s.onerror = function () { reject(new Error("Could not load Firebase SDK")); };
         document.head.appendChild(s);
       });
@@ -174,10 +294,7 @@
       firebaseAuth = window.firebase.auth();
       firestoreDb  = window.firebase.firestore();
 
-      /* Persist login across sessions */
-      try {
-        firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
-      } catch (e) {}
+      try { firebaseAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL); } catch (e) {}
 
       firebaseReady = true;
       return new Promise(function (resolve) {
@@ -196,10 +313,7 @@
   function firebasePull() {
     if (!firebaseReady || !currentUser) return Promise.resolve(null);
     return firestoreDb.collection(FIRESTORE_COL).doc(currentUser.uid).get()
-      .then(function (doc) {
-        if (!doc.exists) return null;
-        return doc.data() || null;
-      });
+      .then(function (doc) { return doc.exists ? (doc.data() || null) : null; });
   }
 
   function firebasePush() {
@@ -253,17 +367,14 @@
     provider.setCustomParameters({ prompt: "select_account" });
     return firebaseAuth.signInWithPopup(provider);
   }
-
   function signInEmail(email, password) {
     if (!firebaseReady) return Promise.reject(new Error("Not ready"));
     return firebaseAuth.signInWithEmailAndPassword(email, password);
   }
-
   function signUpEmail(email, password) {
     if (!firebaseReady) return Promise.reject(new Error("Not ready"));
     return firebaseAuth.createUserWithEmailAndPassword(email, password);
   }
-
   function signOut() {
     if (!firebaseReady) return Promise.resolve();
     return firebaseAuth.signOut();
@@ -308,11 +419,7 @@
       body: JSON.stringify({
         description: "Kerala PSC Study Suite — progress",
         public: false,
-        files: (function () {
-          var o = {};
-          o[GIST_FILE] = { content: JSON.stringify(payload) };
-          return o;
-        })()
+        files: (function () { var o = {}; o[GIST_FILE] = { content: JSON.stringify(payload) }; return o; })()
       })
     }).then(function (res) {
       return res.json().then(function (body) {
@@ -339,11 +446,7 @@
     return ghFetch("https://api.github.com/gists/" + getGistId(), {
       method: "PATCH",
       body: JSON.stringify({
-        files: (function () {
-          var o = {};
-          o[GIST_FILE] = { content: JSON.stringify(payload) };
-          return o;
-        })()
+        files: (function () { var o = {}; o[GIST_FILE] = { content: JSON.stringify(payload) }; return o; })()
       })
     }).then(function () {
       localStorage.setItem(LASTS_KEY, String(Date.now()));
@@ -375,16 +478,13 @@
     }, SAVE_DEBOUNCE);
   }
 
-  /* Intercept every write to localStorage */
+  /* Intercept every write — auto-detect by key/value */
   (function interceptSetItem() {
     var orig = localStorage.setItem;
     localStorage.setItem = function (key, value) {
       orig.apply(localStorage, arguments);
       try {
-        if (typeof key === "string" &&
-            (key.indexOf("kpsc_mock_") === 0 || key === "kpsc_summaries_v1")) {
-          schedulePush();
-        }
+        if (isTrackedKey(key, value)) schedulePush();
       } catch (e) {}
     };
   })();
@@ -395,7 +495,6 @@
       clearTimeout(pushTimer);
       pushNow().catch(function () {});
     } else {
-      /* Tab became visible → pull fresh data */
       autoPullOnLoad();
     }
   });
@@ -404,7 +503,6 @@
     pushNow().catch(function () {});
   });
   window.addEventListener("focus", function () {
-    /* Window regained focus → pull */
     autoPullOnLoad();
   });
 
@@ -435,10 +533,7 @@
           setTimeout(function () { location.reload(); }, 200);
         }
       })
-      .catch(function (e) {
-        pulling = false;
-        console.warn("auto-pull:", e);
-      });
+      .catch(function (e) { pulling = false; console.warn("auto-pull:", e); });
   }
 
   /* =================================================================
@@ -571,7 +666,6 @@
       '    <button type="button" data-tab="import">&#128229; Import</button>',
       '    <button type="button" data-tab="gist">&#128260; Gist</button>',
       '  </div>',
-
       '  <div class="kpsc-panel" data-panel="account">',
       '    <div id="kpscLoggedIn" style="display:none">',
       '      <div class="kpsc-userbox">',
@@ -630,7 +724,6 @@
       '      </div>',
       '    </div>',
       '  </div>',
-
       '  <div class="kpsc-panel hidden" data-panel="export">',
       '    <p>Copy this code and paste into the Import tab on another device. Works without login.</p>',
       '    <textarea class="kpsc-code" id="kpscExportCode" readonly></textarea>',
@@ -640,7 +733,6 @@
       '    </div>',
       '    <div class="kpsc-note" id="kpscExportInfo"></div>',
       '  </div>',
-
       '  <div class="kpsc-panel hidden" data-panel="import">',
       '    <p>Paste a code from another device. Existing answers are kept.</p>',
       '    <textarea class="kpsc-code" id="kpscImportCode" placeholder="KPS1...." spellcheck="false"></textarea>',
@@ -650,7 +742,6 @@
       '    </div>',
       '    <div class="kpsc-note" id="kpscImportInfo" style="display:none"></div>',
       '  </div>',
-
       '  <div class="kpsc-panel hidden" data-panel="gist">',
       '    <p>Advanced: sync through your own private GitHub Gist.</p>',
       '    <div id="kpscGistConnected" style="display:none">',
@@ -674,7 +765,6 @@
       '      <div class="kpsc-note" id="kpscSetupNote" style="display:none"></div>',
       '    </div>',
       '  </div>',
-
       '</div>'
     ].join("\n");
     document.body.appendChild(m);
@@ -690,10 +780,7 @@
   function updateStatusUI(kind, message) {
     var dot = $("kpscDot");
     if (dot) dot.className = "dot " + (kind || "");
-    if (message) {
-      var s = $("kpscStatusLine");
-      if (s) s.textContent = message;
-    }
+    if (message) { var s = $("kpscStatusLine"); if (s) s.textContent = message; }
     var ls = $("kpscLastSync");
     if (ls) {
       var t = localStorage.getItem(LASTS_KEY);
@@ -714,7 +801,6 @@
       if (note) note.style.display = "block";
       if ($("kpscGoogleBtn")) $("kpscGoogleBtn").style.display = "none";
     }
-
     if (currentUser) {
       if ($("kpscLoggedIn"))  $("kpscLoggedIn").style.display  = "";
       if ($("kpscLoggedOut")) $("kpscLoggedOut").style.display = "none";
@@ -734,18 +820,14 @@
       if ($("kpscLoggedIn"))  $("kpscLoggedIn").style.display  = "none";
       if ($("kpscLoggedOut")) $("kpscLoggedOut").style.display = "";
     }
-
-    var gc = $("kpscGistConnected");
-    var gs = $("kpscGistSetup");
+    var gc = $("kpscGistConnected"), gs = $("kpscGistSetup");
     if (gc && gs) {
       if (isGistConnected()) {
-        gc.style.display = "";
-        gs.style.display = "none";
+        gc.style.display = ""; gs.style.display = "none";
         var lbl = $("kpscGistLabel");
         if (lbl) lbl.textContent = getGistId().slice(0, 12) + "…";
       } else {
-        gc.style.display = "none";
-        gs.style.display = "";
+        gc.style.display = "none"; gs.style.display = "";
       }
     }
   }
@@ -762,69 +844,40 @@
     flash("kpscAuthNote", "info", "Signing in…", "Check the popup window.");
     loadFirebaseSDK()
       .then(function () { return signInGoogle(); })
-      .then(function () {
-        flash("kpscAuthNote", "", "Signed in", "Syncing your progress…");
-        return firebasePull();
-      })
+      .then(function () { flash("kpscAuthNote", "", "Signed in", "Syncing your progress…"); return firebasePull(); })
       .then(function (remote) {
         if (remote) {
           var added = applyPayload(remote);
-          if (added.addedMock || added.addedAnswers) {
-            setTimeout(function () { location.reload(); }, 800);
-          }
-        } else {
-          return firebasePush();
-        }
+          if (added.addedMock || added.addedAnswers) setTimeout(function () { location.reload(); }, 800);
+        } else { return firebasePush(); }
       })
-      .catch(function (err) {
-        flash("kpscAuthNote", "err", "Sign-in failed", err.message || err);
-      });
+      .catch(function (err) { flash("kpscAuthNote", "err", "Sign-in failed", err.message || err); });
   }
 
   function doEmailSignIn() {
     var email = ($("kpscEmail").value || "").trim();
     var pass  = ($("kpscPassword").value || "").trim();
-    if (!email || !pass) {
-      flash("kpscAuthNote", "err", "Missing info", "Enter email and password.");
-      return;
-    }
+    if (!email || !pass) { flash("kpscAuthNote", "err", "Missing info", "Enter email and password."); return; }
     loadFirebaseSDK()
       .then(function () { return signInEmail(email, pass); })
-      .then(function () {
-        flash("kpscAuthNote", "", "Signed in", "Syncing…");
-        return firebasePull();
-      })
+      .then(function () { flash("kpscAuthNote", "", "Signed in", "Syncing…"); return firebasePull(); })
       .then(function (remote) {
         if (remote) {
           var added = applyPayload(remote);
-          if (added.addedMock || added.addedAnswers) {
-            setTimeout(function () { location.reload(); }, 800);
-          }
-        } else {
-          return firebasePush();
-        }
+          if (added.addedMock || added.addedAnswers) setTimeout(function () { location.reload(); }, 800);
+        } else { return firebasePush(); }
       })
-      .catch(function (err) {
-        flash("kpscAuthNote", "err", "Sign-in failed", err.message || err);
-      });
+      .catch(function (err) { flash("kpscAuthNote", "err", "Sign-in failed", err.message || err); });
   }
 
   function doEmailSignUp() {
     var email = ($("kpscEmail").value || "").trim();
     var pass  = ($("kpscPassword").value || "").trim();
-    if (!email || !pass || pass.length < 6) {
-      flash("kpscAuthNote", "err", "Password too short", "Use at least 6 characters.");
-      return;
-    }
+    if (!email || !pass || pass.length < 6) { flash("kpscAuthNote", "err", "Password too short", "Use at least 6 characters."); return; }
     loadFirebaseSDK()
       .then(function () { return signUpEmail(email, pass); })
-      .then(function () {
-        flash("kpscAuthNote", "", "Account created", "Syncing your progress…");
-        return firebasePush();
-      })
-      .catch(function (err) {
-        flash("kpscAuthNote", "err", "Could not create account", err.message || err);
-      });
+      .then(function () { flash("kpscAuthNote", "", "Account created", "Syncing your progress…"); return firebasePush(); })
+      .catch(function (err) { flash("kpscAuthNote", "err", "Could not create account", err.message || err); });
   }
 
   function doSignOut() {
@@ -841,26 +894,20 @@
       .then(function (added) {
         if (added && (added.addedMock || added.addedAnswers)) {
           flash("kpscAccountNote", "", "Merged new progress",
-            added.addedMock + " paper(s), " + added.addedAnswers + " answer(s). Reloading…");
+            added.addedMock + " key(s), " + added.addedAnswers + " update(s). Reloading…");
           setTimeout(function () { location.reload(); }, 1200);
-        } else {
-          flash("kpscAccountNote", "", "Up to date", "Everything is synced.");
-        }
+        } else { flash("kpscAccountNote", "", "Up to date", "Everything is synced."); }
       })
-      .catch(function (err) {
-        flash("kpscAccountNote", "err", "Sync failed", err.message || err);
-      });
+      .catch(function (err) { flash("kpscAccountNote", "err", "Sync failed", err.message || err); });
   }
 
   function doGistConnect() {
     var token = ($("kpscTokenInput").value || "").trim();
     var gistId = ($("kpscGistInput").value || "").trim();
-
     if (!token || (token.indexOf("ghp_") !== 0 && token.indexOf("github_pat_") !== 0)) {
       flash("kpscSetupNote", "err", "Invalid token", "Must start with ghp_ or github_pat_.");
       return;
     }
-
     if (gistId) {
       localStorage.setItem(TOKEN_KEY, token);
       localStorage.setItem(GIST_KEY, gistId);
@@ -868,16 +915,11 @@
         .then(function (remote) {
           if (remote) {
             var added = applyPayload(remote);
-            flash("kpscSetupNote", "", "Connected",
-              added.addedMock || added.addedAnswers ? "Progress pulled. Reloading…" : "");
-            if (added.addedMock || added.addedAnswers) {
-              setTimeout(function () { location.reload(); }, 800);
-            } else {
-              updateAccountUI();
-            }
+            flash("kpscSetupNote", "", "Connected", (added.addedMock || added.addedAnswers) ? "Progress pulled. Reloading…" : "");
+            if (added.addedMock || added.addedAnswers) setTimeout(function () { location.reload(); }, 800);
+            else updateAccountUI();
           } else {
-            flash("kpscSetupNote", "warn", "Connected but empty",
-              "No progress found in this Gist.");
+            flash("kpscSetupNote", "warn", "Connected but empty", "No progress found in this Gist.");
             updateAccountUI();
             pushGist().catch(function () {});
           }
@@ -896,9 +938,7 @@
             "Gist ID: <code>" + gist.id + "</code><br>Use this on other devices.");
           updateAccountUI();
         })
-        .catch(function (err) {
-          flash("kpscSetupNote", "err", "Could not create Gist", err.message);
-        });
+        .catch(function (err) { flash("kpscSetupNote", "err", "Could not create Gist", err.message); });
     }
   }
 
@@ -912,22 +952,17 @@
 
   function doGistSyncNow() {
     pullGist()
-      .then(function (remote) {
-        if (!remote) return null;
-        return applyPayload(remote);
-      })
+      .then(function (remote) { return remote ? applyPayload(remote) : null; })
       .then(function (added) {
         return pushGist().then(function () {
           if (added && (added.addedMock || added.addedAnswers)) {
             flash("kpscSetupNote", "", "Merged",
-              added.addedMock + " paper(s), " + added.addedAnswers + " answer(s).");
+              added.addedMock + " key(s), " + added.addedAnswers + " update(s).");
             setTimeout(function () { location.reload(); }, 1000);
           }
         });
       })
-      .catch(function (err) {
-        flash("kpscSetupNote", "err", "Sync failed", err.message);
-      });
+      .catch(function (err) { flash("kpscSetupNote", "err", "Sync failed", err.message); });
   }
 
   function refreshExport() {
@@ -937,14 +972,9 @@
       var payload = collectPayload();
       var code = encode(payload);
       ta.value = code;
-      var answers = 0;
-      Object.keys(payload.mock).forEach(function (k) {
-        answers += Object.keys(payload.mock[k].answers || {}).length;
-      });
+      var keys = Object.keys(payload.stores).length;
       info.className = "kpsc-note";
-      info.innerHTML = "<b>&#10003; Ready</b>Contains " +
-        Object.keys(payload.mock).length + " paper(s), " +
-        answers + " answer(s), " + code.length + " chars.";
+      info.innerHTML = "<b>&#10003; Ready</b>" + keys + " progress key(s) · " + code.length + " chars.";
     } catch (e) {
       ta.value = "";
       info.className = "kpsc-note err";
@@ -955,8 +985,7 @@
   function copyCode() {
     var ta = $("kpscExportCode");
     if (!ta.value) return;
-    ta.select();
-    ta.setSelectionRange(0, ta.value.length);
+    ta.select(); ta.setSelectionRange(0, ta.value.length);
     var ok = false;
     try { ok = document.execCommand("copy"); } catch (e) {}
     if (!ok && navigator.clipboard) navigator.clipboard.writeText(ta.value);
@@ -972,15 +1001,10 @@
     var blob = new Blob([ta.value], { type: "text/plain" });
     var url = URL.createObjectURL(blob);
     var d = new Date();
-    var stamp = d.getFullYear() + "-" +
-      String(d.getMonth() + 1).padStart(2, "0") + "-" +
-      String(d.getDate()).padStart(2, "0");
+    var stamp = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
     var a = document.createElement("a");
-    a.href = url;
-    a.download = "kerala-psc-progress-" + stamp + ".txt";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    a.href = url; a.download = "kerala-psc-progress-" + stamp + ".txt";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   }
 
@@ -989,17 +1013,12 @@
     var info = $("kpscImportInfo");
     info.style.display = "block";
     var raw = (ta.value || "").trim();
-    if (!raw) {
-      info.className = "kpsc-note warn";
-      info.innerHTML = "<b>Empty</b>Paste a code first.";
-      return;
-    }
+    if (!raw) { info.className = "kpsc-note warn"; info.innerHTML = "<b>Empty</b>Paste a code first."; return; }
     try {
       var payload = decode(raw);
       var res = applyPayload(payload);
       info.className = "kpsc-note";
-      info.innerHTML = "<b>&#10003; Loaded</b>Merged " +
-        res.addedMock + " paper(s), " + res.addedAnswers + " answer(s).";
+      info.innerHTML = "<b>&#10003; Loaded</b>Merged " + res.addedMock + " key(s), " + res.addedAnswers + " update(s).";
       setTimeout(function () { location.reload(); }, 1200);
     } catch (e) {
       info.className = "kpsc-note err";
@@ -1026,24 +1045,17 @@
 
     m.querySelector(".kpsc-close").addEventListener("click", closeModal);
     m.addEventListener("click", function (e) { if (e.target === m) closeModal(); });
-
     m.querySelectorAll(".kpsc-tabs button").forEach(function (b) {
       b.addEventListener("click", function () {
-        m.querySelectorAll(".kpsc-tabs button").forEach(function (x) {
-          x.classList.toggle("active", x === b);
-        });
-        m.querySelectorAll(".kpsc-panel").forEach(function (p) {
-          p.classList.toggle("hidden", p.dataset.panel !== b.dataset.tab);
-        });
+        m.querySelectorAll(".kpsc-tabs button").forEach(function (x) { x.classList.toggle("active", x === b); });
+        m.querySelectorAll(".kpsc-panel").forEach(function (p) { p.classList.toggle("hidden", p.dataset.panel !== b.dataset.tab); });
       });
     });
-
     $("kpscGoogleBtn").addEventListener("click", doGoogle);
     $("kpscSignInBtn").addEventListener("click", doEmailSignIn);
     $("kpscSignUpBtn").addEventListener("click", doEmailSignUp);
     $("kpscSignOut").addEventListener("click", doSignOut);
     $("kpscSyncNow").addEventListener("click", doSyncNow);
-
     $("kpscCopyBtn").addEventListener("click", copyCode);
     $("kpscDownloadBtn").addEventListener("click", downloadCode);
     $("kpscLoadBtn").addEventListener("click", loadCode);
@@ -1051,14 +1063,10 @@
       $("kpscImportCode").value = "";
       $("kpscImportInfo").style.display = "none";
     });
-
     $("kpscConnectBtn").addEventListener("click", doGistConnect);
     $("kpscGistSyncNow").addEventListener("click", doGistSyncNow);
     $("kpscGistDisconnect").addEventListener("click", doGistDisconnect);
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeModal();
-    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
   }
 
   function injectButton() {
@@ -1102,14 +1110,13 @@
   }
 
   window.KPSC_Sync = {
-    __version: 4,
+    __version: 5,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
     isConnected: function () { return !!currentUser || isGistConnected(); },
-    syncNow:     function () {
-      return currentUser ? fbSyncNow() : doGistSyncNow();
-    },
-    push:        function () { return pushNow(); }
+    syncNow:     function () { return currentUser ? fbSyncNow() : doGistSyncNow(); },
+    push:        function () { return pushNow(); },
+    trackedKeys: scanTrackedKeys
   };
 })();
