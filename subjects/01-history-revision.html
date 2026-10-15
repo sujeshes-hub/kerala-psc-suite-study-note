@@ -3,21 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>കേരള PSC ചരിത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് (v3)</title>
+<title>കേരള PSC ചരിത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് (v4 Pro)</title>
 <style>
   :root{
     --bg:#f4f6fb;--card:#ffffff;--ink:#1c2340;--muted:#5a6485;
     --accent:#3b4cca;--accent2:#7a3bcc;--gold:#e8a600;--green:#0f9d58;
     --red:#d93025;--line:#e3e7f3;--teal:#0d9488;--orange:#ea580c;
+    --subcard:#f7f9ff;--hl-bg:#fff2b8;--hl-ink:#1c2340;
+  }
+  body.dark{
+    --bg:#0f1424;--card:#182038;--ink:#e8ecf8;--muted:#9aa5c4;
+    --accent:#6878ff;--accent2:#a575ff;--gold:#fbbf24;--green:#22c55e;
+    --red:#f87171;--line:#2a3556;--teal:#2dd4bf;--orange:#fb923c;
+    --subcard:#1f2947;--hl-bg:#5c4800;--hl-ink:#fff8dc;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;padding:18px 12px 60px;
-    background:linear-gradient(180deg,#eef1fa 0%,#f7f8fd 100%);
+    background:var(--bg);
     font-family:"Noto Sans Malayalam","Manjari","Meera",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    color:var(--ink);line-height:1.75;font-size:16px;
+    color:var(--ink);line-height:1.75;font-size:16px;transition:background .25s,color .25s;
   }
-  .wrap{max-width:1080px;margin:0 auto;}
+  .wrap{max-width:1100px;margin:0 auto;}
 
   header.hero{
     background:linear-gradient(135deg,#3b4cca 0%,#7a3bcc 50%,#0d9488 100%);
@@ -30,33 +37,32 @@
   .legend span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
     padding:4px 10px;border-radius:30px;}
 
-  .revision-tools{position:sticky;top:8px;z-index:20;background:rgba(255,255,255,.97);
-    border:1px solid var(--line);box-shadow:0 5px 20px rgba(28,35,64,.10);
-    border-radius:14px;padding:12px;margin:0 0 18px;backdrop-filter:blur(8px)}
-  .search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .search-row input{flex:1;min-width:180px;border:1px solid #ccd3ee;border-radius:10px;
-    padding:11px 12px;font:inherit;background:#fff;color:var(--ink)}
-  .tool-btn{border:1px solid #ccd3ee;background:#f7f8ff;color:var(--accent);
-    padding:9px 12px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
-  .tool-btn:hover{background:var(--accent);color:#fff}
+  .revision-tools{position:sticky;top:8px;z-index:20;background:var(--card);
+    border:1px solid var(--line);box-shadow:0 5px 20px rgba(28,35,64,.14);
+    border-radius:14px;padding:12px;margin:0 0 18px;}
+  .search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .search-row input{flex:1;min-width:180px;border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;font:inherit;background:var(--subcard);color:var(--ink);}
+  .tool-btn{border:1px solid var(--line);background:var(--subcard);color:var(--accent);
+    padding:8px 12px;border-radius:10px;font:inherit;font-size:.86rem;font-weight:700;cursor:pointer;transition:.2s;}
+  .tool-btn:hover,.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .filter-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .pill{border:1px solid var(--line);background:var(--subcard);color:var(--ink);
+    padding:4px 11px;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;}
+  .pill.active{background:var(--accent2);color:#fff;border-color:var(--accent2);}
   .revision-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
-    font-size:.82rem;color:var(--muted);margin-top:9px}
-  .progress-track{height:7px;background:#e5e9fb;border-radius:9px;overflow:hidden;margin-top:7px}
-  .progress-track span{display:block;width:0;height:100%;background:linear-gradient(90deg,#0f9d58,#3b4cca);transition:width .2s}
-  .study-tip{background:#f7f9ff;border:1px dashed #aeb9e9;border-radius:12px;padding:12px 14px;margin:0 0 16px}
-  .study-tip strong{color:var(--accent)}
-  .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
-  .btn{border:none;cursor:pointer;background:var(--card);color:var(--accent);
-    border:1.5px solid #ccd3ee;padding:9px 18px;border-radius:30px;
-    font-family:inherit;font-size:.9rem;font-weight:600;transition:.2s;}
-  .btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+    font-size:.82rem;color:var(--muted);margin-top:9px;}
+  .progress-track{height:7px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:7px;}
+  .progress-track span{display:block;width:0;height:100%;background:linear-gradient(90deg,#0f9d58,#3b4cca);transition:width .2s;}
+  .study-tip{background:var(--subcard);border:1px dashed var(--accent);border-radius:12px;padding:12px 14px;margin:0 0 16px;}
+  .study-tip strong{color:var(--accent);}
 
   details.card{background:var(--card);border-radius:16px;margin-bottom:14px;
     box-shadow:0 3px 14px rgba(28,35,64,.07);border:1px solid var(--line);
     overflow:hidden;transition:.25s;}
   details.card[open]{box-shadow:0 8px 26px rgba(28,35,64,.12);}
   summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;
-    padding:16px 18px;background:linear-gradient(90deg,#f7f9ff,#ffffff);
+    padding:15px 18px;background:var(--subcard);
     border-bottom:1px solid transparent;font-weight:700;user-select:none;}
   details[open] > summary{border-bottom:1px solid var(--line);}
   summary::-webkit-details-marker{display:none;}
@@ -64,12 +70,12 @@
     font-size:1.1rem;transition:transform .25s;}
   details[open] summary::after{transform:rotate(180deg);}
   .num{flex:0 0 auto;background:linear-gradient(135deg,#3b4cca,#7a3bcc);
-    color:#fff;font-size:.78rem;font-weight:700;min-width:28px;height:28px;
-    padding:0 6px;border-radius:9px;display:flex;align-items:center;justify-content:center;}
+    color:#fff;font-size:.78rem;font-weight:700;min-width:30px;height:28px;
+    padding:0 7px;border-radius:9px;display:flex;align-items:center;justify-content:center;}
   .title{font-size:1.02rem;flex:1;}
   .stars{flex:0 0 auto;font-size:.85rem;letter-spacing:-1px;
     background:#fff8e1;border:1px solid #ffe08a;padding:2px 8px;
-    border-radius:20px;color:var(--gold);}
+    border-radius:20px;color:#b88000;}
   .content{padding:16px 18px 20px;}
 
   h3{font-size:.95rem;margin:18px 0 8px;color:var(--accent2);
@@ -77,37 +83,43 @@
   h3:first-child{margin-top:0;}
   ul{margin:6px 0 10px;padding-left:22px;}
   li{margin:5px 0;}
-  .hl{background:#fff2b8;padding:0 4px;border-radius:4px;font-weight:700;}
-  .hl2{background:#d9f2e3;padding:0 4px;border-radius:4px;font-weight:700;}
-  b{color:#101636;}
+  .hl{background:var(--hl-bg);color:var(--hl-ink);padding:1px 5px;border-radius:4px;font-weight:700;transition:.2s;}
+  body.quiz-mode .hl, body.quiz-mode td b{
+    background:#3b4cca;color:transparent;border-radius:4px;cursor:pointer;user-select:none;
+  }
+  body.quiz-mode .hl.revealed, body.quiz-mode td b.revealed{
+    background:var(--hl-bg);color:var(--hl-ink);
+  }
+  b{color:var(--ink);}
 
-  .trap{background:#fff4f2;border:1px solid #ffd4cd;border-left:5px solid var(--red);
+  .trap{background:rgba(217,48,37,.08);border:1px solid rgba(217,48,37,.3);border-left:5px solid var(--red);
     border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.94rem;}
   .trap .lbl{display:inline-block;background:var(--red);color:#fff;font-size:.72rem;
     font-weight:700;padding:1px 8px;border-radius:6px;margin-bottom:4px;}
-  .trick{background:#eef7ff;border:1px solid #cfe6ff;border-left:5px solid #1a73e8;
+  .trick{background:rgba(26,115,232,.08);border:1px solid rgba(26,115,232,.3);border-left:5px solid #1a73e8;
     border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.94rem;}
   .trick .lbl{display:inline-block;background:#1a73e8;color:#fff;font-size:.72rem;
     font-weight:700;padding:1px 8px;border-radius:6px;margin-bottom:4px;}
-  .note{background:#f2fbf5;border:1px solid #c8ecd4;border-left:5px solid var(--green);
+  .note{background:rgba(15,157,88,.08);border:1px solid rgba(15,157,88,.3);border-left:5px solid var(--green);
     border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.94rem;}
   .note .lbl{display:inline-block;background:var(--green);color:#fff;font-size:.72rem;
     font-weight:700;padding:1px 8px;border-radius:6px;margin-bottom:4px;}
-  .new-badge{background:#0f9d58;color:#fff;font-size:.68rem;padding:1px 7px;border-radius:10px;font-weight:700;vertical-align:middle;margin-left:4px;}
+  .new-badge{background:#0f9d58;color:#fff;font-size:.68rem;padding:2px 7px;border-radius:10px;font-weight:700;vertical-align:middle;margin-left:4px;}
+  .fix-badge{background:#ea580c;color:#fff;font-size:.68rem;padding:2px 7px;border-radius:10px;font-weight:700;vertical-align:middle;margin-left:4px;}
 
   .tl{list-style:none;padding-left:0;margin:10px 0;}
   .tl li{position:relative;padding-left:26px;margin:7px 0;}
   .tl li::before{content:"";position:absolute;left:6px;top:.62em;
     width:9px;height:9px;border-radius:50%;background:var(--accent);
-    box-shadow:0 0 0 3px #dfe3fb;}
+    box-shadow:0 0 0 3px var(--line);}
   .tl li::after{content:"";position:absolute;left:10px;top:1.3em;
-    width:1.5px;height:calc(100% - .5em);background:#dfe3fb;}
+    width:1.5px;height:calc(100% - .5em);background:var(--line);}
   .tl li:last-child::after{display:none;}
 
   table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem;}
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
-  th{background:#f0f3fd;color:var(--accent);font-weight:700;}
-  tr:nth-child(even) td{background:#fafbff;}
+  th{background:var(--subcard);color:var(--accent);font-weight:700;}
+  tr:nth-child(even) td{background:rgba(128,128,128,.04);}
   .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
   table.compact td, table.compact th{padding:6px 8px;font-size:.85rem;}
 
@@ -117,18 +129,18 @@
     scroll-snap-align:start;padding:0 6px;}
   .htl .node .dot{width:16px;height:16px;border-radius:50%;
     background:linear-gradient(135deg,var(--accent),var(--accent2));
-    margin:0 auto 8px;position:relative;z-index:2;box-shadow:0 0 0 4px #e5e9fb;}
+    margin:0 auto 8px;position:relative;z-index:2;box-shadow:0 0 0 4px var(--line);}
   .htl .node .yr{font-weight:800;font-size:.85rem;color:var(--accent);}
   .htl .node .ev{font-size:.75rem;color:var(--muted);line-height:1.35;margin-top:2px;}
   .htl .node::before{content:"";position:absolute;top:7px;left:0;width:100%;
-    height:3px;background:#e5e9fb;z-index:1;}
+    height:3px;background:var(--line);z-index:1;}
   .htl .node:first-child::before{left:50%;width:50%;}
   .htl .node:last-child::before{width:50%;}
 
   .cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:10px;margin:12px 0;}
   .cmp .col{border-radius:12px;padding:12px;border:1px solid var(--line);
-    background:#fbfcff;}
+    background:var(--subcard);}
   .cmp .col h4{margin:0 0 6px;font-size:.85rem;padding:4px 8px;border-radius:6px;
     color:#fff;text-align:center;}
   .cmp .col.pt h4{background:#0f9d58;}
@@ -145,36 +157,24 @@
     background:linear-gradient(90deg,#3b4cca,#7a3bcc);
     display:flex;align-items:center;justify-content:flex-end;
     padding-right:6px;color:#fff;font-size:.72rem;font-weight:700;
-    min-width:30px;transition:width .4s;}
+    min-width:30px;}
 
   .flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:12px 0;}
-  .flow .box{background:#eef2ff;border:1.5px solid #c7d2fe;color:var(--accent);
+  .flow .box{background:var(--subcard);border:1.5px solid var(--accent);color:var(--accent);
     padding:6px 12px;border-radius:8px;font-size:.82rem;font-weight:700;}
   .flow .arrow{color:var(--accent2);font-weight:800;font-size:1rem;}
 
-  .tree{margin:12px 0;font-size:.85rem;}
-  .tree .root{background:linear-gradient(135deg,var(--accent),var(--accent2));
-    color:#fff;padding:8px 16px;border-radius:10px;display:inline-block;
-    font-weight:700;margin-bottom:10px;}
-  .tree .branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:8px;margin-left:14px;border-left:2.5px solid #dfe3fb;padding-left:14px;}
-  .tree .branch{background:#f7f9ff;border:1px solid var(--line);border-radius:8px;
-    padding:8px 10px;position:relative;}
-  .tree .branch::before{content:"";position:absolute;left:-14px;top:14px;
-    width:14px;height:2px;background:#dfe3fb;}
-  .tree .branch b{color:var(--accent);font-size:.82rem;}
-
-  .map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  .map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
     gap:8px;margin:12px 0;}
-  .map-grid .cell{background:#fff4f2;border:1.5px solid #ffd4cd;border-radius:10px;
+  .map-grid .cell{background:rgba(217,48,37,.07);border:1.5px solid rgba(217,48,37,.3);border-radius:10px;
     padding:9px 11px;font-size:.82rem;}
   .map-grid .cell b{color:var(--red);display:block;font-size:.85rem;margin-bottom:2px;}
 
   .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
     gap:10px;margin:12px 0;}
-  .stat{background:linear-gradient(135deg,#f7f9ff,#eef2ff);border:1px solid #dfe3fb;
+  .stat{background:var(--subcard);border:1px solid var(--line);
     border-radius:12px;padding:12px;text-align:center;}
-  .stat .big{font-size:1.3rem;font-weight:800;color:var(--accent);}
+  .stat .big{font-size:1.25rem;font-weight:800;color:var(--accent);}
   .stat .small{font-size:.75rem;color:var(--muted);margin-top:2px;}
 
   .icon-list{list-style:none;padding-left:0;}
@@ -182,18 +182,10 @@
   .icon-list li::before{content:"★";position:absolute;left:0;color:var(--gold);font-size:1rem;}
 
   footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px;padding:16px;}
-
-  .fact-check-note{background:#fff8e8;border:1px solid #f3d58a;border-left:5px solid #d99a00;
-    padding:12px 14px;border-radius:10px;margin:12px 0}
-  .fact-check-note h3{margin:0 0 6px;color:#8a5a00;border:0;padding:0}
-
   .review-check{display:inline-flex;gap:7px;align-items:center;font-size:.8rem;color:var(--muted);
-    font-weight:600;white-space:nowrap}
-  .review-check input{accent-color:#0f9d58;width:17px;height:17px}
-  .hidden-by-search{display:none!important}
-
-  .ruler-tag{display:inline-block;background:#eef2ff;color:var(--accent);
-    font-size:.7rem;font-weight:700;padding:1px 7px;border-radius:10px;margin-left:4px;border:1px solid #c7d2fe;}
+    font-weight:600;white-space:nowrap;}
+  .review-check input{accent-color:#0f9d58;width:17px;height:17px;}
+  .hidden-by-search{display:none!important;}
 
   @media(max-width:600px){
     body{font-size:15px;padding:12px 8px 50px;}
@@ -203,16 +195,14 @@
     .content{padding:13px 12px 16px;}
     .bar-row .lbl{flex:0 0 100px;font-size:.78rem;}
     .htl .node{min-width:95px;}
-    .revision-tools{position:static}
+    .revision-tools{position:static;}
   }
   @media print{
-    body{background:#fff;padding:0;color:#000;font-size:11pt}
-    .wrap{max-width:none}.hero{box-shadow:none!important;break-inside:avoid}
-    .controls,.revision-tools{display:none!important}
-    details.card{box-shadow:none;border:1px solid #bbb;break-inside:avoid-page}
-    details.card:not([open]) > .content{display:block!important}
-    details.card > summary{background:#f3f3f3!important}
-    .content{padding:10px}
+    body{background:#fff;padding:0;color:#000;font-size:10.5pt;}
+    .wrap{max-width:none;}.hero{box-shadow:none!important;break-inside:avoid;}
+    .revision-tools{display:none!important;}
+    details.card{box-shadow:none;border:1px solid #bbb;break-inside:avoid-page;}
+    details.card:not([open]) > .content{display:block!important;}
   }
 </style>
 </head>
@@ -220,304 +210,264 @@
 <div class="wrap">
 
 <header class="hero">
-  <h1>📘 കേരള PSC ചരിത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് v3</h1>
-  <p>🆕 പുതിയത്: വേണാട് മുതൽ തിരുവിതാംകൂർ വരെ ഭരണാധികാരികൾ, പ്രധാന ദിവാനമാർ, കേരള നവോത്ഥാന സംഘടനകൾ, ദേശീയ സംഘടനകൾ — എല്ലാം ശരിയായ സ്ഥാനങ്ങളിൽ ചേർത്തു.</p>
+  <h1>📘 കേരള PSC ചരിത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് v4 Pro</h1>
+  <p>✨ v4 അപ്ഡേറ്റ്: ചരിത്രപരമായ പിശകുകൾ തിരുത്തി + കൊച്ചി ചരിത്രം, ബ്രിട്ടീഷ് വിരുദ്ധ കലാപങ്ങൾ, സത്യഗ്രഹങ്ങൾ, നവോത്ഥാന പത്രങ്ങൾ, ക്വിസ് മോഡ് എന്നിവ ചേർത്തു.</p>
   <div class="legend">
     <span>⭐⭐⭐⭐⭐ അതിപ്രധാനം</span>
-    <span>⭐⭐⭐⭐ പ്രധാനം</span>
-    <span>🔴 PSC കെണി</span>
-    <span>🔵 ഓർമ്മവഴി</span>
-    <span>🆕 പുതുതായി ചേർത്തത്</span>
+    <span>🆕 v4-ൽ പുതുതായി ചേർത്തത്</span>
+    <span>🔧 പിശക് തിരുത്തിയത്</span>
+    <span>🎯 ക്വിസ് മോഡ് (Active Recall)</span>
   </div>
 </header>
 
 <section class="revision-tools" aria-label="Revision tools">
   <div class="search-row">
-    <input id="noteSearch" type="search" placeholder="🔎 വിഷയം / വർഷം / വ്യക്തി / സംഘടന തിരയുക..." aria-label="Search revision notes">
+    <input id="noteSearch" type="search" placeholder="🔎 വിഷയം / വർഷം / വ്യക്തി / സമരം തിരയുക..." aria-label="Search revision notes">
+    <button class="tool-btn" type="button" id="quizToggle">🎯 ക്വിസ് മോഡ്</button>
+    <button class="tool-btn" type="button" id="darkToggle">🌙 ഡാർക്ക് മോഡ്</button>
     <button class="tool-btn" type="button" id="openAll">📂 എല്ലാം തുറക്കുക</button>
     <button class="tool-btn" type="button" id="closeAll">📁 എല്ലാം അടയ്ക്കുക</button>
     <button class="tool-btn" type="button" onclick="window.print()">🖨️ Print / PDF</button>
   </div>
-  <div class="revision-meta">
-    <span id="searchStatus">29 വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം</span>
-    <span><span id="reviewCount">0</span> / <span id="totalCount">29</span> വിഭാഗങ്ങൾ ആവർത്തിച്ചു</span>
+  <div class="filter-pills">
+    <button class="pill active" data-filter="all">എല്ലാം (33)</button>
+    <button class="pill" data-filter="5star">⭐⭐⭐⭐⭐ അതിപ്രധാനം</button>
+    <button class="pill" data-filter="new">🆕 പുതിയവ & തിരുത്തലുകൾ</button>
+    <button class="pill" data-filter="kerala">🌴 കേരള ചരിത്രം</button>
+    <button class="pill" data-filter="india">🇮🇳 ഇന്ത്യൻ ചരിത്രം</button>
+    <button class="pill" data-filter="world">🌍 ലോക ചരിത്രം</button>
   </div>
-  <div class="progress-track" aria-label="Revision progress"><span id="reviewProgress"></span></div>
+  <div class="revision-meta">
+    <span id="searchStatus">33 വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം</span>
+    <span><span id="reviewCount">0</span> / <span id="totalCount">33</span> വിഭാഗങ്ങൾ ആവർത്തിച്ചു</span>
+  </div>
+  <div class="progress-track"><span id="reviewProgress"></span></div>
 </section>
 
-<div class="study-tip"><strong>📌 പഠന തന്ത്രം:</strong> ആദ്യം ⭐⭐⭐⭐⭐ വിഭാഗങ്ങൾ → പിന്നീട് 🆕 പുതിയ ഭരണാധികാരി/ദിവാൻ പട്ടികകൾ → അവസാനം 🔴 PSC കെണികളും കാലക്രമങ്ങളും. “പഠിച്ചു” ചെക്ക്ബോക്സ് ടിക്ക് ചെയ്താൽ പുരോഗതി ട്രാക്ക് ചെയ്യാം.</div>
+<div class="study-tip"><strong>💡 പ്രോ ടിപ്പ്:</strong> മുകളിലെ <strong>"🎯 ക്വിസ് മോഡ്"</strong> ബട്ടൺ അമർത്തിയാൽ പ്രധാന ഉത്തരങ്ങൾ നീല ബോക്സായി മറയും. സ്വയം ഓർത്തെടുത്ത ശേഷം അതിൽ ക്ലിക്ക് ചെയ്താൽ ഉത്തരം കാണാം!</div>
 
 <!-- ================= 1 ================= -->
-<details class="card" open>
+<details class="card" data-tags="5star kerala" open>
 <summary><span class="num">1</span><span class="title">യൂറോപ്യന്മാരുടെ വരവ്</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="1"> പഠിച്ചു</label></summary>
 <div class="content">
-
   <h3>🕐 വരവിന്റെ ക്രമം — ഹൊറിസോണ്ടൽ ടൈംലൈൻ</h3>
   <div class="htl">
     <div class="node"><div class="dot"></div><div class="yr">1498</div><div class="ev">പോർച്ചുഗീസ്<br>വാസ്കോ ഡ ഗാമ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1602</div><div class="ev">ഡച്ച്<br>ഹോർത്തൂസ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1599</div><div class="ev">ഉദയംപേരൂർ<br>സുന്നഹദോസ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1602</div><div class="ev">ഡച്ച് EIC<br>ഹോർത്തൂസ്</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1615</div><div class="ev">ഇംഗ്ലീഷ്<br>വില്യം കീലിങ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1653</div><div class="ev">കൂനൻ കുരിശ്<br>സത്യം</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1721</div><div class="ev">ഫ്രഞ്ച്<br>മാഹി</div></div>
   </div>
 
-  <h3>⚖️ നാല് യൂറോപ്യൻ ശക്തികൾ</h3>
   <div class="cmp">
     <div class="col pt"><h4>🇵🇹 പോർച്ചുഗീസ്</h4>
-      <ul><li>1498 — ഗാമ</li><li>കപ്പൽ: സാവോ ഗബ്രിയേൽ</li><li>കോട്ട: ഫോർട്ട് മാനുവൽ (1503)</li><li>അച്ചടിശാല ✓</li><li>മതനയം: കർക്കശം</li></ul></div>
+      <ul><li>1498 മെയ് 20 — കാപ്പാട്</li><li>കപ്പൽ: <b>സാവോ ഗബ്രിയേൽ</b></li><li>ഫോർട്ട് മാനുവൽ (1503)</li><li>അച്ചടിശാല (1577), കശുവണ്ടി, പുകയില</li><li>കുഞ്ഞാലി മരയ്ക്കാർ (നാവികപ്പട)</li></ul></div>
     <div class="col nl"><h4>🇳🇱 ഡച്ച്</h4>
-      <ul><li>1602</li><li>ഹോർത്തൂസ് മലബാറിക്കസ്</li><li>ലാറ്റിൻ, 12 വാല്യം, 740 സസ്യം</li><li>ഇട്ടി അച്ചുതൻ</li><li>മതനയം: ഉദാരം</li></ul></div>
+      <ul><li>1602 (VOC രൂപീകരണം)</li><li><b>ഹോർത്തൂസ് മലബാറിക്കസ്</b> (വാൻ റീഡ്)</li><li>ലാറ്റിൻ, 12 വാല്യം, 742 സസ്യം</li><li>ഇട്ടി അച്ചുതൻ, രംഗഭട്ട്</li><li>മതനയം: ഉദാരം; കൊച്ചി പിടിച്ചത്: 1663</li></ul></div>
     <div class="col en"><h4>🇬🇧 ഇംഗ്ലീഷ്</h4>
-      <ul><li>1615 — വില്യം കീലിങ്</li><li>അഞ്ചുതെങ്ങ് കോട്ട</li><li>തലശ്ശേരി കോട്ട (1708)</li><li>വിഴിഞ്ഞം (1644)</li></ul></div>
+      <ul><li>1615 — ക്യാപ്റ്റൻ കീലിങ്</li><li>വിഴിഞ്ഞം (1644), അഞ്ചുതെങ്ങ് (1695)</li><li>തലശ്ശേരി കോട്ട (1708)</li><li>ശ്രീരംഗപട്ടണം സന്ധി (1792) — മലബാർ ബ്രിട്ടീഷുകാർക്ക്</li></ul></div>
     <div class="col fr"><h4>🇫🇷 ഫ്രഞ്ച്</h4>
-      <ul><li>1721</li><li>താവളം: മാഹി</li><li>ഏറ്റവും ഒടുവിൽ</li><li>ശ്രീരംഗപട്ടണം സന്ധി (1792)</li></ul></div>
+      <ul><li>1721 — ഏറ്റവും ഒടുവിൽ</li><li>താവളം: <b>മാഹി (മയ്യഴി)</b></li><li>1954-ൽ ഇന്ത്യയോട് ചേർന്നു</li><li>മയ്യഴി ഗാന്ധി: ഐ.കെ. കുമാരൻ മാസ്റ്റർ</li></ul></div>
   </div>
 
   <div class="trick"><span class="lbl">TRICK</span> ക്രമം: <b>PDE-F</b> → പോർച്ചുഗീസ് → ഡച്ച് → ഇംഗ്ലീഷ് → ഫ്രഞ്ച്</div>
 
   <ul class="icon-list">
-    <li><span class="hl">1498</span> — വാസ്കോ ഡ ഗാമ കോഴിക്കോട് (കാപ്പാട്); ആധുനിക കേരള ചരിത്രത്തിന്റെ തുടക്കം</li>
-    <li><span class="hl">1524</span> — ഗാമ കൊച്ചിയിൽ അന്തരിച്ചു</li>
-    <li><span class="hl">1503</span> — ഫോർട്ട് മാനുവൽ → ആദ്യ യൂറോപ്യൻ കോട്ട</li>
-    <li><span class="hl">1741</span> — കുളച്ചൽ യുദ്ധം: മാർത്താണ്ഡവർമ്മ ഡച്ചുകാരെ തോൽപ്പിച്ചു</li>
-    <li>പരാജയപ്പെട്ട ഡച്ച് ക്യാപ്റ്റൻ: <b>ഡിലനോയ്</b> | മാവേലിക്കര ഉടമ്പടി: 1753</li>
-    <li>കാർത്താസ് = പാസ് (പെർമിറ്റ്) — കപ്പലല്ല</li>
+    <li><span class="hl">1498</span> — വാസ്കോ ഡ ഗാമ കോഴിക്കോട് (കാപ്പാട്); സാമൂതിരി സ്വീകരിച്ചു</li>
+    <li><span class="hl">1524 ഡിസംബർ 24</span> — ഗാമ കൊച്ചിയിൽ അന്തരിച്ചു (സെന്റ് ഫ്രാൻസിസ് പള്ളിയിൽ സംസ്കരിച്ചു)</li>
+    <li><span class="hl">1599</span> — ഉദയംപേരൂർ സുന്നഹദോസ് (ആർച്ച് ബിഷപ്പ് അലക്സിസ് ഡി മെനസിസ്)</li>
+    <li><span class="hl">1653 ജനുവരി 3</span> — കൂനൻ കുരിശ് സത്യം (മട്ടാഞ്ചേരി — പോർച്ചുഗീസുകാർക്കെതിരെ)</li>
+    <li><span class="hl">1741 ഓഗസ്റ്റ് 10</span> — കുളച്ചൽ യുദ്ധം: മാർത്താണ്ഡവർമ്മ ഡച്ചുകാരെ തോൽപ്പിച്ചു (ഡച്ച് കമാൻഡർ: <b>ഡിലനോയ്</b>)</li>
+    <li><span class="hl">1753 ഓഗസ്റ്റ് 15</span> — <b>മാവേലിക്കര ഉടമ്പടി</b> (മാർത്താണ്ഡവർമ്മയും ഡച്ചുകാരും തമ്മിൽ)</li>
+    <li>കാർത്താസ് = പോർച്ചുഗീസുകാരുടെ സമുദ്ര വ്യാപാര പാസ് (പെർമിറ്റ്)</li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 2 ================= -->
-<details class="card">
+<details class="card" data-tags="5star kerala">
 <summary><span class="num">2</span><span class="title">തിരുവിതാംകൂർ ചരിത്രം (20-ാം നൂറ്റാണ്ട്)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2"> പഠിച്ചു</label></summary>
 <div class="content">
-
   <h3>👑 ശ്രീ ചിത്തിര തിരുനാൾ — നാഴികക്കല്ലുകൾ</h3>
   <div class="htl">
     <div class="node"><div class="dot"></div><div class="yr">1931</div><div class="ev">ഭരണാരംഭം</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1932</div><div class="ev">നിവർത്തന പ്രക്ഷോഭം</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1936</div><div class="ev">ക്ഷേത്ര പ്രവേശന വിളംബരം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1938</div><div class="ev">സ്റ്റേറ്റ് കോൺഗ്രസ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1946</div><div class="ev">പുന്നപ്ര–വയലാർ</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1949</div><div class="ev">തിരു-കൊച്ചി</div></div>
   </div>
 
   <ul class="tl">
-    <li><b>1932</b> — നിവർത്തന പ്രക്ഷോഭം</li>
-    <li><b>1937</b> — തിരുവിതാംകൂർ യൂണിവേഴ്സിറ്റി (ഇന്നത്തെ കേരള യൂണിവേഴ്സിറ്റി)</li>
-    <li><b>1938</b> — തിരുവിതാംകൂർ സ്റ്റേറ്റ് കോൺഗ്രസ് (പ്രസിഡന്റ്: പട്ടം താണുപിള്ള)</li>
-    <li><b>1940</b> — പള്ളിവാസൽ ജലവൈദ്യുത പദ്ധതി</li>
-    <li><b>1946</b> — പുന്നപ്ര–വയലാർ സമരം</li>
-    <li><b>1948</b> — പട്ടം: ആദ്യ ഉത്തരവാദിത്ത സർക്കാരിന്റെ പ്രധാനമന്ത്രി</li>
+    <li><b>1932</b> — നിവർത്തന പ്രക്ഷോഭം (സി. കേശവൻ, എൻ.വി. ജോസഫ്, പി.കെ. കുഞ്ഞ്)</li>
+    <li><b>1936 നവംബർ 12</b> — ക്ഷേത്ര പ്രവേശന വിളംബരം (ഗാന്ധിജി: "ആധുനിക കാലത്തെ അത്ഭുതം")</li>
+    <li><b>1937 നവംബർ 1</b> — തിരുവിതാംകൂർ യൂണിവേഴ്സിറ്റി (ഇന്നത്തെ കേരള യൂണിവേഴ്സിറ്റി)</li>
+    <li><b>1938 ഫെബ്രുവരി</b> — തിരുവിതാംകൂർ സ്റ്റേറ്റ് കോൺഗ്രസ് (ആദ്യ പ്രസിഡന്റ്: പട്ടം താണുപിള്ള)</li>
+    <li><b>1940</b> — പള്ളിവാസൽ ജലവൈദ്യുത പദ്ധതി (കേരളത്തിലെ ആദ്യ ജലവൈദ്യുത പദ്ധതി)</li>
+    <li><b>1946 ഒക്ടോബർ</b> — പുന്നപ്ര–വയലാർ സമരം ('അമേരിക്കൻ മോഡൽ അറബിക്കടലിൽ')</li>
+    <li><b>1948 മാർച്ച് 24</b> — പട്ടം താണുപിള്ള: തിരുവിതാംകൂറിലെ ആദ്യ ഉത്തരവാദിത്ത സർക്കാരിന്റെ പ്രധാനമന്ത്രി</li>
   </ul>
 
-  <div class="note"><span class="lbl">KEY</span> <b>ക്ഷേത്ര പ്രവേശന വിളംബരം:</b> 1936 നവംബർ 12 | ദിവാൻ: സർ സി.പി. രാമസ്വാമി അയ്യർ | ഗാന്ധിജി: "ആധുനിക കാലത്തെ അത്ഭുതം" | കൊച്ചി: 1947</div>
-
-  <h3>🤝 തിരു–കൊച്ചി</h3>
+  <h3>🤝 തിരു–കൊച്ചി ലയനം</h3>
   <div class="flow">
     <span class="box">തിരുവിതാംകൂർ</span><span class="arrow">+</span>
     <span class="box">കൊച്ചി</span><span class="arrow">→</span>
     <span class="box" style="background:#d9f2e3;border-color:#0f9d58;color:#0f9d58;">തിരു–കൊച്ചി (1949 ജൂലൈ 1)</span>
   </div>
   <ul>
-    <li>ആദ്യ രാജപ്രമുഖൻ: ശ്രീ ചിത്തിര തിരുനാൾ</li>
-    <li>ആദ്യ പ്രധാനമന്ത്രി: <b>പറവൂർ ടി.കെ. നാരായണപിള്ള</b></li>
-    <li>അക്കാമ്മ ചെറിയാൻ: "തിരുവിതാംകൂറിലെ ഝാൻസി റാണി"; ആത്മകഥ: "ജീവിതം ഒരു സമരം"</li>
+    <li>ആദ്യ രാജപ്രമുഖൻ: <b>ശ്രീ ചിത്തിര തിരുനാൾ</b></li>
+    <li>ആദ്യ പ്രധാനമന്ത്രി (മുഖ്യമന്ത്രി): <b>പറവൂർ ടി.കെ. നാരായണപിള്ള</b></li>
+    <li>അക്കാമ്മ ചെറിയാൻ: "തിരുവിതാംകൂറിലെ ഝാൻസി റാണി" (ഗാന്ധിജി വിളിച്ചത്); ആത്മകഥ: "ജീവിതം ഒരു സമരം"</li>
   </ul>
-  <div class="note"><span class="lbl">👉 കാണുക</span> 1729 മുതലുള്ള എല്ലാ തിരുവിതാംകൂർ ഭരണാധികാരികളും <b>വിഭാഗം 2A</b> യിലും, ദിവാനമാരെ <b>വിഭാഗം 2B</b> യിലും കാണാം.</div>
 </div>
 </details>
 
-<!-- ================= 2A — NEW: VENAD TO TRAVANCORE RULERS ================= -->
-<details class="card" open>
-<summary><span class="num">2A</span><span class="title">വേണാട് മുതൽ തിരുവിതാംകൂർ വരെ — ഭരണാധികാരികൾ (1729–1949) <span class="new-badge">🆕</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2a"> പഠിച്ചു</label></summary>
+<!-- ================= 2A ================= -->
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">2A</span><span class="title">വേണാട് മുതൽ തിരുവിതാംകൂർ വരെ — ഭരണാധികാരികൾ (1729–1949) <span class="fix-badge">🔧 തിരുത്തി</span> <span class="new-badge">🆕 പൂർണ്ണം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2a"> പഠിച്ചു</label></summary>
 <div class="content">
-
-  <h3>👑 ഭരണാധികാരികളുടെ കാലക്രമം — ഹൊറിസോണ്ടൽ ടൈംലൈൻ</h3>
+  <h3>👑 ഭരണാധികാരികളുടെ പൂർണ്ണ കാലക്രമം (12 ഭരണാധികാരികൾ)</h3>
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1729</div><div class="ev">മാർത്താണ്ഡവർമ്മ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1758</div><div class="ev">ധർമ്മരാജാ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1798</div><div class="ev">ബാലരാമവർമ്മ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1810</div><div class="ev">ഗൗരി ലക്ഷ്മിഭായി</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1829</div><div class="ev">സ്വാതി തിരുനാൾ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1847</div><div class="ev">ഉത്രം തിരുനാൾ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1860</div><div class="ev">ആയില്യം തിരുനാൾ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1885</div><div class="ev">ശ്രീമൂലം തിരുനാൾ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1924</div><div class="ev">സേതു ലക്ഷ്മിഭായി</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1931</div><div class="ev">ചിത്തിര തിരുനാൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1729–58</div><div class="ev">മാർത്താണ്ഡവർമ്മ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1758–98</div><div class="ev">ധർമ്മരാജാ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1798–1810</div><div class="ev">ബാലരാമവർമ്മ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1810–15</div><div class="ev">ഗൗരി ലക്ഷ്മിഭായി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1815–29</div><div class="ev">ഗൗരി പാർവ്വതിഭായി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1829–46</div><div class="ev">സ്വാതി തിരുനാൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1846–60</div><div class="ev">ഉത്രം തിരുനാൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1860–80</div><div class="ev">ആയില്യം തിരുനാൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1880–85</div><div class="ev">വിശാഖം തിരുനാൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1885–1924</div><div class="ev">ശ്രീമൂലം തിരുനാൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1924–31</div><div class="ev">സേതു ലക്ഷ്മിഭായി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1931–49</div><div class="ev">ചിത്തിര തിരുനാൾ</div></div>
   </div>
 
-  <h3>🗡️ മാർത്താണ്ഡവർമ്മ (1729–1758)</h3>
-  <ul class="icon-list">
-    <li><b>ആധുനിക തിരുവിതാംകൂറിന്റെ ശിൽപ്പി</b> എന്നറിയപ്പെടുന്നു</li>
-    <li><span class="hl">1741</span> — <b>കുളച്ചൽ യുദ്ധം</b>: ഡച്ചുകാരെ പരാജയപ്പെടുത്തി</li>
-    <li>ഡച്ച് കമാൻഡർ: <b>ഡിലനോയ് (ഡെലനോയ്)</b> — പിന്നീട് മാർത്താണ്ഡവർമ്മയുടെ കീഴിൽ വലിയ കപ്പിത്താൻ</li>
-    <li><span class="hl">1753</span> — <b>തൃപ്പൂണിത്തുറ ഉടമ്പടി</b>: തിരുവിതാംകൂറും ഡച്ചുകാരും തമ്മിൽ</li>
-    <li><span class="hl">1750</span> — <b>തൃപ്പടിദാനം</b>: രാജ്യം മുഴുവൻ ശ്രീപത്മനാഭസ്വാമിക്ക് ദാനം ചെയ്ത് <b>'ശ്രീപത്മനാഭദാസൻ'</b> എന്ന പദവി സ്വീകരിച്ചു</li>
-    <li>തിരുവിതാംകൂർ സൈന്യത്തെ നവീകരിച്ചത് ഇദ്ദേഹമാണ്</li>
-    <li>ദിവാൻ: <b>രാമയ്യൻ ദളവ</b></li>
-  </ul>
-
-  <h3>🏛️ ധർമ്മരാജാ / കാർത്തിക തിരുനാൾ രാമവർമ്മ (1758–1798)</h3>
-  <ul class="icon-list">
-    <li><b>'ധർമ്മരാജാ'</b> എന്ന് വിശേഷിപ്പിച്ചത് <b>ടിപ്പു സുൽത്താനാണ്</b> — മലബാറിൽ നിന്ന് അഭയം തേടിയെത്തിയ രാജാക്കന്മാർക്കും ജനങ്ങൾക്കും അഭയം നൽകിയതിനാൽ</li>
-    <li><b>ആറ്റിങ്ങൽ തിരുവിതാംകൂറിൽ ചേർത്തു</b> — രാമയ്യൻ ദളവയുടെ സഹായത്തോടെ</li>
-    <li><b>നെടുങ്കോട്ട</b>: ഹൈദർ അലി, ടിപ്പു സുൽത്താൻ എന്നിവരുടെ ആക്രമണം തടയാൻ <b>കൊച്ചി മുതൽ കൊടുങ്ങല്ലൂർ വരെ</b> നിർമ്മിച്ച പ്രതിരോധ മതിൽ</li>
-    <li>വേലുത്തമ്പി ദളവയുമായി ബന്ധപ്പെട്ട പ്രധാന ഭരണകാലം</li>
-  </ul>
-
-  <h3>🤝 ബാലരാമവർമ്മ (1798–1810)</h3>
-  <ul class="icon-list">
-    <li><span class="hl">1805</span> — ബ്രിട്ടീഷുകാരുമായി <b>കണ്ടറകരാർ (Subordinate Alliance)</b> ഒപ്പുവെച്ചു</li>
-    <li>തിരുവിതാംകൂറിൽ <b>ബ്രിട്ടീഷ് റെസിഡന്റ് സമ്പ്രദായം</b> നിലവിൽ വന്നു</li>
-    <li>ഒന്നാമത്തെ റെസിഡന്റ്: <b>കേണൽ മെക്കാളെ</b></li>
-  </ul>
-
-  <h3>⚔️ വേലുത്തമ്പി ദളവ</h3>
-  <ul class="icon-list">
-    <li>തിരുവിതാംകൂറിന്റെ <b>ദളവ</b> (പ്രധാനമന്ത്രി)</li>
-    <li>ബ്രിട്ടീഷ് അതിക്രമങ്ങൾക്കെതിരെ <b>കുണ്ടറ വിളംബരം (1809 ജനുവരി 11)</b> പുറപ്പെടുവിച്ചു</li>
-    <li><b>മണ്ണടി ഭഗവതി ക്ഷേത്രത്തിൽ</b> ആത്മഹത്യ ചെയ്തു</li>
-  </ul>
-
-  <h3>👸 ഗൗരി ലക്ഷ്മിഭായി (1810–1815)</h3>
-  <ul class="icon-list">
-    <li>തിരുവിതാംകൂർ ഭരിച്ച <b>ഏക റാണി</b></li>
-    <li><span class="hl">1812</span> — <b>അടിമക്കച്ചവടം നിരോധിച്ചു</b></li>
-    <li>ബ്രിട്ടീഷ് റെസിഡന്റ് <b>കേണൽ മൺറോയുടെ</b> സഹായത്തോടെ മികച്ച ഭരണപരിഷ്കാരങ്ങൾ</li>
-  </ul>
-
-  <h3>🎵 സ്വാതി തിരുനാൾ (1829–1846)</h3>
-  <ul class="icon-list">
-    <li><b>'ഗർഭശ്രീമാൻ'</b> എന്നറിയപ്പെടുന്നു</li>
-    <li>പ്രഗത്ഭ സംഗീതജ്ഞൻ — കർണാടക സംഗീതത്തിലെയും ഹിന്ദുസ്ഥാനി സംഗീതത്തിലെയും വിദഗ്ധൻ</li>
-    <li><span class="hl">1834</span> — തിരുവനന്തപുരത്ത് <b>ആദ്യ ഇംഗ്ലീഷ് സ്കൂൾ</b> (ഇന്നത്തെ യൂണിവേഴ്സിറ്റി കോളേജ്)</li>
-    <li>തിരുവനന്തപുരത്ത് <b>ഒബ്സർവേറ്ററി</b> സ്ഥാപിച്ചു</li>
-  </ul>
-
-  <h3>📜 ഉത്രം തിരുനാൾ മാർത്താണ്ഡവർമ്മ (1847–1860)</h3>
-  <ul class="icon-list">
-    <li>തിരുവിതാംകൂറിൽ <b>ചട്ടമ്പിനാടകം നിരോധിച്ചു</b></li>
-    <li><b>ചന്നാർ ലഹരി / മാറുതല സമരം (Upper Cloth Agitation)</b>: താഴ്ന്ന ജാതിയിലെ സ്ത്രീകൾക്ക് മേൽമുണ്ട് ധരിക്കാൻ അനുവാദം നൽകി ഉത്തരവിറക്കി</li>
-    <li>1859-ൽ <b>ആയില്യം തിരുനാൾ കാലത്ത്</b> ഇത് പൂർണ്ണമായി നടപ്പായി</li>
-  </ul>
-
-  <h3>🏥 ആയില്യം തിരുനാൾ (1860–1880)</h3>
-  <ul class="icon-list">
-    <li>പ്രശസ്ത ദിവാൻ: <b>സർ ടി. മാധവറാവു</b></li>
-    <li>തിരുവനന്തപുരത്ത് <b>ജനറൽ ആശുപത്രിയും പ്രസ്സ് കൗൺസിലും</b> സ്ഥാപിച്ചു</li>
-  </ul>
-
-  <h3>🏛️ ശ്രീമൂലം തിരുനാൾ (1885–1924)</h3>
-  <ul class="icon-list">
-    <li><span class="hl">1888</span> — <b>ശ്രീമൂലം പ്രജാസഭ</b>: ഇന്ത്യയിൽ ജനപ്രതിനിധികൾക്കായി രൂപീകരിച്ച <b>ആദ്യത്തെ ലെജിസ്ലേറ്റീവ് കൗൺസിൽ</b></li>
-    <li><span class="hl">1891</span> — <b>മലയാളി മെമ്മോറിയൽ</b>: ഉദ്യോഗങ്ങളിൽ നാട്ടുകാർക്ക് അർഹമായ പ്രാതിനിധ്യം ആവശ്യപ്പെട്ട് <b>ബാരിസ്റ്റർ ജി. പരമേശ്വരൻ പിള്ള</b>യുടെ നേതൃത്വത്തിൽ സമർപ്പിച്ചു</li>
-    <li><span class="hl">1896</span> — <b>ഈഴവ മെമ്മോറിയൽ</b>: <b>ഡോ. പൽപ്പു</b>വിന്റെ നേതൃത്വത്തിൽ</li>
-    <li><span class="hl">1899</span> — <b>നെടുങ്ങാടി ബാങ്ക്</b> (കേരളത്തിലെ ആദ്യ ബാങ്ക്) ആരംഭിച്ചത് ഇദ്ദേഹത്തിന്റെ കാലത്താണ്</li>
-  </ul>
-
-  <h3>👸 സേതു ലക്ഷ്മിഭായി — റീജന്റ് റാണി (1924–1931)</h3>
-  <ul class="icon-list">
-    <li><span class="hl">1930</span> — തിരുവിതാംകൂറിൽ <b>ദേവദാസി സമ്പ്രദായം നിരോധിച്ചു</b></li>
-    <li><b>നായർ റെഗുലേഷൻ ആക്ട്</b> നടപ്പിലാക്കി — മരുമക്കത്തായം അവസാനിപ്പിച്ച് <b>മക്കത്തായം</b> കൊണ്ടുവന്നു</li>
-  </ul>
-
-  <h3>👑 ചിത്തിര തിരുനാൾ ബാലരാമവർമ്മ (1931–1949)</h3>
-  <ul class="icon-list">
-    <li>തിരുവിതാംകൂറിലെ <b>അവസാനത്തെ മഹാരാജാവ്</b></li>
-    <li><span class="hl">1936 നവംബർ 12</span> — <b>ക്ഷേത്ര പ്രവേശന വിളംബരം</b>: എല്ലാ വിഭാഗം ഹിന്ദുക്കൾക്കും ക്ഷേത്രങ്ങളിൽ പ്രവേശനം അനുവദിച്ചു</li>
-    <li>പ്രമേയം തയ്യാറാക്കിയത്: <b>സർ സി.പി. രാമസ്വാമി അയ്യരും ബോധൂറാവുമാണ്</b></li>
-    <li>പള്ളിവാസൽ ജലവൈദ്യുത പദ്ധതി ആരംഭിച്ചു</li>
-    <li><span class="hl">1937</span> — <b>തിരുവിതാംകൂർ യൂണിവേഴ്സിറ്റി</b> സ്ഥാപിച്ചു (ഇന്നത്തെ കേരള യൂണിവേഴ്സിറ്റി)</li>
-    <li>'അമേരിക്കൻ മോഡൽ' ഭരണപരിഷ്കാരത്തെ എതിർത്തു; 'സ്വതന്ത്ര തിരുവിതാംകൂർ' വാദം ഉന്നയിച്ച <b>സർ സി.പി. രാമസ്വാമി അയ്യർ ദിവാൻ</b> ആയിരുന്നു (1947)</li>
-    <li><span class="hl">1949 ജൂലൈ 1</span> — തിരു-കൊച്ചി രൂപീകൃതമായതോടെ തിരുവിതാംകൂർ സംസ്ഥാനം നിലവിലില്ലാതെയായി</li>
-  </ul>
-
-  <div class="trick"><span class="lbl">TRICK</span>
-  ഭരണാധികാരികളുടെ ക്രമം: <b>മാ–ധ–ബാ–ഗൗ–സ്വാ–ഉ–ആ–ശ്രീ–സേ–ചി</b><br>
-  (മാർത്താണ്ഡവർമ്മ → ധർമ്മരാജാ → ബാലരാമവർമ്മ → ഗൗരി ലക്ഷ്മിഭായി → സ്വാതി → ഉത്രം → ആയില്യം → ശ്രീമൂലം → സേതു → ചിത്തിര)</div>
-
-  <div class="fact-check-note">
-    <h3>⚠️ പരിശോധിക്കുക — കുണ്ടറ വിളംബരം തീയതി</h3>
-    കുണ്ടറ വിളംബരത്തിന്റെ തീയതി <b>1809 ജനുവരി 11</b> എന്നും ചില സ്രോതസ്സുകളിൽ <b>ജനുവരി 16</b> എന്നും കാണുന്നു. PSC പരീക്ഷയിൽ സാധാരണയായി <b>ജനുവരി 11</b> ആണ് സ്വീകരിക്കപ്പെടുന്നത്.
-  </div>
-</div>
-</details>
-
-<!-- ================= 2B — NEW: TRAVANCORE DIWANS ================= -->
-<details class="card" open>
-<summary><span class="num">2B</span><span class="title">തിരുവിതാംകൂർ പ്രധാന ദിവാനമാർ <span class="new-badge">🆕</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2b"> പഠിച്ചു</label></summary>
-<div class="content">
-
-  <h3>🏛️ ദിവാനമാരുടെ പട്ടിക — വിഷ്വൽ ടേബിൾ</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>ദിവാൻ</th><th>പ്രത്യേകതകൾ</th></tr>
-    <tr><td><b>രാമയ്യൻ ദളവ</b></td><td>മാർത്താണ്ഡവർമ്മയുടെ കാലത്തെ പ്രശസ്തനായ ദിവാൻ; ആറ്റിങ്ങൽ കൂട്ടിച്ചേർക്കൽ</td></tr>
-    <tr><td><b>വേലുത്തമ്പി ദളവ</b></td><td>കുണ്ടറ വിളംബരം പുറപ്പെടുവിച്ചു (1809); മണ്ണടി ഭഗവതി ക്ഷേത്രത്തിൽ ആത്മഹത്യ</td></tr>
-    <tr><td><b>കേണൽ മൺറോ</b></td><td>ബ്രിട്ടീഷ് റെസിഡന്റും ദിവാനുമായിരുന്നു; അഞ്ചുതെങ്ങ് ലഹള അടിച്ചമർത്തി; പല ആരാധനാലയങ്ങളും സർക്കാരിന്റെ കീഴിലാക്കി</td></tr>
-    <tr><td><b>സർ ടി. മാധവറാവു</b></td><td><b>'മോഡേൺ തിരുവിതാംകൂറിന്റെ ശിൽപ്പി'</b> എന്നറിയപ്പെടുന്നു; ജനറൽ ആശുപത്രി, പ്രസ്സ് കൗൺസിൽ</td></tr>
-    <tr><td><b>വി.പി. മാധവ റാവു</b></td><td>പ്രജാസഭയുടെ പ്രവർത്തനങ്ങൾ വിപുലീകരിച്ചു</td></tr>
-    <tr><td><b>സർ സി.പി. രാമസ്വാമി അയ്യർ</b></td><td>അവസാനത്തെ ദിവാൻ; ക്ഷേത്രപ്രവേശന വിളംബരം, ട്രാവൻകൂർ സർവ്വകലാശാല എന്നിവ നടപ്പിലാക്കി; സ്വാതന്ത്ര്യത്തിനുശേഷം 'സ്വതന്ത്ര തിരുവിതാംകൂർ' വാദമുന്നയിച്ചു (1947)</td></tr>
+    <tr><th>ഭരണാധികാരി</th><th>കാലഘട്ടം</th><th>പ്രധാന സംഭവങ്ങളും PSC വസ്തുതകളും</th></tr>
+    <tr><td><b>മാർത്താണ്ഡവർമ്മ</b></td><td>1729–1758</td><td><b>ആധുനിക തിരുവിതാംകൂറിന്റെ ശില്പി</b>; എട്ടു വീട്ടിൽ പിള്ളമാരെ അമർച്ച ചെയ്തു; <span class="hl">1741 കുളച്ചൽ യുദ്ധം</span> (ഡച്ച് ക്യാപ്റ്റൻ ഡിലനോയ് കീഴടങ്ങി — 'വലിയ കപ്പിത്താൻ'); <b>1742-ൽ ആറ്റിങ്ങൽ ലയിപ്പിച്ചു</b>; <span class="hl">1750 ജനുവരി 3 തൃപ്പടിദാനം</span>; <span class="hl">1753 ഓഗസ്റ്റ് 15 മാവേലിക്കര ഉടമ്പടി</span>; മുറജപം, ഭദ്രദീപം തുടങ്ങി; ദളവ: <b>രാമയ്യൻ ദളവ</b>.</td></tr>
+    <tr><td><b>ധർമ്മരാജാ (കാർത്തിക തിരുനാൾ രാമവർമ്മ)</b></td><td>1758–1798</td><td>മലബാറിൽ നിന്നുള്ള അഭയാർത്ഥികളെ സംരക്ഷിച്ചതിനാൽ <b>ടിപ്പു സുൽത്താൻ 'ധർമ്മരാജാ' എന്ന് വിളിച്ചു</b>; മൈസൂർ ആക്രമണം തടയാൻ <b>നെടുങ്കോട്ട (1761–66)</b> നിർമ്മിച്ചു; തലസ്ഥാനം പത്മനാഭപുരത്ത് നിന്ന് <b>തിരുവനന്തപുരത്തേക്ക് മാറ്റി (1795)</b>; കഥകളി ആട്ടക്കഥകളും <b>'ബാലരാമഭാരതം'</b> എന്ന നാട്യശാസ്ത്ര ഗ്രന്ഥവും രചിച്ചു; ദിവാൻ: <b>രാജാ കേശവദാസ്</b>.</td></tr>
+    <tr><td><b>അവിട്ടം തിരുനാൾ ബാലരാമവർമ്മ</b></td><td>1798–1810</td><td>തിരുവിതാംകൂർ ചരിത്രത്തിലെ ഏറ്റവും ദുർബലനായ രാജാവ്; ഉപജാപക സംഘം: <b>ജയന്തൻ ശങ്കരൻ നമ്പൂതിരി, ശങ്കരനാരായണൻ ചെട്ടി, മാത്തു തരകൻ</b>; <span class="hl">1805 സബ്സിഡിയറി അലയൻസ്</span> (കപ്പം കരാർ); ബ്രിട്ടീഷ് റെസിഡന്റ് സമ്പ്രദായം നിലവിൽ വന്നു (ആദ്യ റെസിഡന്റ്: <b>കേണൽ മെക്കാളെ</b>); ദളവ: <b>വേലുത്തമ്പി</b>.</td></tr>
+    <tr><td><b>റാണി ഗൗരി ലക്ഷ്മിഭായി</b></td><td>1810–1815</td><td>സ്വന്തം നിലയിൽ തിരുവിതാംകൂർ ഭരിച്ച ഏക റാണി (1810–13 റാണി, 1813–15 റീജന്റ്); <span class="hl">1812 ഡിസംബർ 5-ന് അടിമക്കച്ചവടം നിരോധിച്ചു</span>; വാക്സിനേഷൻ വകുപ്പ് (1813); റവന്യൂ–ജുഡീഷ്യൽ പരിഷ്കാരങ്ങൾ (ദിവാൻ: കേണൽ മൺറോ).</td></tr>
+    <tr><td><b>റാണി ഗൗരി പാർവ്വതിഭായി</b> <span class="new-badge">🆕</span></td><td>1815–1829</td><td><span class="hl">1817-ൽ പ്രാഥമിക വിദ്യാഭ്യാസം സൗജന്യവും നിർബന്ധിതവുമാക്കി</span> (തിരുവിതാംകൂർ വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട); ക്രൈസ്തവ മിഷനറിമാർക്ക് ഭൂമി നൽകി; ആഭരണങ്ങൾ ധരിക്കാനുള്ള ജാതി നിയന്ത്രണം നീക്കി; 1818-ൽ സിലോണുമായി ജാഫ്ന പുകയില കരാർ.</td></tr>
+    <tr><td><b>സ്വാതി തിരുനാൾ രാമവർമ്മ</b></td><td>1829–1846</td><td><b>'ഗർഭശ്രീമാൻ'</b>, <b>'ദക്ഷിണഭೋಜൻ'</b>; കർണാടക–ഹിന്ദുസ്ഥാനി സംഗീതജ്ഞൻ; <span class="hl">1834 ഇംഗ്ലീഷ് സ്കൂൾ</span> (യൂണിവേഴ്സിറ്റി കോളേജ്); <span class="hl">1836 ആദ്യ സെൻസസ്</span>; 1837 വാനനിരീക്ഷണ കേന്ദ്രം (Observatory); ഹജൂർ കച്ചേരി കൊല്ലത്തുനിന്ന് തിരുവനന്തപുരത്തേക്ക് മാറ്റി; ദിവാൻ: സുബ്ബറാവു.</td></tr>
+    <tr><td><b>ഉത്രം തിരുനാൾ മാർത്താണ്ഡവർമ്മ</b> <span class="fix-badge">🔧</span></td><td>1846–1860</td><td><span class="hl">1853/1855 വിളംബരത്തിലൂടെ അടിമത്തം പൂർണ്ണമായി നിരോധിച്ചു</span>; <span class="hl">1859 ജൂലൈ 26 ചാന്നാർ വിളംബരം</span> (മാറുമറയ്ക്കൽ അവകാശം); ആദ്യ പോസ്റ്റ് ഓഫീസ് (ആലപ്പുഴ - 1857); ആദ്യ കയർ ഫാക്ടറി (ഡാറാസ് മെയിൽ, ആലപ്പുഴ - 1859); 1857 വിപ്ലവകാലത്തെ തിരുവിതാംകൂർ രാജാവ്.</td></tr>
+    <tr><td><b>ആയില്യം തിരുനാൾ രാമവർമ്മ</b></td><td>1860–1880</td><td>ദിവാൻ <b>സർ ടി. മാധവറാവുവിന്റെ</b> കാലത്ത് തിരുവിതാംകൂർ 'മാതൃകാ സംസ്ഥാനം' (Model State) ആയി; <span class="hl">1861 പണ്ടാരപ്പാട്ട വിളംബരം</span>, <span class="hl">1867 ജന്മി–കുടിയാൻ വിളംബരം</span>; തിരുവനന്തപുരം ജനറൽ ആശുപത്രി (1864), മഹാരാജാസ് കോളേജ് (1866), നേപ്പിയർ മ്യൂസിയം (1880); ആദ്യ ക്രമീകൃത സെൻസസ് (1875 മെയ് 18).</td></tr>
+    <tr><td><b>വിശാഖം തിരുനാൾ രാമവർമ്മ</b> <span class="new-badge">🆕</span></td><td>1880–1885</td><td>ക്ഷാമം നേരിടാൻ <span class="hl">മരച്ചീനി (കപ്പ) കൃഷി</span> വ്യാപകമാക്കി; നാട്ടുഭാഷാ പോലീസ് സേന രൂപീകരിച്ചു; 1885-ൽ INC രൂപീകരിക്കുമ്പോൾ തിരുവിതാംകൂർ ഭരണാധികാരി.</td></tr>
+    <tr><td><b>ശ്രീമൂലം തിരുനാൾ രാമവർമ്മ</b> <span class="fix-badge">🔧</span></td><td>1885–1924</td><td><span class="hl">1886 മുല്ലപ്പെരിയാർ കരാർ</span> (999 വർഷത്തേക്ക് — ദിവാൻ രാമയ്യങ്കാർ); <span class="hl">1888 തിരുവിതാംകൂർ ലെജിസ്ലേറ്റീവ് കൗൺസിൽ</span> (ഇന്ത്യൻ നാട്ടുരാജ്യങ്ങളിൽ ആദ്യം); <span class="hl">1891 മലയാളി മെമ്മോറിയൽ</span> (ജി. പരമേശ്വരൻ പിള്ള); <span class="hl">1896 ഈഴവ മെമ്മോറിയൽ</span> (ഡോ. പൽപ്പു); <span class="hl">1904 ശ്രീമൂലം പ്രജാസഭ</span>; സ്ത്രീകൾക്ക് വോട്ടവകാശം നൽകിയ ആദ്യ നാട്ടുരാജ്യം (1920-21).</td></tr>
+    <tr><td><b>റീജന്റ് റാണി സേതു ലക്ഷ്മിഭായി</b></td><td>1924–1931</td><td><span class="hl">1925 വൈക്കം സത്യഗ്രഹം</span> ഒത്തുതീർപ്പാക്കി (ഗാന്ധിജി സന്ദർശിച്ചു); <span class="hl">1925 നായർ റെഗുലേഷൻ ആക്ട്</span> (മരുമക്കത്തായം മാറ്റി മക്കത്തായം കൊണ്ടുവന്നു); മൃഗബലി നിരോധിച്ചു (1925); <b>ദേവദാസി സമ്പ്രദായം നിരോധിച്ചു (1930)</b>; ദിവാൻ: എം.ഇ. വാട്ട്സ്.</td></tr>
+    <tr><td><b>ശ്രീ ചിത്തിര തിരുനാൾ ബാലരാമവർമ്മ</b></td><td>1931–1949</td><td>തിരുവിതാംകൂറിലെ <b>അവസാന മഹാരാജാവ്</b>; <span class="hl">1936 നവംബർ 12 ക്ഷേത്രപ്രവേശന വിളംബരം</span>; തിരുവിതാംകൂർ സർവ്വകലാശാല (1937); പള്ളിവാസൽ പദ്ധതി (1940); വധശിക്ഷ നിർത്തലാക്കി (1944); തിരു-കൊച്ചി രാജപ്രമുഖൻ (1949–1956); ദിവാൻ: സർ സി.പി. രാമസ്വാമി അയ്യർ, പി.ജി.എൻ. ഉണ്ണിത്താൻ.</td></tr>
   </table>
   </div>
 
-  <h3>📊 ദിവാനമാരുടെ കാലക്രമം — ഹൊറിസോണ്ടൽ ടൈംലൈൻ</h3>
-  <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1729–1758</div><div class="ev">രാമയ്യൻ ദളവ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1800–1809</div><div class="ev">വേലുത്തമ്പി ദളവ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1810–1815</div><div class="ev">കേണൽ മൺറോ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1858–1872</div><div class="ev">സർ ടി. മാധവറാവു</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1904–1920</div><div class="ev">വി.പി. മാധവ റാവു</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1936–1947</div><div class="ev">സർ സി.പി. രാമസ്വാമി അയ്യർ</div></div>
+  <div class="trick"><span class="lbl">TRICK</span> ഭരണാധികാരികളുടെ ക്രമം (12 പേർ): <b>മാ–ധ–ബാ–ഗൗല–ഗൗപാ–സ്വാ–ഉ–ആ–വി–ശ്രീ–സേ–ചി</b></div>
+</div>
+</details>
+
+<!-- ================= 2B ================= -->
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">2B</span><span class="title">തിരുവിതാംകൂർ പ്രധാന ദളവമാരും ദിവാനമാരും <span class="new-badge">🆕 വിപുലീകരിച്ചു</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2b"> പഠിച്ചു</label></summary>
+<div class="content">
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>ദളവ / ദിവാൻ</th><th>ഭരണാധികാരി</th><th>പ്രത്യേകതകളും PSC പോയിന്റുകളും</th></tr>
+    <tr><td><b>രാമയ്യൻ ദളവ</b></td><td>മാർത്താണ്ഡവർമ്മ</td><td>ആധുനിക തിരുവിതാംകൂറിന്റെ രാജ്യവിസ്തൃതിക്ക് ചുക്കാൻ പിടിച്ചു; ആറ്റിങ്ങൽ, കായംകുളം, കൊല്ലം എന്നിവ ചേർത്തു; മാവേലിക്കര ഉടമ്പടി (1753).</td></tr>
+    <tr><td><b>രാജാ കേശവദാസ്</b> <span class="new-badge">🆕</span></td><td>ധർമ്മരാജാ</td><td><b>'ദിവാൻ' പദവി സ്വീകരിച്ച ആദ്യ വ്യക്തി</b>; മോണിംഗ്ടൺ പ്രഭു <b>'വലിയ ദിവാൻജി'</b> എന്ന് വിളിച്ചു; <b>ആലപ്പുഴ തുറമുഖത്തിന്റെയും ചാല കമ്പോളത്തിന്റെയും ശില്പി</b>.</td></tr>
+    <tr><td><b>വേലുത്തമ്പി ദളവ</b></td><td>ബാലരാമവർമ്മ</td><td>ശംഖുമുഖം ലഹളയിലൂടെ (1799) ദളവയായി; <b>1809 ജനുവരി 11 കുണ്ടറ വിളംബരം</b>; മണ്ണടി ഭഗവതി ക്ഷേത്രത്തിൽ ആത്മഹത്യ ചെയ്തു.</td></tr>
+    <tr><td><b>ഉമ്മിണി തമ്പി</b> <span class="new-badge">🆕</span></td><td>ബാലരാമവർമ്മ</td><td><b>കൊല്ലം പട്ടണത്തിന്റെ സ്ഥാപകൻ</b>; തിരുവിതാംകൂറിൽ 'കാവൽ' (പോലീസ്) സംവിധാനവും അഞ്ചൽ (തപാൽ) പരിഷ്കരണവും നടപ്പിലാക്കി.</td></tr>
+    <tr><td><b>കേണൽ ജോൺ മൺറോ</b></td><td>ഗൗരി ലക്ഷ്മിഭായി / പാർവ്വതിഭായി</td><td>ഒരേ സമയം ബ്രിട്ടീഷ് റെസിഡന്റും ദിവാനും; ദേവസ്വം ക്ഷേത്രങ്ങൾ സർക്കാരിന്റെ കീഴിലാക്കി; അഞ്ചുതെങ്ങ് ലഹള അടിച്ചമർത്തി; 'പ്രൊട്ടസ്റ്റന്റ് മിഷനറിമാരുടെ പിതാവ്'.</td></tr>
+    <tr><td><b>സർ ടി. മാധവറാവു</b></td><td>ഉത്രം / ആയില്യം തിരുനാൾ</td><td><b>'ആധുനിക തിരുവിതാംകൂറിന്റെ ഭരണ ശില്പി'</b>; പണ്ടാരപ്പാട്ട വിളംബരം (1861), ജനറൽ ആശുപത്രി, മഹാരാജാസ് കോളേജ്.</td></tr>
+    <tr><td><b>വി. രാമയ്യങ്കാർ</b> <span class="new-badge">🆕</span></td><td>വിശാഖം / ശ്രീമൂലം തിരുനാൾ</td><td><b>1886-ലെ മുല്ലപ്പെരിയാർ പാട്ടക്കരാറിൽ</b> തിരുവിതാംകൂറിന് വേണ്ടി ഒപ്പുവെച്ച ദിവാൻ.</td></tr>
+    <tr><td><b>വി.പി. മാധവ റാവു</b></td><td>ശ്രീമൂലം തിരുനാൾ</td><td>1904-ൽ <b>ശ്രീമൂലം പ്രജാസഭ</b> രൂപീകരിക്കുമ്പോൾ ദിവാൻ.</td></tr>
+    <tr><td><b>പി. രാജഗോപാലാചാരി</b> <span class="new-badge">🆕</span></td><td>ശ്രീമൂലം തിരുനാൾ</td><td>ശ്രീമൂലം പ്രജാസഭയുടെ ആദ്യ ദിവാൻ പ്രസിഡന്റ്; <b>1910-ൽ സ്വദേശാഭിമാനി രാമകൃഷ്ണപിള്ളയെ നാടുകടത്തി</b>; അയ്യങ്കാളിയെ പ്രജാസഭയിലേക്ക് നാമനിർദ്ദേശം ചെയ്തു.</td></tr>
+    <tr><td><b>എം.ഇ. വാട്ട്സ്</b> <span class="new-badge">🆕</span></td><td>സേതു ലക്ഷ്മിഭായി</td><td>തിരുവിതാംകൂറിലെ ആദ്യ കാബിനറ്റ് ദിവാൻ; വൈക്കം സത്യഗ്രഹ ഒത്തുതീർപ്പ് കാലത്തെ ദിവാൻ.</td></tr>
+    <tr><td><b>സർ മുഹമ്മദ് ഹബീബുള്ള</b> <span class="new-badge">🆕</span></td><td>ചിത്തിര തിരുനാൾ</td><td>തിരുവിതാംകൂറിലെ <b>ഏക മുസ്ലിം ദിവാൻ</b> (1934–1936); പബ്ലിക് സർവീസ് കമ്മീഷൻ രൂപീകരണത്തിന് തുടക്കമിട്ടു.</td></tr>
+    <tr><td><b>സർ സി.പി. രാമസ്വാമി അയ്യർ</b></td><td>ചിത്തിര തിരുനാൾ</td><td>ക്ഷേത്രപ്രവേശന വിളംബരം (1936), തിരുവിതാംകൂർ സർവ്വകലാശാല (1937); 'അമേരിക്കൻ മോഡൽ' ഭരണപരിഷ്കാരം; <b>'സ്വതന്ത്ര തിരുവിതാംകൂർ' വാദം (1947 ജൂൺ 11)</b>.</td></tr>
+    <tr><td><b>പി.ജി.എൻ. ഉണ്ണിത്താൻ</b> <span class="new-badge">🆕</span></td><td>ചിത്തിര തിരുനാൾ</td><td>സർ സി.പി. രാജിവെച്ച ശേഷം (1947 ഓഗസ്റ്റ്) <b>സ്വതന്ത്ര തിരുവിതാംകൂറിന്റെ അവസാന ദിവാൻ</b>.</td></tr>
+  </table>
   </div>
 
-  <div class="note"><span class="lbl">⭐ ശ്രദ്ധിക്കുക</span>
-  <b>'മോഡേൺ തിരുവിതാംകൂറിന്റെ ശിൽപ്പി'</b> = സർ ടി. മാധവറാവു<br>
-  <b>'ആധുനിക തിരുവിതാംകൂറിന്റെ ശിൽപ്പി'</b> = മാർത്താണ്ഡവർമ്മ<br>
-  <b>അവസാനത്തെ ദിവാൻ</b> = സർ സി.പി. രാമസ്വാമി അയ്യർ</div>
+  <div class="trap"><span class="lbl">PSC TRAP</span>
+  <b>ആദ്യ ബ്രിട്ടീഷ് റെസിഡന്റ്</b> = കേണൽ മെക്കാളെ (1800)<br>
+  <b>റെസിഡന്റും ദിവാനുമായ വ്യക്തി</b> = കേണൽ മൺറോ (1811–1814)<br>
+  <b>'വലിയ ദിവാൻജി' (ആദ്യ ദിവാൻ)</b> = രാജാ കേശവദാസ്</div>
+</div>
+</details>
 
-  <div class="trap"><span class="lbl">TRAP</span> <b>കേണൽ മൺറോ — ബ്രിട്ടീഷ് റെസിഡന്റും ദിവാനുമായിരുന്നു</b><br>
-  തിരുവിതാംകൂറിൽ ഒരേ സമയം റെസിഡന്റും ദിവാനും ആയിരുന്ന വ്യക്തി. അഞ്ചുതെങ്ങ് ലഹള അടിച്ചമർത്തി. ഒന്നാമത്തെ ബ്രിട്ടീഷ് റെസിഡന്റ് <b>കേണൽ മെക്കാളെ</b> ആണ് (മൺറോ അല്ല).</div>
+<!-- ================= 2C — NEW: KOCHI HISTORY ================= -->
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">2C</span><span class="title">കൊച്ചി രാജ്യ ചരിത്രവും ഭരണാധികാരികളും <span class="new-badge">🆕 പുതിയ വിഭാഗം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2c"> പഠിച്ചു</label></summary>
+<div class="content">
+  <h3>🏰 പെരുമ്പടപ്പ് സ്വരൂപം → കൊച്ചി രാജ്യം</h3>
+  <div class="flow">
+    <span class="box">പെരുമ്പടപ്പ് സ്വരൂപം</span><span class="arrow">→</span>
+    <span class="box">ശക്തൻ തമ്പുരാൻ (1790–1805)</span><span class="arrow">→</span>
+    <span class="box">പാലിയത്തച്ചൻ സമരം (1809)</span><span class="arrow">→</span>
+    <span class="box">കൊച്ചി പ്രജാമണ്ഡലം (1941)</span><span class="arrow">→</span>
+    <span class="box" style="background:#d9f2e3;border-color:#0f9d58;color:#0f9d58;">തിരു–കൊച്ചി ലയനം (1949)</span>
+  </div>
+
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>ഭരണാധികാരി / വ്യക്തി</th><th>പ്രധാന സംഭവങ്ങളും PSC വസ്തുതകളും</th></tr>
+    <tr><td><b>ശക്തൻ തമ്പുരാൻ (രാമവർമ്മ IX)</b> (1790–1805)</td><td><b>ആധുനിക കൊച്ചിയുടെ ശില്പി</b>; നായർ പ്രഭുക്കന്മാരുടെയും യോഗതിരിപ്പാടുമാരുടെയും അധികാരം അവസാനിപ്പിച്ചു; <span class="hl">തൃശ്ശൂർ പൂരം</span> ആരംഭിച്ചു; തലസ്ഥാനം തൃശ്ശൂരിൽ നിന്ന് തൃപ്പൂണിത്തുറയിലേക്ക് മാറ്റി; 1791-ൽ ബ്രിട്ടീഷുകാരുമായി സന്ധി ചെയ്തു.</td></tr>
+    <tr><td><b>പാലിയത്തച്ചൻ (ഗോവിന്ദൻ മേനോൻ)</b></td><td>കൊച്ചിയുടെ പാരമ്പര്യ പ്രധാനമന്ത്രി; 1809-ൽ വേലുത്തമ്പി ദളവയ്ക്കൊപ്പം ബ്രിട്ടീഷ് റെസിഡന്റ് മെക്കാളെയുടെ വസതി ആക്രമിച്ചു; മദ്രാസിലേക്ക് നാടുകടത്തപ്പെട്ടു.</td></tr>
+    <tr><td><b>കേണൽ മൺറോ (ദിവാൻ: 1812–1818)</b></td><td>കൊച്ചിയിലെ ഭരണപരിഷ്കർത്താവ്; നഞ്ചപ്പയ്യയാണ് ആദ്യ ദിവാൻ എങ്കിലും ആധുനിക ഭരണം നടപ്പിലാക്കിയത് മൺറോയാണ്; 1818-ൽ 33 പള്ളിക്കൂടങ്ങൾ സ്ഥാപിച്ചു.</td></tr>
+    <tr><td><b>വെങ്കിടസുബ്ബയ്യർ & ശങ്കരവാര്യർ</b></td><td>ദിവാൻ ശങ്കരവാര്യർ <b>1854-ൽ കൊച്ചിയിൽ അടിമത്തം നിരോധിച്ചു</b>; എറണാകുളം മഹാരാജാസ് കോളേജിന്റെ മുൻഗാമിയായ ഇംഗ്ലീഷ് സ്കൂൾ (1845) ആരംഭിച്ചു.</td></tr>
+    <tr><td><b>രാമവർമ്മ രാജർഷി (1895–1914)</b></td><td><b>1902-ൽ കൊച്ചിയിലേക്ക് ആദ്യ റെയിൽവേ ലൈൻ (ഷൊർണൂർ–എറണാകുളം)</b> കൊണ്ടുവന്നു; തൃപ്പൂണിത്തുറ സംസ്കൃത കോളേജ് സ്ഥാപിച്ചു; 1914-ൽ സ്വയം സ്ഥാനത്യാഗം ചെയ്തു.</td></tr>
+    <tr><td><b>ആർ.കെ. ഷൺമുഖം ചെട്ടി (ദിവാൻ: 1935–41)</b></td><td><b>'ആധുനിക കൊച്ചിയുടെ പിതാവ്'</b> എന്നറിയപ്പെടുന്ന ദിവാൻ; കൊച്ചി തുറമുഖ വികസനം (റോബർട്ട് ബ്രിസ്റ്റോയ്ക്കൊപ്പം), എറണാകുളം ഹൈക്കോടതി; 1938-ൽ കൊച്ചിയിൽ ദ്വിഭരണം (Dyarchy) നടപ്പാക്കി.</td></tr>
+    <tr><td><b>കേരളവർമ്മ (ഐക്യകേരള തമ്പുരാൻ)</b> (1946–48)</td><td>1947 തൃശ്ശൂർ ഐക്യകേരള സമ്മേളനത്തിൽ ഐക്യകേരള പ്രമേയത്തെ പിന്തുണച്ചതിനാൽ <b>'ഐക്യകേരള തമ്പുരാൻ'</b> എന്നറിയപ്പെട്ടു; <span class="hl">1947–48 കൊച്ചി ക്ഷേത്രപ്രവേശന വിളംബരം</span> പുറപ്പെടുവിച്ചു.</td></tr>
+    <tr><td><b>പരീക്ഷിത്ത് തമ്പുരാൻ (1948–1949)</b></td><td>കൊച്ചി ഭരിച്ച <b>അവസാനത്തെ രാജാവ്</b>; വലിയ സംസ്കൃത പണ്ഡിതൻ.</td></tr>
+  </table>
+  </div>
+
+  <ul class="icon-list">
+    <li><span class="hl">1941 ജനുവരി 26</span> — <b>കൊച്ചി രാജ്യ പ്രജാമണ്ഡലം</b> രൂപീകരിച്ചു (ആദ്യ പ്രസിഡന്റ്: എസ്. നീലകണ്ഠയ്യർ, സെക്രട്ടറി: വി.ആർ. കൃഷ്ണനെഴുത്തച്ഛൻ).</li>
+    <li>കൊച്ചിയിലെ ആദ്യ ഉത്തരവാദിത്ത സർക്കാരിന്റെ പ്രധാനമന്ത്രി (1947): <b>പനമ്പിള്ളി ഗോവിന്ദമേനോൻ</b> (പിന്നീട് ഇക്കണ്ട വാര്യർ - 1948).</li>
+  </ul>
 </div>
 </details>
 
 <!-- ================= 3 ================= -->
-<details class="card" open>
-<summary><span class="num">3</span><span class="title">സാമൂഹിക പരിഷ്കരണ പ്രസ്ഥാനങ്ങൾ (കേരളം) <span class="new-badge">🆕 വിപുലീകരിച്ചു</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="3"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">3</span><span class="title">സാമൂഹിക പരിഷ്കരണ പ്രസ്ഥാനങ്ങൾ (കേരളം) <span class="fix-badge">🔧 തിരുത്തി</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="3"> പഠിച്ചു</label></summary>
 <div class="content">
-
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>'സമത്വസമാജം' സ്ഥാപിച്ചതാര്?</b> ✅ <b>അയ്യാ വൈകുണ്ഠർ (വൈകുണ്ഠ സ്വാമികൾ) — 1836</b></div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>ഇന്ത്യൻ നവോത്ഥാനത്തിന്റെ പിതാവ്?</b> ✅ <b>രാജാറാം മോഹൻ റായ്</b></div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>'സമത്വസമാജം' സ്ഥാപിച്ചതാര്?</b> ✅ <b>അയ്യാ വൈകുണ്ഠർ (വൈകുണ്ഠ സ്വാമികൾ) — 1836 (കേരളത്തിലെ ആദ്യ സാമൂഹിക പരിഷ്കരണ സംഘടന)</b></div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>ഇന്ത്യൻ നവോത്ഥാനത്തിന്റെ പിതാവ്?</b> ✅ <b>രാജാറാം മോഹൻ റായ്</b> | <b>കേരള നവോത്ഥാനത്തിന്റെ പിതാവ്?</b> ✅ <b>ശ്രീനാരായണ ഗുരു</b></div>
   <div class="trap"><span class="lbl">TRAP 3</span> <b>1937-ൽ ഗാന്ധിജി 'പുലയ രാജാവ്' എന്ന് വിളിച്ചത്?</b> ✅ <b>അയ്യങ്കാളി</b></div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>'പ്രത്യക്ഷ രക്ഷാ ദൈവ സഭ'?</b> ✅ <b>പൊയ്കയിൽ കുമാരഗുരുദേവൻ (1909)</b></div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>1892-ൽ വിവേകാനന്ദൻ ആരെ സന്ദർശിച്ചു?</b> ✅ <b>ചട്ടമ്പി സ്വാമികൾ</b></div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>'പ്രത്യക്ഷ രക്ഷാ ദൈവ സഭ' (PRDS)?</b> ✅ <b>പൊയ്കയിൽ കുമാരഗുരുദേവൻ (പൊയ്കയിൽ യോഹന്നാൻ) — 1909 (ഇരവിപേരൂർ)</b></div>
+  <div class="trap"><span class="lbl">TRAP 5</span> <b>1892-ൽ സ്വാമി വിവേകാനന്ദൻ എറണാകുളത്ത് വെച്ച് ആരെ സന്ദർശിച്ചു?</b> ✅ <b>ചട്ടമ്പി സ്വാമികൾ</b> ('ഞാൻ അവിടെ ഒരു യഥാർത്ഥ മനുഷ്യനെ കണ്ടു')</div>
 
   <h3>📋 കേരള നവോത്ഥാന സംഘടനകൾ — സമ്പൂർണ്ണ പട്ടിക</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>സംഘടന</th><th>സ്ഥാപകൻ / നേതാവ്</th><th>വർഷം</th></tr>
-    <tr><td>സമത്വ സമാജം</td><td>അയ്യാ വൈകുണ്ഠർ</td><td><b>1836</b></td></tr>
-    <tr><td>ശൈവ പ്രകാശ സഭ</td><td>തൈക്കാട് അയ്യാ</td><td><b>1884</b></td></tr>
-    <tr><td>SNDP</td><td>ശ്രീ നാരായണ ഗുരു (ആദ്യ സെക്രട്ടറി: കുമാരനാശാൻ)</td><td><b>1903</b></td></tr>
-    <tr><td>SJPS</td><td>അയ്യങ്കാളി</td><td><b>1907</b></td></tr>
-    <tr><td>ആത്മവിദ്യാ സംഘം</td><td>വാഗ്ഭടാനന്ദൻ</td><td><b>1917</b></td></tr>
+    <tr><th>സംഘടന</th><th>സ്ഥാപകൻ / നേതാവ്</th><th>വർഷം & സ്ഥലം</th></tr>
+    <tr><td>സമത്വ സമാജം</td><td>അയ്യാ വൈകുണ്ഠർ</td><td><b>1836 (ശുചീന്ദ്രം / സ്വാമിത്തോപ്പ്)</b></td></tr>
+    <tr><td>ശൈവ പ്രകാശ സഭ</td><td>തൈക്കാട് അയ്യാ</td><td><b>1884 / 1885 (തിരുവനന്തപുരം)</b></td></tr>
+    <tr><td>സിദ്ധാശ്രമം</td><td>ബ്രഹ്മാനന്ദ ശിവയോഗി</td><td><b>1893 (ആലത്തൂർ, പാലക്കാട്)</b></td></tr>
+    <tr><td>SNDP യോഗം</td><td>ശ്രീ നാരായണ ഗുരു (ആദ്യ സെക്രട്ടറി: കുമാരനാശാൻ)</td><td><b>1903 മെയ് 15</b></td></tr>
+    <tr><td>തത്വപ്രകാശിക ആശ്രമം</td><td>വാഗ്ഭടാനന്ദൻ (ശിവയോഗിയുടെ സഹായത്തോടെ)</td><td><b>1906 (കോഴിക്കോട്)</b></td></tr>
+    <tr><td>സാധുജന പരിപാലന സംഘം (SJPS)</td><td>അയ്യങ്കാളി</td><td><b>1907 (വെങ്ങാനൂർ)</b></td></tr>
+    <tr><td>യോഗക്ഷേമ സഭ</td><td>ശിവരാമൻ നമ്പൂതിരി / വി.ടി. ഭട്ടതിരിപ്പാട്</td><td><b>1908 (ആലുവ)</b></td></tr>
+    <tr><td>PRDS (പ്രത്യക്ഷ രക്ഷാ ദൈവസഭ)</td><td>പൊയ്കയിൽ കുമാരഗുരുദേവൻ</td><td><b>1909 (ഇരവിപേരൂർ)</b></td></tr>
+    <tr><td>സാധുജന പരിപാലന സംഘം (കൊച്ചി)</td><td>കൃഷ്ണാടിയാൻ</td><td><b>1912</b></td></tr>
+    <tr><td>ബ്രഹ്മ പ്രത്യക്ഷ സാധുജന പരിപാലന സംഘം</td><td>കാവരികുളം കണ്ടൻ കുമാരൻ</td><td><b>1912</b></td></tr>
     <tr><td>അദ്വൈതാശ്രമം</td><td>ശ്രീ നാരായണ ഗുരു</td><td><b>1913 (ആലുവ)</b></td></tr>
+    <tr><td>നായർ സർവീസ് സൊസൈറ്റി (NSS)</td><td>മന്നത്ത് പദ്മനാഭൻ (ആദ്യ പ്രസിഡന്റ്: കെ. കേളപ്പൻ)</td><td><b>1914 ഒക്ടോബർ 31 (ചങ്ങനാശ്ശേരി)</b></td></tr>
+    <tr><td>പുലയ മഹാസഭ</td><td>കുറുമ്പൻ ദൈവത്താൻ</td><td><b>1917 (ചെങ്ങന്നൂർ)</b></td></tr>
+    <tr><td>ആത്മവിദ്യാ സംഘം</td><td>വാഗ്ഭടാനന്ദൻ</td><td><b>1917 (വടകര)</b></td></tr>
+    <tr><td>സഹോദര സംഘം</td><td>സഹോദരൻ അയ്യപ്പൻ</td><td><b>1917 മെയ് 29 (ചെറായി)</b></td></tr>
     <tr><td>ആനന്ദ മഹാസഭ</td><td>ബ്രഹ്മാനന്ദ ശിവയോഗി</td><td><b>1918</b></td></tr>
-    <tr><td>സിദ്ധാശ്രമം</td><td>ബ്രഹ്മാനന്ദ ശിവയോഗി</td><td><b>1893 (ആലത്തൂർ)</b></td></tr>
-    <tr><td>PRDS</td><td>പൊയ്കയിൽ കുമാരഗുരുദേവൻ</td><td><b>1909</b></td></tr>
-    <tr><td>NSS</td><td>മന്നത്ത് പദ്മനാഭൻ</td><td><b>1914 (ചങ്ങനാശ്ശേരി)</b></td></tr>
-    <tr><td>യോഗക്ഷേമ സഭ</td><td>വി.ടി. ഭട്ടതിരിപ്പാട്</td><td><b>1908</b></td></tr>
-    <tr><td>സഹോദര സംഘം</td><td>സഹോദരൻ അയ്യപ്പൻ</td><td><b>1917 (ചെറായി)</b></td></tr>
+    <tr><td>ഇസ്ലാം ധർമ്മ പരിപാലന സംഘം (IDPS)</td><td>വക്കം അബ്ദുൾ ഖാദർ മൗലവി</td><td><b>1918 (നിലയ്ക്കമുക്ക്)</b></td></tr>
     <tr><td>നമ്പൂതിരി യുവജന സംഘം</td><td>വി.ടി. ഭട്ടതിരിപ്പാട്</td><td><b>1919</b></td></tr>
-    <tr><td>തത്വപ്രകാശിക ആശ്രമം</td><td>വാഗ്ഭടാനന്ദൻ</td><td><b>1906 (കോഴിക്കോട്)</b></td></tr>
-    <tr><td>ആത്മ ബോധോദയ സംഘം</td><td>ശുഭാനന്ദ ഗുരുദേവൻ</td><td><b>1926</b></td></tr>
-    <tr><td>ഇസ്ലാം ധർമ്മ പരിപാലന സംഘം</td><td>വക്കം മൗലവി</td><td><b>1906</b></td></tr>
-    <tr><td>കേരള മുസ്ലിം ഐക്യ സംഘം</td><td>വക്കം മൗലവി</td><td><b>1922</b></td></tr>
-    <tr><td>ചെറമർ മഹാസഭ</td><td>പാമ്പാടി ജോൺ ജോസഫ്</td><td><b>1921</b></td></tr>
-    <tr><td>ബ്രഹ്മ പ്രത്യക്ഷ സാധുജന പരിപാലന സംഘം</td><td>കവരികുളം കണ്ടൻ കുമരൻ</td><td><b>1912</b></td></tr>
-    <tr><td>ജാതി നാശിനി സഭ</td><td>ആനന്ദതീർത്ഥൻ</td><td><b>1933</b></td></tr>
-    <tr><td>ശബരി ആശ്രമം</td><td>ടി.ആർ. കൃഷ്ണസ്വാമി അയ്യർ</td><td><b>1923 (പാലക്കാട്)</b></td></tr>
     <tr><td>ശ്രീ രാമദാസ ആശ്രമം</td><td>ശ്രീ നീലകണ്ഠ ഗുരുപാദർ</td><td><b>1920 (ചെങ്കോട്ടുകോണം)</b></td></tr>
-    <tr><td>ധർമ്മഭട സംഘം</td><td>ടി.കെ. മാധവൻ</td><td>—</td></tr>
-    <tr><td>വിദ്യാപോഷിണി സഭ</td><td>സഹോദരൻ അയ്യപ്പൻ</td><td>—</td></tr>
-    <tr><td>കേരള ഗ്രന്ഥശാലാ സംഘം</td><td>പി.എൻ. പണിക്കർ</td><td><b>1945</b></td></tr>
+    <tr><td>ചേരമർ മഹാസഭ</td><td>പാമ്പാടി ജോൺ ജോസഫ്</td><td><b>1921</b></td></tr>
+    <tr><td>കേരള മുസ്ലിം ഐക്യ സംഘം</td><td>വക്കം മൗലവി, മണപ്പാട്ട് കുഞ്ഞഹമ്മദ് ഹാജി</td><td><b>1922 (കൊടുങ്ങല്ലൂർ)</b></td></tr>
+    <tr><td>ശബരി ആശ്രമം</td><td>ടി.ആർ. കൃഷ്ണസ്വാമി അയ്യർ</td><td><b>1923 (ഒലവക്കോട്, പാലക്കാട്)</b></td></tr>
+    <tr><td>ആത്മ ബോധോദയ സംഘം</td><td>ശുഭാനന്ദ ഗുരുദേവൻ</td><td><b>1926 (മാവേലിക്കര)</b></td></tr>
+    <tr><td>ജാതി നാശിനി സഭ</td><td>ആനന്ദതീർത്ഥൻ</td><td><b>1933 (പയ്യന്നൂർ)</b></td></tr>
+    <tr><td>തിരുവിതാംകൂർ ഗ്രന്ഥശാലാ സംഘം</td><td>പി.എൻ. പണിക്കർ</td><td><b>1945 (അമ്പലപ്പുഴ)</b></td></tr>
   </table>
   </div>
 
@@ -526,21 +476,42 @@
   <table class="compact">
     <tr><th>സംഘടന</th><th>സ്ഥാപകൻ</th><th>വർഷം</th></tr>
     <tr><td>അരയ സമാജം</td><td>പണ്ഡിറ്റ് കെ.പി. കറുപ്പൻ</td><td>1907</td></tr>
+    <tr><td>വാല സമുദായ പരിഷ്കാരിണി സഭ</td><td>പണ്ഡിറ്റ് കെ.പി. കറുപ്പൻ</td><td>1910 (തേവര)</td></tr>
     <tr><td>കല്യാണദായിനി സഭ</td><td>പണ്ഡിറ്റ് കെ.പി. കറുപ്പൻ</td><td>1912 (ആനപ്പുഴ)</td></tr>
     <tr><td>ജ്ഞാനോദയം സഭ</td><td>പണ്ഡിറ്റ് കെ.പി. കറുപ്പൻ</td><td>1916 (ഇടക്കൊച്ചി)</td></tr>
+    <tr><td>അരയ വംശോദ്ധാരണീ സഭ</td><td>ഡോ. വേലുക്കുട്ടി അരയൻ</td><td>1916</td></tr>
+    <tr><td>സമസ്ത കേരളീയ അരയമഹാജന യോഗം</td><td>ഡോ. വേലുക്കുട്ടി അരയൻ</td><td>1919</td></tr>
     <tr><td>അഖില കേരള അരയ മഹാസഭ</td><td>പണ്ഡിറ്റ് കെ.പി. കറുപ്പൻ</td><td>1922</td></tr>
-    <tr><td>വല സമുദായ പരിഷ്കാരിണി സഭ</td><td>പണ്ഡിറ്റ് കെ.പി. കറുപ്പൻ</td><td>1910</td></tr>
-    <tr><td>അരയ വംശ പരിപാലന യോഗം</td><td>ഡോ. വേലുക്കുട്ടി അരയൻ</td><td>1916</td></tr>
-    <tr><td>സമസ്തകേരളീയ അരയമഹാജന യോഗം</td><td>ഡോ. വേലുക്കുട്ടി അരയൻ</td><td>1919</td></tr>
   </table>
   </div>
+</div>
+</details>
 
-  <div class="note"><span class="lbl">MUDRA</span> <b>സഹോദരൻ അയ്യപ്പൻ:</b> "ജാതി ചോദിക്കരുത്, പറയരുത്, ചിന്തിക്കരുത്"</div>
+<!-- ================= 3A — NEW: RENAISSANCE LEADERS, PRESS & WORKS ================= -->
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">3A</span><span class="title">നവോത്ഥാന നായകന്മാരും പത്രങ്ങളും കൃതികളും <span class="new-badge">🆕 പുതിയ വിഭാഗം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="3a"> പഠിച്ചു</label></summary>
+<div class="content">
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>നവോത്ഥാന നായകൻ</th><th>പ്രധാന കൃതികൾ / പത്രങ്ങൾ</th><th>പ്രധാന സമരങ്ങൾ / PSC പോയിന്റുകൾ</th></tr>
+    <tr><td><b>ശ്രീനാരായണ ഗുരു</b> (1856–1928)</td><td>ആത്മോപദേശശതകം, ദൈവദശകം, ദർശനമാല, ജാതിമീമാംസ, ഗജേന്ദ്രമോക്ഷം വഞ്ചിപ്പാട്ട്; മാസിക: <b>വിവേകോദയം (1904)</b></td><td><b>അരുവിപ്പുറം ശിവപ്രതിഷ്ഠ (1888)</b>; സർവ്വമത സമ്മേളനം (ആലുവ - 1924); കണ്ണാടി പ്രതിഷ്ഠ (കളവങ്കോടം - 1927); സമാധി: <b>1928 സെപ്റ്റംബർ 20 (ശിവഗിരി)</b>.</td></tr>
+    <tr><td><b>ചട്ടമ്പി സ്വാമികൾ</b> (1853–1924)</td><td>പ്രാചീന മലയാളം, വേദാധികാര നിരൂപണം, ക്രിസ്തുമത ഛേദനം, ആദിഭാഷ</td><td>ജനനം: കണ്ണമൂല; ബാലഭട്ടാരകൻ, ഷണ്മുഖദാസൻ; സമാധി: <b>പന്മന ആശ്രമം (കൊല്ലം)</b>.</td></tr>
+    <tr><td><b>അയ്യങ്കാളി</b> (1863–1941)</td><td>മാസിക: <b>സാധുജന പരിപാലനി (1914)</b> (പത്രാധിപർ: കാളി ചോതി)</td><td><b>വില്ലുവണ്ടി സമരം (1893)</b>; ചാലിയത്തെരുവ് ലഹള (1898); കാർഷിക പണിമുടക്ക് (1909–10); <b>കല്ലുമാല സമരം / പെരിനാട് ലഹള (1915)</b>; ഊരൂട്ടമ്പലം ലഹള (പഞ്ചമി).</td></tr>
+    <tr><td><b>വക്കം മൗലവി</b> (1873–1932)</td><td><b>സ്വദേശാഭിമാനി (1905)</b>, മുസ്ലിം (1906), അൽ-ഇസ്ലാം (1918), ദീപിക (1931)</td><td>സ്വദേശാഭിമാനി ആദ്യ പത്രാധിപർ: <b>സി.പി. ഗോവിന്ദപ്പിള്ള</b>; രാമകൃഷ്ണപിള്ളയെ നാടുകടത്തിയത്: <b>1910 സെപ്റ്റംബർ 26</b>.</td></tr>
+    <tr><td><b>കുമാരനാശാൻ</b> (1873–1924)</td><td>വീണപൂവ് (1907), ദുരവസ്ഥ, ചണ്ഡാലഭിക്ഷുകി, കരുണ; പത്രാധിപർ: <b>വിവേകോദയം, പ്രതിഭ</b></td><td>'സ്നേഹഗായകൻ'; 1922-ൽ വെയിൽസ് രാജകുമാരനിൽ നിന്ന് പട്ടും വളയും സ്വീകരിച്ചു; മരണം: <b>1924 ജനുവരി 16 (പല്ലനയാറ്റിൽ റെഡീമർ ബോട്ടപകടം)</b>.</td></tr>
+    <tr><td><b>സഹോദരൻ അയ്യപ്പൻ</b> (1889–1968)</td><td>പത്രങ്ങൾ: <b>സഹോദരൻ, യുക്തിവാദി (1929), വേലക്കാരൻ</b></td><td><b>മിശ്രഭോജനം (1917 മെയ് 29, ചെറായി)</b>; "ജാതി ചോദിക്കരുത്, പറയരുത്, ചിന്തിക്കരുത്".</td></tr>
+    <tr><td><b>വി.ടി. ഭട്ടതിരിപ്പാട്</b> (1896–1982)</td><td>നാടകം: <b>അടുക്കളയിൽ നിന്ന് അരങ്ങത്തേക്ക് (1929)</b>; ആത്മകഥ: കണ്ണീരും കിനാവും; പത്രം: ഉണ്ണിനമ്പൂതിരി, പാശുപതം</td><td><b>യാചനാ യാത്ര (1931)</b> (തൃശ്ശൂർ–ചന്ദ്രഗിരിപ്പുഴ); വിധവാ വിവാഹം പ്രോത്സാഹിപ്പിച്ചു (എം.ആർ.ബി. – ഉമ അന്തർജനം വിവാഹം, 1934).</td></tr>
+    <tr><td><b>പണ്ഡിറ്റ് കറുപ്പൻ</b> (1885–1938)</td><td><b>ജാതിക്കുമ്മി (1904)</b>, ബാലാകലേശം, ആചാരഭൂഷണം</td><td><b>കായൽ സമ്മേളനം (1913, എറണാകുളം)</b>; 'കൊച്ചിയിലെ ലിങ്കൺ'; 'കവിതിലകൻ'.</td></tr>
+    <tr><td><b>വാഗ്ഭടാനന്ദൻ</b> (1885–1939)</td><td><b>ആത്മവിദ്യാകാഹളം (1929)</b>, അഭിനവ കേരളം (1921)</td><td>"ഉണരുവിൻ, അഖിലേശനെ സ്മരിക്കുവിൻ, കഷണമൊ രിന്ദ്രിയവൃത്തി മാറ്റുവിൻ"; പ്രീതിഭോജനം.</td></tr>
+    <tr><td><b>സി. കൃഷ്ണൻ / മൂർക്കോത്ത് കുമാരൻ</b></td><td><b>മിതവാദി</b> (1907 തലശ്ശേരി / 1913 കോഴിക്കോട്)</td><td><b>'ഈഴവരുടെ ബൈബിൾ'</b> എന്നറിയപ്പെട്ട പത്രം.</td></tr>
+    <tr><td><b>ടി.കെ. മാധവൻ</b> (1885–1930)</td><td>പത്രം: <b>ദേശാഭിമാനി (1915)</b></td><td>1923 കാക്കിനഡ കോൺഗ്രസ് സമ്മേളനത്തിൽ അയിത്തോച്ചാടന പ്രമേയം അവതരിപ്പിച്ചു; വൈക്കം സത്യഗ്രഹ നായകൻ.</td></tr>
+  </table>
+  </div>
 </div>
 </details>
 
 <!-- ================= 4 ================= -->
-<details class="card">
+<details class="card" data-tags="kerala">
 <summary><span class="num">4</span><span class="title">മതനവോത്ഥാന പ്രസ്ഥാനങ്ങൾ</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="4"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="flow">
@@ -553,11 +524,11 @@
   <div class="tbl-scroll">
   <table class="compact">
     <tr><th>വ്യക്തി</th><th>സംഘടന/കൃതി</th><th>വർഷം</th></tr>
-    <tr><td>സനാഉള്ള മഖ്തി തങ്ങൾ</td><td>കഠോര കുഠാരം</td><td>1884</td></tr>
+    <tr><td>സനാഉള്ള മഖ്തി തങ്ങൾ</td><td>കഠോര കുഠാരം, പരോപകാരി</td><td>1884</td></tr>
     <tr><td>വക്കം മൗലവി</td><td>IDPS, അൽ-ഇസ്ലാം</td><td>1918</td></tr>
-    <tr><td>ചാവറയച്ചൻ</td><td>CMI സഭ; സെന്റ് ജോസഫ്സ് പ്രസ്സ്</td><td>1831/1846</td></tr>
-    <tr><td>ബ്രഹ്മാനന്ദ സ്വാമി ശിവയോഗി</td><td>ആനന്ദ മഹാസഭ; മോക്ഷപ്രദീപം</td><td>1918</td></tr>
-    <tr><td>സ്വാമി ആഗമാനന്ദൻ</td><td>കാലടി അദ്വൈത ആശ്രമം</td><td>1936</td></tr>
+    <tr><td>ചാവറ കുര്യാക്കോസ് ഏലിയാസ് അച്ചൻ</td><td>CMI സഭ; മാന്നാനം സെന്റ് ജോസഫ്സ് പ്രസ്സ്; 'പള്ളിക്കൊപ്പം പള്ളിക്കൂടം'</td><td>1831 / 1846</td></tr>
+    <tr><td>ബ്രഹ്മാനന്ദ സ്വാമി ശിവയോഗി</td><td>ആനന്ദ മഹാസഭ; മോക്ഷപ്രദീപം, ആനന്ദസൂത്രം</td><td>1918</td></tr>
+    <tr><td>സ്വാമി ആഗമാനന്ദൻ</td><td>കാലടി ശ്രീരാമകൃഷ്ണ അദ്വൈത ആശ്രമം</td><td>1936</td></tr>
     <tr><td>ആനന്ദ തീർത്ഥൻ</td><td>ജാതിനാശിനി സഭ</td><td>1933</td></tr>
     <tr><td>നിധീരിക്കൽ മാണിക്കത്തനാർ</td><td>നസ്രാണി ദീപിക</td><td>1887</td></tr>
   </table>
@@ -566,182 +537,218 @@
 </details>
 
 <!-- ================= 5 ================= -->
-<details class="card">
-<summary><span class="num">5</span><span class="title">കേരളത്തിലെ ദേശീയ പ്രസ്ഥാനം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="5"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="5star kerala">
+<summary><span class="num">5</span><span class="title">കേരളത്തിലെ ദേശീയ പ്രസ്ഥാനം</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="5"> പഠിച്ചു</label></summary>
 <div class="content">
+  <h3>🕊️ ഗാന്ധിജിയുടെ കേരള സന്ദർശനങ്ങൾ (5 തവണ)</h3>
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1920</div><div class="ev">ഗാന്ധിജി<br>ആഗസ്റ്റ് 18</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1925</div><div class="ev">വൈക്കം<br>ശിവഗിരി</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1927</div><div class="ev">സന്ദർശനം</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1934</div><div class="ev">ഹരിജൻ ഫണ്ട്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1937</div><div class="ev">സന്ദർശനം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1920 ഓഗസ്റ്റ് 18</div><div class="ev">ഖിലാഫത്ത്<br>(കോഴിക്കോട്)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1925 മാർച്ച്</div><div class="ev">വൈക്കം സത്യഗ്രഹം<br>ശിവഗിരി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1927 ഒക്ടോബർ</div><div class="ev">ഖാദി പ്രചാരണം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1934 ജനുവരി</div><div class="ev">ഹരിജൻ ഫണ്ട്<br>(കൗമുദി ടീച്ചർ)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1937 ജനുവരി</div><div class="ev">ക്ഷേത്രപ്രവേശനം<br>('തീർത്ഥാടനം')</div></div>
   </div>
 
   <div class="bar-chart">
-    <div class="bar-row"><span class="lbl">മൊറാഴ</span><div class="bar" style="width:40%">1940</div></div>
-    <div class="bar-row"><span class="lbl">കയ്യൂർ</span><div class="bar" style="width:48%">1941</div></div>
-    <div class="bar-row"><span class="lbl">കീഴരിയൂർ</span><div class="bar" style="width:56%">1942</div></div>
-    <div class="bar-row"><span class="lbl">പുന്നപ്ര–വയലാർ</span><div class="bar" style="width:80%">1946</div></div>
+    <div class="bar-row"><span class="lbl">മൊറാഴ സമരം</span><div class="bar" style="width:40%">1940 (കെ.പി.ആർ. ഗോപാലൻ)</div></div>
+    <div class="bar-row"><span class="lbl">കയ്യൂർ സമരം</span><div class="bar" style="width:50%">1941 (തേജസ്വിനി പുഴ)</div></div>
+    <div class="bar-row"><span class="lbl">കീഴരിയൂർ ബോംബ്</span><div class="bar" style="width:60%">1942 (ഡോ. കെ.ബി. മേനോൻ)</div></div>
+    <div class="bar-row"><span class="lbl">പുന്നപ്ര–വയലാർ</span><div class="bar" style="width:80%">1946 ഒക്ടോബർ</div></div>
   </div>
 
   <ul class="icon-list">
-    <li><span class="hl">1921 ആഗസ്റ്റ് 20</span> — മലബാർ കലാപം; ആലി മുസ്ലിയാർ, വാരിയംകുന്നത്ത് കുഞ്ഞഹമ്മദ് ഹാജി</li>
-    <li>INC പ്രസിഡന്റായ ഏക മലയാളി: <b>സർ സി. ശങ്കരൻ നായർ</b> (1897)</li>
-    <li>കൃതി: 'ഗാന്ധിയും അരാജകത്വവും' (1922)</li>
+    <li><span class="hl">1897 അമരാവതി</span> — INC പ്രസിഡന്റായ ഏക മലയാളി: <b>സർ സി. ശങ്കരൻ നായർ</b> (കൃതി: 'ഗാന്ധിയും അരാജകത്വവും' - 1922)</li>
+    <li><span class="hl">1916 പാലക്കാട്</span> — ഒന്നാം മലബാർ ജില്ലാ രാഷ്ട്രീയ സമ്മേളനം (അധ്യക്ഷൻ: ആനി ബസന്റ്)</li>
+    <li><span class="hl">1920 മഞ്ചേരി</span> — അഞ്ചാം മലബാർ രാഷ്ട്രീയ സമ്മേളനം (അധ്യക്ഷൻ: കസ്തൂരിരംഗ അയ്യങ്കാർ)</li>
+    <li><span class="hl">1921 ഏപ്രിൽ</span> — ഒറ്റപ്പാലം ഒന്നാം അഖില കേരള കോൺഗ്രസ് സമ്മേളനം (അധ്യക്ഷൻ: <b>ടി. പ്രകാശം</b>)</li>
+    <li><span class="hl">1923 മാർച്ച് 18</span> — <b>മാതൃഭൂമി</b> പത്രം ആരംഭിച്ചു (സ്ഥാപക പത്രാധിപർ: കെ.പി. കേശവമേനോൻ)</li>
+    <li><span class="hl">1924</span> — <b>അൽ-അമീൻ</b> പത്രം (മുഹമ്മദ് അബ്ദുറഹ്മാൻ സാഹിബ്, കോഴിക്കോട്)</li>
   </ul>
 </div>
 </details>
 
+<!-- ================= 5A — NEW: EARLY ANTI-BRITISH REVOLTS ================= -->
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">5A</span><span class="title">കേരളത്തിലെ ആദ്യകാല ബ്രിട്ടീഷ് വിരുദ്ധ കലാപങ്ങൾ <span class="new-badge">🆕 പുതിയ വിഭാഗം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="5a"> പഠിച്ചു</label></summary>
+<div class="content">
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>കലാപം</th><th>വർഷം</th><th>നേതാക്കൾ</th><th>പ്രധാന PSC പോയിന്റുകൾ</th></tr>
+    <tr><td><b>അഞ്ചുതെങ്ങ് കലാപം</b></td><td>1697</td><td>നാട്ടുകാർ</td><td>ഇംഗ്ലീഷുകാരുടെ കുരുമുളക് കുത്തകയ്ക്കെതിരെ നടന്ന ആദ്യ പ്രക്ഷോഭം.</td></tr>
+    <tr><td><b>ആറ്റിങ്ങൽ കലാപം</b></td><td><b>1721 ഏപ്രിൽ 15</b></td><td>കുടമൺ പിള്ള & നാട്ടുകാർ</td><td><b>കേരളത്തിലെ ആദ്യ സംഘടിത ബ്രിട്ടീഷ് വിരുദ്ധ കലാപം</b>; ഗിഫോർഡും 140 ബ്രിട്ടീഷുകാരും കൊല്ലപ്പെട്ടു; ഫലമായി <b>1723-ൽ വേണാട് ഉടമ്പടി</b> (ഇംഗ്ലീഷ് EIC ആദ്യമായി ഒരു കേരള നാട്ടുരാജ്യവുമായി ഒപ്പിട്ട കരാർ).</td></tr>
+    <tr><td><b>പഴശ്ശി വിപ്ലവം</b> (ഒന്നാം ഘട്ടം: 1793–97, രണ്ടാം ഘട്ടം: 1800–05)</td><td>1793–1805</td><td><b>കേരളവർമ്മ പഴശ്ശിരാജ</b>, തലയ്ക്കൽ ചന്തു, എടച്ചേന കുങ്കൻ, കൈതേരി അമ്പു</td><td>കോട്ടയം രാജകുടുംബാംഗം; <b>'കേരള സിംഹം'</b> (കെ.എം. പണിക്കർ), <b>'പൈച്ചി രാജ'</b> (ബ്രിട്ടീഷുകാർ); ഒളിപ്പോര് (Guerilla Warfare); പഴശ്ശിയെ അമർച്ച ചെയ്ത സബ് കളക്ടർ: <b>തോമസ് ഹാർവി ബാബർ</b> (കോൽക്കാർ സൈന്യം); വീരമൃത്യു: <span class="hl">1805 നവംബർ 30 (മാവിലാംതോട്)</span>.</td></tr>
+    <tr><td><b>വേലുത്തമ്പി–പാലിയത്തച്ചൻ സമരം</b></td><td>1808–1809</td><td>വേലുത്തമ്പി ദളവ, പാലിയത്തച്ചൻ</td><td><b>1809 ജനുവരി 11 — കുണ്ടറ വിളംബരം</b>; കൊല്ലം പീരങ്കി മൈതാനത്ത് ദളവയുടെ സഹോദരൻ പത്മനാഭൻ തമ്പിയെ തൂക്കിലേറ്റി.</td></tr>
+    <tr><td><b>കുറിച്യ കലാപം</b></td><td><b>1812 മാർച്ച് 25</b></td><td><b>രാമൻ നമ്പി</b>, വെൺമണി തിരുമുൽപ്പാട്</td><td>വയനാട്ടിലെ കുറിച്യ–കുറുമ്പ ആദിവാസികൾ നികുതി പണമായി നൽകണമെന്ന ബ്രിട്ടീഷ് ഉത്തരവിനെതിരെ നടത്തിയ സമരം; മുദ്രാവാക്യം: <b>'വട്ടത്തൊപ്പിക്കാരെ നാട്ടിൽ നിന്ന് പുറത്താക്കുക'</b>.</td></tr>
+    <tr><td><b>മലബാർ കലാപം</b></td><td><b>1921 ഓഗസ്റ്റ് 20</b></td><td>ആലി മുസ്ലിയാർ, വാരിയംകുന്നത്ത് കുഞ്ഞഹമ്മദ് ഹാജി, സീതിക്കോയ തങ്ങൾ</td><td>പൂക്കോട്ടൂർ യുദ്ധം; വാരിയംകുന്നൻ സ്ഥാപിച്ച സ്വതന്ത്ര രാജ്യം: <b>'മലയാള രാജ്യം'</b>; <span class="hl">വാഗൺ ട്രാജഡി: 1921 നവംബർ 19</span> (തിരൂർ മുതൽ പോത്തന്നൂർ വരെ <b>MSM LV 1711</b> വാഗണിൽ 64 പേർ ശ്വാസംമുട്ടി മരിച്ചു).</td></tr>
+  </table>
+  </div>
+</div>
+</details>
+
+<!-- ================= 5B — NEW: SATYAGRAHAS IN KERALA ================= -->
+<details class="card" data-tags="5star new kerala" open>
+<summary><span class="num">5B</span><span class="title">കേരളത്തിലെ പ്രധാന സത്യഗ്രഹങ്ങൾ — താരതമ്യ പട്ടിക <span class="new-badge">🆕 പുതിയ വിഭാഗം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="5b"> പഠിച്ചു</label></summary>
+<div class="content">
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>സത്യഗ്രഹം</th><th>വർഷം / കാലയളവ്</th><th>നേതാക്കൾ</th><th>പ്രധാന PSC വസ്തുതകൾ</th></tr>
+    <tr><td><b>വൈക്കം സത്യഗ്രഹം</b></td><td><b>1924 മാർച്ച് 30 – 1925 നവംബർ 23</b> (603 ദിവസം)</td><td>ടി.കെ. മാധവൻ, കെ. കേളപ്പൻ, കെ.പി. കേശവമേനോൻ</td><td>അയിത്തത്തിനെതിരെ ഇന്ത്യയിലെ ആദ്യ സംഘടിത സമരം; ആദ്യ സത്യഗ്രഹികൾ: <b>കുഞ്ഞപ്പി, ബാഹുലേയൻ, ഗോവിന്ദപ്പണിക്കർ</b>; സവർണ്ണ ജാഥ നയിച്ചത്: <b>മന്നത്ത് പത്മനാഭൻ</b> (വൈക്കം → തിരുവനന്തപുരം); നാഗർകോവിലിൽ നിന്ന് ജാഥ: <b>എം.ഇ. നായിഡു</b>; വൈക്കം വീരൻ: <b>ഇ.വി. രാമസ്വാമി നായ്ക്കർ (പെരിയാർ)</b>; പഞ്ചാബിൽ നിന്ന് <b>അകാലികൾ</b> ഭക്ഷണശാല നടത്തി.</td></tr>
+    <tr><td><b>ശുചീന്ദ്രം സത്യഗ്രഹം</b></td><td>1926</td><td>ഡോ. എം.ഇ. നായിഡു, ഗാന്ധിരാമൻ പിള്ള</td><td>ശുചീന്ദ്രം ക്ഷേത്ര റോഡുകളിലെ സഞ്ചാര സ്വാതന്ത്ര്യത്തിനായി.</td></tr>
+    <tr><td><b>ഉപ്പുസത്യഗ്രഹം (കേരളം)</b></td><td><b>1930 ഏപ്രിൽ 13 – ഏപ്രിൽ 21</b></td><td><b>കെ. കേളപ്പൻ</b> (കേരള ഗാന്ധി), പി. കൃഷ്ണപിള്ള, മൊയ്യാരത്ത് ശങ്കരൻ</td><td>കോഴിക്കോട് തളിയിൽ നിന്ന് പയ്യന്നൂർ കടപ്പുറത്തേക്ക്; രണ്ടാം വേദി: <b>ബേപ്പൂർ</b> (മുഹമ്മദ് അബ്ദുറഹ്മാൻ സാഹിബ്); ഗാനം: <b>'വരിക വരിക സഹജരേ'</b> (അംശി നാരായണപിള്ള).</td></tr>
+    <tr><td><b>ഗുരുവായൂർ സത്യഗ്രഹം</b></td><td><b>1931 നവംബർ 1 – 1932 ഒക്ടോബർ 2</b></td><td>കെ. കേളപ്പൻ (നേതാവ്), <b>എ.കെ. ഗോപാലൻ</b> (ക്യാപ്റ്റൻ)</td><td>കണ്ണൂരിൽ നിന്ന് ഗുരുവായൂരിലേക്ക് ജാഥ നയിച്ചത്: സുബ്രഹ്മണ്യൻ തിരുമുമ്പ്; ശ്രീകോവിലിന് മുന്നിലെ മണി അടിച്ചത്: <b>പി. കൃഷ്ണപിള്ള</b>; ഗാന്ധിജിയുടെ നിർദ്ദേശപ്രകാരം കേളപ്പൻ നിരാഹാരം അവസാനിപ്പിച്ചു; തുടർന്ന് പൊന്നാനി താലൂക്കിൽ ഹിതപരിശോധന നടത്തി.</td></tr>
+    <tr><td><b>കുട്ടംകുളം സമരം</b></td><td>1946 ജൂലൈ 6</td><td>പി.കെ. കുമാരൻ മാസ്റ്റർ, കെ.വി. ഉണ്ണി</td><td>ഇരിങ്ങാലക്കുട കൂടൽമാണിക്യം ക്ഷേത്ര പരിസരത്തെ സഞ്ചാര സ്വാതന്ത്ര്യ സമരം.</td></tr>
+    <tr><td><b>പാലിയം സത്യഗ്രഹം</b></td><td><b>1947 ഡിസംബർ 4 – 1948 മാർച്ച്</b> (98 ദിവസം)</td><td>സി. കേശവൻ (ഉദ്ഘാടനം), ആര്യ പള്ളം, പ്രിയദത്ത</td><td>ചേന്ദമംഗലം പാലിയം റോഡിലെ സഞ്ചാര സ്വാതന്ത്ര്യ സമരം; രക്തസാക്ഷി: <b>എ.ജി. വേലായുധൻ</b>.</td></tr>
+  </table>
+  </div>
+</div>
+</details>
+
 <!-- ================= 6 ================= -->
-<details class="card">
+<details class="card" data-tags="kerala">
 <summary><span class="num">6</span><span class="title">സാഹിത്യ സ്രോതസ്സുകൾ</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="6"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>കൃതി</th><th>രചയിതാവ്</th></tr>
-    <tr><td>പതിറ്റുപ്പത്ത്</td><td>ചേര രാജാക്കന്മാർ</td></tr>
-    <tr><td>മൂഷികവംശം</td><td>അതുലൻ</td></tr>
-    <tr><td>തുഹ്ഫത്തുൽ മുജാഹിദീൻ</td><td>ശൈഖ് സൈനുദ്ദീൻ മഖ്ദൂം</td></tr>
+    <tr><th>കൃതി</th><th>രചയിതാവ് / പ്രത്യേകത</th></tr>
+    <tr><td>പതിറ്റുപ്പത്ത്</td><td>ചേര രാജാക്കന്മാരെക്കുറിച്ചുള്ള സംഘകാല കൃതി</td></tr>
+    <tr><td>മൂഷികവംശം</td><td>അതുലൻ (ഏഴിമല / കോലത്തുനാട് ചരിത്രം — സംസ്കൃതത്തിലെ ആദ്യ ചരിത്ര മഹാകാവ്യങ്ങളിലൊന്ന്)</td></tr>
+    <tr><td>തുഹ്ഫത്തുൽ മുജാഹിദീൻ</td><td>ശൈഖ് സൈനുദ്ദീൻ മഖ്ദൂം II (പോർച്ചുഗീസ് വിരുദ്ധ പോരാട്ടം — അറബി ഭാഷയിൽ)</td></tr>
     <tr><td>മലബാർ മാനുവൽ</td><td>വില്യം ലോഗൻ (1887)</td></tr>
-    <tr><td>നാച്ചുറൽ ഹിസ്റ്ററി</td><td>പ്ലിനി</td></tr>
+    <tr><td>നാച്ചുറൽ ഹിസ്റ്ററി</td><td>പ്ലിനി (മുസിരിസ് വ്യാപാരം)</td></tr>
     <tr><td>ഇൻഡിക്ക</td><td>മെഗസ്തനീസ്</td></tr>
-    <tr><td>റിഹ്‌ല</td><td>ഇബ്ൻ ബത്തൂത്ത (1342)</td></tr>
-    <tr><td>ചിലപ്പതികാരം</td><td>ഇളങ്കോ അടികൾ</td></tr>
+    <tr><td>റിഹ്‌ല</td><td>ഇബ്ൻ ബത്തൂത്ത (1342 - മൊറോക്കോ സഞ്ചാരി)</td></tr>
+    <tr><td>ചിലപ്പതികാരം / മണിമേഖല</td><td>ഇളങ്കോ അടികൾ / ചീത്തലൈ ചാത്തനാർ</td></tr>
     <tr><td>ഹിസ്റ്ററി ഓഫ് ട്രാവൻകൂർ</td><td>പി. ശങ്കുണ്ണി മേനോൻ</td></tr>
-    <tr><td>കേരളോൽപ്പത്തി</td><td>പരശുരാമ ഐതിഹ്യം</td></tr>
-    <tr><td>മണിമേഖല</td><td>ചീത്തലൈ ചാത്തനാർ</td></tr>
+    <tr><td>കേരളോൽപ്പത്തി</td><td>പരശുരാമ ഐതിഹ്യം (തുഞ്ചത്തെഴുത്തച്ഛൻ സമാഹരിച്ചതെന്ന് കരുതുന്നു)</td></tr>
     <tr><td>ഹിസ്റ്ററി ഓഫ് കേരള</td><td>കെ.പി. പത്മനാഭ മേനോൻ</td></tr>
     <tr><td>എ സർവേ ഓഫ് കേരള ഹിസ്റ്ററി</td><td>എ. ശ്രീധര മേനോൻ</td></tr>
     <tr><td>മലബാർ ആൻഡ് ദി പോർച്ചുഗീസ്</td><td>കെ.എം. പണിക്കർ</td></tr>
-    <tr><td>ട്രാവൻകൂർ സ്റ്റേറ്റ് മാനുവൽ</td><td>നാഗം അയ്യ (1906)</td></tr>
+    <tr><td>ട്രാവൻകൂർ സ്റ്റേറ്റ് മാനുവൽ</td><td>വി. നാഗം അയ്യ (1906) (ടി.കെ. വേലുപ്പിള്ള - 1940)</td></tr>
     <tr><td>കൊച്ചിൻ സ്റ്റേറ്റ് മാനുവൽ</td><td>സി. അച്യുത മേനോൻ (1911)</td></tr>
-    <tr><td>രാജതരംഗിണി</td><td>കൽഹണൻ</td></tr>
+    <tr><td>രാജതരംഗിണി</td><td>കൽഹണൻ (കാശ്മീർ ചരിത്രം)</td></tr>
   </table>
   </div>
 </div>
 </details>
 
 <!-- ================= 7 ================= -->
-<details class="card">
+<details class="card" data-tags="5star kerala">
 <summary><span class="num">7</span><span class="title">ഐക്യകേരള പ്രസ്ഥാനം</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="7"> പഠിച്ചു</label></summary>
 <div class="content">
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>ഐക്യകേരള പ്രമേയം?</b> ✅ പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928); അധ്യക്ഷൻ: നെഹ്‌റു</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>തൃശൂർ കൺവെൻഷൻ?</b> ✅ കേരളവർമ്മ വലിയ തമ്പുരാൻ</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>ഫസൽ അലി കമ്മീഷൻ?</b> ✅ ഫസൽ അലി, കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>തിരു-കൊച്ചി ആദ്യ മുഖ്യമന്ത്രി?</b> ✅ ടി.കെ. നാരായണ പിള്ള</div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>1956-ൽ വിട്ടുകൊടുത്ത താലൂക്കുകൾ?</b> ✅ തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട്, ചെങ്കോട്ട</div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>ആദ്യ ഐക്യകേരള പ്രമേയം?</b> ✅ പയ്യന്നൂർ കോൺഗ്രസ് സമ്മേളനം (1928 മെയ്); അധ്യക്ഷൻ: ജവഹർലാൽ നെഹ്‌റു</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>തൃശൂർ ഐക്യകേരള കൺവെൻഷൻ (1947 ഏപ്രിൽ)?</b> ✅ അധ്യക്ഷൻ: കെ. കേളപ്പൻ; ഉദ്ഘാടനം/സന്ദേശം: കേരളവർമ്മ വലിയ തമ്പുരാൻ (ഐക്യകേരള തമ്പുരാൻ)</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>ഫസൽ അലി കമ്മീഷൻ (1953)?</b> ✅ ഫസൽ അലി (ചെയർമാൻ), കെ.എം. പണിക്കർ, എച്ച്.എൻ. കുൻസ്രു</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>തിരു-കൊച്ചി ആദ്യ മുഖ്യമന്ത്രി?</b> ✅ പറവൂർ ടി.കെ. നാരായണ പിള്ള (1949 ജൂലൈ 1)</div>
+  <div class="trap"><span class="lbl">TRAP 5</span> <b>1956-ൽ തമിഴ്‌നാടിന് വിട്ടുകൊടുത്ത താലൂക്കുകൾ?</b> ✅ തോവാള, അഗസ്തീശ്വരം, കൽക്കുളം, വിളവൻകോട്, ചെങ്കോട്ട (പകുതി)</div>
 
   <div class="stats">
-    <div class="stat"><div class="big">1956<br>നവം 22</div><div class="small">ആദ്യ ഗവർണ്ണർ<br>ബി. രാമകൃഷ്ണറാവു</div></div>
-    <div class="stat"><div class="big">1956<br>നവം 1</div><div class="small">കേരള ഹൈക്കോടതി</div></div>
-    <div class="stat"><div class="big">1957<br>ഏപ്രിൽ 5</div><div class="small">ആദ്യ മുഖ്യമന്ത്രി<br>ഇ.എം.എസ്.</div></div>
-    <div class="stat"><div class="big">1959<br>ജൂലൈ 31</div><div class="small">മന്ത്രിസഭ പിരിച്ചുവിട്ടു</div></div>
+    <div class="stat"><div class="big">1956 നവം 1</div><div class="small">കേരള സംസ്ഥാനവും<br>ഹൈക്കോടതിയും</div></div>
+    <div class="stat"><div class="big">1956 നവം 22</div><div class="small">ആദ്യ ഗവർണ്ണർ<br>ബി. രാമകൃഷ്ണറാവു</div></div>
+    <div class="stat"><div class="big">1957 ഏപ്രിൽ 5</div><div class="small">ആദ്യ മുഖ്യമന്ത്രി<br>ഇ.എം.എസ്.</div></div>
+    <div class="stat"><div class="big">1959 ജൂലൈ 31</div><div class="small">ആർട്ടിക്കിൾ 356<br>മന്ത്രിസഭ പിരിച്ചുവിട്ടു</div></div>
   </div>
 </div>
 </details>
 
 <!-- ================= 8 ================= -->
-<details class="card">
+<details class="card" data-tags="5star kerala">
 <summary><span class="num">8</span><span class="title">1956-ന് ശേഷമുള്ള കേരള ചരിത്രം</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="8"> പഠിച്ചു</label></summary>
 <div class="content">
-  <div class="trick"><span class="lbl">TRICK 1</span> ഒന്നാം മന്ത്രിസഭ: <b>"മുറ്റത്തെ വിദ്യ ഗൗരിയുടെ റവന്യൂ ആണ്"</b></div>
-  <div class="trick"><span class="lbl">TRICK 2</span> സാക്ഷരത: <b>"89-ൽ കോട്ടയം, 90-ൽ എറണാകുളം, 91-ൽ കേരളം"</b></div>
-  <div class="trick"><span class="lbl">TRICK 3</span> <b>"അ-കൃ-ടി-ഗൗ-മു"</b></div>
-  <div class="trick"><span class="lbl">TRICK 4</span> ഭൂപരിഷ്കരണം: <b>"57 ബിൽ, 63 നിയമം, 69 ഭേദഗതി, 70 പ്രാബല്യം"</b></div>
-  <div class="trick"><span class="lbl">TRICK 5</span> വിമോചന സമരം: <b>"മന്നം നയിച്ചു, 356 വീഴ്ത്തി"</b></div>
+  <div class="trick"><span class="lbl">TRICK 1</span> ഒന്നാം മന്ത്രിസഭ: <b>"മുറ്റത്തെ വിദ്യ ഗൗരിയുടെ റവന്യൂ ആണ്"</b> (മുണ്ടശ്ശേരി = വിദ്യാഭ്യാസം, ഗൗരിയമ്മ = റവന്യൂ)</div>
+  <div class="trick"><span class="lbl">TRICK 2</span> സാക്ഷരത: <b>"89-ൽ കോട്ടയം (നഗരം), 90-ൽ എറണാകുളം (ജില്ല), 91-ൽ കേരളം (സംസ്ഥാനം - ഏപ്രിൽ 18)"</b></div>
+  <div class="trick"><span class="lbl">TRICK 3</span> ഭൂപരിഷ്കരണം: <b>"57 ബിൽ, 63 നിയമം, 69 ഭേദഗതി, 70 ജനുവരി 1 പ്രാബല്യം"</b> (സി. അച്യുതമേനോൻ സർക്കാർ)</div>
+  <div class="trick"><span class="lbl">TRICK 4</span> വിമോചന സമരം (1959 ജൂൺ 12): <b>"മന്നം നയിച്ചു, അങ്കമാലി വെടിവെപ്പ്, ഫ്ലോറി രക്തസാക്ഷി, 356 വീഴ്ത്തി"</b></div>
 
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>ബാലറ്റിലൂടെ വന്ന ആദ്യ കമ്മ്യൂണിസ്റ്റ് സർക്കാർ?</b> ✅ ഇ.എം.എസ്. — 1957 ഏപ്രിൽ 5</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>വിദ്യാഭ്യാസ ബിൽ?</b> ✅ മുണ്ടശ്ശേരി | <b>കാർഷിക ബന്ധ ബിൽ?</b> ✅ ഗൗരിയമ്മ</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>ആദ്യ സമ്പൂർണ്ണ സാക്ഷരതാ ജില്ല?</b> ✅ എറണാകുളം (1990); കോട്ടയം = ആദ്യ സാക്ഷരതാ നഗരം (1989)</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>കുടുംബശ്രീ ഉദ്ഘാടനം?</b> ✅ വാജ്പേയി (1998 മെയ് 17, മലപ്പുറം)</div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>ഭൂപരിഷ്കരണ നിയമം പ്രാബല്യത്തിൽ?</b> ✅ 1970 ജനുവരി 1</div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>ബാലറ്റിലൂടെ അധികാരത്തിൽ വന്ന ആദ്യ കമ്മ്യൂണിസ്റ്റ് സർക്കാർ?</b> ✅ ഇ.എം.എസ്. മന്ത്രിസഭ — 1957 ഏപ്രിൽ 5 (11 മന്ത്രിമാർ)</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>വിദ്യാഭ്യാസ ബിൽ?</b> ✅ ജോസഫ് മുണ്ടശ്ശേരി | <b>കാർഷിക ബന്ധ ബിൽ?</b> ✅ കെ.ആർ. ഗൗരിയമ്മ | <b>ധനകാര്യം?</b> ✅ സി. അച്യുതമേനോൻ | <b>ആരോഗ്യം?</b> ✅ ഡോ. എ.ആർ. മേനോൻ</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>ആദ്യ സമ്പൂർണ്ണ സാക്ഷരതാ ജില്ല?</b> ✅ എറണാകുളം (1990 ഫെബ്രുവരി 4); കോട്ടയം = ആദ്യ സാക്ഷരതാ പട്ടണം (1989)</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>കുടുംബശ്രീ ഉദ്ഘാടനം?</b> ✅ എ.ബി. വാജ്പേയി (1998 മെയ് 17, മലപ്പുറം; പ്രവർത്തനം ആരംഭിച്ചത് 1999 ഏപ്രിൽ 1)</div>
 </div>
 </details>
 
 <!-- ================= 9 ================= -->
-<details class="card">
-<summary><span class="num">9</span><span class="title">ബ്രിട്ടീഷ് ആധിപത്യം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="9"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="india">
+<summary><span class="num">9</span><span class="title">ബ്രിട്ടീഷ് ആധിപത്യവും ഗവർണർ ജനറൽമാരും</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="9"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1757</div><div class="ev">പ്ലാസ്സി</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1764</div><div class="ev">ബക്സർ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1765</div><div class="ev">അലഹബാദ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1757 ജൂൺ 23</div><div class="ev">പ്ലാസ്സി യുദ്ധം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1764 ഒക്ടോ 22</div><div class="ev">ബക്സർ യുദ്ധം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1765</div><div class="ev">അലഹബാദ് സന്ധി</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1792</div><div class="ev">ശ്രീരംഗപട്ടണം</div></div>
   </div>
   <div class="tbl-scroll">
   <table class="compact">
     <tr><th>വസ്തുത</th><th>വിവരം</th></tr>
-    <tr><td>കൽക്കട്ട സുപ്രീം കോടതി</td><td>1774</td></tr>
-    <tr><td>ബംഗാളിലെ കടുവ</td><td>വെല്ലസ്ലി</td></tr>
-    <tr><td>ആദ്യ തപാൽ ദ്രുവൻ</td><td>ഡൽഹൗസി</td></tr>
-    <tr><td>Doctrine of Lapse ആദ്യം</td><td>സത്താറ (1848)</td></tr>
-    <tr><td>സിവിൽ സർവീസ് പാസായ ആദ്യ ഇന്ത്യക്കാരൻ</td><td>സത്യേന്ദ്രനാഥ് ടാഗോർ</td></tr>
-    <tr><td>ഇന്ത്യൻ യൂണിവേഴ്സിറ്റീസ് ആക്ട്</td><td>കഴ്സൺ (1904)</td></tr>
-    <tr><td>കൊലചെയ്യപ്പെട്ട വൈസ്രോയി</td><td>മേയോ പ്രഭു</td></tr>
-    <tr><td>ഏഷ്യാറ്റിക് സൊസൈറ്റി</td><td>വില്യം ജോൺസ് (1784)</td></tr>
-    <tr><td>1857 ലക്നൗ / കാൺപൂർ</td><td>ബീഗം ഹസ്രത്ത് മഹൽ / നാനാ സാഹിബ്</td></tr>
-    <tr><td>ആധുനിക ഇന്ത്യയുടെ നിർമ്മാതാവ്</td><td>ഡൽഹൗസി</td></tr>
-    <tr><td>"ഞാൻ ഒരു റിപ്പബ്ലിക്കനാണ്"</td><td>മൗണ്ട് ബാറ്റൺ</td></tr>
-    <tr><td>തലസ്ഥാനം ഡൽഹിയിലേക്ക്</td><td>1911 (ഹാർഡിഞ്ച് II)</td></tr>
-    <tr><td>തിരുവിതാംകൂറിൽ ആദ്യ ബ്രിട്ടീഷ് റെസിഡന്റ്</td><td>കേണൽ മെക്കാളെ</td></tr>
-    <tr><td>ASI സ്ഥാപനം</td><td>കഴ്സൺ</td></tr>
-    <tr><td>ഗാന്ധിജി ആദ്യ പൊതുപ്രസംഗം</td><td>BHU ഉദ്ഘാടനം (1916)</td></tr>
-    <tr><td>റൗലറ്റ് ആക്ട് വൈസ്രോയി</td><td>ചെംസ്ഫോർഡ് (1919)</td></tr>
-    <tr><td>കേരളത്തിൽ ആദ്യ പണികൊട്ട</td><td>വിഴിഞ്ഞം (1644)</td></tr>
+    <tr><td>റഗുലേറ്റിങ് ആക്ട് (1773) / കൽക്കട്ട സുപ്രീം കോടതി</td><td>1774 (വാറൻ ഹേസ്റ്റിംഗ്സ്; ആദ്യ ചീഫ് ജസ്റ്റിസ്: എലിജ ഇംപെ)</td></tr>
+    <tr><td>ശാശ്വത ഭൂനികുതി (Permanent Settlement - 1793) / സിവിൽ സർവീസ് പിതാവ്</td><td>കോൺവാലിസ് പ്രഭു</td></tr>
+    <tr><td>സബ്സിഡിയറി അലയൻസ് (സൈനിക സഹായ വ്യവസ്ഥ - 1798) / 'ബംഗാളിലെ കടുവ'</td><td>വെല്ലസ്ലി പ്രഭു (ആദ്യം ഒപ്പിട്ടത്: ഹൈദരാബാദ് നിസാം)</td></tr>
+    <tr><td>സതി നിരോധനം (1829) / ഇന്ത്യയുടെ ആദ്യ ഗവർണർ ജനറൽ (1833)</td><td>വില്യം ബെന്റിക് പ്രഭു</td></tr>
+    <tr><td>ദത്തവകാശ നിരോധന നിയമം (Doctrine of Lapse) / റെയിൽവേ (1853) / തപാൽ</td><td>ഡൽഹൗസി പ്രഭു (ആദ്യം ചേർത്തത്: സത്താറ - 1848)</td></tr>
+    <tr><td>ഇന്ത്യയുടെ ആദ്യ വൈസ്രോയി (1858)</td><td>കാനിംഗ് പ്രഭു</td></tr>
+    <tr><td>ഇന്ത്യയിൽ വെച്ച് കൊല്ലപ്പെട്ട ഏക വൈസ്രോയി (1872, ആൻഡമാൻ) / ആദ്യ സെൻസസ് (1872)</td><td>മേയോ പ്രഭു</td></tr>
+    <tr><td>തദ്ദേശ സ്വയംഭരണത്തിന്റെ പിതാവ് / ആദ്യ ക്രമീകൃത സെൻസസ് (1881)</td><td>റിപ്പൺ പ്രഭു</td></tr>
+    <tr><td>ബംഗാൾ വിഭജനം (1905) / യൂണിവേഴ്സിറ്റീസ് ആക്ട് (1904) / ASI പുനഃസംഘടന</td><td>കഴ്സൺ പ്രഭു</td></tr>
+    <tr><td>തലസ്ഥാനം കൽക്കട്ടയിൽ നിന്ന് ഡൽഹിയിലേക്ക് മാറ്റിയ വൈസ്രോയി (1911)</td><td>ഹാർഡിഞ്ച് II</td></tr>
+    <tr><td>സിവിൽ സർവീസ് പാസായ ആദ്യ ഇന്ത്യക്കാരൻ</td><td>സത്യേന്ദ്രനാഥ് ടാഗോർ (1863)</td></tr>
+    <tr><td>ഏഷ്യാറ്റിക് സൊസൈറ്റി ഓഫ് ബംഗാൾ</td><td>വില്യം ജോൺസ് (1784)</td></tr>
   </table>
   </div>
 </div>
 </details>
 
 <!-- ================= 10 ================= -->
-<details class="card">
+<details class="card" data-tags="5star india">
 <summary><span class="num">10</span><span class="title">ഒന്നാം സ്വാതന്ത്ര്യസമരം (1857)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="10"> പഠിച്ചു</label></summary>
 <div class="content">
-  <div class="note"><span class="lbl">CAUSE</span> പശു/പന്നി കൊഴുപ്പ് പുരട്ടിയ <b>എൻഫീൽഡ് തോക്കുകൾ</b></div>
+  <div class="note"><span class="lbl">CAUSE</span> പശു/പന്നി കൊഴുപ്പ് പുരട്ടിയ <b>എൻഫീൽഡ് തോക്കുകൾ</b> | ഒന്നാം സ്വാതന്ത്ര്യ സമരം എന്ന് വിശേഷിപ്പിച്ചത്: <b>വി.ഡി. സവർക്കർ</b></div>
   <div class="htl">
     <div class="node"><div class="dot"></div><div class="yr">1848</div><div class="ev">സത്താറ</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1856</div><div class="ev">അവധ്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1857<br>മാർച്ച് 29</div><div class="ev">മംഗൾ പാണ്ഡെ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1857<br>മെയ് 10</div><div class="ev">മീററ്റ്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1858<br>ഓഗസ്റ്റ് 2</div><div class="ev">ആക്ട്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1857 മാർച്ച് 29</div><div class="ev">മംഗൾ പാണ്ഡെ<br>(ബാരക്പൂർ)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1857 മെയ് 10</div><div class="ev">മീററ്റ് തുടക്കം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1858 നവം 1</div><div class="ev">രാജ്ഞിയുടെ<br>വിളംബരം</div></div>
   </div>
   <div class="map-grid">
-    <div class="cell"><b>ഡൽഹി</b>ബഹദൂർ ഷാ സഫർ, ഭക്ത് ഖാൻ → നിക്കോൾസൺ</div>
-    <div class="cell"><b>കാണ്പൂർ</b>നാനാ സാഹിബ്, താന്തിയാ തോപ്പി → കോളിൻ കാംബെൽ</div>
+    <div class="cell"><b>ഡൽഹി</b>ബഹദൂർ ഷാ സഫർ II, ഭക്ത് ഖാൻ → നിക്കോൾസൺ, ഹഡ്സൺ</div>
+    <div class="cell"><b>കാൺപൂർ</b>നാനാ സാഹിബ്, താന്തിയാ തോപ്പി → കോളിൻ കാംബെൽ</div>
     <div class="cell"><b>ലഖ്‌നൗ</b>ബീഗം ഹസ്രത്ത് മഹൽ → കോളിൻ കാംബെൽ</div>
     <div class="cell"><b>ഝാൻസി</b>റാണി ലക്ഷ്മിഭായ് → ഹ്യൂ റോസ്</div>
-    <div class="cell"><b>ബിഹാർ</b>കൺവർ സിംഗ് → വില്യം ടെയ്‌ലർ</div>
-    <div class="cell"><b>അലഹബാദ്</b>മൗലവി ലിയാഖത്ത് അലി → കേണൽ നീൽ</div>
+    <div class="cell"><b>ബിഹാർ (ആര)</b>കൺവർ സിംഗ് → വില്യം ടെയ്‌ലർ</div>
+    <div class="cell"><b>ഫൈസാബാദ്</b>മൗലവി അഹമ്മദുള്ള → കേണൽ നീൽ</div>
   </div>
   <div class="cmp">
-    <div class="col" style="border-color:#c7d2fe;"><h4 style="background:#3b4cca;">താന്തിയാ തോപ്പി</h4><ul><li>രാമചന്ദ്ര പാണ്ഡുരംഗൻ</li></ul></div>
-    <div class="col" style="border-color:#c7d2fe;"><h4 style="background:#3b4cca;">നാനാ സാഹിബ്</h4><ul><li>ധോണ്ടു പന്ത്</li></ul></div>
-    <div class="col" style="border-color:#c7d2fe;"><h4 style="background:#3b4cca;">റാണി ലക്ഷ്മിഭായ്</h4><ul><li>മണികർണ്ണിക</li></ul></div>
+    <div class="col" style="border-color:#c7d2fe;"><h4 style="background:#3b4cca;">താന്തിയാ തോപ്പി</h4><ul><li>യഥാർത്ഥ പേര്: <b>രാമചന്ദ്ര പാണ്ഡുരംഗൻ</b></li></ul></div>
+    <div class="col" style="border-color:#c7d2fe;"><h4 style="background:#3b4cca;">നാനാ സാഹിബ്</h4><ul><li>യഥാർത്ഥ പേര്: <b>ധോണ്ടു പന്ത്</b></li></ul></div>
+    <div class="col" style="border-color:#c7d2fe;"><h4 style="background:#3b4cca;">റാണി ലക്ഷ്മിഭായ്</h4><ul><li>യഥാർത്ഥ പേര്: <b>മണികർണ്ണിക (മനു)</b></li></ul></div>
   </div>
 </div>
 </details>
 
 <!-- ================= 11 ================= -->
-<details class="card">
+<details class="card" data-tags="5star india">
 <summary><span class="num">11</span><span class="title">INC രൂപീകരണവും ദേശീയ സംഘടനകളും</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="11"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1885</div><div class="ev">INC<br>W.C. ബാനർജി</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1887</div><div class="ev">ത്യാബ്ജി</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1907</div><div class="ev">സൂറത്ത്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1916</div><div class="ev">ലഖ്‌നൗ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1929</div><div class="ev">ലാഹോർ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1885 ഡിസം 28</div><div class="ev">INC ബോംബെ<br>W.C. ബാനർജി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1887 മദ്രാസ്</div><div class="ev">ബദറുദ്ദീൻ<br>ത്യാബ്ജി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1907 സൂറത്ത്</div><div class="ev">പിളർപ്പ്<br>റാഷ് ബിഹാരി ഘോഷ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1916 ലഖ്‌നൗ</div><div class="ev">യോജിപ്പ്<br>എ.സി. മജുംദാർ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1929 ലാഹോർ</div><div class="ev">പൂർണ്ണ സ്വരാജ്<br>നെഹ്‌റു</div></div>
   </div>
 
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>വിഭാഗം</th><th>വ്യക്തി</th><th>വർഷം</th></tr>
-    <tr><td>ആദ്യ അധ്യക്ഷൻ</td><td>W.C. ബാനർജി</td><td>1885</td></tr>
-    <tr><td>ആദ്യ മുസ്ലിം</td><td>ത്യാബ്ജി</td><td>1887</td></tr>
-    <tr><td>ആദ്യ വിദേശി</td><td>ജോർജ് യൂൾ</td><td>1888</td></tr>
-    <tr><td>ആദ്യ വനിത</td><td>ആനി ബസന്റ്</td><td>1917</td></tr>
-    <tr><td>ആദ്യ ഇന്ത്യൻ വനിത</td><td>സരോജിനി നായിഡു</td><td>1925</td></tr>
-    <tr><td>ഏക മലയാളി അധ്യക്ഷൻ</td><td>സി. ശങ്കരൻ നായർ</td><td>1897</td></tr>
+    <tr><th>വിഭാഗം</th><th>വ്യക്തി</th><th>വർഷം & സ്ഥലം</th></tr>
+    <tr><td>സ്ഥാപകൻ / വൈസ്രോയി</td><td>എ.ഒ. ഹ്യൂം / ഡഫറിൻ പ്രഭു</td><td>1885 ഡിസംബർ 28 (ഗോകുൽദാസ് തേജ്പാൽ കോളേജ്)</td></tr>
+    <tr><td>ആദ്യ അധ്യക്ഷൻ</td><td>W.C. ബാനർജി (72 പ്രതിനിധികൾ)</td><td>1885 ബോംബെ</td></tr>
+    <tr><td>ആദ്യ പാർസി അധ്യക്ഷൻ</td><td>ദാദാഭായ് നവറോജി</td><td>1886 കൽക്കട്ട</td></tr>
+    <tr><td>ആദ്യ മുസ്ലിം അധ്യക്ഷൻ</td><td>ബദറുദ്ദീൻ ത്യാബ്ജി</td><td>1887 മദ്രാസ്</td></tr>
+    <tr><td>ആദ്യ വിദേശി അധ്യക്ഷൻ</td><td>ജോർജ് യൂൾ</td><td>1888 അലഹബാദ്</td></tr>
+    <tr><td>ഏക മലയാളി അധ്യക്ഷൻ</td><td>സർ സി. ശങ്കരൻ നായർ</td><td>1897 അമരാവതി</td></tr>
+    <tr><td>ആദ്യ വനിതാ അധ്യക്ഷ</td><td>ആനി ബസന്റ്</td><td>1917 കൽക്കട്ട</td></tr>
+    <tr><td>ഗാന്ധിജി അധ്യക്ഷനായ ഏക സമ്മേളനം</td><td>മഹാത്മാഗാന്ധി</td><td>1924 ബെൽഗാം</td></tr>
+    <tr><td>ആദ്യ ഇന്ത്യൻ വനിതാ അധ്യക്ഷ</td><td>സരോജിനി നായിഡു</td><td>1925 കാൺപൂർ</td></tr>
+    <tr><td>സ്വാതന്ത്ര്യ സമയത്തെ അധ്യക്ഷൻ</td><td>ജെ.ബി. കൃപലാനി</td><td>1947</td></tr>
   </table>
   </div>
 
@@ -749,374 +756,349 @@
   <div class="tbl-scroll">
   <table class="compact">
     <tr><th>സംഘടന</th><th>സ്ഥാപകൻ</th><th>വർഷം</th></tr>
-    <tr><td>ആത്മീയ സഭ</td><td>രാജാ റാം മോഹൻ റോയ്</td><td>1815</td></tr>
-    <tr><td>ബ്രഹ്മസമാജം</td><td>രാജാ റാം മോഹൻ റോയ്</td><td>1828</td></tr>
+    <tr><td>ആത്മീയ സഭ / ബ്രഹ്മസമാജം</td><td>രാജാ റാം മോഹൻ റോയ്</td><td>1815 / 1828</td></tr>
+    <tr><td>തത്വബോധിനി സഭ</td><td>ദേബേന്ദ്രനാഥ ടാഗോർ</td><td>1839</td></tr>
     <tr><td>പ്രാർത്ഥനാ സമാജം</td><td>ആത്മാറാം പാണ്ഡുരംഗ്</td><td>1867</td></tr>
-    <tr><td>സത്യശോധക് സമാജ്</td><td>ജ്യോതിറാവു ഫൂലെ</td><td>1873</td></tr>
-    <tr><td>ആര്യസമാജം</td><td>ദയാനന്ദ സരസ്വതി</td><td>1875</td></tr>
-    <tr><td>തിയോസഫിക്കൽ സൊസൈറ്റി</td><td>മാഡം ബ്ലവാട്സ്കി, കേണൽ ഓൾകോട്ട്</td><td>1875</td></tr>
-    <tr><td>രാമകൃഷ്ണ മിഷൻ</td><td>സ്വാമി വിവേകാനന്ദൻ</td><td>1897</td></tr>
+    <tr><td>സത്യശോധക് സമാജ്</td><td>ജ്യോതിറാവു ഫൂലെ (കൃതി: ഗുലാംഗിരി)</td><td>1873</td></tr>
+    <tr><td>ആര്യസമാജം</td><td>സ്വാമി ദയാനന്ദ സരസ്വതി (മൂൽ ശങ്കർ)</td><td>1875 (ബോംബെ)</td></tr>
+    <tr><td>തിയോസഫിക്കൽ സൊസൈറ്റി</td><td>മാഡം ബ്ലവാട്സ്കി, കേണൽ ഓൾകോട്ട്</td><td>1875 (ന്യൂയോർക്ക് / 1882 അടയാർ)</td></tr>
+    <tr><td>രാമകൃഷ്ണ മിഷൻ</td><td>സ്വാമി വിവേകാനന്ദൻ</td><td>1897 മെയ് 1 (ബേലൂർ മഠം)</td></tr>
     <tr><td>Servants of India Society</td><td>ഗോപാലകൃഷ്ണ ഗോഖലെ</td><td>1905</td></tr>
-    <tr><td>Home Rule League</td><td>ആനി ബസന്റ്, തിലകൻ</td><td>1916</td></tr>
-    <tr><td>ഗദർ പാർട്ടി</td><td>ലാലാ ഹർദയാൽ, സോഹൻ സിംഗ്</td><td>1913</td></tr>
-    <tr><td>സ്വരാജ് പാർട്ടി</td><td>സി.ആർ. ദാസ്, മോത്തിലാൽ നെഹ്‌റു</td><td>1923</td></tr>
-    <tr><td>ഫോർവേഡ് ബ്ലോക്ക്</td><td>സുഭാഷ് ചന്ദ്രബോസ്</td><td>1939</td></tr>
-    <tr><td>INA</td><td>രാഷ് ബിഹാരി ബോസ് (പുനഃസംഘടിപ്പിച്ചത്: നേതാജി)</td><td>1942</td></tr>
-    <tr><td>ഓൾ ഇന്ത്യ കിസാൻ സഭ</td><td>സഹജാനന്ദ സരസ്വതി</td><td>1936</td></tr>
-    <tr><td>ഡിപ്രസ്ഡ് ക്ലാസസ് മിഷൻ</td><td>വി.ആർ. ഷിൻഡെ</td><td>1906</td></tr>
+    <tr><td>ഗദർ പാർട്ടി (സാൻ ഫ്രാൻസിസ്കോ)</td><td>ലാലാ ഹർദയാൽ, സോഹൻ സിംഗ് ഭക്ന</td><td>1913</td></tr>
+    <tr><td>Home Rule League</td><td>ബാലഗംഗാധര തിലകൻ (പൂനെ), ആനി ബസന്റ് (അടയാർ)</td><td>1916</td></tr>
+    <tr><td>സ്വരാജ് പാർട്ടി</td><td>സി.ആർ. ദാസ്, മോത്തിലാൽ നെഹ്‌റു</td><td>1923 ജനുവരി 1</td></tr>
     <tr><td>ബഹിഷ്കൃത് ഹിതകാരിണി സഭ</td><td>ഡോ. ബി.ആർ. അംബേദ്കർ</td><td>1924</td></tr>
+    <tr><td>HSRA (ഹിന്ദുസ്ഥാൻ സോഷ്യലിസ്റ്റ് റിപ്പബ്ലിക്കൻ അസോ.)</td><td>ചന്ദ്രശേഖർ ആസാദ്, ഭഗത് സിംഗ്</td><td>1928 (ഫിറോസ് ഷാ കോട്‌ല)</td></tr>
+    <tr><td>ഓൾ ഇന്ത്യ കിസാൻ സഭ</td><td>സ്വാമി സഹജാനന്ദ സരസ്വതി</td><td>1936 (ലഖ്‌നൗ)</td></tr>
+    <tr><td>ഫോർവേഡ് ബ്ലോക്ക്</td><td>സുഭാഷ് ചന്ദ്രബോസ്</td><td>1939 മെയ് 3</td></tr>
+    <tr><td>INA (ഇന്ത്യൻ നാഷണൽ ആർമി)</td><td>ക്യാപ്റ്റൻ മോഹൻ സിംഗ് / റാഷ് ബിഹാരി ബോസ് / നേതാജി</td><td>1942 / 1943</td></tr>
   </table>
   </div>
 </div>
 </details>
 
 <!-- ================= 12 ================= -->
-<details class="card">
-<summary><span class="num">12</span><span class="title">സ്വദേശി പ്രസ്ഥാനം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="12"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="india">
+<summary><span class="num">12</span><span class="title">ബംഗാൾ വിഭജനവും സ്വദേശി പ്രസ്ഥാനവും (1905)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="12"> പഠിച്ചു</label></summary>
 <div class="content">
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>1905-ലെ INC പ്രസിഡന്റ്?</b> ✅ ഗോപാലകൃഷ്ണ ഗോഖലെ</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>മിന്റോ-മോർലി?</b> ✅ മിന്റോ = വൈസ്രോയി</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>സൂറത്ത് അധ്യക്ഷൻ?</b> ✅ റാഷ് ബിഹാരി ഘോഷ്</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>വിഭജനം റദ്ദാക്കിയത്?</b> ✅ ഹാർഡിഞ്ച് II (1911)</div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>'ഇന്ത്യയിലെ ഔറംഗസേബ്'?</b> ✅ ഗോഖലെ — കഴ്സണെ</div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>ബംഗാൾ വിഭജനം നിലവിൽ വന്ന തീയതി?</b> ✅ 1905 ഒക്ടോബർ 16 (പ്രഖ്യാപിച്ചത്: ജൂലൈ 19; വൈസ്രോയി: കഴ്സൺ)</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>1905-ലെ ബനാറസ് INC പ്രസിഡന്റ്?</b> ✅ ഗോപാലകൃഷ്ണ ഗോഖലെ ('സ്വരാജ്' എന്ന പദം ആദ്യമായി ഉപയോഗിച്ചത് 1906 കൽക്കട്ടയിൽ ദാദാഭായ് നവറോജി)</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>മിന്റോ-മോർലി പരിഷ്കാരം (1909)?</b> ✅ മിന്റോ = വൈസ്രോയി (സാമ്പത്തിക/സാമുദായിക നിയോജകമണ്ഡലത്തിന്റെ പിതാവ്), മോർലി = സ്റ്റേറ്റ് സെക്രട്ടറി</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>1907 സൂറത്ത് സമ്മേളന അധ്യക്ഷൻ?</b> ✅ റാഷ് ബിഹാരി ഘോഷ്</div>
+  <div class="trap"><span class="lbl">TRAP 5</span> <b>ബംഗാൾ വിഭജനം റദ്ദാക്കിയത്?</b> ✅ ഹാർഡിഞ്ച് II (1911 ഡിസംബർ 12 — ഡൽഹി ദർബാർ, ജോർജ് അഞ്ചാമൻ രാജാവ്)</div>
 </div>
 </details>
 
 <!-- ================= 13 ================= -->
-<details class="card">
+<details class="card" data-tags="india">
 <summary><span class="num">13</span><span class="title">സാമൂഹിക പരിഷ്കരണ പ്രസ്ഥാനങ്ങൾ (ഇന്ത്യ)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="13"> പഠിച്ചു</label></summary>
 <div class="content">
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>വിധവാ പുനർവിവാഹ നിയമം?</b> ✅ Drafted ഡൽഹൗസി; പാസാക്കിയത് കാനിംഗ് (1856)</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>ആര്യസമാജം?</b> ✅ 1875 ബോംബെ</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>റാം മോഹൻ റോയിക്ക് 'രാജാ'?</b> ✅ അക്ബർ രണ്ടാമൻ</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>പ്രാർത്ഥനാ സമാജം?</b> ✅ ആത്മാറാം പാണ്ഡുരംഗ് (1867)</div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>വിധവാ പുനർവിവാഹ നിയമം (1856)?</b> ✅ ഈശ്വരചന്ദ്ര വിദ്യാസാഗറിന്റെ ശ്രമഫലം; Drafted by ഡൽഹൗസി; പാസാക്കിയത് കാനിംഗ് (1856 ജൂലൈ 26)</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>'വേദങ്ങളിലേക്ക് മടങ്ങുക' (Go Back to Vedas)?</b> ✅ സ്വാമി ദയാനന്ദ സരസ്വതി (കൃതി: സത്യാർത്ഥ പ്രകാശം; ശുദ്ധി പ്രസ്ഥാനം)</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>റാം മോഹൻ റോയിക്ക് 'രാജാ' പദവി നൽകിയത്?</b> ✅ മുഗൾ ചക്രവർത്തി അക്ബർ രണ്ടാമൻ (പത്രങ്ങൾ: സംവാദ് കൗമുദി, മിറാത്തുൽ അക്ബർ)</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>അലിഗഢ് പ്രസ്ഥാനം?</b> ✅ സർ സയ്യിദ് അഹമ്മദ് ഖാൻ (1875 — മുഹമ്മദൻ ആംഗ്ലോ ഓറിയന്റൽ കോളേജ്)</div>
   <div class="trap"><span class="lbl">TRAP 5</span> <b>"ഇന്ത്യയുടെ മാർട്ടിൻ ലൂഥർ"?</b> ✅ ദയാനന്ദ സരസ്വതി</div>
   <ul>
-    <li>ഇന്ത്യയിലെ ആദ്യത്തെ ആധുനിക മനുഷ്യൻ: രാജാ റാം മോഹൻ റോയ്</li>
-    <li>യങ് ബംഗാൾ: ഡെറോസിയോ</li>
-    <li>Self-Respect Movement: പെരിയാർ</li>
-    <li>അഹമ്മദിയ: മിർസ ഗുലാം അഹമ്മദ്</li>
+    <li>യങ് ബംഗാൾ പ്രസ്ഥാനം: ഹെൻറി വിവിയൻ ഡെറോസിയോ</li>
+    <li>Self-Respect Movement (സ്വാഭിമാന പ്രസ്ഥാനം - 1925): ഇ.വി. രാമസ്വാമി നായ്ക്കർ (പെരിയാർ)</li>
+    <li>അഹമ്മദിയ പ്രസ്ഥാനം (1889): മിർസ ഗുലാം അഹമ്മദ് (ഖാദിയാൻ, പഞ്ചാബ്)</li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 14 ================= -->
-<details class="card">
-<summary><span class="num">14</span><span class="title">പത്രപ്രവർത്തനം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="14"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="india">
+<summary><span class="num">14</span><span class="title">പത്രപ്രവർത്തനം (ഇന്ത്യ & കേരളം)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="14"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="tbl-scroll">
   <table class="compact">
     <tr><th>വ്യക്തി</th><th>പത്രം</th></tr>
-    <tr><td>ഹിക്കി</td><td>ബംഗാൾ ഗസറ്റ് (1780)</td></tr>
-    <tr><td>തിലകൻ</td><td>മറാത്ത, കേസരി</td></tr>
-    <tr><td>ഗാന്ധിജി</td><td>ഇന്ത്യൻ ഒപ്പീനിയൻ, യങ് ഇന്ത്യ, ഹരിജൻ, നവജീവൻ</td></tr>
-    <tr><td>അംബേദ്കർ</td><td>മൂക്‌നായക്, ബഹിഷ്കൃത് ഭാരത്</td></tr>
+    <tr><td>ജെയിംസ് അഗസ്റ്റസ് ഹിക്കി</td><td>ബംഗാൾ ഗസറ്റ് (1780 — ഇന്ത്യയിലെ ആദ്യ പത്രം)</td></tr>
+    <tr><td>ഹെർമൻ ഗുണ്ടർട്ട്</td><td>രാജ്യസമാചാരം (1847 ജൂൺ), പശ്ചിമോദയം (1847 ഒക്ടോബർ) — ഇല്ലിക്കൽ, തലശ്ശേരി</td></tr>
+    <tr><td>കണ്ടത്തിൽ വറുഗീസ് മാപ്പിള</td><td>മലയാള മനോരമ (1888 സ്ഥാപനം / 1890 ആദ്യ ലക്കം)</td></tr>
+    <tr><td>സി.വി. കുഞ്ഞുരാമൻ / കെ. സുകുമാരൻ</td><td>കേരള കൗമുദി (1911 മയ്യനാട്)</td></tr>
+    <tr><td>ബാലഗംഗാധര തിലകൻ</td><td>മറാത്ത (ഇംഗ്ലീഷ്), കേസരി (മറാത്തി)</td></tr>
+    <tr><td>ഗാന്ധിജി</td><td>ഇന്ത്യൻ ഒപ്പീനിയൻ (ദക്ഷിണാഫ്രിക്ക - 1903), യങ് ഇന്ത്യ, ഹരിജൻ, നവജീവൻ</td></tr>
+    <tr><td>ഡോ. ബി.ആർ. അംബേദ്കർ</td><td>മൂക്‌നായക്, ബഹിഷ്കൃത് ഭാരത്, പ്രബുദ്ധ ഭാരത്</td></tr>
     <tr><td>ആനി ബസന്റ്</td><td>ന്യൂ ഇന്ത്യ, കോമൺവീൽ</td></tr>
-    <tr><td>നെഹ്‌റു</td><td>നാഷണൽ ഹെറാൾഡ്</td></tr>
-    <tr><td>ആസാദ്</td><td>അൽ ഹിലാൽ</td></tr>
-    <tr><td>നവറോജി</td><td>റാസ്റ്റ് ഗോഫ്താർ</td></tr>
-    <tr><td>അരബിന്ദോ</td><td>വന്ദേമാതരം</td></tr>
+    <tr><td>ജവഹർലാൽ നെഹ്‌റു / മോത്തിലാൽ നെഹ്‌റു</td><td>നാഷണൽ ഹെറാൾഡ് / ഇൻഡിപെൻഡന്റ്</td></tr>
+    <tr><td>മൗലാനാ അബുൽ കലാം ആസാദ്</td><td>അൽ ഹിലാൽ, അൽ ബലാഗ്</td></tr>
+    <tr><td>ദാദാഭായ് നവറോജി</td><td>റാസ്റ്റ് ഗോഫ്താർ, വോയ്സ് ഓഫ് ഇന്ത്യ</td></tr>
+    <tr><td>അരബിന്ദോ ഘോഷ് / ബിപിൻ ചന്ദ്ര പാൽ</td><td>വന്ദേമാതരം</td></tr>
   </table>
   </div>
-  <div class="note"><span class="lbl">ADD</span> പത്രമാരണ നിയമം (1878): ലിറ്റൺ | റദ്ദാക്കിയത്: റിപ്പൺ (1882)</div>
+  <div class="note"><span class="lbl">KEY</span> <b>പത്രമാരണ നിയമം (Vernacular Press Act - 1878):</b> ലിറ്റൺ പ്രഭു | <b>റദ്ദാക്കിയത്:</b> റിപ്പൺ പ്രഭു (1882) | <b>ഇന്ത്യൻ പത്രങ്ങളുടെ വിമോചകൻ:</b> ചാൾസ് മെറ്റ്കാഫ് (1835)</div>
 </div>
 </details>
 
 <!-- ================= 15 ================= -->
-<details class="card">
-<summary><span class="num">15</span><span class="title">സാഹിത്യവും കലയും</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="15"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="india">
+<summary><span class="num">15</span><span class="title">സാഹിത്യവും കലയും (ദേശീയ പ്രസ്ഥാനം)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="15"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>കൃതി</th><th>രചയിതാവ്</th></tr>
-    <tr><td>ആനന്ദമഠം</td><td>ബങ്കിം ചന്ദ്ര ചാറ്റർജി (1882)</td></tr>
-    <tr><td>നീൽ ദർപ്പൺ</td><td>ദീനബന്ധു മിത്ര (1860)</td></tr>
-    <tr><td>ഭാരത് മാതാ ചിത്രം</td><td>അബനീന്ദനാഥ് ടാഗോർ (1905)</td></tr>
-    <tr><td>ഭരണഘടനയിലെ ചിത്രങ്ങൾ</td><td>നന്ദലാൽ ബോസ്</td></tr>
-    <tr><td>ഡിസ്കവറി ഓഫ് ഇന്ത്യ</td><td>നെഹ്‌റു</td></tr>
-    <tr><td>ഇന്ത്യ വിൻസ് ഫ്രീഡം</td><td>ആസാദ്</td></tr>
+    <tr><th>കൃതി / കല</th><th>രചയിതാവ് / കലാകാരൻ</th></tr>
+    <tr><td>ആനന്ദമഠം (വന്ദേമാതരം ഉൾപ്പെട്ട നോവൽ - സന്യാസി കലാപം)</td><td>ബങ്കിം ചന്ദ്ര ചാറ്റർജി (1882)</td></tr>
+    <tr><td>നീൽ ദർപ്പൺ (അമരി കർഷക കലാപം)</td><td>ദീനബന്ധു മിത്ര (1860)</td></tr>
+    <tr><td>ഭാരത് മാതാ ചിത്രം</td><td>അബനീന്ദ്രനാഥ് ടാഗോർ (1905)</td></tr>
+    <tr><td>ഇന്ത്യൻ ഭരണഘടനയിലെ ചിത്രങ്ങൾ വരച്ചത്</td><td>നന്ദലാൽ ബോസ്</td></tr>
+    <tr><td>ഡിസ്കവറി ഓഫ് ഇന്ത്യ, ഗ്ലിംപ്സസ് ഓഫ് വേൾഡ് ഹിസ്റ്ററി</td><td>ജവഹർലാൽ നെഹ്‌റു</td></tr>
+    <tr><td>ഇന്ത്യ വിൻസ് ഫ്രീഡം</td><td>മൗലാനാ അബുൽ കലാം ആസാദ്</td></tr>
     <tr><td>ദ ഇന്ത്യൻ സ്ട്രഗിൾ</td><td>സുഭാഷ് ചന്ദ്രബോസ്</td></tr>
     <tr><td>അൺഹാപ്പി ഇന്ത്യ</td><td>ലാലാ ലജ്പത് റായ്</td></tr>
-    <tr><td>സോസ്-ഇ-വതൻ</td><td>പ്രേംചന്ദ്</td></tr>
+    <tr><td>പോവർട്ടി ആൻഡ് അൺ-ബ്രിട്ടീഷ് റൂൾ ഇൻ ഇന്ത്യ (ചോർച്ചാ സിദ്ധാന്തം)</td><td>ദാദാഭായ് നവറോജി</td></tr>
+    <tr><td>ഗീതാരഹസ്യം, ആർട്ടിക് ഹോം ഇൻ ദ വേദാസ്</td><td>ബാലഗംഗാധര തിലകൻ</td></tr>
   </table>
   </div>
 </div>
 </details>
 
 <!-- ================= 16 ================= -->
-<details class="card">
+<details class="card" data-tags="5star india">
 <summary><span class="num">16</span><span class="title">ഗാന്ധിയും സ്വാതന്ത്ര്യസമരവും</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="16"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1915</div><div class="ev">തിരിച്ചുവരവ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1915 ജനു 9</div><div class="ev">തിരിച്ചുവരവ്<br>(പ്രവാസി ദിനം)</div></div>
     <div class="node"><div class="dot"></div><div class="yr">1917</div><div class="ev">ചമ്പാരൻ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1919</div><div class="ev">ജാലിയൻവാലാബാഗ്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1920</div><div class="ev">നിസ്സഹകരണം</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1930</div><div class="ev">ദണ്ഡിയാത്ര</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1942</div><div class="ev">ക്വിറ്റ് ഇന്ത്യ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1948</div><div class="ev">രക്തസാക്ഷിത്വം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1919 ഏപ്രിൽ 13</div><div class="ev">ജാലിയൻവാലാബാഗ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1920 ഓഗ 1</div><div class="ev">നിസ്സഹകരണം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1930 മാർച്ച് 12</div><div class="ev">ദണ്ഡിയാത്ര</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1942 ഓഗ 8</div><div class="ev">ക്വിറ്റ് ഇന്ത്യ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1948 ജനു 30</div><div class="ev">രക്തസാക്ഷിത്വം</div></div>
   </div>
   <div class="tbl-scroll">
   <table class="compact">
     <tr><th>വിഷയം</th><th>വിവരം</th></tr>
-    <tr><td>രാഷ്ട്രീയ ഗുരു</td><td>ഗോഖലെ</td></tr>
-    <tr><td>ആദ്യ സത്യഗ്രഹം</td><td>ചമ്പാരൻ (1917)</td></tr>
-    <tr><td>ആദ്യ നിരാഹാരം</td><td>അഹമ്മദാബാദ് (1918)</td></tr>
-    <tr><td>ആദ്യ നിസ്സഹകരണം</td><td>ഖേദ (1918)</td></tr>
-    <tr><td>നിസ്സഹകരണം നിർത്തിയത്</td><td>ചൗരി ചൗര (1922)</td></tr>
-    <tr><td>ഏക കോൺഗ്രസ് അധ്യക്ഷത</td><td>1924 ബെൽഗാം</td></tr>
-    <tr><td>ഉപ്പുനിയമം ലംഘിച്ചത്</td><td>1930 ഏപ്രിൽ 6 (ദണ്ഡി)</td></tr>
-    <tr><td>പങ്കെടുത്ത വട്ടമേശ</td><td>രണ്ടാമത്തേത് (1931)</td></tr>
-    <tr><td>പൂന പാക്ട്</td><td>1932</td></tr>
-    <tr><td>രാഷ്ട്രപിതാവ് / മഹാത്മാ / ഫക്കീർ</td><td>ബോസ് / ടാഗോർ / ചർച്ചിൽ</td></tr>
+    <tr><td>രാഷ്ട്രീയ ഗുരു</td><td>ഗോപാലകൃഷ്ണ ഗോഖലെ</td></tr>
+    <tr><td>ഇന്ത്യയിലെ ആദ്യ സത്യഗ്രഹം</td><td>ചമ്പാരൻ, ബിഹാർ (1917 — നീലം കർഷകർക്കായി, രാജ്കുമാർ ശുക്ല ക്ഷണിച്ചു)</td></tr>
+    <tr><td>ആദ്യ നിരാഹാര സമരം</td><td>അഹമ്മദാബാദ് തുണിമിൽ സമരം (1918)</td></tr>
+    <tr><td>ആദ്യ നിസ്സഹകരണ സമരം</td><td>ഖേദ സത്യഗ്രഹം, ഗുജറാത്ത് (1918)</td></tr>
+    <tr><td>നിസ്സഹകരണ പ്രസ്ഥാനം നിർത്തിവെക്കാൻ കാരണം</td><td>ചൗരി ചൗര സംഭവം (1922 ഫെബ്രുവരി 5, ഗോരഖ്പൂർ UP)</td></tr>
+    <tr><td>ഏക കോൺഗ്രസ് അധ്യക്ഷത</td><td>1924 ബെൽഗാം (കർണാടക)</td></tr>
+    <tr><td>ഉപ്പുനിയമം ലംഘിച്ചത്</td><td>1930 ഏപ്രിൽ 6 (ദണ്ഡി കടപ്പുറം; ആരംഭിച്ചത്: മാർച്ച് 12 സബർമതി ആശ്രമം)</td></tr>
+    <tr><td>ഗാന്ധിജി പങ്കെടുത്ത ഏക വട്ടമേശ സമ്മേളനം</td><td>രണ്ടാമത്തേത് (1931 — രജപുത്താന കപ്പലിൽ പോയി)</td></tr>
+    <tr><td>പൂന പാക്ട് (ഗാന്ധിജിയും അംബേദ്കറും)</td><td>1932 സെപ്റ്റംബർ 24 (യെർവാദ ജയിൽ)</td></tr>
+    <tr><td>ക്വിറ്റ് ഇന്ത്യ മുദ്രാവാക്യം ('പ്രവർത്തിക്കുക അല്ലെങ്കിൽ മരിക്കുക')</td><td>യൂസഫ് മെഹ്റലി തയ്യാറാക്കി, ഗാന്ധിജി അവതരിപ്പിച്ചു (1942)</td></tr>
+    <tr><td>രാഷ്ട്രപിതാവ് / മഹാത്മാ / അർദ്ധനഗ്നനായ ഫക്കീർ</td><td>സുഭാഷ് ചന്ദ്രബോസ് / രവീന്ദ്രനാഥ ടാഗോർ / വിൻസ്റ്റൺ ചർച്ചിൽ</td></tr>
   </table>
   </div>
-  <div class="trick"><span class="lbl">TRICK</span> ദണ്ഡിയാത്ര: <b>12 – 78 – 385 – 6 – 24</b></div>
+  <div class="trick"><span class="lbl">TRICK</span> ദണ്ഡിയാത്ര: <b>12 – 78 – 385 – 6 – 24</b> (മാർച്ച് 12 തുടക്കം, 78 അനുയായികൾ, 385 കി.മീ, ഏപ്രിൽ 6 അവസാനം, 24 ദിവസം)</div>
 </div>
 </details>
 
 <!-- ================= 17 ================= -->
-<details class="card">
+<details class="card" data-tags="india">
 <summary><span class="num">17</span><span class="title">സ്വാതന്ത്ര്യാനന്തര ഇന്ത്യ</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="17"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="stats">
-    <div class="stat"><div class="big">1947</div><div class="small">മൗണ്ട് ബാറ്റൺ പ്ലാൻ<br>ഇന്ത്യൻ ഇൻഡിപെൻഡൻസ് ആക്ട്</div></div>
-    <div class="stat"><div class="big">1954</div><div class="small">ഫ്രഞ്ച് കോളനികൾ</div></div>
-    <div class="stat"><div class="big">1961</div><div class="small">ഗോവ (ഓപ്പറേഷൻ വിജയ്)</div></div>
-    <div class="stat"><div class="big">1951-52</div><div class="small">ആദ്യ പൊതുതെരഞ്ഞെടുപ്പ്</div></div>
+    <div class="stat"><div class="big">1947 ജൂൺ 3</div><div class="small">മൗണ്ട് ബാറ്റൺ പ്ലാൻ</div></div>
+    <div class="stat"><div class="big">1948 സെപ്റ്റം</div><div class="small">ഹൈദരാബാദ്<br>(ഓപ്പറേഷൻ പോളോ)</div></div>
+    <div class="stat"><div class="big">1954 നവം 1</div><div class="small">ഫ്രഞ്ച് കോളനികൾ<br>(പോണ്ടിച്ചേരി, മാഹി)</div></div>
+    <div class="stat"><div class="big">1961 ഡിസം 19</div><div class="small">ഗോവ വിമോചനം<br>(ഓപ്പറേഷൻ വിജയ്)</div></div>
   </div>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>വകുപ്പ്</th><th>മന്ത്രി</th></tr>
-    <tr><td>വിദ്യാഭ്യാസം</td><td>ആസാദ്</td></tr>
-    <tr><td>നിയമം</td><td>അംബേദ്കർ</td></tr>
-    <tr><td>ധനകാര്യം</td><td>ഷൺമുഖം ചെട്ടി</td></tr>
-    <tr><td>ആരോഗ്യം</td><td>രാജ്കുമാരി അമൃത് കൗർ</td></tr>
-    <tr><td>റെയിൽവേ (മലയാളി)</td><td>ഡോ. ജോൺ മത്തായി</td></tr>
+    <tr><th>വകുപ്പ് (ഒന്നാം നെഹ്‌റു മന്ത്രിസഭ - 1947)</th><th>മന്ത്രി</th></tr>
+    <tr><td>പ്രധാനമന്ത്രി, വിദേശകാര്യം</td><td>ജവഹർലാൽ നെഹ്‌റു</td></tr>
+    <tr><td>ഉപപ്രധാനമന്ത്രി, ആഭ്യന്തരം, നാട്ടുരാജ്യ സംയോജനം</td><td>സർദാർ വല്ലഭായ് പട്ടേൽ (സഹായി: വി.പി. മേനോൻ)</td></tr>
+    <tr><td>വിദ്യാഭ്യാസം</td><td>മൗലാനാ അബുൽ കലാം ആസാദ്</td></tr>
+    <tr><td>നിയമം</td><td>ഡോ. ബി.ആർ. അംബേദ്കർ</td></tr>
+    <tr><td>ധനകാര്യം</td><td>ആർ.കെ. ഷൺമുഖം ചെട്ടി</td></tr>
+    <tr><td>ആരോഗ്യം (ആദ്യ വനിതാ ക്യാബിനറ്റ് മന്ത്രി)</td><td>രാജ്കുമാരി അമൃത് കൗർ</td></tr>
+    <tr><td>റെയിൽവേ & ഗതാഗതം (ആദ്യ മലയാളി കേന്ദ്രമന്ത്രി)</td><td>ഡോ. ജോൺ മത്തായി</td></tr>
   </table>
   </div>
 </div>
 </details>
 
 <!-- ================= 18 ================= -->
-<details class="card">
+<details class="card" data-tags="india">
 <summary><span class="num">18</span><span class="title">സംസ്ഥാന പുനഃസംഘടന</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="18"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1953</div><div class="ev">ആന്ധ്ര</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1956</div><div class="ev">14 സംസ്ഥാനം, 6 UT</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1960</div><div class="ev">ഗുജറാത്ത്, മഹാരാഷ്ട്ര</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1975</div><div class="ev">സിക്കിം</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1987</div><div class="ev">ഗോവ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">2014</div><div class="ev">തെലങ്കാന</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1948</div><div class="ev">എസ്.കെ. ധർ<br>& JVP കമ്മിറ്റി</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1953 ഒക്ടോ 1</div><div class="ev">ആന്ധ്ര<br>(പോറ്റി ശ്രീരാമുലു)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1956 നവം 1</div><div class="ev">14 സംസ്ഥാനം<br>6 UT</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1960 മെയ് 1</div><div class="ev">ഗുജറാത്ത്,<br>മഹാരാഷ്ട്ര</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1975</div><div class="ev">സിക്കിം<br>(36-ാം ഭേദഗതി)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">2014 ജൂൺ 2</div><div class="ev">തെലങ്കാന</div></div>
   </div>
   <div class="stats">
     <div class="stat"><div class="big">28</div><div class="small">സംസ്ഥാനങ്ങൾ</div></div>
-    <div class="stat"><div class="big">8</div><div class="small">UT</div></div>
-    <div class="stat"><div class="big">1956</div><div class="small">7-ാം ഭേദഗതി</div></div>
+    <div class="stat"><div class="big">8</div><div class="small">കേന്ദ്രഭരണ പ്രദേശങ്ങൾ</div></div>
+    <div class="stat"><div class="big">7-ാം ഭേദഗതി</div><div class="small">1956 സംസ്ഥാന പുനഃസംഘടന</div></div>
   </div>
 </div>
 </details>
 
 <!-- ================= 19 ================= -->
-<details class="card">
+<details class="card" data-tags="india">
 <summary><span class="num">19</span><span class="title">ശാസ്ത്രം, വിദ്യാഭ്യാസം, സാങ്കേതികവിദ്യ</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="19"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>കമ്മീഷൻ</th><th>വർഷം</th><th>വിഷയം</th></tr>
-    <tr><td>മക്കാളെ</td><td>1835</td><td>ഇംഗ്ലീഷ് വിദ്യാഭ്യാസം</td></tr>
-    <tr><td>വുഡ്സ് ഡെസ്പാച്ച്</td><td>1854</td><td>മാഗ്നാകാർട്ട</td></tr>
-    <tr><td>ഹണ്ടർ</td><td>1882</td><td>പ്രാഥമികം</td></tr>
-    <tr><td>രാധാകൃഷ്ണൻ</td><td>1948</td><td>സർവ്വകലാശാല</td></tr>
-    <tr><td>മുദ്രലിയാർ</td><td>1952</td><td>സെക്കൻഡറി</td></tr>
-    <tr><td>കോത്താരി</td><td>1964</td><td>10+2+3</td></tr>
-    <tr><td>കസ്തൂരിരംഗൻ</td><td>2020</td><td>5+3+3+4</td></tr>
+    <tr><th>കമ്മീഷൻ</th><th>വർഷം</th><th>വിഷയം / സവിശേഷത</th></tr>
+    <tr><td>മക്കാളെ മിനിറ്റ്സ്</td><td>1835</td><td>ഇന്ത്യയിൽ ഇംഗ്ലീഷ് വിദ്യാഭ്യാസത്തിന് തുടക്കം (വില്യം ബെന്റിക്)</td></tr>
+    <tr><td>വുഡ്സ് ഡെസ്പാച്ച്</td><td>1854</td><td>ഇന്ത്യൻ വിദ്യാഭ്യാസത്തിന്റെ മാഗ്നാകാർട്ട (ഡൽഹൗസി)</td></tr>
+    <tr><td>ഹണ്ടർ കമ്മീഷൻ</td><td>1882</td><td>പ്രാഥമിക–സെക്കൻഡറി വിദ്യാഭ്യാസം (റിപ്പൺ)</td></tr>
+    <tr><td>രാധാകൃഷ്ണൻ കമ്മീഷൻ</td><td>1948</td><td>സ്വതന്ത്ര ഇന്ത്യയിലെ ആദ്യ വിദ്യാഭ്യാസ കമ്മീഷൻ (UGC രൂപീകരണം - 1953/1956)</td></tr>
+    <tr><td>മുതലിയാർ കമ്മീഷൻ</td><td>1952</td><td>സെക്കൻഡറി വിദ്യാഭ്യാസ കമ്മീഷൻ</td></tr>
+    <tr><td>കോത്താരി കമ്മീഷൻ</td><td>1964–66</td><td>10+2+3 ഘടന ശുപാർശ ചെയ്തു</td></tr>
+    <tr><td>കസ്തൂരിരംഗൻ കമ്മിറ്റി (NEP 2020)</td><td>2020</td><td>5+3+3+4 ഘടന</td></tr>
   </table>
   </div>
 </div>
 </details>
 
 <!-- ================= 20 ================= -->
-<details class="card">
+<details class="card" data-tags="india">
 <summary><span class="num">20</span><span class="title">ഇന്ത്യയുടെ വിദേശനയം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="20"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1954</div><div class="ev">പഞ്ചശീല</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1961</div><div class="ev">NAM</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1966</div><div class="ev">താഷ്കെന്റ്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1972</div><div class="ev">ഷിംല</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1999</div><div class="ev">ലാഹോർ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1954 ഏപ്രിൽ 29</div><div class="ev">പഞ്ചശീല തത്വങ്ങൾ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1955</div><div class="ev">ബന്ദൂങ് സമ്മേളനം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1961</div><div class="ev">NAM (ബെൽഗ്രേഡ്)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1966 ജനു 10</div><div class="ev">താഷ്കെന്റ് കരാർ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1972 ജൂലൈ 2</div><div class="ev">ഷിംല കരാർ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1999 ഫെബ്രു</div><div class="ev">ലാഹോർ പ്രഖ്യാപനം</div></div>
   </div>
   <ul>
-    <li>ശില്പി: ജവഹർലാൽ നെഹ്‌റു | NAM സ്ഥാപകർ: നെഹ്‌റു, ടിറ്റോ, നാസർ, സുകർണോ, എൻക്രുമ</li>
-    <li>ഗുജ്റാൾ ഡോക്ട്രിൻ: 1996 | ലൂക്ക് ഈസ്റ്റ്: 1992 | ആക്ട് ഈസ്റ്റ്: 2014</li>
-    <li>ആണവ നയം: No First Use | SAARC: 1985 | സാഗർ: 2015</li>
+    <li>ഇന്ത്യൻ വിദേശനയത്തിന്റെ ശില്പി: <b>ജവഹർലാൽ നെഹ്‌റു</b> | പഞ്ചശീല തത്വങ്ങൾ (1954): നെഹ്‌റുവും ചൗ എൻ ലായിയും</li>
+    <li>NAM സ്ഥാപകർ: നെഹ്‌റു (ഇന്ത്യ), ടിറ്റോ (യൂഗോസ്ലാവിയ), നാസർ (ഈജിപ്ത്), സുകർണോ (ഇന്തോനേഷ്യ), എൻക്രുമ (ഘാന)</li>
+    <li>താഷ്കെന്റ് കരാർ (1966): ലാൽ ബഹദൂർ ശാസ്ത്രി & അയൂബ് ഖാൻ | ഷിംല കരാർ (1972): ഇന്ദിരാഗാന്ധി & സുൽഫിക്കർ അലി ഭൂട്ടോ</li>
+    <li>ഗുജ്റാൾ ഡോക്ട്രിൻ: 1996 | Look East Policy: നരസിംഹ റാവു (1991–92) | Act East Policy: നരേന്ദ്ര മോദി (2014)</li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 21 ================= -->
-<details class="card">
+<details class="card" data-tags="world">
 <summary><span class="num">21</span><span class="title">ഇംഗ്ലണ്ടിലെ മഹത്തായ വിപ്ലവം (1688)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="21"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1215</div><div class="ev">മാഗ്ന കാർട്ട</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1628</div><div class="ev">പെറ്റീഷൻ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1679</div><div class="ev">ഹേബിയസ്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1688</div><div class="ev">മഹത്തായ വിപ്ലവം</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1689</div><div class="ev">ബിൽ ഓഫ് റൈറ്റ്സ്</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1701</div><div class="ev">സെറ്റിൽമെന്റ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1215</div><div class="ev">മാഗ്ന കാർട്ട<br>(ജോൺ രാജാവ്)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1628</div><div class="ev">പെറ്റീഷൻ<br>ഓഫ് റൈറ്റ്സ്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1679</div><div class="ev">ഹേബിയസ്<br>കോർപ്പസ് ആക്ട്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1688</div><div class="ev">രക്തരഹിത<br>വിപ്ലവം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1689</div><div class="ev">ബിൽ ഓഫ്<br>റൈറ്റ്സ്</div></div>
   </div>
   <ul>
-    <li>രക്തരഹിത വിപ്ലവം: 1688 | Glorious Revolution</li>
-    <li>ജെയിംസ് രണ്ടാമനെ പുറത്താക്കി | വില്യം III, മേരി II</li>
-    <li>ഫലം: Constitutional Monarchy | ന്യായീകരിച്ചത്: ജോൺ ലോക്ക്</li>
+    <li>രക്തരഹിത വിപ്ലവം (Bloodless Revolution / Glorious Revolution): <b>1688</b></li>
+    <li>സ്റ്റുവർട്ട് വംശത്തിലെ <b>ജെയിംസ് രണ്ടാമനെ</b> പുറത്താക്കി; വില്യം III, മേരി II അധികാരത്തിൽ വന്നു</li>
+    <li>ഫലം: രാജാവിന്റെ പരമാധികാരം അവസാനിച്ച് പാർലമെന്റിന് പരമാധികാരം ലഭിച്ചു (Constitutional Monarchy)</li>
+    <li>വിപ്ലവത്തെ ന്യായീകരിച്ച ചിന്തകൻ: <b>ജോൺ ലോക്ക്</b> (കൃതി: Two Treatises of Government)</li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 22 ================= -->
-<details class="card">
-<summary><span class="num">22</span><span class="title">അമേരിക്കൻ സ്വാതന്ത്ര്യസമരം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="22"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="world">
+<summary><span class="num">22</span><span class="title">അമേരിക്കൻ സ്വാതന്ത്ര്യസമരം (1775–1783)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="22"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="flow">
     <span class="box">Stamp Act 1765</span><span class="arrow">→</span>
-    <span class="box">Boston Tea Party 1773</span><span class="arrow">→</span>
-    <span class="box">Continental Congress 1774</span><span class="arrow">→</span>
-    <span class="box">Declaration 1776</span><span class="arrow">→</span>
+    <span class="box">Boston Tea Party 1773 ഡിസം 16</span><span class="arrow">→</span>
+    <span class="box">1st Congress 1774</span><span class="arrow">→</span>
+    <span class="box">Declaration 1776 ജൂലൈ 4</span><span class="arrow">→</span>
     <span class="box" style="background:#d9f2e3;border-color:#0f9d58;color:#0f9d58;">Paris Treaty 1783</span>
   </div>
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>സ്വാതന്ത്ര്യ പ്രഖ്യാപന രേഖ?</b> ✅ ജെഫേഴ്സൺ</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>ബോസ്റ്റൺ ടി പാർട്ടി?</b> ✅ സാമുവൽ ആഡംസ്</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>ഭരണഘടന?</b> ✅ മാഡിസൺ</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>പാരിസ് ഉടമ്പടി (1783)?</b> ✅ അമേരിക്കൻ സ്വാതന്ത്ര്യ സമരം</div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>ആദ്യ ഭരണരേഖ?</b> ✅ ആർട്ടിക്കിൾസ് ഓഫ് കോൺഫെഡറേഷൻ (1781)</div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>സ്വാതന്ത്ര്യ പ്രഖ്യാപന രേഖ (1776 ജൂലൈ 4) തയ്യാറാക്കിയത്?</b> ✅ തോമസ് ജെഫേഴ്സൺ</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>"പ്രാതിനിധ്യമില്ലാതെ നികുതിയില്ല" (No Taxation without Representation)?</b> ✅ ജെയിംസ് ഓട്ടിസ്</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>അമേരിക്കൻ ഭരണഘടനയുടെ പിതാവ് (1789)?</b> ✅ ജെയിംസ് മാഡിസൺ (ലോകത്തിലെ ആദ്യ എഴുതപ്പെട്ട ഭരണഘടന)</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>'കോമൺ സെൻസ്' ലഘുലേഖ?</b> ✅ തോമസ് പെയിൻ</div>
+  <div class="trap"><span class="lbl">TRAP 5</span> <b>പാരിസ് ഉടമ്പടി (1783)?</b> ✅ 13 കോളനികളുടെ സ്വാതന്ത്ര്യം ബ്രിട്ടൻ അംഗീകരിച്ചു (ഇംഗ്ലണ്ട് രാജാവ്: ജോർജ് മൂന്നാമൻ)</div>
 </div>
 </details>
 
 <!-- ================= 23 ================= -->
-<details class="card">
+<details class="card" data-tags="world">
 <summary><span class="num">23</span><span class="title">ഫ്രഞ്ച് വിപ്ലവം (1789)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="23"> പഠിച്ചു</label></summary>
 <div class="content">
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>"ഞാനാണ് രാഷ്ട്രം"?</b> ✅ ലൂയി പതിനാലാമൻ</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>ബാസ്റ്റിൽ കോട്ട?</b> ✅ 1789 ജൂലൈ 14</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>'സോഷ്യൽ കോൺട്രാക്ട്'?</b> ✅ റൂസ്സോ</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>ഇന്ത്യ കടമെടുത്തത്?</b> ✅ റിപ്പബ്ലിക് + Liberty, Equality, Fraternity</div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>ജാക്കോബിൻസ്?</b> ✅ തീവ്രവാദികൾ</div>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>"ഞാനാണ് രാഷ്ട്രം" (I am the State)?</b> ✅ ലൂയി പതിനാലാമൻ | <b>"എനിക്ക് ശേഷം പ്രളയം"?</b> ✅ ലൂയി പതിനഞ്ചാമൻ | <b>വിപ്ലവകാലത്തെ രാജാവ്?</b> ✅ ലൂയി പതിനാറാമൻ (ഭാര്യ: മേരി അന്റോയിനറ്റ്)</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>ബാസ്റ്റിൽ കോട്ടയുടെ പതനം?</b> ✅ 1789 ജൂലൈ 14 | <b>ടെന്നീസ് കോർട്ട് പ്രതിജ്ഞ?</b> ✅ 1789 ജൂൺ 20</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>'സോഷ്യൽ കോൺട്രാക്ട്' (മനുഷ്യൻ സ്വതന്ത്രനായി ജനിക്കുന്നു...)?</b> ✅ റൂസ്സോ | <b>'ദി സ്പിരിറ്റ് ഓഫ് ലോസ്' (അധികാര വിഭജനം)?</b> ✅ മൊണ്ടെസ്ക്യൂ</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>ഇന്ത്യൻ ഭരണഘടന ഫ്രാൻസിൽ നിന്ന് കടമെടുത്തത്?</b> ✅ റിപ്പബ്ലിക് + സ്വാതന്ത്ര്യം, സമത്വം, സാഹോദര്യം (Liberty, Equality, Fraternity)</div>
   <ul>
-    <li>ടിപ്പു സുൽത്താൻ: 'സ്വാതന്ത്ര്യ വൃക്ഷം', 'സിറ്റിസൺ ടിപ്പു'</li>
-    <li>മുദ്രാവാക്യം ആദ്യം: റോബസ്പിയർ | നെപ്പോളിയോണിക് കോഡ്: 1804</li>
+    <li>ടിപ്പു സുൽത്താൻ ശ്രീരംഗപട്ടണത്ത് 'സ്വാതന്ത്ര്യ വൃക്ഷം' നട്ടു; ജാക്കോബിൻ ക്ലബ്ബിൽ അംഗമായി ('സിറ്റിസൺ ടിപ്പു')</li>
+    <li>ഭീകരവാഴ്ച (Reign of Terror): മാക്സിമിലിയൻ റോബസ്പിയർ | വാട്ടർലൂ യുദ്ധം (നെപ്പോളിയന്റെ പതനം): <b>1815</b></li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 24 ================= -->
-<details class="card">
+<details class="card" data-tags="world">
 <summary><span class="num">24</span><span class="title">റഷ്യൻ വിപ്ലവം (1917)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="24"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1848</div><div class="ev">മാനിഫെസ്റ്റോ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1867</div><div class="ev">ദാസ് കാപിറ്റൽ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1905</div><div class="ev">Bloody Sunday</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1917</div><div class="ev">ഫെബ്രുവരി + ഒക്ടോബർ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1922</div><div class="ev">USSR</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1991</div><div class="ev">തകർച്ച</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1848</div><div class="ev">കമ്മ്യൂണിസ്റ്റ്<br>മാനിഫെസ്റ്റോ</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1905 ജനു 22</div><div class="ev">രക്തരൂക്ഷിത<br>ഞായറാഴ്ച</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1917 മാർച്ച്</div><div class="ev">ഫെബ്രുവരി വിപ്ലവം<br>(കെരൻസ്കി)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1917 നവം 7</div><div class="ev">ഒക്ടോബർ വിപ്ലവം<br>(ലെനിൻ)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1922</div><div class="ev">USSR രൂപീകരണം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1991 ഡിസം</div><div class="ev">USSR തകർച്ച</div></div>
   </div>
   <ul>
-    <li>കാൾ മാർക്സ് — ശാസ്ത്രീയ സോഷ്യലിസം | ലെനിൻ — വിപ്ലവ പിതാവ്</li>
-    <li>ബോൾഷെവിക് (ഭൂരിപക്ഷം), മെൻഷെവിക് (ന്യൂനപക്ഷം) | സാർ നിക്കോളാസ് രണ്ടാമൻ</li>
-    <li>റെഡ് ആർമി: ട്രോട്സ്കി | ഡ്യൂമ: പാർലമെന്റ് | ചെക്ക: രഹസ്യ പോലീസ്</li>
-    <li>ഇന്ത്യൻ കമ്മ്യൂണിസ്റ്റ് പാർട്ടി: എം.എൻ. റോയ് (1920, താഷ്കെന്റ്)</li>
+    <li>വിപ്ലവകാലത്തെ റഷ്യൻ ചക്രവർത്തി: <b>സാർ നിക്കോളാസ് രണ്ടാമൻ</b> (റൊമാനോവ് വംശം)</li>
+    <li>ബോൾഷെവിക് (ഭൂരിപക്ഷം — <b>ലെനിൻ</b>), മെൻഷെവിക് (ന്യൂനപക്ഷം — <b>കെരൻസ്കി</b>)</li>
+    <li>പുതിയ സാമ്പത്തിക നയം (NEP - 1921): ലെനിൻ | പഞ്ചവത്സര പദ്ധതികൾ (1928): <b>ജോസഫ് സ്റ്റാലിൻ</b></li>
+    <li>റെഡ് ആർമി: ലിയോൺ ട്രോട്സ്കി | ഡ്യൂമ: റഷ്യൻ പാർലമെന്റ് | 'അമ്മ' (നോവൽ): മാക്സിം ഗോർക്കി</li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 25 ================= -->
-<details class="card">
-<summary><span class="num">25</span><span class="title">ചൈനീസ് വിപ്ലവങ്ങൾ</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="25"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="world">
+<summary><span class="num">25</span><span class="title">ചൈനീസ് വിപ്ലവങ്ങൾ (1911 & 1949)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="25"> പഠിച്ചു</label></summary>
 <div class="content">
   <ul>
-    <li>1919 മെയ് 4: മെയ് ഫോർത്ത് മൂവ്മെന്റ്</li>
-    <li>ചിയാങ് കൈഷക്കിന്റെ രഹസ്യ സൈനിക വിഭാഗം: ബ്ലൂ ഷർട്ട്സ്</li>
-    <li>മാവോയുടെ ആശയങ്ങൾ: ലഘു ചുവപ്പുപുസ്തകം</li>
-    <li>മക്മഹോൻ രേഖ (1914) | സിൻഹുവ: ഔദ്യോഗിക വാർത്താ ഏജൻസി</li>
-    <li>സുൻയീ സമ്മേളനം (1935) | PLA: 1946 | യെനാൻ: ആസ്ഥാനം</li>
-    <li>1954 പഞ്ചശീല | 1962: ഇന്ത്യ-ചൈന യുദ്ധം</li>
+    <li><b>1911 റിപ്പബ്ലിക്കൻ വിപ്ലവം:</b> മഞ്ചു രാജവംശത്തെ പുറത്താക്കി; നായകൻ: <b>ഡോ. സൺ യാത് സെൻ</b> (കുമിന്താങ് പാർട്ടി; 3 തത്വങ്ങൾ: ദേശീയത, ജനാധിപത്യം, സോഷ്യലിസം)</li>
+    <li><b>1934–1935 ലോങ് മാർച്ച് (Long March):</b> മാവോ സേതുങ്ങിന്റെ നേതൃത്വത്തിൽ 6000 മൈൽ കാൽനടയാത്ര</li>
+    <li><b>1949 ഒക്ടോബർ 1:</b> മാവോ സേതുങ് പീപ്പിൾസ് റിപ്പബ്ലിക് ഓഫ് ചൈന (PRC) സ്ഥാപിച്ചു</li>
+    <li>കറുപ്പ് യുദ്ധങ്ങൾ (Opium Wars): ചൈനയും ബ്രിട്ടനും തമ്മിൽ (1839–42, 1856–60) | ബോക്സർ കലാപം: <b>1899–1901</b></li>
   </ul>
 </div>
 </details>
 
 <!-- ================= 26 ================= -->
-<details class="card">
+<details class="card" data-tags="world">
 <summary><span class="num">26</span><span class="title">ശീതയുദ്ധവും രണ്ടാം ലോകമഹായുദ്ധാനന്തര ചരിത്രവും</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="26"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="htl">
     <div class="node"><div class="dot"></div><div class="yr">1945</div><div class="ev">യുദ്ധാന്ത്യം, UN</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1949</div><div class="ev">NATO</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1955</div><div class="ev">വാഴ്സോ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1962</div><div class="ev">കൂബൻ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1989</div><div class="ev">ബെർലിൻ മതിൽ</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1991</div><div class="ev">USSR തകർച്ച</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1949 ഏപ്രിൽ 4</div><div class="ev">NATO (USA)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1955</div><div class="ev">വാഴ്സോ പാക്ട്</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1961</div><div class="ev">ബെർലിൻ മതിൽ<br>നിർമ്മാണം</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1989 നവം 9</div><div class="ev">ബെർലിൻ മതിൽ<br>തകർച്ച</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1991 ഡിസം 26</div><div class="ev">USSR തകർച്ച</div></div>
   </div>
-  <div class="trick"><span class="lbl">TRICK 1</span> സൈനിക സഖ്യങ്ങൾ: <b>NW & EW</b></div>
-  <div class="trick"><span class="lbl">TRICK 2</span> ഗോർബച്ചേവ്: <b>G-O P-R</b></div>
-  <div class="trick"><span class="lbl">TRICK 3</span> NAM സ്ഥാപകർ: <b>NTNS-K</b></div>
+  <div class="trick"><span class="lbl">TRICK 1</span> സൈനിക സഖ്യങ്ങൾ: <b>NATO (1949 - അമേരിക്കൻ ചേരി, ആസ്ഥാനം: ബ്രസ്സൽസ്) vs Warsaw Pact (1955 - സോവിയറ്റ് ചേരി)</b></div>
+  <div class="trick"><span class="lbl">TRICK 2</span> മിഖായേൽ ഗോർബച്ചേവിന്റെ പരിഷ്കാരങ്ങൾ: <b>ഗ്ലാസ്നോസ്റ്റ് (തുറന്ന സമീപനം) & പെരിസ്ട്രോയിക്ക (പുനഃസംഘടന)</b></div>
 </div>
 </details>
 
 <!-- ================= 27 ================= -->
-<details class="card">
-<summary><span class="num">27</span><span class="title">ഐക്യരാഷ്ട്രസഭ (UN)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="27"> പഠിച്ചു</label></summary>
+<details class="card" data-tags="world">
+<summary><span class="num">27</span><span class="title">ഐക്യരാഷ്ട്രസഭ (UN — 1945 ഒക്ടോബർ 24)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="27"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="stats">
-    <div class="stat"><div class="big">193</div><div class="small">അംഗരാജ്യങ്ങൾ</div></div>
-    <div class="stat"><div class="big">6</div><div class="small">ഘടകങ്ങൾ</div></div>
-    <div class="stat"><div class="big">5</div><div class="small">സ്ഥിരംഗങ്ങൾ</div></div>
-    <div class="stat"><div class="big">51</div><div class="small">സ്ഥാപകർ</div></div>
+    <div class="stat"><div class="big">193</div><div class="small">അംഗരാജ്യങ്ങൾ<br>(193-ാമത്: ദക്ഷിണ സുഡാൻ)</div></div>
+    <div class="stat"><div class="big">6</div><div class="small">പ്രധാന ഘടകങ്ങൾ &<br>6 ഔദ്യോഗിക ഭാഷകൾ</div></div>
+    <div class="stat"><div class="big">5</div><div class="small">സ്ഥിരാംഗങ്ങൾ (Veto)<br>US, UK, FR, RU, CN</div></div>
+    <div class="stat"><div class="big">51</div><div class="small">സ്ഥാപക അംഗങ്ങൾ<br>(പോളണ്ട് ഉൾപ്പെടെ)</div></div>
   </div>
   <ul>
-    <li>UN ആസ്ഥാനം: ന്യൂയോർക്ക് | ICJ: ഹേഗ്</li>
-    <li>ആദ്യ സെക്രട്ടറി ജനറൽ: ട്രിഗ്വേ ലി</li>
-    <li>WHO, ILO: ജനീവ | UNESCO: പാരീസ് | UNICEF: ന്യൂയോർക്ക് | FAO: റോം</li>
-    <li>ആദ്യ വനിത/ഇന്ത്യക്കാരി പൊതുസഭ അധ്യക്ഷ: വിജയലക്ഷ്മി പണ്ഡിറ്റ്</li>
-    <li>UN പൊതുസഭയിൽ മലയാളത്തിൽ പാടിയത്: എം.എസ്. സുബ്ബലക്ഷ്മി</li>
+    <li>'യുണൈറ്റഡ് നേഷൻസ്' എന്ന പേര് നിർദ്ദേശിച്ചത്: <b>ഫ്രാങ്ക്ലിൻ ഡി. റൂസ്‌വെൽറ്റ്</b> | ചാർട്ടർ ഒപ്പുവെച്ചത്: 1945 ജൂൺ 26 (സാൻ ഫ്രാൻസിസ്കോ)</li>
+    <li>UN ആസ്ഥാനം: ന്യൂയോർക്ക് | അന്താരാഷ്ട്ര നീതിന്യായ കോടതി (ICJ — 15 ജഡ്ജിമാർ, 9 വർഷം കാലാവധി): <b>ഹേഗ് (നെതർലാൻഡ്സ്)</b></li>
+    <li>ആദ്യ സെക്രട്ടറി ജനറൽ: <b>ട്രിഗ്വേ ലി (നോർവേ)</b> | ഇപ്പോഴത്തെ സെക്രട്ടറി ജനറൽ: <b>അന്റോണിയോ ഗുട്ടെറസ് (പോർച്ചുഗൽ)</b></li>
+    <li>WHO, ILO, WTO: ജനീവ | UNESCO: പാരീസ് | UNICEF, UNDP: ന്യൂയോർക്ക് | FAO: റോം | IAEA: വിയന്ന</li>
+    <li>ആദ്യ വനിത/ഇന്ത്യക്കാരി പൊതുസഭ അധ്യക്ഷ: <b>വിജയലക്ഷ്മി പണ്ഡിറ്റ് (1953)</b></li>
   </ul>
 </div>
 </details>
 
-<details class="card" open>
-<summary><span class="num">✓</span><span class="title">അവസാന റിവിഷൻ — v3 പുതിയ കൂട്ടിച്ചേർക്കലുകളും പരിശോധനകളും</span><span class="stars">⭐⭐⭐⭐⭐</span></summary>
-<div class="content">
-  <div class="fact-check-note">
-    <h3>🆕 v3-ൽ ചേർത്ത പ്രധാന ഡാറ്റ</h3>
-    <ul>
-      <li><b>വിഭാഗം 2A — വേണാട് മുതൽ തിരുവിതാംകൂർ വരെ ഭരണാധികാരികൾ:</b> മാർത്താണ്ഡവർമ്മ (1729–1758), ധർമ്മരാജാ (1758–1798), ബാലരാമവർമ്മ (1798–1810), ഗൗരി ലക്ഷ്മിഭായി (1810–1815), സ്വാതി തിരുനാൾ (1829–1846), ഉത്രം തിരുനാൾ (1847–1860), ആയില്യം തിരുനാൾ (1860–1880), ശ്രീമൂലം തിരുനാൾ (1885–1924), സേതു ലക്ഷ്മിഭായി (1924–1931), ചിത്തിര തിരുനാൾ (1931–1949) — പൂർണ്ണ വിവരങ്ങൾ.</li>
-      <li><b>വിഭാഗം 2B — പ്രധാന ദിവാനമാർ:</b> രാമയ്യൻ ദളവ, വേലുത്തമ്പി ദളവ, കേണൽ മൺറോ, സർ ടി. മാധവറാവു, വി.പി. മാധവ റാവു, സർ സി.പി. രാമസ്വാമി അയ്യർ.</li>
-      <li><b>വിഭാഗം 3 വിപുലീകരിച്ചു:</b> കേരള നവോത്ഥാന സംഘടനകൾ, ധീവര/അരയ സംഘടനകൾ.</li>
-      <li><b>വിഭാഗം 11 വിപുലീകരിച്ചു:</b> ദേശീയ സംഘടനകളുടെ സമ്പൂർണ്ണ പട്ടിക.</li>
-      <li><b>വിഭാഗം 13 വിപുലീകരിച്ചു:</b> ദേശീയ സാമൂഹിക പരിഷ്കരണ സംഘടനകൾ.</li>
-    </ul>
-  </div>
-
-  <div class="note"><span class="lbl">⚠️ പരിശോധിക്കുക</span>
-  <b>കുണ്ടറ വിളംബരം:</b> ചില സ്രോതസ്സുകളിൽ <b>1809 ജനുവരി 11</b>, മറ്റുള്ളവയിൽ <b>ജനുവരി 16</b>. PSC പരീക്ഷയിൽ സാധാരണയായി <b>ജനുവരി 11</b> സ്വീകരിക്കപ്പെടുന്നു.<br>
-  <b>വർഷ വ്യത്യാസങ്ങൾ:</b> ശൈവ പ്രകാശ സഭ (1884/1885), ആത്മബോധോദയ സംഘം (1926/1932) — PSC ചോദ്യങ്ങൾക്ക് ഏറ്റവും സാധാരണമായി സ്വീകരിക്കപ്പെടുന്ന വർഷം ഉപയോഗിക്കുക.</div>
-
-  <h3>🧠 5 മിനിറ്റ് സ്വയംപരിശോധന</h3>
-  <ol>
-    <li>ഭരണാധികാരികളുടെ ക്രമം നினைവിൽ നിന്ന് പറയുക: മാർത്താണ്ഡവർമ്മ → ധർമ്മരാജാ → ബാലരാമവർമ്മ → ഗൗരി ലക്ഷ്മിഭായി → സ്വാതി → ഉത്രം → ആയില്യം → ശ്രീമൂലം → സേതു → ചിത്തിര.</li>
-    <li>ദിവാനമാരെ അവരുടെ സംഭാവനകളുമായി ബന്ധിപ്പിക്കുക.</li>
-    <li>ഓരോ ഭരണാധികാരിയുടെയും ഒരു പ്രധാന സംഭവം ഓർക്കുക (ഉദാ: ധർമ്മരാജാ → നെടുങ്കോട്ട; സ്വാതി → ഒബ്സർവേറ്ററി).</li>
-    <li>തെറ്റിയ വസ്തുതകൾ മാത്രം തിരഞ്ഞ് വീണ്ടും വായിക്കുക.</li>
-  </ol>
-</div>
-</details>
-
 <footer>
-  📖 കേരള PSC ചരിത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് v3<br>
-  🆕 വേണാട് മുതൽ തിരുവിതാംകൂർ വരെ ഭരണാധികാരികളും ദിവാനമാരും ചേർത്തു.<br>
-  <span style="color:#3b4cca;font-weight:700;">എല്ലാ പ്രധാന വസ്തുതകളും PSC കെണികളും ഉൾപ്പെടുത്തിയിട്ടുണ്ട്.</span>
+  📖 കേരള PSC ചരിത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് v4 Pro<br>
+  <span style="color:var(--accent);font-weight:700;">33 വിഭാഗങ്ങൾ · ക്വിസ് മോഡ് · പിശകുകൾ തിരുത്തിയത് · പൂർണ്ണ സിലബസ് കവറേജ്</span>
 </footer>
 
 </div>
@@ -1130,6 +1112,9 @@
   const count = document.getElementById('reviewCount');
   const total = document.getElementById('totalCount');
   const progress = document.getElementById('reviewProgress');
+  const pills = Array.from(document.querySelectorAll('.pill'));
+  let activeFilter = 'all';
+
   total.textContent = checks.length;
 
   function updateProgress(){
@@ -1138,31 +1123,63 @@
     progress.style.width = (checks.length ? done/checks.length*100 : 0) + '%';
   }
   checks.forEach(c=>{
-    const saved = sessionStorage.getItem('psc-reviewed-'+c.dataset.section);
+    const saved = localStorage.getItem('psc-v4-reviewed-'+c.dataset.section);
     if(saved === '1') c.checked = true;
     c.addEventListener('change', ()=>{
-      sessionStorage.setItem('psc-reviewed-'+c.dataset.section,c.checked?'1':'0');
+      localStorage.setItem('psc-v4-reviewed-'+c.dataset.section, c.checked?'1':'0');
       updateProgress();
     });
   });
   updateProgress();
 
-  function filterSections(){
+  function applyFilters(){
     const q = search.value.trim().toLocaleLowerCase('ml');
     let shown = 0;
     sections.forEach(section=>{
-      const match = !q || section.innerText.toLocaleLowerCase('ml').includes(q);
+      const tags = section.dataset.tags || '';
+      const tagMatch = activeFilter === 'all' || tags.includes(activeFilter);
+      const textMatch = !q || section.innerText.toLocaleLowerCase('ml').includes(q);
+      const match = tagMatch && textMatch;
       section.classList.toggle('hidden-by-search', !match);
       if(match) shown++;
-      if(q && match) section.open = true;
+      if((q || activeFilter !== 'all') && match) section.open = true;
     });
-    status.textContent = q ? ('തിരയലിൽ കണ്ടെത്തിയത്: '+shown+' വിഭാഗങ്ങൾ') : (sections.length+' വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം');
+    status.textContent = 'കണ്ടെത്തിയത്: ' + shown + ' വിഭാഗങ്ങൾ';
   }
-  search.addEventListener('input', filterSections);
+
+  search.addEventListener('input', applyFilters);
+  pills.forEach(pill=>{
+    pill.addEventListener('click', ()=>{
+      pills.forEach(p=>p.classList.remove('active'));
+      pill.classList.add('active');
+      activeFilter = pill.dataset.filter;
+      applyFilters();
+    });
+  });
+
   document.getElementById('openAll').addEventListener('click',()=>sections.forEach(s=>{if(!s.classList.contains('hidden-by-search'))s.open=true;}));
   document.getElementById('closeAll').addEventListener('click',()=>sections.forEach(s=>s.open=false));
+
+  // Quiz Mode
+  const quizBtn = document.getElementById('quizToggle');
+  quizBtn.addEventListener('click', ()=>{
+    document.body.classList.toggle('quiz-mode');
+    quizBtn.classList.toggle('active');
+    document.querySelectorAll('.revealed').forEach(el=>el.classList.remove('revealed'));
+  });
+  document.addEventListener('click', (e)=>{
+    if(!document.body.classList.contains('quiz-mode')) return;
+    const target = e.target.closest('.hl, td b');
+    if(target) target.classList.toggle('revealed');
+  });
+
+  // Dark Mode
+  const darkBtn = document.getElementById('darkToggle');
+  darkBtn.addEventListener('click', ()=>{
+    document.body.classList.toggle('dark');
+    darkBtn.classList.toggle('active');
+  });
 })();
 </script>
-
 </body>
 </html>
