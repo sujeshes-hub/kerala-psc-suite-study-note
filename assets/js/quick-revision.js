@@ -15,7 +15,9 @@
   var CACHE_TTL       = 1000 * 60 * 60 * 24 * 30;   // 30 days
   var MIN_LEN         = 8;
   var MAX_LEN         = 700;
-  var RERENDER_EVERY  = 3;
+  var RERENDER_EVERY  = 8;
+  var CONCURRENCY     = 6;                          // parallel topic fetches
+  var EMPTY_TTL       = 1000 * 60 * 60 * 24;        // remember missing/empty pages for 1 day
 
   var SUBJECTS = {
     "1":  { icon:"📜", title:"History",                      titleMl:"ചരിത്രം",                       tag:"BOTH" },
@@ -48,6 +50,7 @@
   var chipsEl   = document.getElementById("qrChips");
 
   if (!host) return;
+  if (statusEl) statusEl.setAttribute("aria-live", "polite");
 
   var state = {
     data: [],
@@ -61,6 +64,7 @@
   function showNotice(kind, html) {
     if (!noticeEl) return;
     noticeEl.className = "qrnotice " + kind;
+    noticeEl.setAttribute("role", kind === "err" ? "alert" : "status");
     noticeEl.innerHTML = html;
     noticeEl.style.display = "block";
   }
@@ -361,10 +365,14 @@
     var now = Date.now();
     var fetchQueue = [];
 
+    var skipped = 0;
     allEntries.forEach(function (e) {
       var c = cache[e.path];
-      if (c && c.groups && c.groups.length && (now - (c.ts || 0)) < CACHE_TTL) {
+      var age = now - ((c && c.ts) || 0);
+      if (c && c.groups && c.groups.length && age < CACHE_TTL) {
         addTopic(e.topicId, c.title || e.topicId, c.groups);
+      } else if (c && c.empty && age < EMPTY_TTL) {
+        skipped++;                       /* known missing/empty: don't refetch yet */
       } else {
         fetchQueue.push(e);
       }
@@ -375,7 +383,7 @@
     /* 3) if cache covers everything, done */
     if (!fetchQueue.length) {
       showNotice("info",
-        "✓ Loaded <b>" + allEntries.length + "</b> topic files from local cache. " +
+        "✓ Loaded <b>" + (allEntries.length - skipped) + "</b> topic files from local cache. " +
         "Click <b>↻ Reload data</b> to fetch fresh content from topic pages.");
       hideProgress();
       loading = false;
@@ -403,31 +411,46 @@
 
     /* 5) fetch each topic file over HTTP */
     showProgress();
-    var done = 0, total = fetchQueue.length, ok = 0, fail = 0;
+    var done = 0, total = fetchQueue.length, ok = 0, fail = 0, next = 0;
     setProgress(0, total, "Loading 0 / " + total + " topic files…");
 
-    for (var i = 0; i < fetchQueue.length; i++) {
-      var e = fetchQueue[i];
-      try {
-        var res = await fetch(e.path, { cache: "no-cache" });
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        var html = await res.text();
-        var doc = new DOMParser().parseFromString(html, "text/html");
-        var groups = extractGroups(doc);
-        if (groups.length) {
-          var title = topicTitleFromDoc(e.topicId, doc);
-          cache[e.path] = { ts: now, title: title, groups: groups };
-          addTopic(e.topicId, title, groups);
-          ok++;
+    function markEmpty(entry) { cache[entry.path] = { ts: now, empty: true, groups: [] }; }
+
+    async function worker() {
+      while (next < fetchQueue.length) {
+        var e = fetchQueue[next++];
+        try {
+          var res = await fetch(e.path, { cache: "no-cache" });
+          if (!res.ok) {
+            if (res.status === 404) markEmpty(e);
+            throw new Error("HTTP " + res.status);
+          }
+          var html = await res.text();
+          var doc = new DOMParser().parseFromString(html, "text/html");
+          var groups = extractGroups(doc);
+          if (groups.length) {
+            var title = topicTitleFromDoc(e.topicId, doc);
+            cache[e.path] = { ts: now, title: title, groups: groups };
+            addTopic(e.topicId, title, groups);
+            ok++;
+          } else {
+            markEmpty(e);
+            fail++;
+          }
+        } catch (err) {
+          fail++;
+          // silent — most 404s are topics that simply don't exist yet
         }
-      } catch (err) {
-        fail++;
-        // silent — most 404s are topics that simply don't exist yet
+        done++;
+        setProgress(done, total, "Loading " + done + " / " + total + " topic files…");
+        if ((done % RERENDER_EVERY) === 0) render();
+        if ((done % 25) === 0) saveCache(cache);   /* keep progress if the tab is closed mid-load */
       }
-      done++;
-      setProgress(done, total, "Loading " + done + " / " + total + " topic files…");
-      if ((done % RERENDER_EVERY) === 0) render();
     }
+
+    var pool = [];
+    for (var w = 0; w < Math.min(CONCURRENCY, total); w++) pool.push(worker());
+    await Promise.all(pool);
 
     saveCache(cache);
     render();

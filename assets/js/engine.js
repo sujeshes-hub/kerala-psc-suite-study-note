@@ -2,7 +2,7 @@
    Auto-load sync.js site-wide (used by topic pages and mock tests)
    ===================================================================== */
 (function () {
-  if (window.KPSC_Sync && window.KPSC_Sync.__version === 3) return;
+  if (window.KPSC_Sync) return;
   if (document.querySelector('script[data-kpsc-sync]')) return;
 
   var prefix = "";
