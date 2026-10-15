@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kerala PSC – Biology & Public Health Mock Test</title>
+<style>
+:root{--bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;--primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;--green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;--gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,.08);--radius:10px;--radius-sm:6px;--font:'Noto Sans Malayalam','Nirmala UI','Segoe UI',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;font-size:16px}
+.header{position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:var(--shadow)}
+.header-title{font-size:1rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{display:flex;align-items:center;gap:8px;font-size:1.25rem;font-weight:700;background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);border:2px solid var(--primary);font-variant-numeric:tabular-nums}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn{padding:8px 16px;border-radius:var(--radius-sm);border:2px solid var(--orange);background:var(--orange-bg);color:var(--orange);font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:40px}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.study-pause-bar{display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem}
+.save-status{font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;background:var(--green-bg);border:1px solid var(--green);opacity:0;transition:opacity .3s}
+.save-status.visible{opacity:1}
+.resume-banner{display:none;background:linear-gradient(135deg,#1e40af,#3730a3);color:#fff;padding:18px 20px;margin:10px;border-radius:12px}
+.resume-banner.visible{display:block}
+.resume-banner-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+.resume-banner-info{font-size:.88rem;margin-bottom:14px;background:rgba(255,255,255,.12);padding:10px 14px;border-radius:8px}
+.resume-banner-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.banner-btn{padding:10px 20px;border-radius:8px;border:2px solid #fff;background:transparent;color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px}
+.banner-btn.primary{background:#fff;color:#1e40af}
+.banner-btn.danger{border-color:#fca5a5;color:#fca5a5}
+.main-container{display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;align-items:flex-start}
+.question-panel{flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;min-width:0}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none}
+.sidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);padding:3px 12px;border-radius:20px}
+.q-subject{font-size:.82rem;font-weight:600;text-transform:uppercase;color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;line-height:1.5;white-space:pre-line;min-height:48px}
+.option-btn:hover:not(.locked):not(.correct-highlight):not(.wrong-highlight){border-color:var(--primary);background:var(--primary-light)}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600}
+.explanation-box{background:#f8f9fc;border-left:4px solid var(--primary);padding:16px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;line-height:1.7;white-space:pre-line;color:var(--secondary);display:none}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem;text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}.exp-wrong{font-weight:600;color:var(--red)}
+.learning-panel{margin-top:18px;border:2px dashed var(--primary);border-radius:var(--radius);overflow:hidden;background:#fbfcff;display:none}
+.learning-header{background:var(--primary-light);padding:10px 16px;font-weight:700;color:var(--primary);font-size:.88rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.learning-header .arrow{transition:transform .2s}
+.learning-header.open .arrow{transform:rotate(90deg)}
+.learning-body{display:none;padding:16px 18px;font-size:.88rem;line-height:1.7}
+.learning-body.open{display:block}
+.lp-section{margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border)}
+.lp-section:last-child{border-bottom:none}
+.lp-title{font-weight:700;color:var(--primary);display:block;margin-bottom:6px;font-size:.85rem;text-transform:uppercase}
+.lp-title.beginner{color:#0e7490}.lp-title.options{color:#7c2d12}.lp-title.trick{color:#b45309}.lp-title.trap{color:#b91c1c}
+.lp-beginner{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px 14px;border-radius:0 6px 6px 0;white-space:pre-line}
+.lp-option-item{padding:8px 12px;margin-bottom:6px;border-radius:6px;background:#f9fafb;border-left:3px solid var(--border);white-space:pre-line}
+.lp-option-item.correct{background:#e6f4ea;border-left-color:var(--green)}
+.lp-option-item.wrong{background:#fde8e8;border-left-color:var(--red)}
+.lp-trick{background:#fffbeb;border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;white-space:pre-line}
+.lp-trap{background:#fef2f2;border-left:4px solid var(--red);padding:10px 14px;border-radius:0 6px 6px 0;white-space:pre-line}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:var(--font);font-size:.88rem;font-weight:600;min-height:44px;display:inline-flex;align-items:center;gap:6px}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.keyboard-hint{font-size:.75rem;color:var(--gray);margin-top:8px}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.palette-btn{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px}
+.palette-btn.not-visited{background:var(--gray-bg);border-color:var(--border);color:var(--gray)}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid #2c3e8f;outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:.75rem;color:var(--secondary)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
+.legend-dot.not-visited{background:var(--gray-bg);border-color:var(--border)}
+.legend-dot.visited-not-answered{background:var(--red-bg);border-color:var(--red)}
+.legend-dot.answered{background:var(--green-bg);border-color:var(--green)}
+.legend-dot.review{background:var(--orange-bg);border-color:var(--orange)}
+.legend-dot.active-dot{background:var(--panel);border-color:#2c3e8f;outline:2px solid #2c3e8f}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,.85);z-index:9999;justify-content:center;align-items:center;padding:20px}
+.pause-overlay.visible{display:flex}
+.pause-modal{background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;text-align:center}
+.pause-icon{font-size:4rem;margin-bottom:16px}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px}
+.pause-modal.auto h2{color:#8b5cf6}
+.pause-modal p{color:var(--secondary);margin-bottom:24px}
+.pause-modal .resume-main-btn{padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px}
+.pause-modal .pause-note{font-size:.8rem;color:var(--gray);margin-top:16px}
+.auto-badge{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:12px;margin-bottom:12px;text-transform:uppercase}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 16px;text-align:center;border-top:4px solid var(--primary)}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section,.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table-section h3,.result-detail-list h3{font-size:1.05rem;font-weight:700;margin-bottom:14px}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:#fafbfd}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){.main-container{flex-direction:column;padding:10px}.question-panel{padding:16px}.sidebar{width:100%}.q-text{font-size:.92rem}.option-btn{padding:11px 14px;font-size:.86rem}.btn{padding:8px 12px;font-size:.78rem}}
+</style>
+</head>
+<body>
+<header class="header" id="testHeader">
+<span class="header-title">Kerala PSC – Biology & Public Health Mock Test</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+<div class="study-pause-bar" id="studyPauseBar">
+<span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+<button onclick="resumeStudy()">▶ Resume Timer</button>
+</div>
+<div class="resume-banner" id="resumeBanner">
+<div class="resume-banner-title">📥 Saved attempt found</div>
+<div class="resume-banner-info" id="resumeInfo">Loading...</div>
+<div class="resume-banner-buttons">
+<button class="banner-btn primary" onclick="resumeAttempt()">▶ Resume</button>
+<button class="banner-btn danger" onclick="startFresh()">🔄 Start Fresh</button>
+</div>
+</div>
+<div class="pause-overlay" id="pauseOverlay">
+<div class="pause-modal" id="pauseModal">
+<span class="auto-badge" id="pauseBadge" style="display:none;">AUTO-PAUSED</span>
+<div class="pause-icon" id="pauseIcon">⏸</div>
+<h2 id="pauseTitle">Exam Paused</h2>
+<p id="pauseMessage">പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
+<button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+<p class="pause-note">Note: പരീക്ഷ തുടരുന്നതുവരെ ഉത്തരം നൽകാൻ സാധിക്കില്ല.</p>
+</div>
+</div>
+<div class="main-container" id="testView">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><span id="expContent"></span></div>
+<div class="learning-panel" id="learningPanel">
+<div class="learning-header" onclick="toggleLearningPanel(this)">
+<span>📚 Learning Panel — തുടക്കക്കാർക്കുള്ള കുറിപ്പുകൾ, ഓപ്ഷൻ വിശകലനം & ഒഴിവാക്കൽ വഴികൾ</span>
+<span class="arrow">▶</span>
+</div>
+<div class="learning-body" id="learningBody"></div>
+</div>
+<div class="action-buttons" id="actionButtons"></div>
+<div class="keyboard-hint">Shortcuts: 1-4 Select | Enter Save | Space Show Answer | Shift+Enter Skip | R Review | C Clear | N Next | P Pause</div>
+</div>
+<div class="sidebar" id="sidebar">
+<div class="palette-card">
+<h3>Question Palette</h3>
+<div class="palette-grid" id="paletteGrid"></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-dot not-visited"></span> Not Visited</span>
+<span class="legend-item"><span class="legend-dot visited-not-answered"></span> Visited</span>
+<span class="legend-item"><span class="legend-dot answered"></span> Answered</span>
+<span class="legend-item"><span class="legend-dot review"></span> Review</span>
+<span class="legend-item"><span class="legend-dot active-dot"></span> Active</span>
+</div>
+</div>
+<div class="stats-card">
+<h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div>
+</div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div>
+</div>
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Mock Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section">
+<h3>Subject-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div>
+</div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ ഉത്തരങ്ങളും വിട്ടുകളഞ്ഞവയും</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+<script>
+const CONFIG={SECONDS_PER_QUESTION:30,NEGATIVE_MARKING:0.33,AUTO_SUBMIT_ON_TIMEOUT:true,AUTO_PAUSE_ON_TAB_SWITCH:true,STORAGE_KEY:'kpsc_bio_health_v1',STORAGE_VERSION:1};
+const STORAGE_KEY=CONFIG.STORAGE_KEY,STORAGE_VERSION=CONFIG.STORAGE_VERSION,SECONDS_PER_QUESTION=CONFIG.SECONDS_PER_QUESTION,NEGATIVE_MARKING=CONFIG.NEGATIVE_MARKING;
+
+/* ============================================================
+   SOURCE QUESTIONS — Biology & Public Health (100 questions)
+   ------------------------------------------------------------
+   Source fields preserved verbatim:
+     question, options, correct, explanation
+   Supplementary teaching fields added per PART D:
+     subject, beginnerNote, optionAnalysis, rejectionTrick, examTrap
+   ============================================================ */
+const sourceQuestions=[
+/* ===== Q1 ===== */
+{subject:"ജീവശാസ്ത്രം – ജീവകങ്ങൾ",question:"ജീവകങ്ങളും അവയുടെ അപര്യാപ്തതാ രോഗങ്ങളും പൊരുത്തപ്പെടുത്തുക:\na. വൈറ്റമിൻ A – 1. സ്കർവി\nb. വൈറ്റമിൻ B1 – 2. കണ (Rickets)\nc. വൈറ്റമിൻ C – 3. നിശാന്ധത\nD. വൈറ്റമിൻ D – 4. ബെറി-ബെറി",options:["A) a-3, b-4, c-1, d-2","B) a-1, b-2, c-3, d-4","C) a-3, b-1, c-4, d-2","D) a-4, b-3, c-2, d-1"],correct:0,explanation:"വൈറ്റമിൻ A കുറഞ്ഞാൽ നിശാന്ധത, B1 (തയാമിൻ) കുറഞ്ഞാൽ ബെറി-ബെറി, C കുറഞ്ഞാൽ സ്കർവി, D കുറഞ്ഞാൽ കണ എന്നീ രോഗങ്ങൾ ഉണ്ടാകുന്നു.",
+beginnerNote:"ജീവകങ്ങളും അപര്യാപ്തതാ രോഗങ്ങളും:\n• A — നിശാന്ധത, സീരോഫ്താൽമിയ\n• B1 (തയാമിൻ) — ബെറി-ബെറി\n• C (അസ്കോർബിക് ആസിഡ്) — സ്കർവി\n• D (കാൽസിഫെറോൾ) — റിക്കറ്റ്സ് (കണ)",
+optionAnalysis:["A) ✅ ശരി — a-3, b-4, c-1, d-2.","B) ❌ എല്ലാം തെറ്റ്.","C) ❌ b, c വ്യത്യസ്തം.","D) ❌ A-4 എന്നത് തെറ്റ്."],
+rejectionTrick:"'A-നിശ, B1-ബെറി, C-സ്കർവി, D-കണ' എന്ന ക്രമം ഓർക്കുക.",
+examTrap:"⚠️ B1 (ബെറി), B3 (പെല്ലഗ്ര), B12 (പെർണീഷ്യസ് അനീമിയ) — മൂന്നും കൺഫ്യൂസ് ചെയ്യരുത്."},
+
+/* ===== Q2 ===== */
+{subject:"ജീവശാസ്ത്രം – രോഗകാരികൾ",question:"രോഗങ്ങളും രോഗകാരികളും (Pathogens):\na. കോളറ – 1. വൈറസ്\nb. മലേറിയ – 2. ഫംഗസ്\nc. എയ്ഡ്സ് (AIDS) – 3. ബാക്ടീരിയ\nd. അത്‌ലറ്റ്സ് ഫൂട്ട് – 4. പ്രോട്ടോസോവ",options:["A) a-3, b-4, c-1, d-2","B) a-1, b-2, c-3, d-4","C) a-3, b-1, c-4, d-2","D) a-2, b-3, c-1, d-4"],correct:0,explanation:"കോളറ (ബാക്ടീരിയ), മലേറിയ (പ്രോട്ടോസോവ), AIDS (വൈറസ്), അത്‌ലറ്റ്സ് ഫൂട്ട് (ഫംഗസ്).",
+beginnerNote:"രോഗകാരി വിഭാഗങ്ങൾ:\n• ബാക്ടീരിയ — കോളറ, ടൈഫോയ്ഡ്, ക്ഷയം\n• വൈറസ് — AIDS, കോവിഡ്, ഡെങ്കി\n• പ്രോട്ടോസോവ — മലേറിയ, സ്ലീപ്പിംഗ് സിക്ക്നെസ്സ്\n• ഫംഗസ് — അത്‌ലറ്റ്സ് ഫൂട്ട്, റിംഗ് വോം",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'കോളറ = ബാക്ടീരിയ (Cholera = Bacteria)' എന്ന് ആദ്യം ഉറപ്പിക്കുക.",
+examTrap:"⚠️ മലേറിയ = പ്രോട്ടോസോവ; ഡെങ്കി = വൈറസ് — ഇവ കൺഫ്യൂസ് ചെയ്യരുത്."},
+
+/* ===== Q3 ===== */
+{subject:"ജീവശാസ്ത്രം – അവയവങ്ങൾ",question:"മനുഷ്യ ശരീരത്തിലെ അവയവങ്ങളും ധർമ്മങ്ങളും:\na. വൃക്ക (Kidney) – 1. രക്തം പമ്പ് ചെയ്യുന്നു\nb. ഹൃദയം – 2. യൂറിയ ഉത്പാദിപ്പിക്കുന്നു\nc. ശ്വാസകോശം – 3. രക്തം ശുദ്ധീകരിക്കുന്നു\nd. കരൾ (Liver) – 4. രക്തത്തിൽ ഓക്സിജൻ കലർത്തുന്നു",options:["A) a-3, b-1, c-4, d-2","B) a-1, b-2, c-3, d-4","C) a-2, b-4, c-1, d-3","D) a-3, b-4, c-1, d-2"],correct:0,explanation:"വൃക്ക വിസർജ്ജന അവയവമാണ്, കരൾ യൂറിയ നിർമ്മിക്കുന്നു, ഹൃദയം പമ്പ് ചെയ്യുന്നു, ശ്വാസകോശം ശ്വസനപ്രക്രിയ നിർവ്വഹിക്കുന്നു.",
+beginnerNote:"പ്രധാന അവയവങ്ങൾ:\n• വൃക്ക — രക്തം ശുദ്ധീകരണം\n• ഹൃദയം — രക്തം പമ്പ് ചെയ്യൽ\n• ശ്വാസകോശം — ഓക്സിജൻ കലർത്തൽ\n• കരൾ — യൂറിയ നിർമ്മാണം",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'വൃക്ക-വിസർജ്ജനം; കരൾ-യൂറിയ' എന്ന് ഓർക്കുക.",
+examTrap:"⚠️ യൂറിയ നിർമ്മിക്കുന്നത് കരളാണ്; വൃക്ക പുറന്തള്ളുന്നതാണ്."},
+
+/* ===== Q4 ===== */
+{subject:"പരിസ്ഥിതി – കരാറുകൾ",question:"അന്താരാഷ്ട്ര പാരിസ്ഥിതിക കരാറുകളും ലക്ഷ്യങ്ങളും:\na. മോൺട്രിയൽ പ്രോട്ടോക്കോൾ – 1. ഹരിതഗൃഹ വാതകങ്ങൾ കുറയ്ക്കൽ\nb. ക്യോട്ടോ പ്രോട്ടോക്കോൾ – 2. മെർക്കുറി മലിനീകരണം തടയൽ\nc. മിനാമാതാ കൺവെൻഷൻ – 3. ഓസോൺ പാളിയുടെ സംരക്ഷണം",options:["A) a-3, b-1, c-2","B) a-1, b-2, c-3","C) a-2, b-3, c-1","D) a-3, b-2, c-1"],correct:0,explanation:"മോൺട്രിയൽ (ഓസോൺ), ക്യോട്ടോ (ആഗോളതാപനം തടയൽ), മിനാമാതാ (മെർക്കുറി നിയന്ത്രണം).",
+beginnerNote:"Environmental Conventions:\n• Montreal Protocol (1987) — ഓസോൺ\n• Kyoto Protocol (1997) — GHG കുറയ്ക്കൽ\n• Minamata Convention (2013) — Mercury\n• Paris Agreement (2015) — Climate",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'മോൺ-ഓസോൺ; ക്യോട്ടോ-ആഗോളതാപനം; മിനാമാതാ-മെർക്കുറി' എന്ന് ഓർക്കുക.",
+examTrap:"⚠️ മോൺട്രിയൽ vs മിനാമാതാ — പേരിൽ സാമ്യം."},
+
+/* ===== Q5 ===== */
+{subject:"ജീവശാസ്ത്രം – ഹോർമോണുകൾ",question:"അന്തഃസ്രാവി ഗ്രന്ഥികളും ഹോർമോണുകളും:\na. തൈറോയ്ഡ് – 1. ഇൻസുലിൻ\nb. പാൻക്രിയാസ് – 2. അഡ്രിനാലിൻ\nc. അഡ്രിനൽ ഗ്രന്ഥി – 3. തൈറോക്സിൻ",options:["A) a-3, b-1, c-2","B) a-1, b-2, c-3","C) a-2, b-3, c-1","D) a-3, b-2, c-1"],correct:0,explanation:"തൈറോയ്ഡ് ഗ്രന്ഥി തൈറോക്സിനും, പാൻക്രിയാസ് ഇൻസുലിനും, അഡ്രിനൽ ഗ്രന്ഥി അഡ്രിനാലിനും ഉത്പാദിപ്പിക്കുന്നു.",
+beginnerNote:"Endocrine Glands:\n• തൈറോയ്ഡ് → തൈറോക്സിൻ\n• പാൻക്രിയാസ് → ഇൻസുലിൻ + ഗ്ലൂക്കഗൺ\n• അഡ്രിനൽ → അഡ്രിനാലിൻ\n• പിറ്റ്യൂട്ടറി → GH\n• പൈനിയൽ → മെലാറ്റോണിൻ",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'തൈറോ-തൈറോക്സിൻ; പാൻ-ഇൻസുലിൻ; അഡ്രിനൽ-അഡ്രിനാലിൻ'.",
+examTrap:"⚠️ അഡ്രിനാലിൻ = Emergency Hormone (Fight-or-Flight)."},
+
+/* ===== Q6 ===== */
+{subject:"ജീവശാസ്ത്രം – രോഗങ്ങൾ",question:"ജീവിതശൈലീ രോഗങ്ങളും കാരണങ്ങളും:\na. പ്രമേഹം – 1. രക്തസമ്മർദ്ദം വർദ്ധിക്കൽ\nb. ഹൈപ്പർടെൻഷൻ – 2. ഇൻസുലിന്റെ കുറവ്\nc. പൊണ്ണത്തടി – 3. അമിതമായ കൊഴുപ്പും വ്യായാമമില്ലായ്മയും",options:["A) a-2, b-1, c-3","B) a-1, b-2, c-3","C) a-3, b-2, c-1","D) a-2, b-3, c-1"],correct:0,explanation:"ഇൻസുലിൻ കുറയുന്നത് പ്രമേഹത്തിനും, ഉയർന്ന രക്തസമ്മർദ്ദം ഹൈപ്പർടെൻഷനും കാരണമാകുന്നു.",
+beginnerNote:"Lifestyle Diseases:\n• പ്രമേഹം — ഇൻസുലിൻ കുറവ്/പ്രതിരോധം\n• ഹൈപ്പർടെൻഷൻ — ഉയർന്ന BP (140/90+)\n• പൊണ്ണത്തടി — BMI > 30",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'പ്രമേഹം = ഇൻസുലിൻ; ഹൈപ്പർ = BP; പൊണ്ണ = കൊഴുപ്പ്'.",
+examTrap:"⚠️ Type-1 (Insulin dependent), Type-2 (Insulin resistant) — കൺഫ്യൂസ് ചെയ്യരുത്."},
+
+/* ===== Q7 ===== */
+{subject:"ജീവശാസ്ത്രം – രക്തം",question:"ശരിയായ ജോഡി കണ്ടെത്തുക:",options:["A) സാർവത്രിക ദാതാവ് – AB ഗ്രൂപ്പ്","B) സാർവത്രിക സ്വീകർത്താവ് – O ഗ്രൂപ്പ്","C) രക്തം കട്ടപിടിക്കാൻ സഹായിക്കുന്ന കോശങ്ങൾ – പ്ലേറ്റ്‌ലെറ്റുകൾ","D) ചുവന്ന രക്താണുക്കളുടെ ആയുസ്സ് – 20 ദിവസം"],correct:2,explanation:"O ഗ്രൂപ്പ് ദാതാവും AB ഗ്രൂപ്പ് സ്വീകർത്താവുമാണ്. RBC യുടെ ആയുസ്സ് 120 ദിവസമാണ്. പ്ലേറ്റ്‌ലെറ്റുകൾ രക്തം കട്ടപിടിക്കാൻ സഹായിക്കുന്നു.",
+beginnerNote:"രക്ത സവിശേഷതകൾ:\n• Universal Donor — O negative (O-)\n• Universal Recipient — AB positive (AB+)\n• RBC ആയുസ്സ് — 120 ദിവസം\n• Platelets — clotting\n• WBC — immunity",
+optionAnalysis:["A) ❌ AB = Recipient.","B) ❌ O = Donor.","C) ✅ ശരി.","D) ❌ 120 ദിവസം."],
+rejectionTrick:"'O = ദാതാവ്, AB = സ്വീകർത്താവ്' എന്ന് ഓർക്കുക.",
+examTrap:"⚠️ ആന്റിജനും ആന്റിബോഡിയും തമ്മിലുള്ള ബന്ധം കൃത്യമായി പഠിക്കണം."},
+
+/* ===== Q8 ===== */
+{subject:"ജീവശാസ്ത്രം – ശാസ്ത്ര ശാഖകൾ",question:"ശരിയായ ജോഡി കണ്ടെത്തുക:",options:["A) മൈക്കോളജി – ശിലാപഠനം","B) സൈറ്റോളജി – കോശങ്ങളെക്കുറിച്ചുള്ള പഠനം","C) ഓർണിത്തോളജി – സസ്യപഠനം","D) എൻ്റമോളജി – പക്ഷികളെക്കുറിച്ചുള്ള പഠനം"],correct:1,explanation:"കോശങ്ങളെക്കുറിച്ചുള്ള പഠനമാണ് സൈറ്റോളജി. മൈക്കോളജി (ഫംഗസ്), ഓർണിത്തോളജി (പക്ഷികൾ), എൻ്റമോളജി (പ്രാണികൾ).",
+beginnerNote:"Biological Sciences:\n• Cytology — Cells\n• Mycology — Fungi\n• Ornithology — Birds\n• Entomology — Insects\n• Botany — Plants\n• Zoology — Animals",
+optionAnalysis:["A) ❌ Mycology = Fungi.","B) ✅ ശരി.","C) ❌ Ornithology = Birds.","D) ❌ Entomology = Insects."],
+rejectionTrick:"'Cyto = Cell; Myco = Fungus; Ornitho = Birds; Entomo = Insects'.",
+examTrap:"⚠️ -ology വിഭാഗങ്ങൾ കൺഫ്യൂസ് ചെയ്യരുത്."},
+
+/* ===== Q9 ===== */
+{subject:"ജീവശാസ്ത്രം – കൊതുകുകൾ",question:"രോഗം പരത്തുന്ന കൊതുകുകൾ — ശരിയായ ജോഡി:",options:["A) ഡെങ്കിപ്പനി – അനോഫിലസ് കൊതുക്","B) മലേറിയ – ഈഡിസ് കൊതുക്","C) മന്ത് (Filariasis) – ക്യൂലക്സ് കൊതുക്","D) ചിക്കുൻഗുനിയ – ക്യൂലക്സ് കൊതുക്"],correct:2,explanation:"മന്ത് പരത്തുന്നത് ക്യൂലക്സ് കൊതുകാണ്. ഡെങ്കിയും ചിക്കുൻഗുനിയയും ഈഡിസ് കൊതുകും, മലേറിയ അനോഫിലസ് കൊതുകുമാണ് പരത്തുന്നത്.",
+beginnerNote:"Mosquito-borne Diseases:\n• ഈഡിസ് — ഡെങ്കി, ചിക്കുൻഗുനിയ, സിക്ക\n• അനോഫിലസ് — മലേറിയ\n• ക്യൂലക്സ് — മന്ത് (Filariasis)",
+optionAnalysis:["A) ❌ ഡെങ്കി = ഈഡിസ്.","B) ❌ മലേറിയ = അനോഫിലസ്.","C) ✅ ശരി.","D) ❌ ചിക്കുൻഗുനിയ = ഈഡിസ്."],
+rejectionTrick:"'A-A (Anopheles-Malaria), E-Dengue (Aedes-Dengue)'.",
+examTrap:"⚠️ ഈഡിസ് കൊതുക് പകൽ കടിക്കും; അനോഫിലസ് രാത്രി."},
+
+/* ===== Q10 ===== */
+{subject:"കേരളം – ആരോഗ്യ പദ്ധതികൾ",question:"കേരള സർക്കാരിന്റെ ആരോഗ്യ പദ്ധതികൾ — ശരി:",options:["A) ആർദ്രം മിഷൻ – സർക്കാർ ആശുപത്രികളുടെ നവീകരണം","B) കാരുണ്യ – ഗർഭിണികൾക്കുള്ള പോഷകാഹാര പദ്ധതി","C) താലോലം – വൃദ്ധജനങ്ങൾക്കുള്ള പദ്ധതി","D) സ്നേഹപൂർവ്വം – അവയവദാന പദ്ധതി"],correct:0,explanation:"പൊതുജനാരോഗ്യ കേന്ദ്രങ്ങളെ കുടുംബാരോഗ്യ കേന്ദ്രങ്ങളാക്കി മാറ്റുന്ന പദ്ധതിയാണ് ആർദ്രം.",
+beginnerNote:"Kerala Health Schemes:\n• ആർദ്രം മിഷൻ — PHC → FHC upgrade\n• കാരുണ്യ — ₹5 lakh free treatment\n• താലോലം — പ്രതിരോധ കുത്തിവെപ്പ്\n• സ്നേഹപൂർവ്വം — വൃദ്ധജനങ്ങൾ\n• ആശ്വാസകിരണം — കാൻസർ",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ കാരുണ്യ = ചികിത്സ.","C) ❌ താലോലം = വാക്സിനേഷൻ.","D) ❌ സ്നേഹപൂർവ്വം = വൃദ്ധർ."],
+rejectionTrick:"'ആർദ്രം = PHC→FHC; കാരുണ്യ = ₹5 ലക്ഷം'.",
+examTrap:"⚠️ ആർദ്രം vs ആശ്വാസകിരണം — വ്യത്യസ്തം."},
+
+/* ===== Q11 ===== */
+{subject:"ജീവശാസ്ത്രം – ധാതുക്കൾ",question:"ധാതുക്കളും ശരീരത്തിലെ ഉപയോഗവും — ശരി:",options:["A) ഇരുമ്പ് (Iron) – എല്ലുകളുടെ വളർച്ച","B) കാൽസ്യം – ഹീമോഗ്ലോബിൻ നിർമ്മാണം","C) അയഡിൻ – തൈറോയ്ഡ് ഗ്രന്ഥിയുടെ പ്രവർത്തനം","D) സോഡിയം – രക്തം കട്ടപിടിക്കൽ"],correct:2,explanation:"തൈറോക്സിൻ ഉത്പാദനത്തിന് അയഡിൻ അത്യാവശ്യമാണ്. ഇരുമ്പ് ഹീമോഗ്ലോബിനും കാൽസ്യം എല്ലുകൾക്കും ആവശ്യമാണ്.",
+beginnerNote:"Minerals:\n• Iron → Hemoglobin\n• Calcium → Bones/Teeth\n• Iodine → Thyroxine\n• Sodium → Nerve impulse\n• Potassium → Heart function",
+optionAnalysis:["A) ❌ Iron = Hb.","B) ❌ Calcium = Bones.","C) ✅ ശരി.","D) ❌ Sodium = Nerve."],
+rejectionTrick:"'അയഡിൻ = തൈറോക്സിൻ (Iodine-Thyroid)'.",
+examTrap:"⚠️ Iodine deficiency → Goiter."},
+
+/* ===== Q12 ===== */
+{subject:"പരിസ്ഥിതി – ദുരന്തങ്ങൾ",question:"പാരിസ്ഥിതിക ദുരന്തങ്ങളും കാരണമായ രാസവസ്തുക്കളും — ശരി:",options:["A) ഭോപ്പാൽ ദുരന്തം – മീഥൈൽ ഐസോസയനേറ്റ് (MIC)","B) മിനാമാതാ രോഗം – കാഡ്മിയം","C) ഇത്തായ്-ഇത്തായ് രോഗം – മെർക്കുറി","D) എൻഡോസൾഫാൻ ദുരന്തം – ലെഡ്"],correct:0,explanation:"1984-ലെ ഭോപ്പാൽ ദുരന്തത്തിന് കാരണം മീഥൈൽ ഐസോസയനേറ്റ് (MIC) വാതക ചോർച്ചയാണ്. മിനാമാതാ (മെർക്കുറി), ഇത്തായ്-ഇത്തായ് (കാഡ്മിയം).",
+beginnerNote:"Environmental Disasters:\n• Bhopal (1984) — MIC gas\n• Minamata — Mercury\n• Itai-Itai — Cadmium\n• Endosulfan — Kasaragod (Kerala)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ Minamata = Mercury.","C) ❌ Itai-Itai = Cadmium.","D) ❌ Endosulfan = Pesticide."],
+rejectionTrick:"'Bhopal = MIC; Minamata = Mercury; Itai-Itai = Cadmium'.",
+examTrap:"⚠️ Endosulfan ദുരന്തം കാസർഗോഡ് (കേരളം)."},
+
+/* ===== Q13 ===== */
+{subject:"ജീവശാസ്ത്രം – തലച്ചോറ്",question:"തലച്ചോറിന്റെ ഭാഗങ്ങളും ധർമ്മങ്ങളും — തെറ്റായ ജോഡി:",options:["A) സെറിബ്രം – ചിന്ത, ഓർമ്മ, ബുദ്ധി","B) സെറിബെല്ലം – ശരീര തുലനാവസ്ഥ","C) മെഡുല്ല ഒബ്ലാംഗേറ്റ – ഹൃദയമിടിപ്പ്, ശ്വാസോച്ഛ്വാസം","D) തലാമസ് – ശരീര താപനില നിയന്ത്രിക്കൽ"],correct:3,explanation:"ശരീര താപനിലയും വിശപ്പും ദാഹവും നിയന്ത്രിക്കുന്നത് ഹൈപ്പോതലാമസ് (Hypothalamus) ആണ്. തലാമസ് റിലേ സ്റ്റേഷനായി പ്രവർത്തിക്കുന്നു.",
+beginnerNote:"Brain Parts:\n• Cerebrum — thought, memory\n• Cerebellum — balance\n• Medulla — heart rate, breathing\n• Thalamus — sensory relay\n• Hypothalamus — temperature, hunger",
+optionAnalysis:["A) ✅ ശരി.","B) ✅ ശരി.","C) ✅ ശരി.","D) ❌ തലാമസ് ≠ താപനില."],
+rejectionTrick:"'Hypo = Homeostasis (temp, hunger)'.",
+examTrap:"⚠️ Thalamus vs Hypothalamus — പേരിൽ സാമ്യം."},
+
+/* ===== Q14 ===== */
+{subject:"ജീവശാസ്ത്രം – രോഗകാരികൾ",question:"രോഗങ്ങളും രോഗകാരികളും — തെറ്റായ ജോഡി:",options:["A) ക്ഷയം (TB) – ബാക്ടീരിയ","B) ടൈഫോയ്ഡ് – വൈറസ്","C) കോവിഡ് 19 – വൈറസ്","D) റിംഗ് വോം – ഫംഗസ്"],correct:1,explanation:"സാൽമൊണല്ല ടൈഫി എന്ന ബാക്ടീരിയ മൂലമുണ്ടാകുന്ന രോഗമാണ് ടൈഫോയ്ഡ്. ഇത് വൈറസ് രോഗമല്ല.",
+beginnerNote:"Pathogens:\n• TB → Mycobacterium\n• Typhoid → Salmonella typhi (Bacteria)\n• COVID-19 → SARS-CoV-2\n• Ringworm → Fungus",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ ടൈഫോയ്ഡ് = ബാക്ടീരിയ.","C) ✅ ശരി.","D) ✅ ശരി."],
+rejectionTrick:"'Typhoid = Bacteria (Widal test)'.",
+examTrap:"⚠️ ടൈഫോയ്ഡ് vs ടൈഫസ് — വ്യത്യസ്തം."},
+
+/* ===== Q15 ===== */
+{subject:"ജീവശാസ്ത്രം – ജീവകങ്ങൾ",question:"ജീവകങ്ങളുടെ രാസനാമം — തെറ്റായത്:",options:["A) വൈറ്റമിൻ A – റെറ്റിനോൾ","B) വൈറ്റമിൻ C – കാൽസിഫെറോൾ","C) വൈറ്റമിൻ E – ടോക്കോഫെറോൾ","D) വൈറ്റമിൻ K – ഫിലോക്വിനോൺ"],correct:1,explanation:"വൈറ്റമിൻ C യുടെ രാസനാമം അസ്കോർബിക് ആസിഡ് എന്നാണ്. കാൽസിഫെറോൾ എന്നത് വൈറ്റമിൻ D ആണ്.",
+beginnerNote:"Chemical Names:\n• A — Retinol\n• B1 — Thiamine\n• B3 — Niacin\n• B12 — Cyanocobalamin\n• C — Ascorbic acid\n• D — Calciferol\n• E — Tocopherol\n• K — Phylloquinone",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ C = Ascorbic acid.","C) ✅ ശരി.","D) ✅ ശരി."],
+rejectionTrick:"'C = Ascorbic acid; D = Calciferol'.",
+examTrap:"⚠️ Calciferol (D) ≠ Ascorbic acid (C)."},
+
+/* ===== Q16 ===== */
+{subject:"ജീവശാസ്ത്രം – ദഹനം",question:"ദഹനരസങ്ങളും എൻസൈമുകളും — തെറ്റായത്:",options:["A) ഉമിനീർ – ടയലിൻ (Ptyalin)","B) ആമാശയം – പെപ്സിൻ","C) പാൻക്രിയാസ് – ലൈപേസ്","D) പിത്തരസം (Bile) – അമിലേസ്"],correct:3,explanation:"കരളിൽ ഉത്പാദിപ്പിക്കപ്പെടുന്ന പിത്തരസത്തിൽ (Bile) ദഹന എൻസൈമുകൾ അടങ്ങിയിട്ടില്ല; ഇത് കൊഴുപ്പിനെ ചെറുകണികകളാക്കാൻ (Emulsification) സഹായിക്കുന്നു.",
+beginnerNote:"Digestive Enzymes:\n• Saliva — Ptyalin (Starch → Maltose)\n• Stomach — Pepsin (Protein → Peptides)\n• Pancreas — Lipase, Trypsin, Amylase\n• Bile — No enzyme; emulsifies fat\n• Small intestine — Maltase, Lactase, Sucrase",
+optionAnalysis:["A) ✅ ശരി.","B) ✅ ശരി.","C) ✅ ശരി.","D) ❌ Bile-ൽ enzyme ഇല്ല."],
+rejectionTrick:"'Bile = No enzyme; fat emulsification'.",
+examTrap:"⚠️ Bile കരളിൽ ഉണ്ടാക്കുന്നു; പിത്താശയത്തിൽ സംഭരിക്കുന്നു."},
+
+/* ===== Q17 ===== */
+{subject:"ജീവശാസ്ത്രം – വാക്സിൻ",question:"വാക്സിനുകളും രോഗങ്ങളും — തെറ്റായത്:",options:["A) BCG – ക്ഷയരോഗം","B) OPV – പോളിയോ","C) DPT – മലേറിയ","D) MMR – മുണ്ടിനീര്, അഞ്ചാംപനി, റുബെല്ല"],correct:2,explanation:"DPT വാക്സിൻ ഡിഫ്തീരിയ, വില്ലൻചുമ (Pertussis), ടെറ്റനസ് എന്നിവയ്ക്കെതിരെയാണ് നൽകുന്നത്. മലേറിയയ്ക്കല്ല.",
+beginnerNote:"Vaccines:\n• BCG — TB\n• OPV — Polio (Oral)\n• DPT — Diphtheria, Pertussis, Tetanus\n• MMR — Measles, Mumps, Rubella\n• Hep B — Hepatitis B",
+optionAnalysis:["A) ✅ ശരി.","B) ✅ ശരി.","C) ❌ DPT ≠ Malaria.","D) ✅ ശരി."],
+rejectionTrick:"'DPT = 3 diseases; none is Malaria'.",
+examTrap:"⚠️ DPT-യിലെ P = Pertussis (വില്ലൻചുമ), Polio അല്ല."},
+
+/* ===== Q18 ===== */
+{subject:"പൊതുജനാരോഗ്യം – ദിനങ്ങൾ",question:"പരിസ്ഥിതി/ആരോഗ്യ ദിനങ്ങൾ — തെറ്റായത്:",options:["A) ലോക പരിസ്ഥിതി ദിനം – ജൂൺ 5","B) ലോക ഓസോൺ ദിനം – സെപ്റ്റംബർ 16","C) ലോക ജല ദിനം – മാർച്ച് 22","D) ലോക ആരോഗ്യ ദിനം – ഡിസംബർ 1"],correct:3,explanation:"ലോക ആരോഗ്യ ദിനം ഏപ്രിൽ 7 നാണ്. ഡിസംബർ 1 ലോക എയ്ഡ്സ് ദിനമാണ്.",
+beginnerNote:"Health Days:\n• April 7 — World Health Day\n• June 5 — Environment Day\n• Sep 16 — Ozone Day\n• Mar 22 — Water Day\n• Dec 1 — AIDS Day",
+optionAnalysis:["A) ✅ ശരി.","B) ✅ ശരി.","C) ✅ ശരി.","D) ❌ Health Day = April 7."],
+rejectionTrick:"'Health Day = April 7; AIDS Day = Dec 1'.",
+examTrap:"⚠️ Dec 1 = AIDS Day, not Health Day."},
+
+/* ===== Q19 ===== */
+{subject:"ജീവശാസ്ത്രം – വൈറസ്",question:"കൂട്ടത്തിൽ പെടാത്തത് (വൈറസ് രോഗങ്ങൾ):",options:["A) ഡെങ്കിപ്പനി","B) പോളിയോ","C) കോളറ","D) പേവിഷബാധ (Rabies)"],correct:2,explanation:"കോളറ വിബ്രിയോ കോളറേ എന്ന ബാക്ടീരിയ വഴിയുണ്ടാകുന്ന രോഗമാണ്. മറ്റുള്ളവ വൈറസ് രോഗങ്ങളാണ്.",
+beginnerNote:"Viral vs Bacterial:\n• Viral — Dengue, Polio, Rabies, COVID, AIDS\n• Bacterial — Cholera, TB, Typhoid\n• Protozoan — Malaria\n• Fungal — Ringworm",
+optionAnalysis:["A) ✅ വൈറസ്.","B) ✅ വൈറസ്.","C) ❌ ബാക്ടീരിയ.","D) ✅ വൈറസ്."],
+rejectionTrick:"'Cholera = Bacteria (Vibrio cholerae)'.",
+examTrap:"⚠️ പോളിയോ വൈറസ്; കോളറ ബാക്ടീരിയ."},
+
+/* ===== Q20 ===== */
+{subject:"ജീവശാസ്ത്രം – ജീവകങ്ങൾ",question:"കൂട്ടത്തിൽ പെടാത്തത് (കൊഴുപ്പിൽ ലയിക്കുന്ന ജീവകങ്ങൾ):",options:["A) വൈറ്റമിൻ A","B) വൈറ്റമിൻ B","C) വൈറ്റമിൻ D","D) വൈറ്റമിൻ E"],correct:1,explanation:"വൈറ്റമിൻ B യും C യും ജലത്തിൽ ലയിക്കുന്നവയാണ് (Water-soluble). A, D, E, K എന്നിവ കൊഴുപ്പിൽ ലയിക്കുന്നവയാണ്.",
+beginnerNote:"Vitamin Solubility:\n• Fat-soluble — A, D, E, K\n• Water-soluble — B complex, C\n💡 Mnemonic: 'ADEK = Fat; BC = Water'",
+optionAnalysis:["A) ✅ Fat.","B) ❌ Water-soluble.","C) ✅ Fat.","D) ✅ Fat."],
+rejectionTrick:"'ADEK = Fat; BC = Water'.",
+examTrap:"⚠️ Water-soluble vitamins ശരീരത്തിൽ സംഭരിക്കപ്പെടില്ല."},
+
+/* ===== Q21 ===== */
+{subject:"ജീവശാസ്ത്രം – രോഗങ്ങൾ",question:"കൂട്ടത്തിൽ പെടാത്തത് (സാംക്രമികമല്ലാത്ത രോഗങ്ങൾ):",options:["A) പ്രമേഹം","B) കാൻസർ","C) ഹൈപ്പർടെൻഷൻ","D) ക്ഷയരോഗം (TB)"],correct:3,explanation:"ക്ഷയരോഗം ബാക്ടീരിയ വഴി ഒരാളിൽ നിന്ന് മറ്റൊരാളിലേക്ക് പകരുന്ന സാംക്രമിക രോഗമാണ്. മറ്റുള്ളവ ജീവിതശൈലീ രോഗങ്ങളാണ്.",
+beginnerNote:"NCD vs CD:\n• NCD — Diabetes, Cancer, Hypertension, Stroke\n• CD — TB, Cholera, Dengue, COVID\n💡 NCD = Non-Communicable Disease",
+optionAnalysis:["A) ✅ NCD.","B) ✅ NCD.","C) ✅ NCD.","D) ❌ CD (Communicable)."],
+rejectionTrick:"'TB = Communicable; Diabetes = NCD'.",
+examTrap:"⚠️ കാൻസറിന്റെ ചില രൂപങ്ങൾ (HPV) പകരാം; എന്നാൽ പൊതുവെ NCD."},
+
+/* ===== Q22 ===== */
+{subject:"ജീവശാസ്ത്രം – രക്തം",question:"കൂട്ടത്തിൽ പെടാത്തത് (രക്തകോശങ്ങൾ):",options:["A) ചുവന്ന രക്താണുക്കൾ (RBC)","B) ശ്വേതരക്താണുക്കൾ (WBC)","C) പ്ലേറ്റ്‌ലെറ്റുകൾ","D) പ്ലാസ്മ (Plasma)"],correct:3,explanation:"പ്ലാസ്മ എന്നത് രക്തത്തിലെ ദ്രാവക ഭാഗമാണ് (Liquid matrix). മറ്റുള്ളവ അതിലടങ്ങിയിട്ടുള്ള കോശങ്ങളാണ്.",
+beginnerNote:"Blood Composition:\n• 55% Plasma (liquid)\n• 45% Cells — RBC, WBC, Platelets\n• RBC — O₂ transport\n• WBC — Immunity\n• Platelets — Clotting",
+optionAnalysis:["A) ✅ കോശം.","B) ✅ കോശം.","C) ✅ കോശം (cell fragment).","D) ❌ ദ്രാവകം."],
+rejectionTrick:"'Plasma = Liquid matrix; Cells = RBC/WBC/Platelets'.",
+examTrap:"⚠️ Platelets = Cell fragments, not full cells."},
+
+/* ===== Q23 ===== */
+{subject:"ജീവശാസ്ത്രം – ഹോർമോണുകൾ",question:"കൂട്ടത്തിൽ പെടാത്തത് (സസ്യ ഹോർമോണുകൾ):",options:["A) ഓക്സിൻ (Auxin)","B) ജിബ്ബറല്ലിൻ","C) സൈറ്റോകൈനിൻ","D) ഇൻസുലിൻ"],correct:3,explanation:"ഇൻസുലിൻ മനുഷ്യരിലും മൃഗങ്ങളിലും കാണപ്പെടുന്ന ജന്തു ഹോർമോണാണ്. മറ്റുള്ളവ സസ്യ ഹോർമോണുകളാണ്.",
+beginnerNote:"Plant Hormones (PGRs):\n• Auxin — Cell elongation\n• Gibberellin — Stem growth\n• Cytokinin — Cell division\n• Ethylene — Ripening\n• Abscisic acid — Dormancy\n\nAnimal Hormones: Insulin, Thyroxine, Adrenaline",
+optionAnalysis:["A) ✅ സസ്യം.","B) ✅ സസ്യം.","C) ✅ സസ്യം.","D) ❌ ജന്തു."],
+rejectionTrick:"'Insulin = Animal hormone; Auxin = Plant hormone'.",
+examTrap:"⚠️ സസ്യങ്ങളിൽ ഇൻസുലിൻ ഇല്ല (ചില സസ്യങ്ങളിൽ insulin-like protein ഉണ്ട്, എന്നാൽ ഇത് hormone അല്ല)."},
+
+/* ===== Q24 ===== */
+{subject:"പരിസ്ഥിതി – GHG",question:"കൂട്ടത്തിൽ പെടാത്തത് (ഹരിതഗൃഹ വാതകങ്ങൾ):",options:["A) കാർബൺ ഡൈ ഓക്സൈഡ് (CO₂)","B) മീഥേൻ","C) നൈട്രജൻ","D) ക്ലോറോ ഫ്ലൂറോ കാർബൺ (CFC)"],correct:2,explanation:"അന്തരീക്ഷത്തിൽ 78% ഉള്ള നൈട്രജൻ ഒരു ഹരിതഗൃഹ വാതകമല്ല. അത് താപം ആഗിരണം ചെയ്ത് ആഗോളതാപനത്തിന് കാരണമാകുന്നില്ല.",
+beginnerNote:"Greenhouse Gases:\n• CO₂ — GWP 1\n• CH₄ — GWP ~28\n• N₂O — GWP ~265\n• CFC — GWP 5000-14000\n• Not GHGs — N₂, O₂, Ar",
+optionAnalysis:["A) ✅ GHG.","B) ✅ GHG.","C) ❌ അല്ല.","D) ✅ GHG."],
+rejectionTrick:"'N₂, O₂ = അല്ല; CO₂, CH₄ = അതെ'.",
+examTrap:"⚠️ N₂ ഭൂരിഭാഗം ഉള്ളതിനാൽ GHG എന്ന് തെറ്റിദ്ധരിക്കരുത്."},
+
+/* ===== Q25 ===== */
+{subject:"ജീവശാസ്ത്രം – രക്തം (A/R)",question:"പ്രസ്താവന (A): AB രക്തഗ്രൂപ്പുള്ള വ്യക്തിയെ സാർവത്രിക സ്വീകർത്താവ് എന്ന് വിളിക്കുന്നു.\nകാരണം (R): AB രക്തഗ്രൂപ്പുള്ളവരിൽ ആന്റിബോഡികൾ കാണപ്പെടുന്നില്ല.",options:["A) A യും R ഉം ശരി, R ശരിയായ വിശദീകരണം","B) A യും R ഉം ശരി, R തെറ്റായ വിശദീകരണം","C) A ശരി, R തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"പ്ലാസ്മയിൽ ആന്റിബോഡികൾ ഇല്ലാത്തതിനാലാണ് AB ഗ്രൂപ്പുകാർക്ക് ഏത് ഗ്രൂപ്പിൽ നിന്നും രക്തം സ്വീകരിക്കാൻ കഴിയുന്നത്.",
+beginnerNote:"AB+ = Universal Recipient:\n• Antigens A, B, Rh — all present\n• Antibodies — none\n• Can receive from ANY group\n\nO- = Universal Donor:\n• No antigens\n• Antibodies a, b — present\n• Can donate to ANY group",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'AB+ = Recipient; O- = Donor'.",
+examTrap:"⚠️ AB+ vs AB- ; O+ vs O- — Rh factor-ഉം പരിഗണിക്കണം."}
+
+/* ---- Q26–Q100: paste here in the SAME format ----
+   Run "continue" and I'll output Q26–Q50 as the next block.
+   Each block slots directly into this array (before the `];`).
+------------------------------------------------- */
+];
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+let questions=[],currentIndex=0,timeRemaining=0,timerInterval=null,timerEndTime=null,pausedRemaining=null,isSubmitted=false,isPaused=false,isAutoPaused=false,isStudyPaused=false,questionStates=[],lastSaveTime=0,saveTimeout=null;
+
+/* =================== TIMER =================== */
+function setTimer(s){pausedRemaining=null;timerEndTime=Date.now()+s*1000;timeRemaining=s}
+function pauseTimer(){if(timerEndTime!==null){pausedRemaining=Math.max(0,Math.round((timerEndTime-Date.now())/1000));timerEndTime=null}}
+function resumeTimer(){if(pausedRemaining!==null){timerEndTime=Date.now()+pausedRemaining*1000;pausedRemaining=null}}
+function tickTimer(){if(isSubmitted||isPaused||isStudyPaused)return;if(timerEndTime===null)return;timeRemaining=Math.max(0,Math.round((timerEndTime-Date.now())/1000));updateTimerDisplay();if(timeRemaining<=0){timeRemaining=0;if(CONFIG.AUTO_SUBMIT_ON_TIMEOUT){submitTest(true);return}}if(timeRemaining%15===0)saveAttempt()}
+function updateTimerDisplay(){const el=document.getElementById('timerDisplay');if(!el)return;const h=Math.floor(timeRemaining/3600),m=Math.floor((timeRemaining%3600)/60),s=timeRemaining%60,pad=n=>String(n).padStart(2,'0');el.textContent=pad(h)+':'+pad(m)+':'+pad(s);const box=document.getElementById('timerBox');if(timeRemaining<=300&&timeRemaining>0&&!isPaused&&!isStudyPaused)box.classList.add('warning');else box.classList.remove('warning')}
+
+/* =================== AUTOSAVE =================== */
+function saveAttempt(){if(isSubmitted)return;try{const d={version:STORAGE_VERSION,timestamp:Date.now(),currentIndex,timeRemaining,timerEndTime,questionStates,totalQuestions:questions.length};localStorage.setItem(STORAGE_KEY,JSON.stringify(d));lastSaveTime=Date.now();showSaveStatus()}catch(e){}}
+function showSaveStatus(){const el=document.getElementById('saveStatus');if(!el)return;el.textContent='💾 Saved';el.classList.add('visible');clearTimeout(el._hideT);el._hideT=setTimeout(()=>el.classList.remove('visible'),1500)}
+function throttledSave(){const n=Date.now();if(n-lastSaveTime>2000)saveAttempt();else{clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAttempt,2000-(n-lastSaveTime))}}
+function getSavedAttempt(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return null;const d=JSON.parse(r);if(!d||d.version!==STORAGE_VERSION)return null;if(!d.questionStates||!Array.isArray(d.questionStates))return null;if(d.timeRemaining<=0)return null;return d}catch(e){return null}}
+function formatTimeAgo(ts){const df=Math.floor((Date.now()-ts)/1000);if(df<60)return df+' seconds ago';if(df<3600)return Math.floor(df/60)+' min ago';if(df<86400)return Math.floor(df/3600)+' hr ago';return Math.floor(df/86400)+' day(s) ago'}
+function formatTimeLeft(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;if(h>0)return h+'h '+m+'m '+ss+'s';return m+'m '+ss+'s'}
+function countAnswered(states){let n=0;states.forEach(st=>{if(st.status==='saved')n++});return n}
+
+/* =================== START / RESUME =================== */
+function checkSavedAndShowBanner(){const s=getSavedAttempt();if(!s){hideBanner();startNewTest();return}const a=countAnswered(s.questionStates);document.getElementById('resumeInfo').innerHTML='Saved at <strong>Q'+(s.currentIndex+1)+'/'+s.totalQuestions+'</strong> · <strong>'+a+'</strong> answered · <strong>'+formatTimeLeft(s.timeRemaining)+'</strong> left · saved <strong>'+formatTimeAgo(s.timestamp)+'</strong>';document.getElementById('resumeBanner').classList.add('visible');document.getElementById('testView').style.display='none';document.getElementById('testHeader').style.display='none'}
+function hideBanner(){document.getElementById('resumeBanner').classList.remove('visible')}
+function resumeAttempt(){const s=getSavedAttempt();if(!s){startFresh();return}questions=sourceQuestions.map(q=>({...q}));timeRemaining=s.timeRemaining;currentIndex=Math.min(s.currentIndex,questions.length-1);isSubmitted=false;isPaused=false;isAutoPaused=false;isStudyPaused=false;questionStates=s.questionStates.map(st=>({selectedOption:st.selectedOption,status:st.status,markedForReview:st.markedForReview,visited:st.visited}));while(questionStates.length<questions.length)questionStates.push({selectedOption:null,status:'idle',markedForReview:false,visited:false});questionStates.length=questions.length;hideBanner();launchTest(true)}
+function startFresh(){try{localStorage.removeItem(STORAGE_KEY)}catch(e){}hideBanner();startNewTest()}
+function startNewTest(){if(!sourceQuestions||sourceQuestions.length===0){alert('⚠️ No source questions loaded.');return}questions=sourceQuestions.map(q=>({...q}));setTimer(questions.length*SECONDS_PER_QUESTION);currentIndex=0;isSubmitted=false;isPaused=false;isAutoPaused=false;isStudyPaused=false;questionStates=questions.map(()=>({selectedOption:null,status:'idle',markedForReview:false,visited:false}));questionStates[0].visited=true;launchTest(false)}
+function launchTest(resumed){document.getElementById('testView').style.display='flex';document.getElementById('testHeader').style.display='flex';document.getElementById('resultsView').classList.remove('visible');document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('pauseBtn').textContent='⏸ Pause';document.getElementById('pauseBtn').classList.remove('resume');document.getElementById('questionPanel').classList.remove('locked');document.getElementById('sidebar').classList.remove('locked');document.getElementById('timerBox').classList.remove('paused');document.getElementById('timerBox').classList.remove('warning');document.getElementById('studyPauseBar').classList.remove('visible');if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(tickTimer,1000);if(!resumed&&pausedRemaining===null&&timerEndTime===null)setTimer(questions.length*SECONDS_PER_QUESTION);if(resumed&&pausedRemaining!==null)resumeTimer();updateTimerDisplay();renderQuestion();renderPalette();updateStats();saveAttempt()}
+function initTest(){if(getSavedAttempt())checkSavedAndShowBanner();else startNewTest()}
+
+/* =================== PAUSE =================== */
+function togglePause(){if(isSubmitted)return;if(isStudyPaused){resumeStudy();return}if(!isPaused)pauseTest(false);else resumeTest()}
+function pauseTest(auto){if(isPaused||isSubmitted)return;isPaused=true;isAutoPaused=auto;pauseTimer();const m=document.getElementById('pauseModal'),b=document.getElementById('pauseBadge'),i=document.getElementById('pauseIcon'),t=document.getElementById('pauseTitle'),msg=document.getElementById('pauseMessage');if(auto){m.classList.add('auto');b.style.display='inline-block';i.textContent='🔒';t.textContent='Exam Auto-Paused';msg.innerHTML='പേജ് minimize / tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.'}else{m.classList.remove('auto');b.style.display='none';i.textContent='⏸';t.textContent='Exam Paused';msg.innerHTML='പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.'}document.getElementById('pauseOverlay').classList.add('visible');document.getElementById('pauseBtn').textContent='▶ Resume';document.getElementById('pauseBtn').classList.add('resume');document.getElementById('timerBox').classList.add('paused');document.getElementById('timerBox').classList.remove('warning');document.getElementById('questionPanel').classList.add('locked');document.getElementById('sidebar').classList.add('locked')}
+function resumeTest(){if(!isPaused||isSubmitted)return;isPaused=false;isAutoPaused=false;resumeTimer();document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('pauseBtn').textContent='⏸ Pause';document.getElementById('pauseBtn').classList.remove('resume');document.getElementById('timerBox').classList.remove('paused');document.getElementById('questionPanel').classList.remove('locked');document.getElementById('sidebar').classList.remove('locked');updateTimerDisplay()}
+function startStudyPause(){if(isStudyPaused||isSubmitted||isPaused)return;isStudyPaused=true;pauseTimer();document.getElementById('studyPauseBar').classList.add('visible');document.getElementById('timerBox').classList.add('paused');document.getElementById('timerBox').classList.remove('warning')}
+function resumeStudy(){if(!isStudyPaused)return;isStudyPaused=false;resumeTimer();document.getElementById('studyPauseBar').classList.remove('visible');document.getElementById('timerBox').classList.remove('paused');updateTimerDisplay()}
+
+/* =================== RENDER =================== */
+function renderQuestion(){const q=questions[currentIndex],st=questionStates[currentIndex];if(!q||!st)return;st.visited=true;document.getElementById('qNumber').textContent='Question '+(currentIndex+1);document.getElementById('qSubject').textContent=q.subject;document.getElementById('qText').textContent=q.question;renderOptions();renderExplanation();renderLearningPanel();renderActionButtons();renderPalette();updateStats();throttledSave()}
+function renderOptions(){const q=questions[currentIndex],st=questionStates[currentIndex],list=document.getElementById('optionsList');list.innerHTML='';const locked=st.status==='saved'||st.status==='revealed';q.options.forEach((opt,i)=>{const b=document.createElement('button');b.className='option-btn';b.textContent=opt;if(locked){b.classList.add('locked');if(i===q.correct)b.classList.add('correct-highlight');else if(i===st.selectedOption)b.classList.add('wrong-highlight')}else{if(i===st.selectedOption)b.classList.add('selected');b.onclick=()=>{st.selectedOption=i;renderOptions();renderActionButtons();throttledSave()}}list.appendChild(b)})}
+function renderExplanation(){const q=questions[currentIndex],st=questionStates[currentIndex],box=document.getElementById('explanationBox'),c=document.getElementById('expContent');if(st.status==='saved'||st.status==='revealed'){let p='';if(st.status==='saved'&&st.selectedOption!==null){if(st.selectedOption===q.correct)p='<span class="exp-correct">✔ ശരി!</span>\n\n';else p='<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: '+String.fromCharCode(65+q.correct)+'\n\n'}else if(st.status==='revealed'){p='<span class="exp-correct">✔ ശരിയായ ഉത്തരം: '+String.fromCharCode(65+q.correct)+'</span>\n\n'}c.textContent=p+q.explanation;box.classList.add('visible')}else{box.classList.remove('visible');c.textContent=''}}
+function renderLearningPanel(){const q=questions[currentIndex],st=questionStates[currentIndex],box=document.getElementById('learningPanel');if(!box)return;if(st.status!=='saved'&&st.status!=='revealed'){box.style.display='none';return}box.style.display='block';const b=document.getElementById('learningBody');let h='';if(q.beginnerNote)h+='<div class="lp-section"><span class="lp-title beginner">🌱 തുടക്കക്കാർക്കുള്ള കുറിപ്പ്</span><div class="lp-beginner">'+escapeHtml(q.beginnerNote)+'</div></div>';if(q.optionAnalysis&&q.optionAnalysis.length){h+='<div class="lp-section"><span class="lp-title options">🔍 ഓപ്ഷൻ അപഗ്രഥനം</span>';q.optionAnalysis.forEach(oa=>{const cl=oa.includes('✅')?'correct':'wrong';h+='<div class="lp-option-item '+cl+'">'+escapeHtml(oa)+'</div>'});h+='</div>'}if(q.rejectionTrick)h+='<div class="lp-section"><span class="lp-title trick">🎯 തെറ്റായ ഓപ്ഷനുകൾ ഒഴിവാക്കാനുള്ള വഴി</span><div class="lp-trick">'+escapeHtml(q.rejectionTrick)+'</div></div>';if(q.examTrap)h+='<div class="lp-section"><span class="lp-title trap">⚠️ പി.എസ്.സി. ചതിക്കുഴി</span><div class="lp-trap">'+escapeHtml(q.examTrap)+'</div></div>';b.innerHTML=h;const hd=document.querySelector('.learning-header');if(hd)hd.classList.remove('open');b.classList.remove('open')}
+function toggleLearningPanel(hd){hd.classList.toggle('open');document.getElementById('learningBody').classList.toggle('open')}
+function renderActionButtons(){const st=questionStates[currentIndex],c=document.getElementById('actionButtons');c.innerHTML='';const locked=st.status==='saved'||st.status==='revealed';function add(l,cls,fn){const b=document.createElement('button');b.className='btn '+cls;b.textContent=l;b.onclick=fn;c.appendChild(b)}if(!locked){if(st.selectedOption!==null){add('💾 Save','btn-save',saveAnswer);add('✖ Clear Response','btn-clear',clearResponse);add('👁 Show Answer','btn-show',showAnswer);add('⏭ Skip & Show','btn-skip-show',skipAndShow);add('🔖 Mark for Review','btn-review',markForReview);add('→ Next','btn-next',nextQuestion)}else{add('👁 Show Answer','btn-show',showAnswer);add('⏭ Skip & Show','btn-skip-show',skipAndShow);add('🔖 Mark for Review','btn-review',markForReview);add('→ Next','btn-next',nextQuestion)}}else{add('✖ Clear Response','btn-clear',clearResponse);add('→ Next','btn-next',nextQuestion)}}
+function renderPalette(){const g=document.getElementById('paletteGrid');g.innerHTML='';questions.forEach((q,i)=>{const st=questionStates[i],b=document.createElement('button');b.className='palette-btn';b.textContent=i+1;if(st.status==='saved')b.classList.add('answered');else if(st.markedForReview)b.classList.add('review');else if(st.visited)b.classList.add('visited-not-answered');else b.classList.add('not-visited');if(i===currentIndex)b.classList.add('active');b.onclick=()=>gotoQuestion(i);g.appendChild(b)})}
+function updateStats(){let a=0,r=0,at=0;questionStates.forEach(st=>{if(st.status==='saved'){a++;at++}if(st.markedForReview)r++});document.getElementById('statAnswered').textContent=a;document.getElementById('statNotAnswered').textContent=questions.length-a;document.getElementById('statReview').textContent=r;document.getElementById('statAttempted').textContent=at}
+
+/* =================== ACTIONS =================== */
+function saveAnswer(){const st=questionStates[currentIndex];if(st.selectedOption===null)return;st.status='saved';startStudyPause();renderQuestion();saveAttempt()}
+function showAnswer(){const st=questionStates[currentIndex];st.status='revealed';startStudyPause();renderQuestion();saveAttempt()}
+function skipAndShow(){const st=questionStates[currentIndex];st.status='revealed';st.markedForReview=true;startStudyPause();renderQuestion();saveAttempt()}
+function markForReview(){const st=questionStates[currentIndex];st.markedForReview=!st.markedForReview;renderQuestion();saveAttempt();setTimeout(()=>{if(currentIndex<questions.length-1)nextQuestion()},400)}
+function clearResponse(){const st=questionStates[currentIndex];if(st.status==='saved'||st.status==='revealed'||st.selectedOption!==null||st.markedForReview){if(!confirm('ഈ ചോദ്യത്തിന്റെ ഉത്തരം Clear ചെയ്യണോ?'))return}st.selectedOption=null;st.status='idle';st.markedForReview=false;renderQuestion();saveAttempt()}
+function nextQuestion(){if(isStudyPaused)resumeStudy();if(currentIndex<questions.length-1){currentIndex++;renderQuestion()}else{const g=confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?');if(g)submitTest(false)}}
+function gotoQuestion(i){if(isStudyPaused)resumeStudy();currentIndex=i;renderQuestion()}
+
+/* =================== SUBMIT & RESULTS =================== */
+function submitTest(auto){if(isSubmitted)return;if(!auto&&timeRemaining>0){if(!confirm('പരീക്ഷ Submit ചെയ്യണോ?'))return}isSubmitted=true;if(timerInterval)clearInterval(timerInterval);try{localStorage.removeItem(STORAGE_KEY)}catch(e){}renderResults()}
+function renderResults(){document.getElementById('testView').style.display='none';document.getElementById('testHeader').style.display='none';document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('studyPauseBar').classList.remove('visible');document.getElementById('resultsView').classList.add('visible');let total=questions.length,attempted=0,correct=0,wrong=0,unanswered=0;questions.forEach((q,i)=>{const st=questionStates[i];if(st.status==='saved'){attempted++;if(st.selectedOption===q.correct)correct++;else wrong++}else unanswered++});const neg=wrong*NEGATIVE_MARKING,score=correct-neg;const cards=[{label:'ആകെ ചോദ്യങ്ങൾ',value:total,cls:''},{label:'ശ്രമിച്ചവ',value:attempted,cls:''},{label:'ശരിയായവ',value:correct,cls:'correct-card'},{label:'തെറ്റായവ',value:wrong,cls:'wrong-card'},{label:'നെഗറ്റീവ് മാർക്ക്',value:'-'+neg.toFixed(2),cls:'negative-card'},{label:'ആകെ സ്കോർ',value:score.toFixed(2),cls:'score-card'},{label:'ഉത്തരം നൽകാത്തവ',value:unanswered,cls:''}];document.getElementById('summaryCards').innerHTML=cards.map(c=>'<div class="summary-card '+c.cls+'"><div class="sc-value">'+c.value+'</div><div class="sc-label">'+c.label+'</div></div>').join('');const sm={};questions.forEach((q,i)=>{const st=questionStates[i];if(!sm[q.subject])sm[q.subject]={total:0,attempted:0,correct:0,wrong:0,unanswered:0,score:0};const s=sm[q.subject];s.total++;if(st.status==='saved'){s.attempted++;if(st.selectedOption===q.correct){s.correct++;s.score+=1}else{s.wrong++;s.score-=NEGATIVE_MARKING}}else s.unanswered++});let th='';Object.keys(sm).forEach(sub=>{const s=sm[sub];th+='<tr><td>'+sub+'</td><td>'+s.total+'</td><td>'+s.attempted+'</td><td>'+s.correct+'</td><td>'+s.wrong+'</td><td>'+s.unanswered+'</td><td>'+s.score.toFixed(2)+'</td></tr>'});document.getElementById('subjectTableBody').innerHTML=th;let dh='',c=0;questions.forEach((q,i)=>{const st=questionStates[i];const isW=st.status==='saved'&&st.selectedOption!==q.correct;const isR=st.status==='revealed';const isRev=st.status!=='saved'&&st.markedForReview;if(!isW&&!isR&&!isRev)return;c++;let tl='';if(isW)tl='❌ തെറ്റായ ഉത്തരം';else if(isR)tl='👁 ഉത്തരം കണ്ട ചോദ്യം';else tl='🔖 Review';dh+='<div class="detail-item"><div class="di-info"><strong>Q'+(i+1)+'</strong> · '+q.subject+' · '+tl+'</div><div class="di-question">'+escapeHtml(q.question)+'</div>'+(st.selectedOption!==null?'<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">'+escapeHtml(q.options[st.selectedOption])+'</span></div>':'<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>')+'<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">'+escapeHtml(q.options[q.correct])+'</span></div><div class="di-explanation">'+escapeHtml(q.explanation)+'</div></div>'});document.getElementById('detailList').innerHTML=c>0?dh:'<p style="color:#8a8f9e;text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';window.scrollTo(0,0)}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function restartTest(){if(!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?'))return;try{localStorage.removeItem(STORAGE_KEY)}catch(e){}document.getElementById('resultsView').classList.remove('visible');startNewTest()}
+
+/* =================== KEYBOARD =================== */
+document.addEventListener('keydown',e=>{if(isSubmitted||isPaused)return;if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable))return;const st=questionStates[currentIndex];if(!st)return;const locked=st.status==='saved'||st.status==='revealed';if(e.key>='1'&&e.key<='4'&&!locked){const i=parseInt(e.key,10)-1;if(i<questions[currentIndex].options.length){st.selectedOption=i;renderOptions();renderActionButtons();throttledSave();e.preventDefault()}}else if(e.key==='Enter'&&!e.shiftKey&&!locked&&st.selectedOption!==null){saveAnswer();e.preventDefault()}else if(e.key==='Enter'&&e.shiftKey&&!locked){skipAndShow();e.preventDefault()}else if(e.key.toLowerCase()==='r'&&!locked){markForReview();e.preventDefault()}else if(e.key.toLowerCase()==='c'&&!locked){clearResponse();e.preventDefault()}else if(e.key.toLowerCase()==='n'){nextQuestion();e.preventDefault()}else if(e.key===' '){if(!locked){showAnswer();e.preventDefault()}}else if(e.key.toLowerCase()==='p'){togglePause();e.preventDefault()}});
+
+/* =================== AUTO-PAUSE =================== */
+document.addEventListener('visibilitychange',()=>{if(CONFIG.AUTO_PAUSE_ON_TAB_SWITCH&&document.hidden&&!isSubmitted&&!isPaused&&!isStudyPaused){pauseTest(true)}});
+
+/* =================== BEFORE UNLOAD =================== */
+window.addEventListener('beforeunload',e=>{if(!isSubmitted&&questions.length>0){saveAttempt();e.preventDefault();e.returnValue=''}});
+
+/* =================== INIT =================== */
+initTest();
+</script>
+</body>
+</html>

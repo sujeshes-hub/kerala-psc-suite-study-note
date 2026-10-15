@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kerala PSC – Physics Mock Test (100 Q)</title>
+<style>
+:root{--bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;--primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;--green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;--gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,.08);--radius:10px;--radius-sm:6px;--font:'Noto Sans Malayalam','Nirmala UI','Segoe UI',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;font-size:16px}
+.header{position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:var(--shadow)}
+.header-title{font-size:1rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{display:flex;align-items:center;gap:8px;font-size:1.25rem;font-weight:700;background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);border:2px solid var(--primary);font-variant-numeric:tabular-nums}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn{padding:8px 16px;border-radius:var(--radius-sm);border:2px solid var(--orange);background:var(--orange-bg);color:var(--orange);font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:40px}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.study-pause-bar{display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem}
+.save-status{font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;background:var(--green-bg);border:1px solid var(--green);opacity:0;transition:opacity .3s}
+.save-status.visible{opacity:1}
+.resume-banner{display:none;background:linear-gradient(135deg,#1e40af,#3730a3);color:#fff;padding:18px 20px;margin:10px;border-radius:12px}
+.resume-banner.visible{display:block}
+.resume-banner-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+.resume-banner-info{font-size:.88rem;margin-bottom:14px;background:rgba(255,255,255,.12);padding:10px 14px;border-radius:8px}
+.resume-banner-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.banner-btn{padding:10px 20px;border-radius:8px;border:2px solid #fff;background:transparent;color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px}
+.banner-btn.primary{background:#fff;color:#1e40af}
+.banner-btn.danger{border-color:#fca5a5;color:#fca5a5}
+.main-container{display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;align-items:flex-start}
+.question-panel{flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;min-width:0}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none}
+.sidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);padding:3px 12px;border-radius:20px}
+.q-subject{font-size:.82rem;font-weight:600;text-transform:uppercase;color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;line-height:1.5;white-space:pre-line;min-height:48px}
+.option-btn:hover:not(.locked):not(.correct-highlight):not(.wrong-highlight){border-color:var(--primary);background:var(--primary-light)}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600}
+.explanation-box{background:#f8f9fc;border-left:4px solid var(--primary);padding:16px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;line-height:1.7;white-space:pre-line;color:var(--secondary);display:none}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem;text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}.exp-wrong{font-weight:600;color:var(--red)}
+.learning-panel{margin-top:18px;border:2px dashed var(--primary);border-radius:var(--radius);overflow:hidden;background:#fbfcff;display:none}
+.learning-header{background:var(--primary-light);padding:10px 16px;font-weight:700;color:var(--primary);font-size:.88rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.learning-header .arrow{transition:transform .2s}
+.learning-header.open .arrow{transform:rotate(90deg)}
+.learning-body{display:none;padding:16px 18px;font-size:.88rem;line-height:1.7}
+.learning-body.open{display:block}
+.lp-section{margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border)}
+.lp-section:last-child{border-bottom:none}
+.lp-title{font-weight:700;color:var(--primary);display:block;margin-bottom:6px;font-size:.85rem;text-transform:uppercase}
+.lp-title.beginner{color:#0e7490}.lp-title.options{color:#7c2d12}.lp-title.trick{color:#b45309}.lp-title.trap{color:#b91c1c}
+.lp-beginner{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px 14px;border-radius:0 6px 6px 0;white-space:pre-line}
+.lp-option-item{padding:8px 12px;margin-bottom:6px;border-radius:6px;background:#f9fafb;border-left:3px solid var(--border);white-space:pre-line}
+.lp-option-item.correct{background:#e6f4ea;border-left-color:var(--green)}
+.lp-option-item.wrong{background:#fde8e8;border-left-color:var(--red)}
+.lp-trick{background:#fffbeb;border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;white-space:pre-line}
+.lp-trap{background:#fef2f2;border-left:4px solid var(--red);padding:10px 14px;border-radius:0 6px 6px 0;white-space:pre-line}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:var(--font);font-size:.88rem;font-weight:600;min-height:44px;display:inline-flex;align-items:center;gap:6px}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.keyboard-hint{font-size:.75rem;color:var(--gray);margin-top:8px}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.palette-btn{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px}
+.palette-btn.not-visited{background:var(--gray-bg);border-color:var(--border);color:var(--gray)}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid #2c3e8f;outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:.75rem;color:var(--secondary)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
+.legend-dot.not-visited{background:var(--gray-bg);border-color:var(--border)}
+.legend-dot.visited-not-answered{background:var(--red-bg);border-color:var(--red)}
+.legend-dot.answered{background:var(--green-bg);border-color:var(--green)}
+.legend-dot.review{background:var(--orange-bg);border-color:var(--orange)}
+.legend-dot.active-dot{background:var(--panel);border-color:#2c3e8f;outline:2px solid #2c3e8f}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,.85);z-index:9999;justify-content:center;align-items:center;padding:20px}
+.pause-overlay.visible{display:flex}
+.pause-modal{background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;text-align:center}
+.pause-icon{font-size:4rem;margin-bottom:16px}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px}
+.pause-modal.auto h2{color:#8b5cf6}
+.pause-modal p{color:var(--secondary);margin-bottom:24px}
+.pause-modal .resume-main-btn{padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px}
+.pause-modal .pause-note{font-size:.8rem;color:var(--gray);margin-top:16px}
+.auto-badge{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:12px;margin-bottom:12px;text-transform:uppercase}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 16px;text-align:center;border-top:4px solid var(--primary)}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section,.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table-section h3,.result-detail-list h3{font-size:1.05rem;font-weight:700;margin-bottom:14px}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:#fafbfd}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){.main-container{flex-direction:column;padding:10px}.question-panel{padding:16px}.sidebar{width:100%}.q-text{font-size:.92rem}.option-btn{padding:11px 14px;font-size:.86rem}.btn{padding:8px 12px;font-size:.78rem}}
+</style>
+</head>
+<body>
+<header class="header" id="testHeader">
+<span class="header-title">Kerala PSC – Physics Mock Test (100 Q)</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+<div class="study-pause-bar" id="studyPauseBar">
+<span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+<button onclick="resumeStudy()">▶ Resume Timer</button>
+</div>
+<div class="resume-banner" id="resumeBanner">
+<div class="resume-banner-title">📥 Saved attempt found</div>
+<div class="resume-banner-info" id="resumeInfo">Loading...</div>
+<div class="resume-banner-buttons">
+<button class="banner-btn primary" onclick="resumeAttempt()">▶ Resume</button>
+<button class="banner-btn danger" onclick="startFresh()">🔄 Start Fresh</button>
+</div>
+</div>
+<div class="pause-overlay" id="pauseOverlay">
+<div class="pause-modal" id="pauseModal">
+<span class="auto-badge" id="pauseBadge" style="display:none;">AUTO-PAUSED</span>
+<div class="pause-icon" id="pauseIcon">⏸</div>
+<h2 id="pauseTitle">Exam Paused</h2>
+<p id="pauseMessage">പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
+<button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+<p class="pause-note">Note: പരീക്ഷ തുടരുന്നതുവരെ ഉത്തരം നൽകാൻ സാധിക്കില്ല.</p>
+</div>
+</div>
+<div class="main-container" id="testView">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><span id="expContent"></span></div>
+<div class="learning-panel" id="learningPanel">
+<div class="learning-header" onclick="toggleLearningPanel(this)">
+<span>📚 Learning Panel — തുടക്കക്കാർക്കുള്ള കുറിപ്പുകൾ, ഓപ്ഷൻ വിശകലനം & ഒഴിവാക്കൽ വഴികൾ</span>
+<span class="arrow">▶</span>
+</div>
+<div class="learning-body" id="learningBody"></div>
+</div>
+<div class="action-buttons" id="actionButtons"></div>
+<div class="keyboard-hint">Shortcuts: 1-4 Select | Enter Save | Space Show Answer | Shift+Enter Skip | R Review | C Clear | N Next | P Pause</div>
+</div>
+<div class="sidebar" id="sidebar">
+<div class="palette-card">
+<h3>Question Palette</h3>
+<div class="palette-grid" id="paletteGrid"></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-dot not-visited"></span> Not Visited</span>
+<span class="legend-item"><span class="legend-dot visited-not-answered"></span> Visited</span>
+<span class="legend-item"><span class="legend-dot answered"></span> Answered</span>
+<span class="legend-item"><span class="legend-dot review"></span> Review</span>
+<span class="legend-item"><span class="legend-dot active-dot"></span> Active</span>
+</div>
+</div>
+<div class="stats-card">
+<h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div>
+</div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div>
+</div>
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Mock Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section">
+<h3>Subject-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div>
+</div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ ഉത്തരങ്ങളും വിട്ടുകളഞ്ഞവയും</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+<script>
+const CONFIG={SECONDS_PER_QUESTION:30,NEGATIVE_MARKING:0.33,AUTO_SUBMIT_ON_TIMEOUT:true,AUTO_PAUSE_ON_TAB_SWITCH:true,STORAGE_KEY:'kpsc_physics_v1',STORAGE_VERSION:1};
+const STORAGE_KEY=CONFIG.STORAGE_KEY,STORAGE_VERSION=CONFIG.STORAGE_VERSION,SECONDS_PER_QUESTION=CONFIG.SECONDS_PER_QUESTION,NEGATIVE_MARKING=CONFIG.NEGATIVE_MARKING;
+
+const sourceQuestions=[
+{subject:"ഭൗതികശാസ്ത്രം – യൂണിറ്റുകൾ",question:"ഭൗതിക അളവുകളും (Physical Quantities) അവയുടെ യൂണിറ്റുകളും:\na. ബലം (Force) – 1. വാട്ട്\nb. പ്രവൃത്തി (Work) – 2. പാസ്കൽ\nc. പവർ (Power) – 3. ന്യൂട്ടൺ\nd. മർദ്ദം (Pressure) – 4. ജൂൾ",options:["A) a-3, b-4, c-1, d-2","B) a-1, b-2, c-3, d-4","C) a-4, b-3, c-2, d-1","D) a-3, b-1, c-4, d-2"],correct:0,explanation:"ബലത്തിന്റെ യൂണിറ്റ് ന്യൂട്ടൺ, പ്രവൃത്തിക്കും ഊർജ്ജത്തിനും ജൂൾ, പവറിന് വാട്ട്, മർദ്ദത്തിന് പാസ്കൽ എന്നിങ്ങനെയാണ്.",
+beginnerNote:"SI Units:\n• Force → Newton (N)\n• Work/Energy → Joule (J)\n• Power → Watt (W)\n• Pressure → Pascal (Pa)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'N-J-W-Pa — Newton for force, Joule for work, Watt for power, Pascal for pressure'.",
+examTrap:"⚠️ Work, Energy, Heat — എല്ലാം ജൂളിൽ അളക്കുന്നു."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഉപകരണങ്ങൾ",question:"ഉപകരണങ്ങളും അവയുടെ ഉപയോഗങ്ങളും:\na. ബാരോമീറ്റർ – 1. ആപേക്ഷിക ആർദ്രത\nb. ഹൈഗ്രോമീറ്റർ – 2. പാലിന്റെ സാന്ദ്രത\nc. ലാക്റ്റോമീറ്റർ – 3. ഉയർന്ന താപനില\nd. പൈറോമീറ്റർ – 4. അന്തരീക്ഷ മർദ്ദം",options:["A) a-4, b-1, c-2, d-3","B) a-1, b-2, c-3, d-4","C) a-4, b-3, c-2, d-1","D) a-2, b-4, c-1, d-3"],correct:0,explanation:"ബാരോമീറ്റർ മർദ്ദം, ഹൈഗ്രോമീറ്റർ ആർദ്രത (Humidity), ലാക്റ്റോമീറ്റർ പാലിന്റെ സാന്ദ്രത, പൈറോമീറ്റർ ഉയർന്ന താപനില എന്നിവ അളക്കുന്നു.",
+beginnerNote:"Instruments:\n• Barometer — Atmospheric pressure\n• Hygrometer — Humidity\n• Lactometer — Milk purity/density\n• Pyrometer — Very high temperature\n• Hydrometer — Liquid density",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Baro-Atm; Hygro-Humid; Lacto-Milk; Pyro-High Temp'.",
+examTrap:"⚠️ Hygrometer (Humidity) ≠ Hydrometer (Liquid density)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഒപ്റ്റിക്സ്",question:"നേത്രരോഗങ്ങളും അവയ്ക്കുള്ള പരിഹാര ലെൻസുകളും:\na. ഹ്രസ്വദൃഷ്ടി (Myopia) – 1. സിലിണ്ട്രിക്കൽ\nb. ദീർഘദൃഷ്ടി (Hypermetropia) – 2. ബൈഫോക്കൽ\nc. അസ്റ്റിഗ്മാറ്റിസം – 3. കോൺകേവ്\nd. വെള്ളെഴുത്ത് (Presbyopia) – 4. കോൺവെക്സ്",options:["A) a-3, b-4, c-1, d-2","B) a-4, b-3, c-2, d-1","C) a-3, b-1, c-4, d-2","D) a-2, b-4, c-1, d-3"],correct:0,explanation:"ഹ്രസ്വദൃഷ്ടിക്ക് കോൺകേവ് (അവതല) ലെൻസും ദീർഘദൃഷ്ടിക്ക് കോൺവെക്സ് (ഉത്തല) ലെൻസുമാണ് ഉപയോഗിക്കുന്നത്.",
+beginnerNote:"Vision Defects:\n• Myopia (Near-sighted) → Concave\n• Hypermetropia (Far-sighted) → Convex\n• Astigmatism → Cylindrical\n• Presbyopia (Old age) → Bifocal",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Myopia-Concave; Hyper-Convex; Astig-Cylindrical; Presby-Bifocal'.",
+examTrap:"⚠️ Presbyopia = aging; Myopia = ചെറുപ്പത്തിൽ."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഊർജ്ജം",question:"ഊർജ്ജ മാറ്റങ്ങൾ (Energy Conversions):\na. ഡൈനാമോ – 1. വൈദ്യുതോർജ്ജം → ശബ്ദോർജ്ജം\nb. ഇലക്ട്രിക് മോട്ടോർ – 2. ശബ്ദോർജ്ജം → വൈദ്യുതോർജ്ജം\nc. മൈക്രോഫോൺ – 3. യാന്ത്രികോർജ്ജം → വൈദ്യുതോർജ്ജം\nd. ലൗഡ്സ്പീക്കർ – 4. വൈദ്യുതോർജ്ജം → യാന്ത്രികോർജ്ജം",options:["A) a-3, b-4, c-2, d-1","B) a-1, b-2, c-3, d-4","C) a-4, b-3, c-1, d-2","D) a-3, b-2, c-4, d-1"],correct:0,explanation:"ഡൈനാമോ യാന്ത്രികോർജ്ജത്തെ വൈദ്യുതോർജ്ജമാക്കുന്നു. മോട്ടോർ ഇതിന് വിപരീതമായി പ്രവർത്തിക്കുന്നു.",
+beginnerNote:"Energy Conversions:\n• Dynamo/Generator — Mechanical → Electrical\n• Motor — Electrical → Mechanical\n• Microphone — Sound → Electrical\n• Loudspeaker — Electrical → Sound",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Dynamo & Motor are opposites; Mic & Speaker are opposites'.",
+examTrap:"⚠️ Generator ≠ Motor; Mic ≠ Speaker."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ലഘുയന്ത്രങ്ങൾ",question:"ഉത്തോലകങ്ങളും (Levers) ഉദാഹരണങ്ങളും:\na. ഒന്നാം വർഗ്ഗ ഉത്തോലകം – 1. ഐസ് ടോങ്സ്\nb. രണ്ടാം വർഗ്ഗ ഉത്തോലകം – 2. കത്രിക\nc. മൂന്നാം വർഗ്ഗ ഉത്തോലകം – 3. പാക്കുവെട്ടി (Nutcracker)",options:["A) a-2, b-3, c-1","B) a-1, b-2, c-3","C) a-3, b-1, c-2","D) a-2, b-1, c-3"],correct:0,explanation:"ധാരം (Fulcrum) നടുവിൽ വരുന്നത് ഒന്നാം വർഗ്ഗം (കത്രിക), രോധം (Load) നടുവിൽ വരുന്നത് രണ്ടാം വർഗ്ഗം (പാക്കുവെട്ടി), യത്നം (Effort) നടുവിൽ വരുന്നത് മൂന്നാം വർഗ്ഗം (ഐസ് ടോങ്സ്).",
+beginnerNote:"Classes of Levers:\n• Class 1 (F in middle) — Scissors, See-saw\n• Class 2 (L in middle) — Nutcracker, Wheelbarrow\n• Class 3 (E in middle) — Ice tongs, Human arm",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'F-L-E = 1st-2nd-3rd' (Fulcrum, Load, Effort order from middle).",
+examTrap:"⚠️ Class 3 gives least mechanical advantage; human arm is class 3."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഗുരുത്വം",question:"ശരിയായ ജോഡി കണ്ടെത്തുക:",options:["A) ഭൂമിയുടെ പാലായന പ്രവേഗം (Escape velocity) – 11.2 km/s","B) ചന്ദ്രന്റെ പാലായന പ്രവേഗം – 11.2 km/s","C) ഭൂമിയുടെ പാലായന പ്രവേഗം – 9.8 m/s²","D) സൂര്യന്റെ പാലായന പ്രവേഗം – 300,000 km/s"],correct:0,explanation:"ഒരു ഗ്രഹത്തിന്റെ ആകർഷണ വലയത്തിൽ നിന്ന് പുറത്തുകടക്കാൻ വേണ്ട കുറഞ്ഞ പ്രവേഗമാണ് പാലായന പ്രവേഗം. ഭൂമിയിലിത് സെക്കൻഡിൽ 11.2 കിലോമീറ്ററാണ്.",
+beginnerNote:"Escape Velocities:\n• Earth — 11.2 km/s\n• Moon — 2.4 km/s\n• Sun — 617 km/s\n• Jupiter — 59.5 km/s",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ Moon = 2.4 km/s.","C) ❌ Unit wrong (m/s² is g).","D) ❌ Wrong value."],
+rejectionTrick:"'Earth = 11.2 km/s; Moon = 2.4 km/s'.",
+examTrap:"⚠️ g (acceleration) = 9.8 m/s² ≠ escape velocity (11.2 km/s)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പ്രകാശം",question:"ശരിയായ ജോഡി കണ്ടെത്തുക:",options:["A) പ്രകാശത്തിന്റെ വേഗത ശൂന്യതയിൽ – 3×10⁸ m/s","B) പ്രകാശ വേഗത ജലത്തിൽ – 3×10⁸ m/s","C) ശബ്ദത്തിന്റെ വേഗത ശൂന്യതയിൽ – 340 m/s","D) ശബ്ദ വേഗത വായുവിൽ – 3×10⁸ m/s"],correct:0,explanation:"പ്രകാശത്തിന് ഏറ്റവും വേഗതയുള്ളത് ശൂന്യതയിലാണ് (3 ലക്ഷം കിലോമീറ്റർ/സെക്കൻഡ്). ശബ്ദത്തിന് ശൂന്യതയിലൂടെ സഞ്ചരിക്കാൻ കഴിയില്ല.",
+beginnerNote:"Key Speeds:\n• Light in vacuum — 3×10⁸ m/s (c)\n• Light in water — 2.25×10⁸ m/s\n• Sound in air (20°C) — 343 m/s\n• Sound in vacuum — 0 (impossible)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ ജലത്തിൽ കുറവ്.","C) ❌ ശബ്ദം ശൂന്യതയിൽ സാധ്യമല്ല.","D) ❌ ശബ്ദ വേഗത 340 m/s."],
+rejectionTrick:"'Light fastest in vacuum; Sound needs a medium'.",
+examTrap:"⚠️ c = 3×10⁸ m/s = 3 lakh km/s."},
+
+{subject:"ഭൗതികശാസ്ത്രം – താപം",question:"താപപ്രേഷണ രീതികൾ — ശരി:",options:["A) ചാലനം (Conduction) – വാതകങ്ങളിൽ","B) സംവഹനം (Convection) – ഖരവസ്തുക്കളിൽ","C) വികിരണം (Radiation) – മാധ്യമം ആവശ്യമില്ല","D) ബാഷ്പീകരണം – താപം പുറത്തുവിടുന്നു"],correct:2,explanation:"സൂര്യനിൽ നിന്നുള്ള താപം ഭൂമിയിലെത്തുന്നത് മാധ്യമം ആവശ്യമില്ലാത്ത വികിരണം (Radiation) വഴിയാണ്. ചാലനം ഖരവസ്തുക്കളിലും സംവഹനം ദ്രാവക/വാതകങ്ങളിലുമാണ് നടക്കുന്നത്.",
+beginnerNote:"Heat Transfer:\n• Conduction — Solids (direct contact)\n• Convection — Liquids/Gases (bulk motion)\n• Radiation — No medium needed (EM waves)",
+optionAnalysis:["A) ❌ ചാലനം ഖരത്തിൽ.","B) ❌ സംവഹനം ദ്രാവകത്തിൽ.","C) ✅ ശരി.","D) ❌ ബാഷ്പീകരണം താപം എടുക്കുന്നു."],
+rejectionTrick:"'Radiation = No medium (Sun to Earth)'.",
+examTrap:"⚠️ Conduction vs Convection vs Radiation — ഓരോന്നിനും വ്യത്യസ്ത medium."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ശബ്ദം",question:"ശബ്ദത്തിന്റെ ശ്രവണ പരിധി — ശരി:",options:["A) മനുഷ്യന്റെ കേൾവി പരിധി – 20 Hz മുതൽ 20,000 Hz വരെ","B) ഇൻഫ്രാസോണിക് – 20,000 Hz ന് മുകളിൽ","C) അൾട്രാസോണിക് – 20 Hz ന് താഴെ","D) വവ്വാലുകൾ പുറപ്പെടുവിക്കുന്നത് – ഇൻഫ്രാസോണിക്"],correct:0,explanation:"20 Hz ന് താഴെയുള്ളത് ഇൻഫ്രാസോണിക്കും, 20,000 Hz ന് മുകളിലുള്ളത് (വവ്വാലുകൾ പുറപ്പെടുവിക്കുന്നത്) അൾട്രാസോണിക്കുമാണ്.",
+beginnerNote:"Sound Frequency Ranges:\n• Infrasonic — < 20 Hz (Elephants, Earthquakes)\n• Audible — 20 Hz to 20,000 Hz (Humans)\n• Ultrasonic — > 20,000 Hz (Bats, Dolphins, SONAR)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ Infrasonic = <20 Hz.","C) ❌ Ultrasonic = >20,000 Hz.","D) ❌ Bats use ultrasonic."],
+rejectionTrick:"'Infra = below; Ultra = above'.",
+examTrap:"⚠️ Infra-SONAR-ലും Ultra-Bats-ലും ഉപയോഗിക്കുന്നു — രണ്ടും വ്യത്യസ്തം."},
+
+{subject:"ഭൗതികശാസ്ത്രം – വർണ്ണങ്ങൾ",question:"പ്രകാശത്തിന്റെ അടിസ്ഥാന വർണ്ണങ്ങൾ (Primary Colors):",options:["A) ചുവപ്പ്, മഞ്ഞ, നീല","B) ചുവപ്പ്, പച്ച, നീല","C) മഞ്ഞ, പച്ച, നീല","D) സിയാൻ, മജന്ത, മഞ്ഞ"],correct:1,explanation:"പ്രകാശത്തിന്റെ അടിസ്ഥാന വർണ്ണങ്ങൾ (Primary colors of light) ചുവപ്പ്, പച്ച, നീല (RGB) എന്നിവയാണ്.",
+beginnerNote:"Color Systems:\n• RGB (Light) — Red, Green, Blue (Additive)\n• CMYK (Pigment) — Cyan, Magenta, Yellow, Black (Subtractive)\n• RYB (Paint) — Red, Yellow, Blue",
+optionAnalysis:["A) ❌ RYB = Paint.","B) ✅ ശരി.","C) ❌.","D) ❌ CMY = Pigment."],
+rejectionTrick:"'Light = RGB; Pigment = CMY'.",
+examTrap:"⚠️ RGB vs RYB vs CMY — ഓരോ context-ലും വ്യത്യസ്തം."},
+
+{subject:"ഭൗതികശാസ്ത്രം – വൈദ്യുതി",question:"അളവുകളും ഉപകരണങ്ങളും — തെറ്റായ ജോഡി:",options:["A) വൈദ്യുത പ്രവാഹം – അമ്മീറ്റർ","B) വോൾട്ടേജ് – വോൾട്ട്മീറ്റർ","C) വൈദ്യുത പ്രതിരോധം – ഗാൽവനോമീറ്റർ","D) വൈദ്യുതോർജ്ജം – വാട്ട് ഹവർ മീറ്റർ"],correct:2,explanation:"ഗാൽവനോമീറ്റർ വൈദ്യുത പ്രവാഹത്തിന്റെ സാന്നിധ്യവും ദിശയും അറിയാനാണ്. പ്രതിരോധം (Resistance) അളക്കുന്നത് ഓംമീറ്റർ (Ohmmeter) ഉപയോഗിച്ചാണ്.",
+beginnerNote:"Measuring Instruments:\n• Ammeter — Current (series)\n• Voltmeter — Voltage (parallel)\n• Ohmmeter — Resistance\n• Galvanometer — Small current/direction\n• Watt-hour meter — Energy",
+optionAnalysis:["A) ✅ ശരി.","B) ✅ ശരി.","C) ❌ Galvanometer ≠ Resistance meter.","D) ✅ ശരി."],
+rejectionTrick:"'Ohm = Ohmmeter'.",
+examTrap:"⚠️ Galvanometer (sensitive current) vs Ammeter (measure current)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – താപനില",question:"താപനിലകളും മൂല്യങ്ങളും — തെറ്റായത്:",options:["A) ജലത്തിന്റെ തിളനില – 100°C","B) ജലത്തിന്റെ ഫ്രീസിംഗ് പോയിന്റ് – 0°C","C) കേവല പൂജ്യം – 0°C","D) മനുഷ്യ ശരീരത്തിന്റെ സാധാരണ താപനില – 37°C"],correct:2,explanation:"കേവല പൂജ്യം എന്നത് 0 കെൽവിൻ (0 K) അല്ലെങ്കിൽ -273.15°C ആണ്. താപനില ഇതിൽ താഴാൻ സാധ്യമല്ല.",
+beginnerNote:"Temperature Facts:\n• Water boils (1 atm) — 100°C = 212°F = 373 K\n• Water freezes — 0°C = 32°F = 273 K\n• Absolute zero — 0 K = -273.15°C = -459.67°F\n• Human body — 37°C = 98.6°F",
+optionAnalysis:["A) ✅ ശരി.","B) ✅ ശരി.","C) ❌ = 0 K = -273.15°C.","D) ✅ ശരി."],
+rejectionTrick:"'Absolute zero = -273°C, not 0°C'.",
+examTrap:"⚠️ Celsius, Fahrenheit, Kelvin — മൂന്നും കൺഫ്യൂസ് ചെയ്യരുത്."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഗുരുത്വം",question:"g (ഗുരുത്വാകർഷണ ത്വരണം) — തെറ്റായത്:",options:["A) ധ്രുവങ്ങളിൽ – ഏറ്റവും കൂടുതൽ","B) ഭൂമധ്യരേഖയിൽ – ഏറ്റവും കുറവ്","C) ഭൂമിയുടെ കേന്ദ്രത്തിൽ – പൂജ്യം","D) സമുദ്രനിരപ്പിലെ ശരാശരി – 11.2 m/s²"],correct:3,explanation:"സമുദ്രനിരപ്പിൽ ഭൂമിയുടെ 'g' യുടെ ശരാശരി മൂല്യം 9.8 m/s² ആണ്. 11.2 എന്നത് പാലായന പ്രവേഗമാണ്.",
+beginnerNote:"Value of g:\n• Poles — 9.832 m/s²\n• Equator — 9.780 m/s²\n• Standard — 9.8 m/s²\n• Center of Earth — 0\n• 11.2 km/s = Escape velocity (NOT g)",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ g = 9.8 m/s²."],
+rejectionTrick:"'g = 9.8 m/s²; Escape = 11.2 km/s'.",
+examTrap:"⚠️ g vs G (Gravitational constant = 6.67×10⁻¹¹)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ചലന നിയമങ്ങൾ",question:"ചലന നിയമങ്ങൾ — തെറ്റായത്:",options:["A) ഒന്നാം നിയമം – ജഡത്വം","B) രണ്ടാം നിയമം – F = ma","C) മൂന്നാം നിയമം – Action = Reaction","D) ആർക്കിമിഡീസ് തത്വം – ഗ്രഹങ്ങളുടെ ചലനം"],correct:3,explanation:"ഗ്രഹങ്ങളുടെ ചലന നിയമങ്ങൾ ആവിഷ്കരിച്ചത് കെപ്ലർ (Kepler) ആണ്. ദ്രാവകങ്ങളിൽ പൊങ്ങിക്കിടക്കുന്നതുമായി ബന്ധപ്പെട്ടതാണ് ആർക്കിമിഡീസ് തത്വം.",
+beginnerNote:"Laws:\n• Newton's 1st — Inertia\n• Newton's 2nd — F = ma\n• Newton's 3rd — Action-Reaction\n• Kepler — Planetary motion\n• Archimedes — Buoyancy",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ Kepler's law."],
+rejectionTrick:"'Planetary = Kepler; Buoyancy = Archimedes'.",
+examTrap:"⚠️ Newton ≠ Kepler ≠ Archimedes ≠ Pascal."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ദർപ്പണങ്ങൾ",question:"ദർപ്പണങ്ങളും ഉപയോഗങ്ങളും — തെറ്റായത്:",options:["A) റിയർ വ്യൂ മിറർ – കോൺവെക്സ്","B) ഷേവിംഗ് മിറർ – കോൺകേവ്","C) സോളാർ കുക്കർ – കോൺവെക്സ്","D) ദന്ത ഡോക്ടർ – കോൺകേവ്"],correct:2,explanation:"പ്രകാശത്തെ ഒരു ബിന്ദുവിലേക്ക് കേന്ദ്രീകരിക്കാൻ സോളാർ കുക്കറുകളിൽ ഉപയോഗിക്കുന്നത് കോൺകേവ് (അവതല) മിററുകളാണ്.",
+beginnerNote:"Mirrors:\n• Convex — Wider view (rear-view, security)\n• Concave — Focus light (solar cooker, dentist, shaving)\n• Plane — Same size image (normal mirror)",
+optionAnalysis:["A) ✅.","B) ✅.","C) ❌ Solar cooker = concave.","D) ✅."],
+rejectionTrick:"'Solar needs focus = Concave'.",
+examTrap:"⚠️ Convex widens; Concave focuses."},
+
+{subject:"ഭൗതികശാസ്ത്രം – അളവുകൾ",question:"കൂട്ടത്തിൽ പെടാത്തത്:",options:["A) മാസ്സ് (Mass)","B) വേഗത (Speed)","C) സമയം (Time)","D) പ്രവേഗം (Velocity)"],correct:3,explanation:"പ്രവേഗം ഒരു സദിശ അളവാണ് (Vector quantity - ദിശയും അളവുമുണ്ട്). മറ്റുള്ളവ അദിശ അളവുകളാണ് (Scalar quantities).",
+beginnerNote:"Scalars vs Vectors:\n• Scalar — Magnitude only (Mass, Speed, Time, Distance, Energy, Work)\n• Vector — Magnitude + Direction (Velocity, Acceleration, Force, Displacement, Momentum)",
+optionAnalysis:["A) ✅ Scalar.","B) ✅ Scalar.","C) ✅ Scalar.","D) ❌ Vector."],
+rejectionTrick:"'Velocity = Vector; Speed = Scalar'.",
+examTrap:"⚠️ Distance (S) vs Displacement (V); Speed (S) vs Velocity (V)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – യൂണിറ്റുകൾ",question:"കൂട്ടത്തിൽ പെടാത്തത്:",options:["A) മീറ്റർ","B) കിലോഗ്രാം","C) സെക്കൻഡ്","D) ന്യൂട്ടൺ"],correct:3,explanation:"മീറ്റർ, കിലോഗ്രാം, സെക്കൻഡ് എന്നിവ അടിസ്ഥാന യൂണിറ്റുകളാണ് (Fundamental units). ന്യൂട്ടൺ ഒരു ഡിറൈവ്ഡ് യൂണിറ്റാണ്.",
+beginnerNote:"SI Units:\n• Fundamental — m, kg, s, A, K, mol, cd (7 total)\n• Derived — N, J, W, Pa, V, etc.",
+optionAnalysis:["A) ✅ Fundamental.","B) ✅ Fundamental.","C) ✅ Fundamental.","D) ❌ Derived."],
+rejectionTrick:"'7 fundamental units: m, kg, s, A, K, mol, cd'.",
+examTrap:"⚠️ Newton = kg·m/s² (derived)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – തരംഗങ്ങൾ",question:"കൂട്ടത്തിൽ പെടാത്തത് (EM waves):",options:["A) എക്സ്-റേ","B) അൾട്രാവയലറ്റ്","C) ശബ്ദ തരംഗങ്ങൾ","D) ഇൻഫ്രാറെഡ്"],correct:2,explanation:"ശബ്ദ തരംഗങ്ങൾ യാന്ത്രിക തരംഗങ്ങളാണ് (Mechanical waves), അവയ്ക്ക് സഞ്ചരിക്കാൻ മാധ്യമം വേണം. മറ്റുള്ളവ വൈദ്യുത കാന്തിക തരംഗങ്ങളാണ്.",
+beginnerNote:"Wave Types:\n• EM waves — No medium (X-ray, UV, IR, Radio, Light)\n• Mechanical — Need medium (Sound, Water, Seismic)",
+optionAnalysis:["A) ✅ EM.","B) ✅ EM.","C) ❌ Mechanical.","D) ✅ EM."],
+rejectionTrick:"'Sound needs a medium; EM waves don't'.",
+examTrap:"⚠️ Sound ≠ EM; cannot travel in vacuum."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഊർജ്ജം",question:"കൂട്ടത്തിൽ പെടാത്തത് (Renewable):",options:["A) സൗരോർജ്ജം","B) കാറ്റ്","C) കൽക്കരി","D) ജലവൈദ്യുതി"],correct:2,explanation:"കൽക്കരി ഒരു പാരമ്പര്യ ഊർജ്ജ സ്രോതസ്സാണ് (Non-renewable). മറ്റുള്ളവ പുനരുപയോഗിക്കാവുന്ന (Renewable) ഊർജ്ജ സ്രോതസ്സുകളാണ്.",
+beginnerNote:"Energy Sources:\n• Renewable — Solar, Wind, Hydro, Tidal, Geothermal, Biomass\n• Non-renewable — Coal, Petroleum, Natural Gas, Nuclear (U)",
+optionAnalysis:["A) ✅ Renewable.","B) ✅ Renewable.","C) ❌ Non-renewable.","D) ✅ Renewable."],
+rejectionTrick:"'Fossil fuels = Non-renewable'.",
+examTrap:"⚠️ Nuclear = Non-renewable (Uranium limited)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ആറ്റം",question:"കൂട്ടത്തിൽ പെടാത്തത്:",options:["A) പ്രോട്ടോൺ","B) ഇലക്ട്രോൺ","C) ന്യൂട്രോൺ","D) ഫോട്ടോൺ"],correct:3,explanation:"പ്രോട്ടോൺ, ഇലക്ട്രോൺ, ന്യൂട്രോൺ എന്നിവ ആറ്റത്തിന്റെ അടിസ്ഥാന കണങ്ങളാണ്. ഫോട്ടോൺ പ്രകാശത്തിന്റെ (ഊർജ്ജത്തിന്റെ) കണമാണ്.",
+beginnerNote:"Atomic Particles:\n• Proton (p⁺) — Nucleus\n• Neutron (n⁰) — Nucleus\n• Electron (e⁻) — Orbit\n• Photon (γ) — Light quantum (no mass)",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ Light quantum."],
+rejectionTrick:"'Photon = Light particle; not in nucleus'.",
+examTrap:"⚠️ Photon has no mass/charge."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഭാരമില്ലായ്മ (A/R)",question:"പ്രസ്താവന (A): ബഹിരാകാശയാത്രികർക്ക് ബഹിരാകാശത്ത് ഭാരമില്ലായ്മ അനുഭവപ്പെടുന്നു.\nകാരണം (R): ബഹിരാകാശത്ത് ഗുരുത്വാകർഷണ ബലം പൂർണ്ണമായും പൂജ്യമാണ്.",options:["A) A യും R ഉം ശരി, R ശരിയായ വിശദീകരണം","B) A യും R ഉം ശരി, R തെറ്റായ വിശദീകരണം","C) A ശരി, R തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:2,explanation:"ബഹിരാകാശ നിലയങ്ങളിൽ ഭാരമില്ലായ്മ അനുഭവപ്പെടുന്നത് അത് ഭൂമിയെ ചുറ്റിക്കൊണ്ടിരിക്കുന്നതുകൊണ്ടാണ് (Free fall), അല്ലാതെ ഗുരുത്വാകർഷണം പൂജ്യമായതുകൊണ്ടല്ല.",
+beginnerNote:"Weightlessness:\n• Not because gravity is zero\n• Due to free fall (continual falling)\n• ISS astronauts experience it because they orbit Earth\n• Gravitational force at ISS altitude still ~90% of Earth's surface",
+optionAnalysis:["A) ❌ R wrong.","B) ❌ R wrong.","C) ✅ ശരി.","D) ❌ A correct."],
+rejectionTrick:"'Weightless ≠ No gravity; it's Free Fall'.",
+examTrap:"⚠️ Gravity at ISS ≈ 90% — almost same as Earth."},
+
+{subject:"ഭൗതികശാസ്ത്രം – നീലാകാശം (A/R)",question:"പ്രസ്താവന (A): തെളിഞ്ഞ ആകാശത്തിന് നീല നിറമാണ്.\nകാരണം (R): അന്തരീക്ഷത്തിലെ വാതക തന്മാത്രകൾ സൂര്യപ്രകാശത്തിലെ കുറഞ്ഞ തരംഗദൈർഘ്യമുള്ള നീല നിറത്തെ കൂടുതലായി വിസരണം (Scattering) ചെയ്യുന്നു.",options:["A) A യും R ഉം ശരി, R ശരിയായ വിശദീകരണം","B) A യും R ഉം ശരി, R തെറ്റായ വിശദീകരണം","C) A ശരി, R തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"പ്രകാശ വിസരണം (Scattering of light) കാരണമാണ് ആകാശത്തിനും സമുദ്രത്തിനും നീലനിറം ലഭിക്കുന്നത്.",
+beginnerNote:"Rayleigh Scattering:\n• Blue light (short wavelength) scatters ~5.5× more than red\n• Sky = Blue\n• Sunset = Red (light travels longer)\n• Ocean = Blue (scattering + absorption)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Blue scatters more → Sky blue'.",
+examTrap:"⚠️ Sunsets are red because blue is scattered away."},
+
+{subject:"ഭൗതികശാസ്ത്രം – റിയർവ്യൂ മിറർ (A/R)",question:"പ്രസ്താവന (A): വാഹനങ്ങളിൽ റിയർ വ്യൂ മിററായി കോൺവെക്സ് ദർപ്പണങ്ങൾ ഉപയോഗിക്കുന്നു.\nകാരണം (R): കോൺവെക്സ് ദർപ്പണങ്ങൾ എപ്പോഴും നിവർന്നതും ചെറുതുമായ പ്രതിബിംബം നൽകുകയും കൂടുതൽ വിശാലമായ കാഴ്ച സാധ്യമാക്കുകയും ചെയ്യുന്നു.",options:["A) A യും R ഉം ശരി, R ശരിയായ വിശദീകരണം","B) A യും R ഉം ശരി, R തെറ്റായ വിശദീകരണം","C) A ശരി, R തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"പിന്നിൽ നിന്നുള്ള വലിയ വാഹനങ്ങളെ വ്യക്തമായി കാണാൻ ഇത് സഹായിക്കുന്നു.",
+beginnerNote:"Convex Mirror in Vehicles:\n• Wider field of view\n• Virtual, erect, diminished image\n• Always smaller image",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Convex = Wider view'.",
+examTrap:"⚠️ Concave mirror would give inverted image at far distances — dangerous."},
+
+{subject:"ഭൗതികശാസ്ത്രം – താപവികാസം (A/R)",question:"പ്രസ്താവന (A): വേനൽക്കാലത്ത് റെയിൽവേ പാളങ്ങൾ വികസിക്കാൻ സാധ്യതയുള്ളതിനാൽ പാളങ്ങൾക്കിടയിൽ ചെറിയ വിടവുകൾ നൽകാറുണ്ട്.\nകാരണം (R): താപം കൂടുമ്പോൾ ഖരവസ്തുക്കൾ വികസിക്കുന്നു (Thermal Expansion).",options:["A) A യും R ഉം ശരി, R ശരിയായ വിശദീകരണം","B) A യും R ഉം ശരി, R തെറ്റായ വിശദീകരണം","C) A ശരി, R തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"താപവികാസം കാരണം പാളങ്ങൾ വളഞ്ഞുപോകാതിരിക്കാനാണ് വിടവുകൾ നൽകുന്നത്.",
+beginnerNote:"Thermal Expansion:\n• Solids expand on heating\n• Railway gaps compensate for expansion\n• Concrete roads have expansion joints\n• Metal lids loosen with hot water",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Heat → Expand → Need gap'.",
+examTrap:"⚠️ Modern railways use welded tracks with expansion joints at bridges."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ശബ്ദം (A/R)",question:"പ്രസ്താവന (A): ശബ്ദത്തിന് വായുവിനേക്കാൾ വേഗതയിൽ ജലത്തിലൂടെ സഞ്ചരിക്കാൻ കഴിയും.\nകാരണം (R): മാധ്യമത്തിന്റെ സാന്ദ്രതയും ഇലാസ്തികതയും വർദ്ധിക്കുന്നതനുസരിച്ച് ശബ്ദത്തിന്റെ വേഗതയും വർദ്ധിക്കുന്നു.",options:["A) A യും R ഉം ശരി, R ശരിയായ വിശദീകരണം","B) A യും R ഉം ശരി, R തെറ്റായ വിശദീകരണം","C) A ശരി, R തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"ശബ്ദവേഗത വാതകങ്ങളെക്കാൾ ദ്രാവകങ്ങളിലും ദ്രാവകങ്ങളെക്കാൾ ഖരവസ്തുക്കളിലുമാണ് കൂടുതൽ.",
+beginnerNote:"Sound Speed Order:\nSolids > Liquids > Gases > Vacuum(0)\n• Steel — 5960 m/s\n• Water — 1500 m/s\n• Air — 343 m/s",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Solid > Liquid > Gas'.",
+examTrap:"⚠️ Density + Elasticity determine speed, not just density."},
+
+{subject:"ഭൗതികശാസ്ത്രം – റോക്കറ്റ് (Statement)",question:"പ്രസ്താവന: ന്യൂട്ടന്റെ മൂന്നാം ചലന നിയമപ്രകാരം ഓരോ പ്രവർത്തനത്തിനും തുല്യവും വിപരീതവുമായ പ്രതിപ്രവർത്തനം ഉണ്ടായിരിക്കും.\nനിഗമനം: ISRO യുടെ റോക്കറ്റ് വിക്ഷേപണം ഈ തത്വത്തെ അടിസ്ഥാനമാക്കിയാണ് പ്രവർത്തിക്കുന്നത്.",options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) നിഗമനം ശരി, പ്രസ്താവന തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"റോക്കറ്റിൽ നിന്ന് വാതകങ്ങൾ താഴേക്ക് പുറന്തള്ളുന്നതിന്റെ പ്രതിപ്രവർത്തനമായാണ് റോക്കറ്റ് മുകളിലേക്ക് കുതിക്കുന്നത്.",
+beginnerNote:"Newton's 3rd Law Applications:\n• Rocket propulsion\n• Gun recoil\n• Swimming\n• Walking\n• Balloon releasing air",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Rocket = 3rd Law'.",
+examTrap:"⚠️ Different bodies — Action on gas, Reaction on rocket."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പ്ലവനം (Statement)",question:"പ്രസ്താവന: ഒരു ദ്രാവകത്തിൽ മുങ്ങിക്കിടക്കുന്ന വസ്തുവിൽ ദ്രാവകം മുകളിലേക്ക് പ്രയോഗിക്കുന്ന ബലമാണ് പ്ലവക്ഷമ ബലം.\nനിഗമനം: ഇരുമ്പ് കഷ്ണം വെള്ളത്തിൽ താഴുമ്പോഴും, ഇരുമ്പ് കൊണ്ട് നിർമ്മിച്ച വലിയ കപ്പലുകൾ വെള്ളത്തിൽ പൊങ്ങിക്കിടക്കുന്നത് ആർക്കിമിഡീസ് തത്വം മൂലമാണ്.",options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) നിഗമനം ശരി, പ്രസ്താവന തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"കപ്പൽ ആദേശം ചെയ്യുന്ന ജലത്തിന്റെ ഭാരം കപ്പലിന്റെ ഭാരത്തിന് തുല്യമായതിനാലാണ് അത് പൊങ്ങിക്കിടക്കുന്നത്.",
+beginnerNote:"Archimedes' Principle:\n• Upthrust = Weight of displaced fluid\n• Ship floats because it displaces large volume\n• Submarine uses ballast tanks",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Ship → Hollow → Large volume displaced'.",
+examTrap:"⚠️ Shape matters, not just material."},
+
+{subject:"ഭൗതികശാസ്ത്രം – അഭികേന്ദ്ര ബലം (Statement)",question:"പ്രസ്താവന: ഭൂമിയുടെ ഗുരുത്വാകർഷണ ബലത്തിന് എതിരെ ഒരു ഉപഗ്രഹത്തെ വൃത്താകൃതിയിലുള്ള ഭ്രമണപഥത്തിൽ നിലനിർത്തുന്ന ബലമാണ് അഭികേന്ദ്ര ബലം.\nനിഗമനം: ചരടിൽ കെട്ടിയ കല്ല് വട്ടത്തിൽ കറക്കുമ്പോൾ നമ്മുടെ കൈ കല്ലിൽ പ്രയോഗിക്കുന്നതും ഇതേ ബലമാണ്.",options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) നിഗമനം ശരി, പ്രസ്താവന തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"വൃത്തപാതയിൽ സഞ്ചരിക്കുന്ന ഏത് വസ്തുവിനും കേന്ദ്രത്തിലേക്ക് ഒരു ബലം ആവശ്യമാണ്, അതാണ് അഭികേന്ദ്ര ബലം.",
+beginnerNote:"Centripetal Force:\n• Always directed to center\n• F = mv²/r\n• Satellite orbit\n• Stone on string\n• Car turning",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Centripetal = Center-seeking'.",
+examTrap:"⚠️ Centrifugal = Pseudo force; Centripetal = Real."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ജൂൾ താപനം (Statement)",question:"പ്രസ്താവന: വൈദ്യുത പ്രതിരോധം കൂടുതലുള്ള ചാലകങ്ങളിലൂടെ വൈദ്യുതി കടന്നുപോകുമ്പോൾ താപം കൂടുതലായി ഉത്പാദിപ്പിക്കപ്പെടുന്നു.\nനിഗമനം: അതിനാൽ ഇലക്ട്രിക് ഹീറ്റർ, ഇസ്തിരിപ്പെട്ടി എന്നിവയിൽ ഉയർന്ന പ്രതിരോധമുള്ള നിക്കോം വയറുകൾ ഉപയോഗിക്കുന്നു.",options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) നിഗമനം ശരി, പ്രസ്താവന തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"ജൂൾ നിയമപ്രകാരം താപോത്പാദനം പ്രതിരോധത്തിന് നേർഅനുപാതത്തിലാണ് (H = I²Rt).",
+beginnerNote:"Joule's Law:\n• H = I²Rt\n• High resistance → More heat\n• Nichrome (Ni-Cr) — Heating elements\n• Tungsten — Bulbs (high melting point)",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'High R → High heat'.",
+examTrap:"⚠️ Nichrome has high resistivity + high melting point."},
+
+{subject:"ഭൗതികശാസ്ത്രം – അപവർത്തനം (Statement)",question:"പ്രസ്താവന: പ്രകാശം ഒരു മാധ്യമത്തിൽ നിന്ന് സാന്ദ്രത വ്യത്യസ്തമായ മറ്റൊരു മാധ്യമത്തിലേക്ക് കടക്കുമ്പോൾ അതിന്റെ പാതയ്ക്ക് വ്യതിയാനം സംഭവിക്കുന്നു.\nനിഗമനം: വെള്ളത്തിൽ പാതി മുക്കിവെച്ച പെൻസിൽ ഒടിഞ്ഞതായി തോന്നുന്നത് അപവർത്തനം കാരണമാണ്.",options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) നിഗമനം ശരി, പ്രസ്താവന തെറ്റ്","D) രണ്ടും തെറ്റ്"],correct:0,explanation:"വായുവിൽ നിന്ന് ജലത്തിലേക്ക് പ്രകാശം കടക്കുമ്പോൾ പ്രകാശത്തിന് വേഗത കുറയുകയും പാത മാറുകയും ചെയ്യുന്നു.",
+beginnerNote:"Refraction Examples:\n• Pencil appears bent in water\n• Coin appears raised\n• Pool appears shallower\n• Twinkling stars\n• Mirage",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Refraction = Light bends when medium changes'.",
+examTrap:"⚠️ Refraction ≠ Reflection."},
+
+{subject:"ഭൗതികശാസ്ത്രം – VIBGYOR",question:"തരംഗദൈർഘ്യത്തിന്റെ അടിസ്ഥാനത്തിൽ കുറഞ്ഞതിൽ നിന്ന് കൂടിയതിലേക്ക് വർണ്ണങ്ങളെ ക്രമീകരിക്കുക: 1. മഞ്ഞ, 2. ചുവപ്പ്, 3. വയലറ്റ്, 4. പച്ച",options:["A) 3, 4, 1, 2","B) 2, 1, 4, 3","C) 3, 1, 4, 2","D) 2, 4, 1, 3"],correct:0,explanation:"VIBGYOR ക്രമത്തിൽ വയലറ്റിനാണ് തരംഗദൈർഘ്യം ഏറ്റവും കുറവ്, ചുവപ്പിന് ഏറ്റവും കൂടുതൽ.",
+beginnerNote:"Wavelength (VIBGYOR):\nV (Violet) ~400 nm ← smallest\nI, B, G, Y, O, R (Red) ~700 nm ← largest",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Violet < Red in wavelength'.",
+examTrap:"⚠️ Wavelength vs Frequency — Inverse relationship."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ശബ്ദ വേഗത ക്രമം",question:"ശബ്ദത്തിന്റെ വേഗത കുറഞ്ഞതിൽ നിന്ന് കൂടിയതിലേക്ക് ക്രമീകരിക്കുക: 1. ജലം, 2. വായു, 3. ഇരുമ്പ്, 4. ശൂന്യത",options:["A) 4, 2, 1, 3","B) 2, 1, 3, 4","C) 4, 1, 2, 3","D) 3, 1, 2, 4"],correct:0,explanation:"ശൂന്യതയിൽ വേഗത 0 ആണ്, പിന്നീട് വാതകം (വായു), ദ്രാവകം (ജലം), ഖരം (ഇരുമ്പ്) എന്ന ക്രമത്തിലാണ് വേഗത കൂടുന്നത്.",
+beginnerNote:"Sound Speed Order:\nVacuum (0) < Air (343) < Water (1500) < Iron (5100+)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Vacuum < Gas < Liquid < Solid'.",
+examTrap:"⚠️ Vacuum = 0 (Sound cannot travel)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – EM spectrum",question:"വൈദ്യുത കാന്തിക തരംഗങ്ങളെ ആവൃത്തിയുടെ അടിസ്ഥാനത്തിൽ കൂടിയതിൽ നിന്ന് കുറഞ്ഞതിലേക്ക് ക്രമീകരിക്കുക: 1. എക്സ്-റേ, 2. ഗാമ റേ, 3. മൈക്രോവേവ്, 4. ദൃശ്യപ്രകാശം",options:["A) 2, 1, 4, 3","B) 3, 4, 1, 2","C) 1, 2, 4, 3","D) 2, 4, 1, 3"],correct:0,explanation:"ഗാമ തരംഗങ്ങൾക്കാണ് ഏറ്റവും കൂടുതൽ ഊർജ്ജവും ആവൃത്തിയും ഉള്ളത്. മൈക്രോവേവിനും റേഡിയോ തരംഗങ്ങൾക്കും ഏറ്റവും കുറവാണ്.",
+beginnerNote:"EM Spectrum (High to Low frequency):\nGamma > X-ray > UV > Visible > IR > Microwave > Radio",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'GXUVIMR — Gamma, X-ray, UV, Visible, IR, Microwave, Radio'.",
+examTrap:"⚠️ Gamma has highest energy, radio lowest."},
+
+{subject:"ഭൗതികശാസ്ത്രം – SI Prefixes",question:"യൂണിറ്റ് പ്രിഫിക്സുകൾ വലുതിൽ നിന്ന് ചെറുതിലേക്ക് ക്രമീകരിക്കുക: 1. മില്ലി, 2. നാനോ, 3. മൈക്രോ, 4. പിക്കോ",options:["A) 1, 3, 2, 4","B) 4, 2, 3, 1","C) 1, 2, 3, 4","D) 3, 1, 2, 4"],correct:0,explanation:"മില്ലി (10⁻³), മൈക്രോ (10⁻⁶), നാനോ (10⁻⁹), പിക്കോ (10⁻¹²).",
+beginnerNote:"SI Prefixes:\n• milli (m) — 10⁻³\n• micro (µ) — 10⁻⁶\n• nano (n) — 10⁻⁹\n• pico (p) — 10⁻¹²\n• femto (f) — 10⁻¹⁵",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'m-µ-n-p (milli-micro-nano-pico)'.",
+examTrap:"⚠️ 1 nm = 10⁻⁹ m; 1 pm = 10⁻¹² m."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഭൂമിയുടെ പാളികൾ",question:"ഭൂമിയുടെ ആന്തരഘടന പുറത്തുനിന്ന് അകത്തേക്ക്: 1. മാന്റിൽ, 2. ഇന്നർ കോർ, 3. ക്രസ്റ്റ്, 4. ഔട്ടർ കോർ",options:["A) 3, 1, 4, 2","B) 3, 1, 2, 4","C) 1, 3, 4, 2","D) 3, 4, 1, 2"],correct:0,explanation:"ക്രസ്റ്റ് (പുറംതോട്), മാന്റിൽ, ദ്രാവകാവസ്ഥയിലുള്ള ഔട്ടർ കോർ, ഖരാവസ്ഥയിലുള്ള ഇന്നർ കോർ.",
+beginnerNote:"Earth's Layers:\n• Crust (5-70 km)\n• Mantle (~2900 km)\n• Outer Core (Liquid — Fe, Ni)\n• Inner Core (Solid — Fe, Ni)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'C-M-OC-IC (Crust, Mantle, Outer Core, Inner Core)'.",
+examTrap:"⚠️ Outer = Liquid; Inner = Solid."},
+
+{subject:"ഭൗതികശാസ്ത്രം – താപനില",question:"ജലത്തിന്റെ ഫാരൻഹീറ്റ് തിളനില എത്ര?",options:["A) 100°F","B) 180°F","C) 212°F","D) 273°F"],correct:2,explanation:"ഫാരൻഹീറ്റ് സ്കെയിലിൽ ജലം തിളയ്ക്കുന്നത് 212°F ലും ഉറയുന്നത് 32°F ലുമാണ്.",
+beginnerNote:"Fahrenheit Conversion:\n• °F = (°C × 9/5) + 32\n• 100°C = 212°F\n• 0°C = 32°F\n• 37°C = 98.6°F",
+optionAnalysis:["A) ❌ 100°C.","B) ❌.","C) ✅ ശരി.","D) ❌ 273 K."],
+rejectionTrick:"'°C×2+30 ≈ °F (rough)'.",
+examTrap:"⚠️ 100°C = 212°F = 373 K."},
+
+{subject:"ഭൗതികശാസ്ത്രം – g-മൂല്യം",question:"ഭൂമിയുടെ കേന്ദ്രത്തിൽ g-യുടെ മൂല്യം:",options:["A) 9.8 m/s²","B) 0 m/s²","C) 11.2 m/s²","D) 1 m/s²"],correct:1,explanation:"ഭൂമിയുടെ കേന്ദ്രത്തിൽ ഗുരുത്വാകർഷണ ബലം പൂജ്യമായിരിക്കും.",
+beginnerNote:"g at Various Depths:\n• Surface — 9.8 m/s²\n• Higher altitude — Decreases\n• Deeper inside — Decreases\n• Center — 0",
+optionAnalysis:["A) ❌ Surface.","B) ✅ ശരി.","C) ❌ Escape velocity.","D) ❌."],
+rejectionTrick:"'Center of Earth — g = 0'.",
+examTrap:"⚠️ g decreases both above AND inside Earth."},
+
+{subject:"ഭൗതികശാസ്ത്രം – വജ്രത്തിലെ പ്രകാശം",question:"വജ്രത്തിലെ പ്രകാശ വേഗത ഗ്ലാസ്സിലേതിനെക്കാൾ:",options:["A) കൂടുതൽ","B) കുറവ്","C) തുല്യം","D) ഇവയൊന്നുമല്ല"],correct:1,explanation:"സാന്ദ്രത (Refractive index) ഏറ്റവും കൂടുതലുള്ള വജ്രത്തിലാണ് പ്രകാശത്തിന് വേഗത ഏറ്റവും കുറവ്.",
+beginnerNote:"Refractive Index:\n• Vacuum — 1.0\n• Water — 1.33\n• Glass — 1.5\n• Diamond — 2.42 (highest)",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Higher refractive index → Lower speed'.",
+examTrap:"⚠️ Diamond's sparkle is due to high refractive index."},
+
+{subject:"ഭൗതികശാസ്ത്രം – കേൾവി",question:"വവ്വാലുകൾ കേൾക്കാൻ കഴിയുന്ന ശബ്ദത്തിന്റെ പരമാവധി ആവൃത്തി:",options:["A) 20 Hz ന് താഴെ","B) 1,00,000 Hz വരെ","C) 10,000 Hz","D) 0 Hz"],correct:1,explanation:"വവ്വാലുകൾ അൾട്രാസോണിക് ശബ്ദമുപയോഗിച്ചാണ് (എക്കോലൊക്കേഷൻ) സഞ്ചരിക്കുന്നത്.",
+beginnerNote:"Animal Hearing Ranges:\n• Human — 20-20,000 Hz\n• Dog — up to 50,000 Hz\n• Bat — up to 100,000+ Hz\n• Dolphin — up to 150,000 Hz",
+optionAnalysis:["A) ❌ Infrasonic.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Bats use Ultrasonic → >20 kHz'.",
+examTrap:"⚠️ Bats use echolocation with ultrasonic waves."},
+
+{subject:"ഭൗതികശാസ്ത്രം – കെൽവിൻ",question:"കെൽവിൻ സ്കെയിലിൽ ജലത്തിന്റെ ഫ്രീസിംഗ് പോയിന്റ്:",options:["A) 0 K","B) 100 K","C) 273.15 K","D) 373.15 K"],correct:2,explanation:"സെൽഷ്യസിനെ കെൽവിനാക്കാൻ 273 കൂട്ടിയാൽ മതി (0 + 273 = 273 K).",
+beginnerNote:"Kelvin Conversions:\n• K = °C + 273.15\n• Water freezes — 0°C = 273.15 K\n• Water boils — 100°C = 373.15 K\n• Absolute zero — -273.15°C = 0 K",
+optionAnalysis:["A) ❌ = Absolute zero.","B) ❌.","C) ✅ ശരി.","D) ❌ = Boiling point."],
+rejectionTrick:"'0°C = 273 K; 100°C = 373 K'.",
+examTrap:"⚠️ Kelvin has no 'degree' symbol."},
+
+{subject:"ഭൗതികശാസ്ത്രം – അനലോജി (Voltage)",question:"വൈദ്യുത പ്രവാഹം : ആമ്പിയർ :: പൊട്ടൻഷ്യൽ വ്യത്യാസം : ?",options:["A) ഓം","B) വാട്ട്","C) വോൾട്ട്","D) ജൂൾ"],correct:2,explanation:"വോൾട്ടേജിന്റെ അല്ലെങ്കിൽ പൊട്ടൻഷ്യൽ വ്യത്യാസത്തിന്റെ യൂണിറ്റാണ് വോൾട്ട്.",
+beginnerNote:"Electrical Units:\n• Current (I) — Ampere (A)\n• Voltage (V) — Volt (V)\n• Resistance (R) — Ohm (Ω)\n• Power (P) — Watt (W)\n• Charge (Q) — Coulomb (C)",
+optionAnalysis:["A) ❌ Resistance.","B) ❌ Power.","C) ✅ ശരി.","D) ❌ Energy."],
+rejectionTrick:"'I-A; V-V; R-Ω'.",
+examTrap:"⚠️ V = IR (Ohm's law)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – താപ പ്രസരണം",question:"ഖരവസ്തുക്കൾ : ചാലനം :: ദ്രാവകങ്ങൾ : ?",options:["A) വികിരണം","B) സംവഹനം","C) ബാഷ്പീകരണം","D) അപവർത്തനം"],correct:1,explanation:"ദ്രാവകങ്ങളിലും വാതകങ്ങളിലും താപം പ്രേഷണം ചെയ്യുന്നത് സംവഹനം വഴിയാണ്.",
+beginnerNote:"Heat Transfer by Medium:\n• Solid — Conduction\n• Liquid/Gas — Convection\n• Any (no medium) — Radiation",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Solid-Conduction; Liquid-Convection; Vacuum-Radiation'.",
+examTrap:"⚠️ Radiation can occur in all media."},
+
+{subject:"ഭൗതികശാസ്ത്രം – തരംഗദൈർഘ്യം",question:"ആവൃത്തി : ഹെർട്സ് :: തരംഗദൈർഘ്യം : ?",options:["A) ഡെസിബെൽ","B) മീറ്റർ","C) സെക്കൻഡ്","D) വാട്ട്"],correct:1,explanation:"തരംഗദൈർഘ്യം എന്നത് ദൂരമാണ്, അതിനാൽ അതിന്റെ SI യൂണിറ്റ് മീറ്ററാണ്.",
+beginnerNote:"Wave Units:\n• Wavelength (λ) — meter (m)\n• Frequency (f) — Hertz (Hz)\n• Time period (T) — second (s)\n• Speed (v) — m/s\n• Intensity — decibel (dB)",
+optionAnalysis:["A) ❌ Sound intensity.","B) ✅ ശരി.","C) ❌ Time.","D) ❌ Power."],
+rejectionTrick:"'Wavelength = distance = meter'.",
+examTrap:"⚠️ v = f × λ (Speed = Frequency × Wavelength)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഭാരം",question:"പിണ്ഡം (Mass) : കിലോഗ്രാം :: ഭാരം (Weight) : ?",options:["A) കിലോഗ്രാം","B) ന്യൂട്ടൺ","C) പാസ്കൽ","D) ലിറ്റർ"],correct:1,explanation:"പിണ്ഡം പദാർത്ഥത്തിന്റെ അളവും ഭാരം അതിൽ അനുഭവപ്പെടുന്ന ഗുരുത്വാകർഷണ ബലവുമാണ്. ബലത്തിന്റെ യൂണിറ്റ് ന്യൂട്ടൺ ആണ്.",
+beginnerNote:"Mass vs Weight:\n• Mass — kg, scalar, constant\n• Weight — Newton, vector, varies with g\n• W = mg",
+optionAnalysis:["A) ❌ Mass.","B) ✅ ശരി.","C) ❌ Pressure.","D) ❌ Volume."],
+rejectionTrick:"'Weight = Force = Newton'.",
+examTrap:"⚠️ Moon: Mass same (60 kg); Weight 1/6 of Earth's."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ലെൻസുകൾ",question:"കോൺവെക്സ് ലെൻസ് : സംവ്രജന ലെൻസ് :: കോൺകേവ് ലെൻസ് : ?",options:["A) അപവർത്തന ലെൻസ്","B) വിവ്രജന ലെൻസ്","C) പ്ലെയിൻ മിറർ","D) ബൈഫോക്കൽ"],correct:1,explanation:"കോൺകേവ് ലെൻസുകൾ പ്രകാശരശ്മികളെ അകറ്റി വിടുന്നു.",
+beginnerNote:"Lens Types:\n• Convex — Converging (focuses light)\n• Concave — Diverging (spreads light)",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Convex = Converge; Concave = Diverge'.",
+examTrap:"⚠️ Both work on refraction, not reflection."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഓം നിയമം",question:"V = IR എന്നതിൽ 'R' എന്തിനെ സൂചിപ്പിക്കുന്നു?",options:["A) റേഡിയേഷൻ","B) റെസിസ്റ്റൻസ്","C) റിഫ്രാക്ഷൻ","D) റിയാക്ഷൻ"],correct:1,explanation:"V എന്നത് വോൾട്ടേജും I എന്നത് വൈദ്യുതപ്രവാഹവുമാണ്.",
+beginnerNote:"Ohm's Law:\n• V = IR\n• V = Voltage\n• I = Current\n• R = Resistance",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'V-IR — V=IR'.",
+examTrap:"⚠️ Ohm's law valid at constant temperature."},
+
+{subject:"ഭൗതികശാസ്ത്രം – F = ma",question:"F = ma എന്നതിൽ 'a' എന്നത്:",options:["A) ആവൃത്തി","B) ത്വരണം","C) വിസ്തീർണ്ണം","D) ആർദ്രത"],correct:1,explanation:"ഒരു വസ്തുവിൽ പ്രയോഗിക്കുന്ന ബലം അതിന്റെ പിണ്ഡത്തിന്റെയും ത്വരണത്തിന്റെയും ഗുണനഫലമാണ്.",
+beginnerNote:"Newton's 2nd Law:\n• F = ma\n• F = Force (N)\n• m = mass (kg)\n• a = acceleration (m/s²)",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'a = acceleration'.",
+examTrap:"⚠️ Acceleration direction = Force direction."},
+
+{subject:"ഭൗതികശാസ്ത്രം – E=mc²",question:"E = mc² എന്നതിൽ 'c' പ്രതിനിധീകരിക്കുന്നത്:",options:["A) പ്രകാശത്തിന്റെ വേഗത","B) ചാർജ്ജ്","C) താപനില","D) കാർബൺ"],correct:0,explanation:"ശൂന്യതയിലെ പ്രകാശ വേഗതയായ 3×10⁸ m/s നെയാണ് 'c' സൂചിപ്പിക്കുന്നത്.",
+beginnerNote:"Einstein's Mass-Energy:\n• E = mc²\n• E = Energy (J)\n• m = mass (kg)\n• c = 3×10⁸ m/s (Speed of light)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'c = celeritas = speed of light'.",
+examTrap:"⚠️ c in E=mc² is squared."},
+
+{subject:"ഭൗതികശാസ്ത്രം – KE",question:"ഗതികോർജ്ജം '½mv²' — മുകളിലേക്ക് എറിയുന്ന കല്ലിന്റെ ഏറ്റവും ഉയർന്ന ബിന്ദുവിൽ 'v' യുടെ വില:",options:["A) പരമാവധി","B) പൂജ്യം","C) സ്ഥിരം","D) 9.8"],correct:1,explanation:"ഏറ്റവും ഉയർന്ന ബിന്ദുവിൽ പ്രവേഗം (v) പൂജ്യമാകുന്നതിനാൽ ഗതികോർജ്ജം പൂർണ്ണമായും നിലയ്ക്കുന്നു.",
+beginnerNote:"Vertical Motion:\n• Top point — v = 0 (Kinetic Energy = 0)\n• All KE → PE\n• Potential Energy = mgh (max)",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'At top — v = 0, KE = 0, PE = Max'.",
+examTrap:"⚠️ Total mechanical energy constant throughout."},
+
+{subject:"ഭൗതികശാസ്ത്രം – VIBGYOR Scattering",question:"VIBGYOR-ൽ ഏറ്റവും കൂടുതൽ വിസരണത്തിന് വിധേയമാകുന്ന വർണ്ണം:",options:["A) R","B) V","C) Y","D) G"],correct:1,explanation:"തരംഗദൈർഘ്യം ഏറ്റവും കുറഞ്ഞ വയലറ്റ്, ഇൻഡിഗോ, നീല നിറങ്ങളാണ് കൂടുതൽ വിസരണത്തിന് വിധേയമാകുന്നത്.",
+beginnerNote:"Rayleigh Scattering:\n• Scattering ∝ 1/λ⁴\n• Shorter wavelength → More scattering\n• Violet > Blue > Green > Red",
+optionAnalysis:["A) ❌ Red scatters least.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Shorter wavelength → More scattering'.",
+examTrap:"⚠️ Sky blue (not violet) because eyes more sensitive to blue."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ലിവർ",question:"ഉത്തോലകങ്ങൾ പരിശോധിക്കുക:\n1. ധാരം നടുവിൽ വരുന്നവ ഒന്നാം വർഗ്ഗം\n2. മനുഷ്യന്റെ കൈ മൂന്നാം വർഗ്ഗം\n3. കപ്പി ഒരു ലഘുയന്ത്രം",options:["A) 1, 2 ശരി","B) 1, 3 ശരി","C) 2, 3 ശരി","D) എല്ലാം ശരി"],correct:3,explanation:"യത്നം നടുവിൽ വരുന്ന മൂന്നാം വർഗ്ഗത്തിനാണ് കൈ ഉദാഹരണം. കപ്പി, ഉത്തോലകം എന്നിവ ജോലികൾ എളുപ്പമാക്കുന്ന ലഘുയന്ത്രങ്ങളാണ്.",
+beginnerNote:"Levers & Machines:\n• 1st class — Scissors (F in middle)\n• 2nd class — Nutcracker (L in middle)\n• 3rd class — Human arm (E in middle)\n• Simple machines — Pulley, Inclined plane, Screw, Wedge, Wheel & Axle",
+optionAnalysis:["A) ❌.","B) ❌.","C) ❌.","D) ✅ ശരി."],
+rejectionTrick:"'All three statements correct'.",
+examTrap:"⚠️ 6 types of simple machines; pulley is one."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പ്രകാശം",question:"പ്രകാശത്തിന്റെ സവിശേഷതകൾ:\n1. പ്രകാശത്തിന് ഏറ്റവും വേഗതയുള്ളത് ശൂന്യതയിൽ\n2. പ്രകാശം നേർരേഖയിലൂടെ സഞ്ചരിക്കുന്നു\n3. ജലത്തിൽ പ്രകാശ വേഗത വർദ്ധിക്കുന്നു",options:["A) 1, 2 ശരി","B) 1, 3 ശരി","C) 2, 3 ശരി","D) എല്ലാം ശരി"],correct:0,explanation:"ശൂന്യതയെ അപേക്ഷിച്ച് സാന്ദ്രത കൂടിയ മാധ്യമമായ ജലത്തിൽ പ്രകാശ വേഗത കുറയുകയാണ് ചെയ്യുന്നത്.",
+beginnerNote:"Light Properties:\n• Fastest in vacuum (3×10⁸ m/s)\n• Travels in straight lines (rectilinear propagation)\n• Slows in denser media (water, glass)",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Denser medium → Slower light'.",
+examTrap:"⚠️ Light can bend but travels in straight lines in uniform medium."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഉപഗ്രഹങ്ങൾ",question:"ഉപഗ്രഹങ്ങൾ:\n1. ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ ഭൂമിയിൽ നിന്ന് നോക്കുമ്പോൾ എപ്പോഴും ഒരേ സ്ഥാനത്ത്\n2. ഭ്രമണകാലം 24 മണിക്കൂർ\n3. ഭ്രമണപഥത്തിൽ നിൽക്കാൻ അഭികേന്ദ്ര ബലം ആവശ്യം",options:["A) 1, 2 ശരി","B) 1, 3 ശരി","C) 2, 3 ശരി","D) എല്ലാം ശരി"],correct:3,explanation:"ഭൂമിയുടെ ഭ്രമണവേഗതയ്ക്ക് തുല്യമായാണ് ആശയവിനിമയത്തിനായി ഉപയോഗിക്കുന്ന ഈ ഉപഗ്രഹങ്ങൾ കറങ്ങുന്നത്.",
+beginnerNote:"Geostationary Satellite:\n• Orbit: 35,786 km altitude (Equatorial)\n• Period: 24 hours (matches Earth)\n• Used for: Communication, Weather, TV\n• Example: INSAT, GSAT",
+optionAnalysis:["A) ❌.","B) ❌.","C) ❌.","D) ✅ ശരി."],
+rejectionTrick:"'All 3 statements about geostationary satellites'.",
+examTrap:"⚠️ Geostationary ≠ Polar (Sun-synchronous)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ആർദ്രത",question:"താപനിലയും ഈർപ്പവും:\n1. ജലബാഷ്പത്തിന്റെ അളവാണ് ആർദ്രത\n2. താപനില കൂടുമ്പോൾ വായുവിന് കൂടുതൽ ജലബാഷ്പം ഉൾക്കൊള്ളാം\n3. മനുഷ്യ ശരീര താപനില 98.6°C",options:["A) 1, 2 ശരി","B) 1, 3 ശരി","C) 2, 3 ശരി","D) എല്ലാം ശരി"],correct:0,explanation:"മനുഷ്യ ശരീരത്തിന്റെ താപനില 98.6 ഡിഗ്രി ഫാരൻഹീറ്റ് ആണ് (37 ഡിഗ്രി സെൽഷ്യസ്).",
+beginnerNote:"Humidity & Temperature:\n• Warm air holds more moisture\n• Human body — 37°C = 98.6°F\n• Relative humidity measured by hygrometer",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'98.6°F not °C'.",
+examTrap:"⚠️ Fahrenheit vs Celsius — unit matters."},
+
+{subject:"ഭൗതികശാസ്ത്രം – റേഡിയോ ആക്ടിവിറ്റി",question:"റേഡിയോ ആക്ടിവിറ്റി:\n1. യുറേനിയം, റേഡിയം റേഡിയോ ആക്ടീവ്\n2. ആൽഫ, ബീറ്റ, ഗാമ കിരണങ്ങൾ പുറത്തുവിടുന്നു\n3. ഗാമ കിരണങ്ങൾക്ക് തുളച്ചുകയറാനുള്ള കഴിവ് ഏറ്റവും കുറവ്",options:["A) 1, 2 ശരി","B) 1, 3 ശരി","C) 2, 3 ശരി","D) എല്ലാം ശരി"],correct:0,explanation:"ഗാമ കിരണങ്ങൾക്കാണ് തുളച്ചുകയറാനുള്ള കഴിവ് ഏറ്റവും കൂടുതലുള്ളത്. ആൽഫയ്ക്കാണ് ഏറ്റവും കുറവ്.",
+beginnerNote:"Radioactivity:\n• Alpha (α) — Least penetrating (paper stops)\n• Beta (β) — Medium (aluminum)\n• Gamma (γ) — Most penetrating (lead needed)\n• Elements — Uranium, Radium, Plutonium",
+optionAnalysis:["A) ✅ ശരി.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Alpha < Beta < Gamma (penetrating power)'.",
+examTrap:"⚠️ Penetrating power vs Ionizing power — inverse."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ശബ്ദം",question:"ശബ്ദ തരംഗങ്ങൾ — തെറ്റായത്:",options:["A) ശബ്ദം അനുദൈർഘ്യ തരംഗങ്ങൾ","B) ശബ്ദത്തിന് ശൂന്യതയിലൂടെ സഞ്ചരിക്കാം","C) താപനില കൂടുമ്പോൾ ശബ്ദവേഗത വർദ്ധിക്കുന്നു","D) ആവൃത്തിയുടെ യൂണിറ്റ് ഹെർട്സ്"],correct:1,explanation:"ശബ്ദത്തിന് സഞ്ചരിക്കാൻ ഒരു മാധ്യമം അനിവാര്യമാണ്. ശൂന്യതയിൽ കേൾക്കാനാകില്ല.",
+beginnerNote:"Sound Facts:\n• Longitudinal wave\n• Needs medium\n• Speed increases with temperature\n• Unit: Hz (frequency), dB (intensity)",
+optionAnalysis:["A) ✅.","B) ❌ Cannot travel in vacuum.","C) ✅.","D) ✅."],
+rejectionTrick:"'Sound cannot travel in vacuum'.",
+examTrap:"⚠️ Light can travel in vacuum; sound cannot."},
+
+{subject:"ഭൗതികശാസ്ത്രം – കാന്തികത",question:"കാന്തികത — തെറ്റായത്:",options:["A) സമാന ധ്രുവങ്ങൾ വികർഷിക്കുന്നു","B) സ്വതന്ത്രമായി തൂക്കിയ കാന്തം തെക്ക്-വടക്ക് ദിശയിൽ നിൽക്കും","C) കാന്തിക ബലരേഖകൾ തെക്ക് നിന്ന് വടക്കോട്ട് പുറപ്പെടുന്നു","D) ഭൂമി ഒരു വലിയ കാന്തമാണ്"],correct:2,explanation:"കാന്തിക ബലരേഖകൾ എപ്പോഴും കാന്തത്തിന്റെ വടക്ക് ധ്രുവത്തിൽ (North pole) നിന്ന് പുറപ്പെട്ട് തെക്ക് ധ്രുവത്തിൽ അവസാനിക്കുന്നു.",
+beginnerNote:"Magnetic Field Lines:\n• Outside magnet: N → S\n• Inside magnet: S → N\n• Like poles repel; unlike attract\n• Earth = giant magnet",
+optionAnalysis:["A) ✅.","B) ✅.","C) ❌ N → S, not S → N.","D) ✅."],
+rejectionTrick:"'Field lines outside: N → S'.",
+examTrap:"⚠️ Inside the magnet, field lines go S → N."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പ്രകാശ പ്രതിഭാസങ്ങൾ",question:"പ്രകാശ പ്രതിഭാസങ്ങൾ — തെറ്റായത്:",options:["A) മഴവില്ല് — അപവർത്തനം, ആന്തരിക പ്രതിഫലനം, പ്രകീർണ്ണനം","B) നക്ഷത്രങ്ങൾ മിന്നിത്തിളങ്ങുന്നത് — അപവർത്തനം","C) ഒപ്റ്റിക്കൽ ഫൈബർ — പൂർണ്ണാന്തര പ്രതിഫലനം","D) മരീചിക — പ്രകാശ വിസരണം"],correct:3,explanation:"മരുഭൂമിയിലെ മരീചിക (Mirage) പൂർണ്ണാന്തര പ്രതിഫലനത്തിന്റെയും (Total Internal Reflection) അപവർത്തനത്തിന്റെയും ഫലമാണ്.",
+beginnerNote:"Optical Phenomena:\n• Rainbow — Refraction + TIR + Dispersion\n• Twinkling — Atmospheric refraction\n• Optical fiber — Total Internal Reflection\n• Mirage — Refraction + TIR",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ Scattering not main cause."],
+rejectionTrick:"'Mirage = TIR + Refraction'.",
+examTrap:"⚠️ Scattering = Sky blue; Mirage = TIR."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ഊർജ്ജം",question:"ഊർജ്ജം — തെറ്റായത്:",options:["A) ചലിക്കുന്ന വസ്തുവിനുള്ള ഊർജ്ജം ഗതികോർജ്ജം","B) സ്ഥാനം കാരണം ലഭിക്കുന്നത് സ്ഥിതികോർജ്ജം","C) ഊർജ്ജ സംരക്ഷണ നിയമം — നിർമ്മിക്കാനോ നശിപ്പിക്കാനോ കഴിയില്ല","D) പവറിന്റെ വാണിജ്യ യൂണിറ്റ് kWh"],correct:3,explanation:"കിലോവാട്ട് ഹവർ (kWh) എന്നത് വൈദ്യുതോർജ്ജത്തിന്റെ (Energy) വാണിജ്യ യൂണിറ്റാണ്. പവറിന്റെ യൂണിറ്റ് വാട്ട് ആണ്.",
+beginnerNote:"Energy & Power:\n• Kinetic Energy = ½mv²\n• Potential Energy = mgh\n• Energy conservation: E neither created nor destroyed\n• Power = Energy/Time (Unit: Watt)\n• 1 kWh = 3.6 × 10⁶ J",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ kWh is Energy unit."],
+rejectionTrick:"'kWh = Energy; Watt = Power'.",
+examTrap:"⚠️ 1 kWh = 1 unit (electricity bill)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പിണ്ഡം/ഭാരം",question:"പിണ്ഡവും ഭാരവും — തെറ്റായത്:",options:["A) ദ്രവ്യത്തിന്റെ അളവാണ് പിണ്ഡം","B) ഗുരുത്വാകർഷണ ബലമാണ് ഭാരം","C) പ്രപഞ്ചത്തിൽ എവിടെയും ഭാരം ഒരുപോലെ","D) ചന്ദ്രനിൽ ഭാരം കുറയും"],correct:2,explanation:"ഗുരുത്വാകർഷണം മാറുന്നതിനനുസരിച്ച് ഭാരം (Weight) മാറും. എന്നാൽ പിണ്ഡം (Mass) എപ്പോഴും സ്ഥിരമായിരിക്കും.",
+beginnerNote:"Mass vs Weight:\n• Mass — Same everywhere (kg)\n• Weight — Depends on g (N)\n• Moon weight = 1/6 of Earth\n• Weightless in space (free fall)",
+optionAnalysis:["A) ✅.","B) ✅.","C) ❌ Weight varies.","D) ✅."],
+rejectionTrick:"'Mass constant; Weight varies'.",
+examTrap:"⚠️ Body builder in space — Mass 80kg, Weight nearly 0."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പ്രതലബലം",question:"ജലത്തുള്ളികൾക്ക് ഗോളാകൃതി ലഭിക്കാൻ കാരണം:",options:["A) വിസ്കോസിറ്റി","B) പ്രതലബലം","C) കേശികത്വം","D) പ്ലവക്ഷമത"],correct:1,explanation:"പ്രതല വിസ്തീർണ്ണം കഴിയുന്നത്ര കുറയ്ക്കാൻ ദ്രാവകങ്ങൾ കാണിക്കുന്ന പ്രവണതയാണ് പ്രതലബലം.",
+beginnerNote:"Surface Tension:\n• Molecules on surface pulled inward\n• Causes spherical shape\n• Allows insects to walk on water\n• Unit: N/m",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Surface tension → Minimum surface area → Sphere'.",
+examTrap:"⚠️ Soap reduces surface tension."},
+
+{subject:"ഭൗതികശാസ്ത്രം – അമ്മീറ്റർ",question:"ഇലക്ട്രിക് സർക്യൂട്ടിലൂടെയുള്ള കറന്റ് അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണം:",options:["A) വോൾട്ട്മീറ്റർ","B) ഗാൽവനോമീറ്റർ","C) അമ്മീറ്റർ","D) പൊട്ടൻഷ്യോമീറ്റർ"],correct:2,explanation:"അമ്മീറ്റർ സർക്യൂട്ടിൽ ശ്രേണിയായാണ് (Series) ബന്ധിപ്പിക്കുന്നത്. വോൾട്ട്മീറ്റർ സമാന്തരമായി (Parallel) ബന്ധിപ്പിക്കുന്നു.",
+beginnerNote:"Instruments in Circuits:\n• Ammeter — Series (Current)\n• Voltmeter — Parallel (Voltage)\n• Galvanometer — Sensitive current detector",
+optionAnalysis:["A) ❌ Voltage.","B) ❌ Small current.","C) ✅ ശരി.","D) ❌ EMF."],
+rejectionTrick:"'Ammeter = Current; Voltmeter = Voltage'.",
+examTrap:"⚠️ Ammeter has low resistance; Voltmeter high."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ന്യൂക്ലിയർ",question:"അണുബോംബ് പ്രവർത്തിക്കുന്നത് ഏത് തത്വത്തിൽ?",options:["A) ന്യൂക്ലിയർ ഫ്യൂഷൻ","B) ന്യൂക്ലിയർ ഫിഷൻ","C) രാസപ്രവർത്തനം","D) വികിരണം"],correct:1,explanation:"വലിയ ആറ്റങ്ങൾ വിഘടിച്ച് ഊർജ്ജം പുറത്തുവിടുന്നതാണ് ഫിഷൻ. സൂര്യനിലെ ഊർജ്ജം ഫ്യൂഷൻ വഴിയാണ്.",
+beginnerNote:"Nuclear Reactions:\n• Fission — Heavy nucleus splits (Atom bomb, Nuclear reactor)\n• Fusion — Light nuclei combine (Sun, Hydrogen bomb)",
+optionAnalysis:["A) ❌ Sun = fusion.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Atom bomb = Fission; Hydrogen bomb = Fusion'.",
+examTrap:"⚠️ Sun uses fusion; reactor uses fission."},
+
+{subject:"ഭൗതികശാസ്ത്രം – സംവഹനം",question:"ചൂടായ ദ്രാവകം മുകളിലേക്ക് പോകുന്ന പ്രക്രിയ:",options:["A) ചാലനം","B) വികിരണം","C) സംവഹനം","D) ഖരീഭവിക്കൽ"],correct:2,explanation:"വെള്ളം തിളപ്പിക്കുമ്പോൾ താഴെയുള്ള വെള്ളം ചൂടായി മുകളിലേക്കും മുകളിലെ തണുത്ത വെള്ളം താഴേക്കും വരുന്നത് സംവഹനം മൂലമാണ്.",
+beginnerNote:"Convection:\n• Hot fluid rises (less dense)\n• Cold fluid sinks (more dense)\n• Causes sea breeze, land breeze\n• Boiling water, room heater",
+optionAnalysis:["A) ❌.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'Convection = Fluid circulation'.",
+examTrap:"⚠️ Convection needs gravity."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ബലം",question:"ഒരു വസ്തുവിന്റെ വേഗത മാറ്റാൻ ഉപയോഗിക്കുന്ന ബാഹ്യ സ്വാധീനം:",options:["A) മർദ്ദം","B) ത്വരണം","C) ബലം","D) പ്രവർത്തി"],correct:2,explanation:"നിശ്ചലാവസ്ഥയിലുള്ള വസ്തുവിനെ ചലിപ്പിക്കാനോ ചലിക്കുന്നതിനെ നിർത്താനോ പ്രയോഗിക്കുന്നതാണ് ബലം.",
+beginnerNote:"Force:\n• F = ma (Newton's 2nd law)\n• Unit: Newton (N)\n• Vector quantity\n• Contact & Non-contact forces",
+optionAnalysis:["A) ❌ Force/Area.","B) ❌ Rate of velocity change.","C) ✅ ശരി.","D) ❌ F×d."],
+rejectionTrick:"'Force causes acceleration'.",
+examTrap:"⚠️ Force ≠ Pressure ≠ Work."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ശാസ്ത്രജ്ഞർ",question:"കണ്ടുപിടുത്തങ്ങളും ശാസ്ത്രജ്ഞരും — തെറ്റായത്:",options:["A) ഗുരുത്വാകർഷണ നിയമം – ഐസക് ന്യൂട്ടൺ","B) ആപേക്ഷികതാ സിദ്ധാന്തം – ആൽബർട്ട് ഐൻസ്റ്റീൻ","C) എക്സ്-റേ – വിൽഹെം റോൺജൻ","D) ഇലക്ട്രോൺ – ഏണസ്റ്റ് റഥർഫോർഡ്"],correct:3,explanation:"ഇലക്ട്രോൺ കണ്ടുപിടിച്ചത് ജെ.ജെ. തോംസൺ ആണ്. റഥർഫോർഡ് ആറ്റത്തിന്റെ ന്യൂക്ലിയസ് കണ്ടെത്തി.",
+beginnerNote:"Scientists & Discoveries:\n• Newton — Gravity\n• Einstein — Relativity, E=mc²\n• Röntgen — X-rays\n• J.J. Thomson — Electron\n• Rutherford — Nucleus\n• Bohr — Atomic model",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ Thomson discovered electron."],
+rejectionTrick:"'Thomson = Electron; Rutherford = Nucleus'.",
+examTrap:"⚠️ Thomson (electron) vs Rutherford (nucleus) — ശ്രദ്ധിക്കുക."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ബലങ്ങൾ",question:"ബലങ്ങളും ഉദാഹരണങ്ങളും — തെറ്റായത്:",options:["A) കാന്തിക ബലം – സമ്പർക്കമില്ലാത്ത ബലം","B) ഘർഷണ ബലം – സമ്പർക്ക ബലം","C) അഭികേന്ദ്ര ബലം – നേർരേഖാ ചലനം","D) ഗുരുത്വാകർഷണ ബലം – ഭൂമി വസ്തുക്കളെ വലിക്കുന്നത്"],correct:2,explanation:"അഭികേന്ദ്ര ബലം (Centripetal force) വൃത്താകാരത്തിലുള്ള ചലനത്തിനാണ് (Circular motion) ആവശ്യമായിട്ടുള്ളത്.",
+beginnerNote:"Forces:\n• Contact — Friction, Normal, Tension\n• Non-contact — Gravity, Magnetic, Electric\n• Centripetal — Circular motion (towards center)",
+optionAnalysis:["A) ✅.","B) ✅.","C) ❌ Circular, not linear.","D) ✅."],
+rejectionTrick:"'Centripetal = Circular'.",
+examTrap:"⚠️ Centripetal (circular) ≠ Linear."},
+
+{subject:"ഭൗതികശാസ്ത്രം – ശബ്ദ ഗുണങ്ങൾ",question:"ശബ്ദ ഗുണങ്ങൾ — തെറ്റായത്:",options:["A) പിച്ച് – ആവൃത്തി","B) ഉച്ചത – ആയതി","C) ശബ്ദവേഗത – മാധ്യമത്തിന്റെ സാന്ദ്രത","D) എക്കോ – അപവർത്തനം"],correct:3,explanation:"എക്കോ അഥവാ പ്രതിധ്വനി ഉണ്ടാകുന്നത് ശബ്ദത്തിന്റെ പ്രതിഫലനം (Reflection of sound) കാരണമാണ്.",
+beginnerNote:"Sound Properties:\n• Pitch — Frequency\n• Loudness — Amplitude\n• Quality/Timbre — Waveform\n• Echo — Reflection",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ Reflection, not refraction."],
+rejectionTrick:"'Echo = Sound reflection'.",
+examTrap:"⚠️ Echo needs 0.1s gap; minimum distance ~17m."},
+
+{subject:"ഭൗതികശാസ്ത്രം – മിററുകൾ",question:"ലെൻസുകളും ഉപയോഗങ്ങളും — തെറ്റായത്:",options:["A) ഭൂതക്കണ്ണാടി – കോൺവെക്സ് ലെൻസ്","B) വാഹന ഹെഡ്‌ലൈറ്റ് – കോൺവെക്സ് മിറർ","C) മൈക്രോസ്കോപ്പ് – കോൺവെക്സ് ലെൻസ്","D) ക്യാമറ – കോൺവെക്സ് ലെൻസ്"],correct:1,explanation:"വാഹനങ്ങളുടെ ഹെഡ്‌ലൈറ്റിലെ റിഫ്ലക്ടറായി ഉപയോഗിക്കുന്നത് പ്രകാശത്തെ സമാന്തരമായി മുന്നോട്ട് നയിക്കാൻ കോൺകേവ് (അവതല) മിറർ ആണ്.",
+beginnerNote:"Applications:\n• Magnifying glass — Convex lens\n• Headlight — Concave mirror (reflector)\n• Microscope, Camera — Convex lens\n• Rear-view — Convex mirror",
+optionAnalysis:["A) ✅.","B) ❌ Concave mirror.","C) ✅.","D) ✅."],
+rejectionTrick:"'Headlight = Concave (parallel beam)'.",
+examTrap:"⚠️ Concave mirror used in headlights; convex in rear-view."},
+
+{subject:"ഭൗതികശാസ്ത്രം – യൂണിറ്റുകൾ",question:"ഊർജ്ജ രൂപങ്ങളും യൂണിറ്റുകളും — തെറ്റായത്:",options:["A) താപോർജ്ജം – ജൂൾ","B) വൈദ്യുതോർജ്ജം – കിലോവാട്ട് ഹവർ","C) പവർ – വാട്ട്","D) പ്രവൃത്തി – പാസ്കൽ"],correct:3,explanation:"പ്രവൃത്തിയുടെ (Work) യൂണിറ്റ് ജൂൾ ആണ്. പാസ്കൽ മർദ്ദത്തിന്റെ (Pressure) യൂണിറ്റാണ്.",
+beginnerNote:"Units:\n• Work & Energy — Joule\n• Power — Watt\n• Pressure — Pascal\n• Force — Newton",
+optionAnalysis:["A) ✅.","B) ✅.","C) ✅.","D) ❌ Pascal = Pressure."],
+rejectionTrick:"'Work = Joule; Pressure = Pascal'.",
+examTrap:"⚠️ 1 kWh = 3.6 × 10⁶ J."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Cause/Effect (Lightning)",question:"1: പ്രകാശത്തെക്കാൾ വേഗത കുറവാണ് ശബ്ദത്തിന്.\n2: ഇടിമിന്നലുണ്ടാകുമ്പോൾ മിന്നൽ കണ്ടതിന് ശേഷം മാത്രമേ ഇടിമുഴക്കം കേൾക്കാൻ സാധിക്കൂ.",options:["A) 1 കാരണവും 2 ഫലവുമാണ്","B) 2 കാരണവും 1 ഫലവുമാണ്","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"],correct:0,explanation:"പ്രകാശ വേഗത (3 ലക്ഷം km/s) ശബ്ദവേഗതയെക്കാൾ (340 m/s) വളരെ കൂടുതലായതിനാലാണ് ഇത് സംഭവിക്കുന്നത്.",
+beginnerNote:"Lightning Facts:\n• Light speed — 300,000 km/s\n• Sound speed — ~340 m/s\n• Lightning is seen first\n• Thunder follows",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Light fast → See first; Sound slow → Hear later'.",
+examTrap:"⚠️ Distance from lightning: 3 seconds per 1 km (sound)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Cause/Effect (Earth shape)",question:"1: ഭൂമിയുടെ ഭ്രമണം കാരണം മധ്യഭാഗത്ത് അപകേന്ദ്രബലം കൂടുതൽ.\n2: ഭൂമിയുടെ ആകൃതി ഭൂമധ്യരേഖാ പ്രദേശത്ത് അല്പം വീർത്തിരിക്കുന്നു.",options:["A) 1 കാരണവും 2 ഫലവുമാണ്","B) 2 കാരണവും 1 ഫലവുമാണ്","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"],correct:0,explanation:"ഭ്രമണത്തിന്റെ ഫലമായുള്ള അപകേന്ദ്രബലം ഭൂമിയെ തികഞ്ഞ ഗോളാകൃതിയിൽ നിന്നും മാറ്റുന്നു.",
+beginnerNote:"Earth's Shape — Oblate Spheroid:\n• Equatorial bulge (~21 km)\n• Polar flattening\n• Earth radius (equatorial) = 6378 km\n• Earth radius (polar) = 6357 km",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Rotation → Centrifugal → Bulge'.",
+examTrap:"⚠️ Earth is not a perfect sphere."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Cause/Effect (Capillarity)",question:"1: വെള്ളത്തിൽ നേരിയ കുഴൽ മുക്കിവെക്കുമ്പോൾ ജലം അതിലൂടെ മുകളിലേക്ക് കയറുന്നു.\n2: ദ്രാവക തന്മാത്രകൾ തമ്മിലുള്ള കൊഹിഷൻ ബലത്തേക്കാൾ ഗ്ലാസ്സുമായുള്ള അഡ്‌ഹിഷൻ ബലം കൂടുതൽ.",options:["A) 1 കാരണവും 2 ഫലവുമാണ്","B) 2 കാരണവും 1 ഫലവുമാണ്","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"],correct:1,explanation:"അഡ്‌ഹിഷൻ ബലം കൂടുമ്പോഴാണ് കേശികത്വം (Capillarity) വഴി ദ്രാവകങ്ങൾ ചെറിയ കുഴലുകളിലൂടെ മുകളിലേക്ക് കയറുന്നത്.",
+beginnerNote:"Capillarity:\n• Adhesion > Cohesion → Rise (Water)\n• Cohesion > Adhesion → Fall (Mercury)\n• Examples: Blotting paper, Wick, Plant roots",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Adhesion > Cohesion → Capillary rise'.",
+examTrap:"⚠️ Mercury falls (Cohesion stronger)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Cause/Effect (Induction)",question:"1: ഒരു കാന്തിക മണ്ഡലത്തിൽ വെച്ചിരിക്കുന്ന കോയിലിലൂടെയുള്ള കാന്തിക ഫ്ലക്സിന് വ്യതിയാനം.\n2: കോയിലിൽ ഒരു വൈദ്യുത പ്രവാഹം (Induced current) ഉണ്ടാകുന്നു.",options:["A) 1 കാരണവും 2 ഫലവുമാണ്","B) 2 കാരണവും 1 ഫലവുമാണ്","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"],correct:0,explanation:"മൈക്കൽ ഫാരഡേ കണ്ടെത്തിയ വൈദ്യുത കാന്തിക പ്രേരണം (Electromagnetic Induction) എന്ന പ്രതിഭാസമാണിത്. ജനറേറ്ററുകൾ പ്രവർത്തിക്കുന്നത് ഈ തത്വത്തിലാണ്.",
+beginnerNote:"Electromagnetic Induction:\n• Discovered by Faraday (1831)\n• Changing magnetic flux → Induced current\n• Basis of generator, transformer\n• Lenz's law determines direction",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Flux change → Induced current (Faraday)'.",
+examTrap:"⚠️ No change = No current."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Cause/Effect (Friction)",question:"1: യന്ത്രഭാഗങ്ങൾ തമ്മിൽ ഉരസുമ്പോൾ ഘർഷണം അനുഭവപ്പെടുന്നു.\n2: യന്ത്രങ്ങളിൽ താപം ഉത്പാദിപ്പിക്കപ്പെടുകയും തേയ്മാനം സംഭവിക്കുകയും ചെയ്യുന്നു.",options:["A) 1 കാരണവും 2 ഫലവുമാണ്","B) 2 കാരണവും 1 ഫലവുമാണ്","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"],correct:0,explanation:"സമ്പർക്കത്തിലുള്ള പ്രതലങ്ങൾ തമ്മിലുള്ള ചലനത്തെ എതിർക്കുന്ന ബലമായ ഘർഷണം താപോത്പാദനത്തിന് കാരണമാകുന്നു. ലൂബ്രിക്കന്റുകൾ ഉപയോഗിച്ച് ഇത് കുറയ്ക്കാം.",
+beginnerNote:"Friction:\n• Opposes motion\n• Produces heat & wear\n• Reduced by lubricants, ball bearings\n• Necessary for walking, braking",
+optionAnalysis:["A) ✅.","B) ❌.","C) ❌.","D) ❌."],
+rejectionTrick:"'Friction → Heat & Wear'.",
+examTrap:"⚠️ Friction is both useful (walking) and harmful (engine wear)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പിണ്ഡം (Direct)",question:"ഒരു വസ്തുവിന്റെ പിണ്ഡം ഭൂമിയിൽ 60 kg ആണെങ്കിൽ ചന്ദ്രനിൽ അതിന്റെ പിണ്ഡം എത്ര?",options:["A) 10 kg","B) 60 kg","C) 360 kg","D) 0 kg"],correct:1,explanation:"പിണ്ഡം (Mass) എവിടെപ്പോയാലും മാറില്ല. ഭാരം (Weight) ആണ് ചന്ദ്രനിൽ ഭൂമിയുടെ ആറിലൊന്നാകുന്നത്.",
+beginnerNote:"Mass vs Weight:\n• Mass — Constant everywhere\n• Weight — 1/6 on Moon\n• Moon g = 1.6 m/s²\n• Earth g = 9.8 m/s²",
+optionAnalysis:["A) ❌ Weight.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Mass constant; Weight varies'.",
+examTrap:"⚠️ Weight on Moon = 60×1.6 = 96 N (1/6 of 588 N)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – പദാർത്ഥാവസ്ഥ",question:"പദാർത്ഥത്തിന്റെ നാലാമത്തെ അവസ്ഥ:",options:["A) ഖരം","B) ദ്രാവകം","C) വാതകം","D) പ്ലാസ്മ"],correct:3,explanation:"ഉയർന്ന താപനിലയിൽ വാതകങ്ങൾ അയണീകരിക്കപ്പെട്ട അവസ്ഥയാണ് പ്ലാസ്മ. ബോസ്-ഐൻസ്റ്റീൻ കണ്ടൻസേറ്റ് ആണ് അഞ്ചാമത്തെ അവസ്ഥ.",
+beginnerNote:"States of Matter:\n• Solid — Fixed shape & volume\n• Liquid — Fixed volume, variable shape\n• Gas — Variable shape & volume\n• Plasma — Ionized gas (Sun, lightning, neon)\n• BEC — Near absolute zero",
+optionAnalysis:["A) ❌ 1st.","B) ❌ 2nd.","C) ❌ 3rd.","D) ✅ ശരി."],
+rejectionTrick:"'4th = Plasma; 5th = BEC'.",
+examTrap:"⚠️ Sun, stars, lightning = plasma."},
+
+{subject:"ഭൗതികശാസ്ത്രം – തരംഗങ്ങൾ",question:"കുളത്തിൽ കല്ലെറിയുമ്പോൾ ഉണ്ടാകുന്ന തരംഗങ്ങൾ:",options:["A) അനുദൈർഘ്യ തരംഗങ്ങൾ","B) അനുപ്രസ്ഥ തരംഗങ്ങൾ","C) വൈദ്യുത കാന്തിക തരംഗങ്ങൾ","D) ഇലക്ട്രോൺ തരംഗങ്ങൾ"],correct:1,explanation:"മാധ്യമത്തിലെ കണികകൾ തരംഗത്തിന്റെ സഞ്ചാര ദിശയ്ക്ക് ലംബമായി (Perpendicular) ചലിക്കുന്നതാണ് അനുപ്രസ്ഥ തരംഗങ്ങൾ.",
+beginnerNote:"Wave Types:\n• Transverse — Particles perpendicular (Light, Water waves, String)\n• Longitudinal — Particles parallel (Sound, Compression waves)",
+optionAnalysis:["A) ❌ Sound.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Water waves = Transverse'.",
+examTrap:"⚠️ Sound = Longitudinal; Light = Transverse."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Resistance",question:"വൈദ്യുത പ്രതിരോധത്തിന്റെ SI യൂണിറ്റ്:",options:["A) ആമ്പിയർ","B) ഓം","C) വോൾട്ട്","D) ഫാരഡ്"],correct:1,explanation:"ഒരു ചാലകം അതിലൂടെയുള്ള വൈദ്യുതി പ്രവാഹത്തെ തടയുന്ന സ്വഭാവമാണ് പ്രതിരോധം. ഇതിന്റെ യൂണിറ്റ് ഓം ആണ്.",
+beginnerNote:"Electrical Units:\n• Current — Ampere (A)\n• Voltage — Volt (V)\n• Resistance — Ohm (Ω)\n• Capacitance — Farad (F)",
+optionAnalysis:["A) ❌ Current.","B) ✅ ശരി.","C) ❌ Voltage.","D) ❌ Capacitance."],
+rejectionTrick:"'Resistance = Ohm (Ω)'.",
+examTrap:"⚠️ Ohm's law: V = IR."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Solar Heater",question:"സോളാർ ഹീറ്ററുകളിൽ താപമുണ്ടാക്കാൻ കാരണമാകുന്ന കിരണങ്ങൾ:",options:["A) അൾട്രാവയലറ്റ്","B) എക്സ്-റേ","C) ഇൻഫ്രാറെഡ്","D) ഗാമ റേ"],correct:2,explanation:"താപ വികിരണങ്ങൾ എന്ന് വിളിക്കപ്പെടുന്നത് ഇൻഫ്രാറെഡ് കിരണങ്ങളെയാണ്.",
+beginnerNote:"IR Radiation:\n• Heat radiation\n• Used in solar heaters, IR lamps, remote controls\n• Discovered by William Herschel\n• Long wavelength (>700 nm)",
+optionAnalysis:["A) ❌ UV.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'IR = Heat radiation'.",
+examTrap:"⚠️ UV = Skin cancer; IR = Heat."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Horsepower",question:"1 കുതിരശക്തി (HP) എത്ര വാട്ടിന് തുല്യം?",options:["A) 1000 W","B) 746 W","C) 500 W","D) 100 W"],correct:1,explanation:"പവർ അളക്കാൻ ഉപയോഗിക്കുന്ന യൂണിറ്റാണ് കുതിരശക്തി. 1 HP = 746 Watt.",
+beginnerNote:"Power Units:\n• 1 HP = 746 W (Metric: 735.5 W)\n• 1 kW = 1000 W\n• 1 MW = 10⁶ W\n• Used for engines, motors",
+optionAnalysis:["A) ❌ kW.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'1 HP ≈ 746 W'.",
+examTrap:"⚠️ Metric HP = 735.5 W (slight difference)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Interference",question:"സോപ്പു കുമിളകളിലെ മനോഹര നിറങ്ങൾക്ക് കാരണം:",options:["A) വിസരണം","B) ഇന്റർഫെറൻസ്","C) പ്രകീർണ്ണനം","D) അപവർത്തനം"],correct:1,explanation:"പ്രകാശ തരംഗങ്ങൾ തമ്മിൽ ഇടകലരുന്ന പ്രതിഭാസമായ ഇന്റർഫെറൻസ് ആണ് കുമിളകളിലെ നിറങ്ങൾക്ക് കാരണം.",
+beginnerNote:"Interference:\n• Constructive — Bright bands\n• Destructive — Dark bands\n• Examples: Soap bubbles, Oil films, CD colors\n• Thomas Young's double-slit experiment",
+optionAnalysis:["A) ❌ Sky.","B) ✅ ശരി.","C) ❌ Prism.","D) ❌ Pencil in water."],
+rejectionTrick:"'Soap bubble colors = Interference'.",
+examTrap:"⚠️ Interference = wave nature of light proof."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Energy",question:"ഒരു വസ്തുവിന്റെ പ്രവർത്തിക്കാനുള്ള കഴിവിനെ വിളിക്കുന്നത്:",options:["A) പവർ","B) ഊർജ്ജം","C) ബലം","D) ത്വരണം"],correct:1,explanation:"പ്രവർത്തിയും ഊർജ്ജവും അളക്കുന്നത് ഒരേ യൂണിറ്റിലാണ് (ജൂൾ).",
+beginnerNote:"Energy:\n• Capacity to do work\n• Unit: Joule (J)\n• Forms: Kinetic, Potential, Thermal, Chemical, Nuclear, Electrical\n• Law of Conservation: cannot be created/destroyed",
+optionAnalysis:["A) ❌ Energy/Time.","B) ✅ ശരി.","C) ❌ F=ma.","D) ❌ Δv/t."],
+rejectionTrick:"'Energy = Capacity to do work'.",
+examTrap:"⚠️ Work & Energy same unit."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Compass at Poles",question:"ഭൂമിയുടെ ധ്രുവങ്ങളിൽ കോമ്പസ് സൂചി എപ്രകാരമായിരിക്കും നിൽക്കുന്നത്?",options:["A) തിരശ്ചീനമായി","B) ലംബമായി","C) 45° ചരിഞ്ഞ്","D) കറങ്ങിക്കൊണ്ടിരിക്കും"],correct:1,explanation:"കാന്തിക ധ്രുവങ്ങളിൽ കാന്തിക ബലരേഖകൾ ലംബമായിരിക്കുന്നതിനാൽ സൂചിയും താഴേക്ക് ലംബമായി നിൽക്കും.",
+beginnerNote:"Compass at Poles:\n• Magnetic field lines vertical at poles\n• Compass points vertically down\n• Magnetic dip = 90°\n• At equator: horizontal (dip = 0°)",
+optionAnalysis:["A) ❌ Equator.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Poles — Vertical; Equator — Horizontal'.",
+examTrap:"⚠️ Magnetic dip varies with latitude."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Transformer",question:"ട്രാൻസ്ഫോർമർ പ്രവർത്തിക്കുന്നത് ഏത് തത്വത്തിൽ?",options:["A) പ്ലവക്ഷമത","B) ഓം നിയമം","C) മ്യൂച്വൽ ഇൻഡക്ഷൻ","D) ഘർഷണം"],correct:2,explanation:"എ.സി കറന്റിന്റെ വോൾട്ടേജ് കൂട്ടാനും കുറയ്ക്കാനും ഉപയോഗിക്കുന്ന ഉപകരണമാണ് ട്രാൻസ്ഫോർമർ.",
+beginnerNote:"Transformer:\n• Works on Mutual Induction\n• Step-up — Increases voltage\n• Step-down — Decreases voltage\n• Only works on AC\n• Used in power distribution",
+optionAnalysis:["A) ❌ Buoyancy.","B) ❌ Ohm.","C) ✅ ശരി.","D) ❌ Friction."],
+rejectionTrick:"'Transformer = Mutual Induction (AC only)'.",
+examTrap:"⚠️ Transformer works only with AC, not DC."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Decibel",question:"ശബ്ദ തീവ്രത അളക്കാൻ ഉപയോഗിക്കുന്ന യൂണിറ്റ്:",options:["A) ഡെസിബെൽ","B) ഹെർട്സ്","C) പാസ്കൽ","D) മാക്"],correct:0,explanation:"സാധാരണ സംഭാഷണത്തിന്റെ ശബ്ദ തീവ്രത ഏകദേശം 60 dB ആണ്. 80 dB ന് മുകളിലുള്ള ശബ്ദം മലിനീകരണമാണ്.",
+beginnerNote:"Sound Units:\n• Decibel (dB) — Intensity/Loudness\n• Hertz (Hz) — Frequency\n• Mach — Speed (aircraft)\n• 0 dB — Threshold of hearing",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ Frequency.","C) ❌ Pressure.","D) ❌ Speed."],
+rejectionTrick:"'dB = Loudness; Hz = Pitch'.",
+examTrap:"⚠️ 85+ dB = Hearing damage risk."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Water Density",question:"ശുദ്ധജലത്തിന് ഏറ്റവും സാന്ദ്രത കൂടിയ താപനില:",options:["A) 0°C","B) 100°C","C) 4°C","D) -4°C"],correct:2,explanation:"4°C ലാണ് ജലത്തിന് ഏറ്റവും കൂടിയ സാന്ദ്രതയും കുറഞ്ഞ വ്യാപ്തവും ഉള്ളത് (ജലത്തിന്റെ അസാധാരണ വികാസം).",
+beginnerNote:"Anomalous Expansion:\n• Water density max at 4°C = 1000 kg/m³\n• Above & below 4°C, water less dense\n• Allows aquatic life in winter\n• Ice floats (density 917 kg/m³)",
+optionAnalysis:["A) ❌ Ice less dense.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'4°C = Maximum density'.",
+examTrap:"⚠️ Ice floats because less dense than water."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Speed of Light Limit",question:"പ്രകാശത്തെക്കാൾ വേഗത്തിൽ സഞ്ചരിക്കുന്ന യാതൊന്നുമില്ല എന്ന് സമർത്ഥിച്ചത്:",options:["A) ന്യൂട്ടൺ","B) ഐൻസ്റ്റീൻ","C) ഹോക്കിംഗ്","D) ഗലീലിയോ"],correct:1,explanation:"ഐൻസ്റ്റീന്റെ പ്രത്യേക ആപേക്ഷികതാ സിദ്ധാന്തമാണ് ഇത് വ്യക്തമാക്കിയത്.",
+beginnerNote:"Special Relativity (1905):\n• Speed of light in vacuum (c) is constant\n• Nothing can exceed c\n• E = mc²\n• Time dilation & Length contraction",
+optionAnalysis:["A) ❌ Gravity.","B) ✅ ശരി.","C) ❌ Black holes.","D) ❌ Telescope."],
+rejectionTrick:"'c = universal speed limit (Einstein)'.",
+examTrap:"⚠️ Speed of light constant in all frames."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Parallel Circuit",question:"വീടുകളിലെ വൈദ്യുത ഉപകരണങ്ങൾ ഏത് രീതിയിലാണ് ഘടിപ്പിച്ചിരിക്കുന്നത്?",options:["A) ശ്രേണീ രീതി","B) സമാന്തര രീതി","C) മിശ്രിത രീതി","D) ഇവയൊന്നുമല്ല"],correct:1,explanation:"എല്ലാ ഉപകരണങ്ങൾക്കും ഒരേ വോൾട്ടേജ് ലഭിക്കാനും ഒരു ഉപകരണം കേടായാലും മറ്റുള്ളവ പ്രവർത്തിക്കാനുമാണിത്.",
+beginnerNote:"Parallel Connection:\n• Same voltage across all\n• Independent operation\n• Total resistance decreases\n• Used in homes",
+optionAnalysis:["A) ❌ Christmas lights.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Homes = Parallel'.",
+examTrap:"⚠️ Series — one fails, all off."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Speedometer",question:"വാഹനങ്ങളിലെ സ്പീഡോമീറ്റർ അളക്കുന്നത്:",options:["A) ശരാശരി പ്രവേഗം","B) ത്വരണം","C) തൽക്ഷണ വേഗത","D) പിന്നിട്ട ദൂരം"],correct:2,explanation:"ഒരു പ്രത്യേക നിമിഷത്തിലുള്ള വാഹനത്തിന്റെ വേഗതയാണ് സ്പീഡോമീറ്റർ കാണിക്കുന്നത്. ദൂരം അളക്കുന്നത് ഓഡോമീറ്ററാണ്.",
+beginnerNote:"Vehicle Instruments:\n• Speedometer — Instantaneous speed\n• Odometer — Total distance\n• Tachometer — Engine RPM\n• Fuel gauge — Fuel level",
+optionAnalysis:["A) ❌.","B) ❌.","C) ✅ ശരി.","D) ❌ Odometer."],
+rejectionTrick:"'Speed = Speedometer; Distance = Odometer'.",
+examTrap:"⚠️ Two different instruments."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Body Resistance",question:"മനുഷ്യ ശരീരത്തിലെ വൈദ്യുത പ്രതിരോധം ഏത് അവസ്ഥയിൽ കൂടുതൽ?",options:["A) നനഞ്ഞ അവസ്ഥയിൽ","B) ഉണങ്ങിയ അവസ്ഥയിൽ","C) രണ്ടിലും തുല്യം","D) താപനിലയെ ആശ്രയിച്ച്"],correct:1,explanation:"ഈർപ്പമുള്ള ചർമ്മത്തിന് പ്രതിരോധം വളരെ കുറവാണ്, അതിനാൽ ഷോക്ക് ഏൽക്കാനുള്ള സാധ്യത കൂടുതലാണ്.",
+beginnerNote:"Body Resistance:\n• Dry skin — 100,000+ Ω\n• Wet skin — ~1,000 Ω\n• Wet → Electrocution risk\n• Never touch electrical switches with wet hands",
+optionAnalysis:["A) ❌ Wet = Lower resistance.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Wet = Less resistance = More danger'.",
+examTrap:"⚠️ Water conducts electricity better than dry skin."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Weight Formula",question:"ഭാരം (Weight) കണക്കാക്കുന്ന സൂത്രവാക്യം:",options:["A) W = m/g","B) W = m+g","C) W = mg","D) W = v/g"],correct:2,explanation:"ഭാരം എന്നത് പിണ്ഡത്തിന്റെയും (m) ഗുരുത്വാകർഷണ ത്വരണത്തിന്റെയും (g) ഗുണനഫലമാണ്.",
+beginnerNote:"Weight:\n• W = mg\n• W = Weight (N)\n• m = Mass (kg)\n• g = 9.8 m/s² (Earth)\n• Vector quantity",
+optionAnalysis:["A) ❌.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'W = mg (Weight = mass × gravity)'.",
+examTrap:"⚠️ Weight = force (Newton)."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Fluorescent Lamp",question:"ഫ്ലൂറസെന്റ് ബൾബുകളിൽ ഉപയോഗിക്കുന്ന വാതകം:",options:["A) ഹൈഡ്രജൻ","B) ഓക്സിജൻ","C) ആർഗൺ, മെർക്കുറി ബാഷ്പം","D) നൈട്രജൻ"],correct:2,explanation:"വൈദ്യുതി കടന്നുപോകുമ്പോൾ ഈ വാതക മിശ്രിതം യു.വി കിരണങ്ങൾ പുറപ്പെടുവിക്കുകയും അത് ബൾബിലെ ഫ്ലൂറസെന്റ് കോട്ടിംഗിൽ തട്ടി പ്രകാശമായി മാറുകയും ചെയ്യുന്നു.",
+beginnerNote:"Fluorescent Lamp:\n• Contains Argon + Mercury vapor\n• UV rays → Fluorescent coating → Visible light\n• More efficient than incandescent\n• Compact Fluorescent Lamp (CFL)",
+optionAnalysis:["A) ❌.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'Fluorescent = Argon + Mercury'.",
+examTrap:"⚠️ LED ≠ Fluorescent; LED uses diodes."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Ozone Layer",question:"ഓസോൺ പാളി എവിടെയാണ് സ്ഥിതിചെയ്യുന്നത്?",options:["A) ട്രോപോസ്ഫിയർ","B) സ്ട്രാറ്റോസ്ഫിയർ","C) മെസോസ്ഫിയർ","D) തെർമോസ്ഫിയർ"],correct:1,explanation:"സ്ട്രാറ്റോസ്ഫിയറിലെ ഓസോൺ പാളിയാണ് സൂര്യനിൽ നിന്നുള്ള മാരകമായ യു.വി കിരണങ്ങളെ തടയുന്നത്.",
+beginnerNote:"Atmosphere Layers:\n• Troposphere (0-12 km) — Weather\n• Stratosphere (12-50 km) — Ozone\n• Mesosphere (50-85 km) — Meteors burn\n• Thermosphere (85-600 km) — Aurora\n• Exosphere (600+ km)",
+optionAnalysis:["A) ❌ Weather.","B) ✅ ശരി.","C) ❌ Meteors.","D) ❌ Aurora."],
+rejectionTrick:"'Ozone = Stratosphere'.",
+examTrap:"⚠️ Montreal Protocol (1987) — Ozone protection."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Lens Power",question:"ഒരു ലെൻസിന്റെ പവർ അളക്കാൻ ഉപയോഗിക്കുന്ന യൂണിറ്റ്:",options:["A) ഡയോപ്റ്റർ","B) മീറ്റർ","C) ഫോക്കസ്","D) വാട്ട്"],correct:0,explanation:"ലെൻസിന്റെ ഫോക്കൽ ലെങ്ത്തിന്റെ വ്യുൽക്രമമാണ് (Reciprocal) പവർ (P = 1/f).",
+beginnerNote:"Lens Power:\n• P = 1/f (f in meters)\n• Unit: Dioptre (D)\n• Convex — Positive power\n• Concave — Negative power",
+optionAnalysis:["A) ✅ ശരി.","B) ❌ Length.","C) ❌.","D) ❌ Power (general)."],
+rejectionTrick:"'Dioptre = Lens power unit'.",
+examTrap:"⚠️ Optometrist prescription = Dioptre."},
+
+{subject:"ഭൗതികശാസ്ത്രം – SONAR",question:"സോണാർ (SONAR) സംവിധാനം പുറപ്പെടുവിക്കുന്നത്:",options:["A) റേഡിയോ തരംഗങ്ങൾ","B) മൈക്രോവേവ്","C) അൾട്രാസോണിക് ശബ്ദ തരംഗങ്ങൾ","D) ലേസർ"],correct:2,explanation:"20,000 Hz-ന് മുകളിലുള്ള ശബ്ദ തരംഗങ്ങൾ വെള്ളത്തിനടിയിലേക്ക് അയച്ച് അവയുടെ പ്രതിധ്വനി (Echo) കണക്കാക്കിയാണ് ആഴം അളക്കുന്നത്.",
+beginnerNote:"SONAR:\n• SOund Navigation And Ranging\n• Uses ultrasonic waves\n• Measures ocean depth\n• Detects submarines, fish schools\n• Based on echo principle",
+optionAnalysis:["A) ❌.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'SONAR = Ultrasonic sound'.",
+examTrap:"⚠️ RADAR = Radio waves; SONAR = Sound waves."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Generator Brushes",question:"ജനറേറ്ററിലെ ബ്രഷുകൾ നിർമ്മിക്കാൻ ഉപയോഗിക്കുന്ന പദാർത്ഥം:",options:["A) കോപ്പർ","B) ഇരുമ്പ്","C) കാർബൺ","D) സിൽവർ"],correct:2,explanation:"കറങ്ങുന്ന ആർമേച്ചറിൽ നിന്ന് വൈദ്യുതി പുറത്തെ സർക്യൂട്ടിലേക്ക് എത്തിക്കാനാണ് കാർബൺ ബ്രഷുകൾ ഉപയോഗിക്കുന്നത്.",
+beginnerNote:"Generator Brushes:\n• Carbon (graphite) brushes\n• Conduct electricity\n• Low friction\n• Soft (doesn't scratch commutator)\n• Replaceable",
+optionAnalysis:["A) ❌.","B) ❌.","C) ✅ ശരി.","D) ❌."],
+rejectionTrick:"'Carbon brushes = Conducting + self-lubricating'.",
+examTrap:"⚠️ Carbon = Graphite = conducts electricity."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Prism",question:"പ്രകാശത്തിന്റെ പ്രകീർണ്ണനം (Dispersion) കാണിക്കാൻ ഉപയോഗിക്കുന്നത്:",options:["A) പ്ലെയിൻ ഗ്ലാസ്","B) പ്രിസം","C) കോൺവെക്സ് ലെൻസ്","D) മിറർ"],correct:1,explanation:"ധവളപ്രകാശം പ്രിസത്തിലൂടെ കടന്നുപോകുമ്പോൾ അതിന്റെ ഘടക വർണ്ണങ്ങളായി (VIBGYOR) വേർതിരിയുന്നു.",
+beginnerNote:"Dispersion:\n• White light → VIBGYOR\n• Prism separates colors\n• Each color has different wavelength\n• Newton's experiment (1666)",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Prism = Dispersion'.",
+examTrap:"⚠️ Rainbow = Dispersion by water droplets."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Hygrometer",question:"ആപേക്ഷിക ആർദ്രത അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണം:",options:["A) ബാരോമീറ്റർ","B) ഹൈഗ്രോമീറ്റർ","C) ഹൈഡ്രോമീറ്റർ","D) അനിമോമീറ്റർ"],correct:1,explanation:"അന്തരീക്ഷത്തിലെ ജലബാഷ്പത്തിന്റെ അളവ് (ആർദ്രത) അളക്കാനാണ് ഹൈഗ്രോമീറ്റർ ഉപയോഗിക്കുന്നത്. (ദ്രാവകങ്ങളുടെ സാന്ദ്രത അളക്കുന്നത് ഹൈഡ്രോമീറ്റർ).",
+beginnerNote:"Instruments:\n• Hygrometer — Humidity\n• Barometer — Atmospheric pressure\n• Hydrometer — Liquid density\n• Anemometer — Wind speed",
+optionAnalysis:["A) ❌ Pressure.","B) ✅ ശരി.","C) ❌ Density.","D) ❌ Wind."],
+rejectionTrick:"'Hygro (moisture) vs Hydro (water)'.",
+examTrap:"⚠️ Hygrometer ≠ Hydrometer."},
+
+{subject:"ഭൗതികശാസ്ത്രം – Black Box",question:"വിമാനങ്ങളുടെ 'ബ്ലാക്ക് ബോക്സ്' യഥാർത്ഥത്തിൽ ഏത് നിറത്തിൽ?",options:["A) കറുപ്പ്","B) ഓറഞ്ച്","C) വെളുപ്പ്","D) ചുവപ്പ്"],correct:1,explanation:"വിമാനാപകടങ്ങൾക്ക് ശേഷം എളുപ്പത്തിൽ കണ്ടെത്താനായി തെളിഞ്ഞ ഓറഞ്ച് നിറത്തിലാണ് ബ്ലാക്ക് ബോക്സ് പെയിന്റ് ചെയ്തിരിക്കുന്നത്.",
+beginnerNote:"Black Box (Flight Recorder):\n• Color: Orange (visible)\n• Two parts — FDR + CVR\n• FDR = Flight Data Recorder\n• CVR = Cockpit Voice Recorder\n• Withstands crash, fire, water",
+optionAnalysis:["A) ❌.","B) ✅ ശരി.","C) ❌.","D) ❌."],
+rejectionTrick:"'Black box is orange (visible after crash)'.",
+examTrap:"⚠️ Name 'black box' misleading."}
+];
+
+let questions=[],currentIndex=0,timeRemaining=0,timerInterval=null,timerEndTime=null,pausedRemaining=null,isSubmitted=false,isPaused=false,isAutoPaused=false,isStudyPaused=false,questionStates=[],lastSaveTime=0,saveTimeout=null;
+
+function setTimer(s){pausedRemaining=null;timerEndTime=Date.now()+s*1000;timeRemaining=s}
+function pauseTimer(){if(timerEndTime!==null){pausedRemaining=Math.max(0,Math.round((timerEndTime-Date.now())/1000));timerEndTime=null}}
+function resumeTimer(){if(pausedRemaining!==null){timerEndTime=Date.now()+pausedRemaining*1000;pausedRemaining=null}}
+function tickTimer(){if(isSubmitted||isPaused||isStudyPaused)return;if(timerEndTime===null)return;timeRemaining=Math.max(0,Math.round((timerEndTime-Date.now())/1000));updateTimerDisplay();if(timeRemaining<=0){timeRemaining=0;if(CONFIG.AUTO_SUBMIT_ON_TIMEOUT){submitTest(true);return}}if(timeRemaining%15===0)saveAttempt()}
+function updateTimerDisplay(){const el=document.getElementById('timerDisplay');if(!el)return;const h=Math.floor(timeRemaining/3600),m=Math.floor((timeRemaining%3600)/60),s=timeRemaining%60,pad=n=>String(n).padStart(2,'0');el.textContent=pad(h)+':'+pad(m)+':'+pad(s);const box=document.getElementById('timerBox');if(timeRemaining<=300&&timeRemaining>0&&!isPaused&&!isStudyPaused)box.classList.add('warning');else box.classList.remove('warning')}
+function saveAttempt(){if(isSubmitted)return;try{const d={version:STORAGE_VERSION,timestamp:Date.now(),currentIndex,timeRemaining,timerEndTime,questionStates,totalQuestions:questions.length};localStorage.setItem(STORAGE_KEY,JSON.stringify(d));lastSaveTime=Date.now();showSaveStatus()}catch(e){}}
+function showSaveStatus(){const el=document.getElementById('saveStatus');if(!el)return;el.textContent='💾 Saved';el.classList.add('visible');clearTimeout(el._hideT);el._hideT=setTimeout(()=>el.classList.remove('visible'),1500)}
+function throttledSave(){const n=Date.now();if(n-lastSaveTime>2000)saveAttempt();else{clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAttempt,2000-(n-lastSaveTime))}}
+function getSavedAttempt(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return null;const d=JSON.parse(r);if(!d||d.version!==STORAGE_VERSION)return null;if(!d.questionStates||!Array.isArray(d.questionStates))return null;if(d.timeRemaining<=0)return null;return d}catch(e){return null}}
+function formatTimeAgo(ts){const df=Math.floor((Date.now()-ts)/1000);if(df<60)return df+' seconds ago';if(df<3600)return Math.floor(df/60)+' min ago';if(df<86400)return Math.floor(df/3600)+' hr ago';return Math.floor(df/86400)+' day(s) ago'}
+function formatTimeLeft(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;if(h>0)return h+'h '+m+'m '+ss+'s';return m+'m '+ss+'s'}
+function countAnswered(states){let n=0;states.forEach(st=>{if(st.status==='saved')n++});return n}
+function checkSavedAndShowBanner(){const s=getSavedAttempt();if(!s){hideBanner();startNewTest();return}const a=countAnswered(s.questionStates);document.getElementById('resumeInfo').innerHTML='Saved at <strong>Q'+(s.currentIndex+1)+'/'+s.totalQuestions+'</strong> · <strong>'+a+'</strong> answered · <strong>'+formatTimeLeft(s.timeRemaining)+'</strong> left';document.getElementById('resumeBanner').classList.add('visible');document.getElementById('testView').style.display='none';document.getElementById('testHeader').style.display='none'}
+function hideBanner(){document.getElementById('resumeBanner').classList.remove('visible')}
+function resumeAttempt(){const s=getSavedAttempt();if(!s){startFresh();return}questions=sourceQuestions.map(q=>({...q}));timeRemaining=s.timeRemaining;currentIndex=Math.min(s.currentIndex,questions.length-1);isSubmitted=false;isPaused=false;isAutoPaused=false;isStudyPaused=false;questionStates=s.questionStates.map(st=>({selectedOption:st.selectedOption,status:st.status,markedForReview:st.markedForReview,visited:st.visited}));while(questionStates.length<questions.length)questionStates.push({selectedOption:null,status:'idle',markedForReview:false,visited:false});questionStates.length=questions.length;hideBanner();launchTest(true)}
+function startFresh(){try{localStorage.removeItem(STORAGE_KEY)}catch(e){}hideBanner();startNewTest()}
+function startNewTest(){if(!sourceQuestions||sourceQuestions.length===0){alert('⚠️ No source questions loaded.');return}questions=sourceQuestions.map(q=>({...q}));setTimer(questions.length*SECONDS_PER_QUESTION);currentIndex=0;isSubmitted=false;isPaused=false;isAutoPaused=false;isStudyPaused=false;questionStates=questions.map(()=>({selectedOption:null,status:'idle',markedForReview:false,visited:false}));questionStates[0].visited=true;launchTest(false)}
+function launchTest(resumed){document.getElementById('testView').style.display='flex';document.getElementById('testHeader').style.display='flex';document.getElementById('resultsView').classList.remove('visible');document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('pauseBtn').textContent='⏸ Pause';document.getElementById('pauseBtn').classList.remove('resume');document.getElementById('questionPanel').classList.remove('locked');document.getElementById('sidebar').classList.remove('locked');document.getElementById('timerBox').classList.remove('paused');document.getElementById('timerBox').classList.remove('warning');document.getElementById('studyPauseBar').classList.remove('visible');if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(tickTimer,1000);if(!resumed&&pausedRemaining===null&&timerEndTime===null)setTimer(questions.length*SECONDS_PER_QUESTION);if(resumed&&pausedRemaining!==null)resumeTimer();updateTimerDisplay();renderQuestion();renderPalette();updateStats();saveAttempt()}
+function initTest(){if(getSavedAttempt())checkSavedAndShowBanner();else startNewTest()}
+function togglePause(){if(isSubmitted)return;if(isStudyPaused){resumeStudy();return}if(!isPaused)pauseTest(false);else resumeTest()}
+function pauseTest(auto){if(isPaused||isSubmitted)return;isPaused=true;isAutoPaused=auto;pauseTimer();const m=document.getElementById('pauseModal'),b=document.getElementById('pauseBadge'),i=document.getElementById('pauseIcon'),t=document.getElementById('pauseTitle'),msg=document.getElementById('pauseMessage');if(auto){m.classList.add('auto');b.style.display='inline-block';i.textContent='🔒';t.textContent='Exam Auto-Paused';msg.innerHTML='പേജ് minimize / tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.'}else{m.classList.remove('auto');b.style.display='none';i.textContent='⏸';t.textContent='Exam Paused';msg.innerHTML='പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.'}document.getElementById('pauseOverlay').classList.add('visible');document.getElementById('pauseBtn').textContent='▶ Resume';document.getElementById('pauseBtn').classList.add('resume');document.getElementById('timerBox').classList.add('paused');document.getElementById('timerBox').classList.remove('warning');document.getElementById('questionPanel').classList.add('locked');document.getElementById('sidebar').classList.add('locked')}
+function resumeTest(){if(!isPaused||isSubmitted)return;isPaused=false;isAutoPaused=false;resumeTimer();document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('pauseBtn').textContent='⏸ Pause';document.getElementById('pauseBtn').classList.remove('resume');document.getElementById('timerBox').classList.remove('paused');document.getElementById('questionPanel').classList.remove('locked');document.getElementById('sidebar').classList.remove('locked');updateTimerDisplay()}
+function startStudyPause(){if(isStudyPaused||isSubmitted||isPaused)return;isStudyPaused=true;pauseTimer();document.getElementById('studyPauseBar').classList.add('visible');document.getElementById('timerBox').classList.add('paused');document.getElementById('timerBox').classList.remove('warning')}
+function resumeStudy(){if(!isStudyPaused)return;isStudyPaused=false;resumeTimer();document.getElementById('studyPauseBar').classList.remove('visible');document.getElementById('timerBox').classList.remove('paused');updateTimerDisplay()}
+function renderQuestion(){const q=questions[currentIndex],st=questionStates[currentIndex];if(!q||!st)return;st.visited=true;document.getElementById('qNumber').textContent='Question '+(currentIndex+1);document.getElementById('qSubject').textContent=q.subject;document.getElementById('qText').textContent=q.question;renderOptions();renderExplanation();renderLearningPanel();renderActionButtons();renderPalette();updateStats();throttledSave()}
+function renderOptions(){const q=questions[currentIndex],st=questionStates[currentIndex],list=document.getElementById('optionsList');list.innerHTML='';const locked=st.status==='saved'||st.status==='revealed';q.options.forEach((opt,i)=>{const b=document.createElement('button');b.className='option-btn';b.textContent=opt;if(locked){b.classList.add('locked');if(i===q.correct)b.classList.add('correct-highlight');else if(i===st.selectedOption)b.classList.add('wrong-highlight')}else{if(i===st.selectedOption)b.classList.add('selected');b.onclick=()=>{st.selectedOption=i;renderOptions();renderActionButtons();throttledSave()}}list.appendChild(b)})}
+function renderExplanation(){const q=questions[currentIndex],st=questionStates[currentIndex],box=document.getElementById('explanationBox'),c=document.getElementById('expContent');if(st.status==='saved'||st.status==='revealed'){let p='';if(st.status==='saved'&&st.selectedOption!==null){if(st.selectedOption===q.correct)p='<span class="exp-correct">✔ ശരി!</span>\n\n';else p='<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: '+String.fromCharCode(65+q.correct)+'\n\n'}else if(st.status==='revealed'){p='<span class="exp-correct">✔ ശരിയായ ഉത്തരം: '+String.fromCharCode(65+q.correct)+'</span>\n\n'}c.textContent=p+q.explanation;box.classList.add('visible')}else{box.classList.remove('visible');c.textContent=''}}
+function renderLearningPanel(){const q=questions[currentIndex],st=questionStates[currentIndex],box=document.getElementById('learningPanel');if(!box)return;if(st.status!=='saved'&&st.status!=='revealed'){box.style.display='none';return}box.style.display='block';const b=document.getElementById('learningBody');let h='';if(q.beginnerNote)h+='<div class="lp-section"><span class="lp-title beginner">🌱 തുടക്കക്കാർക്കുള്ള കുറിപ്പ്</span><div class="lp-beginner">'+escapeHtml(q.beginnerNote)+'</div></div>';if(q.optionAnalysis&&q.optionAnalysis.length){h+='<div class="lp-section"><span class="lp-title options">🔍 ഓപ്ഷൻ അപഗ്രഥനം</span>';q.optionAnalysis.forEach(oa=>{const cl=oa.includes('✅')?'correct':'wrong';h+='<div class="lp-option-item '+cl+'">'+escapeHtml(oa)+'</div>'});h+='</div>'}if(q.rejectionTrick)h+='<div class="lp-section"><span class="lp-title trick">🎯 ഒഴിവാക്കൽ വഴി</span><div class="lp-trick">'+escapeHtml(q.rejectionTrick)+'</div></div>';if(q.examTrap)h+='<div class="lp-section"><span class="lp-title trap">⚠️ പി.എസ്.സി. ചതിക്കുഴി</span><div class="lp-trap">'+escapeHtml(q.examTrap)+'</div></div>';b.innerHTML=h;const hd=document.querySelector('.learning-header');if(hd)hd.classList.remove('open');b.classList.remove('open')}
+function toggleLearningPanel(hd){hd.classList.toggle('open');document.getElementById('learningBody').classList.toggle('open')}
+function renderActionButtons(){const st=questionStates[currentIndex],c=document.getElementById('actionButtons');c.innerHTML='';const locked=st.status==='saved'||st.status==='revealed';function add(l,cls,fn){const b=document.createElement('button');b.className='btn '+cls;b.textContent=l;b.onclick=fn;c.appendChild(b)}if(!locked){if(st.selectedOption!==null){add('💾 Save','btn-save',saveAnswer);add('✖ Clear','btn-clear',clearResponse);add('👁 Show','btn-show',showAnswer);add('⏭ Skip & Show','btn-skip-show',skipAndShow);add('🔖 Review','btn-review',markForReview);add('→ Next','btn-next',nextQuestion)}else{add('👁 Show','btn-show',showAnswer);add('⏭ Skip & Show','btn-skip-show',skipAndShow);add('🔖 Review','btn-review',markForReview);add('→ Next','btn-next',nextQuestion)}}else{add('✖ Clear','btn-clear',clearResponse);add('→ Next','btn-next',nextQuestion)}}
+function renderPalette(){const g=document.getElementById('paletteGrid');g.innerHTML='';questions.forEach((q,i)=>{const st=questionStates[i],b=document.createElement('button');b.className='palette-btn';b.textContent=i+1;if(st.status==='saved')b.classList.add('answered');else if(st.markedForReview)b.classList.add('review');else if(st.visited)b.classList.add('visited-not-answered');else b.classList.add('not-visited');if(i===currentIndex)b.classList.add('active');b.onclick=()=>gotoQuestion(i);g.appendChild(b)})}
+function updateStats(){let a=0,r=0,at=0;questionStates.forEach(st=>{if(st.status==='saved'){a++;at++}if(st.markedForReview)r++});document.getElementById('statAnswered').textContent=a;document.getElementById('statNotAnswered').textContent=questions.length-a;document.getElementById('statReview').textContent=r;document.getElementById('statAttempted').textContent=at}
+function saveAnswer(){const st=questionStates[currentIndex];if(st.selectedOption===null)return;st.status='saved';startStudyPause();renderQuestion();saveAttempt()}
+function showAnswer(){const st=questionStates[currentIndex];st.status='revealed';startStudyPause();renderQuestion();saveAttempt()}
+function skipAndShow(){const st=questionStates[currentIndex];st.status='revealed';st.markedForReview=true;startStudyPause();renderQuestion();saveAttempt()}
+function markForReview(){const st=questionStates[currentIndex];st.markedForReview=!st.markedForReview;renderQuestion();saveAttempt();setTimeout(()=>{if(currentIndex<questions.length-1)nextQuestion()},400)}
+function clearResponse(){const st=questionStates[currentIndex];if(st.status==='saved'||st.status==='revealed'||st.selectedOption!==null||st.markedForReview){if(!confirm('ഈ ചോദ്യത്തിന്റെ ഉത്തരം Clear ചെയ്യണോ?'))return}st.selectedOption=null;st.status='idle';st.markedForReview=false;renderQuestion();saveAttempt()}
+function nextQuestion(){if(isStudyPaused)resumeStudy();if(currentIndex<questions.length-1){currentIndex++;renderQuestion()}else{const g=confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?');if(g)submitTest(false)}}
+function gotoQuestion(i){if(isStudyPaused)resumeStudy();currentIndex=i;renderQuestion()}
+function submitTest(auto){if(isSubmitted)return;if(!auto&&timeRemaining>0){if(!confirm('പരീക്ഷ Submit ചെയ്യണോ?'))return}isSubmitted=true;if(timerInterval)clearInterval(timerInterval);try{localStorage.removeItem(STORAGE_KEY)}catch(e){}renderResults()}
+function renderResults(){document.getElementById('testView').style.display='none';document.getElementById('testHeader').style.display='none';document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('studyPauseBar').classList.remove('visible');document.getElementById('resultsView').classList.add('visible');let total=questions.length,attempted=0,correct=0,wrong=0,unanswered=0;questions.forEach((q,i)=>{const st=questionStates[i];if(st.status==='saved'){attempted++;if(st.selectedOption===q.correct)correct++;else wrong++}else unanswered++});const neg=wrong*NEGATIVE_MARKING,score=correct-neg;const cards=[{label:'ആകെ ചോദ്യങ്ങൾ',value:total,cls:''},{label:'ശ്രമിച്ചവ',value:attempted,cls:''},{label:'ശരിയായവ',value:correct,cls:'correct-card'},{label:'തെറ്റായവ',value:wrong,cls:'wrong-card'},{label:'നെഗറ്റീവ്',value:'-'+neg.toFixed(2),cls:'negative-card'},{label:'ആകെ സ്കോർ',value:score.toFixed(2),cls:'score-card'},{label:'ഉത്തരം നൽകാത്തവ',value:unanswered,cls:''}];document.getElementById('summaryCards').innerHTML=cards.map(c=>'<div class="summary-card '+c.cls+'"><div class="sc-value">'+c.value+'</div><div class="sc-label">'+c.label+'</div></div>').join('');const sm={};questions.forEach((q,i)=>{const st=questionStates[i];if(!sm[q.subject])sm[q.subject]={total:0,attempted:0,correct:0,wrong:0,unanswered:0,score:0};const s=sm[q.subject];s.total++;if(st.status==='saved'){s.attempted++;if(st.selectedOption===q.correct){s.correct++;s.score+=1}else{s.wrong++;s.score-=NEGATIVE_MARKING}}else s.unanswered++});let th='';Object.keys(sm).forEach(sub=>{const s=sm[sub];th+='<tr><td>'+sub+'</td><td>'+s.total+'</td><td>'+s.attempted+'</td><td>'+s.correct+'</td><td>'+s.wrong+'</td><td>'+s.unanswered+'</td><td>'+s.score.toFixed(2)+'</td></tr>'});document.getElementById('subjectTableBody').innerHTML=th;let dh='',c=0;questions.forEach((q,i)=>{const st=questionStates[i];const isW=st.status==='saved'&&st.selectedOption!==q.correct;const isR=st.status==='revealed';const isRev=st.status!=='saved'&&st.markedForReview;if(!isW&&!isR&&!isRev)return;c++;let tl='';if(isW)tl='❌ തെറ്റ്';else if(isR)tl='👁 ഉത്തരം കണ്ടത്';else tl='🔖 Review';dh+='<div class="detail-item"><div class="di-info"><strong>Q'+(i+1)+'</strong> · '+q.subject+' · '+tl+'</div><div class="di-question">'+escapeHtml(q.question)+'</div>'+(st.selectedOption!==null?'<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">'+escapeHtml(q.options[st.selectedOption])+'</span></div>':'<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>')+'<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">'+escapeHtml(q.options[q.correct])+'</span></div><div class="di-explanation">'+escapeHtml(q.explanation)+'</div></div>'});document.getElementById('detailList').innerHTML=c>0?dh:'<p style="color:#8a8f9e;text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം! 🎉</p>';window.scrollTo(0,0)}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function restartTest(){if(!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?'))return;try{localStorage.removeItem(STORAGE_KEY)}catch(e){}document.getElementById('resultsView').classList.remove('visible');startNewTest()}
+document.addEventListener('keydown',e=>{if(isSubmitted||isPaused)return;if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable))return;const st=questionStates[currentIndex];if(!st)return;const locked=st.status==='saved'||st.status==='revealed';if(e.key>='1'&&e.key<='4'&&!locked){const i=parseInt(e.key,10)-1;if(i<questions[currentIndex].options.length){st.selectedOption=i;renderOptions();renderActionButtons();throttledSave();e.preventDefault()}}else if(e.key==='Enter'&&!e.shiftKey&&!locked&&st.selectedOption!==null){saveAnswer();e.preventDefault()}else if(e.key==='Enter'&&e.shiftKey&&!locked){skipAndShow();e.preventDefault()}else if(e.key.toLowerCase()==='r'&&!locked){markForReview();e.preventDefault()}else if(e.key.toLowerCase()==='c'&&!locked){clearResponse();e.preventDefault()}else if(e.key.toLowerCase()==='n'){nextQuestion();e.preventDefault()}else if(e.key===' '){if(!locked){showAnswer();e.preventDefault()}}else if(e.key.toLowerCase()==='p'){togglePause();e.preventDefault()}});
+document.addEventListener('visibilitychange',()=>{if(CONFIG.AUTO_PAUSE_ON_TAB_SWITCH&&document.hidden&&!isSubmitted&&!isPaused&&!isStudyPaused){pauseTest(true)}});
+window.addEventListener('beforeunload',e=>{if(!isSubmitted&&questions.length>0){saveAttempt();e.preventDefault();e.returnValue=''}});
+initTest();
+</script>
+</body>
+</html>
