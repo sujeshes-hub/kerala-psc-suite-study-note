@@ -3,86 +3,336 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>കേരള PSC – ഔദ്യോഗിക ഭാഷ | അധ്യായം 128</title>
+  <title>കേരള PSC – ഇന്ത്യൻ ഭരണഘടന: ഔദ്യോഗിക ഭാഷ | അധ്യായം 128</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ========== CSS DESIGN TOKENS ========== */
     :root {
-      --primary: #4a148c; --primary-light: #6a1b9a; --secondary: #00695c;
-      --accent: #b83b2c; --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
-      --text: #14202b; --text-light: #4a5f72;
-      --important-bg: #fff8e1; --important-border: #f9a825;
-      --memory-bg: #e8f5e9; --memory-border: #43a047;
-      --trap-bg: #fce4ec; --trap-border: #c62828;
-      --correction-bg: #fff3e0; --correction-border: #ef6c00;
-      --added-bg: #e3f2fd; --added-border: #1976d2;
-      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
-      --table-head: #4a148c; --table-alt: #f3e5f5; --star: #f9a825;
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
     }
+
+    /* ========== DARK & SEPIA THEMES ========== */
+    [data-theme="dark"] {
+      --bg: #1e1e2e;
+      --light-bg: #11111b;
+      --border: #313244;
+      --text: #cdd6f4;
+      --text-light: #a6adc8;
+      --primary: #cba6f7;
+      --primary-light: #b4befe;
+      --important-bg: #2c2518;
+      --important-border: #f9a825;
+      --memory-bg: #192b22;
+      --memory-border: #43a047;
+      --trap-bg: #2d1920;
+      --trap-border: #c62828;
+      --correction-bg: #2c2018;
+      --correction-border: #ef6c00;
+      --added-bg: #182432;
+      --added-border: #1976d2;
+      --revision-bg: #22182b;
+      --revision-border: #8e24aa;
+      --table-head: #6a1b9a;
+      --table-alt: #181825;
+    }
+
+    [data-theme="sepia"] {
+      --bg: #fdf6e3;
+      --light-bg: #eee8d5;
+      --border: #d3cbb7;
+      --text: #433422;
+      --text-light: #65533c;
+      --primary: #7b4b1e;
+      --primary-light: #9c6b3a;
+      --important-bg: #f7efd8;
+      --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0;
+      --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0;
+      --revision-bg: #ece0ee;
+      --table-head: #7b4b1e;
+      --table-alt: #f2ead4;
+    }
+
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options span {
+      background: #181825;
+      color: var(--text);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
-      font-size: 16px; line-height: 1.7; color: var(--text);
-      background: var(--light-bg); padding: 16px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+      transition: background 0.3s, color 0.3s;
     }
-    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
     .toc {
-      position: sticky; top: 16px; height: calc(100vh - 32px);
-      overflow-y: auto; background: var(--bg); border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1); padding: 16px; align-self: start;
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
     }
+
     .toc-title {
-      font-size: 18px; font-weight: 700; color: var(--primary);
-      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
     }
+
     .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
     .toc-controls button {
-      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
-      background: var(--light-bg); color: var(--primary);
-      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
+
     .toc-controls button:hover { background: var(--primary); color: #fff; }
+
     .toc-nav { list-style: none; }
     .toc-nav li { margin-bottom: 2px; }
+
     .toc-nav a {
-      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
-      text-decoration: none; border-radius: 6px;
-      border-left: 3px solid transparent; transition: all 0.2s;
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
     }
+
     .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
     .toc-nav a.active {
-      background: var(--light-bg); color: var(--primary);
-      border-left-color: var(--primary); font-weight: 600;
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
     }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-wrap {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--light-bg);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
     .main-container {
-      background: var(--bg); border-radius: 16px;
+      background: var(--bg);
+      border-radius: 16px;
       box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
-      padding: 24px; min-width: 0;
+      padding: 24px;
+      min-width: 0;
     }
+
+    /* ========== CHAPTER HEADER ========== */
     .chapter-header {
       background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
-      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
     }
+
     .chapter-header .label {
-      font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
-      opacity: 0.85; margin-bottom: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
     }
+
     .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
     .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
-    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .section h2 {
-      background: var(--light-bg); color: var(--primary); padding: 14px 18px;
-      font-size: 19px; cursor: pointer; display: flex; justify-content: space-between;
-      align-items: center; user-select: none; transition: background 0.2s; margin: 0;
+
+    /* ========== TOP UTILITY BAR ========== */
+    .utility-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--light-bg);
+      padding: 10px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
     }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn {
+      padding: 7px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+
+    /* ========== ACTIVE RECALL (BLUR MODE) ========== */
+    body.recall-mode strong {
+      filter: blur(5px);
+      background: rgba(106, 27, 154, 0.15);
+      border-radius: 4px;
+      padding: 0 4px;
+      cursor: pointer;
+      transition: filter 0.2s ease;
+      user-select: none;
+    }
+    body.recall-mode strong:hover,
+    body.recall-mode strong.revealed {
+      filter: blur(0);
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+      gap: 10px;
+    }
+
     .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
     .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .section-title-text { flex: 1; }
+    .section-done-check {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--secondary);
+      flex-shrink: 0;
+    }
     .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
     .section.collapsed .toggle-icon { transform: rotate(-90deg); }
     .section.collapsed > *:not(h2) { display: none; }
     .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
     .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
-      padding: 14px 16px; border-radius: 8px; margin: 12px 0;
-      border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     }
+
     .important { background: var(--important-bg); border-left-color: var(--important-border); }
     .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
     .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
@@ -91,82 +341,170 @@
     .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
     .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
     .last-minute strong { color: #ffd54f; }
-    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
     .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
     .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
     .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    /* ========== LISTS ========== */
     ul, ol { padding-left: 22px; margin: 8px 0; }
     li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
     table {
-      width: 100%; border-collapse: collapse; margin: 12px 0;
-      font-size: 14px; border-radius: 8px; overflow: hidden;
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     }
+
     thead th {
-      background: var(--table-head); color: #fff;
-      padding: 10px 12px; text-align: left; font-weight: 600;
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
     }
-    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
     tbody tr:nth-child(even) { background: var(--table-alt); }
-    tbody tr:hover { background: #ede7f6; }
+    tbody tr:hover { background: var(--light-bg); }
+
+    /* ========== QUIZ DASHBOARD ========== */
+    .quiz-dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--light-bg);
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      border: 2px solid var(--primary);
+      position: sticky;
+      top: 10px;
+      z-index: 50;
+    }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+
+    /* ========== QUESTION ITEM ========== */
     .question-item {
-      background: #fafafa; border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px; margin: 14px 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
     }
+
     .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
-    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-    .options span {
-      display: block; padding: 8px 12px; background: #fff;
-      border: 1.5px solid var(--border); border-radius: 8px;
-      cursor: pointer; transition: all 0.2s; font-size: 14px;
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
     }
-    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
-    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
-    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
-    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
-    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .options .opt-btn {
+      display: block;
+      padding: 8px 12px;
+      background: var(--bg);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-family: inherit;
+      text-align: left;
+      width: 100%;
+    }
+
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+
     .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
     .q-controls button {
-      padding: 6px 12px; font-size: 12px; font-family: inherit;
-      border: 1px solid var(--border); border-radius: 6px; cursor: pointer;
-      background: #fff; color: var(--text); transition: all 0.2s;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.2s;
     }
     .q-controls button:hover { background: var(--light-bg); }
     .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
     .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
-    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
     .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
     .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
     .answer-block {
-      display: none; margin-top: 10px; padding: 10px 14px;
-      background: var(--memory-bg); border-radius: 8px;
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
       border-left: 4px solid var(--memory-border);
     }
     .answer-block.show { display: block; }
     .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
     .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    /* ========== TYPOGRAPHY ========== */
     h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
     p { margin: 8px 0; }
     strong { color: var(--primary); }
     .last-minute strong { color: #ffd54f; }
+
     .checklist { list-style: none; padding-left: 0; }
     .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 900px) {
       .layout { grid-template-columns: 1fr; }
       .toc {
-        position: sticky; top: 0; height: auto; max-height: 60px;
-        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
-        border-radius: 0 0 12px 12px; z-index: 100;
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
       }
-      .toc-title, .toc-controls { display: none; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
       .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
       .toc-nav li { margin: 0; }
       .toc-nav a {
-        padding: 6px 12px; background: var(--light-bg);
-        border-radius: 20px; border-left: none; font-size: 12px;
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
       }
       .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
     }
+
     @media (max-width: 600px) {
       body { font-size: 15.2px; }
       .chapter-header h1 { font-size: 21px; }
@@ -176,17 +514,21 @@
       thead th, tbody td { padding: 6px 8px; }
       .q-text { font-size: 14.7px; }
       .options { grid-template-columns: 1fr; }
-      .options span { font-size: 13.5px; }
+      .options .opt-btn { font-size: 13.5px; }
     }
+
+    /* ========== PRINT STYLES ========== */
     @media print {
-      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
       .layout { display: block; }
-      .toc { display: none; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
       .main-container { box-shadow: none; border-radius: 0; padding: 0; }
       .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .last-minute {
-        -webkit-print-color-adjust: exact; print-color-adjust: exact;
-        background: #4a148c !important; color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
       }
       .section.collapsed > *:not(h2) { display: block !important; }
       .section { page-break-inside: avoid; border: 1px solid #ccc; }
@@ -195,6 +537,7 @@
       .q-controls { display: none; }
       .answer-block { display: block !important; }
     }
+
     .map-container { max-width: 100%; overflow-x: auto; }
     .map-container svg { max-width: 100%; height: auto; }
   </style>
@@ -202,6 +545,7 @@
 <body>
 
 <div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
   <nav class="toc" aria-label="ഉള്ളടക്കം">
     <div class="toc-title">ഉള്ളടക്കം</div>
     <div class="toc-controls">
@@ -210,75 +554,90 @@
     </div>
     <ul class="toc-nav" id="tocNav">
       <li><a href="#sec0">⭐ Star Guide</a></li>
-      <li><a href="#sec1">1. ആമുഖം</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
       <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
-      <li><a href="#sec3">3. Part XVII വ്യവസ്ഥകൾ</a></li>
+      <li><a href="#sec3">3. ഭരണഘടനാ വ്യവസ്ഥകൾ</a></li>
       <li><a href="#sec4">4. പ്രധാന ആർട്ടിക്കിളുകൾ</a></li>
       <li><a href="#sec5">5. എട്ടാം ഷെഡ്യൂൾ</a></li>
       <li><a href="#sec6">6. ശ്രേഷ്ഠ ഭാഷകൾ</a></li>
       <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
       <li><a href="#sec8">8. PSC വിശകലനം</a></li>
       <li><a href="#sec9">9. ആശയക്കുഴപ്പങ്ങൾ</a></li>
-      <li><a href="#sec10">10. താരതമ്യ പട്ടികകൾ</a></li>
-      <li><a href="#sec11">11. Mnemonics</a></li>
-      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
-      <li><a href="#sec13">13. അധിക വസ്തുതകൾ</a></li>
-      <li><a href="#sec14">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
-      <li><a href="#sec15">15. ഉത്തര സൂചിക</a></li>
-      <li><a href="#sec16">16. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
-      <li><a href="#sec17">17. ഒരു പേജ് റിവിഷൻ</a></li>
-      <li><a href="#sec18">18. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
-      <li><a href="#sec19">19. ഉപസംഹാരം</a></li>
+      <li><a href="#sec10">10. Mnemonics</a></li>
+      <li><a href="#sec11">11. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec12">12. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec13">13. Quick Revision</a></li>
+      <li><a href="#sec14">14. One-Page Revision</a></li>
+      <li><a href="#sec15">15. ഉപസംഹാരം</a></li>
     </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
   </nav>
 
+  <!-- ========== MAIN CONTENT ========== -->
   <main class="main-container">
 
+    <!-- CHAPTER HEADER -->
     <header class="chapter-header">
       <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 128</div>
       <h1>ഇന്ത്യൻ ഭരണഘടന – ഔദ്യോഗിക ഭാഷ</h1>
       <div class="subtitle">Official Language | Kerala PSC Rank File – Complete Verified Notes</div>
     </header>
 
+    <!-- UTILITY BAR -->
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 കുറിപ്പുകളിൽ തിരയുക (ഉദാ: 343, PESA, മലയാളം)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+
     <!-- ===== SECTION 0: STAR GUIDE ===== -->
     <section class="section" id="sec0">
-      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
       <div class="section-body">
         <div class="important">
           <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
           <ul>
-            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — എട്ടാം ഷെഡ്യൂൾ ഭേദഗതികൾ (21, 71, 92), ആർട്ടിക്കിൾ 343, 348, 351, ശ്രേഷ്ഠ ഭാഷകൾ (11), മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി (2013)</li>
-            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ദേശീയ ഭാഷ vs ഔദ്യോഗിക ഭാഷ, മുൻഷി-അയ്യങ്കാർ ഫോർമുല, 1963 നിയമം, 1967 ഭേദഗതി</li>
-            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — 344 (കമ്മീഷൻ), 350/350A/350B, ഹിന്ദി ദിവസ്, ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ</li>
-            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ധർ കമ്മീഷൻ, ത്രിഭാഷാ ഫോർമുല, ബി.ജി. ഖേർ കമ്മീഷൻ</li>
-            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ഭരണഘടനാ നിർമ്മാണ സഭയിലെ ഭാഷാ തർക്കം</li>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആർട്ടിക്കിൾ 343 (ഹിന്ദി), 8-ാം ഷെഡ്യൂൾ ഭേദഗതികൾ (21, 71, 92), ശ്രേഷ്ഠ ഭാഷകൾ (11), മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി (2013)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ആർട്ടിക്കിൾ 348 (കോടതി ഭാഷ), 351 (ഹിന്ദി വികസനം), ദേശീയ ഭാഷയില്ല, ഔദ്യോഗിക ഭാഷ vs ദേശീയ ഭാഷ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ആർട്ടിക്കിൾ 344 (ഔദ്യോഗിക ഭാഷാ കമ്മീഷൻ), 350A (മാതൃഭാഷാ വിദ്യാഭ്യാസം), 350B (ഭാഷാ ന്യൂനപക്ഷ ഓഫീസർ)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ത്രിഭാഷാ ഫോർമുല, ഹിന്ദി ദിവസ്, ലോക ഹിന്ദി ദിനം, 1963/1967 ഭേദഗതികൾ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — മുൻഷി-അയ്യങ്കാർ ഫോർമുല, ധർ കമ്മീഷൻ, ഫസൽ അലി കമ്മീഷൻ</li>
           </ul>
         </div>
         <div class="added-fact">
           <span class="box-label">➕ ചുരുക്കം</span>
           <ul>
-            <li><strong>Part XVII:</strong> ആർട്ടിക്കിൾ 343–351 (ഔദ്യോഗിക ഭാഷകൾ)</li>
-            <li><strong>എട്ടാം ഷെഡ്യൂൾ:</strong> 22 ഭാഷകൾ (ആദ്യം 14)</li>
-            <li><strong>ശ്രേഷ്ഠ ഭാഷകൾ:</strong> 11 (2024 ഒക്ടോബറിൽ 5 കൂടി ചേർത്തു)</li>
-            <li><strong>ഇന്ത്യയ്ക്ക് ദേശീയ ഭാഷയില്ല</strong> — ഹിന്ദി ഒരു ഔദ്യോഗിക ഭാഷ മാത്രം</li>
+            <li><strong>ഭാഗം XVII:</strong> ആർട്ടിക്കിൾ 343–351</li>
+            <li><strong>8-ാം ഷെഡ്യൂൾ:</strong> 22 ഭാഷകൾ (ഇംഗ്ലീഷ് ഇല്ല)</li>
+            <li><strong>ശ്രേഷ്ഠ ഭാഷകൾ:</strong> 11 എണ്ണം (2024 ഒക്ടോബറിൽ 5 പുതിയത്)</li>
+            <li><strong>മലയാളം:</strong> ശ്രേഷ്ഠ ഭാഷാ പദവി 2013</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- ===== SECTION 1: ആമുഖം ===== -->
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
     <section class="section" id="sec1">
-      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
       <div class="section-body">
         <ul>
-          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ <strong>17-ാം ഭാഗത്തിൽ (Part XVII) ആർട്ടിക്കിൾ 343 മുതൽ 351 വരെ</strong> പ്രതിപാദിക്കുന്ന ഔദ്യോഗിക ഭാഷകൾ, എട്ടാം ഷെഡ്യൂളിലെ 22 ഭാഷകൾ, സുപ്രീം കോടതിയുടെ ഭാഷ, ഇന്ത്യയിലെ ശ്രേഷ്ഠ ഭാഷകൾ (Classical Languages) എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ 17-ാം ഭാഗത്തിൽ (Part XVII) ആർട്ടിക്കിൾ 343 മുതൽ 351 വരെ പ്രതിപാദിക്കുന്ന ഔദ്യോഗിക ഭാഷകൾ, എട്ടാം ഷെഡ്യൂളിലെ 22 ഭാഷകൾ, സുപ്രീം കോടതിയുടെ ഭാഷ, ഇന്ത്യയിലെ ശ്രേഷ്ഠ ഭാഷകൾ (Classical Languages) എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഇന്ത്യയ്ക്ക് ഒരു ദേശീയ ഭാഷയില്ല (No National Language), മറിച്ച് ഔദ്യോഗിക ഭാഷകൾ (Official Languages) മാത്രമാണുള്ളത്. ഭാഷാടിസ്ഥാനത്തിലുള്ള ഭരണഘടനാ ഭേദഗതികളും, അടുത്തിടെ (2024-ൽ) കേന്ദ്ര സർക്കാർ പുതിയതായി പ്രഖ്യാപിച്ച ശ്രേഷ്ഠ ഭാഷകളുടെ വിവരങ്ങളും നിലവിലെ പരീക്ഷകൾക്ക് വളരെ പ്രധാനപ്പെട്ടതാണ്.</li>
-          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> എട്ടാം ഷെഡ്യൂളിലേക്ക് ഭാഷകൾ കൂട്ടിച്ചേർത്ത ഭേദഗതികൾ (21, 71, 92), ആർട്ടിക്കിൾ 343, ആർട്ടിക്കിൾ 351, മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിച്ച വർഷം (2013) എന്നിവ PSC പരീക്ഷകളിലെ 'എവർഗ്രീൻ' ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> എട്ടാം ഷെഡ്യൂളിലേക്ക് ഭാഷകൾ കൂട്ടിച്ചേർത്ത ഭേദഗതികൾ (21, 71, 92), ആർട്ടിക്കിൾ 343, ആർട്ടിക്കിൾ 351, മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിച്ച വർഷം (2013) എന്നിവ പി.എസ്.സി പരീക്ഷകളിലെ 'എവർഗ്രീൻ' ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഒറ്റ നോട്ടത്തിൽ:</strong> ഭാഗം XVII (343–351) | 8-ാം ഷെഡ്യൂൾ (22 ഭാഷ) | ശ്രേഷ്ഠ ഭാഷ (11) – <strong>ശ്രേഷ്ഠ ഭാഷ ഭരണഘടനാ വിഭാഗമല്ല; സാംസ്കാരിക മന്ത്രാലയത്തിന്റെ ഭരണപരമായ പദവിയാണ്.</strong></li>
         </ul>
-        <div class="added-fact">
-          <span class="box-label">➕ ഒറ്റ നോട്ടത്തിൽ</span>
-          <p>ഭാഗം XVII (343–351) | 8-ാം ഷെഡ്യൂൾ (22 ഭാഷ) | ശ്രേഷ്ഠ ഭാഷ (11) – <strong>ശ്രേഷ്ഠ ഭാഷ ഭരണഘടനാ വിഭാഗമല്ല; സാംസ്കാരിക മന്ത്രാലയത്തിന്റെ ഭരണപരമായ പദവിയാണ്.</strong></p>
-        </div>
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick:</strong></span>
           <p>"<strong>343 ഹിന്ദി, 348 കോടതി, 351 വികസനം</strong>" → "<strong>ഹി-കോ-വി</strong>".</p>
@@ -288,7 +647,10 @@
 
     <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
     <section class="section" id="sec2">
-      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. ചരിത്ര പശ്ചാത്തലം</span>
+      </h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> ഭരണഘടനാ നിർമ്മാണ സഭയിൽ (Constituent Assembly) ഏറ്റവും വലിയ തർക്കം നടന്ന വിഷയങ്ങളിലൊന്നാണ് രാജ്യത്തിന്റെ ഭാഷ എന്തായിരിക്കണം എന്നത്. ഹിന്ദി സംസാരിക്കുന്നവർ അത് ദേശീയ ഭാഷയാക്കണമെന്ന് വാദിച്ചപ്പോൾ, ദക്ഷിണേന്ത്യൻ സംസ്ഥാനങ്ങൾ ഇംഗ്ലീഷ് തുടരണമെന്ന് ആവശ്യപ്പെട്ടു.</li>
@@ -313,34 +675,28 @@
       </div>
     </section>
 
-    <!-- ===== SECTION 3: Part XVII വ്യവസ്ഥകൾ ===== -->
+    <!-- ===== SECTION 3: ഭരണഘടനാ വ്യവസ്ഥകൾ ===== -->
     <section class="section" id="sec3">
-      <h2 role="button" tabindex="0" aria-expanded="false">3. ഭരണഘടനാ വ്യവസ്ഥകൾ (Part XVII)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. ഭരണഘടനാ വ്യവസ്ഥകൾ (Part XVII)</span>
+      </h2>
       <div class="section-body">
         <p>ഭരണഘടനയുടെ <strong>ഭാഗം 17 (Part XVII)</strong> ലാണ് ഔദ്യോഗിക ഭാഷകളെക്കുറിച്ച് പ്രതിപാദിക്കുന്നത്. ആർട്ടിക്കിൾ 343 മുതൽ 351 വരെയുള്ള ഈ ഭാഗത്തെ 4 അധ്യായങ്ങളായി തിരിച്ചിരിക്കുന്നു:</p>
-
-        <div style="overflow-x: auto;">
-          <table>
-            <thead>
-              <tr><th>അധ്യായം</th><th>ആർട്ടിക്കിളുകൾ</th><th>വിഷയം</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><strong>1</strong></td><td>343, 344</td><td>യൂണിയന്റെ ഭാഷ (Language of the Union)</td></tr>
-              <tr><td><strong>2</strong></td><td>345–347</td><td>പ്രാദേശിക ഭാഷകൾ (Regional Languages)</td></tr>
-              <tr><td><strong>3</strong></td><td>348, 349</td><td>സുപ്രീം കോടതി, ഹൈക്കോടതി ഭാഷകൾ</td></tr>
-              <tr><td><strong>4</strong></td><td>350, 350A, 350B, 351</td><td>പ്രത്യേക നിർദ്ദേശങ്ങൾ (Special Directives)</td></tr>
-            </tbody>
-          </table>
-        </div>
-
+        <ol>
+          <li><strong>യൂണിയന്റെ ഭാഷ (Language of the Union - Arts 343, 344)</strong></li>
+          <li><strong>പ്രാദേശിക ഭാഷകൾ (Regional Languages - Arts 345 to 347)</strong></li>
+          <li><strong>സുപ്രീം കോടതി, ഹൈക്കോടതി ഭാഷകൾ (Arts 348, 349)</strong></li>
+          <li><strong>പ്രത്യേക നിർദ്ദേശങ്ങൾ (Special Directives - Arts 350, 351)</strong></li>
+        </ol>
         <div class="added-fact">
-          <span class="box-label">➕ പൂർണ്ണ പട്ടിക (343–351)</span>
+          <span class="box-label">➕ പൂർണ്ണ പട്ടിക</span>
           <ul>
             <li><strong>343:</strong> യൂണിയന്റെ ഔദ്യോഗിക ഭാഷ</li>
             <li><strong>344:</strong> കമ്മീഷനും പാർലമെന്ററി കമ്മിറ്റിയും</li>
             <li><strong>345:</strong> സംസ്ഥാനത്തിന്റെ ഔദ്യോഗിക ഭാഷ</li>
             <li><strong>346:</strong> സംസ്ഥാനങ്ങൾ തമ്മിൽ/സംസ്ഥാനം-കേന്ദ്രം തമ്മിലുള്ള ആശയവിനിമയ ഭാഷ</li>
-            <li><strong>347:</strong> ഒരു സംസ്ഥാനത്തെ ജനസംഖ്യയുടെ ഒരു വിഭാഗം സംസാരിക്കുന്ന ഭാഷയ്ക്ക് അംഗീകാരം (രാഷ്ട്രപതി നിർദ്ദേശിക്കാം)</li>
+            <li><strong>347:</strong> ഒരു സംസ്ഥാനത്തെ ജനസംഖ്യയുടെ ഒരു വിഭാഗം സംസാരിക്കുന്ന ഭാഷയ്ക്ക് അംഗീകാരം – രാഷ്ട്രപതി നിർദ്ദേശിക്കാം</li>
             <li><strong>348:</strong> കോടതികളുടെ/നിയമങ്ങളുടെ ഭാഷ</li>
             <li><strong>349:</strong> ഭാഷാ സംബന്ധമായ ചില നിയമങ്ങൾക്ക് പ്രത്യേക നടപടിക്രമം</li>
             <li><strong>350:</strong> ഏത് ഭാഷയിലും പരാതി/നിവേദനം നൽകാനുള്ള അവകാശം</li>
@@ -350,7 +706,6 @@
           </ul>
           <p><strong>350A, 350B:</strong> <strong>7-ാം ഭേദഗതി (1956)</strong> ചേർത്തു (ഭാഷാടിസ്ഥാനത്തിലുള്ള സംസ്ഥാന പുനഃസംഘടനയ്ക്ക് ശേഷം).</p>
         </div>
-
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick:</strong></span>
           <p><strong>ക്രമം "ഉ-പ്രാ-കോ-വി":</strong> <strong>ഉ</strong>നിയൻ (343–344), <strong>പ്രാ</strong>ദേശികം (345–347), <strong>കോ</strong>ടതി (348–349), <strong>വി</strong>ശേഷ നിർദ്ദേശം (350–351).</p>
@@ -360,87 +715,92 @@
 
     <!-- ===== SECTION 4: പ്രധാന ആർട്ടിക്കിളുകൾ ===== -->
     <section class="section" id="sec4">
-      <h2 role="button" tabindex="0" aria-expanded="false">4. പി.എസ്.സി എപ്പോഴും ചോദിക്കുന്ന ആർട്ടിക്കിളുകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. പി.എസ്.സി എപ്പോഴും ചോദിക്കുന്ന ആർട്ടിക്കിളുകൾ</span>
+      </h2>
       <div class="section-body">
         <h3>ആർട്ടിക്കിൾ 343 – യൂണിയന്റെ ഔദ്യോഗിക ഭാഷ</h3>
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> കേന്ദ്ര ഗവൺമെന്റിന്റെ ഔദ്യോഗിക ഭാഷ <strong>ദേവനാഗരി ലിപിയിലുള്ള (Devanagari script) ഹിന്ദി</strong> ആയിരിക്കും എന്ന് പ്രഖ്യാപിക്കുന്നു. നമ്പറുകൾ എഴുതുമ്പോൾ അന്താരാഷ്ട്ര രീതിയിലുള്ള നമ്പറുകൾ (1, 2, 3...) ഉപയോഗിക്കണം.</li>
-          <li><span class="stars">⭐⭐⭐⭐</span> <strong>343(2):</strong> ഭരണഘടന തുടങ്ങിയ ശേഷം <strong>15 വർഷം (1965 വരെ)</strong> ഇംഗ്ലീഷ് തുടരും.</li>
-          <li><span class="stars">⭐⭐⭐⭐</span> <strong>343(3):</strong> പാർലമെന്റിന് നിയമം വഴി അതിനു ശേഷവും ഇംഗ്ലീഷ് അനുവദിക്കാം (→ <strong>Official Languages Act, 1963</strong>; <strong>1967-ലെ ഭേദഗതി</strong> അനിശ്ചിതകാല തുടർച്ച).</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>Official Language Rules, 1976:</strong> സംസ്ഥാനങ്ങളെ <strong>A, B, C മേഖലകളായി</strong> തിരിച്ചു (ഹിന്ദി ഉപയോഗത്തിനനുസരിച്ച്; കേരളം C മേഖല).</li>
+          <li><strong>343(2):</strong> ഭരണഘടന തുടങ്ങിയ ശേഷം <strong>15 വർഷം (1965 വരെ)</strong> ഇംഗ്ലീഷ് തുടരും</li>
+          <li><strong>343(3):</strong> പാർലമെന്റിന് നിയമം വഴി അതിനു ശേഷവും ഇംഗ്ലീഷ് അനുവദിക്കാം (→ <strong>Official Languages Act, 1963</strong>; <strong>1967-ലെ ഭേദഗതി</strong> അനിശ്ചിതകാല തുടർച്ച).</li>
+          <li><strong>Official Language Rules, 1976:</strong> സംസ്ഥാനങ്ങളെ <strong>A, B, C മേഖലകളായി</strong> തിരിച്ചു (ഹിന്ദി ഉപയോഗത്തിനനുസരിച്ച്; കേരളം C മേഖല).</li>
         </ul>
 
-        <h3>ആർട്ടിക്കിൾ 344 – കമ്മീഷനും പാർലമെന്ററി കമ്മിറ്റിയും</h3>
+        <h3>ആർട്ടിക്കിൾ 344 – ഔദ്യോഗിക ഭാഷാ കമ്മീഷൻ</h3>
         <ul>
-          <li><span class="stars">⭐⭐⭐⭐</span> ഭാഷാ വിഷയങ്ങളിൽ ഉപദേശം നൽകാൻ രാഷ്ട്രപതിക്ക് ഒരു <strong>ഔദ്യോഗിക ഭാഷാ കമ്മീഷനെ</strong> നിയമിക്കാം. (ഇതനുസരിച്ച് 1955-ൽ <strong>ബി.ജി. ഖേർ (B.G. Kher)</strong> അധ്യക്ഷനായി ആദ്യ കമ്മീഷനെ നിയമിച്ചു).</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>344(1):</strong> ഭരണഘടന തുടങ്ങി <strong>5 വർഷം, 10 വർഷം</strong> കഴിഞ്ഞ് രാഷ്ട്രപതി കമ്മീഷൻ രൂപീകരിക്കും; <strong>8-ാം ഷെഡ്യൂളിലെ ഭാഷകളെ പ്രതിനിധീകരിക്കുന്ന അംഗങ്ങൾ</strong> കമ്മീഷനിൽ ഉണ്ടാകും.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>344(4):</strong> <strong>30 അംഗ പാർലമെന്ററി കമ്മിറ്റി (ലോക്സഭ 20 + രാജ്യസഭ 10)</strong> കമ്മീഷൻ ശുപാർശകൾ പരിശോധിക്കും (1957 മുതൽ; ആദ്യ അധ്യക്ഷൻ ഗോവിന്ദ് വല്ലഭ് പന്ത്).</li>
-          <li><span class="stars">⭐⭐</span> <strong>ഔദ്യോഗിക ഭാഷാ വകുപ്പ്:</strong> ആഭ്യന്തര മന്ത്രാലയത്തിന് (MHA) കീഴിൽ (1975).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭാഷാ വിഷയങ്ങളിൽ ഉപദേശം നൽകാൻ രാഷ്ട്രപതിക്ക് ഒരു <strong>ഔദ്യോഗിക ഭാഷാ കമ്മീഷനെ</strong> നിയമിക്കാം. (ഇതനുസരിച്ച് 1955-ൽ ബി.ജി. ഖേർ (B.G. Kher) അധ്യക്ഷനായി ആദ്യ കമ്മീഷനെ നിയമിച്ചു).</li>
+          <li><strong>344(1):</strong> ഭരണഘടന തുടങ്ങി <strong>5 വർഷം, 10 വർഷം</strong> കഴിഞ്ഞ് രാഷ്ട്രപതി കമ്മീഷൻ രൂപീകരിക്കും; <strong>8-ാം ഷെഡ്യൂളിലെ ഭാഷകളെ പ്രതിനിധീകരിക്കുന്ന അംഗങ്ങൾ</strong> കമ്മീഷനിൽ ഉണ്ടാകും.</li>
+          <li><strong>344(4):</strong> <strong>30 അംഗ പാർലമെന്ററി കമ്മിറ്റി (ലോക്‌സഭ 20 + രാജ്യസഭ 10)</strong> കമ്മീഷൻ ശുപാർശകൾ പരിശോധിക്കും (1957 മുതൽ; ആദ്യ അധ്യക്ഷൻ ഗോവിന്ദ് വല്ലഭ് പന്ത്).</li>
+          <li><strong>ഔദ്യോഗിക ഭാഷാ വകുപ്പ്:</strong> ആഭ്യന്തര മന്ത്രാലയത്തിന് (MHA) കീഴിൽ (1975).</li>
         </ul>
 
         <h3>ആർട്ടിക്കിൾ 345 – സംസ്ഥാനത്തിന്റെ ഔദ്യോഗിക ഭാഷ</h3>
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> സംസ്ഥാനങ്ങളുടെ ഔദ്യോഗിക ഭാഷ തീരുമാനിക്കാൻ അതത് സംസ്ഥാന നിയമസഭകൾക്ക് അധികാരം നൽകുന്നു. ആ സംസ്ഥാനത്തെ ഒന്നോ അതിലധികമോ ഭാഷകൾ, അല്ലെങ്കിൽ ഹിന്ദി, അംഗീകരിക്കാം.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>കേരളത്തിന്റെ ഔദ്യോഗിക ഭാഷ മലയാളം</strong> (Kerala Official Language Act, 1969).</li>
+          <li><strong>കേരളത്തിന്റെ ഔദ്യോഗിക ഭാഷ മലയാളം</strong> (Kerala Official Language Act, 1969).</li>
         </ul>
 
         <h3>ആർട്ടിക്കിൾ 348 – കോടതികളുടെ ഭാഷ (വളരെ പ്രധാനം)</h3>
         <ul>
-          <li><span class="stars">⭐⭐⭐⭐⭐</span> പാർലമെന്റ് നിയമം നിർമ്മിക്കുന്നത് വരെ <strong>സുപ്രീം കോടതിയുടെയും ഹൈക്കോടതികളുടെയും നടപടിക്രമങ്ങളുടെ ഭാഷ ഇംഗ്ലീഷ് (English)</strong> ആയിരിക്കും എന്ന് വ്യക്തമാക്കുന്നു.</li>
-          <li><span class="stars">⭐⭐⭐⭐</span> ബില്ലുകളുടെയും ആക്ടുകളുടെയും <strong>authoritative (ആധികാരിക) പാഠം ഇംഗ്ലീഷ്</strong> ആണ്.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>348(2):</strong> ഗവർണ്ണർക്ക് <strong>രാഷ്ട്രപതിയുടെ സമ്മതത്തോടെ</strong> ആ സംസ്ഥാനത്തിന്റെ ഹൈക്കോടതിയിൽ <strong>ഹിന്ദി/സംസ്ഥാന ഭാഷ</strong> ഉപയോഗം അനുവദിക്കാം (ഉദാ: ഹൈക്കോടതികളിൽ ഹിന്ദി – രാജസ്ഥാൻ, ഉത്തർപ്രദേശ്, മധ്യപ്രദേശ്, ബിഹാർ).</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>348(3):</strong> സംസ്ഥാന നിയമസഭ ഇംഗ്ലീഷ് ഒഴികെ മറ്റൊരു ഭാഷയിൽ നിയമം പാസാക്കിയാലും, <strong>ഇംഗ്ലീഷ് പരിഭാഷ</strong> ഗവർണ്ണറുടെ ഗസറ്റിൽ പ്രസിദ്ധീകരിക്കണം (അതാണ് ആധികാരികം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പാർലമെന്റ് നിയമം നിർമ്മിക്കുന്നത് വരെ <strong>സുപ്രീം കോടതിയുടെയും ഹൈക്കോടതികളുടെയും നടപടിക്രമങ്ങളുടെ ഭാഷ ഇംഗ്ലീഷ്</strong> ആയിരിക്കും.</li>
+          <li><strong>കൃത്യമായി:</strong> ബില്ലുകൾ, ആക്ടുകൾ, ഓർഡിനൻസുകൾ, ചട്ടങ്ങൾ എന്നിവയുടെ <strong>authoritative (ആധികാരിക) പാഠം ഇംഗ്ലീഷ്</strong> ആണ്.</li>
+          <li><strong>348(2):</strong> ഗവർണ്ണർക്ക് <strong>രാഷ്ട്രപതിയുടെ സമ്മതത്തോടെ</strong> ആ സംസ്ഥാനത്തിന്റെ ഹൈക്കോടതിയിൽ <strong>ഹിന്ദി/സംസ്ഥാന ഭാഷ</strong> ഉപയോഗം അനുവദിക്കാം (ഉദാ: ഹൈക്കോടതികളിൽ ഹിന്ദി – രാജസ്ഥാൻ, ഉത്തർപ്രദേശ്, മധ്യപ്രദേശ്, ബിഹാർ).</li>
+          <li><strong>348(3):</strong> സംസ്ഥാന നിയമസഭ ഇംഗ്ലീഷ് ഒഴികെ മറ്റൊരു ഭാഷയിൽ നിയമം പാസാക്കിയാലും, <strong>ഇംഗ്ലീഷ് പരിഭാഷ</strong> ഗവർണ്ണറുടെ ഗസറ്റിൽ പ്രസിദ്ധീകരിക്കണം (അതാണ് ആധികാരികം).</li>
         </ul>
 
         <h3>ആർട്ടിക്കിൾ 351 – ഹിന്ദിയുടെ വികസനം (വളരെ പ്രധാനം)</h3>
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> ഹിന്ദി ഭാഷയുടെ പ്രചാരണവും വികസനവും പ്രോത്സാഹിപ്പിക്കുക എന്നത് കേന്ദ്ര സർക്കാരിന്റെ പ്രത്യേക ചുമതലയാണെന്ന് വ്യക്തമാക്കുന്നു.</li>
-          <li><span class="stars">⭐⭐⭐</span> ഹിന്ദി <strong>ഇന്ത്യയുടെ സമ്മിശ്ര സംസ്കാരത്തിന്റെ എല്ലാ ഘടകങ്ങൾക്കും ആവിഷ്കാര മാധ്യമമായി</strong> വളരണം; ഹിന്ദുസ്ഥാനിയിൽ നിന്നും <strong>8-ാം ഷെഡ്യൂളിലെ മറ്റ് ഭാഷകളിൽ നിന്നും</strong> രൂപങ്ങളും ശൈലിയും സ്വീകരിച്ച് സമ്പുഷ്ടമാക്കണം.</li>
+          <li>ഹിന്ദി <strong>ഇന്ത്യയുടെ സമ്മിശ്ര സംസ്കാരത്തിന്റെ എല്ലാ ഘടകങ്ങൾക്കും ആവിഷ്കാര മാധ്യമമായി</strong> വളരണം; ഹിന്ദുസ്ഥാനിയിൽ നിന്നും <strong>8-ാം ഷെഡ്യൂളിലെ മറ്റ് ഭാഷകളിൽ നിന്നും</strong> രൂപങ്ങളും ശൈലിയും സ്വീകരിച്ച് സമ്പുഷ്ടമാക്കണം.</li>
         </ul>
 
-        <div class="added-fact">
-          <span class="box-label">➕ മറ്റ് ആർട്ടിക്കിളുകൾ</span>
-          <ul>
-            <li><strong>Art 350:</strong> ഏത് പരാതി പരിഹാര അധികാരിക്കും (കേന്ദ്രം/സംസ്ഥാനം) <strong>ഉപയോഗത്തിലുള്ള ഏത് ഭാഷയിലും</strong> നിവേദനം നൽകാനുള്ള അവകാശം.</li>
-            <li><strong>Art 350A:</strong> പ്രാഥമിക ഘട്ടത്തിൽ <strong>മാതൃഭാഷയിൽ</strong> വിദ്യാഭ്യാസം.</li>
-            <li><strong>Art 350B:</strong> <strong>ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ (Special Officer for Linguistic Minorities)</strong> – 1957-ൽ ആദ്യമായി നിയമിച്ചു.</li>
-          </ul>
-        </div>
+        <h3>ആർട്ടിക്കിൾ 350, 350A, 350B</h3>
+        <ul>
+          <li><strong>350:</strong> ഏത് പരാതി പരിഹാര അധികാരിക്കും (കേന്ദ്രം/സംസ്ഥാനം) <strong>ഉപയോഗത്തിലുള്ള ഏത് ഭാഷയിലും</strong> നിവേദനം നൽകാനുള്ള അവകാശം.</li>
+          <li><strong>350A:</strong> പ്രാഥമിക ഘട്ടത്തിൽ <strong>മാതൃഭാഷയിൽ</strong> വിദ്യാഭ്യാസം.</li>
+          <li><strong>350B:</strong> <strong>ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ (Special Officer for Linguistic Minorities)</strong>.</li>
+        </ul>
 
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick:</strong></span>
-          <p>"<strong>343 ഹിന്ദി ഔദ്യോഗിക; 351 ഹിന്ദി വളർത്തണം; 348 ഇംഗ്ലീഷ് കോടതി</strong>".</p>
+          <p>"<strong>343 ഔദ്യോഗികം, 344 കമ്മീഷൻ, 345 സംസ്ഥാനം, 348 കോടതി, 350 നിവേദനം, 350A മാതൃഭാഷ, 350B ന്യൂനപക്ഷ ഓഫീസർ, 351 ഹിന്ദി വികസനം</strong>".</p>
         </div>
       </div>
     </section>
 
     <!-- ===== SECTION 5: എട്ടാം ഷെഡ്യൂൾ ===== -->
     <section class="section" id="sec5">
-      <h2 role="button" tabindex="0" aria-expanded="false">5. എട്ടാം ഷെഡ്യൂളും ഭരണഘടനാ ഭേദഗതികളും</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. എട്ടാം ഷെഡ്യൂളും ഭരണഘടനാ ഭേദഗതികളും</span>
+      </h2>
       <div class="section-body">
         <p>ഇന്ത്യൻ ഭരണഘടന ഔദ്യോഗികമായി അംഗീകരിച്ചിട്ടുള്ള ഭാഷകളുടെ പട്ടികയാണ് <strong>8-ാം ഷെഡ്യൂൾ</strong>.</p>
-
         <ul>
-          <li><span class="stars">⭐⭐⭐⭐</span> <strong>8-ാം ഷെഡ്യൂളിന്റെ ഉദ്ദേശ്യം:</strong> Art 344(1) (ഔദ്യോഗിക ഭാഷാ കമ്മീഷനിൽ പ്രാതിനിധ്യം), Art 351 (ഹിന്ദിയെ സമ്പുഷ്ടമാക്കാൻ ഈ ഭാഷകളിൽ നിന്ന് സ്വീകരിക്കൽ) എന്നിവയുമായി ബന്ധപ്പെട്ടതാണ്. 8-ാം ഷെഡ്യൂളിനെക്കുറിച്ചുള്ള ഭരണഘടനാ വ്യവസ്ഥകൾ ആർട്ടിക്കിൾ 344(1), 351 എന്നിവയിലാണ്.</li>
-          <li><span class="stars">⭐⭐⭐</span> 1950-ൽ ഭരണഘടന നിലവിൽ വന്നപ്പോൾ ഇതിൽ <strong>14 ഭാഷകൾ</strong> മാത്രമാണുണ്ടായിരുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>8-ാം ഷെഡ്യൂളിന്റെ ഉദ്ദേശ്യം:</strong> Art 344(1) (ഔദ്യോഗിക ഭാഷാ കമ്മീഷനിൽ പ്രാതിനിധ്യം), Art 351 (ഹിന്ദിയെ സമ്പുഷ്ടമാക്കാൻ ഈ ഭാഷകളിൽ നിന്ന് സ്വീകരിക്കൽ) എന്നിവയുമായി ബന്ധപ്പെട്ടതാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഷെഡ്യൂളിൽ ഭാഷകൾ ഉൾപ്പെടുത്താൻ ഭരണഘടനാ നിർമ്മാണ സഭ ഔപചാരിക മാനദണ്ഡം വച്ചിട്ടില്ല; അശോക് പഹ്വ കമ്മിറ്റി (1996), സീതാകാന്ത് മഹാപാത്ര കമ്മിറ്റി (2003) എന്നിവ മാനദണ്ഡം ശുപാർശ ചെയ്തിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> 1950-ൽ ഭരണഘടന നിലവിൽ വന്നപ്പോൾ ഇതിൽ <strong>14 ഭാഷകൾ</strong> മാത്രമാണുണ്ടായിരുന്നത്.</li>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> നിലവിൽ 8-ാം ഷെഡ്യൂളിൽ <strong>22 ഭാഷകൾ</strong> ഉണ്ട്.</li>
         </ul>
 
         <div class="added-fact">
-          <span class="box-label">➕ ആദ്യ 14 ഭാഷകൾ (1950)</span>
+          <span class="box-label">➕ ആദ്യ 14 ഭാഷകൾ</span>
           <p>അസമീസ്, ബംഗാളി, ഗുജറാത്തി, ഹിന്ദി, കന്നഡ, കശ്മീരി, <strong>മലയാളം</strong>, മറാഠി, ഒഡിയ, പഞ്ചാബി, സംസ്കൃതം, തമിഴ്, തെലുങ്ക്, ഉർദു. (<strong>മലയാളം തുടക്കം മുതൽ ഉണ്ട്</strong>.)</p>
+          <p>ഭോജ്പുരി, രാജസ്ഥാനി, തുളു തുടങ്ങിയവ ഉൾപ്പെടുത്താൻ ആവശ്യമുണ്ട്.</p>
         </div>
 
-        <h3>ഭാഷകൾ കൂട്ടിച്ചേർത്ത 3 ഭരണഘടനാ ഭേദഗതികൾ</h3>
+        <h3>★★★ ഭാഷകൾ കൂട്ടിച്ചേർത്ത 3 ഭരണഘടനാ ഭേദഗതികൾ</h3>
         <div style="overflow-x: auto;">
           <table>
             <thead>
-              <tr><th>ഭേദഗതി</th><th>വർഷം</th><th>ചേർത്ത ഭാഷകൾ</th><th>ആകെ എണ്ണം</th></tr>
+              <tr><th>ഭേദഗതി</th><th>വർഷം</th><th>ഭാഷകൾ</th><th>ആകെ എണ്ണം</th></tr>
             </thead>
             <tbody>
-              <tr><td><strong>21-ാം</strong></td><td>1967</td><td>സിന്ധി</td><td>15</td></tr>
-              <tr><td><strong>71-ാം</strong></td><td>1992</td><td>കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി</td><td>18</td></tr>
-              <tr><td><strong>92-ാം</strong></td><td>2003</td><td>ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി</td><td>22</td></tr>
+              <tr><td><strong>21-ാം ഭേദഗതി</strong></td><td>1967</td><td><strong>സിന്ധി</strong></td><td>15</td></tr>
+              <tr><td><strong>71-ാം ഭേദഗതി</strong></td><td>1992</td><td><strong>കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി</strong></td><td>18</td></tr>
+              <tr><td><strong>92-ാം ഭേദഗതി</strong></td><td>2003</td><td><strong>ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി</strong></td><td>22</td></tr>
             </tbody>
           </table>
         </div>
@@ -456,66 +816,64 @@
             <li><strong>മൈഥിലി</strong> = ബിഹാർ</li>
             <li><strong>സന്താലി</strong> = ഝാർഖണ്ഡ്/ഒഡീഷ</li>
           </ul>
-          <p><strong>ഉൾപ്പെടുത്താൻ ആവശ്യമുള്ളവ:</strong> ഭോജ്പുരി, രാജസ്ഥാനി, തുളു.</p>
-        </div>
-
-        <div class="viz-box">
-          <span class="box-label">📊 എട്ടാം ഷെഡ്യൂൾ ഭാഷകളുടെ വളർച്ച</span>
-          <svg viewBox="0 0 700 180" width="100%" height="auto" role="img" aria-label="Eighth Schedule Growth">
-            <rect x="50" y="40" width="100" height="100" rx="6" fill="#4a148c" opacity="0.85"/>
-            <text x="100" y="75" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">14</text>
-            <text x="100" y="100" text-anchor="middle" fill="#ffd54f" font-size="11">1950</text>
-            <text x="100" y="120" text-anchor="middle" fill="#fff" font-size="9">Initial</text>
-
-            <rect x="180" y="50" width="100" height="90" rx="6" fill="#1565c0" opacity="0.85"/>
-            <text x="230" y="85" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">15</text>
-            <text x="230" y="105" text-anchor="middle" fill="#ffd54f" font-size="11">1967</text>
-            <text x="230" y="122" text-anchor="middle" fill="#fff" font-size="9">+Sindhi</text>
-
-            <rect x="310" y="60" width="100" height="80" rx="6" fill="#00695c" opacity="0.85"/>
-            <text x="360" y="95" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">18</text>
-            <text x="360" y="115" text-anchor="middle" fill="#ffd54f" font-size="11">1992</text>
-            <text x="360" y="130" text-anchor="middle" fill="#fff" font-size="9">+3 NAMAK</text>
-
-            <rect x="440" y="40" width="100" height="100" rx="6" fill="#b83b2c" opacity="0.85"/>
-            <text x="490" y="75" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">22</text>
-            <text x="490" y="100" text-anchor="middle" fill="#ffd54f" font-size="11">2003</text>
-            <text x="490" y="120" text-anchor="middle" fill="#fff" font-size="9">+4 BODMAS</text>
-
-            <text x="360" y="170" text-anchor="middle" fill="#4a148c" font-size="13" font-weight="bold">21 + 71 = 92 (ഭേദഗതി ട്രിക്ക്!)</text>
-          </svg>
-          <div class="viz-caption">📊 8-ാം ഷെഡ്യൂൾ: 14 → 15 → 18 → 22</div>
         </div>
 
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick:</strong></span>
-          <p><strong>ഭേദഗതി നമ്പറുകൾ:</strong> ആദ്യത്തേത് <strong>21</strong>, രണ്ടാമത്തേത് <strong>71</strong> → കൂട്ടിയാൽ <strong>92</strong>! (21 + 71 = 92).</p>
-          <p><strong>NAMAK</strong> (71-ാം ഭേദഗതി): <strong>N</strong>epali, <strong>A</strong>?? — യഥാർത്ഥത്തിൽ: <strong>N</strong>epali, <strong>M</strong>anipuri, <strong>K</strong>onkani + A (ഓർമ്മ സഹായി).</p>
-          <p><strong>BODMAS</strong> (92-ാം ഭേദഗതി): <strong>BO</strong>do, <strong>D</strong>ogri, <strong>MA</strong>ithili, <strong>S</strong>anthali.</p>
+          <p><strong>71-ാം ഭേദഗതി (3 ഭാഷകൾ): "NAMAK"</strong> — <strong>NA</strong> (Nepali), <strong>MA</strong> (Manipuri), <strong>K</strong> (Konkani).</p>
+          <p><strong>92-ാം ഭേദഗതി (4 ഭാഷകൾ): "BODMAS"</strong> — <strong>BO</strong> (Bodo), <strong>D</strong> (Dogri), <strong>MA</strong> (Maithili), <strong>S</strong> (Santhali).</p>
+          <p><strong>ഭേദഗതി നമ്പറുകൾ:</strong> 21 + 71 = 92!</p>
+          <p><strong>ഭാഷാ എണ്ണം:</strong> 14 → 15 → 18 → 22.</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 എട്ടാം ഷെഡ്യൂൾ - ഭാഷകളുടെ വളർച്ച</span>
+          <svg viewBox="0 0 600 200" width="100%" height="auto" role="img" aria-label="8th Schedule Language Growth">
+            <rect x="50" y="40" width="100" height="120" fill="#4a148c" opacity="0.85"/>
+            <text x="100" y="30" text-anchor="middle" font-size="13" font-weight="bold" fill="#14202b">1950</text>
+            <text x="100" y="105" text-anchor="middle" font-size="22" font-weight="bold" fill="#fff">14</text>
+            <text x="100" y="180" text-anchor="middle" font-size="11" fill="#4a5f72">ആദ്യം</text>
+
+            <rect x="190" y="55" width="100" height="105" fill="#1565c0" opacity="0.85"/>
+            <text x="240" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#14202b">1967</text>
+            <text x="240" y="110" text-anchor="middle" font-size="22" font-weight="bold" fill="#fff">15</text>
+            <text x="240" y="180" text-anchor="middle" font-size="11" fill="#4a5f72">+ സിന്ധി</text>
+
+            <rect x="330" y="75" width="100" height="85" fill="#2e7d32" opacity="0.85"/>
+            <text x="380" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#14202b">1992</text>
+            <text x="380" y="120" text-anchor="middle" font-size="22" font-weight="bold" fill="#fff">18</text>
+            <text x="380" y="180" text-anchor="middle" font-size="11" fill="#4a5f72">+ NAMAK</text>
+
+            <rect x="470" y="30" width="100" height="130" fill="#b83b2c" opacity="0.85"/>
+            <text x="520" y="20" text-anchor="middle" font-size="13" font-weight="bold" fill="#14202b">2003</text>
+            <text x="520" y="100" text-anchor="middle" font-size="22" font-weight="bold" fill="#fff">22</text>
+            <text x="520" y="180" text-anchor="middle" font-size="11" fill="#4a5f72">+ BODMAS</text>
+          </svg>
+          <div class="viz-caption">📊 എട്ടാം ഷെഡ്യൂളിലെ ഭാഷകളുടെ എണ്ണം: 14 → 15 → 18 → 22</div>
         </div>
       </div>
     </section>
 
     <!-- ===== SECTION 6: ശ്രേഷ്ഠ ഭാഷകൾ ===== -->
     <section class="section" id="sec6">
-      <h2 role="button" tabindex="0" aria-expanded="false">6. ഇന്ത്യയിലെ ശ്രേഷ്ഠ ഭാഷകൾ (Classical Languages)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. ഇന്ത്യയിലെ ശ്രേഷ്ഠ ഭാഷകൾ (Classical Languages)</span>
+      </h2>
       <div class="section-body">
-        <p>ഒരു ഭാഷയ്ക്ക് 1500 മുതൽ 2000 വർഷം വരെ പഴക്കമുള്ള സ്വന്തമായ തനത് സാഹിത്യ പാരമ്പര്യമുണ്ടെങ്കിൽ കേന്ദ്ര സർക്കാർ അതിന് ശ്രേഷ്ഠ ഭാഷാ പദവി നൽകുന്നു. PSC പരീക്ഷകളിലെ നിർണ്ണായക ഭാഗമാണിത്.</p>
-
+        <p>ഒരു ഭാഷയ്ക്ക് 1500 മുതൽ 2000 വർഷം വരെ പഴക്കമുള്ള സ്വന്തമായ തനത് സാഹിത്യ പാരമ്പര്യമുണ്ടെങ്കിൽ കേന്ദ്ര സർക്കാർ അതിന് ശ്രേഷ്ഠ ഭാഷാ പദവി നൽകുന്നു.</p>
         <ul>
-          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇതുവരെ ഇന്ത്യയിൽ ആകെ <strong>11 ശ്രേഷ്ഠ ഭാഷകളാണുള്ളത്</strong> (നേരത്തെ 6 എണ്ണം, 2024 ഒക്ടോബറിൽ 5 കൂടി ചേർത്തു).</li>
-          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആരാണ് നൽകുന്നത്:</strong> <strong>സാംസ്കാരിക മന്ത്രാലയം (Ministry of Culture)</strong>. <strong>ഭാഷാ വിദഗ്ധ സമിതി (Linguistic Experts Committee)</strong> – സാഹിത്യ അക്കാദമിക്ക് കീഴിൽ (2004 നവംബർ) പരിശോധിച്ച് ശുപാർശ ചെയ്യും.</li>
-          <li><span class="stars">⭐⭐⭐</span> ശ്രേഷ്ഠ ഭാഷ എന്ന പുതിയ വിഭാഗം <strong>2004 ഒക്ടോബറിൽ</strong> കേന്ദ്രം സൃഷ്ടിച്ചു; 2024 ജൂലൈ 25-ന് സമിതി മാനദണ്ഡങ്ങൾ പുതുക്കി.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>2024 ഒക്ടോബർ 3-ന്</strong> പ്രധാനമന്ത്രി നരേന്ദ്ര മോദിയുടെ അധ്യക്ഷതയിൽ കേന്ദ്ര മന്ത്രിസഭ അംഗീകരിച്ചു.</li>
-          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പദവി ഭരണഘടനാപരമല്ല:</strong> ശ്രേഷ്ഠ പദവി സാംസ്കാരിക മന്ത്രാലയത്തിന്റെ ഭരണപരമായ വിഭാഗമാണ്; ഭരണഘടനാ ഷെഡ്യൂൾ അല്ല; 8-ാം ഷെഡ്യൂളിനോട് സമാന്തരമായി നിൽക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇതുവരെ ഇന്ത്യയിൽ ആകെ <strong>11 ശ്രേഷ്ഠ ഭാഷകളാണുള്ളത്</strong> (നേരത്തെ ഇത് 6 എണ്ണമായിരുന്നു, 2024 ഒക്ടോബറിൽ 5 എണ്ണം കൂടി കൂട്ടിച്ചേർത്തു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആരാണ് നൽകുന്നത്:</strong> സാംസ്കാരിക മന്ത്രാലയം (Ministry of Culture). <strong>ഭാഷാ വിദഗ്ധ സമിതി (Linguistic Experts Committee) – സാഹിത്യ അക്കാദമിക്ക് കീഴിൽ (2004 നവംബർ)</strong> പരിശോധിച്ച് ശുപാർശ ചെയ്യും.</li>
+          <li><span class="stars">⭐⭐⭐</span> ശ്രേഷ്ഠ ഭാഷ എന്ന പുതിയ വിഭാഗം 2004 ഒക്ടോബറിൽ കേന്ദ്രം സൃഷ്ടിച്ചു; 2024 ജൂലൈ 25-ന് സമിതി മാനദണ്ഡങ്ങൾ പുതുക്കി. 2024 ഒക്ടോബർ 3-ന് പ്രധാനമന്ത്രി നരേന്ദ്ര മോദിയുടെ അധ്യക്ഷതയിൽ കേന്ദ്ര മന്ത്രിസഭ അംഗീകരിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പദവി ഭരണഘടനാപരമല്ല:</strong> ശ്രേഷ്ഠ പദവി സാംസ്കാരിക മന്ത്രാലയത്തിന്റെ ഭരണപരമായ വിഭാഗമാണ്; ഭരണഘടനാ ഷെഡ്യൂൾ അല്ല; 8-ാം ഷെഡ്യൂളിനോട് സമാന്തരമായി നിൽക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഗുണങ്ങൾ:</strong> ക്ലാസിക്കൽ ഭാഷാ പണ്ഡിതർക്ക് വർഷംതോറും രണ്ട് അന്താരാഷ്ട്ര പുരസ്കാരങ്ങൾ; കേന്ദ്ര സർവകലാശാലകളിൽ പ്രൊഫസർ ചെയറുകൾ സൃഷ്ടിക്കാൻ UGC-യോട് അഭ്യർത്ഥന. ക്ലാസിക്കൽ ഭാഷാ പഠനത്തിന് "Centre of Excellence for Studies in Classical Languages" സ്ഥാപിച്ചു.</li>
         </ul>
 
-        <h3>ശ്രേഷ്ഠ ഭാഷകളും പദവി ലഭിച്ച വർഷവും</h3>
+        <h3>★★★ ശ്രേഷ്ഠ ഭാഷകളും പദവി ലഭിച്ച വർഷവും</h3>
         <div style="overflow-x: auto;">
           <table>
-            <thead>
-              <tr><th>#</th><th>ഭാഷ</th><th>വർഷം</th></tr>
-            </thead>
+            <thead><tr><th>#</th><th>ഭാഷ</th><th>വർഷം</th></tr></thead>
             <tbody>
               <tr><td>1</td><td><strong>തമിഴ്</strong> (ആദ്യ ഭാഷ)</td><td>2004</td></tr>
               <tr><td>2</td><td>സംസ്കൃതം</td><td>2005</td></tr>
@@ -523,92 +881,92 @@
               <tr><td>4</td><td>കന്നഡ</td><td>2008</td></tr>
               <tr><td>5</td><td><strong>മലയാളം</strong></td><td><strong>2013</strong></td></tr>
               <tr><td>6</td><td>ഒഡിയ</td><td>2014</td></tr>
-              <tr><td>7</td><td><strong>മറാഠി</strong></td><td>2024</td></tr>
-              <tr><td>8</td><td><strong>പാലി</strong></td><td>2024</td></tr>
-              <tr><td>9</td><td><strong>പ്രാകൃത്</strong></td><td>2024</td></tr>
-              <tr><td>10</td><td><strong>ആസാമീസ്</strong></td><td>2024</td></tr>
-              <tr><td>11</td><td><strong>ബംഗാളി</strong></td><td>2024</td></tr>
+              <tr><td>7</td><td>മറാഠി</td><td>2024</td></tr>
+              <tr><td>8</td><td>പാലി</td><td>2024</td></tr>
+              <tr><td>9</td><td>പ്രാകൃത്</td><td>2024</td></tr>
+              <tr><td>10</td><td>ആസാമീസ്</td><td>2024</td></tr>
+              <tr><td>11</td><td>ബംഗാളി</td><td>2024</td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="added-fact">
-          <span class="box-label">➕ മലയാളത്തിന്റെ ശ്രേഷ്ഠ ഭാഷാ പദവി</span>
-          <ul>
-            <li><strong>2013 മേയ് 23-ന്</strong> പദവി ലഭിച്ചു. (ചില വെബ്സൈറ്റുകളിൽ 2013 ഓഗസ്റ്റ് എന്ന് കാണും; PSC-ക്ക് <strong>2013</strong> മതി.)</li>
-            <li>ഭാഷാ വിദഗ്ധ സമിതി 2012 ഡിസംബർ 19-ന് ഈ വിഷയം പരിശോധിച്ച് റിപ്പോർട്ട് നൽകി.</li>
-            <li>കേരള സർക്കാർ, കേരള സാഹിത്യ അക്കാദമി, മദ്രാസ് കേരള സമാജം എന്നിവയാണ് ആവശ്യം ഉന്നയിച്ചത്.</li>
-            <li>മലയാളം = <strong>5-ാമത്തെ ശ്രേഷ്ഠ ഭാഷ</strong>.</li>
-          </ul>
+          <span class="box-label">➕ മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി</span>
+          <p><strong>2013 മേയ് 23</strong>-ന് പദവി ലഭിച്ചു. (ചില വെബ്സൈറ്റുകളിൽ 2013 ഓഗസ്റ്റ് എന്ന് കാണും; PSC-ക്ക് <strong>2013</strong> മതി.) ഭാഷാ വിദഗ്ധ സമിതി 2012 ഡിസംബർ 19-ന് ഈ വിഷയം പരിശോധിച്ച് റിപ്പോർട്ട് നൽകി; കേരള സർക്കാർ, കേരള സാഹിത്യ അക്കാദമി, മദ്രാസ് കേരള സമാജം എന്നിവയാണ് ആവശ്യം ഉന്നയിച്ചത്.</p>
         </div>
 
         <div class="correction">
-          <span class="box-label">✏️ പ്രധാന ട്രാപ്പ്</span>
-          <p><strong>8-ാം ഷെഡ്യൂളും ശ്രേഷ്ഠ ഭാഷയും:</strong> 2024-ന് മുമ്പ് ശ്രേഷ്ഠ ഭാഷകളെല്ലാം 8-ാം ഷെഡ്യൂളിൽ ഉണ്ടായിരുന്നു. <strong>ഇപ്പോൾ പാലിയും പ്രാകൃതും ശ്രേഷ്ഠ ഭാഷകളാണ്, പക്ഷേ 8-ാം ഷെഡ്യൂളിൽ ഇല്ല.</strong> ഹിന്ദി, ഉർദു, പഞ്ചാബി, ഗുജറാത്തി തുടങ്ങിയവ 8-ാം ഷെഡ്യൂളിലുണ്ടെങ്കിലും ശ്രേഷ്ഠ ഭാഷകളല്ല. <strong>സംസ്കൃതം രണ്ടിലുമുണ്ട്.</strong></p>
-        </div>
-
-        <div class="viz-box">
-          <span class="box-label">📊 8-ാം ഷെഡ്യൂൾ vs ശ്രേഷ്ഠ ഭാഷ</span>
-          <svg viewBox="0 0 700 220" width="100%" height="auto" role="img" aria-label="Eighth Schedule vs Classical Languages">
-            <rect x="40" y="30" width="280" height="160" rx="10" fill="#4a148c" opacity="0.15" stroke="#4a148c" stroke-width="2"/>
-            <text x="180" y="60" text-anchor="middle" fill="#4a148c" font-size="15" font-weight="bold">8-ാം ഷെഡ്യൂൾ</text>
-            <text x="180" y="85" text-anchor="middle" fill="#14202b" font-size="12">22 ഭാഷകൾ</text>
-            <text x="180" y="110" text-anchor="middle" fill="#14202b" font-size="11">ഭരണഘടനാപരം</text>
-            <text x="180" y="130" text-anchor="middle" fill="#14202b" font-size="11">Art 344(1), 351</text>
-            <text x="180" y="155" text-anchor="middle" fill="#b83b2c" font-size="11" font-weight="bold">ഉദാ: ഹിന്ദി, ഉർദു, മലയാളം</text>
-
-            <rect x="380" y="30" width="280" height="160" rx="10" fill="#00695c" opacity="0.15" stroke="#00695c" stroke-width="2"/>
-            <text x="520" y="60" text-anchor="middle" fill="#00695c" font-size="15" font-weight="bold">ശ്രേഷ്ഠ ഭാഷ</text>
-            <text x="520" y="85" text-anchor="middle" fill="#14202b" font-size="12">11 ഭാഷകൾ</text>
-            <text x="520" y="110" text-anchor="middle" fill="#14202b" font-size="11">ഭരണപരം</text>
-            <text x="520" y="130" text-anchor="middle" fill="#14202b" font-size="11">സാംസ്കാരിക മന്ത്രാലയം</text>
-            <text x="520" y="155" text-anchor="middle" fill="#b83b2c" font-size="11" font-weight="bold">ഉദാ: പാലി, പ്രാകൃത്</text>
-
-            <text x="350" y="210" text-anchor="middle" fill="#4a148c" font-size="12" font-weight="bold">സംസ്കൃതം രണ്ടിലും ഉണ്ട്!</text>
-          </svg>
-          <div class="viz-caption">📊 രണ്ട് പട്ടികകളും കലർത്തരുത്</div>
+          <span class="box-label">✏️ 8-ാം ഷെഡ്യൂളും ശ്രേഷ്ഠ ഭാഷയും (ട്രാപ്പ്)</span>
+          <p>2024-ന് മുമ്പ് ശ്രേഷ്ഠ ഭാഷകളെല്ലാം 8-ാം ഷെഡ്യൂളിൽ ഉണ്ടായിരുന്നു. <strong>ഇപ്പോൾ പാലിയും പ്രാകൃതും ശ്രേഷ്ഠ ഭാഷകളാണ്, പക്ഷേ 8-ാം ഷെഡ്യൂളിൽ ഇല്ല.</strong> ഹിന്ദി, ഉർദു, പഞ്ചാബി, ഗുജറാത്തി തുടങ്ങിയവ 8-ാം ഷെഡ്യൂളിലുണ്ടെങ്കിലും ശ്രേഷ്ഠ ഭാഷകളല്ല. <strong>സംസ്കൃതം രണ്ടിലുമുണ്ട്.</strong></p>
         </div>
 
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick:</strong></span>
-          <p><strong>ക്രമം:</strong> "ത-സം-തെ-ക-മ-ഒ" (2004, 05, 08, 08, 13, 14) + "മ-പാ-പ്രാ-അ-ബ" (2024).</p>
-          <p><strong>മലയാളം = 5-ാമത്തെ ഭാഷ (2013).</strong></p>
+          <p><strong>ക്രമം:</strong> "<strong>ത-സം-തെ-ക-മ-ഒ</strong>" (2004, 05, 08, 08, 13, 14) + "<strong>മ-പാ-പ്രാ-അ-ബ</strong>" (2024×5).</p>
+          <p><strong>മലയാളം = 5-ാമത്തെ ഭാഷ; തെലുങ്കും കന്നഡയും ഒരേ വർഷം (2008).</strong></p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 ശ്രേഷ്ഠ ഭാഷകൾ — കാലക്രമം</span>
+          <svg viewBox="0 0 800 180" width="100%" height="auto" role="img" aria-label="Classical Languages Timeline">
+            <line x1="40" y1="100" x2="760" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="100" r="11" fill="#c62828"/>
+            <text x="100" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2004</text>
+            <text x="100" y="130" text-anchor="middle" font-size="10" fill="#4a5f72">തമിഴ്</text>
+            <circle cx="210" cy="100" r="11" fill="#ef6c00"/>
+            <text x="210" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2005</text>
+            <text x="210" y="130" text-anchor="middle" font-size="10" fill="#4a5f72">സംസ്കൃതം</text>
+            <circle cx="320" cy="100" r="11" fill="#2e7d32"/>
+            <text x="320" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2008</text>
+            <text x="320" y="130" text-anchor="middle" font-size="10" fill="#4a5f72">തെലുങ്ക്, കന്നഡ</text>
+            <circle cx="440" cy="100" r="11" fill="#6a1b9a"/>
+            <text x="440" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2013</text>
+            <text x="440" y="130" text-anchor="middle" font-size="10" fill="#4a5f72">മലയാളം</text>
+            <circle cx="550" cy="100" r="11" fill="#1565c0"/>
+            <text x="550" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2014</text>
+            <text x="550" y="130" text-anchor="middle" font-size="10" fill="#4a5f72">ഒഡിയ</text>
+            <circle cx="680" cy="100" r="11" fill="#b83b2c"/>
+            <text x="680" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2024</text>
+            <text x="680" y="130" text-anchor="middle" font-size="10" fill="#4a5f72">മറാഠി, പാലി, പ്രാകൃത്, ആസാമീസ്, ബംഗാളി</text>
+          </svg>
+          <div class="viz-caption">📊 ശ്രേഷ്ഠ ഭാഷകൾ — ആകെ 11 (2024 ഒക്ടോബർ വരെ)</div>
         </div>
       </div>
     </section>
 
     <!-- ===== SECTION 7: പ്രധാന വസ്തുതകൾ ===== -->
     <section class="section" id="sec7">
-      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. പ്രധാന വസ്തുതകൾ</span>
+      </h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യൻ ഭരണഘടനയുടെ <strong>എട്ടാം ഷെഡ്യൂളിൽ ഇംഗ്ലീഷ് (English) ഉൾപ്പെട്ടിട്ടില്ല</strong>. (ഇതൊരു സ്ഥിരം പി.എസ്.സി ചോദ്യമാണ്).</li>
           <li><span class="stars">⭐⭐⭐</span> രാജസ്ഥാൻ സംസ്ഥാനത്തെ ജനങ്ങൾ കൂടുതലായി സംസാരിക്കുന്ന രാജസ്ഥാനി, ബിഹാറിലെ ഭോജ്പുരി എന്നിവയും എട്ടാം ഷെഡ്യൂളിൽ ഇല്ലാത്ത ഭാഷകളാണ്. <strong>തുളുവും</strong> ഇല്ല.</li>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യയുടെ ഭരണഘടന എട്ടാം ഷെഡ്യൂളിൽ ഔദ്യോഗിക ഭാഷകൾ മാത്രമേ പറയുന്നുള്ളൂ. <strong>ഇന്ത്യയ്ക്ക് ഒരു ദേശീയ ഭാഷ (National Language) ഇല്ല</strong>. ഹിന്ദി കേന്ദ്ര സർക്കാരിന്റെ ഔദ്യോഗിക ഭാഷ (Official Language) മാത്രമാണ്.</li>
-          <li><span class="stars">⭐⭐⭐</span> മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിക്കാൻ വേണ്ടി സംസ്ഥാന സർക്കാർ നിയോഗിച്ച വിദഗ്ധ സമിതിയുടെ അധ്യക്ഷൻ ഒ.എൻ.വി. കുറുപ്പ് ആയിരുന്നു. <strong>✏️ ഉറപ്പില്ല:</strong> ഈ വിവരം വിശ്വസനീയ ഉറവിടത്തിൽ സ്ഥിരീകരിക്കാനായില്ല.</li>
+          <li><span class="stars">⭐⭐⭐</span> മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിക്കാൻ വേണ്ടി സംസ്ഥാന സർക്കാർ നിയോഗിച്ച വിദ്യഗ്ധ സമിതിയുടെ അധ്യക്ഷൻ ഒ.എൻ.വി. കുറുപ്പ് ആയിരുന്നു. <strong>⚠️ ഉറപ്പില്ല:</strong> ഈ വിവരം വിശ്വസനീയ ഉറവിടത്തിൽ സ്ഥിരീകരിക്കാനായില്ല. (പദവിക്ക് വേണ്ടി വാദിച്ചവരിൽ കേരള സർക്കാർ, കേരള സാഹിത്യ അക്കാദമി, മദ്രാസ് കേരള സമാജം എന്നിവയാണ് രേഖയിൽ കാണുന്നത്.)</li>
         </ul>
-
         <div class="added-fact">
           <span class="box-label">➕ അധിക വസ്തുതകൾ</span>
           <ul>
-            <li><strong>Union-ന്റെ ഔദ്യോഗിക ഭാഷകൾ:</strong> <strong>ഹിന്ദി + ഇംഗ്ലീഷ്</strong> (Official Languages Act 1963).</li>
+            <li><strong>8-ാം ഷെഡ്യൂൾ vs ശ്രേഷ്ഠ ഭാഷ:</strong> 22 vs 11; ഭരണഘടനാപരം vs ഭരണപരം.</li>
+            <li><strong>Union-ന്റെ ഔദ്യോഗിക ഭാഷകൾ:</strong> ഹിന്ദി + ഇംഗ്ലീഷ് (Official Languages Act 1963).</li>
             <li><strong>ഹൈക്കോടതികളിൽ ഹിന്ദി:</strong> രാജസ്ഥാൻ, ഉത്തർപ്രദേശ്, മധ്യപ്രദേശ്, ബിഹാർ (Art 348(2) + Official Languages Act 1963 Sec 7).</li>
             <li><strong>ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ (Art 350B):</strong> 1957-ൽ ആദ്യമായി നിയമിച്ചു.</li>
             <li><strong>ഹിന്ദി ദിവസ്:</strong> സെപ്റ്റംബർ 14; <strong>ലോക ഹിന്ദി ദിനം:</strong> ജനുവരി 10.</li>
             <li><strong>മലയാളം:</strong> കേരളത്തിന്റെ ഔദ്യോഗിക ഭാഷ (Kerala Official Language Act 1969); <strong>മലയാള ദിനം: നവംബർ 1</strong> (കേരളപ്പിറവി).</li>
           </ul>
         </div>
-
-        <div class="memory">
-          <span class="box-label">🧠 <strong>Trick:</strong></span>
-          <p>"<strong>8-ാം ഷെഡ്യൂൾ vs ശ്രേഷ്ഠ ഭാഷ:</strong> 22 vs 11; ഭരണഘടനാപരം vs ഭരണപരം".</p>
-        </div>
       </div>
     </section>
 
     <!-- ===== SECTION 8: PSC വിശകലനം ===== -->
     <section class="section" id="sec8">
-      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. കേരള PSC പരീക്ഷാ വിശകലനം</span>
+      </h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> എട്ടാം ഷെഡ്യൂൾ ഭാഷാ ഭേദഗതികൾ (21, 71, 92), മലയാളത്തിന് ശ്രേഷ്ഠഭാഷാ പദവി കിട്ടിയ വർഷം (2013), പുതിയതായി ശ്രേഷ്ഠഭാഷാ പദവി കിട്ടിയ ഭാഷകൾ (മറാഠി, ബംഗാളി തുടങ്ങിയവ).</li>
@@ -622,426 +980,350 @@
 
     <!-- ===== SECTION 9: ആശയക്കുഴപ്പങ്ങൾ ===== -->
     <section class="section" id="sec9">
-      <h2 role="button" tabindex="0" aria-expanded="false">9. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</span>
+      </h2>
       <div class="section-body">
         <div style="overflow-x: auto;">
           <table>
-            <thead>
-              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
-            </thead>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr></thead>
             <tbody>
-              <tr><td><strong>ഇംഗ്ലീഷ്</strong></td><td><strong>നേപ്പാളി</strong></td><td>ഇംഗ്ലീഷ് 8-ാം ഷെഡ്യൂളിൽ <strong>ഇല്ല</strong>. വിദേശ രാജ്യത്തെ ഭാഷയായ നേപ്പാളി <strong>ഉണ്ട്</strong> (71-ാം ഭേദഗതി).</td></tr>
-              <tr><td><strong>ദേശീയ ഭാഷ</strong></td><td><strong>ഔദ്യോഗിക ഭാഷ</strong></td><td>ഇന്ത്യയ്ക്ക് <strong>ദേശീയ ഭാഷയില്ല</strong>. ഹിന്ദി ഒരു <strong>ഔദ്യോഗിക ഭാഷ</strong> മാത്രം (Art 343).</td></tr>
-              <tr><td><strong>ആർട്ടിക്കിൾ 343</strong></td><td><strong>ആർട്ടിക്കിൾ 351</strong></td><td>343: ഹിന്ദി ഔദ്യോഗിക ഭാഷ. 351: ഹിന്ദിയുടെ വികസനം കേന്ദ്രത്തിന്റെ ചുമതല.</td></tr>
-              <tr><td><strong>8-ാം ഷെഡ്യൂൾ (22)</strong></td><td><strong>ശ്രേഷ്ഠ ഭാഷ (11)</strong></td><td>8-ാം ഷെഡ്യൂൾ ഭരണഘടനാപരം; ശ്രേഷ്ഠ പദവി സാംസ്കാരിക മന്ത്രാലയത്തിന്റെ ഭരണപരം. സംസ്കൃതം രണ്ടിലും; പാലി/പ്രാകൃത് ശ്രേഷ്ഠ മാത്രം; ഹിന്ദി/ഉർദു 8-ാം ഷെഡ്യൂൾ മാത്രം.</td></tr>
-              <tr><td><strong>1963 നിയമം</strong></td><td><strong>1967 ഭേദഗതി</strong></td><td>1963: 1965-ന് ശേഷവും ഇംഗ്ലീഷ് അനുവദിച്ചു. 1967: <strong>അനിശ്ചിതകാലത്തേക്ക്</strong>.</td></tr>
-              <tr><td><strong>Art 345</strong></td><td><strong>Art 346, 347</strong></td><td>345: സംസ്ഥാനത്തിന്റെ ഔദ്യോഗിക ഭാഷ. 346: കേന്ദ്രം-സംസ്ഥാനം/സംസ്ഥാനങ്ങൾ തമ്മിലുള്ള ആശയവിനിമയ ഭാഷ. 347: ജനസംഖ്യയുടെ ഒരു വിഭാഗം സംസാരിക്കുന്ന ഭാഷയ്ക്ക് അംഗീകാരം.</td></tr>
-              <tr><td><strong>Art 350</strong></td><td><strong>Art 350A / 350B</strong></td><td>350: ഏത് ഭാഷയിലും നിവേദനം; 350A: പ്രാഥമിക തലത്തിൽ മാതൃഭാഷയിൽ വിദ്യാഭ്യാസം; 350B: ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ.</td></tr>
+              <tr>
+                <td><strong>ഇംഗ്ലീഷ് (English)</strong></td>
+                <td><strong>നേപ്പാളി (Nepali)</strong></td>
+                <td>ഇന്ത്യയിൽ നിയമ നിർമ്മാണത്തിനും സുപ്രീം കോടതിയിലും ഏറ്റവും കൂടുതൽ ഉപയോഗിക്കുന്ന ഭാഷ <strong>ഇംഗ്ലീഷ്</strong> ആണെങ്കിലും അത് ഭരണഘടനയുടെ എട്ടാം ഷെഡ്യൂളിൽ <strong>ഇല്ല</strong>. എന്നാൽ വിദേശ രാജ്യത്തെ ഭാഷയായ <strong>നേപ്പാളി</strong> എട്ടാം ഷെഡ്യൂളിൽ <strong>ഉണ്ട്</strong> താനും (71-ാം ഭേദഗതി).</td>
+              </tr>
+              <tr>
+                <td><strong>ദേശീയ ഭാഷ (National Language)</strong></td>
+                <td><strong>ഔദ്യോഗിക ഭാഷ (Official Language)</strong></td>
+                <td>ഇന്ത്യയുടെ ദേശീയ ഭാഷ ഏതാണെന്ന് ചോദിച്ചാൽ 'ഹിന്ദി' എന്ന് ഉത്തരം എഴുതരുത്. ഇന്ത്യയ്ക്ക് <strong>ദേശീയ ഭാഷയില്ല</strong>. ആർട്ടിക്കിൾ 343 പ്രകാരം ഹിന്ദി എന്നത് ഒരു <strong>ഔദ്യോഗിക ഭാഷ</strong> മാത്രമാണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>ആർട്ടിക്കിൾ 343</strong></td>
+                <td><strong>ആർട്ടിക്കിൾ 351</strong></td>
+                <td>ദേവനാഗരി ലിപിയിലുള്ള ഹിന്ദി ഇന്ത്യയുടെ ഔദ്യോഗിക ഭാഷയാണെന്ന് പറയുന്നത് <strong>343</strong> ലാണ്. എന്നാൽ ഹിന്ദി ഭാഷയെ പ്രോത്സാഹിപ്പിക്കാനും പ്രചരിപ്പിക്കാനും കേന്ദ്ര സർക്കാർ ശ്രദ്ധിക്കണമെന്ന് പറയുന്നത് <strong>351</strong> ലാണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>8-ാം ഷെഡ്യൂൾ (22 ഭാഷ)</strong></td>
+                <td><strong>ശ്രേഷ്ഠ ഭാഷ (11)</strong></td>
+                <td>8-ാം ഷെഡ്യൂൾ ഭരണഘടനാപരം (Art 344(1), 351). ശ്രേഷ്ഠ പദവി സാംസ്കാരിക മന്ത്രാലയത്തിന്റെ ഭരണപരം. <strong>സംസ്കൃതം രണ്ടിലും; പാലി, പ്രാകൃത് ശ്രേഷ്ഠ ഭാഷ മാത്രം; ഹിന്ദി, ഉർദു 8-ാം ഷെഡ്യൂൾ മാത്രം.</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1963 നിയമം</strong></td>
+                <td><strong>1967 ഭേദഗതി</strong></td>
+                <td>1963: 1965-ന് ശേഷവും ഇംഗ്ലീഷ് അനുവദിച്ചു. 1967: <strong>അനിശ്ചിതകാലത്തേക്ക്</strong> (ഹിന്ദി ഇതര സംസ്ഥാനങ്ങൾ ആഗ്രഹിക്കുന്നിടത്തോളം).</td>
+              </tr>
+              <tr>
+                <td><strong>Art 345</strong></td>
+                <td><strong>Art 346, 347</strong></td>
+                <td>345: സംസ്ഥാനത്തിന്റെ ഔദ്യോഗിക ഭാഷ. 346: കേന്ദ്രം-സംസ്ഥാനം/സംസ്ഥാനങ്ങൾ തമ്മിലുള്ള ആശയവിനിമയ ഭാഷ. 347: ജനസംഖ്യയുടെ ഒരു വിഭാഗം സംസാരിക്കുന്ന ഭാഷയ്ക്ക് അംഗീകാരം (രാഷ്ട്രപതി).</td>
+              </tr>
+              <tr>
+                <td><strong>Art 350</strong></td>
+                <td><strong>Art 350A / 350B</strong></td>
+                <td>350: ഏത് ഭാഷയിലും നിവേദനം; 350A: പ്രാഥമിക തലത്തിൽ മാതൃഭാഷയിൽ വിദ്യാഭ്യാസം; 350B: ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ.</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- ===== SECTION 10: താരതമ്യ പട്ടികകൾ ===== -->
+    <!-- ===== SECTION 10: Mnemonics ===== -->
     <section class="section" id="sec10">
-      <h2 role="button" tabindex="0" aria-expanded="false">10. താരതമ്യ പട്ടികകൾ</h2>
-      <div class="section-body">
-        <h3>Table 1: Part XVII ആർട്ടിക്കിളുകൾ</h3>
-        <div style="overflow-x: auto;">
-          <table>
-            <thead>
-              <tr><th>ആർട്ടിക്കിൾ</th><th>വിഷയം</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>343</td><td>യൂണിയന്റെ ഔദ്യോഗിക ഭാഷ (ഹിന്ദി, ദേവനാഗരി)</td></tr>
-              <tr><td>344</td><td>ഔദ്യോഗിക ഭാഷാ കമ്മീഷൻ + പാർലമെന്ററി കമ്മിറ്റി</td></tr>
-              <tr><td>345</td><td>സംസ്ഥാനത്തിന്റെ ഔദ്യോഗിക ഭാഷ</td></tr>
-              <tr><td>346</td><td>ആശയവിനിമയ ഭാഷ</td></tr>
-              <tr><td>347</td><td>ജനസംഖ്യയുടെ ഒരു വിഭാഗത്തിന്റെ ഭാഷ</td></tr>
-              <tr><td>348</td><td>കോടതികളുടെ ഭാഷ (ഇംഗ്ലീഷ്)</td></tr>
-              <tr><td>349</td><td>ഭാഷാ നിയമങ്ങൾക്ക് പ്രത്യേക നടപടിക്രമം</td></tr>
-              <tr><td>350</td><td>ഏത് ഭാഷയിലും നിവേദനം</td></tr>
-              <tr><td>350A</td><td>മാതൃഭാഷയിൽ പ്രാഥമിക വിദ്യാഭ്യാസം (7-ാം ഭേദഗതി 1956)</td></tr>
-              <tr><td>350B</td><td>ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ (7-ാം ഭേദഗതി 1956)</td></tr>
-              <tr><td>351</td><td>ഹിന്ദിയുടെ വികസനം</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3>Table 2: 8-ാം ഷെഡ്യൂൾ ഭേദഗതികൾ</h3>
-        <div style="overflow-x: auto;">
-          <table>
-            <thead>
-              <tr><th>ഭേദഗതി</th><th>വർഷം</th><th>ഭാഷകൾ</th><th>എണ്ണം</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>– (യഥാർത്ഥം)</td><td>1950</td><td>14 ഭാഷകൾ</td><td>14</td></tr>
-              <tr><td>21-ാം</td><td>1967</td><td>സിന്ധി</td><td>15</td></tr>
-              <tr><td>71-ാം</td><td>1992</td><td>കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി</td><td>18</td></tr>
-              <tr><td>92-ാം</td><td>2003</td><td>ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി</td><td>22</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3>Table 3: ശ്രേഷ്ഠ ഭാഷകൾ (11)</h3>
-        <div style="overflow-x: auto;">
-          <table>
-            <thead>
-              <tr><th>ഭാഷ</th><th>വർഷം</th><th>ഭാഷ</th><th>വർഷം</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>തമിഴ്</td><td>2004</td><td>ഒഡിയ</td><td>2014</td></tr>
-              <tr><td>സംസ്കൃതം</td><td>2005</td><td>മറാഠി</td><td>2024</td></tr>
-              <tr><td>തെലുങ്ക്</td><td>2008</td><td>പാലി</td><td>2024</td></tr>
-              <tr><td>കന്നഡ</td><td>2008</td><td>പ്രാകൃത്</td><td>2024</td></tr>
-              <tr><td>മലയാളം</td><td>2013</td><td>ആസാമീസ്</td><td>2024</td></tr>
-              <tr><td colspan="2"></td><td>ബംഗാളി</td><td>2024</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SECTION 11: Mnemonics ===== -->
-    <section class="section" id="sec11">
-      <h2 role="button" tabindex="0" aria-expanded="false">11. Mnemonics (ഓർമ്മിക്കാനുള്ള സൂത്രവാക്യങ്ങൾ)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</span>
+      </h2>
       <div class="section-body">
         <div class="memory">
-          <span class="box-label">🧠 <strong>Trick 1 (71-ാം ഭേദഗതി – 3 ഭാഷകൾ):</strong></span>
-          <p><strong>"NAMAK"</strong> (നമക് - ഹിന്ദിയിൽ ഉപ്പ് എന്നർത്ഥം)</p>
-          <ul>
-            <li><strong>N</strong> — Nepali (നേപ്പാളി)</li>
-            <li><strong>M</strong> — Manipuri (മണിപ്പൂരി)</li>
-            <li><strong>K</strong> — Konkani (കൊങ്കണി)</li>
-          </ul>
+          <span class="box-label">🧠 <strong>Trick 1 (71-ാം ഭേദഗതി):</strong></span>
+          <p><strong>"NAMAK"</strong> (നമക് - ഹിന്ദിയിൽ ഉപ്പ് എന്നർത്ഥം): <strong>NA</strong> = Nepali, <strong>MA</strong> = Manipuri, <strong>K</strong> = Konkani.</p>
         </div>
         <div class="memory">
-          <span class="box-label">🧠 <strong>Trick 2 (92-ാം ഭേദഗതി – 4 ഭാഷകൾ):</strong></span>
-          <p>ഗണിതത്തിലെ <strong>"BODMAS"</strong> നിയമം ഓർക്കുക.</p>
-          <ul>
-            <li><strong>BO</strong> — Bodo (ബോഡോ)</li>
-            <li><strong>D</strong> — Dogri (ദോഗ്രി)</li>
-            <li><strong>MA</strong> — Maithili (മൈഥിലി)</li>
-            <li><strong>S</strong> — Santhali (സന്താലി)</li>
-          </ul>
+          <span class="box-label">🧠 <strong>Trick 2 (92-ാം ഭേദഗതി):</strong></span>
+          <p><strong>"BODMAS"</strong> (ഗണിത നിയമം): <strong>BO</strong> = Bodo, <strong>D</strong> = Dogri, <strong>MA</strong> = Maithili, <strong>S</strong> = Santhali.</p>
         </div>
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick 3 (ഭേദഗതി നമ്പറുകൾ):</strong></span>
-          <p>ആദ്യത്തെ ഭേദഗതിയായ <strong>21</strong> ഉം രണ്ടാമത്തെ ഭേദഗതിയായ <strong>71</strong> ഉം കൂട്ടിയാൽ മൂന്നാമത്തെ ഭേദഗതിയായ <strong>92</strong> ലഭിക്കും! (<strong>21 + 71 = 92</strong>)</p>
+          <p><strong>21 + 71 = 92</strong> (ആദ്യ രണ്ട് ഭേദഗതികളുടെ തുക = മൂന്നാമത്തേത്!)</p>
         </div>
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick 4 (ഭാഷാ എണ്ണം):</strong></span>
           <p><strong>14 → 15 → 18 → 22</strong> ("<strong>പതിന്നാല്</strong> ആദ്യം, <strong>സിന്ധി</strong> ഒന്ന്, <strong>NAMAK</strong> മൂന്ന്, <strong>BODMAS</strong> നാല്").</p>
         </div>
         <div class="memory">
-          <span class="box-label">🧠 <strong>Trick 5 (ആർട്ടിക്കിളുകൾ):</strong></span>
+          <span class="box-label">🧠 <strong>Trick 5 (ഭേദഗതി വർഷങ്ങൾ):</strong></span>
+          <p><strong>21 (1967), 71 (1992), 92 (2003)</strong> → "<strong>67, 92, 03</strong>".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6 (ആർട്ടിക്കിളുകൾ):</strong></span>
           <p>"<strong>343 ഔദ്യോഗികം, 344 കമ്മീഷൻ, 345 സംസ്ഥാനം, 348 കോടതി, 350 നിവേദനം, 350A മാതൃഭാഷ, 350B ന്യൂനപക്ഷ ഓഫീസർ, 351 ഹിന്ദി വികസനം</strong>".</p>
         </div>
         <div class="memory">
-          <span class="box-label">🧠 <strong>Trick 6 (ശ്രേഷ്ഠ ഭാഷകൾ):</strong></span>
-          <p>"<strong>ത-സം-തെ-ക-മ-ഒ</strong>" (6 പഴയവ) + "<strong>മ-പാ-പ്രാ-അ-ബ</strong>" (5 പുതിയ). <strong>ഇരട്ടകൾ:</strong> തെലുങ്കും കന്നഡയും (2008).</p>
+          <span class="box-label">🧠 <strong>Trick 7 (ശ്രേഷ്ഠ ഭാഷകൾ):</strong></span>
+          <p>"<strong>ത</strong>മിഴ് <strong>സം</strong>സ്കൃതം... <strong>ത-സം-തെ-ക-മ-ഒ</strong>" (6 പഴയവ) + "<strong>മ-പാ-പ്രാ-അ-ബ</strong>" (5 പുതിയ). <strong>ഇരട്ടകൾ:</strong> തെലുങ്കും കന്നഡയും (2008).</p>
         </div>
         <div class="memory">
-          <span class="box-label">🧠 <strong>Trick 7 (ഹിന്ദി ദിവസ്):</strong></span>
+          <span class="box-label">🧠 <strong>Trick 8 (ഹിന്ദി ദിവസ്):</strong></span>
           <p>"<strong>14-ാം തീയതി ഇന്ത്യയിൽ, 10-ാം തീയതി ലോകത്ത്</strong>".</p>
         </div>
       </div>
     </section>
 
-    <!-- ===== SECTION 12: PSC കെണികൾ ===== -->
-    <section class="section" id="sec12">
-      <h2 role="button" tabindex="0" aria-expanded="false">12. സാധാരണ PSC കെണികൾ</h2>
+    <!-- ===== SECTION 11: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span>
+      </h2>
       <div class="section-body">
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 1</span>
-          <p><strong>Question:</strong> ഇന്ത്യയുടെ ദേശീയ ഭാഷ ഏതാണ്?</p>
-          <p><strong>Confusing Options:</strong> ഹിന്ദി / ഇംഗ്ലീഷ് / സംസ്കൃതം / ഇല്ല</p>
-          <p><strong>Fact:</strong> ഇന്ത്യയ്ക്ക് <strong>ദേശീയ ഭാഷയില്ല</strong>. ഹിന്ദി <strong>ഔദ്യോഗിക ഭാഷ</strong> മാത്രം (Art 343).</p>
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
         </div>
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 2</span>
-          <p><strong>Question:</strong> 8-ാം ഷെഡ്യൂളിൽ ഇല്ലാത്ത ഭാഷ?</p>
-          <p><strong>Confusing Options:</strong> നേപ്പാളി / സിന്ധി / ഇംഗ്ലീഷ് / കൊങ്കണി</p>
-          <p><strong>Fact:</strong> <strong>ഇംഗ്ലീഷ്</strong>. കൂടാതെ രാജസ്ഥാനി, ഭോജ്പുരി, തുളു.</p>
-        </div>
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 3</span>
-          <p><strong>Question:</strong> പാലി, പ്രാകൃത് എന്നിവ എവിടെയുണ്ട്?</p>
-          <p><strong>Confusing Options:</strong> 8-ാം ഷെഡ്യൂളിൽ / ശ്രേഷ്ഠ ഭാഷകളിൽ / രണ്ടിലും / ഒന്നിലുമില്ല</p>
-          <p><strong>Fact:</strong> <strong>ശ്രേഷ്ഠ ഭാഷകളിൽ മാത്രം</strong> (2024-ൽ ചേർത്തു); 8-ാം ഷെഡ്യൂളിൽ <strong>ഇല്ല</strong>.</p>
-        </div>
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 4</span>
-          <p><strong>Question:</strong> സുപ്രീം കോടതിയുടെ ഭാഷ ഏതാണ്?</p>
-          <p><strong>Confusing Options:</strong> ഹിന്ദി / ഇംഗ്ലീഷ് / സംസ്കൃതം / സംസ്ഥാന ഭാഷ</p>
-          <p><strong>Fact:</strong> <strong>ഇംഗ്ലീഷ്</strong> (Art 348).</p>
-        </div>
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 5</span>
-          <p><strong>Question:</strong> മലയാളത്തിന് ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിച്ച വർഷം?</p>
-          <p><strong>Confusing Options:</strong> 2008 / 2013 / 2014 / 2024</p>
-          <p><strong>Fact:</strong> <strong>2013</strong> (മേയ് 23). 5-ാമത്തെ ശ്രേഷ്ഠ ഭാഷ.</p>
-        </div>
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 6</span>
-          <p><strong>Question:</strong> ഇംഗ്ലീഷിന്റെ ഉപയോഗം അനിശ്ചിതകാലത്തേക്ക് നീട്ടിയത്?</p>
-          <p><strong>Confusing Options:</strong> 1963 നിയമം / 1965 / <strong>1967 ഭേദഗതി</strong> / 1976</p>
-          <p><strong>Fact:</strong> <strong>1967-ലെ ഭേദഗതി</strong>. 1963 നിയമം 1965-ന് ശേഷവും അനുവദിച്ചു.</p>
-        </div>
-        <div class="trap">
-          <span class="box-label">⚠️ Trap 7</span>
-          <p><strong>Question:</strong> Art 351 എന്തിനെക്കുറിച്ചാണ്?</p>
-          <p><strong>Confusing Options:</strong> ഹിന്ദി ഔദ്യോഗിക ഭാഷ / <strong>ഹിന്ദിയുടെ വികസനം</strong> / കോടതി ഭാഷ / സംസ്ഥാന ഭാഷ</p>
-          <p><strong>Fact:</strong> <strong>ഹിന്ദിയുടെ വികസനം</strong> കേന്ദ്രത്തിന്റെ ചുമതല.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- ===== SECTION 13: അധിക വസ്തുതകൾ ===== -->
-    <section class="section" id="sec13">
-      <h2 role="button" tabindex="0" aria-expanded="false">13. അധിക വസ്തുതകൾ</h2>
-      <div class="section-body">
-        <ul>
-          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആദ്യ ഔദ്യോഗിക ഭാഷാ കമ്മീഷൻ:</strong> ബി.ജി. ഖേർ (1955), Art 344(1) പ്രകാരം.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>30 അംഗ പാർലമെന്ററി കമ്മിറ്റി:</strong> ലോക്സഭ 20 + രാജ്യസഭ 10; ആദ്യ അധ്യക്ഷൻ ഗോവിന്ദ് വല്ലഭ് പന്ത് (1957).</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>ഔദ്യോഗിക ഭാഷാ വകുപ്പ്:</strong> ആഭ്യന്തര മന്ത്രാലയത്തിന് (MHA) കീഴിൽ (1975).</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>Art 350A, 350B:</strong> 7-ാം ഭേദഗതി (1956) ചേർത്തു.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ:</strong> 1957-ൽ ആദ്യമായി നിയമിച്ചു.</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>കേരള ഔദ്യോഗിക ഭാഷാ നിയമം:</strong> 1969 (മലയാളം).</li>
-          <li><span class="stars">⭐⭐⭐</span> <strong>മലയാള ദിനം:</strong> നവംബർ 1 (കേരളപ്പിറവി).</li>
-          <li><span class="stars">⭐⭐</span> <strong>ഹിന്ദി ദിവസ്:</strong> സെപ്റ്റംബർ 14; <strong>ലോക ഹിന്ദി ദിനം:</strong> ജനുവരി 10.</li>
-          <li><span class="stars">⭐⭐</span> <strong>Official Language Rules, 1976:</strong> A, B, C മേഖലകൾ; കേരളം C മേഖല.</li>
-          <li><span class="stars">⭐⭐</span> <strong>ത്രിഭാഷാ ഫോർമുല:</strong> കോത്താരി കമ്മീഷൻ (1964–66) ശുപാർശ; 1968 NEP.</li>
-          <li><span class="stars">⭐⭐</span> <strong>ധർ കമ്മീഷൻ (1948):</strong> ഭാഷാടിസ്ഥാനത്തിലുള്ള സംസ്ഥാനങ്ങൾ.</li>
-          <li><span class="stars">⭐⭐</span> <strong>ഫസൽ അലി കമ്മീഷൻ (1955–56):</strong> സംസ്ഥാന പുനഃസംഘടന; 1956 കേരളം രൂപീകരണം.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===== SECTION 14: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
-    <section class="section" id="sec14">
-      <h2 role="button" tabindex="0" aria-expanded="false">14. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
-      <div class="section-body">
         <!-- Q1 -->
         <div class="question-item" data-qindex="0">
           <div class="q-text">1. ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് ദേവനാഗരി ലിപിയിലുള്ള ഹിന്ദിയെ കേന്ദ്ര സർക്കാരിന്റെ ഔദ്യോഗിക ഭാഷയായി അംഗീകരിച്ചിരിക്കുന്നത്?</div>
           <div class="options">
-            <span data-opt="A">A. ആർട്ടിക്കിൾ 340</span>
-            <span data-opt="B">B. ആർട്ടിക്കിൾ 343</span>
-            <span data-opt="C">C. ആർട്ടിക്കിൾ 351</span>
-            <span data-opt="D">D. ആർട്ടിക്കിൾ 370</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ആർട്ടിക്കിൾ 340</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ആർട്ടിക്കിൾ 343</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ആർട്ടിക്കിൾ 351</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ആർട്ടിക്കിൾ 370</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 343</div>
-            <div class="explanation">ഭരണഘടനയുടെ 17-ാം ഭാഗത്തിലെ ആദ്യ ആർട്ടിക്കിൾ. സംഖ്യകൾ അന്താരാഷ്ട്ര രീതിയിൽ.</div>
+            <div class="explanation">ഭരണഘടനയുടെ 17-ാം ഭാഗത്തിലെ ആദ്യ ആർട്ടിക്കിളാണിത്. ഇതനുസരിച്ച് സംഖ്യകൾ അന്താരാഷ്ട്ര രീതിയിലാണ് ഉപയോഗിക്കേണ്ടത്.</div>
           </div>
         </div>
+
         <!-- Q2 -->
         <div class="question-item" data-qindex="1">
-          <div class="q-text">2. ഇന്ത്യൻ ഭരണഘടനയുടെ എട്ടാം ഷെഡ്യൂളിൽ നിലവിൽ എത്ര ഭാഷകളുണ്ട്?</div>
+          <div class="q-text">2. ഇന്ത്യൻ ഭരണഘടനയുടെ എട്ടാം ഷെഡ്യൂളിൽ നിലവിൽ ഔദ്യോഗികമായി അംഗീകരിച്ചിട്ടുള്ള എത്ര ഭാഷകളുണ്ട്?</div>
           <div class="options">
-            <span data-opt="A">A. 14</span>
-            <span data-opt="B">B. 18</span>
-            <span data-opt="C">C. 22</span>
-            <span data-opt="D">D. 24</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 14</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 18</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 22</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 24</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) 22</div>
-            <div class="explanation">1950-ൽ 14; 3 ഭേദഗതികളിലൂടെ 8 കൂടി ചേർത്തു.</div>
+            <div class="explanation">1950-ൽ ഭരണഘടന നിലവിൽ വന്നപ്പോൾ 14 ഭാഷകളാണ് ഉണ്ടായിരുന്നത്. പിന്നീട് 3 ഭേദഗതികളിലൂടെ 8 ഭാഷകൾ കൂടി ചേർത്തു.</div>
           </div>
         </div>
+
         <!-- Q3 -->
         <div class="question-item" data-qindex="2">
-          <div class="q-text">3. എട്ടാം ഷെഡ്യൂളിൽ 'കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി' എന്നീ മൂന്ന് ഭാഷകളെ കൂടി ഉൾപ്പെടുത്തിയ ഭരണഘടനാ ഭേദഗതി?</div>
+          <div class="q-text">3. ഭരണഘടനയുടെ എട്ടാം ഷെഡ്യൂളിൽ 'കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി' (NAMAK) എന്നീ മൂന്ന് ഭാഷകളെ കൂടി ഉൾപ്പെടുത്തിയ ഭരണഘടനാ ഭേദഗതി ഏതാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. 21-ാം ഭേദഗതി</span>
-            <span data-opt="B">B. 71-ാം ഭേദഗതി</span>
-            <span data-opt="C">C. 92-ാം ഭേദഗതി</span>
-            <span data-opt="D">D. 100-ാം ഭേദഗതി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 21-ാം ഭരണഘടനാ ഭേദഗതി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 71-ാം ഭരണഘടനാ ഭേദഗതി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 92-ാം ഭരണഘടനാ ഭേദഗതി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 100-ാം ഭരണഘടനാ ഭേദഗതി</button>
           </div>
           <div class="answer-block">
-            <div class="answer-label">ശരിയുത്തരം: (B) 71-ാം ഭേദഗതി (1992)</div>
-            <div class="explanation">21-ാം: സിന്ധി (1967); 92-ാം: ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി (2003).</div>
+            <div class="answer-label">ശരിയുത്തരം: (B) 71-ാം ഭരണഘടനാ ഭേദഗതി (1992)</div>
+            <div class="explanation">21-ാം ഭേദഗതിയിലൂടെ സിന്ധിയും (1967), 92-ാം ഭേദഗതിയിലൂടെ ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി (2003) എന്നിവയുമാണ് ചേർത്തത്.</div>
           </div>
         </div>
+
         <!-- Q4 -->
         <div class="question-item" data-qindex="3">
-          <div class="q-text">4. എട്ടാം ഷെഡ്യൂളിൽ ഉൾപ്പെടാത്ത ഭാഷ ഏതാണ്?</div>
+          <div class="q-text">4. താഴെ പറയുന്നവയിൽ ഇന്ത്യൻ ഭരണഘടനയുടെ എട്ടാം ഷെഡ്യൂളിൽ ഉൾപ്പെടാത്ത (Not included) ഭാഷ ഏതാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. ഇംഗ്ലീഷ്</span>
-            <span data-opt="B">B. നേപ്പാളി</span>
-            <span data-opt="C">C. സിന്ധി</span>
-            <span data-opt="D">D. കൊങ്കണി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ഇംഗ്ലീഷ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. നേപ്പാളി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സിന്ധി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. കൊങ്കണി</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) ഇംഗ്ലീഷ്</div>
-            <div class="explanation">രാജസ്ഥാനി, ഭോജ്പുരി, തുളു എന്നിവയും ഷെഡ്യൂളിലില്ല.</div>
+            <div class="explanation">പി.എസ്.സി എപ്പോഴും ചോദിക്കുന്ന ഒരു ട്രിക്ക് ചോദ്യമാണിത്. ഇംഗ്ലീഷിന് പുറമെ രാജസ്ഥാനി, ഭോജ്പുരി, തുളു എന്നിവയും ഷെഡ്യൂളിലില്ല.</div>
           </div>
         </div>
+
         <!-- Q5 -->
         <div class="question-item" data-qindex="4">
-          <div class="q-text">5. സുപ്രീം കോടതിയുടെയും ഹൈക്കോടതികളുടെയും നടപടിക്രമങ്ങളുടെ ഭാഷ ഇംഗ്ലീഷ് ആയിരിക്കും എന്ന് നിർദ്ദേശിക്കുന്ന ആർട്ടിക്കിൾ?</div>
+          <div class="q-text">5. പാർലമെന്റ് പ്രത്യേക നിയമം നിർമ്മിക്കുന്നത് വരെ ഇന്ത്യൻ സുപ്രീം കോടതിയുടെയും ഹൈക്കോടതികളുടെയും നടപടിക്രമങ്ങളുടെ ഔദ്യോഗിക ഭാഷ 'ഇംഗ്ലീഷ്' ആയിരിക്കും എന്ന് നിർദ്ദേശിക്കുന്ന ഭരണഘടനാ ആർട്ടിക്കിൾ ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ആർട്ടിക്കിൾ 124</span>
-            <span data-opt="B">B. ആർട്ടിക്കിൾ 343</span>
-            <span data-opt="C">C. ആർട്ടിക്കിൾ 348</span>
-            <span data-opt="D">D. ആർട്ടിക്കിൾ 351</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ആർട്ടിക്കിൾ 124</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ആർട്ടിക്കിൾ 343</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ആർട്ടിക്കിൾ 348</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ആർട്ടിക്കിൾ 351</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) ആർട്ടിക്കിൾ 348</div>
-            <div class="explanation">ബില്ലുകളുടെയും നിയമങ്ങളുടെയും ആധികാരിക പാഠം ഇംഗ്ലീഷ്.</div>
+            <div class="explanation">കേന്ദ്ര-സംസ്ഥാന നിയമസഭകൾ പാസാക്കുന്ന ബില്ലുകളുടെയും നിയമങ്ങളുടെയും ആധികാരിക പാഠം ഇംഗ്ലീഷായിരിക്കണം. സംസ്ഥാനങ്ങൾക്ക് മറ്റൊരു ഭാഷയിൽ പാസാക്കാം, ഇംഗ്ലീഷ് പരിഭാഷ വേണം.</div>
           </div>
         </div>
+
         <!-- Q6 -->
         <div class="question-item" data-qindex="5">
-          <div class="q-text">6. മലയാള ഭാഷയ്ക്ക് ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിച്ച വർഷം?</div>
+          <div class="q-text">6. മലയാള ഭാഷയ്ക്ക് കേന്ദ്ര സർക്കാരിന്റെ 'ശ്രേഷ്ഠ ഭാഷാ പദവി' (Classical Language Status) ലഭിച്ച വർഷം ഏതാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. 2004</span>
-            <span data-opt="B">B. 2008</span>
-            <span data-opt="C">C. 2013</span>
-            <span data-opt="D">D. 2014</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 2004</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 2008</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2013</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 2014</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) 2013</div>
-            <div class="explanation">അഞ്ചാമത്തെ ശ്രേഷ്ഠ ഭാഷ. ആദ്യത്തേത് തമിഴ് (2004).</div>
+            <div class="explanation">ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിക്കുന്ന ഇന്ത്യയിലെ അഞ്ചാമത്തെ ഭാഷയാണ് മലയാളം. ആദ്യത്തേത് തമിഴാണ് (2004).</div>
           </div>
         </div>
+
         <!-- Q7 -->
         <div class="question-item" data-qindex="6">
-          <div class="q-text">7. 2024 ഒക്ടോബറിൽ ശ്രേഷ്ഠ ഭാഷാ പദവി ലഭിച്ച 5 ഭാഷകളുടെ കൂട്ടത്തിൽ ഉൾപ്പെടാത്തത്?</div>
+          <div class="q-text">7. 2024 ഒക്ടോബറിൽ കേന്ദ്ര സർക്കാർ പുതിയതായി 5 ഭാഷകൾക്ക് കൂടി ശ്രേഷ്ഠ ഭാഷാ പദവി നൽകിയിരുന്നു. താഴെ പറയുന്നവയിൽ ആ കൂട്ടത്തിൽ ഉൾപ്പെടാത്ത ഭാഷ ഏതാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. മറാഠി</span>
-            <span data-opt="B">B. ആസാമീസ്</span>
-            <span data-opt="C">C. ബംഗാളി</span>
-            <span data-opt="D">D. ഭോജ്പുരി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. മറാഠി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ആസാമീസ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ബംഗാളി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഭോജ്പുരി</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (D) ഭോജ്പുരി</div>
-            <div class="explanation">പദവി ലഭിച്ചത് മറാഠി, പാലി, പ്രാകൃത്, ആസാമീസ്, ബംഗാളി. ആകെ 11.</div>
+            <div class="explanation">2024-ൽ പദവി ലഭിച്ചത് മറാഠി, പാലി, പ്രാകൃത്, ആസാമീസ്, ബംഗാളി എന്നീ 5 ഭാഷകൾക്കാണ്. ഇതോടെ ഇന്ത്യയിലെ ശ്രേഷ്ഠ ഭാഷകളുടെ എണ്ണം 11 ആയി മാറി.</div>
           </div>
         </div>
+
         <!-- Q8 -->
         <div class="question-item" data-qindex="7">
-          <div class="q-text">8. Statement Question: ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+          <div class="q-text">8. Statement Question: ഔദ്യോഗിക ഭാഷകളുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
             1. ഇന്ത്യൻ ഭരണഘടനയുടെ 17-ാം ഭാഗത്തിലാണ് ഔദ്യോഗിക ഭാഷകളെക്കുറിച്ച് പ്രതിപാദിക്കുന്നത്.<br>
-            2. ആർട്ടിക്കിൾ 343 പ്രകാരം ഹിന്ദി ഇന്ത്യയുടെ 'ദേശീയ ഭാഷ' ആണ്.<br>
-            3. ഹിന്ദിയുടെ വികസനം കേന്ദ്ര സർക്കാരിന്റെ പ്രത്യേക ചുമതലയാണെന്ന് ആർട്ടിക്കിൾ 351 വ്യക്തമാക്കുന്നു.</div>
+            2. ഭരണഘടനയുടെ ആർട്ടിക്കിൾ 343 പ്രകാരം ഇന്ത്യയുടെ 'ദേശീയ ഭാഷയായി' (National Language) ഹിന്ദിയെ അംഗീകരിച്ചിരിക്കുന്നു.<br>
+            3. ഹിന്ദി ഭാഷയുടെ പ്രചാരണവും വികസനവും കേന്ദ്ര സർക്കാരിന്റെ പ്രത്യേക ചുമതലയാണെന്ന് ആർട്ടിക്കിൾ 351 വ്യക്തമാക്കുന്നു.</div>
           <div class="options">
-            <span data-opt="A">A. 1, 2 മാത്രം</span>
-            <span data-opt="B">B. 1, 3 മാത്രം</span>
-            <span data-opt="C">C. 2, 3 മാത്രം</span>
-            <span data-opt="D">D. 1, 2, 3</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1, 2 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</button>
           </div>
           <div class="answer-block">
-            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 മാത്രം</div>
-            <div class="explanation">പ്രസ്താവന 2 തെറ്റ്. ഇന്ത്യയ്ക്ക് ദേശീയ ഭാഷയില്ല; ഹിന്ദി ഒരു ഔദ്യോഗിക ഭാഷ മാത്രം.</div>
+            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 2 തെറ്റാണ്; കാരണം ഭരണഘടന ഇന്ത്യയ്ക്ക് ഒരു 'ദേശീയ ഭാഷ' നൽകുന്നില്ല. ഹിന്ദി ഇന്ത്യയുടെ 'ഔദ്യോഗിക ഭാഷ' (Official Language) മാത്രമാണ്.</div>
           </div>
         </div>
+
         <!-- Q9 -->
         <div class="question-item" data-qindex="8">
           <div class="q-text">9. പ്രാഥമിക ഘട്ടത്തിൽ മാതൃഭാഷയിൽ വിദ്യാഭ്യാസം നൽകണമെന്ന് നിർദ്ദേശിക്കുന്ന ആർട്ടിക്കിൾ?</div>
           <div class="options">
-            <span data-opt="A">A. 350</span>
-            <span data-opt="B">B. 350A</span>
-            <span data-opt="C">C. 350B</span>
-            <span data-opt="D">D. 351</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 350</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 350A</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 350B</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 351</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) 350A</div>
-            <div class="explanation">350 = ഏത് ഭാഷയിലും നിവേദനം; 350B = ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ. 7-ാം ഭേദഗതി (1956).</div>
+            <div class="explanation">350 = ഏത് ഭാഷയിലും നിവേദനം; 350B = ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ. (7-ാം ഭേദഗതി 1956).</div>
           </div>
         </div>
+
         <!-- Q10 -->
         <div class="question-item" data-qindex="9">
-          <div class="q-text">10. ഇന്ത്യയിൽ ഇംഗ്ലീഷിന്റെ ഉപയോഗം അനിശ്ചിതകാലത്തേക്ക് നീട്ടിയ ഭേദഗതി?</div>
+          <div class="q-text">10. ഇന്ത്യയിൽ ഇംഗ്ലീഷിന്റെ ഉപയോഗം അനിശ്ചിതകാലത്തേക്ക് നീട്ടിയ ഭേദഗതി ഏത് വർഷം?</div>
           <div class="options">
-            <span data-opt="A">A. 1963</span>
-            <span data-opt="B">B. 1965</span>
-            <span data-opt="C">C. 1967</span>
-            <span data-opt="D">D. 1976</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1963</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1965</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1967</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1976</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) 1967</div>
             <div class="explanation">1963-ലെ ഔദ്യോഗിക ഭാഷാ നിയമത്തിന്റെ 1967-ലെ ഭേദഗതി.</div>
           </div>
         </div>
+
         <!-- Q11 -->
         <div class="question-item" data-qindex="10">
-          <div class="q-text">11. ശ്രേഷ്ഠ ഭാഷയാണെങ്കിലും 8-ാം ഷെഡ്യൂളിൽ ഇല്ലാത്തത് ഏത്?</div>
+          <div class="q-text">11. താഴെ പറയുന്നവയിൽ ശ്രേഷ്ഠ ഭാഷയാണെങ്കിലും 8-ാം ഷെഡ്യൂളിൽ ഇല്ലാത്തത് ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. സംസ്കൃതം</span>
-            <span data-opt="B">B. പാലി</span>
-            <span data-opt="C">C. ഒഡിയ</span>
-            <span data-opt="D">D. ബംഗാളി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. സംസ്കൃതം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. പാലി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഒഡിയ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ബംഗാളി</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) പാലി</div>
-            <div class="explanation">പാലി, പ്രാകൃത് → ശ്രേഷ്ഠ ഭാഷ, 8-ാം ഷെഡ്യൂളിൽ ഇല്ല. സംസ്കൃതം രണ്ടിലും.</div>
+            <div class="explanation">പാലി, പ്രാകൃത് → ശ്രേഷ്ഠ ഭാഷ, പക്ഷേ 8-ാം ഷെഡ്യൂളിൽ ഇല്ല. സംസ്കൃതം രണ്ടിലുമുണ്ട്.</div>
           </div>
         </div>
+
         <!-- Q12 -->
         <div class="question-item" data-qindex="11">
-          <div class="q-text">12. ഹിന്ദി ദിവസ് ആചരിക്കുന്നത് എന്ന്?</div>
+          <div class="q-text">12. ഹിന്ദി ദിവസ് (Hindi Diwas) ആചരിക്കുന്നത് എന്ന്?</div>
           <div class="options">
-            <span data-opt="A">A. ജനുവരി 10</span>
-            <span data-opt="B">B. സെപ്റ്റംബർ 14</span>
-            <span data-opt="C">C. നവംബർ 1</span>
-            <span data-opt="D">D. ഓഗസ്റ്റ് 15</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ജനുവരി 10</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സെപ്റ്റംബർ 14</button>
+            <button type="button" class="opt-btn" data-opt="C">C. നവംബർ 1</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഓഗസ്റ്റ് 15</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) സെപ്റ്റംബർ 14</div>
             <div class="explanation">1949-ൽ ഹിന്ദിയെ ഔദ്യോഗിക ഭാഷയായി അംഗീകരിച്ചതിന്റെ ഓർമ്മ. ജനുവരി 10 ലോക ഹിന്ദി ദിനം.</div>
           </div>
         </div>
+
         <!-- Q13 -->
         <div class="question-item" data-qindex="12">
           <div class="q-text">13. ഔദ്യോഗിക ഭാഷാ വിഷയങ്ങൾ പരിശോധിക്കുന്ന പാർലമെന്ററി കമ്മിറ്റിയിലെ അംഗസംഖ്യ?</div>
           <div class="options">
-            <span data-opt="A">A. 20</span>
-            <span data-opt="B">B. 30</span>
-            <span data-opt="C">C. 15</span>
-            <span data-opt="D">D. 25</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 20</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 30</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 15</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 25</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) 30</div>
-            <div class="explanation">ലോക്സഭ 20 + രാജ്യസഭ 10 (Art 344(4)).</div>
+            <div class="explanation">ലോക്‌സഭ 20 + രാജ്യസഭ 10 (Art 344(4)).</div>
           </div>
         </div>
+
         <!-- Q14 -->
         <div class="question-item" data-qindex="13">
-          <div class="q-text">14. ശ്രേഷ്ഠ ഭാഷാ പദവി നൽകുന്ന ഇന്ത്യൻ മന്ത്രാലയം?</div>
+          <div class="q-text">14. ശ്രേഷ്ഠ ഭാഷാ പദവി നൽകുന്ന ഇന്ത്യൻ മന്ത്രാലയം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ആഭ്യന്തര മന്ത്രാലയം</span>
-            <span data-opt="B">B. വിദ്യാഭ്യാസ മന്ത്രാലയം</span>
-            <span data-opt="C">C. സാംസ്കാരിക മന്ത്രാലയം</span>
-            <span data-opt="D">D. വിദേശകാര്യ മന്ത്രാലയം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ആഭ്യന്തര മന്ത്രാലയം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. വിദ്യാഭ്യാസ മന്ത്രാലയം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സാംസ്കാരിക മന്ത്രാലയം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വിദേശകാര്യ മന്ത്രാലയം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) സാംസ്കാരിക മന്ത്രാലയം</div>
             <div class="explanation">സാഹിത്യ അക്കാദമിക്ക് കീഴിലെ ഭാഷാ വിദഗ്ധ സമിതിയുടെ ശുപാർശ പ്രകാരം.</div>
           </div>
         </div>
+
         <!-- Q15 -->
         <div class="question-item" data-qindex="14">
           <div class="q-text">15. ഇന്ത്യയിലെ ആദ്യ ഔദ്യോഗിക ഭാഷാ കമ്മീഷന്റെ അധ്യക്ഷൻ?</div>
           <div class="options">
-            <span data-opt="A">A. ബി.ജി. ഖേർ</span>
-            <span data-opt="B">B. കാക്കാ കലേൽക്കർ</span>
-            <span data-opt="C">C. ബി.പി. മണ്ഡൽ</span>
-            <span data-opt="D">D. ഫസൽ അലി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ബി.ജി. ഖേർ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കാക്കാ കലേൽക്കർ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ബി.പി. മണ്ഡൽ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഫസൽ അലി</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) ബി.ജി. ഖേർ (1955)</div>
-            <div class="explanation">Art 344(1). കലേൽക്കർ = ഒന്നാം പിന്നോക്ക കമ്മീഷൻ; മണ്ഡൽ = രണ്ടാം; ഫസൽ അലി = സംസ്ഥാന പുനഃസംഘടന.</div>
+            <div class="explanation">Art 344(1). കലേൽക്കർ = ഒന്നാം പിന്നോക്ക വിഭാഗ കമ്മീഷൻ; മണ്ഡൽ = രണ്ടാം; ഫസൽ അലി = സംസ്ഥാന പുനഃസംഘടനാ കമ്മീഷൻ.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== SECTION 15: ഉത്തര സൂചിക ===== -->
-    <section class="section" id="sec15">
-      <h2 role="button" tabindex="0" aria-expanded="false">15. ഉത്തര സൂചിക (Answer Key)</h2>
+    <!-- ===== SECTION 12: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. ഉത്തര സൂചിക (Answer Key)</span>
+      </h2>
       <div class="section-body">
         <div style="overflow-x: auto;">
           <table style="max-width: 500px; margin: 0 auto; text-align: center;">
@@ -1060,9 +1342,12 @@
       </div>
     </section>
 
-    <!-- ===== SECTION 16: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
-    <section class="section" id="sec16">
-      <h2 role="button" tabindex="0" aria-expanded="false">16. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+    <!-- ===== SECTION 13: Quick Revision ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</span>
+      </h2>
       <div class="section-body">
         <ul class="checklist">
           <li><strong>ഭാഗവും ഷെഡ്യൂളും:</strong> ഭാഗം XVII (17), എട്ടാം ഷെഡ്യൂൾ.</li>
@@ -1070,22 +1355,25 @@
           <li><strong>ആർട്ടിക്കിൾ 348:</strong> സുപ്രീം കോടതി/ഹൈക്കോടതി ഭാഷ ഇംഗ്ലീഷ്.</li>
           <li><strong>ആർട്ടിക്കിൾ 351:</strong> ഹിന്ദിയുടെ വികസനം.</li>
           <li><strong>ഭാഷകളുടെ എണ്ണം:</strong> തുടക്കത്തിൽ 14, ഇപ്പോൾ 22.</li>
-          <li><strong>ഭേദഗതികൾ:</strong> 21-ാം → സിന്ധി (1967); 71-ാം → NAMAK (1992); 92-ാം → BODMAS (2003).</li>
-          <li><strong>ശ്രേഷ്ഠ ഭാഷകൾ:</strong> ആകെ 11. ആദ്യം തമിഴ് (2004). മലയാളം (2013). പുതിയ 5 (2024).</li>
+          <li><strong>ഭേദഗതികൾ:</strong> 21-ാമത് (സിന്ധി), 71-ാമത് (NAMAK), 92-ാമത് (BODMAS).</li>
+          <li><strong>ശ്രേഷ്ഠ ഭാഷകൾ:</strong> ആകെ 11 എണ്ണം. ആദ്യത്തേത് തമിഴ് (2004). മലയാളം (2013). പുതിയ 5 എണ്ണം (മറാഠി, പാലി, പ്രാകൃത്, ആസാമീസ്, ബംഗാളി - 2024).</li>
           <li><strong>344:</strong> ഔദ്യോഗിക ഭാഷാ കമ്മീഷൻ (ആദ്യം 1955, ബി.ജി. ഖേർ) + 30 അംഗ പാർലമെന്ററി കമ്മിറ്റി.</li>
-          <li><strong>350 / 350A / 350B:</strong> നിവേദനം / മാതൃഭാഷാ പഠനം / ഭാഷാ ന്യൂനപക്ഷ ഓഫീസർ (7-ാം ഭേദഗതി 1956).</li>
-          <li><strong>ഇംഗ്ലീഷ്:</strong> 343(2) → 15 വർഷം (1965); 1963 നിയമം; <strong>1967 ഭേദഗതി → അനിശ്ചിതകാലം</strong>.</li>
-          <li><strong>ശ്രേഷ്ഠ ഭാഷ:</strong> ഭരണപരം (സാംസ്കാരിക മന്ത്രാലയം); പാലി/പ്രാകൃത് 8-ാം ഷെഡ്യൂളിൽ ഇല്ല; സംസ്കൃതം രണ്ടിലും.</li>
+          <li><strong>350 / 350A / 350B:</strong> ഏത് ഭാഷയിലും നിവേദനം / പ്രാഥമിക മാതൃഭാഷാ പഠനം / ഭാഷാ ന്യൂനപക്ഷ ഓഫീസർ (7-ാം ഭേദഗതി 1956).</li>
+          <li><strong>ഇംഗ്ലീഷ്:</strong> 343(2) → 15 വർഷം (1965); Official Languages Act 1963; <strong>1967 ഭേദഗതി → അനിശ്ചിതകാലം</strong>.</li>
+          <li><strong>ശ്രേഷ്ഠ ഭാഷ ഭരണപരം</strong> (സാംസ്കാരിക മന്ത്രാലയം); പാലി/പ്രാകൃത് 8-ാം ഷെഡ്യൂളിൽ ഇല്ല; സംസ്കൃതം രണ്ടിലും.</li>
           <li><strong>ഹിന്ദി ദിവസ്:</strong> സെപ്റ്റംബർ 14; <strong>മലയാള ദിനം:</strong> നവംബർ 1.</li>
         </ul>
       </div>
     </section>
 
-    <!-- ===== SECTION 17: ഒരു പേജ് റിവിഷൻ ===== -->
-    <section class="section" id="sec17">
-      <h2 role="button" tabindex="0" aria-expanded="false">17. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+    <!-- ===== SECTION 14: One-Page Revision ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. One-Page Revision Sheet</span>
+      </h2>
       <div class="section-body">
-        <h3>Official Language (Part XVII, Articles 343–351)</h3>
+        <h3>Official Language (Part XVII, Articles 343 - 351)</h3>
         <ul>
           <li><strong>Article 343:</strong> Hindi in Devanagari script is the Official Language of the Union. (India has NO National Language).</li>
           <li><strong>Article 344:</strong> Official Language Commission (1st headed by B.G. Kher, 1955).</li>
@@ -1100,9 +1388,10 @@
         <ul>
           <li>Initially 14 languages. <strong>English is NOT included.</strong></li>
           <li><strong>21st Amendment (1967):</strong> Sindhi.</li>
-          <li><strong>71st Amendment (1992):</strong> Konkani, Manipuri, Nepali.</li>
-          <li><strong>92nd Amendment (2003):</strong> Bodo, Dogri, Maithili, Santhali.</li>
+          <li><strong>71st Amendment (1992):</strong> Konkani, Manipuri, Nepali (NAMAK).</li>
+          <li><strong>92nd Amendment (2003):</strong> Bodo, Dogri, Maithili, Santhali (BODMAS).</li>
           <li><em>Memory Trick: 21 + 71 = 92</em></li>
+          <li>Linked to Arts 344(1) and 351; still 22 languages (as of 2025–26); demands pending for Bhojpuri, Rajasthani, Tulu.</li>
         </ul>
 
         <h3>Classical Languages in India (Total 11 as of Oct 2024)</h3>
@@ -1115,57 +1404,25 @@
       </div>
     </section>
 
-    <!-- ===== SECTION 18: ടോപ്പ് 25 വസ്തുതകൾ ===== -->
-    <section class="section" id="sec18">
-      <h2 role="button" tabindex="0" aria-expanded="false">18. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
-      <div class="section-body">
-        <ol>
-          <li>Part XVII (343–351) ഔദ്യോഗിക ഭാഷകളെക്കുറിച്ച്.</li>
-          <li>Art 343: ദേവനാഗരി ലിപിയിലുള്ള ഹിന്ദി യൂണിയന്റെ ഔദ്യോഗിക ഭാഷ.</li>
-          <li>Art 344: ഔദ്യോഗിക ഭാഷാ കമ്മീഷൻ (ആദ്യം 1955, ബി.ജി. ഖേർ).</li>
-          <li>Art 348: കോടതികളുടെ ഭാഷ ഇംഗ്ലീഷ്.</li>
-          <li>Art 351: ഹിന്ദിയുടെ വികസനം.</li>
-          <li>Art 350: ഏത് ഭാഷയിലും നിവേദനം.</li>
-          <li>Art 350A: മാതൃഭാഷയിൽ പ്രാഥമിക വിദ്യാഭ്യാസം.</li>
-          <li>Art 350B: ഭാഷാ ന്യൂനപക്ഷ കമ്മീഷണർ (7-ാം ഭേദഗതി 1956).</li>
-          <li>8-ാം ഷെഡ്യൂൾ: ആദ്യം 14, ഇപ്പോൾ 22.</li>
-          <li>21-ാം ഭേദഗതി (1967): സിന്ധി.</li>
-          <li>71-ാം ഭേദഗതി (1992): NAMAK — കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി.</li>
-          <li>92-ാം ഭേദഗതി (2003): BODMAS — ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി.</li>
-          <li>ഇംഗ്ലീഷ് 8-ാം ഷെഡ്യൂളിൽ ഇല്ല.</li>
-          <li>ഇന്ത്യയ്ക്ക് ദേശീയ ഭാഷയില്ല; ഹിന്ദി ഔദ്യോഗിക ഭാഷ മാത്രം.</li>
-          <li>ശ്രേഷ്ഠ ഭാഷകൾ: ആകെ 11.</li>
-          <li>ആദ്യ ശ്രേഷ്ഠ ഭാഷ: തമിഴ് (2004).</li>
-          <li>മലയാളം: 5-ാമത്തെ ശ്രേഷ്ഠ ഭാഷ (2013).</li>
-          <li>2024 ഒക്ടോബറിൽ 5 പുതിയ ശ്രേഷ്ഠ ഭാഷകൾ: മറാഠി, പാലി, പ്രാകൃത്, ആസാമീസ്, ബംഗാളി.</li>
-          <li>ശ്രേഷ്ഠ ഭാഷാ പദവി നൽകുന്നത്: സാംസ്കാരിക മന്ത്രാലയം.</li>
-          <li>പാലി, പ്രാകൃത്: ശ്രേഷ്ഠ ഭാഷ, 8-ാം ഷെഡ്യൂളിൽ ഇല്ല.</li>
-          <li>സംസ്കൃതം: രണ്ടിലും ഉണ്ട്.</li>
-          <li>1963 നിയമം → 1965-ന് ശേഷവും ഇംഗ്ലീഷ്; 1967 ഭേദഗതി → അനിശ്ചിതകാലം.</li>
-          <li>ഹിന്ദി ദിവസ്: സെപ്റ്റംബർ 14; ലോക ഹിന്ദി ദിനം: ജനുവരി 10.</li>
-          <li>മലയാളം: കേരള ഔദ്യോഗിക ഭാഷ (1969); മലയാള ദിനം നവംബർ 1.</li>
-          <li>30 അംഗ പാർലമെന്ററി കമ്മിറ്റി (ലോക്സഭ 20 + രാജ്യസഭ 10).</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ===== SECTION 19: ഉപസംഹാരം ===== -->
-    <section class="section" id="sec19">
-      <h2 role="button" tabindex="0" aria-expanded="false">19. ഉപസംഹാരം</h2>
+    <!-- ===== SECTION 15: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. ഉപസംഹാരം</span>
+      </h2>
       <div class="section-body">
         <h3>പ്രധാന Takeaways</h3>
         <ul>
-          <li>Part XVII (343–351) ഔദ്യോഗിക ഭാഷകളെക്കുറിച്ച്; 8-ാം ഷെഡ്യൂളിൽ 22 ഭാഷകൾ.</li>
-          <li>ഇന്ത്യയ്ക്ക് ദേശീയ ഭാഷയില്ല; ഹിന്ദി ഒരു ഔദ്യോഗിക ഭാഷ മാത്രം (Art 343).</li>
-          <li>സുപ്രീം കോടതി/ഹൈക്കോടതികളുടെ ഭാഷ ഇംഗ്ലീഷ് (Art 348).</li>
-          <li>ഭേദഗതികൾ: 21 (സിന്ധി 1967), 71 (NAMAK 1992), 92 (BODMAS 2003).</li>
-          <li>ശ്രേഷ്ഠ ഭാഷകൾ: 11 (2024 ഒക്ടോബറിൽ 5 കൂടി ചേർത്തു); മലയാളം 2013-ൽ.</li>
-          <li>ശ്രേഷ്ഠ പദവി ഭരണപരം (സാംസ്കാരിക മന്ത്രാലയം); പാലി/പ്രാകൃത് 8-ാം ഷെഡ്യൂളിൽ ഇല്ല.</li>
+          <li>ഭാഗം XVII (343–351) ഔദ്യോഗിക ഭാഷകളെക്കുറിച്ച് പ്രതിപാദിക്കുന്നു.</li>
+          <li>ആർട്ടിക്കിൾ 343 = ഹിന്ദി (ദേവനാഗരി) ഔദ്യോഗിക ഭാഷ; ആർട്ടിക്കിൾ 348 = കോടതി ഭാഷ ഇംഗ്ലീഷ്; ആർട്ടിക്കിൾ 351 = ഹിന്ദി വികസനം.</li>
+          <li>8-ാം ഷെഡ്യൂളിൽ 22 ഭാഷകൾ; ഇംഗ്ലീഷ് ഇല്ല.</li>
+          <li>ശ്രേഷ്ഠ ഭാഷകൾ 11 എണ്ണം; മലയാളം 2013-ൽ പദവി ലഭിച്ചു.</li>
+          <li>ഇന്ത്യയ്ക്ക് ഒരു ദേശീയ ഭാഷയില്ല; ഹിന്ദി + ഇംഗ്ലീഷ് എന്നിവ ഔദ്യോഗിക ഭാഷകൾ.</li>
           <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 2–3 ചോദ്യങ്ങൾ ഉറപ്പായും പ്രതീക്ഷിക്കാം.</li>
         </ul>
         <div class="important">
           <span class="box-label">📝 Teacher's Note</span>
-          <p>Art 343, 348, 351 എന്നിവയും 8-ാം ഷെഡ്യൂൾ ഭേദഗതികളും (21, 71, 92) കൃത്യമായി ഓർക്കുക. 2024-ലെ ശ്രേഷ്ഠ ഭാഷകളുടെ പുതിയ പട്ടിക PSC-യുടെ പ്രിയപ്പെട്ട ചോദ്യമാണ്. അടുത്ത അധ്യായത്തിൽ കേന്ദ്ര-സംസ്ഥാന ബന്ധങ്ങൾ ചർച്ച ചെയ്യും. ഈ ഭാഗം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+          <p>ആർട്ടിക്കിൾ 343, 348, 351 എന്നിവ കൃത്യമായി ഓർക്കുക. 8-ാം ഷെഡ്യൂൾ ഭേദഗതികൾ (21, 71, 92) ഉം ശ്രേഷ്ഠ ഭാഷകളുടെ വർഷങ്ങളും PSC-യുടെ പ്രിയപ്പെട്ട കെണികളാണ്. പാലി/പ്രാകൃത് 8-ാം ഷെഡ്യൂളിൽ ഇല്ല എന്നതും, ഇന്ത്യയ്ക്ക് ദേശീയ ഭാഷയില്ല എന്നതും ട്രാപ്പ് ചോദ്യങ്ങളിൽ വരും. അടുത്ത അധ്യായം അയച്ചോളൂ.</p>
         </div>
       </div>
     </section>
@@ -1173,6 +1430,7 @@
   </main>
 </div>
 
+<!-- ========== JAVASCRIPT ========== -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
@@ -1180,6 +1438,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var sections = Array.from(document.querySelectorAll('.section'));
   var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
 
+  // Insert toggle icons
   sections.forEach(function (sec) {
     var h2 = sec.querySelector('h2');
     if (h2 && !h2.querySelector('.toggle-icon')) {
@@ -1190,43 +1449,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  function openOnly(sec) {
-    sections.forEach(function (s) {
-      if (s === sec) {
-        s.classList.remove('collapsed');
-        var h2 = s.querySelector('h2');
-        if (h2) h2.setAttribute('aria-expanded', 'true');
-      } else {
-        s.classList.add('collapsed');
-        var h2b = s.querySelector('h2');
-        if (h2b) h2b.setAttribute('aria-expanded', 'false');
-      }
-    });
+  // Keep multiple sections open — no auto-collapse
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
-  function toggleSection(sec) {
-    if (sec.classList.contains('collapsed')) {
-      openOnly(sec);
-    } else {
-      sec.classList.add('collapsed');
-      var h2 = sec.querySelector('h2');
-      if (h2) h2.setAttribute('aria-expanded', 'false');
-    }
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
   }
 
   sections.forEach(function (sec) {
     var h2 = sec.querySelector('h2');
     if (!h2) return;
-    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
     h2.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
         e.preventDefault();
         toggleSection(sec);
       }
     });
   });
 
-  if (sections.length > 0) { openOnly(sections[0]); }
+  // Open first section by default
+  if (sections.length > 0) {
+    openOnly(sections[0]);
+  }
 
   var expandAllBtn = document.getElementById('expandAll');
   var collapseAllBtn = document.getElementById('collapseAll');
@@ -1251,6 +1509,107 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // ===== THEME TOGGLE =====
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme128');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme128', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ===== ACTIVE RECALL (BLUR/REVEAL) =====
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // ===== LIVE SEARCH =====
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+    });
+  }
+
+  // ===== SECTION PROGRESS CHECKBOX =====
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone128_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone128_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone128_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
   tocLinks.forEach(function (link) {
     link.addEventListener('click', function (e) {
       e.preventDefault();
@@ -1258,9 +1617,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!targetId) return;
       var target = document.querySelector(targetId);
       if (!target) return;
+
       openOnly(target);
+
       tocLinks.forEach(function (l) { l.classList.remove('active'); });
       link.classList.add('active');
+
       var headerOffset = 20;
       var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
       window.scrollTo({ top: targetPosition, behavior: 'smooth' });
@@ -1268,7 +1630,11 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   if ('IntersectionObserver' in window) {
-    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observerOptions = {
+      rootMargin: '-15% 0px -75% 0px',
+      threshold: 0
+    };
+
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -1283,20 +1649,52 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     }, observerOptions);
-    sections.forEach(function (sec) { observer.observe(sec); });
+
+    sections.forEach(function (sec) {
+      observer.observe(sec);
+    });
   }
 
+  // ===== MCQ SYSTEM =====
   var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaOfficialLanguage128Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      var key = quizPrefix + qIndex;
+      try {
+        var stored = localStorage.getItem(key);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
 
   questionItems.forEach(function (item) {
     var qIndex = item.getAttribute('data-qindex');
     if (qIndex === null) return;
-    var storageKey = 'keralaOfficialLang128Q_' + qIndex;
+    var storageKey = quizPrefix + qIndex;
 
     var answerBlock = item.querySelector('.answer-block');
     var answerLabel = item.querySelector('.answer-label');
     var optionsContainer = item.querySelector('.options');
-    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
 
     var correctLetter = null;
     if (answerLabel) {
@@ -1306,7 +1704,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (answerBlock) answerBlock.style.display = 'none';
 
-    var state = { selected: null, saved: false, marked: false, locked: false };
+    var state = {
+      selected: null,
+      saved: false,
+      marked: false,
+      locked: false,
+      correctLetter: correctLetter
+    };
 
     try {
       var stored = localStorage.getItem(storageKey);
@@ -1317,6 +1721,7 @@ document.addEventListener('DOMContentLoaded', function () {
           state.saved = !!parsed.saved;
           state.marked = !!parsed.marked;
           state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
         }
       }
     } catch (e) {}
@@ -1335,6 +1740,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (opt === correctLetter) span.classList.add('correct');
         if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
       });
+      if (answerBlock) answerBlock.style.display = 'block';
     }
 
     var controls = document.createElement('div');
@@ -1381,22 +1787,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function persist() {
-      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+      } catch (e) {}
     }
 
     function showResult() {
       if (!state.selected || !correctLetter) return;
+
       optionSpans.forEach(function (span) {
         span.classList.remove('correct', 'wrong');
         var opt = span.getAttribute('data-opt');
         if (opt === correctLetter) span.classList.add('correct');
         if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
       });
+
       if (state.selected === correctLetter) {
         statusSpan.textContent = '✅ Correct';
       } else {
         statusSpan.textContent = '❌ Wrong';
       }
+      if (answerBlock) answerBlock.style.display = 'block';
     }
 
     function applyLock(locked) {
@@ -1405,6 +1816,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (locked) span.classList.add('locked');
         else span.classList.remove('locked');
       });
+
       if (locked) {
         lockBtn.textContent = '🔓 Unlock';
         statusSpan.textContent = 'Locked';
@@ -1420,13 +1832,18 @@ document.addEventListener('DOMContentLoaded', function () {
     optionSpans.forEach(function (span) {
       span.addEventListener('click', function () {
         if (state.locked) return;
+
         optionSpans.forEach(function (s) {
           s.classList.remove('selected', 'correct', 'wrong');
         });
+
         span.classList.add('selected');
         state.selected = span.getAttribute('data-opt');
         state.saved = false;
+
         statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+
         persist();
       });
     });
@@ -1437,10 +1854,12 @@ document.addEventListener('DOMContentLoaded', function () {
         statusSpan.textContent = 'Select an option';
         return;
       }
+
       state.saved = true;
       persist();
       showResult();
       statusSpan.textContent += ' — Saved';
+      updateScoreboard();
     });
 
     showBtn.addEventListener('click', function () {
@@ -1463,6 +1882,24 @@ document.addEventListener('DOMContentLoaded', function () {
       applyLock(!state.locked);
     });
   });
+
+  updateScoreboard();
+
+  // ===== RESET ALL QUIZ ANSWERS =====
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
 });
 </script>
 

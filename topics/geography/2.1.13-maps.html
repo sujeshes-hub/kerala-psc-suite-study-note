@@ -1,106 +1,1932 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2.1.13 Maps - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂപടങ്ങൾ | അധ്യായം 142</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    /* ========== DARK & SEPIA THEMES ========== */
+    [data-theme="dark"] {
+      --bg: #1e1e2e;
+      --light-bg: #11111b;
+      --border: #313244;
+      --text: #cdd6f4;
+      --text-light: #a6adc8;
+      --primary: #cba6f7;
+      --primary-light: #b4befe;
+      --important-bg: #2c2518;
+      --important-border: #f9a825;
+      --memory-bg: #192b22;
+      --memory-border: #43a047;
+      --trap-bg: #2d1920;
+      --trap-border: #c62828;
+      --correction-bg: #2c2018;
+      --correction-border: #ef6c00;
+      --added-bg: #182432;
+      --added-border: #1976d2;
+      --revision-bg: #22182b;
+      --revision-border: #8e24aa;
+      --table-head: #6a1b9a;
+      --table-alt: #181825;
+    }
+
+    [data-theme="sepia"] {
+      --bg: #fdf6e3;
+      --light-bg: #eee8d5;
+      --border: #d3cbb7;
+      --text: #433422;
+      --text-light: #65533c;
+      --primary: #7b4b1e;
+      --primary-light: #9c6b3a;
+      --important-bg: #f7efd8;
+      --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0;
+      --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0;
+      --revision-bg: #ece0ee;
+      --table-head: #7b4b1e;
+      --table-alt: #f2ead4;
+    }
+
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn {
+      background: #181825;
+      color: var(--text);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-wrap {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--light-bg);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    /* ========== TOP UTILITY BAR ========== */
+    .utility-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--light-bg);
+      padding: 10px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn {
+      padding: 7px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+
+    /* ========== ACTIVE RECALL (BLUR MODE) ========== */
+    body.recall-mode strong {
+      filter: blur(5px);
+      background: rgba(106, 27, 154, 0.15);
+      border-radius: 4px;
+      padding: 0 4px;
+      cursor: pointer;
+      transition: filter 0.2s ease;
+      user-select: none;
+    }
+    body.recall-mode strong:hover,
+    body.recall-mode strong.revealed {
+      filter: blur(0);
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+      gap: 10px;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .section-title-text { flex: 1; }
+    .section-done-check {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--secondary);
+      flex-shrink: 0;
+    }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    /* ========== LISTS ========== */
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+
+    /* ========== QUIZ DASHBOARD ========== */
+    .quiz-dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--light-bg);
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      border: 2px solid var(--primary);
+      position: sticky;
+      top: 10px;
+      z-index: 50;
+    }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options .opt-btn {
+      display: block;
+      padding: 8px 12px;
+      background: var(--bg);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-family: inherit;
+      text-align: left;
+      width: 100%;
+    }
+
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">2.1.13 Maps</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. കാർട്ടോഗ്രഫി</a></li>
+      <li><a href="#sec4">4. തോത് അടിസ്ഥാനം</a></li>
+      <li><a href="#sec5">5. ഉപയോഗ അടിസ്ഥാനം</a></li>
+      <li><a href="#sec6">6. ഭൂപട ഘടകങ്ങൾ</a></li>
+      <li><a href="#sec7">7. തോത് രേഖപ്പെടുത്തൽ</a></li>
+      <li><a href="#sec8">8. ഭൂപട നിറങ്ങൾ</a></li>
+      <li><a href="#sec9">9. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec10">10. PSC വിശകലനം</a></li>
+      <li><a href="#sec11">11. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec12">12. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec13">13. Mnemonics</a></li>
+      <li><a href="#sec14">14. Question Trend</a></li>
+      <li><a href="#sec15">15. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec16">16. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec17">17. Quick Revision</a></li>
+      <li><a href="#sec18">18. One-Page Revision</a></li>
+      <li><a href="#sec19">19. ഉപസംഹാരം</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">അടിസ്ഥാന ഭൂമിശാസ്ത്രം | അധ്യായം 142</div>
+      <h1>അടിസ്ഥാന ഭൂമിശാസ്ത്രം – ഭൂപടങ്ങൾ</h1>
+      <div class="subtitle">Maps | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- UTILITY BAR -->
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 കുറിപ്പുകളിൽ തിരയുക (ഉദാ: കാഡസ്ട്രൽ, കോണ്ടൂർ, ഡെറാഡൂൺ)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ് (അനാക്സിമാണ്ടർ), വില്ലേജ് ഓഫീസിലെ ഭൂപടം (കാഡസ്ട്രൽ), സമോന്നത രേഖകൾ (Contour lines), സർവ്വേ ഓഫ് ഇന്ത്യ ആസ്ഥാനം (ഡെറാഡൂൺ)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ആധുനിക കാർട്ടോഗ്രഫിയുടെ പിതാവ് (മെർക്കാറ്റർ), ഭിന്നക തോത് (RF - യൂണിറ്റില്ല), ജലാശയങ്ങളുടെ നിറം (നീല), ആദ്യ ആധുനിക അറ്റ്ലസ് (ഓർട്ടിയിലസ്, 1570)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ടോപ്പോഷീറ്റുകൾ (സർവ്വേ ഓഫ് ഇന്ത്യ), ചെറുകിട ഭൂപടങ്ങൾ (അറ്റ്ലസ്), തോത് രേഖപ്പെടുത്തൽ രീതികൾ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ആദ്യ സർവ്വേയർ ജനറൽ (കോളിൻ മക്കെൻസി), GTS (ലാംബ്ടൺ), NATMO ആസ്ഥാനം (കൊൽക്കത്ത)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ഇമാഗോ മുണ്ടി, ടോളമിയുടെ ജ്യോഗ്രഫിയ, ഇറാത്തോസ്തനീസ്</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>കാർട്ടോഗ്രഫി:</strong> ഭൂപട നിർമ്മാണ ശാസ്ത്രം</li>
+            <li><strong>വൻതോത്:</strong> ചെറിയ സ്ഥലം, കൂടുതൽ വിവരം</li>
+            <li><strong>ചെറുകിട:</strong> വലിയ സ്ഥലം, കുറവ് വിവരം</li>
+            <li><strong>നിറങ്ങൾ:</strong> നീല=ജലം, പച്ച=സസ്യജാലം, മഞ്ഞ=കൃഷി, ബ്രൗൺ=പർവ്വതം, ചുവപ്പ്=റോഡ്/വീട്, കറുപ്പ്=റെയിൽവേ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഗോളാകൃതിയിലുള്ള ഭൂമിയെയോ അതിലെ ഒരു പ്രദേശത്തെയോ ഒരു പരന്ന പ്രതലത്തിൽ (2D) അളവുകൾക്ക് അനുസൃതമായി രേഖപ്പെടുത്തുന്ന 'ഭൂപടങ്ങളെ' (Maps) കുറിച്ചാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്. കാർട്ടോഗ്രഫി, കാഡസ്ട്രൽ ഭൂപടങ്ങൾ, ധരാതലീയ ഭൂപടങ്ങൾ (Toposheets), ഭൂപടങ്ങളിലെ നിറങ്ങൾ, സർവ്വേ ഓഫ് ഇന്ത്യ എന്നിവയാണ് പ്രധാന പാഠഭാഗങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഭൂമിശാസ്ത്ര പഠനത്തിന്റെ അടിസ്ഥാന ഉപകരണമാണ് ഭൂപടങ്ങൾ. ഒരു പ്രദേശത്തിന്റെ അതിർത്തികൾ, ഭൂപ്രകൃതി, കാലാവസ്ഥ എന്നിവ മനസ്സിലാക്കാൻ ഇവ അത്യന്താപേക്ഷിതമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> വില്ലേജ് ഓഫീസുകളിൽ ഉപയോഗിക്കുന്ന ഭൂപടം ഏത് (കാഡസ്ട്രൽ), ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ് (അനാക്സിമാണ്ടർ), സർവ്വേ ഓഫ് ഇന്ത്യയുടെ ആസ്ഥാനം (ഡെറാഡൂൺ), സമോന്നത രേഖകൾ (Contour lines) എന്നിവ പി.എസ്.സി എൽ.ഡി.സി, വി.ഇ.ഒ പരീക്ഷകളിൽ എവർഗ്രീൻ ആയി ചോദിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഭൂപടവും ഗ്ലോബും:</strong> ഗ്ലോബ് ഭൂമിയുടെ യഥാർത്ഥ ആകൃതിയുടെ ചെറു മാതൃകയാണ്, അതിൽ ദിശയ്ക്കും വിസ്തീർണ്ണത്തിനും വികലത (distortion) ഉണ്ടാകില്ല. പരന്ന ഭൂപടത്തിൽ ഗോളാകൃതിയെ അതേപടി കാണിക്കാനാവില്ല, അതുകൊണ്ടാണ് പ്രൊജക്ഷനുകൾ (Projections) വേണ്ടി വരുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഭൂപടത്തിന്റെ പ്രയോജനങ്ങൾ:</strong> ദൂരം, ദിശ, വിസ്തീർണ്ണം, ഉയരം, വിതരണം (distribution) എന്നിവ മനസ്സിലാക്കാം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. ചരിത്ര പശ്ചാത്തലം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ആദ്യകാലത്ത് മനുഷ്യർ മൃഗങ്ങളുടെ തോലിലും മരപ്പട്ടകളിലുമാണ് ഭൂപടങ്ങൾ വരച്ചിരുന്നത്. ലോകത്തിലെ ഏറ്റവും പഴയ ഭൂപടം കണ്ടെത്തിയത് മെസപ്പൊട്ടേമിയയിൽ (ഇന്നത്തെ ഇറാഖ്) നിന്നുമാണ് (കളിമൺ ഫലകങ്ങളിൽ).
+            <ul>
+              <li>ബാബിലോണിയക്കാരുടെ കളിമൺ ഫലക ലോകഭൂപടം (ഏകദേശം BC 600) 'ഇമാഗോ മുണ്ടി' (Imago Mundi) എന്നറിയപ്പെടുന്നു.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ശാസ്ത്രീയമായി ഭൂപടങ്ങൾ നിർമ്മിക്കാൻ തുടങ്ങിയത് പുരാതന ഗ്രീക്കുകാരാണ്. അക്ഷാംശങ്ങളും രേഖാംശങ്ങളും ഉപയോഗിച്ച് ലോകഭൂപടം ആദ്യമായി നിർമ്മിക്കാൻ ശ്രമിച്ചത് <strong>ക്ലോഡിയസ് ടോളമി (Ptolemy)</strong> ആണ്. ആധുനിക കാലത്ത് ലോക ഭൂപടനിർമ്മാണത്തിൽ വിപ്ലവം സൃഷ്ടിച്ചത് <strong>ജെറാർഡസ് മെർക്കാറ്റർ (Gerardus Mercator)</strong> ആണ്. നാവികർക്ക് ദിശ മനസ്സിലാക്കാൻ ഏറ്റവും അനുയോജ്യമായ 'മെർക്കാറ്റർ പ്രൊജക്ഷൻ' ഇദ്ദേഹമാണ് വികസിപ്പിച്ചത്.
+            <ul>
+              <li>ടോളമിയുടെ പ്രശസ്ത ഗ്രന്ഥം <strong>ജ്യോഗ്രഫിയ (Geographia)</strong>.</li>
+              <li>മെർക്കാറ്റർ പ്രൊജക്ഷൻ പ്രസിദ്ധീകരിച്ചത് <strong>1569</strong>-ൽ. ഇത് ഒരു സിലിണ്ടറിക്കൽ (Cylindrical) പ്രൊജക്ഷൻ ആണ്. ദിശകൾ കൃത്യമാണെങ്കിലും ധ്രുവങ്ങളോട് അടുക്കുമ്പോൾ വിസ്തീർണ്ണം പെരുപ്പിച്ച് കാണിക്കും (ഉദാ: ഗ്രീൻലാൻഡ് യഥാർത്ഥത്തേക്കാൾ വലുതായി തോന്നും).</li>
+              <li>ഭൂമിയുടെ ചുറ്റളവ് ആദ്യമായി കണക്കാക്കിയ <strong>ഇറാത്തോസ്തനീസ്</strong> ഭൂമിശാസ്ത്രത്തിന്റെ പിതാവ് എന്ന് അറിയപ്പെടുന്നു.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: കാർട്ടോഗ്രഫി ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. ഭൂപട ശാസ്ത്രം (Cartography)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിർവ്വചനം:</strong> ഭൂപടങ്ങൾ നിർമ്മിക്കുന്ന ശാസ്ത്ര ശാഖയാണ് <strong>കാർട്ടോഗ്രഫി (Cartography)</strong>. ഭൂപടങ്ങൾ നിർമ്മിക്കുന്ന ആളെ കാർട്ടോഗ്രാഫർ (Cartographer) എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പിതാക്കന്മാർ:</strong>
+            <ul>
+              <li>ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ്: <strong>അനാക്സിമാണ്ടർ (Anaximander)</strong>.</li>
+              <li>ആധുനിക ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ്: <strong>ജെറാർഡസ് മെർക്കാറ്റർ (Gerardus Mercator)</strong>.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അറ്റ്ലസ് (Atlas):</strong> ഭൂപടങ്ങളുടെ സമാഹാരത്തെ (പുസ്തകത്തെ) 'അറ്റ്ലസ്' എന്ന് വിളിക്കുന്നു.
+            <ul>
+              <li><strong>തിരുത്ത്:</strong> എബ്രഹാം ഓർട്ടിയിലസ് (Abraham Ortelius) <strong>1570</strong>-ൽ പ്രസിദ്ധീകരിച്ച <em>Theatrum Orbis Terrarum</em> ആണ് ആദ്യത്തെ ആധുനിക അറ്റ്ലസ്. (1595 തെറ്റ്)</li>
+              <li>'അറ്റ്ലസ്' എന്ന പേര് ആദ്യമായി ഉപയോഗിച്ചത് <strong>മെർക്കാറ്റർ</strong>. അദ്ദേഹത്തിന്റെ അറ്റ്ലസ് മരണശേഷം <strong>1595</strong>-ൽ പ്രസിദ്ധീകരിച്ചു.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>A</strong>naximander = <strong>A</strong>ncient (പുരാതനം, ഗ്രീക്ക്); <strong>M</strong>ercator = <strong>M</strong>odern."</p>
+          <p>"ഓർട്ടിയിലസ് <strong>70</strong> (1570, ആദ്യ അറ്റ്ലസ്); മെർക്കാറ്റർ <strong>95</strong> (1595, 'Atlas' എന്ന പേര്)."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: തോത് അടിസ്ഥാനം ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. തോത് അടിസ്ഥാനമാക്കിയുള്ള ഭൂപടങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <p>ഭൂപടത്തിൽ രണ്ട് സ്ഥലങ്ങൾ തമ്മിലുള്ള അകലവും, ഭൂമിയിൽ അവ തമ്മിലുള്ള യഥാർത്ഥ അകലവും തമ്മിലുള്ള അനുപാതമാണ് <strong>തോത് (Scale)</strong>. തോതിന്റെ അടിസ്ഥാനത്തിൽ ഭൂപടങ്ങളെ രണ്ടാക്കി തിരിക്കാം:</p>
+
+        <h3>1. വൻതോത് ഭൂപടങ്ങൾ (Large Scale Maps)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ചെറിയ പ്രദേശങ്ങളെ (Small areas) വളരെ വിശദമായി (Detailed) കാണിക്കാൻ ഉപയോഗിക്കുന്നവയാണ് വൻതോത് ഭൂപടങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കാഡസ്ട്രൽ ഭൂപടങ്ങൾ (Cadastral Maps):</strong> ഭൂമിയുടെയും പറമ്പുകളുടെയും കൃത്യമായ അതിരുകൾ, കെട്ടിടങ്ങൾ എന്നിവ രേഖപ്പെടുത്തിയിട്ടുള്ള ഭൂപടം.
+            <ul>
+              <li><strong>തിരുത്ത്:</strong> ഭൂമിയുടെ രജിസ്റ്റർ / കണക്കെടുപ്പ് എന്നർത്ഥമുള്ള 'കാഡസ്ട്രേ' (Cadastre) എന്ന ഫ്രഞ്ച് പദത്തിൽ നിന്നാണ് ഈ പേര് വന്നത്.</li>
+              <li>വില്ലേജ് ഓഫീസുകളിലും പഞ്ചായത്തുകളിലും ഉപയോഗിക്കുന്നത് ഇതാണ്. നികുതി പിരിക്കാനും അതിർത്തി നിർണ്ണയിക്കാനും ഉപയോഗിക്കുന്നു.</li>
+              <li>കേരളത്തിൽ റവന്യൂ വകുപ്പിന് കീഴിലുള്ള സർവ്വേ ആൻഡ് ലാൻഡ് റെക്കോർഡ്സ് വകുപ്പാണ് ഇവ തയ്യാറാക്കുന്നത്.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ധരാതലീയ ഭൂപടങ്ങൾ അഥവാ ടോപ്പോഷീറ്റുകൾ (Topographical Maps):</strong> പ്രകൃതിദത്തമായ (മലകൾ, നദികൾ) വിവരങ്ങളും മനുഷ്യനിർമ്മിതമായ (റോഡുകൾ, റെയിൽവേ) വിവരങ്ങളും വിശദമായി നൽകുന്ന ഭൂപടങ്ങളാണിവ. ഇന്ത്യയിൽ ഇവ തയ്യാറാക്കുന്നത് 'സർവ്വേ ഓഫ് ഇന്ത്യ' (Survey of India) ആണ്.
+            <ul>
+              <li>സർവ്വേ ഓഫ് ഇന്ത്യയുടെ പ്രധാന ടോപ്പോഷീറ്റ് ശ്രേണികൾ 1:2,50,000, 1:50,000, 1:25,000 എന്നീ തോതുകളിലാണ്.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>2. ചെറുകിട ഭൂപടങ്ങൾ (Small Scale Maps)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> വലിയ പ്രദേശങ്ങളെ (വൻകരകൾ, രാജ്യങ്ങൾ) വളരെ കുറച്ച് വിവരങ്ങൾ മാത്രം നൽകി കാണിക്കാൻ ഉപയോഗിക്കുന്നവയാണ് ചെറുകിട ഭൂപടങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <em>ഉദാഹരണം:</em> അറ്റ്ലസ് ഭൂപടങ്ങൾ (Atlas maps), ചുമർ ഭൂപടങ്ങൾ (Wall maps).</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ തോത് തിരിച്ചറിയാനുള്ള എളുപ്പവഴി</span>
+          <p>RF-ലെ ഭിന്നസംഖ്യ വലുതാണെങ്കിൽ വൻതോത്. ഉദാ: 1/50,000 (വൻതോത്), 1/10,00,000 (ചെറുകിട), കാരണം 1/50,000 > 1/10,00,000.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>വൻ = ചെറിയ സ്ഥലം, വലിയ വിവരം; ചെറുകിട = വലിയ സ്ഥലം, കുറച്ച് വിവരം.</strong> (പേരും സ്ഥലവും നേർവിപരീതം!)</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 വൻതോത് vs ചെറുകിട ഭൂപടങ്ങൾ</span>
+          <svg viewBox="0 0 700 200" width="100%" height="auto" role="img" aria-label="Large vs Small Scale">
+            <rect x="50" y="40" width="250" height="120" rx="10" fill="#4a148c" opacity="0.85"/>
+            <text x="175" y="30" text-anchor="middle" font-size="14" font-weight="bold" fill="#14202b">വൻതോത് (Large Scale)</text>
+            <text x="175" y="75" text-anchor="middle" font-size="13" fill="#fff">ചെറിയ സ്ഥലം</text>
+            <text x="175" y="105" text-anchor="middle" font-size="13" fill="#ffd54f">വളരെ വിശദമായി</text>
+            <text x="175" y="135" text-anchor="middle" font-size="11" fill="#fff">ഉദാ: കാഡസ്ട്രൽ, ടോപ്പോഷീറ്റ്</text>
+
+            <rect x="400" y="40" width="250" height="120" rx="10" fill="#00695c" opacity="0.85"/>
+            <text x="525" y="30" text-anchor="middle" font-size="14" font-weight="bold" fill="#14202b">ചെറുകിട (Small Scale)</text>
+            <text x="525" y="75" text-anchor="middle" font-size="13" fill="#fff">വലിയ സ്ഥലം</text>
+            <text x="525" y="105" text-anchor="middle" font-size="13" fill="#ffd54f">കുറഞ്ഞ വിവരങ്ങൾ</text>
+            <text x="525" y="135" text-anchor="middle" font-size="11" fill="#fff">ഉദാ: അറ്റ്ലസ്, ചുമർ ഭൂപടം</text>
+          </svg>
+          <div class="viz-caption">📊 തോതും പ്രദേശവും നേർവിപരീതം — ഓർക്കാൻ എളുപ്പം</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: ഉപയോഗ അടിസ്ഥാനം ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. ഉപയോഗത്തിന്റെ അടിസ്ഥാനത്തിലുള്ള ഭൂപടങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഭൗതിക ഭൂപടങ്ങൾ (Physical Maps):</strong> പർവ്വതങ്ങൾ, സമതലങ്ങൾ, നദികൾ, പീഠഭൂമികൾ തുടങ്ങിയ പ്രകൃതിദത്തമായ ഭൂരൂപങ്ങളെ കാണിക്കുന്ന ഭൂപടങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>രാഷ്ട്രീയ ഭൂപടങ്ങൾ (Political Maps):</strong> രാജ്യങ്ങൾ, സംസ്ഥാനങ്ങൾ, ജില്ലകൾ, അവയുടെ അതിർത്തികൾ, പ്രധാന നഗരങ്ങൾ എന്നിവ കാണിക്കുന്ന ഭൂപടങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയാധിഷ്ഠിത ഭൂപടങ്ങൾ (Thematic Maps):</strong> ഏതെങ്കിലും ഒരു പ്രത്യേക വിഷയത്തെ മാത്രം (ഉദാഹരണത്തിന്: കാർഷിക വിളകൾ, മഴയുടെ അളവ്, ജനസാന്ദ്രത, വ്യവസായങ്ങൾ) അടിസ്ഥാനമാക്കി തയ്യാറാക്കുന്ന ഭൂപടങ്ങൾ.
+            <ul>
+              <li>ഇന്ത്യയിൽ തീമാറ്റിക് ഭൂപടങ്ങളും നാഷണൽ അറ്റ്ലസും തയ്യാറാക്കുന്ന സ്ഥാപനം <strong>NATMO (National Atlas and Thematic Mapping Organisation)</strong>, ആസ്ഥാനം കൊൽക്കത്ത.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>നാവിക / വ്യോമ ഭൂപടങ്ങൾ (Charts):</strong> നാവികർക്കും പൈലറ്റുമാർക്കും വേണ്ടിയുള്ള ഭൂപടങ്ങൾ 'ചാർട്ടുകൾ' എന്നറിയപ്പെടുന്നു.</li>
+        </ol>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>PPT</strong> = <strong>P</strong>hysical (പ്രകൃതി), <strong>P</strong>olitical (അതിർത്തി), <strong>T</strong>hematic (വിഷയം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: ഭൂപട ഘടകങ്ങൾ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. ഭൂപടത്തിലെ അവശ്യഘടകങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <p>ഒരു ഭൂപടം പൂർണ്ണമാകണമെങ്കിൽ അതിൽ താഴെ പറയുന്ന ഘടകങ്ങൾ ഉണ്ടായിരിക്കണം:</p>
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>തലക്കെട്ട് (Title):</strong> ഭൂപടം എന്തിനെക്കുറിച്ചുള്ളതാണെന്ന് വ്യക്തമാക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>തോത് (Scale):</strong> ദൂരം കണക്കാക്കാൻ സഹായിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ദിശ (Direction):</strong> ഭൂപടങ്ങളിൽ സാധാരണയായി മുകൾഭാഗം <strong>വടക്ക് (North)</strong> ദിശയെയാണ് സൂചിപ്പിക്കുന്നത് (ഒരു അമ്പടയാളം നൽകിയിരിക്കും).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സൂചിക (Legend/Key):</strong> ഭൂപടത്തിൽ ഉപയോഗിച്ചിരിക്കുന്ന വിവിധ ചിഹ്നങ്ങളും നിറങ്ങളും എന്താണ് അർത്ഥമാക്കുന്നത് എന്ന് വിശദീകരിക്കുന്ന പട്ടികയാണിത്.</li>
+        </ol>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>തോ-ത-ദി-സൂ</strong>" = <strong>തോ</strong>ത്, <strong>ത</strong>ലക്കെട്ട്, <strong>ദി</strong>ശ, <strong>സൂ</strong>ചിക.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: തോത് രേഖപ്പെടുത്തൽ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. ഭൂപടത്തിലെ തോതുകൾ രേഖപ്പെടുത്തുന്ന രീതികൾ</span>
+      </h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രസ്താവനാ തോത് (Statement of Scale):</strong> വാക്കുകളിലൂടെ തോത് പ്രസ്താവിക്കുന്ന രീതി (ഉദാ: 1 സെന്റീമീറ്റർ = 1 കിലോമീറ്റർ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭിന്നക തോത് (Representative Fraction - RF):</strong> അനുപാതമായി (Ratio/Fraction) തോത് കാണിക്കുന്ന രീതി. ഉദാഹരണത്തിന് 1:1,00,000. <strong>ഇതിന് യൂണിറ്റുകൾ ഉണ്ടായിരിക്കില്ല</strong> (എല്ലാ രാജ്യക്കാർക്കും മനസ്സിലാക്കാൻ).
+            <ul>
+              <li><strong>RF = ഭൂപടത്തിലെ ദൂരം ÷ ഭൂമിയിലെ യഥാർത്ഥ ദൂരം.</strong></li>
+              <li><strong>മാറ്റിയെഴുതൽ:</strong> 1 സെ.മീ = 1 കി.മീ → 1 കി.മീ = 1,00,000 സെ.മീ → <strong>RF = 1:1,00,000</strong>. അതുപോലെ 1:50,000 എന്നാൽ 1 സെ.മീ = 0.5 കി.മീ.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രേഖാ തോത് (Linear Scale / Graphical Scale):</strong> ഭൂപടത്തിന്റെ താഴെ ഒരു നേർരേഖ വരച്ച് അതിനെ തുല്യ ഭാഗങ്ങളായി വിഭജിച്ച് ദൂരം കാണിക്കുന്ന രീതി. ഭൂപടം ഫോട്ടോസ്റ്റാറ്റ് എടുക്കുകയോ വലുതാക്കുകയോ ചെയ്താലും രേഖാ തോതിന് മാറ്റം വരില്ല (ഏറ്റവും ശാസ്ത്രീയമായ രീതി).
+            <ul>
+              <li>ഇതിനെ <strong>ബാർ സ്കെയിൽ (Bar Scale)</strong> എന്നും പറയുന്നു.</li>
+            </ul>
+          </li>
+        </ol>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>വാക്ക് = പ്രസ്താവന</strong>; <strong>ഭിന്നം = അനുപാതം (യൂണിറ്റില്ല)</strong>; <strong>വര = രേഖ (ഫോട്ടോസ്റ്റാറ്റിലും സുരക്ഷിതം)</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: ഭൂപട നിറങ്ങൾ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. ഭൂപടങ്ങളിലെ നിറങ്ങൾ (Colors in Maps)</span>
+      </h2>
+      <div class="section-body">
+        <p>ടോപ്പോഷീറ്റുകളിൽ വിവിധ സവിശേഷതകൾ കാണിക്കാൻ അന്താരാഷ്ട്ര തലത്തിൽ അംഗീകരിക്കപ്പെട്ട നിറങ്ങൾ ഉപയോഗിക്കുന്നു:</p>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നീല (Blue):</strong> ജലാശയങ്ങൾ (സമുദ്രങ്ങൾ, നദികൾ, തടാകങ്ങൾ, കിണറുകൾ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പച്ച (Green):</strong> <strong>സസ്യജാലം (Vegetation: വനം, തോട്ടം, പുൽമേട്)</strong>. <span style="color:var(--trap-border);">(തിരുത്ത്: കൃഷിയിടം അല്ല)</span></li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മഞ്ഞ (Yellow):</strong> <strong>കൃഷിഭൂമി (Cultivated land)</strong>. <span style="color:var(--trap-border);">(തിരുത്ത്: കൃഷി = മഞ്ഞ)</span></li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ബ്രൗൺ / തവിട്ട് (Brown):</strong> പർവ്വതങ്ങൾ, കുന്നുകൾ, സമോന്നത രേഖകൾ (Contour lines).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ചുവപ്പ് (Red):</strong> മനുഷ്യവാസ കേന്ദ്രങ്ങൾ (Settlements), റോഡുകൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കറുപ്പ് (Black):</strong> റെയിൽവേ ലൈനുകൾ, ടെലിഫോൺ ലൈനുകൾ, അതിർത്തികൾ.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>നീല = നീർ</strong>; <strong>പച്ച = പ്രകൃതി (മരം)</strong>; <strong>മഞ്ഞ = മുണ്ടകൻ (കൃഷി, പാടം)</strong>; <strong>ബ്രൗൺ = മല (കുന്നിൻ മണ്ണിന്റെ നിറം)</strong>; <strong>ചുവപ്പ് = ചുറ്റും ആൾത്താമസം (റോഡ്, വീട്)</strong>; <strong>കറുപ്പ് = കമ്പിപ്പാത (റെയിൽവേ)</strong>.</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 ഭൂപട നിറങ്ങളും അർത്ഥങ്ങളും</span>
+          <svg viewBox="0 0 700 200" width="100%" height="auto" role="img" aria-label="Map Colors">
+            <rect x="20" y="40" width="100" height="80" rx="8" fill="#1976d2"/>
+            <text x="70" y="85" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">നീല</text>
+            <text x="70" y="140" text-anchor="middle" font-size="11" fill="#14202b">ജലാശയം</text>
+
+            <rect x="130" y="40" width="100" height="80" rx="8" fill="#43a047"/>
+            <text x="180" y="85" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">പച്ച</text>
+            <text x="180" y="140" text-anchor="middle" font-size="11" fill="#14202b">സസ്യജാലം</text>
+
+            <rect x="240" y="40" width="100" height="80" rx="8" fill="#f9a825"/>
+            <text x="290" y="85" text-anchor="middle" fill="#14202b" font-size="12" font-weight="bold">മഞ്ഞ</text>
+            <text x="290" y="140" text-anchor="middle" font-size="11" fill="#14202b">കൃഷിഭൂമി</text>
+
+            <rect x="350" y="40" width="100" height="80" rx="8" fill="#8d6e63"/>
+            <text x="400" y="85" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">ബ്രൗൺ</text>
+            <text x="400" y="140" text-anchor="middle" font-size="11" fill="#14202b">പർവ്വതം</text>
+
+            <rect x="460" y="40" width="100" height="80" rx="8" fill="#c62828"/>
+            <text x="510" y="85" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">ചുവപ്പ്</text>
+            <text x="510" y="140" text-anchor="middle" font-size="11" fill="#14202b">റോഡ്/വീട്</text>
+
+            <rect x="570" y="40" width="100" height="80" rx="8" fill="#212121"/>
+            <text x="620" y="85" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">കറുപ്പ്</text>
+            <text x="620" y="140" text-anchor="middle" font-size="11" fill="#14202b">റെയിൽവേ</text>
+          </svg>
+          <div class="viz-caption">📊 ഭൂപട നിറങ്ങളും അവയുടെ അർത്ഥങ്ങളും</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. പ്രധാന വസ്തുതകൾ (Important Facts)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സർവ്വേ ഓഫ് ഇന്ത്യ (Survey of India):</strong> ഇന്ത്യയുടെ ഔദ്യോഗിക ഭൂപട നിർമ്മാണ ഏജൻസിയാണിത്. <strong>1767-ൽ</strong> സ്ഥാപിതമായ ഈ സ്ഥാപനത്തിന്റെ ആസ്ഥാനം ഉത്തരാഖണ്ഡിലെ <strong>ഡെറാഡൂണിലാണ് (Dehradun)</strong>. കേന്ദ്ര ശാസ്ത്ര സാങ്കേതിക <strong>വകുപ്പിന്</strong> (Department of Science & Technology, Ministry of Science & Technology) കീഴിലാണ് ഇത് പ്രവർത്തിക്കുന്നത്.
+            <ul>
+              <li><strong>വ്യക്തത:</strong> സർവ്വേ ഓഫ് ഇന്ത്യയുടെ സ്ഥാപകൻ / ആദ്യ സർവ്വേയർ ജനറൽ (ബംഗാൾ) <strong>ജെയിംസ് റെന്നൽ (James Rennell)</strong>; 'സർവ്വേയർ ജനറൽ ഓഫ് ഇന്ത്യ' ആദ്യമായി <strong>കോളിൻ മക്കെൻസി (1815)</strong>. പി.എസ്.സി ചോദ്യത്തിൽ "ഇന്ത്യയുടെ ആദ്യ സർവ്വേയർ ജനറൽ" എന്ന് വന്നാൽ ഉത്തരം <strong>കോളിൻ മക്കെൻസി</strong>.</li>
+              <li>ഇന്ത്യയിലെ ഏറ്റവും പഴക്കമുള്ള ശാസ്ത്ര വകുപ്പുകളിൽ ഒന്നാണിത്. <strong>ഗ്രേറ്റ് ട്രിഗണോമെട്രിക്കൽ സർവ്വേ (GTS)</strong> ആരംഭിച്ചത് <strong>വില്യം ലാംബ്ടൺ (1802)</strong>; ഇതിന്റെ തുടർച്ച നയിച്ചത് <strong>ജോർജ് എവറസ്റ്റ്</strong>.</li>
+              <li><strong>ജിയോളജിക്കൽ സർവ്വേ ഓഫ് ഇന്ത്യ (GSI)</strong> വേറെ സ്ഥാപനമാണ്. ഇത് ഭൂഗർഭ / ധാതു സർവ്വേയ്ക്കുള്ളതാണ്, ആസ്ഥാനം കൊൽക്കത്ത. ടോപ്പോഷീറ്റ് തയ്യാറാക്കുന്നത് GSI അല്ല.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സമോന്നത രേഖകൾ (Contour Lines):</strong> സമുദ്രനിരപ്പിൽ നിന്നും ഒരേ ഉയരത്തിലുള്ള സ്ഥലങ്ങളെ തമ്മിൽ യോജിപ്പിച്ചുകൊണ്ട് ഭൂപടങ്ങളിൽ വരയ്ക്കുന്ന സാങ്കൽപ്പിക രേഖകളാണിവ. ഇതിന് ബ്രൗൺ (തവിട്ട്) നിറമാണ് നൽകുന്നത്. സമോന്നത രേഖകൾ അടുത്തടുത്ത് വന്നാൽ അവിടെ വലിയ ചെരിവാണെന്നും (Steep slope), അകന്ന് വന്നാൽ ചെറിയ ചെരിവാണെന്നും (Gentle slope) മനസ്സിലാക്കാം.
+            <ul>
+              <li>തുടർച്ചയായ ഉയരവ്യത്യാസത്തെ <strong>കോണ്ടൂർ ഇന്റർവെൽ</strong> എന്ന് പറയുന്നു.</li>
+              <li><strong>ആകൃതി നോക്കി തിരിച്ചറിയൽ:</strong> ഉള്ളിലേക്ക് ചെറുതായി വരുന്ന അടഞ്ഞ വൃത്തങ്ങൾ = കുന്ന് / കൊടുമുടി; മുകൾ ഭാഗത്തേക്ക് (ഉയരം കൂടിയ ഭാഗത്തേക്ക്) അഗ്രം വരുന്ന 'V' ആകൃതി = താഴ്‌വര; താഴ്ന്ന ഭാഗത്തേക്ക് അഗ്രം വരുന്ന ആകൃതി = മലയിടുക്ക് / സ്പർ (ridge / spur).</li>
+              <li><strong>ബെഞ്ച് മാർക്ക് (BM), സ്പോട്ട് ഹൈറ്റ്:</strong> ഭൂപടത്തിൽ കൃത്യമായ ഉയരം കാണിക്കുന്ന അടയാളങ്ങൾ.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> നാവിഗേഷനായി ഉപയോഗിക്കുന്ന നാവിക ഭൂപടങ്ങളെ <strong>ചാർട്ടുകൾ (Charts)</strong> എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>മറ്റു 'ഐസോ' രേഖകൾ:</strong> ഐസോബാർ = ഒരേ വായുമർദ്ദം; ഐസോതേം = ഒരേ താപനില; ഐസോഹൈറ്റ് / കോണ്ടൂർ = ഒരേ ഉയരം; ഐസോഹൈറ്റ് (Isohyet) = ഒരേ മഴ. (കോണ്ടൂറിന്റെ ശാസ്ത്രീയ പേര് ഐസോഹിപ്സ് / Isohypse ആണ്, ഐസോഹൈറ്റുമായി (Isohyet = മഴ) തെറ്റരുത്.)</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരളത്തിൽ:</strong> സർവ്വേ ആൻഡ് ലാൻഡ് റെക്കോർഡ്സ് വകുപ്പിന്റെ ഡിജിറ്റൽ റീസർവേ പദ്ധതി 'എന്റെ ഭൂമി' പോർട്ടൽ വഴി നടപ്പിലാക്കുന്നു.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>സർവ്വേ = ഡെറാഡൂൺ (D)</strong>; <strong>GSI = കൊൽക്കത്ത (K = Kolkata, "ഖനി")</strong>.</p>
+          <p><strong>അടുത്ത് = അപകടച്ചെരിവ് (കുത്തനെ)</strong>; <strong>അകലെ = അനായാസം (പതിയെ)</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: PSC വിശകലനം ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. കേരള PSC പരീക്ഷാ വിശകലനം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ് (അനാക്സിമാണ്ടർ), വില്ലേജ് ഓഫീസിൽ ഉപയോഗിക്കുന്ന ഭൂപടം (കാഡസ്ട്രൽ), സമോന്നത രേഖകൾ എന്തിനെ സൂചിപ്പിക്കുന്നു (ഒരേ ഉയരമുള്ള സ്ഥലങ്ങൾ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> സർവ്വേ ഓഫ് ഇന്ത്യയുടെ ആസ്ഥാനം (ഡെറാഡൂൺ), ഭിന്നക തോതിന്റെ (RF) പ്രത്യേകത (യൂണിറ്റുകളില്ല), ജലാശയങ്ങളെ സൂചിപ്പിക്കുന്ന നിറം (നീല).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ടോപ്പോഷീറ്റുകൾ തയ്യാറാക്കുന്നത് ആര് (സർവ്വേ ഓഫ് ഇന്ത്യ), ചെറുകിട ഭൂപടങ്ങൾക്ക് ഉദാഹരണം (അറ്റ്ലസ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഇവയും ശ്രദ്ധിക്കുക:</strong> ആധുനിക കാർട്ടോഗ്രഫിയുടെ പിതാവ് (മെർക്കാറ്റർ), ഭൂപടത്തിൽ പച്ച / മഞ്ഞ നിറങ്ങളുടെ അർത്ഥം, ആദ്യത്തെ ആധുനിക അറ്റ്ലസ് (ഓർട്ടിയിലസ്).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇടയ്ക്ക് ചോദിക്കാം:</strong> ആദ്യ സർവ്വേയർ ജനറൽ (കോളിൻ മക്കെൻസി), ഗ്രേറ്റ് ട്രിഗണോമെട്രിക്കൽ സർവ്വേ (ലാംബ്ടൺ), NATMO ആസ്ഥാനം (കൊൽക്കത്ത), 'ഇമാഗോ മുണ്ടി'.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>വൻതോത് ഭൂപടങ്ങൾ (Large Scale)</strong></td>
+                <td><strong>ചെറുകിട ഭൂപടങ്ങൾ (Small Scale)</strong></td>
+                <td>പേര് കേൾക്കുമ്പോൾ തെറ്റരുത്. <strong>ചെറിയ</strong> പ്രദേശങ്ങളെ വളരെ വിശദമായി കാണിക്കാനാണ് <strong>വൻതോത്</strong> ഭൂപടങ്ങൾ ഉപയോഗിക്കുന്നത് (ഉദാ: കാഡസ്ട്രൽ/വില്ലേജ് മാപ്പ്). എന്നാൽ <strong>വലിയ</strong> പ്രദേശങ്ങളെ കുറഞ്ഞ വിവരങ്ങളോടെ കാണിക്കാനാണ് <strong>ചെറുകിട</strong> ഭൂപടങ്ങൾ ഉപയോഗിക്കുന്നത് (ഉദാ: ലോക ഭൂപടം).</td>
+              </tr>
+              <tr>
+                <td><strong>അനാക്സിമാണ്ടർ</strong></td>
+                <td><strong>ജെറാർഡസ് മെർക്കാറ്റർ</strong></td>
+                <td>ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ് എന്ന് പൊതുവായി ചോദിച്ചാൽ <strong>അനാക്സിമാണ്ടർ</strong> ആണ്. എന്നാൽ <strong>ആധുനിക</strong> ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവാരെന്ന് ചോദിച്ചാൽ <strong>ജെറാർഡസ് മെർക്കാറ്റർ</strong> ആണ്.</td>
+              </tr>
+              <tr>
+                <td><strong>ചുവപ്പ് നിറം (ഭൂപടത്തിൽ)</strong></td>
+                <td><strong>കറുപ്പ് നിറം (ഭൂപടത്തിൽ)</strong></td>
+                <td>ഭൂപടത്തിൽ റോഡുകളും മനുഷ്യവാസ കേന്ദ്രങ്ങളും (Settlements) സൂചിപ്പിക്കാൻ <strong>ചുവപ്പ് (Red)</strong> ഉപയോഗിക്കുമ്പോൾ, റെയിൽവേ ലൈനുകളും അതിർത്തികളും കാണിക്കാൻ <strong>കറുപ്പ് (Black)</strong> നിറമാണ് ഉപയോഗിക്കുന്നത്.</td>
+              </tr>
+              <tr>
+                <td><strong>പച്ച (Green)</strong></td>
+                <td><strong>മഞ്ഞ (Yellow)</strong></td>
+                <td>പച്ച = സസ്യജാലം (വനം, തോട്ടം); മഞ്ഞ = കൃഷിഭൂമി.</td>
+              </tr>
+              <tr>
+                <td><strong>ഓർട്ടിയിലസ് (1570)</strong></td>
+                <td><strong>മെർക്കാറ്റർ (1595)</strong></td>
+                <td>ആദ്യ ആധുനിക അറ്റ്ലസ് ഓർട്ടിയിലസിന്റേത്; 'അറ്റ്ലസ്' എന്ന പേര് ഉപയോഗിച്ചത് മെർക്കാറ്റർ.</td>
+              </tr>
+              <tr>
+                <td><strong>സർവ്വേ ഓഫ് ഇന്ത്യ</strong></td>
+                <td><strong>ജിയോളജിക്കൽ സർവ്വേ ഓഫ് ഇന്ത്യ (GSI)</strong></td>
+                <td>സർവ്വേ ഓഫ് ഇന്ത്യ = ഭൂപടം / ടോപ്പോഷീറ്റ് (ഡെറാഡൂൺ, 1767); GSI = ഭൂഗർഭ ശാസ്ത്രം / ധാതു (കൊൽക്കത്ത, 1851).</td>
+              </tr>
+              <tr>
+                <td><strong>കോണ്ടൂർ (Isohypse)</strong></td>
+                <td><strong>ഐസോഹൈറ്റ് (Isohyet)</strong></td>
+                <td>കോണ്ടൂർ = ഒരേ ഉയരം; ഐസോഹൈറ്റ് = ഒരേ മഴ.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+        <h3>Table 1: തോത് അടിസ്ഥാനമാക്കിയുള്ള തരംതിരിവ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>വൻതോത് ഭൂപടങ്ങൾ</th><th>ചെറുകിട ഭൂപടങ്ങൾ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ഉൾക്കൊള്ളുന്ന പ്രദേശം</td><td>ചെറിയ പ്രദേശം (Villages/Cities)</td><td>വലിയ പ്രദേശം (Continents/Countries)</td></tr>
+              <tr><td>വിവരങ്ങളുടെ അളവ്</td><td>വളരെ കൂടുതൽ വിശദാംശങ്ങൾ</td><td>വളരെ കുറഞ്ഞ വിശദാംശങ്ങൾ</td></tr>
+              <tr><td>ഉദാഹരണങ്ങൾ</td><td>കാഡസ്ട്രൽ ഭൂപടങ്ങൾ, ടോപ്പോഷീറ്റുകൾ</td><td>അറ്റ്ലസ് ഭൂപടങ്ങൾ, ചുമർ ഭൂപടങ്ങൾ</td></tr>
+              <tr><td>RF (ഉദാ)</td><td>വലിയ ഭിന്നം (1:50,000)</td><td>ചെറിയ ഭിന്നം (1:10,00,000)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: തോത് രേഖപ്പെടുത്തുന്ന രീതികൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>രീതി</th><th>പ്രത്യേകത</th><th>ഫോട്ടോസ്റ്റാറ്റ് / വലുതാക്കൽ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>പ്രസ്താവനാ തോത്</td><td>വാക്കുകളിൽ (1 സെ.മീ = 1 കി.മീ)</td><td>തെറ്റാകും</td></tr>
+              <tr><td>ഭിന്നക തോത് (RF)</td><td>അനുപാതം, യൂണിറ്റില്ല (1:1,00,000)</td><td>തെറ്റാകില്ല; അളക്കാൻ ഗണിതം വേണം</td></tr>
+              <tr><td>രേഖാ തോത്</td><td>വരയിൽ ദൂരം</td><td><strong>മാറ്റമില്ല, ഏറ്റവും ശാസ്ത്രീയം</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: ഭൂപട നിറങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>നിറം</th><th>സൂചിപ്പിക്കുന്നത്</th></tr></thead>
+            <tbody>
+              <tr><td>നീല</td><td>ജലാശയങ്ങൾ (നദി, തടാകം, സമുദ്രം)</td></tr>
+              <tr><td>പച്ച</td><td>സസ്യജാലം (വനം, തോട്ടം, പുൽമേട്)</td></tr>
+              <tr><td>മഞ്ഞ</td><td>കൃഷിഭൂമി</td></tr>
+              <tr><td>ബ്രൗൺ</td><td>പർവ്വതങ്ങൾ, കോണ്ടൂർ രേഖകൾ</td></tr>
+              <tr><td>ചുവപ്പ്</td><td>റോഡുകൾ, മനുഷ്യവാസ കേന്ദ്രങ്ങൾ</td></tr>
+              <tr><td>കറുപ്പ്</td><td>റെയിൽവേ, അതിർത്തികൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: Mnemonics ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</span>
+      </h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1 (പിതാക്കന്മാർ):</strong></span>
+          <p><strong>A</strong>naximander = <strong>A</strong>ncient; <strong>M</strong>ercator = <strong>M</strong>odern. രണ്ടിനും 'M' = Modern = Mercator.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2 (അറ്റ്ലസ്):</strong></span>
+          <p>ഓർട്ടിയിലസ് <strong>70</strong> (ആദ്യ അറ്റ്ലസ്, 1570), മെർക്കാറ്റർ <strong>95</strong> ('Atlas' പേര്, 1595).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3 (ഭൂപട ഘടകങ്ങൾ):</strong></span>
+          <p>"<strong>തോ-ത-ദി-സൂ</strong>" = തോത്, തലക്കെട്ട്, ദിശ, സൂചിക.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4 (ഭൂപട തരങ്ങൾ):</strong></span>
+          <p><strong>PPT</strong> = Physical, Political, Thematic.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5 (വൻതോത്/ചെറുകിട):</strong></span>
+          <p>വൻ = ചെറിയ സ്ഥലം; ചെറുകിട = വലിയ സ്ഥലം (നേർവിപരീതം).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6 (നിറങ്ങൾ):</strong></span>
+          <p>നീല = നീർ; പച്ച = പ്രകൃതി; മഞ്ഞ = പാടം (കൃഷി); ബ്രൗൺ = മല / കോണ്ടൂർ; ചുവപ്പ് = ആൾത്താമസം / റോഡ്; കറുപ്പ് = കമ്പിപ്പാത / അതിര്.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7 (സർവ്വേ):</strong></span>
+          <p>സർവ്വേ = ഡെറാഡൂൺ; GSI = കൊൽക്കത്ത.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8 (കോണ്ടൂർ):</strong></span>
+          <p>അടുത്ത് = കുത്തനെ; അകലെ = പതിയെ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: Question Trend ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. ചോദ്യ പ്രവണത (Question Trend)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭൂപടങ്ങളുടെ അടിസ്ഥാന പാഠങ്ങളിൽ നിന്ന് LDC / VEO / LGS തലത്തിൽ സാധാരണയായി <strong>ഫാക്ച്വൽ ചോദ്യങ്ങൾ</strong> (പിതാവ്, ആസ്ഥാനം, നിറം, നിർവ്വചനം) ആണ് കൂടുതൽ വരുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിക്കുന്ന മേഖലകൾ:</strong> കാർട്ടോഗ്രഫിയുടെ പിതാവ് (Anaximander / Mercator), കാഡസ്ട്രൽ ഭൂപടം, സർവ്വേ ഓഫ് ഇന്ത്യ ആസ്ഥാനം, വൻതോത് vs ചെറുകിട, നിറങ്ങളുടെ അർത്ഥം, കോണ്ടൂർ രേഖ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ട്രാപ്പ് ചോദ്യങ്ങൾ:</strong> (1) വൻതോത് എന്നാൽ വലിയ പ്രദേശം എന്ന തെറ്റിദ്ധാരണ, (2) ആധുനിക vs സാധാരണ പിതാവ്, (3) പച്ച/മഞ്ഞ ആശയക്കുഴപ്പം, (4) സർവ്വേ ഓഫ് ഇന്ത്യ vs GSI.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഭൂമിശാസ്ത്രത്തിൽ ഭൂപടങ്ങൾ നിർമ്മിക്കുന്ന ശാസ്ത്ര ശാഖ (Art and science of map making) ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഡെമോഗ്രഫി (Demography)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കാർട്ടോഗ്രഫി (Cartography)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ടോപ്പോഗ്രഫി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. എപ്പിഗ്രാഫി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കാർട്ടോഗ്രഫി (Cartography)</div>
+            <div class="explanation">അനാക്സിമാണ്ടറിനെയാണ് ഇതിന്റെ പിതാവായി കണക്കാക്കുന്നത്. ഡെമോഗ്രഫി = ജനസംഖ്യാ പഠനം; എപ്പിഗ്രാഫി = ലിഖിതങ്ങളെക്കുറിച്ചുള്ള പഠനം.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. വളരെ ചെറിയ പ്രദേശങ്ങളുടെ സവിശേഷതകളും ഭൂമിയുടെ അതിരുകളും വിശദമായി കാണിക്കുന്നതിനായി വില്ലേജ് ഓഫീസുകളിലും പഞ്ചായത്തുകളിലും ഉപയോഗിക്കുന്ന ഭൂപടങ്ങൾ (Maps) ഏതാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. രാഷ്ട്രീയ ഭൂപടങ്ങൾ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. അറ്റ്ലസ് ഭൂപടങ്ങൾ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. കാഡസ്ട്രൽ ഭൂപടങ്ങൾ (Cadastral maps)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഭൗതിക ഭൂപടങ്ങൾ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കാഡസ്ട്രൽ ഭൂപടങ്ങൾ (Cadastral maps)</div>
+            <div class="explanation">ഭൂമിയുടെ രജിസ്റ്റർ / കണക്കെടുപ്പ് എന്നർത്ഥം വരുന്ന ഫ്രഞ്ച് പദമായ 'കാഡസ്ട്രേ'യിൽ നിന്നാണ് കാഡസ്ട്രൽ എന്ന പദമുണ്ടായത്. ഇത് വലിയ തോതിലുള്ള (Large scale) ഭൂപടങ്ങൾക്ക് ഉദാഹരണമാണ്.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ഇന്ത്യയിൽ ഔദ്യോഗികമായി ധരാതലീയ ഭൂപടങ്ങൾ അഥവാ ടോപ്പോഷീറ്റുകൾ (Topographical Maps) തയ്യാറാക്കാൻ ചുമതലപ്പെട്ട കേന്ദ്ര സർക്കാർ ഏജൻസി ഏതാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ജിയോളജിക്കൽ സർവ്വേ ഓഫ് ഇന്ത്യ (GSI)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സർവ്വേ ഓഫ് ഇന്ത്യ (Survey of India)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഇസ്രോ (ISRO)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ആർക്കിയോളജിക്കൽ സർവ്വേ ഓഫ് ഇന്ത്യ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സർവ്വേ ഓഫ് ഇന്ത്യ (Survey of India)</div>
+            <div class="explanation">1767-ൽ സ്ഥാപിതമായ ഇതിന്റെ ആസ്ഥാനം ഉത്തരാഖണ്ഡിലെ ഡെറാഡൂണിലാണ് (Dehradun). GSI ഭൗമശാസ്ത്ര (ധാതു) സർവ്വേ നടത്തുന്ന സ്ഥാപനമാണ്.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. ഭൂപടത്തിൽ ഒരു പ്രദേശത്തെ പർവ്വതങ്ങൾ, കുന്നുകൾ തുടങ്ങിയ ഉയരമുള്ള ഭാഗങ്ങൾ സൂചിപ്പിക്കുന്നതിന് സാധാരണയായി ഉപയോഗിക്കുന്ന നിറം (Colour code) ഏതാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. നീല</button>
+            <button type="button" class="opt-btn" data-opt="B">B. പച്ച</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ബ്രൗൺ / തവിട്ട് (Brown)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. മഞ്ഞ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ബ്രൗൺ / തവിട്ട് (Brown)</div>
+            <div class="explanation">പച്ച നിറം സസ്യജാലത്തെയും (വനം, തോട്ടം), നീല ജലാശയങ്ങളെയും, മഞ്ഞ നിറം കൃഷിയിടങ്ങളെയും സൂചിപ്പിക്കാൻ ഉപയോഗിക്കുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. സമുദ്രനിരപ്പിൽ നിന്നും ഒരേ ഉയരത്തിലുള്ള സ്ഥലങ്ങളെ തമ്മിൽ യോജിപ്പിച്ചുകൊണ്ട് ഭൂപടങ്ങളിൽ വരയ്ക്കുന്ന സാങ്കൽപ്പിക രേഖകൾ ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഐസോബാറുകൾ (Isobars)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സമോന്നത രേഖകൾ അഥവാ കോണ്ടൂർ രേഖകൾ (Contour Lines)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഐസോതേമുകൾ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. അക്ഷാംശ രേഖകൾ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സമോന്നത രേഖകൾ അഥവാ കോണ്ടൂർ രേഖകൾ (Contour Lines)</div>
+            <div class="explanation">ഈ രേഖകൾ അടുത്തടുത്ത് വന്നാൽ വലിയ ചെരിവാണെന്നും, അകന്ന് വന്നാൽ ചെറിയ ചെരിവാണെന്നും ഭൂപടത്തിൽ നിന്ന് മനസ്സിലാക്കാം. ഇവയ്ക്കും ബ്രൗൺ നിറമാണ് നൽകുന്നത്. ഐസോബാർ = വായുമർദ്ദം, ഐസോതേം = താപനില.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. താഴെ പറയുന്നവയിൽ ചെറുകിട ഭൂപടങ്ങൾക്ക് (Small Scale Maps) ഉദാഹരണമല്ലാത്തത് ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. അറ്റ്ലസ് ഭൂപടങ്ങൾ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ലോക ഭൂപടം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ചുമർ ഭൂപടങ്ങൾ (Wall maps)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. കാഡസ്ട്രൽ ഭൂപടങ്ങൾ (Cadastral maps)</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) കാഡസ്ട്രൽ ഭൂപടങ്ങൾ (Cadastral maps)</div>
+            <div class="explanation">കാഡസ്ട്രൽ ഭൂപടങ്ങളും ടോപ്പോഷീറ്റുകളും വലിയ തോത് (Large scale) ഭൂപടങ്ങളാണ്.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: ഭൂപടങ്ങളുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഭൂപടങ്ങളിൽ ഉപയോഗിക്കുന്ന ഭിന്നക തോതിന് (Representative Fraction - RF) പ്രത്യേകമായി യൂണിറ്റുകൾ ഉണ്ടായിരിക്കില്ല.<br>
+            2. ഭൂപടങ്ങൾ തയ്യാറാക്കുമ്പോൾ സാധാരണയായി ഭൂപടത്തിന്റെ മുകൾഭാഗം എപ്പോഴും തെക്ക് ദിശയെ (South) സൂചിപ്പിക്കുന്ന രീതിയിലാണ് വരയ്ക്കാറുള്ളത്.<br>
+            3. ഏതെങ്കിലും ഒരു പ്രത്യേക വിഷയത്തെ മാത്രം അടിസ്ഥാനമാക്കി തയ്യാറാക്കുന്ന ഭൂപടങ്ങളാണ് വിഷയാധിഷ്ഠിത ഭൂപടങ്ങൾ (Thematic Maps).</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1, 2 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 2 തെറ്റാണ്; കാരണം ഭൂപടങ്ങളിൽ എപ്പോഴും മുകൾഭാഗം <strong>വടക്ക് (North)</strong> ദിശയെയാണ് സൂചിപ്പിക്കുന്നത്.</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ഇന്ത്യയിലെ ജനവാസ കേന്ദ്രങ്ങൾ (Settlements), ഗതാഗതത്തിനായി ഉപയോഗിക്കുന്ന പ്രധാന റോഡുകൾ എന്നിവ ഭൂപടങ്ങളിൽ സൂചിപ്പിക്കാൻ ഉപയോഗിക്കുന്ന നിറം ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. കറുപ്പ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ചുവപ്പ് (Red)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. മഞ്ഞ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വെള്ള</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ചുവപ്പ് (Red)</div>
+            <div class="explanation">എന്നാൽ റെയിൽവേ ലൈനുകളും അന്താരാഷ്ട്ര അതിർത്തികളും കറുപ്പ് (Black) നിറത്തിലാണ് സൂചിപ്പിക്കാറുള്ളത്.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. ഭൂപടങ്ങൾ വലുതാക്കുകയോ ചെറുതാക്കുകയോ (ഫോട്ടോസ്റ്റാറ്റ് എടുക്കുകയോ) ചെയ്താലും തോതിൽ മാറ്റം വരാത്ത, ഏറ്റവും ശാസ്ത്രീയമായ തോത് രേഖപ്പെടുത്തൽ രീതി ഏതാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. പ്രസ്താവനാ തോത് (Statement of scale)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഭിന്നക തോത് (Representative Fraction)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. രേഖാ തോത് (Linear Scale)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഇവയൊന്നുമല്ല</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) രേഖാ തോത് (Linear Scale)</div>
+            <div class="explanation">ഭൂപടം വലുതാകുമ്പോൾ അതിനനുസരിച്ച് ഈ വരയും (രേഖാ തോതും) വലുതാകുന്നതുകൊണ്ട് അനുപാതത്തിൽ തെറ്റ് സംഭവിക്കില്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ആധുനിക ഭൂപടനിർമ്മാണ ശാസ്ത്രത്തിന്റെ പിതാവ് (Father of Modern Cartography) എന്ന് ലോകമെമ്പാടും അറിയപ്പെടുന്നതാര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ക്ലോഡിയസ് ടോളമി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. അനാക്സിമാണ്ടർ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ജെറാർഡസ് മെർക്കാറ്റർ (Gerardus Mercator)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഇറാത്തോസ്തനീസ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ജെറാർഡസ് മെർക്കാറ്റർ (Gerardus Mercator)</div>
+            <div class="explanation">ഗോളാകൃതിയിലുള്ള ഭൂമിയെ പരന്ന പ്രതലത്തിൽ കൃത്യമായി അവതരിപ്പിച്ച 'മെർക്കാറ്റർ പ്രൊജക്ഷൻ' ഇദ്ദേഹമാണ് വികസിപ്പിച്ചത്.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. 1 സെന്റീമീറ്റർ = 1 കിലോമീറ്റർ എന്ന തോതിനെ ഭിന്നക തോത് (RF) ആയി എഴുതിയാൽ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1:1,000</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1:10,000</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1:1,00,000</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1:10,00,000</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1:1,00,000</div>
+            <div class="explanation">1 കി.മീ = 1000 മീ = 1,00,000 സെ.മീ. RF-ന് യൂണിറ്റില്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. ലോകത്തിലെ ആദ്യത്തെ ആധുനിക അറ്റ്ലസ് (Theatrum Orbis Terrarum) പ്രസിദ്ധീകരിച്ചത് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. മെർക്കാറ്റർ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ടോളമി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. അബ്രഹാം ഓർട്ടിയിലസ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. അനാക്സിമാണ്ടർ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അബ്രഹാം ഓർട്ടിയിലസ് (1570)</div>
+            <div class="explanation">'അറ്റ്ലസ്' എന്ന പേര് ഉപയോഗിച്ചത് മെർക്കാറ്റർ ആണ് (അദ്ദേഹത്തിന്റെ അറ്റ്ലസ് 1595).</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. കൃഷിഭൂമിയെ ടോപ്പോഷീറ്റുകളിൽ സൂചിപ്പിക്കുന്ന നിറം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. പച്ച</button>
+            <button type="button" class="opt-btn" data-opt="B">B. മഞ്ഞ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. നീല</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ചുവപ്പ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) മഞ്ഞ</div>
+            <div class="explanation">പച്ച = വനം / സസ്യജാലം.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. കൺടൂർ രേഖകൾ അടുത്തടുത്ത് വരുന്നത് എന്ത് സൂചിപ്പിക്കുന്നു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. സമതലം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കുത്തനെയുള്ള ചരിവ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. നദി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. പീഠഭൂമി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കുത്തനെയുള്ള ചരിവ് (Steep slope)</div>
+            <div class="explanation">അകന്ന് വന്നാൽ ചെറിയ ചെരിവ് (Gentle slope).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. ഉത്തര സൂചിക (Answer Key)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(D)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>7</td><td>(B)</td><td>12</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(C)</td><td>14</td><td>(B)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(C)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: Quick Revision ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</span>
+      </h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>കാർട്ടോഗ്രഫി:</strong> ഭൂപടനിർമ്മാണ ശാസ്ത്രം. പിതാവ്: അനാക്സിമാണ്ടർ.</li>
+          <li><strong>ആധുനിക കാർട്ടോഗ്രഫിയുടെ പിതാവ്:</strong> ജെറാർഡസ് മെർക്കാറ്റർ.</li>
+          <li><strong>Large Scale Maps:</strong> ചെറിയ സ്ഥലത്തെ വിശദമായി കാണിക്കുന്നു (ഉദാ: കാഡസ്ട്രൽ, ടോപ്പോഷീറ്റുകൾ).</li>
+          <li><strong>Small Scale Maps:</strong> വലിയ സ്ഥലത്തെ കാണിക്കുന്നു (ഉദാ: അറ്റ്ലസ്, ചുമർ ഭൂപടങ്ങൾ).</li>
+          <li><strong>കാഡസ്ട്രൽ ഭൂപടം:</strong> വില്ലേജ് ഓഫീസ്, അതിരുകൾ നിശ്ചയിക്കാൻ.</li>
+          <li><strong>സർവ്വേ ഓഫ് ഇന്ത്യ:</strong> 1767-ൽ സ്ഥാപിതം. ആസ്ഥാനം: ഡെറാഡൂൺ. ടോപ്പോഷീറ്റുകൾ തയ്യാറാക്കുന്നു.</li>
+          <li><strong>ഭൂപടത്തിലെ മുകൾഭാഗം:</strong> വടക്ക് (North).</li>
+          <li><strong>നിറങ്ങൾ:</strong> നീല (വെള്ളം), പച്ച (സസ്യജാലം), മഞ്ഞ (കൃഷിഭൂമി), ബ്രൗൺ (പർവ്വതങ്ങൾ), ചുവപ്പ് (റോഡ്/കെട്ടിടങ്ങൾ), കറുപ്പ് (റെയിൽവേ/അതിർത്തി).</li>
+          <li><strong>സമോന്നത രേഖകൾ (Contour Lines):</strong> ഒരേ ഉയരമുള്ള സ്ഥലങ്ങളെ യോജിപ്പിക്കുന്ന രേഖകൾ (ബ്രൗൺ നിറം).</li>
+          <li><strong>ആദ്യ ആധുനിക അറ്റ്ലസ്:</strong> ഓർട്ടിയിലസ് (1570); 'അറ്റ്ലസ്' എന്ന പേര്: മെർക്കാറ്റർ (അറ്റ്ലസ് 1595).</li>
+          <li><strong>RF:</strong> യൂണിറ്റില്ല; 1 സെ.മീ = 1 കി.മീ → 1:1,00,000.</li>
+          <li><strong>രേഖാ തോത്:</strong> ഫോട്ടോസ്റ്റാറ്റിലും മാറില്ല, ഏറ്റവും ശാസ്ത്രീയം.</li>
+          <li><strong>ആദ്യ സർവ്വേയർ ജനറൽ ഓഫ് ഇന്ത്യ:</strong> കോളിൻ മക്കെൻസി; GTS: ലാംബ്ടൺ; NATMO: കൊൽക്കത്ത.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: One-Page Revision ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. One-Page Revision Sheet</span>
+      </h2>
+      <div class="section-body">
+        <h3>Map Classification based on Scale</h3>
+        <ul>
+          <li><strong>Large Scale Maps:</strong> Highly detailed, covers small areas. (e.g., Cadastral maps used in Village offices, Topographical maps).</li>
+          <li><strong>Small Scale Maps:</strong> Less detailed, covers large areas. (e.g., Atlas maps, Wall maps).</li>
+          <li><strong>Tip:</strong> Larger RF fraction (1/50,000) = Larger scale.</li>
+        </ul>
+
+        <h3>Important Map Types</h3>
+        <ul>
+          <li><strong>Physical:</strong> Mountains, rivers, natural features.</li>
+          <li><strong>Political:</strong> Borders, states, countries, cities.</li>
+          <li><strong>Thematic:</strong> Focuses on a specific theme (e.g., Rainfall, Population density).</li>
+          <li><strong>Charts:</strong> Nautical / aeronautical maps.</li>
+        </ul>
+
+        <h3>Methods of Scale</h3>
+        <ul>
+          <li><strong>Statement</strong> (words), <strong>RF</strong> (ratio, no units), <strong>Linear / Bar scale</strong> (most scientific; unchanged on photocopy).</li>
+        </ul>
+
+        <h3>Colors in Toposheets</h3>
+        <ul>
+          <li><strong>Blue:</strong> Water bodies.</li>
+          <li><strong>Green:</strong> Forests, vegetation (orchards, grass).</li>
+          <li><strong>Yellow:</strong> Cultivated land (agriculture).</li>
+          <li><strong>Brown:</strong> Mountains, Sand features, <strong>Contour lines</strong> (lines joining places of equal elevation).</li>
+          <li><strong>Red:</strong> Settlements, Roads.</li>
+          <li><strong>Black:</strong> Railways, Boundaries, Telephone lines.</li>
+        </ul>
+
+        <h3>Institutions & Figures</h3>
+        <ul>
+          <li><strong>Father of Cartography:</strong> Anaximander.</li>
+          <li><strong>Father of Modern Cartography:</strong> Gerardus Mercator.</li>
+          <li><strong>First modern Atlas:</strong> Ortelius (1570); <strong>'Atlas' name:</strong> Mercator (Atlas published 1595).</li>
+          <li><strong>Survey of India:</strong> Established in 1767. HQ: Dehradun. Responsible for mapping and surveying in India. Under Dept. of Science & Technology.</li>
+          <li><strong>First Surveyor General of India:</strong> Colin Mackenzie; <strong>GTS:</strong> William Lambton (1802).</li>
+          <li><strong>NATMO:</strong> Kolkata (thematic maps, National Atlas). <strong>GSI:</strong> Kolkata (geological survey).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. ഉപസംഹാരം</span>
+      </h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ഭൂപടങ്ങൾ നിർമ്മിക്കുന്ന ശാസ്ത്രമാണ് കാർട്ടോഗ്രഫി; പിതാവ് അനാക്സിമാണ്ടർ.</li>
+          <li>തോത് അനുസരിച്ച് വൻതോത് (ചെറിയ സ്ഥലം, കൂടുതൽ വിവരം), ചെറുകിട (വലിയ സ്ഥലം, കുറവ് വിവരം).</li>
+          <li>കാഡസ്ട്രൽ ഭൂപടങ്ങൾ വില്ലേജ് ഓഫീസുകളിൽ; ടോപ്പോഷീറ്റുകൾ സർവ്വേ ഓഫ് ഇന്ത്യ (ഡെറാഡൂൺ) തയ്യാറാക്കുന്നു.</li>
+          <li>സമോന്നത രേഖകൾ ഒരേ ഉയരം കാണിക്കുന്നു (ബ്രൗൺ); റോഡ്/വീട് ചുവപ്പ്; റെയിൽവേ കറുപ്പ്; ജലം നീല; സസ്യജാലം പച്ച; കൃഷി മഞ്ഞ.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1–2 ചോദ്യങ്ങൾ ഉറപ്പായും പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ഭൂപട നിറങ്ങളും തോത് രീതികളും PSC-യുടെ പ്രിയപ്പെട്ട കെണികളാണ്. പച്ച = സസ്യജാലം, മഞ്ഞ = കൃഷിഭൂമി എന്ന വ്യത്യാസം കൃത്യമായി ഓർക്കുക. സർവ്വേ ഓഫ് ഇന്ത്യ vs GSI, കോണ്ടൂർ vs ഐസോഹൈറ്റ് എന്നിവയും ട്രാപ്പ് ചോദ്യങ്ങളിൽ വരും. അടുത്ത അധ്യായം അയച്ചോളൂ.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
 
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>2.1.13 Maps</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-window.PART_KEY   = 'geography-2.1.13-maps';
-window.PART_TITLE = '2.1.13 Maps';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  // Insert toggle icons
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  // Keep multiple sections open — no auto-collapse
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  // Open first section by default
+  if (sections.length > 0) {
+    openOnly(sections[0]);
+  }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== THEME TOGGLE =====
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme142maps');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme142maps', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ===== ACTIVE RECALL (BLUR/REVEAL) =====
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // ===== LIVE SEARCH =====
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+    });
+  }
+
+  // ===== SECTION PROGRESS CHECKBOX =====
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone142maps_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone142maps_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone142maps_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = {
+      rootMargin: '-15% 0px -75% 0px',
+      threshold: 0
+    };
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(function (sec) {
+      observer.observe(sec);
+    });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaMaps142Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      var key = quizPrefix + qIndex;
+      try {
+        var stored = localStorage.getItem(key);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null,
+      saved: false,
+      marked: false,
+      locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  // ===== RESET ALL QUIZ ANSWERS =====
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
