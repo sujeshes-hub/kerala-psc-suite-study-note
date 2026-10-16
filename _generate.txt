@@ -1,0 +1,410 @@
+@echo off
+cd /d "%~dp0"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop';$s=Get-Content -Raw '%~f0';$i=$s.IndexOf('#::PSSTART::#');iex $s.Substring($i+13)"
+exit /b
+
+#::PSSTART::#
+$ErrorActionPreference = 'Stop'
+$root = (Get-Location).Path
+$utf8 = New-Object System.Text.UTF8Encoding $false
+
+Write-Host ''
+Write-Host 'Kerala PSC Study Suite - generator' -ForegroundColor Cyan
+Write-Host '==================================' -ForegroundColor Cyan
+Write-Host ''
+
+# ============================================================
+# TEMPLATE 1 - INDEX.HTML
+# ============================================================
+$indexHtml = @'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kerala PSC Study Suite</title>
+<link rel="stylesheet" href="assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Kerala PSC Study Suite</h1>
+  <p>573/2025 + 883/2025 - Master Combined Syllabus</p>
+  <div class="badges">
+    <span>Works offline</span>
+    <span>17 subjects</span>
+    <span>Progress saved locally</span>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <div class="section-head">
+      <h2>Subjects</h2>
+      <button class="btn danger" id="resetAllBtn" type="button">Reset all progress</button>
+    </div>
+    <div class="grid" id="subjectGrid">
+      <p class="empty">Loading...</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="summary">
+      <h3>Overall Progress</h3>
+      <div class="summary-grid">
+        <div class="stat"><span class="k">Subjects started</span><span class="v" id="sumParts">0</span></div>
+        <div class="stat"><span class="k">Total questions</span><span class="v" id="sumTotal">0</span></div>
+        <div class="stat"><span class="k">Attempted</span><span class="v" id="sumAtt">0</span></div>
+        <div class="stat"><span class="k">Correct</span><span class="v" id="sumCor">0</span></div>
+        <div class="stat"><span class="k">Wrong</span><span class="v" id="sumWr">0</span></div>
+        <div class="stat"><span class="k">Net score</span><span class="v" id="sumNet">0.00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="howto">
+    <h3>How to use</h3>
+    <ul>
+      <li>Tap any <b>subject</b> to see its chapters.</li>
+      <li>Tap a <b>chapter</b> to see its topics.</li>
+      <li>Tap a <b>topic</b> to open notes + mock test.</li>
+      <li>Progress saves automatically in your browser.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>Kerala PSC Study Suite - Works fully offline</footer>
+
+<script src="assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const grid = document.getElementById('subjectGrid');
+  const list = Syllabus.getAllSubjects();
+  if (!list || !list.length) {
+    grid.innerHTML = '<p class="empty">No subjects found.</p>';
+    return;
+  }
+  grid.innerHTML = list.map(S => {
+    const totalTopics = S.chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
+    return '<a href="subjects/' + S.code + '-' + S.id + '.html" class="card">' +
+      '<span class="badge">' + S.code + '</span>' +
+      '<h3>' + S.icon + ' ' + S.title + '</h3>' +
+      '<p class="desc">' + S.titleMl + ' - ' + S.desc + '</p>' +
+      '<div class="meta">' +
+        '<span>' + S.chapters.length + ' chapter' + (S.chapters.length === 1 ? '' : 's') + '</span>' +
+        '<span>' + totalTopics + ' topics</span>' +
+      '</div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+    '</a>';
+  }).join('');
+  const s = document.createElement('script');
+  s.src = 'assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+
+</body>
+</html>
+'@
+
+# ============================================================
+# TEMPLATE 2 - SUBJECT PAGE
+# ============================================================
+$subjectHtml = @'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loading - Kerala PSC</title>
+<link rel="stylesheet" href="../assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1 id="heroTitle">Loading...</h1>
+  <p id="heroSub"></p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> &rsaquo;
+    <span id="crumb">...</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Chapters in this Subject</h2>
+    </div>
+    <div class="grid" id="chapterGrid">
+      <p class="empty">Loading...</p>
+    </div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite - Works fully offline</footer>
+
+<script src="../assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const filename = location.pathname.replace(/\\/g, '/').split('/').pop();
+  const slug = filename.replace(/\.html$/i, '').replace(/^\d+-/, '');
+  const S = Syllabus.getSubject(slug);
+  if (!S) {
+    document.body.innerHTML = '<p style="padding:2rem;font-family:sans-serif">Subject not found: <b>' + slug + '</b></p>';
+    return;
+  }
+  document.title = S.code + ' ' + S.title + ' - Kerala PSC';
+  document.getElementById('heroTitle').textContent = S.icon + ' ' + S.code + ' ' + S.title;
+  document.getElementById('heroSub').textContent = S.titleMl + ' - ' + S.desc;
+  document.getElementById('crumb').textContent = S.title;
+
+  const CF = (window.KPSC_SYLLABUS && window.KPSC_SYLLABUS.CHAPTER_FILES) || {};
+  const grid = document.getElementById('chapterGrid');
+
+  grid.innerHTML = S.chapters.map(c => {
+    const file = CF[c.id];
+    const badge = c.tag === '573' ? '573 only' : c.tag === '883' ? '883 only' : 'BOTH';
+    const badgeCls = c.tag === '573' ? 'c573' : c.tag === '883' ? 'c883' : '';
+    const topicCount = (c.topics || []).length;
+    if (!file) {
+      return '<div class="card" style="opacity:.72;cursor:default">' +
+        '<span class="badge ' + badgeCls + '">' + c.id + '</span>' +
+        '<h3>' + c.title + '</h3>' +
+        '<p class="desc">' + (c.titleMl || '') + '</p>' +
+        '<div class="meta"><span>Coming soon</span><span>' + badge + '</span></div>' +
+        '<div class="bar"><i style="width:0%"></i></div>' +
+      '</div>';
+    }
+    return '<a href="../' + file + '" class="card">' +
+      '<span class="badge ' + badgeCls + '">' + c.id + '</span>' +
+      '<h3>' + c.title + '</h3>' +
+      '<p class="desc">' + (c.titleMl || '') + '</p>' +
+      '<div class="meta"><span>' + topicCount + ' topics</span><span>' + badge + '</span></div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+    '</a>';
+  }).join('');
+
+  const s = document.createElement('script');
+  s.src = '../assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+
+</body>
+</html>
+'@
+
+# ============================================================
+# TEMPLATE 3 - CHAPTER PAGE
+# ============================================================
+$chapterHtml = @'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loading - Kerala PSC</title>
+<link rel="stylesheet" href="../../assets/css/landing.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1 id="heroTitle">Loading...</h1>
+  <p id="heroSub"></p>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../../index.html">Home</a> &rsaquo;
+    <a id="crumbSubj" href="#">Subject</a> &rsaquo;
+    <span id="crumb">Chapter</span>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Topics in this Chapter</h2>
+    </div>
+    <div class="grid" id="topicGrid">
+      <p class="empty">Loading...</p>
+    </div>
+  </section>
+</main>
+
+<footer>Kerala PSC Study Suite - Works fully offline</footer>
+
+<script src="../../assets/js/syllabus.js"></script>
+<script>
+(async () => {
+  await Syllabus.load();
+  const filename = location.pathname.replace(/\\/g, '/').split('/').pop();
+  const chapterId = filename.replace(/\.html$/i, '').split('-')[0];
+
+  let foundSubj = null, foundChap = null;
+  for (const S of Syllabus.getAllSubjects()) {
+    const c = S.chapters.find(x => x.id === chapterId);
+    if (c) { foundSubj = S; foundChap = c; break; }
+  }
+  if (!foundChap) {
+    document.body.innerHTML = '<p style="padding:2rem;font-family:sans-serif">Chapter not found: <b>' + chapterId + '</b></p>';
+    return;
+  }
+
+  document.title = foundChap.id + ' ' + foundChap.title + ' - Kerala PSC';
+  document.getElementById('heroTitle').textContent = foundChap.id + ' ' + foundChap.title;
+  document.getElementById('heroSub').textContent = foundChap.titleMl || '';
+
+  const subjLink = document.getElementById('crumbSubj');
+  subjLink.textContent = foundSubj.title;
+  subjLink.href = '../../subjects/' + foundSubj.code + '-' + foundSubj.id + '.html';
+  document.getElementById('crumb').textContent = foundChap.title;
+
+  const grid = document.getElementById('topicGrid');
+  const topics = foundChap.topics || [];
+
+  if (!topics.length) {
+    grid.innerHTML = '<p class="empty">No topics in this chapter yet.</p>';
+    return;
+  }
+
+  grid.innerHTML = topics.map(t => {
+    const badge = t.tag === '573' ? '573 only' : t.tag === '883' ? '883 only' : 'BOTH';
+    const badgeCls = t.tag === '573' ? 'c573' : t.tag === '883' ? 'c883' : '';
+    const subsHtml = t.subs ? '<p class="desc" style="font-size:.78rem;min-height:auto">' + t.subs + '</p>' : '';
+
+    if (!t.file) {
+      return '<div class="card" style="opacity:.72;cursor:default">' +
+        '<span class="badge ' + badgeCls + '">' + t.id + '</span>' +
+        '<h3>' + t.title + '</h3>' +
+        '<p class="desc">' + (t.titleMl || '') + '</p>' +
+        subsHtml +
+        '<div class="meta"><span>Coming soon</span><span>' + badge + '</span></div>' +
+        '<div class="bar"><i style="width:0%"></i></div>' +
+      '</div>';
+    }
+
+    return '<a href="../../' + t.file + '" class="card" data-part="' + t.key + '" data-total="' + (t.qs || 0) + '">' +
+      '<span class="badge ' + badgeCls + '">' + t.id + '</span>' +
+      '<h3>' + t.title + '</h3>' +
+      '<p class="desc">' + (t.titleMl || '') + '</p>' +
+      subsHtml +
+      '<div class="meta"><span>' + (t.qs || 0) + ' MCQs</span><span>' + badge + '</span></div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+      '<div class="progressline"><span class="status">Not started</span><span class="score"></span></div>' +
+    '</a>';
+  }).join('');
+
+  const s = document.createElement('script');
+  s.src = '../../assets/js/sections.js';
+  document.body.appendChild(s);
+})();
+</script>
+
+</body>
+</html>
+'@
+
+# ============================================================
+# WRITE INDEX.HTML
+# ============================================================
+[System.IO.File]::WriteAllText((Join-Path $root 'index.html'), $indexHtml, $utf8)
+Write-Host '  index.html' -ForegroundColor Green
+
+# ============================================================
+# WRITE 17 SUBJECT PAGES
+# ============================================================
+$subjectsDir = Join-Path $root 'subjects'
+New-Item -ItemType Directory -Force -Path $subjectsDir | Out-Null
+
+$subjectFiles = @(
+  '01-history',
+  '02-geography',
+  '03-economics',
+  '04-constitution',
+  '05-kerala-administration',
+  '06-biology',
+  '07-physics',
+  '08-chemistry',
+  '09-art-sports-literature',
+  '10-computer',
+  '11-arithmetic',
+  '12-mental-ability',
+  '13-english',
+  '14-malayalam',
+  '15-current-affairs',
+  '16-important-acts',
+  '17-special-topics'
+)
+
+foreach ($name in $subjectFiles) {
+  $dest = Join-Path $subjectsDir ($name + '.html')
+  [System.IO.File]::WriteAllText($dest, $subjectHtml, $utf8)
+  Write-Host ("  subjects\" + $name + ".html") -ForegroundColor Green
+}
+
+# ============================================================
+# WRITE 33 CHAPTER PAGES
+# ============================================================
+$chaptersDir = Join-Path $root 'chapters'
+New-Item -ItemType Directory -Force -Path $chaptersDir | Out-Null
+
+$chapterMap = [ordered]@{
+  'history'               = @('1.1-kerala-history','1.2-indian-history','1.3-world-history')
+  'geography'             = @('2.1-basic-geography','2.2-india','2.3-kerala')
+  'economics'             = @('3-indian-economy')
+  'constitution'          = @('4-indian-constitution')
+  'kerala-administration' = @('5-kerala-administration')
+  'biology'               = @('6-biology-public-health')
+  'physics'               = @('7-physics')
+  'chemistry'             = @('8-chemistry')
+  'art-sports-literature' = @('9-art-sports-literature')
+  'computer'              = @('10-computer-it')
+  'arithmetic'            = @('11-simple-arithmetic')
+  'mental-ability'        = @('12-mental-ability')
+  'english'               = @('13.1-grammar','13.2-vocabulary')
+  'malayalam'             = @('14-malayalam')
+  'current-affairs'       = @('15.1-current-affairs')
+  'important-acts'        = @(
+    '16.1-rti',
+    '16.2-public-services',
+    '16.3-consumer-protection',
+    '16.4-vulnerable-sections',
+    '16.5-women',
+    '16.6-children',
+    '16.7-corruption',
+    '16.8-public-servant',
+    '16.9-tribunals'
+  )
+  'special-topics'        = @(
+    '17.1-legal-metrology-basics',
+    '17.2-legal-metrology-act',
+    '17.3-packaged-commodity-rules',
+    '17.4-kerala-enforcement-rules'
+  )
+}
+
+foreach ($dir in $chapterMap.Keys) {
+  $dirPath = Join-Path $chaptersDir $dir
+  New-Item -ItemType Directory -Force -Path $dirPath | Out-Null
+  foreach ($file in $chapterMap[$dir]) {
+    $dest = Join-Path $dirPath ($file + '.html')
+    [System.IO.File]::WriteAllText($dest, $chapterHtml, $utf8)
+    Write-Host ("  chapters\" + $dir + "\" + $file + ".html") -ForegroundColor Green
+  }
+}
+
+Write-Host ''
+Write-Host '==================================' -ForegroundColor Cyan
+Write-Host 'Done. Created 51 files:' -ForegroundColor Cyan
+Write-Host '  - index.html' -ForegroundColor Cyan
+Write-Host '  - 17 subject pages' -ForegroundColor Cyan
+Write-Host '  - 33 chapter pages' -ForegroundColor Cyan
+Write-Host ''
+Write-Host 'NEXT STEP:' -ForegroundColor Yellow
+Write-Host 'Add the CHAPTER_FILES block to assets\js\syllabus.js' -ForegroundColor Yellow
+Write-Host ''
+Read-Host 'Press Enter to close'

@@ -1,10 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Kerala PSC study suite for 573/2025 and 883/2025: chapter-wise notes, mock tests and quick revision. Works offline.">
-<meta name="theme-color" content="#0b5d63">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kerala PSC Study Suite</title>
 <link rel="stylesheet" href="assets/css/landing.css">
 <style>
@@ -13,61 +11,48 @@
 .btn.qr:hover{background:linear-gradient(135deg,#0a4f54,#0f7679);color:#fff;text-decoration:none;}
 .hero .badges .qr-badge{background:#fff;color:#0b5d63;border-color:#fff;text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:.35rem;}
 .hero .badges .qr-badge:hover{background:#e6f4f6;color:#0b5d63;text-decoration:none;}
-
-/* Accessibility and quality floor (zero-specificity so landing.css can still override) */
-.skip-link{position:absolute;left:.5rem;top:-4rem;z-index:100;padding:.6rem 1rem;border-radius:.5rem;background:#0b5d63;color:#fff;font-weight:700;text-decoration:none;}
-.skip-link:focus{top:.5rem;}
-:where(a,button):focus-visible{outline:3px solid #f5b301;outline-offset:2px;}
-.empty .btn{margin-left:.5rem;}
-noscript .empty{padding:1rem;text-align:center;}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
-}
 </style>
 </head>
 <body>
-
-<a class="skip-link" href="#main">Skip to content</a>
 
 <header class="hero">
   <h1>Kerala PSC Study Suite</h1>
   <p>573/2025 + 883/2025 - Master Combined Syllabus</p>
   <div class="badges">
     <span>Works offline</span>
-    <span id="subjectCount">17 subjects</span>
+    <span>17 subjects</span>
     <span>Progress saved locally</span>
-    <a href="all-subjects-quick-revision.html" class="qr-badge"><span aria-hidden="true">⚡</span> Quick Revision</a>
+    <a href="all-subjects-quick-revision.html" class="qr-badge">⚡ Quick Revision</a>
   </div>
 </header>
 
-<main id="main">
+<main>
 
-  <section aria-labelledby="mtHeading">
+  <section>
     <div class="section-head">
-      <h2 id="mtHeading"><span aria-hidden="true">📄</span> Mock Tests</h2>
+      <h2>📄 Mock Tests</h2>
     </div>
-    <div class="grid" id="mtGrid" aria-busy="true">
-      <p class="empty" role="status">Loading...</p>
+    <div class="grid" id="mtGrid">
+      <p class="empty">Loading...</p>
     </div>
   </section>
 
-  <section aria-labelledby="subjHeading">
+  <section>
     <div class="section-head">
-      <h2 id="subjHeading">Subjects</h2>
+      <h2>Subjects</h2>
       <div class="actions">
-        <a href="all-subjects-quick-revision.html" class="btn qr"><span aria-hidden="true">⚡</span> Quick Revision</a>
+        <a href="all-subjects-quick-revision.html" class="btn qr">⚡ Quick Revision</a>
         <button class="btn danger" id="resetAllBtn" type="button">Reset all progress</button>
       </div>
     </div>
-    <div class="grid" id="subjectGrid" aria-busy="true">
-      <p class="empty" role="status">Loading...</p>
+    <div class="grid" id="subjectGrid">
+      <p class="empty">Loading...</p>
     </div>
-    <noscript><p class="empty">JavaScript is required to show subjects and mock tests. Please enable it in your browser.</p></noscript>
   </section>
 
-  <section aria-labelledby="sumHeading">
+  <section>
     <div class="summary">
-      <h3 id="sumHeading">Overall Progress</h3>
+      <h3>Overall Progress</h3>
       <div class="summary-grid">
         <div class="stat"><span class="k">Subjects started</span><span class="v" id="sumParts">0</span></div>
         <div class="stat"><span class="k">Total questions</span><span class="v" id="sumTotal">0</span></div>
@@ -97,95 +82,74 @@ noscript .empty{padding:1rem;text-align:center;}
 <script src="assets/js/syllabus.js"></script>
 <script>
 (async () => {
-  const mtGrid  = document.getElementById('mtGrid');
-  const grid    = document.getElementById('subjectGrid');
-  const countEl = document.getElementById('subjectCount');
+  await Syllabus.load();
 
-  const showMessage = (el, msg, withReload) => {
-    el.setAttribute('aria-busy', 'false');
-    el.innerHTML = '<p class="empty" role="alert">' + msg +
-      (withReload ? ' <button class="btn" type="button" onclick="location.reload()">Reload</button>' : '') + '</p>';
-  };
-
-  /* ---------- Mock Tests (static, so they render even if the syllabus fails) ---------- */
+  /* ---------- Mock Tests (three cards) ---------- */
+  const mtGrid = document.getElementById('mtGrid');
   const EXAMS = [
     {
+      code: "573",
       title: "573/2025 Mock Tests",
       titleMl: "573/2025 മോക്ക് ടെസ്റ്റുകൾ",
       desc: "Full-length papers for the 573 exam",
       file: "mock-tests/573.html",
-      cls: "c573", label: "573 only"
+      tag: "573"
     },
     {
+      code: "883",
       title: "883/2025 Mock Tests",
       titleMl: "883/2025 മോക്ക് ടെസ്റ്റുകൾ",
       desc: "Inspecting Assistant (Legal Metrology)",
       file: "mock-tests/883.html",
-      cls: "c883", label: "883 only"
+      tag: "883"
     },
     {
+      code: "SUB",
       title: "Subject-wise Mock Tests",
       titleMl: "വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ",
       desc: "Chapter mock tests grouped by subject",
       file: "mock-tests/subjects.html",
-      cls: "", label: "BOTH"
+      tag: "BOTH"
     }
   ];
 
-  mtGrid.innerHTML = EXAMS.map(e =>
-    `<a href="${e.file}" class="card">
-      <span class="badge ${e.cls}">${e.label}</span>
-      <h3><span aria-hidden="true">📄</span> ${e.title}</h3>
-      <p class="desc"><span lang="ml">${e.titleMl}</span><br>${e.desc}</p>
-      <div class="meta"><span>Open list →</span></div>
-      <div class="bar" aria-hidden="true"><i style="width:0%"></i></div>
-    </a>`
-  ).join('');
-  mtGrid.setAttribute('aria-busy', 'false');
+  mtGrid.innerHTML = EXAMS.map(e => {
+    let cls = "", txt = "";
+    if (e.tag === "573")      { cls = "c573"; txt = "573 only"; }
+    else if (e.tag === "883") { cls = "c883"; txt = "883 only"; }
+    else                      { cls = "";     txt = "BOTH"; }
+    return '<a href="' + e.file + '" class="card">' +
+      '<span class="badge ' + cls + '">' + txt + '</span>' +
+      '<h3>📄 ' + e.title + '</h3>' +
+      '<p class="desc">' + e.titleMl + '<br>' + e.desc + '</p>' +
+      '<div class="meta"><span>Open list →</span></div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+    '</a>';
+  }).join('');
 
   /* ---------- Subjects ---------- */
-  if (typeof Syllabus === 'undefined') {
-    showMessage(grid, 'Syllabus data could not be loaded. Check that assets/js/syllabus.js is available.', true);
-    return;
-  }
-
-  try {
-    await Syllabus.load();
-  } catch (err) {
-    console.error('Syllabus failed to load:', err);
-    showMessage(grid, 'Could not load the syllabus. Reload the page to try again.', true);
-    return;
-  }
-
+  const grid = document.getElementById('subjectGrid');
   const list = Syllabus.getAllSubjects();
   if (!list || !list.length) {
-    showMessage(grid, 'No subjects found.', false);
+    grid.innerHTML = '<p class="empty">No subjects found.</p>';
     return;
   }
-
-  countEl.textContent = list.length + (list.length === 1 ? ' subject' : ' subjects');
-
   grid.innerHTML = list.map(S => {
-    const chapters = S.chapters || [];
-    const totalTopics = chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
-    return `<a href="subjects/${S.code}-${S.id}.html" class="card">
-      <span class="badge">${S.code}</span>
-      <h3><span aria-hidden="true">${S.icon}</span> ${S.title}</h3>
-      <p class="desc"><span lang="ml">${S.titleMl}</span> - ${S.desc}</p>
-      <div class="meta">
-        <span>${chapters.length} chapter${chapters.length === 1 ? '' : 's'}</span>
-        <span>${totalTopics} topic${totalTopics === 1 ? '' : 's'}</span>
-      </div>
-      <div class="bar" aria-hidden="true"><i style="width:0%"></i></div>
-    </a>`;
+    const totalTopics = S.chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
+    return '<a href="subjects/' + S.code + '-' + S.id + '.html" class="card">' +
+      '<span class="badge">' + S.code + '</span>' +
+      '<h3>' + S.icon + ' ' + S.title + '</h3>' +
+      '<p class="desc">' + S.titleMl + ' - ' + S.desc + '</p>' +
+      '<div class="meta">' +
+        '<span>' + S.chapters.length + ' chapter' + (S.chapters.length === 1 ? '' : 's') + '</span>' +
+        '<span>' + totalTopics + ' topics</span>' +
+      '</div>' +
+      '<div class="bar"><i style="width:0%"></i></div>' +
+    '</a>';
   }).join('');
-  grid.setAttribute('aria-busy', 'false');
 
-  /* sections.js only loads the "Revision Notes" button on subjects/NN-*.html pages.
-     It does nothing on this page, but it is kept as in the original. */
   const s = document.createElement('script');
   s.src = 'assets/js/sections.js';
-  s.onerror = () => console.warn('assets/js/sections.js could not be loaded.');
   document.body.appendChild(s);
 })();
 </script>
