@@ -1,12 +1,12 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 5.1  — fixes reload-loop on mobile
+   Version: 5.2  — skips the Quick Revision cache, queues saves made during a push, modal focus
    ===================================================================== */
 (function () {
   "use strict";
 
-  if (window.KPSC_Sync && window.KPSC_Sync.__version === 5.1) return;
+  if (window.KPSC_Sync) return;
 
   /* =================================================================
      ▼▼▼  FIREBASE CONFIG  ▼▼▼
@@ -42,7 +42,7 @@
 
   var firebaseApp = null, firebaseAuth = null, firestoreDb = null;
   var firebaseReady = false, currentUser = null;
-  var pushing = false, pulling = false, lastPull = 0;
+  var pushing = false, pushQueued = false, pulling = false, lastPull = 0;
   var pushTimer = null, syncing = false, fbSDKPromise = null;
 
   /* =================================================================
@@ -51,6 +51,7 @@
   function isTrackedKey(k, v) {
     if (!k || typeof k !== "string") return false;
     if (SKIP_KEYS[k]) return false;
+    if (k.indexOf("kpsc_qr_cache") === 0) return false;
     if (k.indexOf("firebase") === 0) return false;
     if (k.indexOf("__") === 0) return false;
     if (k.indexOf("kpsc_") === 0)  return true;
@@ -180,7 +181,7 @@
       var addedKeys = 0, changedKeys = 0;
 
       Object.keys(payload.stores).forEach(function (k) {
-        if (SKIP_KEYS[k]) return;
+        if (SKIP_KEYS[k] || k.indexOf("kpsc_qr_cache") === 0) return;
         var remote = payload.stores[k];
         var localRaw = localStorage.getItem(k);
 
@@ -271,7 +272,8 @@
   }
 
   function firebasePush() {
-    if (!firebaseReady || !currentUser || pushing) return Promise.resolve(false);
+    if (!firebaseReady || !currentUser) return Promise.resolve(false);
+    if (pushing) { pushQueued = true; return Promise.resolve(false); }
     pushing = true;
     var payload = collectPayload();
     payload.uid     = currentUser.uid;
@@ -282,11 +284,11 @@
       .then(function () {
         localStorage.setItem(LASTS_KEY, String(Date.now()));
         updateStatusUI("ok", "Saved " + new Date().toLocaleTimeString());
-        pushing = false;
+        pushDone();
         return true;
       })
       .catch(function (err) {
-        pushing = false;
+        pushDone();
         updateStatusUI("err", "Save failed: " + (err.message || err));
         throw err;
       });
@@ -388,7 +390,8 @@
   }
 
   function pushGist() {
-    if (!isGistConnected() || pushing) return Promise.resolve(false);
+    if (!isGistConnected()) return Promise.resolve(false);
+    if (pushing) { pushQueued = true; return Promise.resolve(false); }
     pushing = true;
     var payload = collectPayload();
     return ghFetch("https://api.github.com/gists/" + getGistId(), {
@@ -399,10 +402,10 @@
     }).then(function () {
       localStorage.setItem(LASTS_KEY, String(Date.now()));
       updateStatusUI("ok", "Pushed " + new Date().toLocaleTimeString());
-      pushing = false;
+      pushDone();
       return true;
     }).catch(function (err) {
-      pushing = false;
+      pushDone();
       updateStatusUI("err", "Push failed: " + err.message);
       throw err;
     });
@@ -424,6 +427,11 @@
     pushTimer = setTimeout(function () {
       pushNow().catch(function (e) { console.warn("auto-push:", e); });
     }, SAVE_DEBOUNCE);
+  }
+
+  function pushDone() {
+    pushing = false;
+    if (pushQueued) { pushQueued = false; schedulePush(); }
   }
 
   (function interceptSetItem() {
@@ -486,6 +494,7 @@
       "box-shadow:0 6px 22px rgba(0,0,0,.28);transition:.15s;}" +
     ".kpsc-sync-btn:hover{transform:translateY(-2px);}" +
     ".kpsc-sync-btn:active{transform:scale(.96);}" +
+    ".kpsc-sync-btn:focus-visible,.kpsc-close:focus-visible,.kpsc-tabs button:focus-visible,.kpsc-actions button:focus-visible{outline:3px solid #f5b301;outline-offset:2px;}" +
     ".kpsc-sync-btn::after{content:'';position:absolute;top:6px;right:8px;" +
       "width:9px;height:9px;border-radius:50%;background:#94a3b8;" +
       "box-shadow:0 0 0 2px #0b5d63;}" +
@@ -494,6 +503,7 @@
     ".kpsc-sync-btn.saving::after{background:#f59e0b;animation:pulse 1s ease infinite;}" +
     "@keyframes pulse{50%{opacity:.4;}}" +
     "@media print{.kpsc-sync-btn{display:none !important;}}" +
+    "@media (prefers-reduced-motion:reduce){.kpsc-sync-btn,.kpsc-sync-btn::after,.kpsc-status .dot{animation:none !important;transition:none !important;}}" +
 
     ".kpsc-sync-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);" +
       "z-index:9999;display:none;align-items:center;justify-content:center;" +
@@ -943,16 +953,22 @@
     }
   }
 
+  var lastFocus = null;
   function openModal() {
     var m = $("kpscSyncModal") || buildModal();
+    lastFocus = document.activeElement;
     m.classList.add("open");
     m.setAttribute("aria-hidden", "false");
     refreshExport();
     updateAccountUI();
+    var c = m.querySelector(".kpsc-close");
+    if (c) c.focus();
   }
   function closeModal() {
     var m = $("kpscSyncModal");
     if (m) { m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); }
+    if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
+    lastFocus = null;
   }
 
   function bindEvents() {
@@ -1022,7 +1038,7 @@
   }
 
   window.KPSC_Sync = {
-    __version: 5.1,
+    __version: 5.2,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
