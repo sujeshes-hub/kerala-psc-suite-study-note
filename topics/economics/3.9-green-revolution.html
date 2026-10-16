@@ -1,186 +1,105 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>കേരള PSC – ഇന്ത്യ: ഹരിതവിപ്ലവം | അധ്യായം 86</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #4a148c;
-      --primary-light: #6a1b9a;
-      --secondary: #00695c;
-      --accent: #b83b2c;
-      --bg: #ffffff;
-      --light-bg: #f3e5f5;
-      --border: #e1bee7;
-      --text: #14202b;
-      --text-light: #4a5f72;
-      --important-bg: #fff8e1;
-      --important-border: #f9a825;
-      --memory-bg: #e8f5e9;
-      --memory-border: #43a047;
-      --trap-bg: #fce4ec;
-      --trap-border: #c62828;
-      --correction-bg: #fff3e0;
-      --correction-border: #ef6c00;
-      --added-bg: #e3f2fd;
-      --added-border: #1976d2;
-      --revision-bg: #f3e5f5;
-      --revision-border: #8e24aa;
-      --table-head: #4a148c;
-      --table-alt: #f3e5f5;
-      --star: #f9a825;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
-      font-size: 16px; line-height: 1.7; color: var(--text);
-      background: var(--light-bg); padding: 16px;
-    }
-    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
-    .toc {
-      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
-      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
-      padding: 16px; align-self: start;
-    }
-    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
-    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
-    .toc-controls button {
-      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
-      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
-      border-radius: 6px; cursor: pointer; transition: all 0.2s;
-    }
-    .toc-controls button:hover { background: var(--primary); color: #fff; }
-    .toc-nav { list-style: none; }
-    .toc-nav li { margin-bottom: 2px; }
-    .toc-nav a {
-      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
-      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
-    }
-    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
-    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
-    .main-container {
-      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
-      padding: 24px; min-width: 0;
-    }
-    .chapter-header {
-      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
-      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
-    }
-    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
-    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
-    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
-    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .section h2 {
-      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
-      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
-    }
-    .section h2:hover { background: #ede7f6; }
-    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
-    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
-    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
-    .section.collapsed > *:not(h2) { display: none; }
-    .section-body { padding: 16px 18px; }
-    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
-      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    }
-    .important { background: var(--important-bg); border-left-color: var(--important-border); }
-    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
-    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
-    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
-    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
-    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
-    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
-    .last-minute strong { color: #ffd54f; }
-    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
-    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
-    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
-    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
-    ul, ol { padding-left: 22px; margin: 8px 0; }
-    li { margin-bottom: 6px; }
-    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
-    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
-    tbody tr:nth-child(even) { background: var(--table-alt); }
-    tbody tr:hover { background: #ede7f6; }
-    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
-    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
-    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-    .options span {
-      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
-      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
-    }
-    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
-    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
-    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
-    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
-    .options span.locked { cursor: not-allowed; opacity: 0.8; }
-    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
-    .q-controls button {
-      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
-      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
-    }
-    .q-controls button:hover { background: var(--light-bg); }
-    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
-    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
-    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
-    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
-    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
-    .answer-block {
-      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
-      border-radius: 8px; border-left: 4px solid var(--memory-border);
-    }
-    .answer-block.show { display: block; }
-    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
-    .explanation { font-size: 13.5px; color: var(--text-light); }
-    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
-    p { margin: 8px 0; }
-    strong { color: var(--primary); }
-    .last-minute strong { color: #ffd54f; }
-    .checklist { list-style: none; padding-left: 0; }
-    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
-    .arrow-list { list-style: none; padding-left: 0; }
-    .arrow-list li::before { content: "→ "; color: var(--primary); font-weight: 700; }
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .toc {
-        position: sticky; top: 0; height: auto; max-height: 60px;
-        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
-        border-radius: 0 0 12px 12px; z-index: 100;
-      }
-      .toc-title, .toc-controls { display: none; }
-      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
-      .toc-nav li { margin: 0; }
-      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
-      .toc-nav a.active { background: var(--primary); color: #fff; }
-    }
-    @media (max-width: 600px) {
-      body { font-size: 15.2px; }
-      .chapter-header h1 { font-size: 21px; }
-      .section h2 { font-size: 17.5px; }
-      h3 { font-size: 16px; }
-      table { font-size: 12px; }
-      thead th, tbody td { padding: 6px 8px; }
-      .q-text { font-size: 14.7px; }
-      .options { grid-template-columns: 1fr; }
-      .options span { font-size: 13.5px; }
-    }
-    @media print {
-      body { background: #fff; font-size: 10.5pt; padding: 0; }
-      .layout { display: block; }
-      .toc { display: none; }
-      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
-      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
-      .section.collapsed > *:not(h2) { display: block !important; }
-      .section { page-break-inside: avoid; border: 1px solid #ccc; }
-      .section h2 { cursor: default; background: #f3e5f5 !important; }
-      .toggle-icon { display: none; }
-      .q-controls { display: none; }
-      .answer-block { display: block !important; }
-    }
+:root{--primary:#4a148c;--primary-light:#6a1b9a;--secondary:#00695c;--accent:#b83b2c;--bg:#fff;--light-bg:#f3e5f5;--border:#e1bee7;--text:#14202b;--text-light:#4a5f72;--important-bg:#fff8e1;--important-border:#f9a825;--memory-bg:#e8f5e9;--memory-border:#43a047;--trap-bg:#fce4ec;--trap-border:#c62828;--correction-bg:#fff3e0;--correction-border:#ef6c00;--added-bg:#e3f2fd;--added-border:#1976d2;--revision-bg:#f3e5f5;--revision-border:#8e24aa;--table-head:#4a148c;--table-alt:#f3e5f5;--star:#f9a825}
+[data-theme="dark"]{--bg:#1e1e2e;--light-bg:#11111b;--border:#313244;--text:#cdd6f4;--text-light:#a6adc8;--primary:#cba6f7;--primary-light:#b4befe;--important-bg:#2c2518;--important-border:#f9a825;--memory-bg:#192b22;--memory-border:#43a047;--trap-bg:#2d1920;--trap-border:#c62828;--correction-bg:#2c2018;--correction-border:#ef6c00;--added-bg:#182432;--added-border:#1976d2;--revision-bg:#22182b;--revision-border:#8e24aa;--table-head:#6a1b9a;--table-alt:#181825}
+[data-theme="sepia"]{--bg:#fdf6e3;--light-bg:#eee8d5;--border:#d3cbb7;--text:#433422;--text-light:#65533c;--primary:#7b4b1e;--primary-light:#9c6b3a;--important-bg:#f7efd8;--memory-bg:#e9f0dd;--trap-bg:#f4e0e0;--correction-bg:#f8e8d4;--added-bg:#e0e8f0;--revision-bg:#ece0ee;--table-head:#7b4b1e;--table-alt:#f2ead4}
+[data-theme="dark"] .question-item,[data-theme="dark"] .viz-box,[data-theme="dark"] .options .opt-btn{background:#181825;color:var(--text)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans Malayalam','Manjari','Rachana','Nirmala UI',Arial,sans-serif;font-size:16px;line-height:1.7;color:var(--text);background:var(--light-bg);padding:16px;transition:background .3s,color .3s}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:20px;max-width:1400px;margin:0 auto}
+.toc{position:sticky;top:16px;height:calc(100vh - 32px);overflow-y:auto;background:var(--bg);border-radius:12px;box-shadow:0 2px 12px rgba(74,20,140,.1);padding:16px;align-self:start}
+.toc-title{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.toc-controls{display:flex;gap:6px;margin-bottom:12px}
+.toc-controls button{flex:1;padding:6px 8px;font-size:11px;font-family:inherit;background:var(--light-bg);color:var(--primary);border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.toc-controls button:hover{background:var(--primary);color:#fff}
+.toc-nav{list-style:none}.toc-nav li{margin-bottom:2px}
+.toc-nav a{display:block;padding:6px 10px;font-size:13px;color:var(--text-light);text-decoration:none;border-radius:6px;border-left:3px solid transparent;transition:.2s}
+.toc-nav a:hover{background:var(--light-bg);color:var(--primary)}
+.toc-nav a.active{background:var(--light-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.progress-wrap{margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+.progress-label{font-size:12px;color:var(--text-light);margin-bottom:6px;display:flex;justify-content:space-between;font-weight:600}
+.progress-track{width:100%;height:8px;background:var(--light-bg);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width .3s ease}
+.main-container{background:var(--bg);border-radius:16px;box-shadow:0 4px 24px rgba(74,20,140,.12);padding:24px;min-width:0}
+.chapter-header{background:linear-gradient(135deg,#4a148c 0%,#6a1b9a 100%);color:#fff;border-radius:12px;padding:24px;margin-bottom:24px}
+.chapter-header .label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;opacity:.85;margin-bottom:8px}
+.chapter-header h1{font-size:26px;line-height:1.4;margin-bottom:8px}
+.chapter-header .subtitle{font-size:14px;opacity:.9;font-style:italic}
+.utility-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;background:var(--light-bg);padding:10px 16px;border-radius:10px;margin-bottom:20px;border:1px solid var(--border)}
+.search-input{flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-family:inherit;font-size:14px}
+.utility-btns{display:flex;gap:8px;flex-wrap:wrap}
+.util-btn{padding:7px 12px;font-size:13px;font-family:inherit;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--primary);cursor:pointer;transition:.2s}
+.util-btn:hover{background:var(--light-bg)}.util-btn.active{background:var(--primary);color:var(--bg)}
+body.recall-mode strong{filter:blur(5px);background:rgba(106,27,154,.15);border-radius:4px;padding:0 4px;cursor:pointer;transition:filter .2s ease;user-select:none}
+body.recall-mode strong:hover,body.recall-mode strong.revealed{filter:blur(0)}
+.section{margin-bottom:20px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.section h2{background:var(--light-bg);color:var(--primary);padding:14px 18px;font-size:19px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;transition:background .2s;border-radius:0;margin:0;gap:10px}
+.section h2:hover{background:#ede7f6}[data-theme="dark"] .section h2:hover{background:#2a2a3c}
+.section h2:focus{outline:2px solid var(--primary);outline-offset:-2px}
+.section-title-text{flex:1}
+.section-done-check{width:18px;height:18px;cursor:pointer;accent-color:var(--secondary);flex-shrink:0}
+.toggle-icon{font-size:14px;transition:transform .3s;color:var(--primary)}
+.section.collapsed .toggle-icon{transform:rotate(-90deg)}
+.section.collapsed > *:not(h2){display:none}
+.section-body{padding:16px 18px}
+.important,.memory,.trap,.correction,.added-fact,.revision,.last-minute,.viz-box{padding:14px 16px;border-radius:8px;margin:12px 0;border-left:5px solid;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.important{background:var(--important-bg);border-left-color:var(--important-border)}
+.memory{background:var(--memory-bg);border-left-color:var(--memory-border)}
+.trap{background:var(--trap-bg);border-left-color:var(--trap-border)}
+.correction{background:var(--correction-bg);border-left-color:var(--correction-border)}
+.added-fact{background:var(--added-bg);border-left-color:var(--added-border)}
+.revision{background:var(--revision-bg);border-left-color:var(--revision-border)}
+.last-minute{background:#4a148c;color:#fff;border-left-color:#7c43bd}.last-minute strong{color:#ffd54f}
+.viz-box{background:var(--bg);border-left-color:var(--primary);text-align:center;border:1px solid var(--border)}
+.viz-caption{font-size:13px;color:var(--text-light);margin-top:8px;font-style:italic}
+.box-label{font-weight:700;font-size:15px;margin-bottom:6px;display:block}
+.stars{color:var(--star);font-size:13px;letter-spacing:1px}
+ul,ol{padding-left:22px;margin:8px 0}li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+thead th{background:var(--table-head);color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+tbody td{padding:8px 12px;border-bottom:1px solid var(--border)}
+tbody tr:nth-child(even){background:var(--table-alt)}tbody tr:hover{background:var(--light-bg)}
+.quiz-dashboard{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--light-bg);padding:14px 18px;border-radius:10px;margin-bottom:16px;border:2px solid var(--primary);position:sticky;top:10px;z-index:50}
+.score-stats{display:flex;gap:16px;font-weight:700;font-size:14px;flex-wrap:wrap}
+.score-stats span{color:var(--text)}.sc-correct{color:var(--memory-border)}.sc-wrong{color:var(--trap-border)}.sc-total{color:var(--primary)}
+.question-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin:14px 0}
+.q-text{font-weight:600;font-size:15.5px;margin-bottom:10px;color:var(--primary)}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.options .opt-btn{display:block;padding:8px 12px;background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:.2s;font-size:14px;font-family:inherit;text-align:left;width:100%}
+.options .opt-btn:hover{border-color:var(--primary-light);background:var(--light-bg)}
+.options .opt-btn.selected{border-color:var(--primary);background:var(--light-bg);font-weight:600}
+.options .opt-btn.correct{border-color:var(--memory-border);background:#c8e6c9;color:#14202b}
+.options .opt-btn.wrong{border-color:var(--trap-border);background:#ffcdd2;color:#14202b}
+.options .opt-btn.locked{cursor:not-allowed;opacity:.8}
+[data-theme="dark"] .options .opt-btn.correct{background:#1e4d2b;color:#cdd6f4}
+[data-theme="dark"] .options .opt-btn.wrong{background:#4d1e22;color:#cdd6f4}
+.q-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.q-controls button{padding:6px 12px;font-size:12px;font-family:inherit;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:var(--bg);color:var(--text);transition:.2s}
+.q-controls button:hover{background:var(--light-bg)}
+.btn-save{background:var(--secondary)!important;color:#fff!important;border-color:var(--secondary)!important}
+.btn-show{background:var(--primary)!important;color:#fff!important;border-color:var(--primary)!important}
+.btn-mark.active{background:var(--star)!important;color:#14202b!important;border-color:var(--star)!important}
+.btn-lock{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+.q-status{font-size:12px;font-weight:600;margin-left:auto;color:var(--text-light)}
+.answer-block{display:none;margin-top:10px;padding:10px 14px;background:var(--memory-bg);border-radius:8px;border-left:4px solid var(--memory-border)}
+.answer-block.show{display:block}
+.answer-label{font-weight:700;color:var(--secondary);margin-bottom:4px}
+.explanation{font-size:13.5px;color:var(--text-light)}
+h3{font-size:17px;color:var(--primary);margin:14px 0 8px}p{margin:8px 0}
+strong{color:var(--primary)}.last-minute strong{color:#ffd54f}
+.checklist{list-style:none;padding-left:0}.checklist li::before{content:"\2714 ";color:var(--secondary);font-weight:700}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:sticky;top:0;height:auto;max-height:60px;overflow-x:auto;overflow-y:hidden;padding:8px 12px;border-radius:0 0 12px 12px;z-index:100}.toc-title,.toc-controls,.progress-wrap{display:none}.toc-nav{display:flex;gap:6px;white-space:nowrap;padding-bottom:4px}.toc-nav li{margin:0}.toc-nav a{padding:6px 12px;background:var(--light-bg);border-radius:20px;border-left:none;font-size:12px}.toc-nav a.active{background:var(--primary);color:#fff}.quiz-dashboard{position:static}}
+@media(max-width:600px){body{font-size:15.2px}.chapter-header h1{font-size:21px}.section h2{font-size:17.5px}h3{font-size:16px}table{font-size:12px}thead th,tbody td{padding:6px 8px}.q-text{font-size:14.7px}.options{grid-template-columns:1fr}.options .opt-btn{font-size:13.5px}}
+@media print{body{background:#fff;font-size:10.5pt;padding:0;color:#000}.layout{display:block}.toc,.utility-bar,.quiz-dashboard,.section-done-check{display:none}.main-container{box-shadow:none;border-radius:0;padding:0}.chapter-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.last-minute{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#4a148c!important;color:#fff!important}.section.collapsed > *:not(h2){display:block!important}.section{page-break-inside:avoid;border:1px solid #ccc}.section h2{cursor:default;background:#f3e5f5!important}.toggle-icon{display:none}.q-controls{display:none}.answer-block{display:block!important}}
+.map-container{max-width:100%;overflow-x:auto}.map-container svg{max-width:100%;height:auto}
   </style>
 </head>
 <body>
@@ -216,6 +135,11 @@
       <li><a href="#sec19">19. ഒരു പേജ് റിവിഷൻ</a></li>
       <li><a href="#sec20">20. ഉപസംഹാരം</a></li>
     </ul>
+  
+    <div class="progress-wrap">
+      <div class="progress-label"><span>&#x1F4CA; &#x0D2A;&#x0D20;&#x0D28; &#x0D2A;&#x0D41;&#x0D30;&#x0D4B;&#x0D17;&#x0D24;&#x0D3F;</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
   </nav>
 
   <main class="main-container">
@@ -226,9 +150,19 @@
       <div class="subtitle">Green Revolution in India | Kerala PSC Rank File – Complete Verified Notes</div>
     </header>
 
+    <!-- UTILITY BAR -->
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="&#x1F50D; &#x0D15;&#x0D41;&#x0D31;&#x0D3F;&#x0D2A;&#x0D4D;&#x0D2A;&#x0D41;&#x0D15;&#x0D33;&#x0D3F;&#x0D7D; &#x0D24;&#x0D3F;&#x0D30;&#x0D2F;&#x0D41;&#x0D15;...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall">&#x1F9E0; Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">&#x1F319; Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">&#x1F504; Reset Quiz</button>
+      </div>
+    </div>
+
     <!-- SECTION 0: STAR GUIDE -->
     <section class="section" id="sec0">
-      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <h2 role="button" tabindex="0" aria-expanded="true"><input type="checkbox" class="section-done-check" data-sec="sec0" title="Mark as completed"><span class="section-title-text">⭐ Star Guide</span></h2>
       <div class="section-body">
         <div class="important">
           <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
@@ -253,7 +187,7 @@
 
     <!-- SECTION 1: അധ്യായ ആമുഖം -->
     <section class="section" id="sec1">
-      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec1" title="Mark as completed"><span class="section-title-text">1. അധ്യായ ആമുഖം</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ സമ്പദ്‌വ്യവസ്ഥയെ ഭക്ഷ്യ ഇറക്കുമതി രാജ്യത്തിൽ നിന്നും ഭക്ഷ്യ സ്വയംപര്യാപ്തതയിലേക്ക് (Food self-sufficiency) നയിച്ച ഹരിതവിപ്ലവം, അതിന്റെ ശില്പികൾ, അത്ഭുത വിത്തുകൾ (HYV Seeds), സ്വാധീനിച്ച സംസ്ഥാനങ്ങൾ, വിളകൾ എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
@@ -266,7 +200,7 @@
 
     <!-- SECTION 2: ചരിത്ര പശ്ചാത്തലം -->
     <section class="section" id="sec2">
-      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec2" title="Mark as completed"><span class="section-title-text">2. ചരിത്ര പശ്ചാത്തലം (Behind the Story)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> സ്വാതന്ത്ര്യം ലഭിച്ചതിന് ശേഷം ഇന്ത്യ കടുത്ത ഭക്ഷ്യക്ഷാമം നേരിട്ടിരുന്നു. ജനങ്ങളെ പട്ടിണിയിൽ നിന്ന് രക്ഷിക്കാൻ അമേരിക്കയുടെ <strong>'PL-480'</strong> (Public Law 480) പദ്ധതി പ്രകാരം ഗുണനിലവാരം കുറഞ്ഞ ഗോതമ്പ് ഇന്ത്യയ്ക്ക് ഇറക്കുമതി ചെയ്യേണ്ടി വന്നു. "കപ്പലിൽ നിന്ന് നേരിട്ട് വായിലേക്ക്" (Ship to mouth) എന്നായിരുന്നു ഈ ദയനീയ അവസ്ഥയെ അന്ന് വിശേഷിപ്പിച്ചിരുന്നത്.</li>
@@ -289,7 +223,7 @@
 
     <!-- SECTION 3: പ്രധാന വ്യക്തിത്വങ്ങൾ -->
     <section class="section" id="sec3">
-      <h2 role="button" tabindex="0" aria-expanded="false">3. ഹരിതവിപ്ലവത്തിന്റെ പ്രധാന വ്യക്തിത്വങ്ങൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec3" title="Mark as completed"><span class="section-title-text">3. ഹരിതവിപ്ലവത്തിന്റെ പ്രധാന വ്യക്തിത്വങ്ങൾ</span></h2>
       <div class="section-body">
         <h3>1. ലോക ഹരിതവിപ്ലവത്തിന്റെ പിതാവ്: നോർമൻ ബോർലോഗ്</h3>
         <ul>
@@ -333,7 +267,7 @@
 
     <!-- SECTION 4: തുടക്കവും ലക്ഷ്യങ്ങളും -->
     <section class="section" id="sec4">
-      <h2 role="button" tabindex="0" aria-expanded="false">4. ഹരിതവിപ്ലവം: തുടക്കവും ലക്ഷ്യങ്ങളും</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec4" title="Mark as completed"><span class="section-title-text">4. ഹരിതവിപ്ലവം: തുടക്കവും ലക്ഷ്യങ്ങളും</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കാലഘട്ടം:</strong> ഇന്ത്യയിൽ ഹരിതവിപ്ലവം ആരംഭിച്ചത് മൂന്നാം പഞ്ചവത്സര പദ്ധതിയുടെ തകർച്ചയ്ക്ക് ശേഷം വന്ന പദ്ധതി അവധിക്കാലത്താണ് (<strong>Plan Holiday: 1966-1969</strong>).</li>
@@ -359,7 +293,7 @@
 
     <!-- SECTION 5: വിളകളും സംസ്ഥാനങ്ങളും -->
     <section class="section" id="sec5">
-      <h2 role="button" tabindex="0" aria-expanded="false">5. സ്വാധീനിച്ച വിളകളും സംസ്ഥാനങ്ങളും</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec5" title="Mark as completed"><span class="section-title-text">5. സ്വാധീനിച്ച വിളകളും സംസ്ഥാനങ്ങളും</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാന വിളകൾ:</strong> ഹരിതവിപ്ലവം ഏറ്റവും കൂടുതൽ ഗുണം ചെയ്തത് <strong>ഗോതമ്പ് (Wheat)</strong>, <strong>നെല്ല് (Rice)</strong> എന്നിവയ്ക്കാണ്. (അതുകൊണ്ട് ഇന്ത്യയിലെ ഹരിതവിപ്ലവത്തെ 'ഗോതമ്പ് വിപ്ലവം' എന്നും വിളിക്കാറുണ്ട്). നാണ്യവിളകൾക്കോ പയറുവർഗ്ഗങ്ങൾക്കോ ഇതിന്റെ ഗുണം കാര്യമായി ലഭിച്ചില്ല.</li>
@@ -376,7 +310,7 @@
 
     <!-- SECTION 6: അത്ഭുത വിത്തുകൾ -->
     <section class="section" id="sec6">
-      <h2 role="button" tabindex="0" aria-expanded="false">6. അത്ഭുത വിത്തുകൾ (Miracle Seeds)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec6" title="Mark as completed"><span class="section-title-text">6. അത്ഭുത വിത്തുകൾ (Miracle Seeds)</span></h2>
       <div class="section-body">
         <h3>IR-8 (ഐ.ആർ 8):</h3>
         <ul>
@@ -407,7 +341,7 @@
 
     <!-- SECTION 7: രണ്ടാം & നിത്യഹരിത വിപ്ലവം -->
     <section class="section" id="sec7">
-      <h2 role="button" tabindex="0" aria-expanded="false">7. രണ്ടാം ഹരിതവിപ്ലവവും നിത്യഹരിത വിപ്ലവവും</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec7" title="Mark as completed"><span class="section-title-text">7. രണ്ടാം ഹരിതവിപ്ലവവും നിത്യഹരിത വിപ്ലവവും</span></h2>
       <div class="section-body">
         <h3>നിത്യഹരിത വിപ്ലവം (Evergreen Revolution):</h3>
         <ul>
@@ -433,7 +367,7 @@
 
     <!-- SECTION 8: മറ്റ് വിപ്ലവങ്ങൾ -->
     <section class="section" id="sec8">
-      <h2 role="button" tabindex="0" aria-expanded="false">8. മറ്റ് വിപ്ലവങ്ങൾ (ചോദ്യത്തിന് സാധ്യത)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec8" title="Mark as completed"><span class="section-title-text">8. മറ്റ് വിപ്ലവങ്ങൾ (ചോദ്യത്തിന് സാധ്യത)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> <strong>ധവള വിപ്ലവം (White):</strong> പാൽ (Operation Flood) - വർഗീസ് കുര്യൻ</li>
@@ -455,7 +389,7 @@
 
     <!-- SECTION 9: പ്രധാന വസ്തുതകൾ -->
     <section class="section" id="sec9">
-      <h2 role="button" tabindex="0" aria-expanded="false">9. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec9" title="Mark as completed"><span class="section-title-text">9. പ്രധാന വസ്തുതകൾ (Important Facts)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> ഐക്യരാഷ്ട്രസഭയുടെ പരിസ്ഥിതി പ്രോഗ്രാം (UNEP) എം.എസ്. സ്വാമിനാഥനെ <strong>'സാമ്പത്തിക പരിസ്ഥിതി ശാസ്ത്രത്തിന്റെ പിതാവ്'</strong> (Father of Economic Ecology) എന്ന് വിശേഷിപ്പിച്ചിട്ടുണ്ട്.</li>
@@ -475,7 +409,7 @@
 
     <!-- SECTION 10: PSC വിശകലനം -->
     <section class="section" id="sec10">
-      <h2 role="button" tabindex="0" aria-expanded="false">10. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec10" title="Mark as completed"><span class="section-title-text">10. കേരള PSC പരീക്ഷാ വിശകലനം</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> എം.എസ്. സ്വാമിനാഥൻ, വില്യം ഗൗഡ്, നോർമൻ ബോർലോഗ് (നൊബേൽ സമാധാന പുരസ്കാരം), ഇന്ത്യയുടെ അത്ഭുത നെല്ല് (IR-8).</li>
@@ -488,7 +422,7 @@
 
     <!-- SECTION 11: മുൻകാല ചോദ്യ പ്രവണത -->
     <section class="section" id="sec11">
-      <h2 role="button" tabindex="0" aria-expanded="false">11. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec11" title="Mark as completed"><span class="section-title-text">11. മുൻകാല ചോദ്യ പ്രവണത</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> "ഹരിതവിപ്ലവം (Green Revolution) എന്ന പദം ആദ്യമായി ഉപയോഗിച്ചത് ആര്?" (വില്യം ഗൗഡ് / William Gaud).</li>
@@ -501,7 +435,7 @@
 
     <!-- SECTION 12: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
     <section class="section" id="sec12">
-      <h2 role="button" tabindex="0" aria-expanded="false">12. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec12" title="Mark as completed"><span class="section-title-text">12. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (Confusing Facts)</span></h2>
       <div class="section-body">
         <div class="trap">
           <span class="box-label">⚠️ Confusing 1</span>
@@ -533,7 +467,7 @@
 
     <!-- SECTION 13: താരതമ്യ പട്ടികകൾ -->
     <section class="section" id="sec13">
-      <h2 role="button" tabindex="0" aria-expanded="false">13. താരതമ്യ പട്ടികകൾ (Comparison Tables)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec13" title="Mark as completed"><span class="section-title-text">13. താരതമ്യ പട്ടികകൾ (Comparison Tables)</span></h2>
       <div class="section-body">
         <h3>Table 1: ഹരിതവിപ്ലവത്തിലെ പ്രധാന വിത്തുകൾ</h3>
         <div style="overflow-x: auto;">
@@ -571,7 +505,7 @@
 
     <!-- SECTION 14: Mnemonics -->
     <section class="section" id="sec14">
-      <h2 role="button" tabindex="0" aria-expanded="false">14. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec14" title="Mark as completed"><span class="section-title-text">14. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</span></h2>
       <div class="section-body">
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick 1:</strong> വിജയിച്ച സംസ്ഥാനങ്ങൾ</span>
@@ -598,7 +532,7 @@
 
     <!-- SECTION 15: PSC കെണികൾ -->
     <section class="section" id="sec15">
-      <h2 role="button" tabindex="0" aria-expanded="false">15. സാധാരണ PSC കെണികൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec15" title="Mark as completed"><span class="section-title-text">15. സാധാരണ PSC കെണികൾ</span></h2>
       <div class="section-body">
         <div class="trap">
           <span class="box-label">⚠️ Trap 1</span>
@@ -635,16 +569,25 @@
 
     <!-- SECTION 16: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
     <section class="section" id="sec16">
-      <h2 role="button" tabindex="0" aria-expanded="false">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec16" title="Mark as completed"><span class="section-title-text">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span></h2>
       <div class="section-body">
         <!-- Q1 -->
+                <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">&#x1F4DD; &#x0D06;&#x0D15;&#x0D46;: <span id="scTotal">0</span></span>
+            <span class="sc-correct">&#x2705; &#x0D36;&#x0D30;&#x0D3F;: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">&#x274C; &#x0D24;&#x0D46;&#x0D31;&#x0D4D;&#x0D31;&#x0D4D;: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">&#x1F504; Reset</button>
+        </div>
+
         <div class="question-item" data-qindex="0">
           <div class="q-text">1. ഇന്ത്യയിൽ ഹരിതവിപ്ലവം (Green Revolution) ആരംഭിച്ചത് ഏത് പഞ്ചവത്സര പദ്ധതിയുടെ/കാലയളവിന്റെ സമയത്താണ്?</div>
           <div class="options">
-            <span data-opt="A">A. ഒന്നാം പഞ്ചവത്സര പദ്ധതി</span>
-            <span data-opt="B">B. നാലാം പഞ്ചവത്സര പദ്ധതി</span>
-            <span data-opt="C">C. പദ്ധതി അവധിക്കാലം (Plan Holiday: 1966-69)</span>
-            <span data-opt="D">D. അഞ്ചാം പഞ്ചവത്സര പദ്ധതി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ഒന്നാം പഞ്ചവത്സര പദ്ധതി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. നാലാം പഞ്ചവത്സര പദ്ധതി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പദ്ധതി അവധിക്കാലം (Plan Holiday: 1966-69)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. അഞ്ചാം പഞ്ചവത്സര പദ്ധതി</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) പദ്ധതി അവധിക്കാലം (Plan Holiday: 1966-69)</div>
@@ -655,10 +598,10 @@
         <div class="question-item" data-qindex="1">
           <div class="q-text">2. കാർഷിക രംഗത്ത് വിപ്ലവകരമായ മാറ്റങ്ങൾ കൊണ്ടുവന്നതിന് ലോക ഹരിതവിപ്ലവത്തിന്റെ പിതാവായ നോർമൻ ബോർലോഗിന് (Norman Borlaug) ലഭിച്ച നൊബേൽ സമ്മാനം ഏത് വിഭാഗത്തിലാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. സാമ്പത്തിക ശാസ്ത്രം</span>
-            <span data-opt="B">B. രസതന്ത്രം</span>
-            <span data-opt="C">C. സമാധാനം (Peace)</span>
-            <span data-opt="D">D. വൈദ്യശാസ്ത്രം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. സാമ്പത്തിക ശാസ്ത്രം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. രസതന്ത്രം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സമാധാനം (Peace)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വൈദ്യശാസ്ത്രം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) സമാധാനം (Peace)</div>
@@ -669,10 +612,10 @@
         <div class="question-item" data-qindex="2">
           <div class="q-text">3. 'ഇന്ത്യയുടെ അത്ഭുത നെല്ല്' (Miracle Rice of India) എന്ന് ഹരിതവിപ്ലവ കാലത്ത് വിശേഷിപ്പിക്കപ്പെട്ട അത്യുൽപ്പാദന ശേഷിയുള്ള നെൽവിത്ത് ഏതാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. ഐ.ആർ 8 (IR-8)</span>
-            <span data-opt="B">B. കല്യാൺ സോന</span>
-            <span data-opt="C">C. സൊണാലിക</span>
-            <span data-opt="D">D. പി.ടി.ബി 10</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ഐ.ആർ 8 (IR-8)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കല്യാൺ സോന</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സൊണാലിക</button>
+            <button type="button" class="opt-btn" data-opt="D">D. പി.ടി.ബി 10</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) ഐ.ആർ 8 (IR-8)</div>
@@ -683,10 +626,10 @@
         <div class="question-item" data-qindex="3">
           <div class="q-text">4. 2024-ൽ രാജ്യത്തെ പരമോന്നത സിവിലിയൻ ബഹുമതിയായ 'ഭാരതരത്ന' (മരണാനന്തരം) നൽകി ആദരിച്ച, ഇന്ത്യൻ ഹരിതവിപ്ലവത്തിന്റെ പിതാവ് ആര്?</div>
           <div class="options">
-            <span data-opt="A">A. വർഗീസ് കുര്യൻ</span>
-            <span data-opt="B">B. സി. സുബ്രഹ്മണ്യം</span>
-            <span data-opt="C">C. എം.എസ്. സ്വാമിനാഥൻ (M.S. Swaminathan)</span>
-            <span data-opt="D">D. നോർമൻ ബോർലോഗ്</span>
+            <button type="button" class="opt-btn" data-opt="A">A. വർഗീസ് കുര്യൻ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സി. സുബ്രഹ്മണ്യം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. എം.എസ്. സ്വാമിനാഥൻ (M.S. Swaminathan)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. നോർമൻ ബോർലോഗ്</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) എം.എസ്. സ്വാമിനാഥൻ (M.S. Swaminathan)</div>
@@ -697,10 +640,10 @@
         <div class="question-item" data-qindex="4">
           <div class="q-text">5. കാർഷിക മേഖലയിലെ മാറ്റങ്ങളെ സൂചിപ്പിക്കാൻ 'ഹരിതവിപ്ലവം' (Green Revolution) എന്ന പദം ആദ്യമായി ഉപയോഗിച്ചത് ആരാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. വില്യം ഗൗഡ് (William Gaud)</span>
-            <span data-opt="B">B. വില്യം കാംബെൽ</span>
-            <span data-opt="C">C. എം.എസ്. സ്വാമിനാഥൻ</span>
-            <span data-opt="D">D. ഇന്ദിരാഗാന്ധി</span>
+            <button type="button" class="opt-btn" data-opt="A">A. വില്യം ഗൗഡ് (William Gaud)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. വില്യം കാംബെൽ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. എം.എസ്. സ്വാമിനാഥൻ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഇന്ദിരാഗാന്ധി</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) വില്യം ഗൗഡ് (William Gaud)</div>
@@ -711,10 +654,10 @@
         <div class="question-item" data-qindex="5">
           <div class="q-text">6. ഇന്ത്യയിൽ ഹരിതവിപ്ലവത്തിന്റെ ഗുണഫലങ്ങൾ ഏറ്റവും കൂടുതൽ ലഭിച്ചത് ഏത് വിളയ്ക്കാണ്?</div>
           <div class="options">
-            <span data-opt="A">A. പരുത്തി</span>
-            <span data-opt="B">B. ഗോതമ്പ് (Wheat)</span>
-            <span data-opt="C">C. കരിമ്പ്</span>
-            <span data-opt="D">D. ചണം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. പരുത്തി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഗോതമ്പ് (Wheat)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. കരിമ്പ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ചണം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) ഗോതമ്പ് (Wheat)</div>
@@ -728,10 +671,10 @@
             2. സൊണാലിക, കല്യാൺ സോന എന്നിവ ഹരിതവിപ്ലവ കാലത്ത് ഉപയോഗിച്ച അത്യുൽപ്പാദന ശേഷിയുള്ള ഗോതമ്പ് ഇനങ്ങളാണ്.<br>
             3. ഹരിതവിപ്ലവത്തിന്റെ രാഷ്ട്രീയ പിതാവ് എന്ന് അറിയപ്പെടുന്നത് മുൻ കൃഷിമന്ത്രിയായിരുന്ന സി. സുബ്രഹ്മണ്യമാണ്.</div>
           <div class="options">
-            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
-            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
-            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
-            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1, 2 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 എന്നിവ ശരിയാണ്</div>
@@ -742,10 +685,10 @@
         <div class="question-item" data-qindex="7">
           <div class="q-text">8. പാരിസ്ഥിതിക സന്തുലിതാവസ്ഥ നിലനിർത്തിക്കൊണ്ടുള്ള സുസ്ഥിര കാർഷിക വികസനം ലക്ഷ്യമാക്കി എം.എസ്. സ്വാമിനാഥൻ മുന്നോട്ടുവെച്ച പുതിയ ആശയം ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
           <div class="options">
-            <span data-opt="A">A. നീല വിപ്ലവം</span>
-            <span data-opt="B">B. നിത്യഹരിത വിപ്ലവം (Evergreen Revolution)</span>
-            <span data-opt="C">C. സുവർണ്ണ വിപ്ലവം</span>
-            <span data-opt="D">D. വട്ട വിപ്ലവം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. നീല വിപ്ലവം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. നിത്യഹരിത വിപ്ലവം (Evergreen Revolution)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സുവർണ്ണ വിപ്ലവം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വട്ട വിപ്ലവം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) നിത്യഹരിത വിപ്ലവം (Evergreen Revolution)</div>
@@ -759,10 +702,10 @@
             2. കല്യാൺ സോന - b. ഇന്ത്യ തദ്ദേശീയമായി വികസിപ്പിച്ച നെല്ല്<br>
             3. ജയ - c. ഇന്ത്യയുടെ അത്ഭുത നെല്ല്</div>
           <div class="options">
-            <span data-opt="A">A. 1-c, 2-a, 3-b</span>
-            <span data-opt="B">B. 1-a, 2-c, 3-b</span>
-            <span data-opt="C">C. 1-b, 2-a, 3-c</span>
-            <span data-opt="D">D. 1-c, 2-b, 3-a</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1-c, 2-a, 3-b</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1-a, 2-c, 3-b</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1-b, 2-a, 3-c</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1-c, 2-b, 3-a</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) 1-c, 2-a, 3-b</div>
@@ -773,10 +716,10 @@
         <div class="question-item" data-qindex="9">
           <div class="q-text">10. ഇന്ത്യയിൽ ഹരിതവിപ്ലവം നടപ്പിലാക്കുന്നതിന് മുൻപ്, കടുത്ത ഭക്ഷ്യക്ഷാമം പരിഹരിക്കാൻ 'PL-480' (Public Law 480) എന്ന പദ്ധതി പ്രകാരം ഇന്ത്യ ഏത് രാജ്യത്ത് നിന്നാണ് ഗോതമ്പ് ഇറക്കുമതി ചെയ്തിരുന്നത്?</div>
           <div class="options">
-            <span data-opt="A">A. റഷ്യ</span>
-            <span data-opt="B">B. ഫ്രാൻസ്</span>
-            <span data-opt="C">C. അമേരിക്ക (USA)</span>
-            <span data-opt="D">D. ബ്രിട്ടൻ</span>
+            <button type="button" class="opt-btn" data-opt="A">A. റഷ്യ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഫ്രാൻസ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. അമേരിക്ക (USA)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ബ്രിട്ടൻ</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) അമേരിക്ക (USA)</div>
@@ -787,10 +730,10 @@
         <div class="question-item" data-qindex="10">
           <div class="q-text">11. ഹരിതവിപ്ലവ കാലത്ത് ഇന്ത്യയിലെ കാർഷിക വില കമ്മീഷൻ (Agricultural Prices Commission) രൂപീകരിച്ച വർഷം?</div>
           <div class="options">
-            <span data-opt="A">A. 1950</span>
-            <span data-opt="B">B. 1965</span>
-            <span data-opt="C">C. 1975</span>
-            <span data-opt="D">D. 1985</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1950</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1965</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1975</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1985</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) 1965</div>
@@ -801,10 +744,10 @@
         <div class="question-item" data-qindex="11">
           <div class="q-text">12. 'ഹരിതവിപ്ലവം' എന്ന പദം ആദ്യമായി ഉപയോഗിച്ച വർഷം?</div>
           <div class="options">
-            <span data-opt="A">A. 1960</span>
-            <span data-opt="B">B. 1966</span>
-            <span data-opt="C">C. 1968</span>
-            <span data-opt="D">D. 1970</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1960</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1966</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1968</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1970</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) 1968</div>
@@ -815,10 +758,10 @@
         <div class="question-item" data-qindex="12">
           <div class="q-text">13. സ്വാമിനാഥൻ കമ്മീഷൻ (National Commission on Farmers) ശുപാർശ ചെയ്തത് എന്ത്?</div>
           <div class="options">
-            <span data-opt="A">A. MSP = ഉൽപ്പാദനച്ചെലവിന്റെ (C2) 50% കൂടുതൽ</span>
-            <span data-opt="B">B. MSP റദ്ദാക്കൽ</span>
-            <span data-opt="C">C. വിത്ത് ഇറക്കുമതി</span>
-            <span data-opt="D">D. രാസവള സബ്സിഡി നിർത്തൽ</span>
+            <button type="button" class="opt-btn" data-opt="A">A. MSP = ഉൽപ്പാദനച്ചെലവിന്റെ (C2) 50% കൂടുതൽ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. MSP റദ്ദാക്കൽ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. വിത്ത് ഇറക്കുമതി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. രാസവള സബ്സിഡി നിർത്തൽ</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) MSP = ഉൽപ്പാദനച്ചെലവിന്റെ (C2) 50% കൂടുതൽ</div>
@@ -829,10 +772,10 @@
         <div class="question-item" data-qindex="13">
           <div class="q-text">14. ധവള വിപ്ലവവുമായി ബന്ധപ്പെട്ട വ്യക്തി?</div>
           <div class="options">
-            <span data-opt="A">A. വർഗീസ് കുര്യൻ</span>
-            <span data-opt="B">B. സ്വാമിനാഥൻ</span>
-            <span data-opt="C">C. ബോർലോഗ്</span>
-            <span data-opt="D">D. സി. സുബ്രഹ്മണ്യം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. വർഗീസ് കുര്യൻ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സ്വാമിനാഥൻ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ബോർലോഗ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. സി. സുബ്രഹ്മണ്യം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) വർഗീസ് കുര്യൻ</div>
@@ -843,10 +786,10 @@
         <div class="question-item" data-qindex="14">
           <div class="q-text">15. ഇന്ത്യയുടെ ആദ്യ കാർഷിക സർവകലാശാല?</div>
           <div class="options">
-            <span data-opt="A">A. പന്ത്നഗർ (GB Pant)</span>
-            <span data-opt="B">B. ലുധിയാന</span>
-            <span data-opt="C">C. കോയമ്പത്തൂർ</span>
-            <span data-opt="D">D. വെള്ളാനിക്കര</span>
+            <button type="button" class="opt-btn" data-opt="A">A. പന്ത്നഗർ (GB Pant)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ലുധിയാന</button>
+            <button type="button" class="opt-btn" data-opt="C">C. കോയമ്പത്തൂർ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വെള്ളാനിക്കര</button>
           </div>
           <div class="answer-label" style="display:none"></div>
           <div class="answer-block">
@@ -859,7 +802,7 @@
 
     <!-- SECTION 17: ഉത്തര സൂചിക -->
     <section class="section" id="sec17">
-      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉത്തര സൂചിക (Answer Key)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec17" title="Mark as completed"><span class="section-title-text">17. ഉത്തര സൂചിക (Answer Key)</span></h2>
       <div class="section-body">
         <div style="overflow-x: auto;">
           <table style="max-width: 500px; margin: 0 auto; text-align: center;">
@@ -880,7 +823,7 @@
 
     <!-- SECTION 18: 30-സെക്കൻഡ് റിവിഷൻ -->
     <section class="section" id="sec18">
-      <h2 role="button" tabindex="0" aria-expanded="false">18. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec18" title="Mark as completed"><span class="section-title-text">18. 30-സെക്കൻഡ് റിവിഷൻ</span></h2>
       <div class="section-body">
         <ul class="checklist">
           <li>ഹരിതവിപ്ലവം ആരംഭിച്ചത്: <strong>1966-67</strong> (പദ്ധതി അവധിക്കാലത്ത്, 1966-69).</li>
@@ -903,7 +846,7 @@
 
     <!-- SECTION 19: ഒരു പേജ് റിവിഷൻ -->
     <section class="section" id="sec19">
-      <h2 role="button" tabindex="0" aria-expanded="false">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec19" title="Mark as completed"><span class="section-title-text">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</span></h2>
       <div class="section-body">
         <h3>The Fathers:</h3>
         <ul>
@@ -942,7 +885,7 @@
 
     <!-- SECTION 20: ഉപസംഹാരം -->
     <section class="section" id="sec20">
-      <h2 role="button" tabindex="0" aria-expanded="false">20. ഉപസംഹാരം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec20" title="Mark as completed"><span class="section-title-text">20. ഉപസംഹാരം</span></h2>
       <div class="section-body">
         <h3>പ്രധാന Takeaways</h3>
         <ul>
@@ -1246,6 +1189,53 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+'use strict';
+var SLUG='3_9_green_revolution';var QUIZ_PREFIX='pscQuiz_'+SLUG+'_';var SEC_PREFIX='pscSec_'+SLUG+'_';var THEME_KEY='pscThemeGlobal';
+var sections=Array.from(document.querySelectorAll('.section'));var tocLinks=Array.from(document.querySelectorAll('.toc-nav a'));
+sections.forEach(function(sec){var h2=sec.querySelector('h2');if(h2&&!h2.querySelector('.toggle-icon')){var i=document.createElement('span');i.className='toggle-icon';i.textContent='\u25BE';h2.appendChild(i);}});
+function toggleSection(sec){var c=sec.classList.toggle('collapsed');var h2=sec.querySelector('h2');if(h2)h2.setAttribute('aria-expanded',String(!c));}
+function openOnly(sec){sec.classList.remove('collapsed');var h2=sec.querySelector('h2');if(h2)h2.setAttribute('aria-expanded','true');}
+sections.forEach(function(sec){var h2=sec.querySelector('h2');if(!h2)return;h2.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('section-done-check'))return;toggleSection(sec);});h2.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){if(e.target.classList&&e.target.classList.contains('section-done-check'))return;e.preventDefault();toggleSection(sec);}});});
+if(sections.length>0)openOnly(sections[0]);
+var expandAllBtn=document.getElementById('expandAll');var collapseAllBtn=document.getElementById('collapseAll');
+if(expandAllBtn)expandAllBtn.addEventListener('click',function(){sections.forEach(function(s){s.classList.remove('collapsed');var h2=s.querySelector('h2');if(h2)h2.setAttribute('aria-expanded','true');});});
+if(collapseAllBtn)collapseAllBtn.addEventListener('click',function(){sections.forEach(function(s){s.classList.add('collapsed');var h2=s.querySelector('h2');if(h2)h2.setAttribute('aria-expanded','false');});});
+var themeBtn=document.getElementById('toggleTheme');var themes=['light','dark','sepia'];var currentThemeIdx=0;
+function themeLabel(t){return t==='dark'?'\uD83D\uDCDC Sepia':t==='sepia'?'\u2600\uFE0F Light':'\uD83C\uDF19 Dark';}
+try{var savedTheme=localStorage.getItem(THEME_KEY);if(savedTheme&&themes.indexOf(savedTheme)!==-1){currentThemeIdx=themes.indexOf(savedTheme);document.documentElement.setAttribute('data-theme',savedTheme);if(themeBtn)themeBtn.textContent=themeLabel(savedTheme);}}catch(e){}
+if(themeBtn)themeBtn.addEventListener('click',function(){currentThemeIdx=(currentThemeIdx+1)%themes.length;var n=themes[currentThemeIdx];document.documentElement.setAttribute('data-theme',n);themeBtn.textContent=themeLabel(n);try{localStorage.setItem(THEME_KEY,n);}catch(e){}});
+var recallBtn=document.getElementById('toggleRecall');
+if(recallBtn){recallBtn.addEventListener('click',function(){var a=document.body.classList.toggle('recall-mode');recallBtn.classList.toggle('active',a);document.querySelectorAll('strong.revealed').forEach(function(el){el.classList.remove('revealed');});});document.body.addEventListener('click',function(e){if(document.body.classList.contains('recall-mode')&&e.target.tagName==='STRONG')e.target.classList.toggle('revealed');});}
+var searchInput=document.getElementById('noteSearch');
+if(searchInput)searchInput.addEventListener('input',function(){var q=this.value.trim().toLowerCase();sections.forEach(function(sec){if(!q){sec.style.display='';return;}if(sec.textContent.toLowerCase().indexOf(q)!==-1){sec.classList.remove('collapsed');sec.style.display='';}else{sec.style.display='none';}});});
+var doneChecks=Array.from(document.querySelectorAll('.section-done-check'));var progressFill=document.getElementById('progressFill');var progressPercent=document.getElementById('progressPercent');
+function updateProgress(){var t=doneChecks.length;var c=doneChecks.filter(function(x){return x.checked;}).length;var p=t>0?Math.round((c/t)*100):0;if(progressFill)progressFill.style.width=p+'%';if(progressPercent)progressPercent.textContent=p+'%';}
+doneChecks.forEach(function(chk){var secId=chk.getAttribute('data-sec');try{if(localStorage.getItem(SEC_PREFIX+secId)==='1')chk.checked=true;}catch(e){}chk.addEventListener('click',function(e){e.stopPropagation();});chk.addEventListener('change',function(){try{if(chk.checked)localStorage.setItem(SEC_PREFIX+secId,'1');else localStorage.removeItem(SEC_PREFIX+secId);}catch(e){}updateProgress();});});
+updateProgress();
+tocLinks.forEach(function(link){link.addEventListener('click',function(e){e.preventDefault();var tid=link.getAttribute('href');if(!tid)return;var t=document.querySelector(tid);if(!t)return;openOnly(t);tocLinks.forEach(function(l){l.classList.remove('active');});link.classList.add('active');var p=t.getBoundingClientRect().top+window.pageYOffset-20;window.scrollTo({top:p,behavior:'smooth'});});});
+if('IntersectionObserver' in window){var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id=entry.target.getAttribute('id');if(!id)return;tocLinks.forEach(function(link){link.classList.remove('active');if(link.getAttribute('href')==='#'+id)link.classList.add('active');});}});},{rootMargin:'-15% 0px -75% 0px',threshold:0});sections.forEach(function(s){observer.observe(s);});}
+var questionItems=Array.from(document.querySelectorAll('.question-item'));
+function updateScoreboard(){var t=questionItems.length,c=0,w=0;questionItems.forEach(function(it){var q=it.getAttribute('data-qindex');if(q===null)return;try{var s=localStorage.getItem(QUIZ_PREFIX+q);if(s){var p=JSON.parse(s);if(p&&p.saved&&p.selected&&p.correctLetter){if(p.selected===p.correctLetter)c++;else w++;}}}catch(e){}});var tEl=document.getElementById('scTotal');var cEl=document.getElementById('scCorrect');var wEl=document.getElementById('scWrong');if(tEl)tEl.textContent=t;if(cEl)cEl.textContent=c;if(wEl)wEl.textContent=w;}
+questionItems.forEach(function(item){var qIndex=item.getAttribute('data-qindex');if(qIndex===null)return;var storageKey=QUIZ_PREFIX+qIndex;var answerBlock=item.querySelector('.answer-block');var answerLabel=item.querySelector('.answer-block .answer-label')||item.querySelector('.answer-label');var optionsContainer=item.querySelector('.options');if(!optionsContainer)return;var optionSpans=Array.from(optionsContainer.querySelectorAll('button.opt-btn'));var correctLetter=null;if(answerLabel){var txt=answerLabel.textContent;['A','B','C','D'].forEach(function(L){if(!correctLetter&&txt.indexOf('('+L+')')!==-1)correctLetter=L;});}if(answerBlock)answerBlock.style.display='none';var state={selected:null,saved:false,marked:false,locked:false,correctLetter:correctLetter};try{var s=localStorage.getItem(storageKey);if(s){var p=JSON.parse(s);if(p){state.selected=p.selected||null;state.saved=!!p.saved;state.marked=!!p.marked;state.locked=!!p.locked;state.correctLetter=p.correctLetter||correctLetter;}}}catch(e){}
+if(state.selected)optionSpans.forEach(function(sp){if(sp.getAttribute('data-opt')===state.selected)sp.classList.add('selected');});
+if(state.saved&&state.selected&&correctLetter){optionSpans.forEach(function(sp){var o=sp.getAttribute('data-opt');if(o===correctLetter)sp.classList.add('correct');if(o===state.selected&&o!==correctLetter)sp.classList.add('wrong');});if(answerBlock)answerBlock.style.display='block';}
+var controls=document.createElement('div');controls.className='q-controls';var saveBtn=document.createElement('button');saveBtn.type='button';saveBtn.className='btn-save';saveBtn.textContent='Save Answer';var showBtn=document.createElement('button');showBtn.type='button';showBtn.className='btn-show';showBtn.textContent='Show Answer';var markBtn=document.createElement('button');markBtn.type='button';markBtn.className='btn-mark';markBtn.textContent='Mark for Review';var lockBtn=document.createElement('button');lockBtn.type='button';lockBtn.className='btn-lock';lockBtn.textContent='\uD83D\uDD12 Lock';var statusSpan=document.createElement('span');statusSpan.className='q-status';controls.appendChild(saveBtn);controls.appendChild(showBtn);controls.appendChild(markBtn);controls.appendChild(lockBtn);controls.appendChild(statusSpan);optionsContainer.parentNode.insertBefore(controls,optionsContainer.nextSibling);if(state.marked)markBtn.classList.add('active');
+function persist(){try{localStorage.setItem(storageKey,JSON.stringify(state));}catch(e){}}
+function showResult(){if(!state.selected||!correctLetter)return;optionSpans.forEach(function(sp){sp.classList.remove('correct','wrong');var o=sp.getAttribute('data-opt');if(o===correctLetter)sp.classList.add('correct');if(o===state.selected&&o!==correctLetter)sp.classList.add('wrong');});statusSpan.textContent=(state.selected===correctLetter)?'\u2705 Correct':'\u274C Wrong';if(answerBlock)answerBlock.style.display='block';}
+function applyLock(l){state.locked=l;optionSpans.forEach(function(sp){if(l)sp.classList.add('locked');else sp.classList.remove('locked');});if(l){lockBtn.textContent='\uD83D\uDD13 Unlock';statusSpan.textContent='Locked';if(state.selected)showResult();}else{lockBtn.textContent='\uD83D\uDD12 Lock';if(!state.saved)statusSpan.textContent='Unlocked';else showResult();}persist();}
+if(state.locked)applyLock(true);
+optionSpans.forEach(function(sp){sp.addEventListener('click',function(){if(state.locked)return;optionSpans.forEach(function(x){x.classList.remove('selected','correct','wrong');});sp.classList.add('selected');state.selected=sp.getAttribute('data-opt');state.saved=false;statusSpan.textContent='';if(answerBlock)answerBlock.style.display='none';persist();});});
+saveBtn.addEventListener('click',function(){if(state.locked)return;if(!state.selected){statusSpan.textContent='Select an option';return;}state.saved=true;persist();showResult();statusSpan.textContent+=' \u2014 Saved';updateScoreboard();});
+showBtn.addEventListener('click',function(){if(!answerBlock)return;if(answerBlock.style.display==='none'||answerBlock.style.display==='')answerBlock.style.display='block';else answerBlock.style.display='none';});
+markBtn.addEventListener('click',function(){state.marked=!state.marked;markBtn.classList.toggle('active',state.marked);persist();});
+lockBtn.addEventListener('click',function(){applyLock(!state.locked);});});
+updateScoreboard();
+function resetAllQuiz(){if(!confirm('\u0D0E\u0D32\u0D4D\u0D32\u0D3E \u0D09\u0D24\u0D4D\u0D24\u0D30\u0D19\u0D4D\u0D19\u0D33\u0D41\u0D02 \u0D31\u0D40\u0D38\u0D46\u0D31\u0D4D\u0D31\u0D4D \u0D1A\u0D46\u0D2F\u0D4D\u0D2F\u0D23\u0D4B?'))return;try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(QUIZ_PREFIX)===0)localStorage.removeItem(k);});}catch(e){}location.reload();}
+var rb=document.getElementById('resetQuiz');if(rb)rb.addEventListener('click',resetAllQuiz);
+var rbb=document.getElementById('resetQuizBottom');if(rbb)rbb.addEventListener('click',resetAllQuiz);
+});
+</script>
 </body>
 </html>

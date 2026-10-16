@@ -1,186 +1,105 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>കേരള PSC – ഭൂമിശാസ്ത്രം: മലിനീകരണങ്ങൾ | അധ്യായം 24</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #4a148c;
-      --primary-light: #6a1b9a;
-      --secondary: #00695c;
-      --accent: #b83b2c;
-      --bg: #ffffff;
-      --light-bg: #f3e5f5;
-      --border: #e1bee7;
-      --text: #14202b;
-      --text-light: #4a5f72;
-      --important-bg: #fff8e1;
-      --important-border: #f9a825;
-      --memory-bg: #e8f5e9;
-      --memory-border: #43a047;
-      --trap-bg: #fce4ec;
-      --trap-border: #c62828;
-      --correction-bg: #fff3e0;
-      --correction-border: #ef6c00;
-      --added-bg: #e3f2fd;
-      --added-border: #1976d2;
-      --revision-bg: #f3e5f5;
-      --revision-border: #8e24aa;
-      --table-head: #4a148c;
-      --table-alt: #f3e5f5;
-      --star: #f9a825;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
-      font-size: 16px; line-height: 1.7; color: var(--text);
-      background: var(--light-bg); padding: 16px;
-    }
-    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
-    .toc {
-      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
-      background: var(--bg); border-radius: 12px; box-shadow: 0 2px 12px rgba(74,20,140,0.1);
-      padding: 16px; align-self: start;
-    }
-    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
-    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
-    .toc-controls button {
-      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
-      background: var(--light-bg); color: var(--primary); border: 1px solid var(--border);
-      border-radius: 6px; cursor: pointer; transition: all 0.2s;
-    }
-    .toc-controls button:hover { background: var(--primary); color: #fff; }
-    .toc-nav { list-style: none; }
-    .toc-nav li { margin-bottom: 2px; }
-    .toc-nav a {
-      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
-      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
-    }
-    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
-    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
-    .main-container {
-      background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74,20,140,0.12);
-      padding: 24px; min-width: 0;
-    }
-    .chapter-header {
-      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
-      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
-    }
-    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
-    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
-    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
-    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .section h2 {
-      background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 19px;
-      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-      user-select: none; transition: background 0.2s; border-radius: 0; margin: 0;
-    }
-    .section h2:hover { background: #ede7f6; }
-    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
-    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
-    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
-    .section.collapsed > *:not(h2) { display: none; }
-    .section-body { padding: 16px 18px; }
-    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
-      padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    }
-    .important { background: var(--important-bg); border-left-color: var(--important-border); }
-    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
-    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
-    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
-    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
-    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
-    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
-    .last-minute strong { color: #ffd54f; }
-    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
-    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
-    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
-    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
-    ul, ol { padding-left: 22px; margin: 8px 0; }
-    li { margin-bottom: 6px; }
-    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
-    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
-    tbody tr:nth-child(even) { background: var(--table-alt); }
-    tbody tr:hover { background: #ede7f6; }
-    .question-item { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
-    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
-    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-    .options span {
-      display: block; padding: 8px 12px; background: #fff; border: 1.5px solid var(--border);
-      border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px;
-    }
-    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
-    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
-    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
-    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
-    .options span.locked { cursor: not-allowed; opacity: 0.8; }
-    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
-    .q-controls button {
-      padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border);
-      border-radius: 6px; cursor: pointer; background: #fff; color: var(--text); transition: all 0.2s;
-    }
-    .q-controls button:hover { background: var(--light-bg); }
-    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
-    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
-    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
-    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
-    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
-    .answer-block {
-      display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg);
-      border-radius: 8px; border-left: 4px solid var(--memory-border);
-    }
-    .answer-block.show { display: block; }
-    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
-    .explanation { font-size: 13.5px; color: var(--text-light); }
-    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
-    p { margin: 8px 0; }
-    strong { color: var(--primary); }
-    .last-minute strong { color: #ffd54f; }
-    .checklist { list-style: none; padding-left: 0; }
-    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
-    .arrow-list { list-style: none; padding-left: 0; }
-    .arrow-list li::before { content: "→ "; color: var(--primary); font-weight: 700; }
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .toc {
-        position: sticky; top: 0; height: auto; max-height: 60px;
-        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
-        border-radius: 0 0 12px 12px; z-index: 100;
-      }
-      .toc-title, .toc-controls { display: none; }
-      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
-      .toc-nav li { margin: 0; }
-      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
-      .toc-nav a.active { background: var(--primary); color: #fff; }
-    }
-    @media (max-width: 600px) {
-      body { font-size: 15.2px; }
-      .chapter-header h1 { font-size: 21px; }
-      .section h2 { font-size: 17.5px; }
-      h3 { font-size: 16px; }
-      table { font-size: 12px; }
-      thead th, tbody td { padding: 6px 8px; }
-      .q-text { font-size: 14.7px; }
-      .options { grid-template-columns: 1fr; }
-      .options span { font-size: 13.5px; }
-    }
-    @media print {
-      body { background: #fff; font-size: 10.5pt; padding: 0; }
-      .layout { display: block; }
-      .toc { display: none; }
-      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
-      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
-      .section.collapsed > *:not(h2) { display: block !important; }
-      .section { page-break-inside: avoid; border: 1px solid #ccc; }
-      .section h2 { cursor: default; background: #f3e5f5 !important; }
-      .toggle-icon { display: none; }
-      .q-controls { display: none; }
-      .answer-block { display: block !important; }
-    }
+:root{--primary:#4a148c;--primary-light:#6a1b9a;--secondary:#00695c;--accent:#b83b2c;--bg:#fff;--light-bg:#f3e5f5;--border:#e1bee7;--text:#14202b;--text-light:#4a5f72;--important-bg:#fff8e1;--important-border:#f9a825;--memory-bg:#e8f5e9;--memory-border:#43a047;--trap-bg:#fce4ec;--trap-border:#c62828;--correction-bg:#fff3e0;--correction-border:#ef6c00;--added-bg:#e3f2fd;--added-border:#1976d2;--revision-bg:#f3e5f5;--revision-border:#8e24aa;--table-head:#4a148c;--table-alt:#f3e5f5;--star:#f9a825}
+[data-theme="dark"]{--bg:#1e1e2e;--light-bg:#11111b;--border:#313244;--text:#cdd6f4;--text-light:#a6adc8;--primary:#cba6f7;--primary-light:#b4befe;--important-bg:#2c2518;--important-border:#f9a825;--memory-bg:#192b22;--memory-border:#43a047;--trap-bg:#2d1920;--trap-border:#c62828;--correction-bg:#2c2018;--correction-border:#ef6c00;--added-bg:#182432;--added-border:#1976d2;--revision-bg:#22182b;--revision-border:#8e24aa;--table-head:#6a1b9a;--table-alt:#181825}
+[data-theme="sepia"]{--bg:#fdf6e3;--light-bg:#eee8d5;--border:#d3cbb7;--text:#433422;--text-light:#65533c;--primary:#7b4b1e;--primary-light:#9c6b3a;--important-bg:#f7efd8;--memory-bg:#e9f0dd;--trap-bg:#f4e0e0;--correction-bg:#f8e8d4;--added-bg:#e0e8f0;--revision-bg:#ece0ee;--table-head:#7b4b1e;--table-alt:#f2ead4}
+[data-theme="dark"] .question-item,[data-theme="dark"] .viz-box,[data-theme="dark"] .options .opt-btn{background:#181825;color:var(--text)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans Malayalam','Manjari','Rachana','Nirmala UI',Arial,sans-serif;font-size:16px;line-height:1.7;color:var(--text);background:var(--light-bg);padding:16px;transition:background .3s,color .3s}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:20px;max-width:1400px;margin:0 auto}
+.toc{position:sticky;top:16px;height:calc(100vh - 32px);overflow-y:auto;background:var(--bg);border-radius:12px;box-shadow:0 2px 12px rgba(74,20,140,.1);padding:16px;align-self:start}
+.toc-title{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.toc-controls{display:flex;gap:6px;margin-bottom:12px}
+.toc-controls button{flex:1;padding:6px 8px;font-size:11px;font-family:inherit;background:var(--light-bg);color:var(--primary);border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.toc-controls button:hover{background:var(--primary);color:#fff}
+.toc-nav{list-style:none}.toc-nav li{margin-bottom:2px}
+.toc-nav a{display:block;padding:6px 10px;font-size:13px;color:var(--text-light);text-decoration:none;border-radius:6px;border-left:3px solid transparent;transition:.2s}
+.toc-nav a:hover{background:var(--light-bg);color:var(--primary)}
+.toc-nav a.active{background:var(--light-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.progress-wrap{margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+.progress-label{font-size:12px;color:var(--text-light);margin-bottom:6px;display:flex;justify-content:space-between;font-weight:600}
+.progress-track{width:100%;height:8px;background:var(--light-bg);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width .3s ease}
+.main-container{background:var(--bg);border-radius:16px;box-shadow:0 4px 24px rgba(74,20,140,.12);padding:24px;min-width:0}
+.chapter-header{background:linear-gradient(135deg,#4a148c 0%,#6a1b9a 100%);color:#fff;border-radius:12px;padding:24px;margin-bottom:24px}
+.chapter-header .label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;opacity:.85;margin-bottom:8px}
+.chapter-header h1{font-size:26px;line-height:1.4;margin-bottom:8px}
+.chapter-header .subtitle{font-size:14px;opacity:.9;font-style:italic}
+.utility-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;background:var(--light-bg);padding:10px 16px;border-radius:10px;margin-bottom:20px;border:1px solid var(--border)}
+.search-input{flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-family:inherit;font-size:14px}
+.utility-btns{display:flex;gap:8px;flex-wrap:wrap}
+.util-btn{padding:7px 12px;font-size:13px;font-family:inherit;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--primary);cursor:pointer;transition:.2s}
+.util-btn:hover{background:var(--light-bg)}.util-btn.active{background:var(--primary);color:var(--bg)}
+body.recall-mode strong{filter:blur(5px);background:rgba(106,27,154,.15);border-radius:4px;padding:0 4px;cursor:pointer;transition:filter .2s ease;user-select:none}
+body.recall-mode strong:hover,body.recall-mode strong.revealed{filter:blur(0)}
+.section{margin-bottom:20px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.section h2{background:var(--light-bg);color:var(--primary);padding:14px 18px;font-size:19px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;transition:background .2s;border-radius:0;margin:0;gap:10px}
+.section h2:hover{background:#ede7f6}[data-theme="dark"] .section h2:hover{background:#2a2a3c}
+.section h2:focus{outline:2px solid var(--primary);outline-offset:-2px}
+.section-title-text{flex:1}
+.section-done-check{width:18px;height:18px;cursor:pointer;accent-color:var(--secondary);flex-shrink:0}
+.toggle-icon{font-size:14px;transition:transform .3s;color:var(--primary)}
+.section.collapsed .toggle-icon{transform:rotate(-90deg)}
+.section.collapsed > *:not(h2){display:none}
+.section-body{padding:16px 18px}
+.important,.memory,.trap,.correction,.added-fact,.revision,.last-minute,.viz-box{padding:14px 16px;border-radius:8px;margin:12px 0;border-left:5px solid;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.important{background:var(--important-bg);border-left-color:var(--important-border)}
+.memory{background:var(--memory-bg);border-left-color:var(--memory-border)}
+.trap{background:var(--trap-bg);border-left-color:var(--trap-border)}
+.correction{background:var(--correction-bg);border-left-color:var(--correction-border)}
+.added-fact{background:var(--added-bg);border-left-color:var(--added-border)}
+.revision{background:var(--revision-bg);border-left-color:var(--revision-border)}
+.last-minute{background:#4a148c;color:#fff;border-left-color:#7c43bd}.last-minute strong{color:#ffd54f}
+.viz-box{background:var(--bg);border-left-color:var(--primary);text-align:center;border:1px solid var(--border)}
+.viz-caption{font-size:13px;color:var(--text-light);margin-top:8px;font-style:italic}
+.box-label{font-weight:700;font-size:15px;margin-bottom:6px;display:block}
+.stars{color:var(--star);font-size:13px;letter-spacing:1px}
+ul,ol{padding-left:22px;margin:8px 0}li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+thead th{background:var(--table-head);color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+tbody td{padding:8px 12px;border-bottom:1px solid var(--border)}
+tbody tr:nth-child(even){background:var(--table-alt)}tbody tr:hover{background:var(--light-bg)}
+.quiz-dashboard{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--light-bg);padding:14px 18px;border-radius:10px;margin-bottom:16px;border:2px solid var(--primary);position:sticky;top:10px;z-index:50}
+.score-stats{display:flex;gap:16px;font-weight:700;font-size:14px;flex-wrap:wrap}
+.score-stats span{color:var(--text)}.sc-correct{color:var(--memory-border)}.sc-wrong{color:var(--trap-border)}.sc-total{color:var(--primary)}
+.question-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin:14px 0}
+.q-text{font-weight:600;font-size:15.5px;margin-bottom:10px;color:var(--primary)}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.options .opt-btn{display:block;padding:8px 12px;background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:.2s;font-size:14px;font-family:inherit;text-align:left;width:100%}
+.options .opt-btn:hover{border-color:var(--primary-light);background:var(--light-bg)}
+.options .opt-btn.selected{border-color:var(--primary);background:var(--light-bg);font-weight:600}
+.options .opt-btn.correct{border-color:var(--memory-border);background:#c8e6c9;color:#14202b}
+.options .opt-btn.wrong{border-color:var(--trap-border);background:#ffcdd2;color:#14202b}
+.options .opt-btn.locked{cursor:not-allowed;opacity:.8}
+[data-theme="dark"] .options .opt-btn.correct{background:#1e4d2b;color:#cdd6f4}
+[data-theme="dark"] .options .opt-btn.wrong{background:#4d1e22;color:#cdd6f4}
+.q-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.q-controls button{padding:6px 12px;font-size:12px;font-family:inherit;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:var(--bg);color:var(--text);transition:.2s}
+.q-controls button:hover{background:var(--light-bg)}
+.btn-save{background:var(--secondary)!important;color:#fff!important;border-color:var(--secondary)!important}
+.btn-show{background:var(--primary)!important;color:#fff!important;border-color:var(--primary)!important}
+.btn-mark.active{background:var(--star)!important;color:#14202b!important;border-color:var(--star)!important}
+.btn-lock{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+.q-status{font-size:12px;font-weight:600;margin-left:auto;color:var(--text-light)}
+.answer-block{display:none;margin-top:10px;padding:10px 14px;background:var(--memory-bg);border-radius:8px;border-left:4px solid var(--memory-border)}
+.answer-block.show{display:block}
+.answer-label{font-weight:700;color:var(--secondary);margin-bottom:4px}
+.explanation{font-size:13.5px;color:var(--text-light)}
+h3{font-size:17px;color:var(--primary);margin:14px 0 8px}p{margin:8px 0}
+strong{color:var(--primary)}.last-minute strong{color:#ffd54f}
+.checklist{list-style:none;padding-left:0}.checklist li::before{content:"\2714 ";color:var(--secondary);font-weight:700}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:sticky;top:0;height:auto;max-height:60px;overflow-x:auto;overflow-y:hidden;padding:8px 12px;border-radius:0 0 12px 12px;z-index:100}.toc-title,.toc-controls,.progress-wrap{display:none}.toc-nav{display:flex;gap:6px;white-space:nowrap;padding-bottom:4px}.toc-nav li{margin:0}.toc-nav a{padding:6px 12px;background:var(--light-bg);border-radius:20px;border-left:none;font-size:12px}.toc-nav a.active{background:var(--primary);color:#fff}.quiz-dashboard{position:static}}
+@media(max-width:600px){body{font-size:15.2px}.chapter-header h1{font-size:21px}.section h2{font-size:17.5px}h3{font-size:16px}table{font-size:12px}thead th,tbody td{padding:6px 8px}.q-text{font-size:14.7px}.options{grid-template-columns:1fr}.options .opt-btn{font-size:13.5px}}
+@media print{body{background:#fff;font-size:10.5pt;padding:0;color:#000}.layout{display:block}.toc,.utility-bar,.quiz-dashboard,.section-done-check{display:none}.main-container{box-shadow:none;border-radius:0;padding:0}.chapter-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.last-minute{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#4a148c!important;color:#fff!important}.section.collapsed > *:not(h2){display:block!important}.section{page-break-inside:avoid;border:1px solid #ccc}.section h2{cursor:default;background:#f3e5f5!important}.toggle-icon{display:none}.q-controls{display:none}.answer-block{display:block!important}}
+.map-container{max-width:100%;overflow-x:auto}.map-container svg{max-width:100%;height:auto}
   </style>
 </head>
 <body>
@@ -217,6 +136,11 @@
       <li><a href="#sec20">20. ടോപ്പ് 25 വസ്തുതകൾ</a></li>
       <li><a href="#sec21">21. ഉപസംഹാരം</a></li>
     </ul>
+  
+    <div class="progress-wrap">
+      <div class="progress-label"><span>&#x1F4CA; &#x0D2A;&#x0D20;&#x0D28; &#x0D2A;&#x0D41;&#x0D30;&#x0D4B;&#x0D17;&#x0D24;&#x0D3F;</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
   </nav>
 
   <main class="main-container">
@@ -227,9 +151,19 @@
       <div class="subtitle">Pollutions | Kerala PSC Rank File – Complete Verified Notes</div>
     </header>
 
+    <!-- UTILITY BAR -->
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="&#x1F50D; &#x0D15;&#x0D41;&#x0D31;&#x0D3F;&#x0D2A;&#x0D4D;&#x0D2A;&#x0D41;&#x0D15;&#x0D33;&#x0D3F;&#x0D7D; &#x0D24;&#x0D3F;&#x0D30;&#x0D2F;&#x0D41;&#x0D15;...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall">&#x1F9E0; Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">&#x1F319; Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">&#x1F504; Reset Quiz</button>
+      </div>
+    </div>
+
     <!-- SECTION 0: STAR GUIDE -->
     <section class="section" id="sec0">
-      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <h2 role="button" tabindex="0" aria-expanded="true"><input type="checkbox" class="section-done-check" data-sec="sec0" title="Mark as completed"><span class="section-title-text">⭐ Star Guide</span></h2>
       <div class="section-body">
         <div class="important">
           <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
@@ -254,7 +188,7 @@
 
     <!-- SECTION 1: അധ്യായ ആമുഖം -->
     <section class="section" id="sec1">
-      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec1" title="Mark as completed"><span class="section-title-text">1. അധ്യായ ആമുഖം</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം എന്താണ്?</strong> പ്രകൃതിയിലെ വായു, ജലം, മണ്ണ് എന്നിവയുടെ സ്വാഭാവിക ഗുണനിലവാരം നശിപ്പിക്കുന്ന മനുഷ്യന്റെയും പ്രകൃതിയുടെയും ഇടപെടലുകളെക്കുറിച്ചും, അതുവഴിയുണ്ടാകുന്ന രോഗങ്ങൾ, പരിസ്ഥിതി പ്രശ്നങ്ങൾ എന്നിവയെക്കുറിച്ചുമാണ് ഈ അധ്യായത്തിൽ നാം പഠിക്കുന്നത്.</li>
@@ -267,7 +201,7 @@
 
     <!-- SECTION 2: പിന്നാന്യൂറ കഥ -->
     <section class="section" id="sec2">
-      <h2 role="button" tabindex="0" aria-expanded="false">2. പിന്നാന്യൂറ കഥ (Behind the Story)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec2" title="Mark as completed"><span class="section-title-text">2. പിന്നാന്യൂറ കഥ (Behind the Story)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐</span> <strong>എങ്ങനെ ആരംഭിച്ചു?</strong> പ്രകൃതിക്ക് അതിന്റേതായ ഒരു ശുദ്ധീകരണ പ്രക്രിയയുണ്ട്. എന്നാൽ 18-ാം നൂറ്റാണ്ടിലെ വ്യാവസായിക വിപ്ലവത്തിന് (Industrial Revolution) ശേഷം യന്ത്രവൽക്കരണം വ്യാപകമായതോടെ വൻതോതിൽ പുകയും രാസമാലിന്യങ്ങളും പ്രകൃതിയിലേക്ക് തള്ളാൻ തുടങ്ങി. പ്ലാസ്റ്റിക്കിന്റെയും രാസവളങ്ങളുടെയും വരവോടെ ഇത് കൂടുതൽ വഷളായി.</li>
@@ -279,7 +213,7 @@
 
     <!-- SECTION 3: വായു മലിനീകരണം -->
     <section class="section" id="sec3">
-      <h2 role="button" tabindex="0" aria-expanded="false">3. വായു മലിനീകരണം (Air Pollution)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec3" title="Mark as completed"><span class="section-title-text">3. വായു മലിനീകരണം (Air Pollution)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാന കാരണങ്ങൾ:</strong> വാഹനങ്ങളുടെ പുക, വ്യവസായശാലകൾ, ഫോസിൽ ഇന്ധനങ്ങൾ കത്തിക്കൽ, കാട്ടുതീ.</li>
@@ -301,7 +235,7 @@
 
     <!-- SECTION 4: ജല മലിനീകരണം -->
     <section class="section" id="sec4">
-      <h2 role="button" tabindex="0" aria-expanded="false">4. ജല മലിനീകരണം (Water Pollution)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec4" title="Mark as completed"><span class="section-title-text">4. ജല മലിനീകരണം (Water Pollution)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാന കാരണങ്ങൾ:</strong> വ്യാവസായിക മാലിന്യങ്ങൾ, രാസവളങ്ങൾ, കീടനാശിനികൾ, ഡ്രെയിനേജ് മാലിന്യങ്ങൾ.</li>
@@ -318,7 +252,7 @@
 
     <!-- SECTION 5: മണ്ണ് & ജൈവവ്യാപനം -->
     <section class="section" id="sec5">
-      <h2 role="button" tabindex="0" aria-expanded="false">5. മണ്ണ് മലിനീകരണവും ജൈവവ്യാപനവും (Biomagnification)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec5" title="Mark as completed"><span class="section-title-text">5. മണ്ണ് മലിനീകരണവും ജൈവവ്യാപനവും (Biomagnification)</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മണ്ണ് മലിനീകരണം:</strong> കീടനാശിനികൾ, പ്ലാസ്റ്റിക്, ഇ-മാലിന്യങ്ങൾ (E-waste) എന്നിവയാണ് മണ്ണിനെ നശിപ്പിക്കുന്നത്.</li>
@@ -334,7 +268,7 @@
 
     <!-- SECTION 6: ശബ്ദ & റേഡിയോ മലിനീകരണം -->
     <section class="section" id="sec6">
-      <h2 role="button" tabindex="0" aria-expanded="false">6. ശബ്ദ മലിനീകരണവും റേഡിയോ ആക്ടീവ് മലിനീകരണവും</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec6" title="Mark as completed"><span class="section-title-text">6. ശബ്ദ മലിനീകരണവും റേഡിയോ ആക്ടീവ് മലിനീകരണവും</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ശബ്ദ മലിനീകരണം (Noise Pollution):</strong> മനുഷ്യന് അലോസരമുണ്ടാക്കുന്ന ഉയർന്ന ശബ്ദമാണിത്. ശബ്ദത്തിന്റെ യൂണിറ്റ് <strong>ഡെസിബൽ (Decibel - dB)</strong> ആണ്. ലോകാരോഗ്യ സംഘടനയുടെ (WHO) മാനദണ്ഡപ്രകാരം സുരക്ഷിതമായ ശബ്ദപരിധി <strong>45 ഡെസിബൽ</strong> ആണ്. <strong>85 ഡെസിബല്ലിന് മുകളിലുള്ള ശബ്ദം കേൾവിശക്തി നഷ്ടപ്പെടുത്തും</strong>.</li>
@@ -346,7 +280,7 @@
 
     <!-- SECTION 7: പ്രധാന വസ്തുതകൾ -->
     <section class="section" id="sec7">
-      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec7" title="Mark as completed"><span class="section-title-text">7. പ്രധാന വസ്തുതകൾ</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മിനമാത രോഗം (Minamata disease):</strong> മെർക്കുറി (Mercury - രസം) ജലത്തിൽ കലർന്ന് മത്സ്യം വഴി മനുഷ്യരിലെത്തിയതുകൊണ്ടുണ്ടായ നാഡീരോഗം (ജപ്പാൻ - 1956).</li>
@@ -362,7 +296,7 @@
 
     <!-- SECTION 8: PSC വിശകലനം -->
     <section class="section" id="sec8">
-      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec8" title="Mark as completed"><span class="section-title-text">8. കേരള PSC പരീക്ഷാ വിശകലനം</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ലോഹങ്ങളും അവയുണ്ടാക്കുന്ന രോഗങ്ങളും (മെർക്കുറി, കാഡ്മിയം), ഭോപ്പാൽ വാതക ദുരന്തം (വാതകം, വർഷം), ആസിഡ് മഴയ്ക്ക് കാരണമാകുന്ന വാതകങ്ങൾ.</li>
@@ -374,7 +308,7 @@
 
     <!-- SECTION 9: മുൻകാല ചോദ്യ പ്രവണത -->
     <section class="section" id="sec9">
-      <h2 role="button" tabindex="0" aria-expanded="false">9. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec9" title="Mark as completed"><span class="section-title-text">9. മുൻകാല ചോദ്യ പ്രവണത</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> കേരള PSC യുടെ LDC/Degree പരീക്ഷകളിൽ Match the Following ആയി ലോഹങ്ങളും (Mercury, Cadmium, Arsenic) അസുഖങ്ങളും (Minamata, Itai-Itai, Black foot) സ്ഥിരമായി ചോദിക്കാറുണ്ട്.</li>
@@ -386,7 +320,7 @@
 
     <!-- SECTION 10: ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ -->
     <section class="section" id="sec10">
-      <h2 role="button" tabindex="0" aria-expanded="false">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec10" title="Mark as completed"><span class="section-title-text">10. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</span></h2>
       <div class="section-body">
         <div style="overflow-x: auto;">
           <table>
@@ -427,7 +361,7 @@
 
     <!-- SECTION 11: താരതമ്യ പട്ടികകൾ -->
     <section class="section" id="sec11">
-      <h2 role="button" tabindex="0" aria-expanded="false">11. താരതമ്യ പട്ടികകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec11" title="Mark as completed"><span class="section-title-text">11. താരതമ്യ പട്ടികകൾ</span></h2>
       <div class="section-body">
         <h3>Table 1: മലിനീകരണ വസ്തുക്കളും മനുഷ്യരിലെ രോഗങ്ങളും</h3>
         <div style="overflow-x: auto;">
@@ -465,7 +399,7 @@
 
     <!-- SECTION 12: സമയരേഖ -->
     <section class="section" id="sec12">
-      <h2 role="button" tabindex="0" aria-expanded="false">12. സമയരേഖ / പ്രധാന നാഴികക്കല്ലുകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec12" title="Mark as completed"><span class="section-title-text">12. സമയരേഖ / പ്രധാന നാഴികക്കല്ലുകൾ</span></h2>
       <div class="section-body">
         <div class="last-minute">
           <span class="box-label">📅 പരിസ്ഥിതി ദുരന്തങ്ങളുടെയും നിയമങ്ങളുടെയും കാലക്രമം</span>
@@ -485,7 +419,7 @@
 
     <!-- SECTION 13: Mnemonics -->
     <section class="section" id="sec13">
-      <h2 role="button" tabindex="0" aria-expanded="false">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec13" title="Mark as completed"><span class="section-title-text">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</span></h2>
       <div class="section-body">
         <div class="memory">
           <span class="box-label">🧠 <strong>Trick 1:</strong> ഭോപ്പാൽ വാതക ദുരന്തത്തിലെ വാതകം</span>
@@ -513,7 +447,7 @@
 
     <!-- SECTION 14: PSC കെണികൾ -->
     <section class="section" id="sec14">
-      <h2 role="button" tabindex="0" aria-expanded="false">14. സാധാരണ PSC കെണികൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec14" title="Mark as completed"><span class="section-title-text">14. സാധാരണ PSC കെണികൾ</span></h2>
       <div class="section-body">
         <div class="trap">
           <span class="box-label">⚠️ Trap 1</span>
@@ -550,7 +484,7 @@
 
     <!-- SECTION 15: അധിക വസ്തുതകൾ -->
     <section class="section" id="sec15">
-      <h2 role="button" tabindex="0" aria-expanded="false">15. അധിക കേരള PSC വസ്തുതകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec15" title="Mark as completed"><span class="section-title-text">15. അധിക കേരള PSC വസ്തുതകൾ</span></h2>
       <div class="section-body">
         <ul>
           <li><span class="stars">⭐⭐⭐⭐</span> വാഹനങ്ങളുടെ പുകക്കുഴലുകളിൽ നിന്ന് പുറത്തുവരുന്ന മലിനീകാരികളെ കുറയ്ക്കാൻ സഹായിക്കുന്ന ഉപകരണമാണ് <strong>കാറ്റലിറ്റിക് കൺവർട്ടർ (Catalytic Converter)</strong>.</li>
@@ -568,16 +502,25 @@
 
     <!-- SECTION 16: പ്രതീക്ഷിത ചോദ്യങ്ങൾ -->
     <section class="section" id="sec16">
-      <h2 role="button" tabindex="0" aria-expanded="false">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec16" title="Mark as completed"><span class="section-title-text">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span></h2>
       <div class="section-body">
         <!-- Q1 -->
+                <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">&#x1F4DD; &#x0D06;&#x0D15;&#x0D46;: <span id="scTotal">0</span></span>
+            <span class="sc-correct">&#x2705; &#x0D36;&#x0D30;&#x0D3F;: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">&#x274C; &#x0D24;&#x0D46;&#x0D31;&#x0D4D;&#x0D31;&#x0D4D;: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">&#x1F504; Reset</button>
+        </div>
+
         <div class="question-item" data-qindex="0">
           <div class="q-text">1. അന്തരീക്ഷത്തിലെ സൾഫർ ഡയോക്സൈഡ്, നൈട്രജൻ ഓക്സൈഡുകൾ എന്നിവ മഴവെള്ളവുമായി ചേർന്ന് പെയ്യുന്ന അപകടകരമായ പ്രതിഭാസം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ആഗോളതാപനം</span>
-            <span data-opt="B">B. ഓസോൺ വിള്ളൽ</span>
-            <span data-opt="C">C. ആസിഡ് മഴ (Acid Rain)</span>
-            <span data-opt="D">D. ഹരിതഗൃഹ പ്രഭാവം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ആഗോളതാപനം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഓസോൺ വിള്ളൽ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ആസിഡ് മഴ (Acid Rain)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഹരിതഗൃഹ പ്രഭാവം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) ആസിഡ് മഴ (Acid Rain)</div>
@@ -588,10 +531,10 @@
         <div class="question-item" data-qindex="1">
           <div class="q-text">2. മെർക്കുറി (രസം) കലർന്ന ജലത്തിലെ മത്സ്യം കഴിച്ചതിനെ തുടർന്ന് മനുഷ്യരിൽ പിടിപെട്ട മാരകമായ നാഡീരോഗം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ഇത്തായ്-ഇത്തായ്</span>
-            <span data-opt="B">B. മിനമാത രോഗം (Minamata disease)</span>
-            <span data-opt="C">C. പ്ലംബിസം</span>
-            <span data-opt="D">D. കോളറ</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ഇത്തായ്-ഇത്തായ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. മിനമാത രോഗം (Minamata disease)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പ്ലംബിസം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. കോളറ</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) മിനമാത രോഗം (Minamata disease)</div>
@@ -602,10 +545,10 @@
         <div class="question-item" data-qindex="2">
           <div class="q-text">3. ശരിയായ ജോഡി കണ്ടെത്തുക (മലിനീകരണവും രോഗവും):</div>
           <div class="options">
-            <span data-opt="A">A. കാഡ്മിയം - ബ്ലാക്ക് ഫൂട്ട് രോഗം</span>
-            <span data-opt="B">B. ആഴ്സനിക് - ഇത്തായ് ഇത്തായ്</span>
-            <span data-opt="C">C. ഈയം (Lead) - പ്ലംബിസം (Plumbism)</span>
-            <span data-opt="D">D. മെർക്കുറി - ബ്ലൂ ബേബി സിൻഡ്രോം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. കാഡ്മിയം - ബ്ലാക്ക് ഫൂട്ട് രോഗം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ആഴ്സനിക് - ഇത്തായ് ഇത്തായ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഈയം (Lead) - പ്ലംബിസം (Plumbism)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. മെർക്കുറി - ബ്ലൂ ബേബി സിൻഡ്രോം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) ഈയം (Lead) - പ്ലംബിസം (Plumbism)</div>
@@ -616,10 +559,10 @@
         <div class="question-item" data-qindex="3">
           <div class="q-text">4. 1984-ൽ ആയിരക്കണക്കിന് ആളുകളുടെ മരണത്തിന് കാരണമായ ഭോപ്പാൽ വാതക ദുരന്തത്തിൽ ചേർന്ന വാതകം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. മീഥൈൽ ഐസോസയനൈഡ്</span>
-            <span data-opt="B">B. ഹൈഡ്രജൻ സൾഫൈഡ്</span>
-            <span data-opt="C">C. മീഥൈൽ ഐസോസയനേറ്റ് (MIC)</span>
-            <span data-opt="D">D. സൾഫർ ഡയോക്സൈഡ്</span>
+            <button type="button" class="opt-btn" data-opt="A">A. മീഥൈൽ ഐസോസയനൈഡ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഹൈഡ്രജൻ സൾഫൈഡ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. മീഥൈൽ ഐസോസയനേറ്റ് (MIC)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. സൾഫർ ഡയോക്സൈഡ്</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) മീഥൈൽ ഐസോസയനേറ്റ് (MIC)</div>
@@ -630,10 +573,10 @@
         <div class="question-item" data-qindex="4">
           <div class="q-text">5. കാർഷികാവശ്യങ്ങൾക്ക് ഉപയോഗിക്കുന്ന രാസവളങ്ങൾ ജലാശയങ്ങളിൽ എത്തിച്ചേരുകയും, അവിടെ പായലുകൾ അമിതമായി വളർന്ന് ഓക്സിജൻ ഇല്ലാതാകുകയും ചെയ്യുന്ന പ്രതിഭാസത്തെ എന്ത് വിളിക്കുന്നു?</div>
           <div class="options">
-            <span data-opt="A">A. ജൈവവ്യാപനം (Biomagnification)</span>
-            <span data-opt="B">B. കാർബൺ സിങ്ക്</span>
-            <span data-opt="C">C. യൂട്രോഫിക്കേഷൻ (Eutrophication)</span>
-            <span data-opt="D">D. സബ്ലിമേഷൻ</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ജൈവവ്യാപനം (Biomagnification)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കാർബൺ സിങ്ക്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. യൂട്രോഫിക്കേഷൻ (Eutrophication)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. സബ്ലിമേഷൻ</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) യൂട്രോഫിക്കേഷൻ (Eutrophication)</div>
@@ -644,10 +587,10 @@
         <div class="question-item" data-qindex="5">
           <div class="q-text">6. കുടിവെള്ളത്തിൽ നൈട്രേറ്റുകളുടെ (Nitrates) അളവ് വർധിക്കുന്നത് ശിശുക്കളിൽ ഉണ്ടാക്കുന്ന രോഗം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ബ്ലൂ ബേബി സിൻഡ്രോം (Blue baby syndrome)</span>
-            <span data-opt="B">B. പ്ലംബിസം</span>
-            <span data-opt="C">C. ടൈഫോയ്ഡ്</span>
-            <span data-opt="D">D. മിനമാത</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ബ്ലൂ ബേബി സിൻഡ്രോം (Blue baby syndrome)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. പ്ലംബിസം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ടൈഫോയ്ഡ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. മിനമാത</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) ബ്ലൂ ബേബി സിൻഡ്രോം (Blue baby syndrome)</div>
@@ -661,10 +604,10 @@
             2. ആസിഡ് മഴ കാരണം താജ്മഹൽ പോലെയുള്ള സ്മാരകങ്ങളുടെ നിറം മങ്ങുന്നതിനെ മാർബിൾ കാൻസർ എന്ന് വിളിക്കുന്നു.<br>
             3. വായു മലിനീകരണം കൃത്യമായി കണ്ടെത്താൻ സഹായിക്കുന്ന സസ്യങ്ങളാണ് ലൈക്കനുകൾ (Lichens).</div>
           <div class="options">
-            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
-            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
-            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
-            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1, 2 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2, 3 എന്നിവ മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 എന്നിവ ശരിയാണ്</div>
@@ -675,10 +618,10 @@
         <div class="question-item" data-qindex="7">
           <div class="q-text">8. ഡി.ഡി.ടി (DDT) പോലെയുള്ള വിഘടിക്കാത്ത രാസമാലിന്യങ്ങൾ ആഹാരശൃംഖലയിലൂടെ കൈമാറ്റം ചെയ്യപ്പെട്ട് ഉയർന്ന തലത്തിലുള്ള ജീവികളുടെ ശരീരത്തിൽ വലിയ അളവിൽ അടിഞ്ഞുകൂടുന്ന പ്രതിഭാസം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. യൂട്രോഫിക്കേഷൻ</span>
-            <span data-opt="B">B. ജൈവവ്യാപനം (Biomagnification)</span>
-            <span data-opt="C">C. ബയോ ഹെമഡിയേഷൻ</span>
-            <span data-opt="D">D. ബയോ ലൂമിനെസൻസ്</span>
+            <button type="button" class="opt-btn" data-opt="A">A. യൂട്രോഫിക്കേഷൻ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ജൈവവ്യാപനം (Biomagnification)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ബയോ ഹെമഡിയേഷൻ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ബയോ ലൂമിനെസൻസ്</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) ജൈവവ്യാപനം (Biomagnification)</div>
@@ -693,10 +636,10 @@
             • മിനമാത രോഗം തിരിച്ചറിഞ്ഞത് - c. 1984<br>
             • ഫുക്കുഷിമ ആണവ ദുരന്തം - d. 1986</div>
           <div class="options">
-            <span data-opt="A">A. 1-c, 2-d, 3-a, 4-b</span>
-            <span data-opt="B">B. 1-d, 2-c, 3-b, 4-a</span>
-            <span data-opt="C">C. 1-a, 2-b, 3-c, 4-d</span>
-            <span data-opt="D">D. 1-c, 2-a, 3-d, 4-b</span>
+            <button type="button" class="opt-btn" data-opt="A">A. 1-c, 2-d, 3-a, 4-b</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1-d, 2-c, 3-b, 4-a</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1-a, 2-b, 3-c, 4-d</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1-c, 2-a, 3-d, 4-b</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) 1-c, 2-d, 3-a, 4-b</div>
@@ -707,10 +650,10 @@
         <div class="question-item" data-qindex="9">
           <div class="q-text">10. ശബ്ദ മലിനീകരണം (Noise Pollution) അളക്കുന്ന യൂണിറ്റ് ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ഹെർട്സ് (Hertz)</span>
-            <span data-opt="B">B. ഡോബ്സൺ (Dobson)</span>
-            <span data-opt="C">C. ഡെസിബൽ (Decibel - dB)</span>
-            <span data-opt="D">D. പാസ്കൽ (Pascal)</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ഹെർട്സ് (Hertz)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഡോബ്സൺ (Dobson)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഡെസിബൽ (Decibel - dB)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. പാസ്കൽ (Pascal)</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) ഡെസിബൽ (Decibel - dB)</div>
@@ -721,10 +664,10 @@
         <div class="question-item" data-qindex="10">
           <div class="q-text">11. കുടിവെള്ളത്തിൽ കാഡ്മിയം (Cadmium) കലർന്നതുകൊണ്ടുണ്ടാകുന്ന 'ഇത്തായ്-ഇത്തായ്' (Itai-Itai) രോഗം ശരീരത്തിലെ ഏത് ഭാഗങ്ങളെയാണ് പ്രധാനമായും ബാധിക്കുന്നത്?</div>
           <div class="options">
-            <span data-opt="A">A. ഹൃദയം</span>
-            <span data-opt="B">B. അസ്ഥികളെയും വൃക്കകളെയും</span>
-            <span data-opt="C">C. ശ്വാസകോശത്തെ</span>
-            <span data-opt="D">D. കരളിനെ</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ഹൃദയം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. അസ്ഥികളെയും വൃക്കകളെയും</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ശ്വാസകോശത്തെ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. കരളിനെ</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) അസ്ഥികളെയും വൃക്കകളെയും</div>
@@ -736,10 +679,10 @@
           <div class="q-text">12. Assertion (A): അടച്ചിട്ട മുറിയിൽ വിറക് കത്തിച്ച് ഉറങ്ങുന്നത് മരണത്തിന് കാരണമായേക്കാം.<br>
             Reason (R): വിറക് പൂർണ്ണമായും കത്താത്ത അവസ്ഥയിൽ (Incomplete combustion) കാർബൺ മോണോക്സൈഡ് എന്ന വിഷവാതകം ഉണ്ടാകുകയും, അത് ശ്വസിക്കുമ്പോൾ ശരീരത്തിന് ഓക്സിജൻ ലഭിക്കാതെ വരികയും ചെയ്യുന്നു.</div>
           <div class="options">
-            <span data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</span>
-            <span data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</span>
-            <span data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</span>
-            <span data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</span>
+            <button type="button" class="opt-btn" data-opt="A">A. A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</button>
+            <button type="button" class="opt-btn" data-opt="B">B. A യും R ഉം ശരിയാണ്, എന്നാൽ R എന്നത് A യുടെ ശരിയായ വിശദീകരണമല്ല.</button>
+            <button type="button" class="opt-btn" data-opt="C">C. A ശരിയാണ്, R തെറ്റാണ്.</button>
+            <button type="button" class="opt-btn" data-opt="D">D. A തെറ്റാണ്, R ശരിയാണ്.</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) A യും R ഉം ശരിയാണ്, R എന്നത് A യുടെ ശരിയായ വിശദീകരണമാണ്.</div>
@@ -750,10 +693,10 @@
         <div class="question-item" data-qindex="12">
           <div class="q-text">13. പുക (Smoke), മഞ്ഞ് (Fog) എന്നിവ കൂടിച്ചേർന്ന് വായു മലിനീകരണം രൂക്ഷമാകുന്ന അവസ്ഥയെ വിളിക്കുന്ന പേരെന്ത്?</div>
           <div class="options">
-            <span data-opt="A">A. സ്മോഗ് (Smog)</span>
-            <span data-opt="B">B. ആസിഡ് മഴ</span>
-            <span data-opt="C">C. എയറോസോൾ (Aerosol)</span>
-            <span data-opt="D">D. ഹരിതഗൃഹ പ്രഭാവം</span>
+            <button type="button" class="opt-btn" data-opt="A">A. സ്മോഗ് (Smog)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ആസിഡ് മഴ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. എയറോസോൾ (Aerosol)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഹരിതഗൃഹ പ്രഭാവം</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (A) സ്മോഗ് (Smog)</div>
@@ -764,10 +707,10 @@
         <div class="question-item" data-qindex="13">
           <div class="q-text">14. ഭോപ്പാൽ വാതക ദുരന്തത്തിന് ശേഷം ഇന്ത്യയിൽ പാസാക്കിയ ഏറ്റവും പ്രധാനപ്പെട്ട പരിസ്ഥിതി നിയമം ഏത്?</div>
           <div class="options">
-            <span data-opt="A">A. ജല മലിനീകരണ നിയന്ത്രണ നിയമം (1974)</span>
-            <span data-opt="B">B. വായു മലിനീകരണ നിയന്ത്രണ നിയമം (1981)</span>
-            <span data-opt="C">C. പരിസ്ഥിതി സംരക്ഷണ നിയമം (Environment Protection Act - 1986)</span>
-            <span data-opt="D">D. വന്യജീവി സംരക്ഷണ നിയമം (1972)</span>
+            <button type="button" class="opt-btn" data-opt="A">A. ജല മലിനീകരണ നിയന്ത്രണ നിയമം (1974)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. വായു മലിനീകരണ നിയന്ത്രണ നിയമം (1981)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പരിസ്ഥിതി സംരക്ഷണ നിയമം (Environment Protection Act - 1986)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വന്യജീവി സംരക്ഷണ നിയമം (1972)</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (C) പരിസ്ഥിതി സംരക്ഷണ നിയമം (Environment Protection Act - 1986)</div>
@@ -778,10 +721,10 @@
         <div class="question-item" data-qindex="14">
           <div class="q-text">15. ജല മലിനീകരണം സൂചിപ്പിക്കുന്നതിന് ഉപയോഗിക്കുന്ന അളവായ BOD യുടെ പൂർണ്ണരൂപം എന്ത്?</div>
           <div class="options">
-            <span data-opt="A">A. Biological Oxygen Decrease</span>
-            <span data-opt="B">B. Biochemical Oxygen Demand</span>
-            <span data-opt="C">C. Basic Oxygen Demand</span>
-            <span data-opt="D">D. Biometric Oxygen Data</span>
+            <button type="button" class="opt-btn" data-opt="A">A. Biological Oxygen Decrease</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Biochemical Oxygen Demand</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Basic Oxygen Demand</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Biometric Oxygen Data</button>
           </div>
           <div class="answer-block">
             <div class="answer-label">ശരിയുത്തരം: (B) Biochemical Oxygen Demand</div>
@@ -793,7 +736,7 @@
 
     <!-- SECTION 17: ഉത്തര സൂചിക -->
     <section class="section" id="sec17">
-      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉത്തര സൂചിക (Answer Key)</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec17" title="Mark as completed"><span class="section-title-text">17. ഉത്തര സൂചിക (Answer Key)</span></h2>
       <div class="section-body">
         <div style="overflow-x: auto;">
           <table style="max-width: 500px; margin: 0 auto; text-align: center;">
@@ -814,7 +757,7 @@
 
     <!-- SECTION 18: 30-സെക്കൻഡ് റിവിഷൻ -->
     <section class="section" id="sec18">
-      <h2 role="button" tabindex="0" aria-expanded="false">18. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec18" title="Mark as completed"><span class="section-title-text">18. 30-സെക്കൻഡ് റിവിഷൻ</span></h2>
       <div class="section-body">
         <ul class="checklist">
           <li>വായു മലിനീകാരിയായ വിഷവാതകം: <strong>കാർബൺ മോണോക്സൈഡ് (CO)</strong>.</li>
@@ -845,7 +788,7 @@
 
     <!-- SECTION 19: ഒരു പേജ് റിവിഷൻ -->
     <section class="section" id="sec19">
-      <h2 role="button" tabindex="0" aria-expanded="false">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec19" title="Mark as completed"><span class="section-title-text">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</span></h2>
       <div class="section-body">
         <h3>ലോഹങ്ങളും രോഗങ്ങളും:</h3>
         <ul>
@@ -874,7 +817,7 @@
 
     <!-- SECTION 20: ടോപ്പ് 25 വസ്തുതകൾ -->
     <section class="section" id="sec20">
-      <h2 role="button" tabindex="0" aria-expanded="false">20. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec20" title="Mark as completed"><span class="section-title-text">20. ടോപ്പ് 25 പ്രതീക്ഷിത PSC വസ്തുതകൾ</span></h2>
       <div class="section-body">
         <ol>
           <li>ഇന്ത്യയിൽ പരിസ്ഥിതിയുമായി ബന്ധപ്പെട്ട പ്രധാന കേസുകൾ കൈകാര്യം ചെയ്യുന്ന കോടതിയാണ് <strong>ദേശീയ ഹരിത ട്രൈബ്യൂണൽ (National Green Tribunal - NGT - 2010 ൽ രൂപീകരിച്ചു)</strong>. ആസ്ഥാനം ന്യൂഡൽഹി.</li>
@@ -908,7 +851,7 @@
 
     <!-- SECTION 21: ഉപസംഹാരം -->
     <section class="section" id="sec21">
-      <h2 role="button" tabindex="0" aria-expanded="false">21. ഉപസംഹാരം</h2>
+      <h2 role="button" tabindex="0" aria-expanded="false"><input type="checkbox" class="section-done-check" data-sec="sec21" title="Mark as completed"><span class="section-title-text">21. ഉപസംഹാരം</span></h2>
       <div class="section-body">
         <h3>പ്രധാന Takeaways</h3>
         <ul>
@@ -1210,6 +1153,53 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+'use strict';
+var SLUG='2_1_12_pollution';var QUIZ_PREFIX='pscQuiz_'+SLUG+'_';var SEC_PREFIX='pscSec_'+SLUG+'_';var THEME_KEY='pscThemeGlobal';
+var sections=Array.from(document.querySelectorAll('.section'));var tocLinks=Array.from(document.querySelectorAll('.toc-nav a'));
+sections.forEach(function(sec){var h2=sec.querySelector('h2');if(h2&&!h2.querySelector('.toggle-icon')){var i=document.createElement('span');i.className='toggle-icon';i.textContent='\u25BE';h2.appendChild(i);}});
+function toggleSection(sec){var c=sec.classList.toggle('collapsed');var h2=sec.querySelector('h2');if(h2)h2.setAttribute('aria-expanded',String(!c));}
+function openOnly(sec){sec.classList.remove('collapsed');var h2=sec.querySelector('h2');if(h2)h2.setAttribute('aria-expanded','true');}
+sections.forEach(function(sec){var h2=sec.querySelector('h2');if(!h2)return;h2.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('section-done-check'))return;toggleSection(sec);});h2.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){if(e.target.classList&&e.target.classList.contains('section-done-check'))return;e.preventDefault();toggleSection(sec);}});});
+if(sections.length>0)openOnly(sections[0]);
+var expandAllBtn=document.getElementById('expandAll');var collapseAllBtn=document.getElementById('collapseAll');
+if(expandAllBtn)expandAllBtn.addEventListener('click',function(){sections.forEach(function(s){s.classList.remove('collapsed');var h2=s.querySelector('h2');if(h2)h2.setAttribute('aria-expanded','true');});});
+if(collapseAllBtn)collapseAllBtn.addEventListener('click',function(){sections.forEach(function(s){s.classList.add('collapsed');var h2=s.querySelector('h2');if(h2)h2.setAttribute('aria-expanded','false');});});
+var themeBtn=document.getElementById('toggleTheme');var themes=['light','dark','sepia'];var currentThemeIdx=0;
+function themeLabel(t){return t==='dark'?'\uD83D\uDCDC Sepia':t==='sepia'?'\u2600\uFE0F Light':'\uD83C\uDF19 Dark';}
+try{var savedTheme=localStorage.getItem(THEME_KEY);if(savedTheme&&themes.indexOf(savedTheme)!==-1){currentThemeIdx=themes.indexOf(savedTheme);document.documentElement.setAttribute('data-theme',savedTheme);if(themeBtn)themeBtn.textContent=themeLabel(savedTheme);}}catch(e){}
+if(themeBtn)themeBtn.addEventListener('click',function(){currentThemeIdx=(currentThemeIdx+1)%themes.length;var n=themes[currentThemeIdx];document.documentElement.setAttribute('data-theme',n);themeBtn.textContent=themeLabel(n);try{localStorage.setItem(THEME_KEY,n);}catch(e){}});
+var recallBtn=document.getElementById('toggleRecall');
+if(recallBtn){recallBtn.addEventListener('click',function(){var a=document.body.classList.toggle('recall-mode');recallBtn.classList.toggle('active',a);document.querySelectorAll('strong.revealed').forEach(function(el){el.classList.remove('revealed');});});document.body.addEventListener('click',function(e){if(document.body.classList.contains('recall-mode')&&e.target.tagName==='STRONG')e.target.classList.toggle('revealed');});}
+var searchInput=document.getElementById('noteSearch');
+if(searchInput)searchInput.addEventListener('input',function(){var q=this.value.trim().toLowerCase();sections.forEach(function(sec){if(!q){sec.style.display='';return;}if(sec.textContent.toLowerCase().indexOf(q)!==-1){sec.classList.remove('collapsed');sec.style.display='';}else{sec.style.display='none';}});});
+var doneChecks=Array.from(document.querySelectorAll('.section-done-check'));var progressFill=document.getElementById('progressFill');var progressPercent=document.getElementById('progressPercent');
+function updateProgress(){var t=doneChecks.length;var c=doneChecks.filter(function(x){return x.checked;}).length;var p=t>0?Math.round((c/t)*100):0;if(progressFill)progressFill.style.width=p+'%';if(progressPercent)progressPercent.textContent=p+'%';}
+doneChecks.forEach(function(chk){var secId=chk.getAttribute('data-sec');try{if(localStorage.getItem(SEC_PREFIX+secId)==='1')chk.checked=true;}catch(e){}chk.addEventListener('click',function(e){e.stopPropagation();});chk.addEventListener('change',function(){try{if(chk.checked)localStorage.setItem(SEC_PREFIX+secId,'1');else localStorage.removeItem(SEC_PREFIX+secId);}catch(e){}updateProgress();});});
+updateProgress();
+tocLinks.forEach(function(link){link.addEventListener('click',function(e){e.preventDefault();var tid=link.getAttribute('href');if(!tid)return;var t=document.querySelector(tid);if(!t)return;openOnly(t);tocLinks.forEach(function(l){l.classList.remove('active');});link.classList.add('active');var p=t.getBoundingClientRect().top+window.pageYOffset-20;window.scrollTo({top:p,behavior:'smooth'});});});
+if('IntersectionObserver' in window){var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id=entry.target.getAttribute('id');if(!id)return;tocLinks.forEach(function(link){link.classList.remove('active');if(link.getAttribute('href')==='#'+id)link.classList.add('active');});}});},{rootMargin:'-15% 0px -75% 0px',threshold:0});sections.forEach(function(s){observer.observe(s);});}
+var questionItems=Array.from(document.querySelectorAll('.question-item'));
+function updateScoreboard(){var t=questionItems.length,c=0,w=0;questionItems.forEach(function(it){var q=it.getAttribute('data-qindex');if(q===null)return;try{var s=localStorage.getItem(QUIZ_PREFIX+q);if(s){var p=JSON.parse(s);if(p&&p.saved&&p.selected&&p.correctLetter){if(p.selected===p.correctLetter)c++;else w++;}}}catch(e){}});var tEl=document.getElementById('scTotal');var cEl=document.getElementById('scCorrect');var wEl=document.getElementById('scWrong');if(tEl)tEl.textContent=t;if(cEl)cEl.textContent=c;if(wEl)wEl.textContent=w;}
+questionItems.forEach(function(item){var qIndex=item.getAttribute('data-qindex');if(qIndex===null)return;var storageKey=QUIZ_PREFIX+qIndex;var answerBlock=item.querySelector('.answer-block');var answerLabel=item.querySelector('.answer-block .answer-label')||item.querySelector('.answer-label');var optionsContainer=item.querySelector('.options');if(!optionsContainer)return;var optionSpans=Array.from(optionsContainer.querySelectorAll('button.opt-btn'));var correctLetter=null;if(answerLabel){var txt=answerLabel.textContent;['A','B','C','D'].forEach(function(L){if(!correctLetter&&txt.indexOf('('+L+')')!==-1)correctLetter=L;});}if(answerBlock)answerBlock.style.display='none';var state={selected:null,saved:false,marked:false,locked:false,correctLetter:correctLetter};try{var s=localStorage.getItem(storageKey);if(s){var p=JSON.parse(s);if(p){state.selected=p.selected||null;state.saved=!!p.saved;state.marked=!!p.marked;state.locked=!!p.locked;state.correctLetter=p.correctLetter||correctLetter;}}}catch(e){}
+if(state.selected)optionSpans.forEach(function(sp){if(sp.getAttribute('data-opt')===state.selected)sp.classList.add('selected');});
+if(state.saved&&state.selected&&correctLetter){optionSpans.forEach(function(sp){var o=sp.getAttribute('data-opt');if(o===correctLetter)sp.classList.add('correct');if(o===state.selected&&o!==correctLetter)sp.classList.add('wrong');});if(answerBlock)answerBlock.style.display='block';}
+var controls=document.createElement('div');controls.className='q-controls';var saveBtn=document.createElement('button');saveBtn.type='button';saveBtn.className='btn-save';saveBtn.textContent='Save Answer';var showBtn=document.createElement('button');showBtn.type='button';showBtn.className='btn-show';showBtn.textContent='Show Answer';var markBtn=document.createElement('button');markBtn.type='button';markBtn.className='btn-mark';markBtn.textContent='Mark for Review';var lockBtn=document.createElement('button');lockBtn.type='button';lockBtn.className='btn-lock';lockBtn.textContent='\uD83D\uDD12 Lock';var statusSpan=document.createElement('span');statusSpan.className='q-status';controls.appendChild(saveBtn);controls.appendChild(showBtn);controls.appendChild(markBtn);controls.appendChild(lockBtn);controls.appendChild(statusSpan);optionsContainer.parentNode.insertBefore(controls,optionsContainer.nextSibling);if(state.marked)markBtn.classList.add('active');
+function persist(){try{localStorage.setItem(storageKey,JSON.stringify(state));}catch(e){}}
+function showResult(){if(!state.selected||!correctLetter)return;optionSpans.forEach(function(sp){sp.classList.remove('correct','wrong');var o=sp.getAttribute('data-opt');if(o===correctLetter)sp.classList.add('correct');if(o===state.selected&&o!==correctLetter)sp.classList.add('wrong');});statusSpan.textContent=(state.selected===correctLetter)?'\u2705 Correct':'\u274C Wrong';if(answerBlock)answerBlock.style.display='block';}
+function applyLock(l){state.locked=l;optionSpans.forEach(function(sp){if(l)sp.classList.add('locked');else sp.classList.remove('locked');});if(l){lockBtn.textContent='\uD83D\uDD13 Unlock';statusSpan.textContent='Locked';if(state.selected)showResult();}else{lockBtn.textContent='\uD83D\uDD12 Lock';if(!state.saved)statusSpan.textContent='Unlocked';else showResult();}persist();}
+if(state.locked)applyLock(true);
+optionSpans.forEach(function(sp){sp.addEventListener('click',function(){if(state.locked)return;optionSpans.forEach(function(x){x.classList.remove('selected','correct','wrong');});sp.classList.add('selected');state.selected=sp.getAttribute('data-opt');state.saved=false;statusSpan.textContent='';if(answerBlock)answerBlock.style.display='none';persist();});});
+saveBtn.addEventListener('click',function(){if(state.locked)return;if(!state.selected){statusSpan.textContent='Select an option';return;}state.saved=true;persist();showResult();statusSpan.textContent+=' \u2014 Saved';updateScoreboard();});
+showBtn.addEventListener('click',function(){if(!answerBlock)return;if(answerBlock.style.display==='none'||answerBlock.style.display==='')answerBlock.style.display='block';else answerBlock.style.display='none';});
+markBtn.addEventListener('click',function(){state.marked=!state.marked;markBtn.classList.toggle('active',state.marked);persist();});
+lockBtn.addEventListener('click',function(){applyLock(!state.locked);});});
+updateScoreboard();
+function resetAllQuiz(){if(!confirm('\u0D0E\u0D32\u0D4D\u0D32\u0D3E \u0D09\u0D24\u0D4D\u0D24\u0D30\u0D19\u0D4D\u0D19\u0D33\u0D41\u0D02 \u0D31\u0D40\u0D38\u0D46\u0D31\u0D4D\u0D31\u0D4D \u0D1A\u0D46\u0D2F\u0D4D\u0D2F\u0D23\u0D4B?'))return;try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(QUIZ_PREFIX)===0)localStorage.removeItem(k);});}catch(e){}location.reload();}
+var rb=document.getElementById('resetQuiz');if(rb)rb.addEventListener('click',resetAllQuiz);
+var rbb=document.getElementById('resetQuizBottom');if(rbb)rbb.addEventListener('click',resetAllQuiz);
+});
+</script>
 </body>
 </html>

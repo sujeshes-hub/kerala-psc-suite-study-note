@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ഭൂരൂപങ്ങൾ | അധ്യായം 138</title>
+  <style>
+    :root {
+      --primary: #4a148c; --primary-light: #6a1b9a; --secondary: #00695c;
+      --accent: #b83b2c; --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
+      --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #4a148c; --table-alt: #f3e5f5; --star: #f9a825;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+    }
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px);
+      overflow-y: auto; background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1); padding: 16px; align-self: start;
+    }
+    .toc-title {
+      font-size: 18px; font-weight: 700; color: var(--primary);
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
+    }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 6px 10px; font-size: 13px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px;
+      border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg); color: var(--primary);
+      border-left-color: var(--primary); font-weight: 600;
+    }
+    .main-container {
+      background: var(--bg); border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px; min-width: 0;
+    }
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+      opacity: 0.85; margin-bottom: 8px;
+    }
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary); padding: 14px 18px;
+      font-size: 19px; cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; user-select: none; transition: background 0.2s; margin: 0;
+    }
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0;
+      border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0;
+      font-size: 14px; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    thead th {
+      background: var(--table-head); color: #fff;
+      padding: 10px 12px; text-align: left; font-weight: 600;
+    }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+    .question-item {
+      background: #fafafa; border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; margin: 14px 0;
+    }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options span {
+      display: block; padding: 8px 12px; background: #fff;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; font-size: 14px;
+    }
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer;
+      background: #fff; color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px;
+      background: var(--memory-bg); border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px; background: var(--light-bg);
+        border-radius: 20px; border-left: none; font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        background: #4a148c !important; color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. പർവ്വതങ്ങൾ</a></li>
+      <li><a href="#sec4">4. പീഠഭൂമികൾ</a></li>
+      <li><a href="#sec5">5. സമതലങ്ങൾ</a></li>
+      <li><a href="#sec6">6. മറ്റ് ഭൂരൂപങ്ങൾ</a></li>
+      <li><a href="#sec7">7. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec8">8. PSC വിശകലനം</a></li>
+      <li><a href="#sec9">9. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec10">10. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec11">11. Mnemonics</a></li>
+      <li><a href="#sec12">12. PSC കെണികൾ</a></li>
+      <li><a href="#sec13">13. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec14">14. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec15">15. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec16">16. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec17">17. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">അടിസ്ഥാന ഭൂമിശാസ്ത്രം | അധ്യായം 138</div>
+      <h1>അടിസ്ഥാന ഭൂമിശാസ്ത്രം – ഭൂരൂപങ്ങൾ</h1>
+      <div class="subtitle">Landforms – Basic Geography | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഹിമാലയം (മടക്കുപർവ്വതം), ആരവല്ലി (അവശിഷ്ട പർവ്വതം), U-ആകൃതി താഴ്‌വര (ഹിമാനി), കൂൺപാറകൾ (കാറ്റ്), ലോകത്തിന്റെ മേൽക്കൂര (പാമീർ)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — V-ആകൃതി താഴ്‌വര (നദി), ബ്ലോക്ക് പർവ്വതം (വിന്ധ്യ-സത്പുര), മൊറൈനുകൾ (ഹിമാനി), ആൻഡീസ് (നീളം കൂടിയത്), കിളിമഞ്ചാരോ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ഡെക്കാൻ ട്രാപ്പ്, ഓക്സ്-ബോ തടാകങ്ങൾ, ഗ്രാൻഡ് ക്യാനിയൻ, ഫിയോർഡ്, സ്റ്റാലക്ടൈറ്റ്/സ്റ്റാലഗ്മൈറ്റ്</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ഹോഴ്സ്റ്റ്/ഗ്രാബൻ, ബർഖാൻ, ഛോട്ടാനാഗ്പൂർ, പീഠഭൂമി തരങ്ങൾ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ഭൂരൂപങ്ങളുടെ ക്രമം (First/Second/Third order), 600 മീ. മാനദണ്ഡം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>പർവ്വതം:</strong> 4 തരം — മടക്ക്, ഖണ്ഡം, അഗ്നി, അവശിഷ്ടം</li>
+            <li><strong>പീഠഭൂമി:</strong> ലോകത്തിന്റെ മേൽക്കൂര = പാമീർ; ഏറ്റവും വലുത് = ടിബറ്റൻ</li>
+            <li><strong>പ്രകൃതിശക്തികൾ:</strong> നദി → V, ഹിമാനി → U, കാറ്റ് → കൂൺപാറ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഭൂമിയുടെ ഉപരിതലത്തിലുള്ള വിവിധതരം ഭൂരൂപങ്ങളായ പർവ്വതങ്ങൾ (Mountains), പീഠഭൂമികൾ (Plateaus), സമതലങ്ങൾ (Plains), താഴ്‌വരകൾ (Valleys), അവയുടെ രൂപീകരണ കാരണങ്ങൾ (ആന്തരികവും ബാഹ്യവുമായ ബലങ്ങൾ), വിവിധതരം പർവ്വതങ്ങൾക്ക് ഉദാഹരണങ്ങൾ എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഭൂമിശാസ്ത്രത്തിന്റെ അടിസ്ഥാനമാണ് ഭൂരൂപങ്ങൾ. ഹിമാലയം എന്തുതരം പർവ്വതമാണെന്നും, ഡെക്കാൻ പീഠഭൂമി എങ്ങനെ രൂപപ്പെട്ടുവെന്നും, നദികളും കാറ്റും എന്തുതരം ഭൂരൂപങ്ങൾ ഉണ്ടാക്കുന്നുവെന്നും മനസ്സിലാക്കാൻ ഇത് സഹായിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> മടക്കുപർവ്വതങ്ങൾക്ക് ഉദാഹരണം (ഹിമാലയം, ആൻഡീസ്), വായുവിന്റെ അപരദനം കൊണ്ടുണ്ടാകുന്ന ഭൂരൂപം (കൂൺപാറകൾ), U-ആകൃതിയിലുള്ള താഴ്‌വരകൾ നിർമ്മിക്കുന്നത് എന്ത് (ഹിമാനികൾ) തുടങ്ങിയ ചോദ്യങ്ങൾ PSC പരീക്ഷകളിലെ 'എവർഗ്രീൻ' മേഖലയാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഭൂരൂപങ്ങളുടെ ക്രമം (Order of Relief):</strong> ഏറ്റവും വലുത് <strong>ഒന്നാം ക്രമം (First order): ഭൂഖണ്ഡങ്ങളും സമുദ്രത്തടങ്ങളും</strong>; <strong>രണ്ടാം ക്രമം: പർവ്വതങ്ങൾ, പീഠഭൂമികൾ, സമതലങ്ങൾ</strong>; <strong>മൂന്നാം ക്രമം: താഴ്‌വരകൾ, ഡെൽറ്റകൾ, മണൽക്കുന്നുകൾ തുടങ്ങിയ ചെറു ഭൂരൂപങ്ങൾ.</strong></li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഉയരത്തിന്റെ മാനദണ്ഡം:</strong> സാധാരണ <strong>600 മീറ്ററിൽ കൂടുതൽ</strong> ഉയരമുള്ളവ പർവ്വതം, അതിൽ കുറഞ്ഞവ <strong>കുന്ന് (Hill)</strong>.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>600 കടന്നാൽ പർവ്വതം, താഴെ കുന്ന്</strong>."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം – ഭൂരൂപങ്ങൾ ഉണ്ടാകുന്നത് എങ്ങനെ?</h2>
+      <div class="section-body">
+        <p>ഭൂമിയുടെ ഉപരിതലം ഒരിക്കലും ഒരുപോലെയല്ല. ഭൂമിയിൽ നിരന്തരം നടക്കുന്ന രണ്ട് തരം ബലങ്ങളാണ് (Forces) ഭൂരൂപങ്ങളെ നിർമ്മിക്കുന്നതും മാറ്റങ്ങൾ വരുത്തുന്നതും:</p>
+
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആന്തരിക ബലങ്ങൾ (Endogenic Forces):</strong> ഭൂമിക്കുള്ളിൽ നടക്കുന്ന ഭൂകമ്പം, അഗ്നിപർവ്വത സ്ഫോടനം, ഫലകങ്ങളുടെ ചലനം (Plate Tectonics) എന്നിവ കാരണം പർവ്വതങ്ങളും പീഠഭൂമികളും ഉയർന്നു വരുന്നു. (ഭൂവൽക്കത്തെ <strong>ഉയർത്തുന്നു/നിർമ്മിക്കുന്നു</strong> – Constructive).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ബാഹ്യ ബലങ്ങൾ (Exogenic Forces):</strong> ഭൂമിക്ക് പുറത്ത് കാറ്റ്, ഒഴുകുന്ന ജലം (നദികൾ), ഹിമാനികൾ (Glaciers), തിരമാലകൾ എന്നിവ പാറകളെ പൊടിക്കുകയും (Weathering) ഒഴുക്കിക്കൊണ്ടുപോയി (Erosion) പുതിയ ഭൂരൂപങ്ങൾ (സമതലങ്ങൾ, ഡെൽറ്റകൾ) ഉണ്ടാക്കുകയും ചെയ്യുന്നു. (ഭൂവൽക്കത്തെ <strong>തേയ്ക്കുന്നു/നിരപ്പാക്കുന്നു</strong> – Destructive/Gradational).</li>
+        </ol>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><em>Endo = Inside (ഉള്ളിൽ → ഉയർത്തും), Exo = Outside (പുറത്ത് → തേയ്ക്കും).</em></p>
+        </div>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അപക്ഷയം → അപരദനം → നിക്ഷേപണം:</strong> പാറ പൊടിയുന്നത് <strong>അപക്ഷയം (Weathering)</strong>, അത് ഒഴുക്കിക്കൊണ്ടുപോകുന്നത് <strong>അപരദനം (Erosion)</strong>, ഒടുവിൽ അടിഞ്ഞുകൂടുന്നത് <strong>നിക്ഷേപണം (Deposition)</strong>.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>W-E-D ക്രമം</strong> (Weathering → Erosion → Deposition).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: പർവ്വതങ്ങൾ ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. പർവ്വതങ്ങൾ (Mountains)</h2>
+      <div class="section-body">
+        <p>ഭൂപ്രതലത്തിൽ നിന്നും വളരെ ഉയർന്നുനിൽക്കുന്നതും മുകൾഭാഗം കൂർത്തതുമായ (Peaks) ഭൂരൂപങ്ങളാണിവ. രൂപീകരണത്തിന്റെ അടിസ്ഥാനത്തിൽ ഇവ <strong>4 തരമുണ്ട്</strong>:</p>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>4 തരം ഓർക്കാൻ: "<strong>മ-ഖ-അ-അ</strong>" → <strong>മ</strong>ടക്ക്, <strong>ഖ</strong>ണ്ഡം (ബ്ലോക്ക്), <strong>അ</strong>ഗ്നി, <strong>അ</strong>വശിഷ്ടം.</p>
+        </div>
+
+        <h3>1. മടക്കുപർവ്വതങ്ങൾ (Fold Mountains)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂമിക്കടിയിലെ ഫലകങ്ങൾ (Tectonic Plates) തമ്മിൽ കൂട്ടിയിടിക്കുമ്പോൾ (<strong>സമ്മർദ്ദം/Compression</strong>) ഭൂവൽക്കത്തിലെ പാറകൾ മടങ്ങിമടങ്ങി ഉയർന്നുണ്ടാവുന്നതാണ് മടക്കുപർവ്വതങ്ങൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇവ ലോകത്തിലെ പ്രായം കുറഞ്ഞ പർവ്വതങ്ങളാണ് (Young fold mountains). ഇവ ഇപ്പോഴും ഉയർന്നുകൊണ്ടിരിക്കുന്നു (ഉദാ: ഹിമാലയം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണങ്ങൾ:</strong> <strong>ഹിമാലയം (ഏഷ്യ)</strong>, <strong>ആൻഡീസ് (തെക്കേ അമേരിക്ക - ലോകത്തിലെ ഏറ്റവും നീളം കൂടിയ പർവ്വതനിര)</strong>, റോക്കീസ് (വടക്കേ അമേരിക്ക), ആൽപ്സ് (യൂറോപ്പ്).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>Fold Mountains = <strong>HARA</strong> → <strong>H</strong>imalayas, <strong>A</strong>ndes, <strong>R</strong>ockies, <strong>A</strong>lps.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li>ഹിമാലയത്തിലെ ഏറ്റവും ഉയർന്ന കൊടുമുടി <strong>എവറസ്റ്റ്</strong> (ലോകത്തിലെ ഏറ്റവും ഉയരം കൂടിയ കൊടുമുടി, സമുദ്രനിരപ്പിൽ നിന്ന്).</li>
+            <li>ആൻഡീസിലെ ഏറ്റവും ഉയർന്ന കൊടുമുടി <strong>അക്കോൺകാഗ്വ (Aconcagua)</strong>. ആൽപ്സിലേത് <strong>മോണ്ട് ബ്ലാങ്ക് (Mont Blanc)</strong>.</li>
+            <li>ഇന്ത്യയിൽ <strong>ഏറ്റവും പഴക്കമുള്ള മടക്കുപർവ്വതം ആരവല്ലി</strong> (ഇപ്പോൾ തേയ്മാനം വന്ന് അവശിഷ്ട പർവ്വതമായി).</li>
+          </ul>
+        </div>
+
+        <h3>2. ഖണ്ഡപർവ്വതങ്ങൾ അഥവാ ബ്ലോക്ക് പർവ്വതങ്ങൾ (Block Mountains)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഭൂവൽക്കത്തിൽ വിള്ളലുകൾ (Faults) ഉണ്ടാകുമ്പോൾ (<strong>വലിവ്/Tension</strong>) ഒരു ഭാഗം ഉയരുകയോ താഴ്ന്നുപോവുകയോ ചെയ്യുമ്പോഴുണ്ടാകുന്ന പർവ്വതങ്ങളാണിവ. ഉയർന്ന ഭാഗത്തെ '<strong>ഹോഴ്സ്റ്റ്</strong>' (Horst) എന്നും താഴ്ന്ന ഭാഗത്തെ (പിളർപ്പ് താഴ്‌വര) '<strong>ഗ്രാബൻ</strong>' (Graben) എന്നും വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണങ്ങൾ:</strong> ഇന്ത്യയിലെ <strong>വിന്ധ്യ - സത്പുര നിരകൾ</strong>, യൂറോപ്പിലെ ബ്ലാക്ക് ഫോറസ്റ്റ് (Black Forest - ജർമ്മനി), വാസ്ഗസ് (ഫ്രാൻസ്).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>Horst = <strong>H</strong>igh (ഉയർന്നത്), Graben = <strong>G</strong>one down (താഴ്ന്നത്).</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li>ഗ്രാബൻ/റിഫ്റ്റ് വാലിക്ക് ഉദാഹരണം: <strong>നർമ്മദ, തപ്തി താഴ്‌വരകൾ</strong> (വിന്ധ്യ-സത്പുരയ്ക്കിടയിൽ), റൈൻ താഴ്‌വര (ജർമ്മനി), ജോർദാൻ താഴ്‌വര, ഈസ്റ്റ് ആഫ്രിക്കൻ റിഫ്റ്റ് വാലി, <strong>ചാവുകടൽ (Dead Sea)</strong>.</li>
+            <li>നർമ്മദയും തപ്തിയും "പടിഞ്ഞാറോട്ട്" ഒഴുകുന്ന പിളർപ്പ് താഴ്‌വര നദികൾ — ഡെൽറ്റ ഇല്ല, ഈസ്റ്റ്വറി (Estuary) ആണ്.</li>
+            <li>പശ്ചിമഘട്ടം ഫോൾട്ട് സ്കാർപ്പ് (Fault-scarp) രൂപീകരണമായി പരിഗണിക്കപ്പെടുന്നു.</li>
+          </ul>
+        </div>
+
+        <h3>3. അഗ്നിപർവ്വതങ്ങൾ (Volcanic Mountains)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> അഗ്നിപർവ്വത സ്ഫോടനത്തിലൂടെ പുറത്തുവരുന്ന മാഗ്മ (ലാവ) തണുത്തുറഞ്ഞ് ഉണ്ടാകുന്ന പർവ്വതങ്ങളാണിവ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണങ്ങൾ:</strong> കിളിമഞ്ചാരോ (ആഫ്രിക്ക - ടാൻസാനിയ), ഫ്യൂജിയാമ (ജപ്പാൻ), മൗണ്ട് വെസൂവിയസ് (ഇറ്റലി).</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li>കിളിമഞ്ചാരോ <strong>ആഫ്രിക്കയിലെ ഏറ്റവും ഉയരം കൂടിയ കൊടുമുടി</strong> (നിഷ്ക്രിയ/Dormant അഗ്നിപർവ്വതം). വെസൂവിയസ് സജീവ (Active) അഗ്നിപർവ്വതം.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>കിളിമഞ്ചാരോ = <strong>K</strong>ing of <strong>A</strong>frica (ആഫ്രിക്കയുടെ രാജാവ്).</p>
+        </div>
+
+        <h3>4. അവശിഷ്ട പർവ്വതങ്ങൾ (Residual Mountains)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> വർഷങ്ങളായി കാറ്റും മഴയും വെയിലും കൊണ്ടുണ്ടായ അപരദനം (Erosion) കാരണം തേയ്മാനം സംഭവിച്ച് ബാക്കിയായ പഴയ പർവ്വതങ്ങളാണിവ. (Relict mountains എന്നും പറയും).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഉദാഹരണങ്ങൾ:</strong> ഇന്ത്യയിലെ <strong>ആരവല്ലി പർവ്വതനിര (Aravalli - ഇന്ത്യയിലെ ഏറ്റവും പഴക്കമുള്ള പർവ്വതനിര)</strong>, റഷ്യയിലെ യുറാൽ (Urals).</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li>ആരവല്ലി ഡൽഹി മുതൽ ഗുജറാത്തിലെ പാലൻപൂർ വരെ നീളുന്നു. ഏറ്റവും ഉയർന്ന കൊടുമുടി <strong>ഗുരുശിഖർ (Guru Shikhar - മൗണ്ട് അബു, രാജസ്ഥാൻ)</strong>. യുറാൽ പർവ്വതം <strong>ഏഷ്യയെയും യൂറോപ്പിനെയും വേർതിരിക്കുന്നു</strong>.</li>
+            <li>✏️ ആരവല്ലി <strong>ഉത്ഭവത്തിൽ മടക്കുപർവ്വതമാണ്</strong>; ഇപ്പോൾ തേയ്മാനം വന്ന <strong>അവശിഷ്ട (Relict) പർവ്വതം</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ആര</strong>" വല്ലി = "<strong>ആര</strong>ണ് ഏറ്റവും പഴയത്? ആരവല്ലി!"</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 പർവ്വതങ്ങളുടെ 4 തരങ്ങൾ</span>
+          <svg viewBox="0 0 720 220" width="100%" height="auto" role="img" aria-label="Types of Mountains">
+            <rect x="20" y="20" width="165" height="180" rx="10" fill="#4a148c" opacity="0.12" stroke="#4a148c" stroke-width="2"/>
+            <text x="102" y="50" text-anchor="middle" fill="#4a148c" font-size="13" font-weight="bold">മടക്ക്</text>
+            <text x="102" y="75" text-anchor="middle" fill="#14202b" font-size="10">ഹിമാലയം</text>
+            <text x="102" y="95" text-anchor="middle" fill="#14202b" font-size="10">ആൻഡീസ്</text>
+            <text x="102" y="115" text-anchor="middle" fill="#14202b" font-size="10">റോക്കീസ്</text>
+            <text x="102" y="135" text-anchor="middle" fill="#14202b" font-size="10">ആൽപ്സ്</text>
+            <text x="102" y="165" text-anchor="middle" fill="#b83b2c" font-size="9">HARA</text>
+
+            <rect x="195" y="20" width="165" height="180" rx="10" fill="#00695c" opacity="0.12" stroke="#00695c" stroke-width="2"/>
+            <text x="277" y="50" text-anchor="middle" fill="#00695c" font-size="13" font-weight="bold">ബ്ലോക്ക്</text>
+            <text x="277" y="75" text-anchor="middle" fill="#14202b" font-size="10">വിന്ധ്യ</text>
+            <text x="277" y="95" text-anchor="middle" fill="#14202b" font-size="10">സത്പുര</text>
+            <text x="277" y="115" text-anchor="middle" fill="#14202b" font-size="10">ബ്ലാക്ക് ഫോറസ്റ്റ്</text>
+            <text x="277" y="135" text-anchor="middle" fill="#14202b" font-size="10">വാസ്ഗസ്</text>
+            <text x="277" y="165" text-anchor="middle" fill="#b83b2c" font-size="9">BSV</text>
+
+            <rect x="370" y="20" width="165" height="180" rx="10" fill="#b83b2c" opacity="0.12" stroke="#b83b2c" stroke-width="2"/>
+            <text x="452" y="50" text-anchor="middle" fill="#b83b2c" font-size="13" font-weight="bold">അഗ്നി</text>
+            <text x="452" y="75" text-anchor="middle" fill="#14202b" font-size="10">കിളിമഞ്ചാരോ</text>
+            <text x="452" y="95" text-anchor="middle" fill="#14202b" font-size="10">ഫ്യൂജിയാമ</text>
+            <text x="452" y="115" text-anchor="middle" fill="#14202b" font-size="10">വെസൂവിയസ്</text>
+            <text x="452" y="165" text-anchor="middle" fill="#b83b2c" font-size="9">Active/Dormant</text>
+
+            <rect x="545" y="20" width="165" height="180" rx="10" fill="#ef6c00" opacity="0.12" stroke="#ef6c00" stroke-width="2"/>
+            <text x="627" y="50" text-anchor="middle" fill="#ef6c00" font-size="13" font-weight="bold">അവശിഷ്ട</text>
+            <text x="627" y="75" text-anchor="middle" fill="#14202b" font-size="10">ആരവല്ലി</text>
+            <text x="627" y="95" text-anchor="middle" fill="#14202b" font-size="10">യുറാൽ</text>
+            <text x="627" y="135" text-anchor="middle" fill="#b83b2c" font-size="9">Oldest / Relict</text>
+          </svg>
+          <div class="viz-caption">📊 മ-ഖ-അ-അ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: പീഠഭൂമികൾ ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. പീഠഭൂമികൾ (Plateaus)</h2>
+      <div class="section-body">
+        <p>ചുറ്റുപാടുമുള്ള പ്രദേശങ്ങളെക്കാൾ ഉയർന്നതും, എന്നാൽ മുകൾഭാഗം മേശ പോലെ പരന്നതുമായ (Tableland) ഭൂരൂപങ്ങളാണിവ.</p>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ലോകത്തിലെ ഏറ്റവും വലിയതും ഉയരം കൂടിയതുമായ പീഠഭൂമിയാണ് <strong>ടിബറ്റൻ പീഠഭൂമി (Tibetan Plateau)</strong>. ഇതും 'ലോകത്തിന്റെ മേൽക്കൂര' (Roof of the World) എന്ന് വിശേഷിപ്പിക്കപ്പെടാറുണ്ട്. എന്നാൽ PSC-യിൽ <strong>"ലോകത്തിന്റെ മേൽക്കൂര" എന്ന ചോദ്യത്തിന് സാധാരണ ഉത്തരം പാമീർ പീഠഭൂമി (Pamir Plateau)</strong> ആണ്. <strong>പാമീർ ടിബറ്റൻ പീഠഭൂമിയുടെ ഭാഗമല്ല; ഇത് വേറിട്ട, ടിബറ്റിന് പടിഞ്ഞാറുള്ള പീഠഭൂമിയാണ് (പാമീർ നോട്ട് - ഹിമാലയം, കാരക്കോറം, ഹിന്ദുകുഷ് എന്നിവ ചേരുന്ന സ്ഥലം).</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യയിലെ ഏറ്റവും വലിയ പീഠഭൂമിയാണ് <strong>ഡെക്കാൻ പീഠഭൂമി (Deccan Plateau)</strong> (ഇതിന്റെ വടക്കുപടിഞ്ഞാറൻ ഭാഗം <strong>ഡെക്കാൻ ട്രാപ്പ് എന്ന അഗ്നിപർവ്വത/ലാവാ പീഠഭൂമിയാണ്</strong>). ഇന്ത്യയുടെ ധാതു കലവറ എന്നറിയപ്പെടുന്നത് <strong>ഛോട്ടാനാഗ്പൂർ പീഠഭൂമിയാണ്</strong>.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>പാമീർ = <strong>P</strong>eak of the world (മേൽക്കൂര), ടിബറ്റ് = <strong>T</strong>allest &amp; <strong>T</strong>ops in size (ഏറ്റവും വലുത്/ഉയരം).</p>
+        </div>
+
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <ul>
+            <li><strong>പാമീർ പീഠഭൂമി ടിബറ്റൻ പീഠഭൂമിയുടെ ഭാഗമല്ല.</strong> ഇത് വേറെ പീഠഭൂമിയാണ് (പാമീർ നോട്ട്).</li>
+            <li><strong>ഡെക്കാൻ പീഠഭൂമി മുഴുവൻ അഗ്നിപർവ്വത പീഠഭൂമിയല്ല.</strong> വടക്കു-പടിഞ്ഞാറൻ ഭാഗമാണ് ഡെക്കാൻ ട്രാപ്പ് (ലാവാ പീഠഭൂമി).</li>
+          </ul>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ (പീഠഭൂമി തരങ്ങൾ)</span>
+          <ul>
+            <li><strong>പർവ്വതാന്തര പീഠഭൂമി (Intermontane):</strong> പർവ്വതങ്ങൾക്കിടയിൽ – ടിബറ്റൻ, പാമീർ.</li>
+            <li><strong>ഭൂഖണ്ഡ പീഠഭൂമി (Continental):</strong> ഡെക്കാൻ, ആഫ്രിക്കൻ പീഠഭൂമി.</li>
+            <li><strong>പിഡ്മോണ്ട് (Piedmont):</strong> പർവ്വതത്തിന്റെ താഴ്‌വാരത്ത്.</li>
+            <li>ഇന്ത്യയിലെ മറ്റ് പീഠഭൂമികൾ: <strong>മാൾവ</strong>, ഛോട്ടാനാഗ്പൂർ, മേഘാലയ (ഷില്ലോങ്).</li>
+            <li>ഛോട്ടാനാഗ്പൂർ = ഇന്ത്യയുടെ <strong>"റൂർ (Ruhr)"</strong> എന്നും വിളിക്കാറുണ്ട് (ഖനന/വ്യാവസായിക മേഖല).</li>
+          </ul>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 പ്രധാന പീഠഭൂമികൾ</span>
+          <svg viewBox="0 0 720 160" width="100%" height="auto" role="img" aria-label="Major Plateaus">
+            <rect x="20" y="30" width="160" height="100" rx="8" fill="#4a148c" opacity="0.85"/>
+            <text x="100" y="70" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">ടിബറ്റൻ</text>
+            <text x="100" y="95" text-anchor="middle" fill="#ffd54f" font-size="11">ഏറ്റവും വലുത്</text>
+            <text x="100" y="115" text-anchor="middle" fill="#fff" font-size="10">ഉയരം കൂടിയത്</text>
+
+            <rect x="195" y="30" width="160" height="100" rx="8" fill="#00695c" opacity="0.85"/>
+            <text x="275" y="70" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">പാമീർ</text>
+            <text x="275" y="95" text-anchor="middle" fill="#ffd54f" font-size="11">ലോകത്തിന്റെ</text>
+            <text x="275" y="115" text-anchor="middle" fill="#fff" font-size="10">മേൽക്കൂര</text>
+
+            <rect x="370" y="30" width="160" height="100" rx="8" fill="#b83b2c" opacity="0.85"/>
+            <text x="450" y="70" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">ഡെക്കാൻ</text>
+            <text x="450" y="95" text-anchor="middle" fill="#ffd54f" font-size="11">ഇന്ത്യയിൽ വലുത്</text>
+            <text x="450" y="115" text-anchor="middle" fill="#fff" font-size="10">NW = Trap</text>
+
+            <rect x="545" y="30" width="160" height="100" rx="8" fill="#ef6c00" opacity="0.85"/>
+            <text x="625" y="70" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">ഛോട്ടാനാഗ്പൂർ</text>
+            <text x="625" y="95" text-anchor="middle" fill="#ffd54f" font-size="11">ധാതു കലവറ</text>
+            <text x="625" y="115" text-anchor="middle" fill="#fff" font-size="10">റൂർ</text>
+          </svg>
+          <div class="viz-caption">📊 4 പ്രധാന പീഠഭൂമികൾ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: സമതലങ്ങൾ ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. സമതലങ്ങൾ (Plains)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> വളരെ നിരപ്പായ, ഉയരം കുറഞ്ഞ വിശാലമായ ഭൂപ്രദേശങ്ങളാണിവ. നദികൾ ഒഴുക്കിക്കൊണ്ടുവരുന്ന എക്കൽ മണ്ണ് (Alluvium) അടിഞ്ഞുകൂടിയാണ് ഭൂരിഭാഗം സമതലങ്ങളും ഉണ്ടാകുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ലോകത്തിൽ ഏറ്റവും ജനവാസമുള്ള പ്രദേശങ്ങളാണിവ. ഇന്ത്യയിലെ <strong>സിന്ധു-ഗംഗാ-ബ്രഹ്മപുത്ര സമതലം (Indo-Gangetic Plain)</strong> ഇതിന് ഏറ്റവും മികച്ച ഉദാഹരണമാണ്.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വസ്തുതകൾ (സമതല തരങ്ങൾ)</span>
+          <ul>
+            <li><strong>എക്കൽ സമതലം</strong> (നദി) – Alluvial plain</li>
+            <li><strong>ലായസ് സമതലം</strong> (കാറ്റ്) – ഉദാ: ചൈനയിലെ ലായസ് പീഠഭൂമി</li>
+            <li><strong>ഹിമാനി സമതലം</strong> (Glacial)</li>
+            <li><strong>തടാക സമതലം</strong> (Lacustrine)</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>എക്കൽ = നദി, ലായസ് = കാറ്റ്.</strong>"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: മറ്റ് ഭൂരൂപങ്ങൾ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. മറ്റ് പ്രധാന ഭൂരൂപങ്ങൾ</h2>
+      <div class="section-body">
+        <p>പ്രകൃതിശക്തികൾ (നദി, കാറ്റ്, ഹിമാനി) രൂപപ്പെടുത്തുന്ന ചില പ്രത്യേക ഭൂരൂപങ്ങൾ:</p>
+
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>V-ആകൃതിയിലുള്ള താഴ്‌വരകൾ (V-shaped Valleys):</strong> നദികൾ (ഒഴുകുന്ന ജലം) മലമുകളിൽ നിന്ന് കുത്തിയൊഴുകുമ്പോൾ താഴേക്ക് കാർന്നെടുത്ത് ഉണ്ടാകുന്ന ഭൂരൂപമാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>U-ആകൃതിയിലുള്ള താഴ്‌വരകൾ (U-shaped Valleys):</strong> <strong>ഹിമാനികൾ (Glaciers - മഞ്ഞുനദികൾ)</strong> നീങ്ങുമ്പോൾ താഴ്‌വരകളെ വശങ്ങളിലേക്കും താഴേക്കും കാർന്നെടുത്ത് ഉണ്ടാകുന്ന ഭൂരൂപമാണിത്. (PSC ആവർത്തിച്ചു ചോദിക്കുന്നത്). (ഈ താഴ്‌വര കടലിൽ മുങ്ങിയാൽ <strong>ഫിയോർഡ് (Fiord)</strong> – ഉദാ: നോർവേ).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കൂൺ പാറകൾ (Mushroom Rocks):</strong> <strong>കാറ്റ് (Wind)</strong> കാരണം മരുഭൂമികളിൽ പാറകളുടെ താഴ്ഭാഗം പെട്ടെന്ന് തേയ്മാനം സംഭവിച്ച് മുകൾഭാഗം കൂൺ പോലെ നിൽക്കുന്ന ഭൂരൂപം. (<strong>Pedestal Rock</strong> എന്നും അറിയപ്പെടുന്നു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മൊറൈനുകൾ (Moraines):</strong> ഹിമാനികൾ (Glaciers) ഒഴുക്കിക്കൊണ്ടുവന്ന് നിക്ഷേപിക്കുന്ന മണലും പാറക്കഷണങ്ങളും.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഡെൽറ്റകൾ (Deltas):</strong> നദികൾ കടലിൽ ചേരുന്ന ഭാഗത്ത് മണ്ണ് നിക്ഷേപിച്ച് ഉണ്ടാകുന്ന ത്രികോണാകൃതിയിലുള്ള (Triangle) ഭൂരൂപം. (ഉദാ: ഗംഗാ-ബ്രഹ്മപുത്ര ഡെൽറ്റയായ സുന്ദർബൻസ് - ലോകത്തിലെ ഏറ്റവും വലിയ ഡെൽറ്റ).</li>
+        </ol>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>ഡെൽറ്റ = ഗ്രീക്ക് അക്ഷരം <strong>Δ</strong> (ത്രികോണം).</p>
+        </div>
+
+        <h3>അധിക ഭൂരൂപങ്ങൾ</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഹിമാനി (Glacier):</strong> സിർക്ക് (Cirque), അരേത് (Arete), ഹാങ്ങിംഗ് വാലി, എസ്കർ, ഡ്രംലിൻ (നിക്ഷേപണം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കാറ്റ്:</strong> ബർഖാൻ (Barchan - ചന്ദ്രക്കലാകൃതി മണൽക്കുന്ന്), യാർഡാങ് (Yardang), ഇൻസൽബർഗ് (Inselberg).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>തിരമാല:</strong> സീ ആർച്ച് (Sea Arch), സീ സ്റ്റാക്ക് (Sea Stack), ക്ലിഫ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ചുണ്ണാമ്പുകല്ല് പ്രദേശം (Karst):</strong> സ്റ്റാലക്ടൈറ്റ് (മുകളിൽ നിന്ന് താഴേക്ക്), സ്റ്റാലഗ്മൈറ്റ് (താഴെ നിന്ന് മുകളിലേക്ക്).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>Stalac<strong>t</strong>ite = <strong>T</strong>op (മേൽക്കൂരയിൽ നിന്ന്), Stalag<strong>m</strong>ite = <strong>M</strong>ound (നിലത്ത് നിന്ന്).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രധാന വസ്തുതകൾ (Important Facts)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> നദികളുടെ അപരദനം (Erosion) മൂലം ഉണ്ടാകുന്ന വളരെ ആഴമുള്ളതും ചെങ്കുത്തായതുമായ താഴ്‌വരകളെ <strong>ക്യാനിയനുകൾ (Canyons)</strong> എന്ന് വിളിക്കുന്നു (ഉദാ: അമേരിക്കയിലെ (അരിസോണ) കൊളറാഡോ നദി നിർമ്മിച്ച ഗ്രാൻഡ് ക്യാനിയൻ). ഇടുങ്ങിയതും ആഴമേറിയതുമായ നദീതാഴ്‌വരയെ <strong>ഗോർജ് (Gorge)</strong> എന്നും പറയുന്നു (ഉദാ: സിന്ധു, ബ്രഹ്മപുത്ര/ദിഹാങ് ഗോർജ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കാറ്റ് മണൽത്തരികളെ ഒരു സ്ഥലത്ത് നിന്ന് പറത്തിക്കൊണ്ടുപോയി മറ്റൊരു സ്ഥലത്ത് വലിയ കുന്നുകളായി നിക്ഷേപിക്കുന്നതിനെ <strong>മണൽക്കുന്നുകൾ (Sand Dunes)</strong> എന്ന് വിളിക്കുന്നു. കാറ്റിനാൽ നിക്ഷേപിക്കപ്പെടുന്ന വളരെ നേർത്ത മണ്ണാണ് <strong>ലായസ് (Loess)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> കടൽത്തിരമാലകൾ (Sea waves) കാരണം പാറകളിൽ രൂപപ്പെടുന്ന ഗുഹകളെയാണ് <strong>സീ കേവുകൾ (Sea Caves)</strong> എന്ന് വിളിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> നദികൾ വളഞ്ഞുപുളഞ്ഞൊഴുകുമ്പോൾ (Meandering) അവയുടെ ഒരു വളവ് മുറിച്ചുമാറ്റപ്പെട്ട് ഉണ്ടാകുന്ന ചെറിയ തടാകങ്ങളെയാണ് <strong>ഓക്സ്-ബോ തടാകങ്ങൾ (Ox-bow Lakes)</strong> എന്ന് വിളിക്കുന്നത് (ഉദാ: ബീഹാറിലെ കൻവർ തടാകം / കബർതാൽ - ഏഷ്യയിലെ ഏറ്റവും വലിയ ശുദ്ധജല ഓക്സ്-ബോ തടാകം).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഹിമാലയം ഇപ്പോഴും ഉയരുന്നു</strong> (ഇന്ത്യൻ ഫലകം യൂറേഷ്യൻ ഫലകത്തിലേക്ക് നീങ്ങുന്നതിനാൽ); ആരവല്ലി ഇപ്പോൾ ഉയരുന്നില്ല, തേയ്മാനം തുടരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഭൂകമ്പം, അഗ്നിപർവ്വതം തുടങ്ങിയവ <strong>ആകസ്മിക (Sudden)</strong> ആന്തരിക ബലങ്ങളും, പർവ്വതനിർമ്മാണം <strong>മന്ദഗതിയിലുള്ള (Slow)</strong> ബലവുമാണ്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: PSC വിശകലനം ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> ഹിമാലയം എന്തുതരം പർവ്വതം (മടക്കുപർവ്വതം), ആരവല്ലി എന്തുതരം പർവ്വതം (അവശിഷ്ട പർവ്വതം), U-ആകൃതി താഴ്‌വര നിർമ്മിക്കുന്നത് (ഹിമാനി/Glacier).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> ലോകത്തിന്റെ മേൽക്കൂര (പാമീർ; ടിബറ്റിനെ ഏറ്റവും ഉയരം/വലുപ്പം എന്ന നിലയിൽ ഓർക്കുക), V-ആകൃതി താഴ്‌വര (നദി), കൂൺപാറകൾ നിർമ്മിക്കുന്നത് (കാറ്റ്), ബ്ലോക്ക് പർവ്വതങ്ങൾക്ക് ഉദാഹരണം (വിന്ധ്യ-സത്പുര).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> മൊറൈനുകൾ (ഹിമാനി നിക്ഷേപം), ഓക്സ്-ബോ തടാകങ്ങൾ (നദികളുടെ വളവ്), ഗ്രാൻഡ് ക്യാനിയൻ (കൊളറാഡോ നദി), ആൻഡീസ് (ഏറ്റവും നീളം കൂടിയ പർവ്വതനിര), കിളിമഞ്ചാരോ (ആഫ്രിക്കയിലെ ഏറ്റവും ഉയരം കൂടിയത്).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇടയ്ക്ക് വരാവുന്നത്:</strong> ഹോഴ്സ്റ്റ്/ഗ്രാബൻ, ഫിയോർഡ്, സ്റ്റാലക്ടൈറ്റ്/സ്റ്റാലഗ്മൈറ്റ്, ബർഖാൻ, ഛോട്ടാനാഗ്പൂർ (ധാതു കലവറ).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>V-ആകൃതി താഴ്‌വര</strong></td><td><strong>U-ആകൃതി താഴ്‌വര</strong></td><td>V = കുത്തിയൊഴുകുന്ന <strong>നദികൾ</strong>; U = സാവധാനം നീങ്ങുന്ന <strong>ഹിമാനികൾ</strong>.</td></tr>
+              <tr><td><strong>മടക്കുപർവ്വതം</strong></td><td><strong>ബ്ലോക്ക് പർവ്വതം</strong></td><td>മടക്ക് = ഫലകങ്ങൾ ഇടിച്ച് <strong>മടങ്ങി</strong> (ഹിമാലയം); ബ്ലോക്ക് = ഭൂവൽക്കത്തിൽ <strong>വിള്ളൽ</strong> (വിന്ധ്യ-സത്പുര).</td></tr>
+              <tr><td><strong>മൊറൈനുകൾ</strong></td><td><strong>മണൽക്കുന്നുകൾ</strong></td><td>മൊറൈൻ = <strong>ഹിമാനി</strong> നിക്ഷേപം; മണൽക്കുന്ന് = <strong>കാറ്റ്</strong> നിക്ഷേപം.</td></tr>
+              <tr><td><strong>പാമീർ</strong></td><td><strong>ടിബറ്റൻ</strong></td><td>പാമീർ = "ലോകത്തിന്റെ മേൽക്കൂര" (വേറിട്ടത്); ടിബറ്റ് = ഏറ്റവും വലുതും ഉയരം കൂടിയതും. ഒന്ന് മറ്റൊന്നിന്റെ ഭാഗമല്ല.</td></tr>
+              <tr><td><strong>ആരവല്ലി</strong></td><td><strong>ഹിമാലയം</strong></td><td>രണ്ടും ഉത്ഭവത്തിൽ മടക്കുപർവ്വതങ്ങൾ; ഹിമാലയം <strong>ഉയരുന്നു</strong>, ആരവല്ലി <strong>തേയ്മാനം വന്ന അവശിഷ്ടം</strong>.</td></tr>
+              <tr><td><strong>ക്യാനിയൻ</strong></td><td><strong>ഗോർജ്</strong></td><td>ക്യാനിയൻ = ആഴവും വീതിയുമുള്ള താഴ്‌വര (ഗ്രാൻഡ് ക്യാനിയൻ); ഗോർജ് = ഇടുങ്ങിയതും ആഴമേറിയതും.</td></tr>
+              <tr><td><strong>സ്റ്റാലക്ടൈറ്റ്</strong></td><td><strong>സ്റ്റാലഗ്മൈറ്റ്</strong></td><td>സ്റ്റാലക്ടൈറ്റ് = മേൽക്കൂരയിൽ നിന്ന് തൂങ്ങുന്നത്; സ്റ്റാലഗ്മൈറ്റ് = തറയിൽ നിന്ന് മുകളിലേക്ക്.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: പ്രകൃതി ശക്തികളും ഭൂരൂപങ്ങളും (Very Important)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പ്രകൃതി ശക്തി</th><th>അപരദനം കൊണ്ടുള്ളത്</th><th>നിക്ഷേപണം കൊണ്ടുള്ളത്</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>നദികൾ</strong></td><td>V-താഴ്‌വര, ക്യാനിയൻ, ഗോർജ്, വെള്ളച്ചാട്ടം</td><td>എക്കൽ സമതലം, ഡെൽറ്റ, ഓക്സ്-ബോ തടാകം</td></tr>
+              <tr><td><strong>ഹിമാനികൾ</strong></td><td>U-താഴ്‌വര, സിർക്ക്, അരേത്, ഫിയോർഡ്</td><td>മൊറൈനുകൾ, എസ്കർ, ഡ്രംലിൻ</td></tr>
+              <tr><td><strong>കാറ്റ്</strong></td><td>കൂൺപാറ, യാർഡാങ്, ഇൻസൽബർഗ്</td><td>മണൽക്കുന്നുകൾ, ബർഖാൻ, ലായസ്</td></tr>
+              <tr><td><strong>തിരമാല</strong></td><td>സീ കേവ്, ക്ലിഫ്, സീ ആർച്ച്, സീ സ്റ്റാക്ക്</td><td>ബീച്ചുകൾ, സാൻഡ് ബാർ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: പർവ്വതങ്ങളും ഉദാഹരണങ്ങളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പർവ്വത തരം</th><th>ഉദാഹരണങ്ങൾ</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>മടക്കുപർവ്വതങ്ങൾ</strong></td><td>ഹിമാലയം, ആൻഡീസ്, റോക്കീസ്, ആൽപ്സ്</td></tr>
+              <tr><td><strong>ബ്ലോക്ക് പർവ്വതങ്ങൾ</strong></td><td>വിന്ധ്യ, സത്പുര, ബ്ലാക്ക് ഫോറസ്റ്റ്, വാസ്ഗസ്</td></tr>
+              <tr><td><strong>അവശിഷ്ട പർവ്വതങ്ങൾ</strong></td><td>ആരവല്ലി (ഏറ്റവും പഴയത്), യുറാൽ</td></tr>
+              <tr><td><strong>അഗ്നിപർവ്വതങ്ങൾ</strong></td><td>കിളിമഞ്ചാരോ, ഫ്യൂജിയാമ, വെസൂവിയസ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: പ്രധാന പീഠഭൂമികൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>പീഠഭൂമി</th><th>പ്രത്യേകത</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>ടിബറ്റൻ</strong></td><td>ലോകത്തിലെ ഏറ്റവും വലുതും ഉയരം കൂടിയതും</td></tr>
+              <tr><td><strong>പാമീർ</strong></td><td>"ലോകത്തിന്റെ മേൽക്കൂര" (PSC ഉത്തരം)</td></tr>
+              <tr><td><strong>ഡെക്കാൻ</strong></td><td>ഇന്ത്യയിലെ ഏറ്റവും വലുത്; NW = ഡെക്കാൻ ട്രാപ്പ്</td></tr>
+              <tr><td><strong>ഛോട്ടാനാഗ്പൂർ</strong></td><td>ഇന്ത്യയുടെ ധാതു കലവറ; "റൂർ"</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: Mnemonics ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1 (മടക്കുപർവ്വതങ്ങൾ):</strong></span>
+          <p><strong>"HARA"</strong> (ഹാര) — <strong>H</strong>imalayas, <strong>A</strong>ndes, <strong>R</strong>ockies, <strong>A</strong>lps.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2 (ബ്ലോക്ക് പർവ്വതങ്ങൾ):</strong></span>
+          <p><strong>"BSV"</strong> — <strong>B</strong>lack forest, <strong>S</strong>atpura, <strong>V</strong>indhya = Block mountains.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3 (പർവ്വത തരം 4):</strong></span>
+          <p>"<strong>മ-ഖ-അ-അ</strong>" → <strong>മ</strong>ടക്ക്, <strong>ഖ</strong>ണ്ഡം, <strong>അ</strong>ഗ്നി, <strong>അ</strong>വശിഷ്ടം.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4 (ഹിമാനി vs നദി):</strong></span>
+          <p>"<strong>U</strong>" = "<strong>U</strong>ce" (ഐസ്/ഹിമാനി), "<strong>V</strong>" = "<strong>V</strong>ellam" (വെള്ളം/നദി).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5 (പാമീർ/ടിബറ്റ്):</strong></span>
+          <p><strong>P</strong>amir = <strong>P</strong>eak roof (മേൽക്കൂര), <strong>T</strong>ibet = <strong>T</strong>allest &amp; Largest.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6 (സ്റ്റാലക്ടൈറ്റ്/സ്റ്റാലഗ്മൈറ്റ്):</strong></span>
+          <p>Stalac<strong>t</strong>ite = <strong>T</strong>op (മേൽക്കൂര), Stalag<strong>m</strong>ite = <strong>M</strong>ound (നിലം).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7 (ആരവല്ലി):</strong></span>
+          <p>"<strong>ആര</strong>" വല്ലി = "<strong>ആര</strong>ണ് ഏറ്റവും പഴയത്?"</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8 (W-E-D):</strong></span>
+          <p><strong>W</strong>eathering → <strong>E</strong>rosion → <strong>D</strong>eposition.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: PSC കെണികൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1</span>
+          <p><strong>Question:</strong> ഹിമാലയം എന്തുതരം പർവ്വതം?</p>
+          <p><strong>Confusing Options:</strong> ബ്ലോക്ക് / അഗ്നി / അവശിഷ്ടം / മടക്ക്</p>
+          <p><strong>Fact:</strong> <strong>മടക്കുപർവ്വതം</strong>. ഫലകങ്ങൾ ഇടിച്ച് മടങ്ങി ഉണ്ടായത്.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2</span>
+          <p><strong>Question:</strong> U-ആകൃതി താഴ്‌വര നിർമ്മിക്കുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> നദികൾ / കാറ്റ് / ഹിമാനികൾ / തിരമാലകൾ</p>
+          <p><strong>Fact:</strong> <strong>ഹിമാനികൾ</strong>. നദികൾ = V-ആകൃതി.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3</span>
+          <p><strong>Question:</strong> ലോകത്തിന്റെ മേൽക്കൂര?</p>
+          <p><strong>Confusing Options:</strong> ടിബറ്റൻ / ഡെക്കാൻ / <strong>പാമീർ</strong> / കൊളറാഡോ</p>
+          <p><strong>Fact:</strong> <strong>പാമീർ പീഠഭൂമി</strong> (PSC ഉത്തരം). ടിബറ്റൻ = ഏറ്റവും വലുത്/ഉയരം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4</span>
+          <p><strong>Question:</strong> കൂൺപാറകൾ നിർമ്മിക്കുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> നദി / <strong>കാറ്റ്</strong> / ഹിമാനി / തിരമാല</p>
+          <p><strong>Fact:</strong> <strong>കാറ്റ്</strong> (മരുഭൂമികളിൽ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5</span>
+          <p><strong>Question:</strong> ഇന്ത്യയിലെ ഏറ്റവും പഴയ പർവ്വതനിര?</p>
+          <p><strong>Confusing Options:</strong> ഹിമാലയം / വിന്ധ്യ / <strong>ആരവല്ലി</strong> / സത്പുര</p>
+          <p><strong>Fact:</strong> <strong>ആരവല്ലി</strong> (അവശിഷ്ട പർവ്വതം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6</span>
+          <p><strong>Question:</strong> ബ്ലോക്ക് പർവ്വതങ്ങൾക്ക് ഉദാഹരണം?</p>
+          <p><strong>Confusing Options:</strong> ഹിമാലയം / ആരവല്ലി / <strong>വിന്ധ്യ-സത്പുര</strong> / കിളിമഞ്ചാരോ</p>
+          <p><strong>Fact:</strong> <strong>വിന്ധ്യ-സത്പുര</strong> (വിള്ളൽ കാരണം).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7</span>
+          <p><strong>Question:</strong> ഇന്ത്യയുടെ ധാതു കലവറ?</p>
+          <p><strong>Confusing Options:</strong> ഡെക്കാൻ / <strong>ഛോട്ടാനാഗ്പൂർ</strong> / മാൾവ / മേഘാലയ</p>
+          <p><strong>Fact:</strong> <strong>ഛോട്ടാനാഗ്പൂർ പീഠഭൂമി</strong> ("റൂർ").</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8</span>
+          <p><strong>Question:</strong> ലോകത്തിലെ ഏറ്റവും നീളം കൂടിയ പർവ്വതനിര?</p>
+          <p><strong>Confusing Options:</strong> ഹിമാലയം / ആൽപ്സ് / <strong>ആൻഡീസ്</strong> / റോക്കീസ്</p>
+          <p><strong>Fact:</strong> <strong>ആൻഡീസ്</strong> (~7000 കി.മീ). ഏറ്റവും ഉയരം = ഹിമാലയം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഭൂമിക്കടിയിലെ ഫലകങ്ങൾ തമ്മിൽ കൂട്ടിയിടിക്കുന്നതിന്റെ ഫലമായി ഭൂവൽക്കത്തിലെ പാറകൾ മടങ്ങിമടങ്ങി ഉയർന്നുണ്ടാകുന്ന പർവ്വതങ്ങൾക്ക് ഉദാഹരണം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. വിന്ധ്യ-സത്പുര നിരകൾ</span>
+            <span data-opt="B">B. ഹിമാലയൻ പർവ്വതനിരകൾ</span>
+            <span data-opt="C">C. ആരവല്ലി നിരകൾ</span>
+            <span data-opt="D">D. കിളിമഞ്ചാരോ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഹിമാലയൻ പർവ്വതനിരകൾ</div>
+            <div class="explanation">ഹിമാലയം, ആൻഡീസ്, റോക്കീസ് = മടക്കുപർവ്വതങ്ങൾ. വിന്ധ്യ = ബ്ലോക്ക്; കിളിമഞ്ചാരോ = അഗ്നി; ആരവല്ലി = അവശിഷ്ടം.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. കാറ്റിന്റെ അപരദനം (Wind Erosion) മൂലമുണ്ടാകുന്ന പ്രധാന ഭൂരൂപമായ 'കൂൺ പാറകൾ' (Mushroom Rocks) എവിടെയാണ് സാധാരണയായി കാണപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. നദീതടങ്ങളിൽ</span>
+            <span data-opt="B">B. മരുഭൂമികളിൽ</span>
+            <span data-opt="C">C. ഹിമാനി പ്രദേശങ്ങളിൽ</span>
+            <span data-opt="D">D. തീരപ്രദേശങ്ങളിൽ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) മരുഭൂമികളിൽ</div>
+            <div class="explanation">മരുഭൂമിയിലെ കാറ്റ് പാറകളുടെ താഴെഭാഗം ശക്തമായി കാർന്നെടുക്കുന്നത് കൊണ്ടാണ് കൂൺ ആകൃതി.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. U-ആകൃതിയിലുള്ള താഴ്‌വരകൾ (U-shaped Valleys) ഏത് പ്രകൃതിശക്തിയുടെ പ്രവർത്തന ഫലമായാണ് രൂപപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഒഴുകുന്ന നദികൾ</span>
+            <span data-opt="B">B. കാറ്റ്</span>
+            <span data-opt="C">C. ഹിമാനികൾ</span>
+            <span data-opt="D">D. കടൽത്തിരമാലകൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഹിമാനികൾ</div>
+            <div class="explanation">ഹിമാനികൾ നിരങ്ങിയിറങ്ങുമ്പോൾ U-ആകൃതി. നദികൾ = V-ആകൃതി.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. 'ലോകത്തിന്റെ മേൽക്കൂര' (Roof of the World) എന്ന് സാധാരണയായി വിശേഷിപ്പിക്കപ്പെടുന്ന പീഠഭൂമി ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പാമീർ പീഠഭൂമി</span>
+            <span data-opt="B">B. ഡെക്കാൻ പീഠഭൂമി</span>
+            <span data-opt="C">C. കൊളറാഡോ പീഠഭൂമി</span>
+            <span data-opt="D">D. അറേബ്യൻ പീഠഭൂമി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) പാമീർ പീഠഭൂമി</div>
+            <div class="explanation">PSC ഉത്തരം പാമീർ. ടിബറ്റൻ = ഏറ്റവും വലുതും ഉയരം കൂടിയതും.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഇന്ത്യയിലെ ഏറ്റവും പ്രായം കൂടിയ പർവ്വതനിരയും അവശിഷ്ട പർവ്വതത്തിന് ഉത്തമ ഉദാഹരണവുമായ പർവ്വതനിര ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പൂർവ്വഘട്ടം</span>
+            <span data-opt="B">B. വിന്ധ്യൻ നിരകൾ</span>
+            <span data-opt="C">C. ആരവല്ലി പർവ്വതനിരകൾ</span>
+            <span data-opt="D">D. ഹിമാലയം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആരവല്ലി പർവ്വതനിരകൾ</div>
+            <div class="explanation">ഏറ്റവും ഉയർന്ന കൊടുമുടി ഗുരുശിഖർ (മൗണ്ട് അബു, രാജസ്ഥാൻ).</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഹിമാനികൾ ഒഴുക്കിക്കൊണ്ടുവന്ന് നിക്ഷേപിക്കുന്ന മണലും ചെളിയും പാറക്കഷണങ്ങളും ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. മൊറൈനുകൾ</span>
+            <span data-opt="B">B. സാൻഡ് ഡ്യൂൺസ്</span>
+            <span data-opt="C">C. എക്കൽ മണ്ണ്</span>
+            <span data-opt="D">D. ഡെൽറ്റകൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) മൊറൈനുകൾ</div>
+            <div class="explanation">ഹിമാനിയുടെ നിക്ഷേപം = മൊറൈൻ. കാറ്റിന്റെ നിക്ഷേപം = മണൽക്കുന്നുകൾ.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഭൂവൽക്കത്തിൽ വിള്ളലുകൾ ഉണ്ടായി ഒരു ഭാഗം ഉയരുകയോ താഴുകയോ ചെയ്യുമ്പോഴുണ്ടാകുന്നവയാണ് ഖണ്ഡപർവ്വതങ്ങൾ.<br>
+            2. ഗ്രാൻഡ് ക്യാനിയൻ കൊളറാഡോ നദിയുടെ അപരദനം കൊണ്ടുണ്ടായതാണ്.<br>
+            3. നദികൾ കടലിൽ ചേരുന്ന ഭാഗത്ത് ഉണ്ടാകുന്ന ത്രികോണാകൃതിയിലുള്ള ഭൂരൂപമാണ് ഡെൽറ്റ.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 മാത്രം</span>
+            <span data-opt="B">B. 1, 3 മാത്രം</span>
+            <span data-opt="C">C. 2, 3 മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 ശരിയാണ്</div>
+            <div class="explanation">മൂന്ന് പ്രസ്താവനകളും കൃത്യമായ ഭൂമിശാസ്ത്ര വസ്തുതകളാണ്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ജർമ്മനിയിലെ ബ്ലാക്ക് ഫോറസ്റ്റ്, ഇന്ത്യയിലെ വിന്ധ്യ-സത്പുര നിരകൾ എന്നിവ എന്തുതരം ഭൂരൂപങ്ങൾക്ക് ഉദാഹരണമാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മടക്കുപർവ്വതങ്ങൾ</span>
+            <span data-opt="B">B. ബ്ലോക്ക് പർവ്വതങ്ങൾ</span>
+            <span data-opt="C">C. അവശിഷ്ട പർവ്വതങ്ങൾ</span>
+            <span data-opt="D">D. അഗ്നിപർവ്വതങ്ങൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ബ്ലോക്ക് പർവ്വതങ്ങൾ</div>
+            <div class="explanation">ഇവയ്ക്കിടയിലെ താഴ്ന്ന ഭാഗം = റിഫ്റ്റ് വാലി (നർമ്മദ, തപ്തി).</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following:<br>
+            1. നദികൾ — a. കൂൺപാറകൾ<br>
+            2. കാറ്റ് — b. മൊറൈനുകൾ<br>
+            3. ഹിമാനി — c. V-ആകൃതി താഴ്‌വര</div>
+          <div class="options">
+            <span data-opt="A">A. 1-c, 2-b, 3-a</span>
+            <span data-opt="B">B. 1-a, 2-c, 3-b</span>
+            <span data-opt="C">C. 1-c, 2-a, 3-b</span>
+            <span data-opt="D">D. 1-b, 2-a, 3-c</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1-c, 2-a, 3-b</div>
+            <div class="explanation">നദി → V-താഴ്‌വര. കാറ്റ് → കൂൺപാറ. ഹിമാനി → മൊറൈൻ/U-താഴ്‌വര.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ആഫ്രിക്കയിലെ ഏറ്റവും ഉയരമുള്ള കൊടുമുടിയായ കിളിമഞ്ചാരോ, ജപ്പാനിലെ ഫ്യൂജിയാമ എന്നിവ ഏതിന് ഉദാഹരണമാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. അഗ്നിപർവ്വതങ്ങൾ</span>
+            <span data-opt="B">B. മടക്കുപർവ്വതങ്ങൾ</span>
+            <span data-opt="C">C. അവശിഷ്ട പർവ്വതങ്ങൾ</span>
+            <span data-opt="D">D. പീഠഭൂമികൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) അഗ്നിപർവ്വതങ്ങൾ</div>
+            <div class="explanation">ലാവ തണുത്തുറഞ്ഞ് ഉണ്ടായത്. കിളിമഞ്ചാരോ = Dormant; വെസൂവിയസ് = Active.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ലോകത്തിലെ ഏറ്റവും നീളം കൂടിയ പർവ്വതനിര ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഹിമാലയം</span>
+            <span data-opt="B">B. ആൽപ്സ്</span>
+            <span data-opt="C">C. ആൻഡീസ്</span>
+            <span data-opt="D">D. റോക്കീസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ആൻഡീസ്</div>
+            <div class="explanation">തെക്കേ അമേരിക്കയുടെ പടിഞ്ഞാറൻ തീരം; ~7000 കി.മീ. ഏറ്റവും ഉയരം = ഹിമാലയം.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. ഹിമാനികൾ നിർമ്മിച്ച U-ആകൃതി താഴ്‌വര കടലിൽ മുങ്ങിയുണ്ടാകുന്ന ഇടുങ്ങിയ കടലിടുക്ക് അറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ക്യാനിയൻ</span>
+            <span data-opt="B">B. ഫിയോർഡ്</span>
+            <span data-opt="C">C. ഡെൽറ്റ</span>
+            <span data-opt="D">D. ലഗൂൺ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഫിയോർഡ്</div>
+            <div class="explanation">ഉദാ: നോർവേയുടെ തീരം.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ഗുഹയുടെ മേൽക്കൂരയിൽ നിന്ന് താഴേക്ക് തൂങ്ങിക്കിടക്കുന്ന ചുണ്ണാമ്പ് നിക്ഷേപം?</div>
+          <div class="options">
+            <span data-opt="A">A. സ്റ്റാലഗ്മൈറ്റ്</span>
+            <span data-opt="B">B. സ്റ്റാലക്ടൈറ്റ്</span>
+            <span data-opt="C">C. മൊറൈൻ</span>
+            <span data-opt="D">D. ലായസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സ്റ്റാലക്ടൈറ്റ്</div>
+            <div class="explanation">സ്റ്റാലക്ടൈറ്റ് = മുകളിൽ (Top) നിന്ന്; സ്റ്റാലഗ്മൈറ്റ് = നിലത്ത് (Mound) നിന്ന്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>8</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>9</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>10</td><td>(A)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(C)</td><td>12</td><td>(B)</td></tr>
+              <tr><td>6</td><td>(A)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>7</td><td>(D)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>മടക്കുപർവ്വതങ്ങൾ:</strong> ഹിമാലയം, ആൻഡീസ് (ഏറ്റവും നീളം), റോക്കീസ്, ആൽപ്സ്.</li>
+          <li><strong>ബ്ലോക്ക് പർവ്വതങ്ങൾ:</strong> വിന്ധ്യ, സത്പുര, ബ്ലാക്ക് ഫോറസ്റ്റ് (ഹോഴ്സ്റ്റ്/ഗ്രാബൻ).</li>
+          <li><strong>അവശിഷ്ട പർവ്വതങ്ങൾ:</strong> ആരവല്ലി (ഏറ്റവും പഴയത്), യുറാൽ.</li>
+          <li><strong>അഗ്നിപർവ്വതങ്ങൾ:</strong> കിളിമഞ്ചാരോ, ഫ്യൂജിയാമ, വെസൂവിയസ്.</li>
+          <li><strong>പീഠഭൂമി:</strong> ലോകത്തിന്റെ മേൽക്കൂര = പാമീർ; ഏറ്റവും വലുത് = ടിബറ്റൻ; ഇന്ത്യയിൽ വലുത് = ഡെക്കാൻ.</li>
+          <li><strong>നദികൾ:</strong> V-ആകൃതി താഴ്‌വര, ക്യാനിയൻ, ഡെൽറ്റ, ഓക്സ്-ബോ.</li>
+          <li><strong>ഹിമാനികൾ:</strong> U-ആകൃതി താഴ്‌വര, മൊറൈൻ, ഫിയോർഡ്.</li>
+          <li><strong>കാറ്റ്:</strong> കൂൺപാറ, മണൽക്കുന്ന്, ലായസ്.</li>
+          <li><strong>ആന്തരിക ബലം:</strong> ഉയർത്തും; <strong>ബാഹ്യ ബലം:</strong> തേയ്ക്കും.</li>
+          <li><strong>W-E-D:</strong> Weathering → Erosion → Deposition.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>Types of Mountains</h3>
+        <ul>
+          <li><strong>Fold Mountains:</strong> Compression (folding). Ex: Himalayas, Andes (longest), Rockies, Alps. (Young, Himalayas still rising).</li>
+          <li><strong>Block Mountains:</strong> Tension (faulting). Ex: Vindhya, Satpura, Black Forest. Horst = raised, Graben/Rift valley = sunken (Narmada, Tapti).</li>
+          <li><strong>Residual Mountains:</strong> Erosion of old mountains. Ex: Aravalli (Oldest in India), Urals.</li>
+          <li><strong>Volcanic Mountains:</strong> Ex: Mt. Kilimanjaro (Africa's highest), Fujiyama, Vesuvius.</li>
+        </ul>
+
+        <h3>Plateaus & Plains</h3>
+        <ul>
+          <li><strong>Tibetan Plateau:</strong> Largest and highest in the world.</li>
+          <li><strong>Pamir Plateau:</strong> "Roof of the World".</li>
+          <li><strong>Deccan Plateau:</strong> Largest in India; NW part = Deccan Trap.</li>
+          <li><strong>Chotanagpur Plateau:</strong> Mineral heartland of India; "Ruhr".</li>
+          <li><strong>Plains:</strong> Alluvial (river), Loess (wind), Glacial, Lacustrine.</li>
+        </ul>
+
+        <h3>Landforms by Agents of Erosion/Deposition</h3>
+        <ul>
+          <li><strong>River:</strong> V-shaped Valleys, Canyons, Gorges, Ox-bow lakes, Deltas.</li>
+          <li><strong>Glacier:</strong> U-shaped Valleys, Fiords, Cirque, Moraines, Esker, Drumlin.</li>
+          <li><strong>Wind:</strong> Mushroom Rocks, Yardang, Sand dunes (Barchan), Loess.</li>
+          <li><strong>Sea Waves:</strong> Sea Caves, Sea Arches, Sea Stacks, Beaches.</li>
+          <li><strong>Karst:</strong> Stalactite (from top), Stalagmite (from floor).</li>
+        </ul>
+
+        <h3>Key Facts</h3>
+        <ul>
+          <li>Grand Canyon = Colorado River (USA).</li>
+          <li>Sundarbans = Largest delta (Ganga-Brahmaputra).</li>
+          <li>Aravalli highest peak = Guru Shikhar (Mt. Abu, Rajasthan).</li>
+          <li>Andes highest peak = Aconcagua.</li>
+          <li>Alps highest peak = Mont Blanc.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ഭൂരൂപങ്ങൾ = ആന്തരിക (Endogenic) + ബാഹ്യ (Exogenic) ബലങ്ങളുടെ ഫലം.</li>
+          <li>പർവ്വതങ്ങൾ 4 തരം: മടക്ക്, ഖണ്ഡം, അഗ്നി, അവശിഷ്ടം.</li>
+          <li>ഹിമാലയം = മടക്കുപർവ്വതം; ആരവല്ലി = അവശിഷ്ട പർവ്വതം.</li>
+          <li>നദി → V-താഴ്‌വര; ഹിമാനി → U-താഴ്‌വര; കാറ്റ് → കൂൺപാറ.</li>
+          <li>ലോകത്തിന്റെ മേൽക്കൂര = പാമീർ; ഏറ്റവും വലിയ പീഠഭൂമി = ടിബറ്റൻ.</li>
+          <li>PSC പരീക്ഷകളിൽ 1–2 ചോദ്യങ്ങൾ ഉറപ്പായും.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>പർവ്വതങ്ങളുടെ 4 തരങ്ങളും ഉദാഹരണങ്ങളും കൃത്യമായി ഓർക്കുക. "U-ഹിമാനി, V-നദി" എന്നത് PSC-യുടെ പ്രിയപ്പെട്ട കെണിയാണ്. ആരവല്ലി (അവശിഷ്ടം) vs ഹിമാലയം (മടക്ക്) കലരരുത്. അടുത്ത അധ്യായത്തിൽ കാലാവസ്ഥ ചർച്ച ചെയ്യും. ഈ ഭാഗം നന്നായി റിവിഷൻ ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaLandforms138Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
+</script>
+
+</body>
+</html>

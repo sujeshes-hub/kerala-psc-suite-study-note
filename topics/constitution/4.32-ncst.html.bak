@@ -1,0 +1,1546 @@
+﻿<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ | അധ്യായം 126</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    /* ========== LISTS ========== */
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. ആമുഖം</a></li>
+      <li><a href="#sec2">2. രൂപീകരണ ചരിത്രം</a></li>
+      <li><a href="#sec3">3. Art 338A</a></li>
+      <li><a href="#sec4">4. ഘടനയും നിയമനവും</a></li>
+      <li><a href="#sec5">5. അധികാരങ്ങളും ചുമതലകളും</a></li>
+      <li><a href="#sec6">6. പ്രധാന വ്യക്തികൾ</a></li>
+      <li><a href="#sec7">7. PSC വിശകലനം</a></li>
+      <li><a href="#sec8">8. Confusing Facts</a></li>
+      <li><a href="#sec9">9. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec10">10. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec11">11. Quick Revision</a></li>
+      <li><a href="#sec12">12. One-Page Revision</a></li>
+      <li><a href="#sec13">13. Comparison Tables</a></li>
+      <li><a href="#sec14">14. Mnemonics</a></li>
+      <li><a href="#sec15">15. PSC കെണികൾ</a></li>
+      <li><a href="#sec16">16. Additional Questions</a></li>
+      <li><a href="#sec17">17. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 126</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ</h1>
+      <div class="subtitle">National Commission for Scheduled Tribes (NCST) | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആർട്ടിക്കിൾ 338A, 89-ാം ഭേദഗതി (2003), റിപ്പോർട്ട് രാഷ്ട്രപതിക്ക്, ഗോത്രവർഗ്ഗ മന്ത്രാലയം (നോഡൽ), സിവിൽ കോടതി അധികാരം</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഘടന (5), കാലാവധി (3 വർഷം), നിയമനം (രാഷ്ട്രപതി), 338/338A/338B കെണി, 2004 ഫെബ്രുവരി 19</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ആദ്യ ചെയർമാൻ (കൺവർ സിംഗ്), PESA (1996), വനാവകാശ നിയമം (2006), 5-ാം/6-ാം ഷെഡ്യൂൾ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ആർട്ടിക്കിൾ 342, 366(25), ജൻജാതീയ ഗൗരവ് ദിവസ് (നവം 15)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — സ്പെഷ്യൽ ഓഫീസർ (1950), 65-ാം ഭേദഗതി (1990), ഗോത്രവർഗ്ഗ മന്ത്രാലയം (1999)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>338 = SC, 338A = ST, 338B = OBC</strong> ("A = Adivasi (ST), B = Backward")</li>
+            <li><strong>90 സംയുക്തം → 99 മന്ത്രാലയം → 03 ഭേദഗതി → 04 NCST</strong></li>
+            <li><strong>ST = ഗോത്രവർഗ്ഗ മന്ത്രാലയം; SC = സാമൂഹ്യ നീതി മന്ത്രാലയം</strong></li>
+            <li><strong>ആദ്യ ചെയർമാൻ:</strong> കൺവർ സിംഗ്; <strong>ഇപ്പോഴത്തെ:</strong> അന്തർ സിംഗ് ആര്യ ⚠️</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. ആമുഖം (Chapter Introduction)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യയിലെ പട്ടികവർഗ്ഗ (Scheduled Tribes - ST) വിഭാഗങ്ങളുടെ ക്ഷേമത്തിനും അവകാശ സംരക്ഷണത്തിനുമായി പ്രവർത്തിക്കുന്ന <strong>ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ (NCST)</strong>, അതിന്റെ രൂപീകരണം (ആർട്ടിക്കിൾ 338A), ഘടന, ചുമതലകൾ എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> മുൻ അധ്യായത്തിൽ പഠിച്ച പട്ടികജാതി കമ്മീഷനിൽ (NCSC) നിന്നാണ് ഇതിനെ വിഭജിച്ചെടുത്തത്. വനമേഖലകളിലും മറ്റും ജീവിക്കുന്ന ആദിവാസി വിഭാഗങ്ങൾക്ക് കൂടുതൽ പരിഗണന നൽകുന്നതിനാണ് ഈ കമ്മീഷൻ രൂപീകരിച്ചത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> കമ്മീഷനെക്കുറിച്ച് പറയുന്ന ആർട്ടിക്കിൾ (338A), കമ്മീഷൻ രൂപീകരിച്ച വർഷം (2004), ആദ്യ ചെയർമാൻ, നിലവിലെ ചെയർമാൻ എന്നിവ പി.എസ്.സി പരീക്ഷകളിൽ സ്ഥിരമായി ചോദിക്കുന്നതാണ്.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ പഠിക്കാനുള്ള രീതി</span>
+          <p>4 ഭാഗമായി ഓർക്കുക: <strong>ചരിത്രം (1990 → 1999 → 2003 → 2004) → ആർട്ടിക്കിൾ 338A → ഘടന/നിയമനം → അധികാരങ്ങൾ.</strong></p>
+          <p><strong>ഒറ്റ വാചകത്തിൽ:</strong> ★★★ NCST = ആർട്ടിക്കിൾ 338A, 89-ാം ഭേദഗതി (2003), പ്രാബല്യം 2004 ഫെബ്രുവരി 19, 5 അംഗങ്ങൾ, രാഷ്ട്രപതി നിയമിക്കും, 3 വർഷം, റിപ്പോർട്ട് രാഷ്ട്രപതിക്ക്, നോഡൽ മന്ത്രാലയം ഗോത്രവർഗ്ഗ മന്ത്രാലയം.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"338 → A → B"</strong> (SC → ST → OBC). <strong>"A = Adivasi"</strong> (338A = ആദിവാസി).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: രൂപീകരണ ചരിത്രം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. രൂപീകരണ ചരിത്രം (History & 89th Amendment)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഭരണഘടന നിലവിൽ വന്നപ്പോൾ പട്ടികജാതി (SC), പട്ടികവർഗ്ഗ (ST) വിഭാഗങ്ങൾക്ക് സംയുക്തമായി ഒരു 'സ്പെഷ്യൽ ഓഫീസർ' മാത്രമാണുണ്ടായിരുന്നത്. പിന്നീട് <strong>1990-ലെ 65-ാം ഭേദഗതി</strong>യിലൂടെ ഇതൊരു സംയുക്ത കമ്മീഷനായി മാറി.</li>
+        </ul>
+
+        <div class="correction">
+          <span class="box-label">✏️ കുറിപ്പ്</span>
+          <p>65-ാം ഭേദഗതി 1990-ൽ പാസായി. സംയുക്ത കമ്മീഷൻ (National Commission for SC and ST) പ്രവർത്തനം തുടങ്ങിയത് <strong>1992 മാർച്ച് 12-ന്</strong> എന്നാണ് അറിവ്. ⚠️ Needs verification.</p>
+        </div>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>89-ാം ഭരണഘടനാ ഭേദഗതി (2003):</strong> 1999-ൽ കേന്ദ്ര സർക്കാർ പ്രത്യേകമായി ഒരു 'കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം' (Ministry of Tribal Affairs) രൂപീകരിച്ചിരുന്നു. ഇതിന്റെ തുടർച്ചയായി, പട്ടികവർഗ്ഗക്കാർക്ക് കൂടുതൽ ശ്രദ്ധ നൽകുന്നതിനായി 2003-ൽ <strong>89-ാം ഭരണഘടനാ ഭേദഗതി</strong> പാസാക്കി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഈ ഭേദഗതിയിലൂടെ സംയുക്ത കമ്മീഷനെ വിഭജിച്ച് <strong>ആർട്ടിക്കിൾ 338A</strong> പ്രകാരം 'ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ' (NCST) എന്ന പേരിൽ പുതിയൊരു ഭരണഘടനാ സ്ഥാപനം രൂപീകരിച്ചു. ഇത് നിലവിൽ വന്നത് <strong>2004 ഫെബ്രുവരി 19</strong> നാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> അതേ ഭേദഗതിയിലൂടെ <strong>ദേശീയ പട്ടികജാതി കമ്മീഷൻ (NCSC) ആർട്ടിക്കിൾ 338-ൽ</strong> വെവ്വേറെ നിലനിൽക്കുന്നു.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li>ഗോത്രവർഗ്ഗ മന്ത്രാലയം 1999 ഒക്ടോബർ 15-ന്. ആദ്യ മന്ത്രി ജുവൽ ഓറം. ⚠️ Needs verification.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"90 സംയുക്തം, 99 മന്ത്രാലയം, 03 ഭേദഗതി, 04 NCST"</strong> (1990 → 1999 → 2003 → 2004).</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📅 NCST-യുടെ പരിണാമം</span>
+          <svg viewBox="0 0 900 200" width="100%" height="auto" role="img" aria-label="NCST Evolution">
+            <line x1="60" y1="110" x2="850" y2="110" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="130" cy="110" r="10" fill="#c62828"/>
+            <text x="130" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#14202b">1950</text>
+            <text x="130" y="140" text-anchor="middle" font-size="9" fill="#4a5f72">Special Officer</text>
+
+            <circle cx="330" cy="110" r="10" fill="#ef6c00"/>
+            <text x="330" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#14202b">1990</text>
+            <text x="330" y="140" text-anchor="middle" font-size="9" fill="#4a5f72">65-ാം ഭേദഗതി</text>
+            <text x="330" y="155" text-anchor="middle" font-size="8" fill="#4a5f72">(SC+ST ഒന്നിച്ച്)</text>
+
+            <circle cx="530" cy="110" r="10" fill="#2e7d32"/>
+            <text x="530" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#14202b">2003/2004</text>
+            <text x="530" y="140" text-anchor="middle" font-size="9" fill="#4a5f72">89-ാം ഭേദഗതി</text>
+            <text x="530" y="155" text-anchor="middle" font-size="8" fill="#4a5f72">(NCSC + NCST)</text>
+
+            <circle cx="760" cy="110" r="10" fill="#1565c0"/>
+            <text x="760" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#14202b">2004 ഫെബ്രു 19</text>
+            <text x="760" y="140" text-anchor="middle" font-size="9" fill="#4a5f72">NCST നിലവിൽ</text>
+          </svg>
+          <div class="viz-caption">📅 1950 → 1990 → 2004</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: Art 338A ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. അടിസ്ഥാന വിവരങ്ങൾ (Article 338A)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭാഗവും ആർട്ടിക്കിളും:</strong> ഭരണഘടനയുടെ <strong>ഭാഗം 16 (Part XVI)</strong> ലെ <strong>ആർട്ടിക്കിൾ 338A</strong> ലാണ് NCST യെക്കുറിച്ച് പ്രതിപാദിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആസ്ഥാനം:</strong> ലോക് നായക് ഭവൻ, ന്യൂഡൽഹി. ⚠️ Needs verification (വിലാസം മാറാം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നോഡൽ മന്ത്രാലയം:</strong> കമ്മീഷന്റെ പ്രവർത്തനങ്ങളെ ഏകോപിപ്പിക്കുന്നത് <strong>കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം (Ministry of Tribal Affairs)</strong> ആണ്. (പട്ടികജാതി കമ്മീഷൻ സാമൂഹ്യനീതി മന്ത്രാലയത്തിന് കീഴിലാണ് വരുന്നത്).</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li><strong>ഭാഗം 16 (330–342A):</strong> ചില വിഭാഗങ്ങൾക്കുള്ള പ്രത്യേക വ്യവസ്ഥകൾ. ബന്ധപ്പെട്ട ആർട്ടിക്കിളുകൾ: 330, 332 (ലോക്സഭ/നിയമസഭ സീറ്റ് സംവരണം), 335 (സർവീസിലെ അവകാശവാദം), 338A (NCST), 342 (ST പട്ടിക).</li>
+            <li><strong>ST പട്ടിക (ആർട്ടിക്കിൾ 342):</strong> ഏതൊക്കെ വിഭാഗങ്ങൾ ST ആണെന്ന് രാഷ്ട്രപതി പൊതുവിജ്ഞാപനം വഴി തീരുമാനിക്കും. പട്ടികയിൽ മാറ്റം വരുത്താൻ പാർലമെന്റിന് നിയമം വഴി അധികാരം. <strong>366(25)</strong> ST-യുടെ നിർവചനം. ⚠️</li>
+            <li><strong>ഷെഡ്യൂൾഡ് ഏരിയ:</strong> <strong>5-ാം ഷെഡ്യൂൾ</strong> (അസം, മേഘാലയ, ത്രിപുര, മിസോറം ഒഴികെയുള്ള സംസ്ഥാനങ്ങളിലെ ഷെഡ്യൂൾഡ് ഏരിയകളുടെയും ST-യുടെയും ഭരണം). <strong>6-ാം ഷെഡ്യൂൾ</strong> (അസം, മേഘാലയ, ത്രിപുര, മിസോറം എന്നിവിടങ്ങളിലെ ഗോത്ര മേഖലകൾ; ADC-കൾ). ആർട്ടിക്കിൾ 244. ⚠️</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"5-ൽ അഞ്ച് (അവശേഷിച്ച സംസ്ഥാനങ്ങൾ), 6-ൽ ആറ് (വടക്കുകിഴക്ക് 4 സംസ്ഥാനം)"</strong>; <strong>"ST = ട്രൈബൽ മന്ത്രാലയം, SC = സോഷ്യൽ ജസ്റ്റിസ് മന്ത്രാലയം"</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: ഘടനയും നിയമനവും ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. ഘടനയും നിയമനവും</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഘടന (Composition):</strong> പട്ടികജാതി കമ്മീഷനെപ്പോലെ തന്നെ ഈ കമ്മീഷനിലും ഒരു <strong>ചെയർമാൻ, ഒരു വൈസ് ചെയർമാൻ, മറ്റ് 3 അംഗങ്ങൾ</strong> ഉൾപ്പെടെ ആകെ <strong>5 പേർ</strong> ഉണ്ടായിരിക്കും. (ഇതിൽ ഒരു അംഗം നിർബന്ധമായും വനിതയായിരിക്കണം). അംഗങ്ങളിൽ കുറഞ്ഞത് രണ്ട് പേരെങ്കിലും പട്ടികവർഗ്ഗ വിഭാഗത്തിൽ നിന്നുള്ളവരായിരിക്കണം എന്നാണ് ചട്ടം.</li>
+        </ul>
+
+        <div class="correction">
+          <span class="box-label">⚠️ Needs verification</span>
+          <p>വനിതാ അംഗം, ST അംഗങ്ങളുടെ എണ്ണം എന്നിവ ഭരണഘടനയിലല്ല, രാഷ്ട്രപതി നിശ്ചയിച്ച ചട്ടങ്ങളിലാണ്. ഗൈഡിൽ ഉറപ്പാക്കുക.</p>
+        </div>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം (Appointment):</strong> കമ്മീഷൻ ചെയർമാനെയും അംഗങ്ങളെയും നിയമിക്കുന്നത് ഇന്ത്യയുടെ <strong>രാഷ്ട്രപതിയാണ് (President)</strong>. ➕ രാഷ്ട്രപതി ഒപ്പും മുദ്രയുമുള്ള വാറന്റ് (warrant under hand and seal) വഴി.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കാലാവധി (Tenure):</strong> രാഷ്ട്രപതിയാണ് ഇവരുടെ കാലാവധി നിശ്ചയിക്കുന്നത്. നിലവിൽ അത് <strong>3 വർഷമാണ്</strong>. (തുടർച്ചയായി രണ്ട് തവണയിൽ കൂടുതൽ ഒരാൾക്ക് നിയമനം നൽകാൻ കഴിയില്ല). ⚠️ Needs verification (രണ്ട് തവണ പരിധി).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പദവി:</strong> ചെയർമാന് കേന്ദ്ര കാബിനറ്റ് മന്ത്രിയുടെ റാങ്കും, വൈസ് ചെയർമാന് കേന്ദ്ര സഹമന്ത്രിയുടെ റാങ്കുമാണുള്ളത്. ➕ അംഗങ്ങൾക്ക് കേന്ദ്ര സർക്കാർ സെക്രട്ടറിയുടെ റാങ്ക്. ⚠️ Needs verification.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"ചെയർമാൻ + വൈസ് + 3 = 5; 3 വർഷം; ചെയർമാൻ = കാബിനറ്റ് റാങ്ക്"</strong>.</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 NCST ഘടന</span>
+          <svg viewBox="0 0 600 200" width="100%" height="auto" role="img" aria-label="NCST Composition">
+            <rect x="200" y="20" width="200" height="50" rx="10" fill="#4a148c" opacity="0.9"/>
+            <text x="300" y="50" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">ചെയർമാൻ</text>
+
+            <rect x="200" y="80" width="200" height="45" rx="10" fill="#00695c" opacity="0.9"/>
+            <text x="300" y="108" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">വൈസ് ചെയർമാൻ</text>
+
+            <rect x="80" y="135" width="130" height="45" rx="8" fill="#1565c0" opacity="0.85"/>
+            <text x="145" y="163" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">അംഗം 1</text>
+
+            <rect x="235" y="135" width="130" height="45" rx="8" fill="#1565c0" opacity="0.85"/>
+            <text x="300" y="163" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">അംഗം 2</text>
+
+            <rect x="390" y="135" width="130" height="45" rx="8" fill="#1565c0" opacity="0.85"/>
+            <text x="455" y="163" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">അംഗം 3</text>
+
+            <text x="300" y="198" text-anchor="middle" fill="#4a5f72" font-size="10">🧠 "1+1+3 = 5"</text>
+          </svg>
+          <div class="viz-caption">📊 ചെയർമാൻ + വൈസ് ചെയർമാൻ + 3 അംഗങ്ങൾ = 5</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: അധികാരങ്ങളും ചുമതലകളും ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. അധികാരങ്ങളും ചുമതലകളും</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> പട്ടികവർഗ്ഗ (ST) വിഭാഗങ്ങളുടെ ഭരണഘടനാപരമായ അവകാശങ്ങളും പരിരക്ഷകളും നിരീക്ഷിക്കുകയും ലംഘനങ്ങളെക്കുറിച്ച് അന്വേഷിക്കുകയും ചെയ്യുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സിവിൽ കോടതി അധികാരം (Power of Civil Court):</strong> പരാതികൾ അന്വേഷിക്കുന്ന സമയത്ത് സിവിൽ കോടതിക്കുള്ള എല്ലാ അധികാരങ്ങളും (സാക്ഷികളെ വിളിച്ചുവരുത്താനും തെളിവെടുക്കാനും) കമ്മീഷനുണ്ട്. ➕ സിവിൽ കോടതി അധികാരങ്ങൾ: സമൻസ് അയച്ച് ഹാജരാക്കൽ, രേഖകൾ ഹാജരാക്കാൻ ആവശ്യപ്പെടൽ, സത്യവാങ്മൂലം വഴി തെളിവ് സ്വീകരിക്കൽ, പൊതു രേഖകൾ ആവശ്യപ്പെടൽ, കമ്മീഷനുകൾ നൽകൽ (ആർട്ടിക്കിൾ 338A(8)). ⚠️</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>PESA Act:</strong> ആദിവാസി മേഖലകളിലെ ഗ്രാമസഭകൾക്ക് കൂടുതൽ അധികാരം നൽകുന്ന 'പെസ' നിയമം (Panchayats Extension to Scheduled Areas Act, 1996) കൃത്യമായി നടപ്പിലാക്കുന്നുണ്ടോ എന്ന് നിരീക്ഷിക്കുക. ➕ <strong>വനാവകാശ നിയമം, 2006</strong> (Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act): വനത്തിലെ ഭൂമി/വിഭവ അവകാശങ്ങൾ. ⚠️</li>
+          <li><span class="stars">⭐⭐⭐</span> വനത്തിൽ ജീവിക്കുന്ന ഗോത്രവർഗ്ഗക്കാരുടെ ഭൂമിയുടെ അവകാശം, വനവിഭവങ്ങൾ ശേഖരിക്കാനുള്ള അവകാശം എന്നിവ സംരക്ഷിക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വാർഷിക റിപ്പോർട്ട്:</strong> കമ്മീഷൻ തങ്ങളുടെ വാർഷിക റിപ്പോർട്ട് <strong>രാഷ്ട്രപതിക്കാണ്</strong> സമർപ്പിക്കേണ്ടത്. (ഇത് സംസ്ഥാനങ്ങളെ സംബന്ധിക്കുന്നതാണെങ്കിൽ ആ ഭാഗം അതത് സംസ്ഥാന ഗവർണ്ണർമാർക്ക് നൽകും).</li>
+        </ol>
+
+        <div class="correction">
+          <span class="box-label">✏️ കുറിപ്പ്</span>
+          <p>ഭരണഘടനാ വ്യവസ്ഥ പ്രകാരം സംസ്ഥാനവുമായി ബന്ധപ്പെട്ട റിപ്പോർട്ടിന്റെ പകർപ്പ് <strong>സംസ്ഥാന സർക്കാരിനാണ്</strong> അയക്കുന്നത്. സംസ്ഥാന സർക്കാർ അത് നിയമസഭയിൽ വെക്കുന്നു. രാഷ്ട്രപതി കേന്ദ്ര റിപ്പോർട്ട് പാർലമെന്റിൽ മെമ്മോറാണ്ടത്തോടൊപ്പം വെക്കുന്നു. ⚠️ Needs verification (ഗൈഡിൽ "ഗവർണ്ണർ" എന്നാണെങ്കിൽ അത് ഉപയോഗിക്കുക).</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li><strong>കൂടിയാലോചന (338A(9)):</strong> ST-യെ ബാധിക്കുന്ന പ്രധാന നയ വിഷയങ്ങളിൽ കേന്ദ്രവും സംസ്ഥാനങ്ങളും കമ്മീഷനുമായി കൂടിയാലോചിക്കണം. ⚠️</li>
+            <li><strong>ബന്ധപ്പെട്ട വ്യവസ്ഥകൾ:</strong> ആർട്ടിക്കിൾ 46 (SC/ST-യുടെ വിദ്യാഭ്യാസ-സാമ്പത്തിക താൽപര്യം പ്രോത്സാഹിപ്പിക്കൽ, നിർദ്ദേശക തത്വം), ആർട്ടിക്കിൾ 275(1) (ഗോത്ര ക്ഷേമത്തിനുള്ള ഗ്രാന്റ്), SC/ST (അതിക്രമം തടയൽ) നിയമം 1989. ⚠️</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"NCST = നിരീക്ഷിക്കും, അന്വേഷിക്കും (സിവിൽ കോടതി അധികാരം), PESA + വനാവകാശം"</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: പ്രധാന വ്യക്തികൾ ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. പ്രധാന വ്യക്തികൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> 2004-ൽ രൂപീകരിച്ച NCST യുടെ ആദ്യത്തെ ചെയർമാൻ: <strong>കൺവർ സിംഗ് (Kunwar Singh)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> കമ്മീഷന്റെ ഏറ്റവും പുതിയ (2024-ൽ നിയമിതനായ) ചെയർമാൻ: <strong>അന്തർ സിംഗ് ആര്യ (Antar Singh Arya)</strong>. ⚠️ Needs verification (കറന്റ് അഫയേഴ്സ്: കാലാവധി മാറുമ്പോൾ ചെയർമാനും മാറാം; പരീക്ഷ തീയതിക്ക് അനുസരിച്ച് ഉറപ്പാക്കുക).</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ താരതമ്യത്തിന്</span>
+          <ul>
+            <li>NCSC ആദ്യ ചെയർമാൻ: സൂരജ് ഭാൻ.</li>
+            <li>NCBC (ഭരണഘടനാ പദവിക്ക് ശേഷം) ആദ്യ ചെയർമാൻ: ഭഗവാൻ ലാൽ സാഹ്നി. ⚠️</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"കൺവർ ST-ക്ക്, സൂരജ് SC-ക്ക്"</strong> (ആദ്യ ചെയർമാൻമാർ).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: PSC വിശകലനം ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> പട്ടികവർഗ്ഗ കമ്മീഷന്റെ ആർട്ടിക്കിൾ (338A), വിഭജിച്ച ഭേദഗതി (89-ാം ഭേദഗതി - 2003), നിയമിക്കുന്നത് ആര് (രാഷ്ട്രപതി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> രൂപീകരിച്ച വർഷം (2004), നിലവിലെ ചെയർമാൻ (അന്തർ സിംഗ് ആര്യ), കാലാവധി (3 വർഷം).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> ആകെ അംഗങ്ങൾ (5), ബന്ധപ്പെട്ട മന്ത്രാലയം (Ministry of Tribal Affairs), ആദ്യ ചെയർമാൻ (കൺവർ സിംഗ്).</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ സാധ്യതയുള്ള ചോദ്യ രീതികൾ (ഇവ യഥാർത്ഥ PYQ അല്ല)</span>
+          <ul>
+            <li>338/338A/338B പൊരുത്തപ്പെടുത്തൽ</li>
+            <li>NCSC vs NCST മന്ത്രാലയം</li>
+            <li>89-ാം vs 65-ാം vs 102-ാം ഭേദഗതി</li>
+            <li>5-ാം/6-ാം ഷെഡ്യൂൾ</li>
+            <li>PESA/വനാവകാശ നിയമ വർഷങ്ങൾ</li>
+            <li>കേരളത്തിലെ ആദിവാസി വിവരങ്ങൾ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: Confusing Facts ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ (NCSC vs NCST)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>സവിശേഷത</th>
+                <th>ദേശീയ പട്ടികജാതി കമ്മീഷൻ (NCSC)</th>
+                <th>ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ (NCST)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>ആർട്ടിക്കിൾ</strong></td><td>ആർട്ടിക്കിൾ 338</td><td>ആർട്ടിക്കിൾ 338A</td></tr>
+              <tr><td><strong>ഏത് മന്ത്രാലയത്തിന് കീഴിൽ?</strong></td><td>കേന്ദ്ര സാമൂഹ്യ നീതി മന്ത്രാലയം</td><td>കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം</td></tr>
+              <tr><td><strong>അംഗങ്ങളുടെ എണ്ണം</strong></td><td>5 പേർ</td><td>5 പേർ</td></tr>
+              <tr><td><strong>രൂപീകരിച്ച വർഷം</strong></td><td>1990 (സംയുക്ത കമ്മീഷനായി)</td><td>2004 (സ്വതന്ത്ര കമ്മീഷനായി)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><em>(ശ്രദ്ധിക്കുക: രണ്ടിന്റെയും ഭരണഘടനാപരമായ അധികാരങ്ങളും (സിവിൽ കോടതി), റിപ്പോർട്ട് നൽകുന്ന രീതിയും (രാഷ്ട്രപതിക്ക്) തികച്ചും സമാനമാണ്).</em></p>
+
+        <div class="correction">
+          <span class="box-label">✏️ പട്ടികയിലെ "1990" സംബന്ധിച്ച കുറിപ്പ്</span>
+          <p>1990 = 65-ാം ഭേദഗതി പാസായ വർഷം. സംയുക്ത കമ്മീഷൻ പ്രവർത്തനം തുടങ്ങിയത് 1992 ⚠️. NCSC വെവ്വേറെ കമ്മീഷനായി മാറിയത് 2004-ൽ (NCST-യോടൊപ്പം).</p>
+        </div>
+
+        <h3>➕ കൂടുതൽ കൺഫ്യൂഷനുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>ഗോത്രവർഗ്ഗ മന്ത്രാലയം (1999)</strong></td><td><strong>NCST (2004)</strong></td><td>മന്ത്രാലയം 1999-ൽ (ഭേദഗതിക്ക് മുൻപ്). കമ്മീഷൻ 89-ാം ഭേദഗതി (2003) പ്രകാരം 2004-ൽ.</td></tr>
+              <tr><td><strong>89-ാം ഭേദഗതി (2003)</strong></td><td><strong>65-ാം ഭേദഗതി (1990)</strong></td><td>65-ാം: SC/ST-ക്ക് സംയുക്ത കമ്മീഷൻ. 89-ാം: അത് NCSC, NCST എന്നിങ്ങനെ വിഭജിച്ചു.</td></tr>
+              <tr><td><strong>ആർട്ടിക്കിൾ 338A (NCST)</strong></td><td><strong>ആർട്ടിക്കിൾ 342 (ST പട്ടിക)</strong></td><td>338A = കമ്മീഷൻ. 342 = ഏതൊക്കെ വിഭാഗങ്ങൾ ST എന്ന് തീരുമാനിക്കുന്ന വ്യവസ്ഥ.</td></tr>
+              <tr><td><strong>5-ാം ഷെഡ്യൂൾ</strong></td><td><strong>6-ാം ഷെഡ്യൂൾ</strong></td><td>5-ാം: വടക്കുകിഴക്കൻ 4 സംസ്ഥാനങ്ങൾ ഒഴികെയുള്ളിടത്തെ ഷെഡ്യൂൾഡ് ഏരിയ. 6-ാം: അസം, മേഘാലയ, ത്രിപുര, മിസോറം ഗോത്ര മേഖലകൾ. ⚠️</td></tr>
+              <tr><td><strong>NCST (ST)</strong></td><td><strong>NCBC (OBC)</strong></td><td>NCBC = 338B, 102-ാം ഭേദഗതി (2018). മന്ത്രാലയം സാമൂഹ്യ നീതി.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് 'ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ' (NCST) പ്രവർത്തിക്കുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 338</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 338A</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 338B</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 340</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 338A</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 338 പട്ടികജാതി കമ്മീഷനും (NCSC), 338B പിന്നോക്ക വിഭാഗ കമ്മീഷനുമാണ് (NCBC).</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ദേശീയ പട്ടികജാതി-പട്ടികവർഗ്ഗ കമ്മീഷനെ വിഭജിച്ച്, 'ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ' (NCST) എന്ന പേരിൽ പുതിയൊരു ഭരണഘടനാ സ്ഥാപനത്തിന് രൂപം നൽകിയ ഭരണഘടനാ ഭേദഗതി ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 65-ാം ഭരണഘടനാ ഭേദഗതി</span>
+            <span data-opt="B">B. 89-ാം ഭരണഘടനാ ഭേദഗതി</span>
+            <span data-opt="C">C. 102-ാം ഭരണഘടനാ ഭേദഗതി</span>
+            <span data-opt="D">D. 104-ാം ഭരണഘടനാ ഭേദഗതി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 89-ാം ഭരണഘടനാ ഭേദഗതി</div>
+            <div class="explanation">ഈ ഭേദഗതി പ്രകാരം 2004-ലാണ് കമ്മീഷൻ ഔദ്യോഗികമായി നിലവിൽ വന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷന്റെ (NCST) പ്രവർത്തനങ്ങളെ ഏകോപിപ്പിക്കുന്നത് കേന്ദ്ര ഗവൺമെന്റിന്റെ ഏത് മന്ത്രാലയത്തിന് കീഴിലാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സാമൂഹ്യ നീതി മന്ത്രാലയം</span>
+            <span data-opt="B">B. കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം</span>
+            <span data-opt="C">C. കേന്ദ്ര ആഭ്യന്തര മന്ത്രാലയം</span>
+            <span data-opt="D">D. ന്യൂനപക്ഷ കാര്യ മന്ത്രാലയം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം</div>
+            <div class="explanation">ഇന്ത്യയിലെ ആദിവാസി വിഭാഗങ്ങൾക്ക് കൂടുതൽ പ്രത്യേക പരിഗണന നൽകുന്നതിനായി 1999-ലാണ് ഈ മന്ത്രാലയം രൂപീകരിച്ചത്.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. ഒരു പരാതി അന്വേഷിക്കുന്ന സമയത്ത് ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷന് ലഭിക്കുന്ന ഭരണഘടനാപരമായ അധികാരം (Powers) താഴെ പറയുന്നവയിൽ ഏത് കോടതിക്ക് സമാനമാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. സുപ്രീം കോടതി</span>
+            <span data-opt="B">B. ക്രിമിനൽ കോടതി</span>
+            <span data-opt="C">C. സിവിൽ കോടതി</span>
+            <span data-opt="D">D. ലോകായുക്ത</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സിവിൽ കോടതി</div>
+            <div class="explanation">തെളിവെടുക്കാനും സാക്ഷികളെ വിളിച്ചുവരുത്താനും സത്യവാങ്മൂലം വാങ്ങാനും കമ്മീഷന് സിവിൽ കോടതിയുടെ അധികാരമുണ്ട്. (പട്ടികജാതി കമ്മീഷനും സമാന അധികാരമാണ്).</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. 2004-ൽ പുതിയതായി നിലവിൽ വന്ന ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷന്റെ (NCST) ആദ്യ ചെയർമാൻ ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. രാം ശങ്കർ കതേരിയ</span>
+            <span data-opt="B">B. നന്ദ് കുമാർ സായ്</span>
+            <span data-opt="C">C. കൺവർ സിംഗ്</span>
+            <span data-opt="D">D. അന്തർ സിംഗ് ആര്യ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കൺവർ സിംഗ്</div>
+            <div class="explanation">സൂരജ് ഭാൻ ആയിരുന്നു പട്ടികജാതി കമ്മീഷന്റെ (NCSC) ആദ്യ ചെയർമാൻ.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. നിലവിൽ (2024 മുതൽ) ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷന്റെ (NCST) ചെയർമാനായി സേവനമനുഷ്ഠിക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഭഗവാൻ ലാൽ സാഹ്നി</span>
+            <span data-opt="B">B. ഹൻസ്‌രാജ് ഗംഗാറാം അഹിർ</span>
+            <span data-opt="C">C. അന്തർ സിംഗ് ആര്യ</span>
+            <span data-opt="D">D. കിഷോർ മക്വാന</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അന്തർ സിംഗ് ആര്യ</div>
+            <div class="explanation">ഭഗവാൻ ലാൽ സാഹ്നിയും ഹൻസ്‌രാജ് ഗംഗാറാം അഹിറും NCBC ചെയർമാൻമാരാണ്. കിഷോർ മക്വാന NCSC ചെയർമാനാണ്. ⚠️ Needs verification.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷനുമായി (NCST) ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. ഭരണഘടനയുടെ ആർട്ടിക്കിൾ 338A പ്രകാരമുള്ള ഒരു ഭരണഘടനാ സ്ഥാപനമാണ് ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ.<br>
+            2. കമ്മീഷൻ ചെയർമാനെയും അംഗങ്ങളെയും നിയമിക്കുന്നത് ഇന്ത്യയുടെ രാഷ്ട്രപതിയാണ്.<br>
+            3. കമ്മീഷനിൽ ഒരു ചെയർമാനും ഒരു വൈസ് ചെയർമാനും ഉൾപ്പെടെ ആകെ 3 അംഗങ്ങൾ മാത്രമാണുള്ളത്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്; കാരണം കമ്മീഷനിൽ ഒരു ചെയർമാൻ, ഒരു വൈസ് ചെയർമാൻ, 3 അംഗങ്ങൾ ഉൾപ്പെടെ ആകെ 5 പേരാണ് ഉള്ളത്.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം (Ministry of Tribal Affairs) രൂപീകൃതമായ വർഷം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 1989</span>
+            <span data-opt="B">B. 2004</span>
+            <span data-opt="C">C. 1999</span>
+            <span data-opt="D">D. 2006</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1999</div>
+            <div class="explanation">1989 = SC/ST അതിക്രമം തടയൽ നിയമം; 2004 = NCST നിലവിൽ വന്ന വർഷം; 2006 = വനാവകാശ നിയമം.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. ഏതൊക്കെ സമുദായങ്ങൾ പട്ടികവർഗ്ഗമാണെന്ന് (ST) പൊതുവിജ്ഞാപനത്തിലൂടെ തീരുമാനിക്കാൻ രാഷ്ട്രപതിക്ക് അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 341</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 342</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 342A</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 338A</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 342</div>
+            <div class="explanation">341 = പട്ടികജാതി പട്ടിക; 342 = പട്ടികവർഗ്ഗ പട്ടിക; 342A = SEBC പട്ടിക; 338A = ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. അസം, മേഘാലയ, ത്രിപുര, മിസോറം എന്നീ സംസ്ഥാനങ്ങളിലെ ഗോത്ര മേഖലകളുടെ ഭരണത്തെക്കുറിച്ച് പ്രതിപാദിക്കുന്ന ഭരണഘടനയുടെ ഷെഡ്യൂൾ ഏത്? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. അഞ്ചാം ഷെഡ്യൂൾ</span>
+            <span data-opt="B">B. ഏഴാം ഷെഡ്യൂൾ</span>
+            <span data-opt="C">C. ഒൻപതാം ഷെഡ്യൂൾ</span>
+            <span data-opt="D">D. ആറാം ഷെഡ്യൂൾ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ആറാം ഷെഡ്യൂൾ</div>
+            <div class="explanation">അഞ്ചാം ഷെഡ്യൂൾ = ഈ നാല് സംസ്ഥാനങ്ങൾ ഒഴികെയുള്ളിടത്തെ ഷെഡ്യൂൾഡ് ഏരിയകൾ; ഏഴാം ഷെഡ്യൂൾ = 3 ലിസ്റ്റ്; ഒൻപതാം ഷെഡ്യൂൾ = കോടതി പുനഃപരിശോധനയിൽ നിന്ന് സംരക്ഷണം.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഷെഡ്യൂൾഡ് ഏരിയകളിലെ ഗ്രാമസഭകൾക്ക് കൂടുതൽ അധികാരം നൽകുന്ന 'പെസ' (PESA) നിയമം പാസാക്കിയ വർഷം?</div>
+          <div class="options">
+            <span data-opt="A">A. 1996</span>
+            <span data-opt="B">B. 2006</span>
+            <span data-opt="C">C. 1992</span>
+            <span data-opt="D">D. 1989</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1996</div>
+            <div class="explanation">Panchayats (Extension to Scheduled Areas) Act, 1996. 2006 = വനാവകാശ നിയമം; 1992 = 73/74 ഭേദഗതികൾ; 1989 = SC/ST അതിക്രമം തടയൽ നിയമം.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. വനാവകാശ നിയമം (Forest Rights Act) പാസാക്കിയ വർഷം? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. 1996</span>
+            <span data-opt="B">B. 2013</span>
+            <span data-opt="C">C. 2004</span>
+            <span data-opt="D">D. 2006</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 2006</div>
+            <div class="explanation">Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act. 1996 = പെസ; 2013 = ഭൂമിയേറ്റെടുക്കൽ നിയമം; 2004 = NCST നിലവിൽ വന്ന വർഷം.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. ദേശീയ പട്ടികജാതി കമ്മീഷന്റെ (NCSC) ആദ്യ ചെയർമാൻ ആരായിരുന്നു? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. കൺവർ സിംഗ്</span>
+            <span data-opt="B">B. അന്തർ സിംഗ് ആര്യ</span>
+            <span data-opt="C">C. സൂരജ് ഭാൻ</span>
+            <span data-opt="D">D. കിഷോർ മക്വാന</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സൂരജ് ഭാൻ</div>
+            <div class="explanation">കൺവർ സിംഗ് = NCST ആദ്യ ചെയർമാൻ; അന്തർ സിംഗ് ആര്യ = NCST ചെയർമാൻ (2024 മുതൽ ⚠️); കിഷോർ മക്വാന = NCSC ചെയർമാൻ (പിന്നീട്).</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ ചെയർമാന്റെ പദവി (rank) ഏതിന് സമാനമാണ്? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. കേന്ദ്ര സഹമന്ത്രി</span>
+            <span data-opt="B">B. കേന്ദ്ര കാബിനറ്റ് മന്ത്രി</span>
+            <span data-opt="C">C. കേന്ദ്ര സെക്രട്ടറി</span>
+            <span data-opt="D">D. ഡെപ്യൂട്ടി മന്ത്രി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കേന്ദ്ര കാബിനറ്റ് മന്ത്രി</div>
+            <div class="explanation">വൈസ് ചെയർമാൻ = സഹമന്ത്രി റാങ്ക്; അംഗങ്ങൾ = സെക്രട്ടറി റാങ്ക് ⚠️.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. 'ജൻജാതീയ ഗൗരവ് ദിവസ്' (നവംബർ 15) ഏത് ആദിവാസി നേതാവിന്റെ ജന്മദിനവുമായി ബന്ധപ്പെട്ടതാണ്? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. ബിർസ മുണ്ട</span>
+            <span data-opt="B">B. ടന്ത്യ ഭീൽ</span>
+            <span data-opt="C">C. അല്ലൂരി സീതാരാമ രാജു</span>
+            <span data-opt="D">D. കോമരം ഭീം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ബിർസ മുണ്ട</div>
+            <div class="explanation">ജന്മദിനം നവംബർ 15; 2021 മുതൽ ജൻജാതീയ ഗൗരവ് ദിവസ്. ടന്ത്യ ഭീൽ = മറ്റൊരു ആദിവാസി സ്വാതന്ത്ര്യ സമര സേനാനി; അല്ലൂരി സീതാരാമ രാജു = ആന്ധ്രയിലെ റമ്പ കലാപ നേതാവ്; കോമരം ഭീം = തെലങ്കാനയിലെ ഗോണ്ട് നേതാവ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(C)</td><td>11</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>7</td><td>(A)</td><td>12</td><td>(D)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>8</td><td>(C)</td><td>13</td><td>(C)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(B)</td><td>14</td><td>(B)</td></tr>
+              <tr><td>5</td><td>(C)</td><td>10</td><td>(D)</td><td>15</td><td>(A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: Quick Revision ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സ്ഥാപനം:</strong> ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ (NCST).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ:</strong> 338A.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഭേദഗതി:</strong> 89-ാം ഭേദഗതി (2003). നിലവിൽ വന്നത് 2004 ഫെബ്രുവരി 19.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മന്ത്രാലയം:</strong> കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമിക്കുന്നത്:</strong> രാഷ്ട്രപതി.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>റിപ്പോർട്ട് നൽകുന്നത്:</strong> രാഷ്ട്രപതിക്ക്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഘടന:</strong> ആകെ 5 അംഗങ്ങൾ (1 ചെയർമാൻ + 1 വൈസ് ചെയർമാൻ + 3 അംഗങ്ങൾ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കാലാവധി:</strong> 3 വർഷം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആദ്യ ചെയർമാൻ:</strong> കൺവർ സിംഗ്. നിലവിലെ ചെയർമാൻ: അന്തർ സിംഗ് ആര്യ ⚠️.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ചരിത്ര ക്രമം:</strong> സ്പെഷ്യൽ ഓഫീസർ → 65-ാം ഭേദഗതി (1990) → ഗോത്രവർഗ്ഗ മന്ത്രാലയം (1999) → 89-ാം ഭേദഗതി (2003) → NCST (2004).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പദവി:</strong> ചെയർമാൻ കാബിനറ്റ് റാങ്ക്, വൈസ് ചെയർമാൻ സഹമന്ത്രി റാങ്ക്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പെസ നിയമം 1996, വനാവകാശ നിയമം 2006, ST പട്ടിക: ആർട്ടിക്കിൾ 342.</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>338 SC, 338A ST, 338B OBC.</strong></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: One-Page Revision ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>National Commission for Scheduled Tribes (NCST)</h3>
+        <ul>
+          <li><strong>Article:</strong> 338A (Part XVI).</li>
+          <li><strong>Origin:</strong> Special Officer (1950) → joint National Commission for SC & ST (65th Amendment, 1990) → separated by <strong>89th Amendment Act, 2003</strong>.</li>
+          <li><strong>Came into being:</strong> 19 February 2004.</li>
+          <li><strong>Nodal Ministry:</strong> Ministry of Tribal Affairs (created 1999). (NCSC → Ministry of Social Justice and Empowerment.)</li>
+          <li><strong>HQ:</strong> Lok Nayak Bhawan, New Delhi ⚠️.</li>
+        </ul>
+
+        <h3>Composition & Appointment</h3>
+        <ul>
+          <li><strong>Composition:</strong> 5 (Chairperson + Vice-Chairperson + 3 Members). At least one woman member ⚠️.</li>
+          <li><strong>Appointment:</strong> President (warrant under hand and seal).</li>
+          <li><strong>Tenure:</strong> 3 years; not more than two terms ⚠️.</li>
+          <li><strong>Rank:</strong> Chairperson – Union Cabinet Minister; Vice-Chairperson – Minister of State ⚠️.</li>
+        </ul>
+
+        <h3>Powers & Functions</h3>
+        <ul>
+          <li>Investigate and monitor constitutional safeguards for ST.</li>
+          <li>Inquire into specific complaints.</li>
+          <li>Advise on socio-economic development.</li>
+          <li>Vested with the powers of a <strong>Civil Court</strong> during investigations.</li>
+          <li>Submit annual reports to the <strong>President</strong>.</li>
+          <li>Monitors: PESA Act 1996, Forest Rights Act 2006 ⚠️.</li>
+        </ul>
+
+        <h3>Related Articles</h3>
+        <ul>
+          <li>Art 342 (ST list); Art 366(25) (ST definition); Art 244 + 5th/6th Schedule; Art 330/332 (seat reservation); Art 46 (DPSP); Art 275(1) (tribal welfare grants).</li>
+        </ul>
+
+        <h3>Key Names</h3>
+        <ul>
+          <li>First Chairman: Kunwar Singh.</li>
+          <li>Current Chairman: Antar Singh Arya ⚠️.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: Comparison Tables ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: NCSC, NCST, NCBC</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>സവിശേഷത</th><th>NCSC</th><th>NCST</th><th>NCBC</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ആർട്ടിക്കിൾ</td><td>338</td><td>338A</td><td>338B</td></tr>
+              <tr><td>ഭേദഗതി</td><td>65-ാം (1990), 89-ാം (2003)</td><td>89-ാം (2003)</td><td>102-ാം (2018)</td></tr>
+              <tr><td>മന്ത്രാലയം</td><td>സാമൂഹ്യ നീതി</td><td>ഗോത്രവർഗ്ഗ കാര്യ</td><td>സാമൂഹ്യ നീതി</td></tr>
+              <tr><td>അംഗങ്ങൾ</td><td>5</td><td>5</td><td>5</td></tr>
+              <tr><td>നിയമിക്കുന്നത്</td><td>രാഷ്ട്രപതി</td><td>രാഷ്ട്രപതി</td><td>രാഷ്ട്രപതി</td></tr>
+              <tr><td>കാലാവധി</td><td>3 വർഷം</td><td>3 വർഷം</td><td>3 വർഷം ⚠️</td></tr>
+              <tr><td>റിപ്പോർട്ട്</td><td>രാഷ്ട്രപതി</td><td>രാഷ്ട്രപതി</td><td>രാഷ്ട്രപതി</td></tr>
+              <tr><td>സിവിൽ കോടതി അധികാരം</td><td>ഉണ്ട്</td><td>ഉണ്ട്</td><td>ഉണ്ട്</td></tr>
+              <tr><td>ആദ്യ ചെയർമാൻ</td><td>സൂരജ് ഭാൻ</td><td>കൺവർ സിംഗ്</td><td>(ഭരണഘടനാ പദവിക്ക് ശേഷം) ഭഗവാൻ ലാൽ സാഹ്നി</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: ST-യുമായി ബന്ധപ്പെട്ട പ്രധാന ഭരണഘടനാ വ്യവസ്ഥകൾ ⚠️</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വ്യവസ്ഥ</th><th>വിഷയം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ആർട്ടിക്കിൾ 338A</td><td>ദേശീയ പട്ടികവർഗ്ഗ കമ്മീഷൻ</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 342</td><td>ST പട്ടിക (രാഷ്ട്രപതി)</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 366(25)</td><td>ST-യുടെ നിർവചനം</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 244, 5-ാം ഷെഡ്യൂൾ</td><td>ഷെഡ്യൂൾഡ് ഏരിയകളുടെ ഭരണം</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 244, 6-ാം ഷെഡ്യൂൾ</td><td>അസം, മേഘാലയ, ത്രിപുര, മിസോറം ഗോത്ര മേഖലകൾ</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 330, 332</td><td>ലോക്സഭ/നിയമസഭ സീറ്റ് സംവരണം</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 46</td><td>SC/ST-യുടെ താൽപര്യം പ്രോത്സാഹിപ്പിക്കൽ (നിർദ്ദേശക തത്വം)</td></tr>
+              <tr><td>ആർട്ടിക്കിൾ 275(1)</td><td>ഗോത്ര ക്ഷേമത്തിന് ഗ്രാന്റ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: കമ്മീഷൻ ചരിത്രത്തിലെ ഘട്ടങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>വർഷം</th><th>സംഭവം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1950</td><td>ആർട്ടിക്കിൾ 338 പ്രകാരം SC/ST-ക്ക് സ്പെഷ്യൽ ഓഫീസർ</td></tr>
+              <tr><td>1990</td><td>65-ാം ഭേദഗതി (സംയുക്ത കമ്മീഷൻ; പ്രവർത്തനം 1992 ⚠️)</td></tr>
+              <tr><td>1996</td><td>PESA നിയമം</td></tr>
+              <tr><td>1999</td><td>കേന്ദ്ര ഗോത്രവർഗ്ഗ മന്ത്രാലയം</td></tr>
+              <tr><td>2003</td><td>89-ാം ഭേദഗതി</td></tr>
+              <tr><td>2004 ഫെബ്രുവരി 19</td><td>NCST നിലവിൽ വന്നു</td></tr>
+              <tr><td>2006</td><td>വനാവകാശ നിയമം ⚠️</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: Mnemonics ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1 (338 സീരീസ്):</strong></span>
+          <p>"<strong>338 → A → B</strong>" (SC → ST → OBC); "SC തുടക്കത്തിലേ, ST പിന്നീട് (A), OBC അവസാനം (B)."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2 (വർഷ ക്രമം):</strong></span>
+          <p>"<strong>90 സംയുക്തം, 99 മന്ത്രാലയം, 03 ഭേദഗതി, 04 NCST</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3 (മന്ത്രാലയം):</strong></span>
+          <p>"<strong>ST = Tribal, SC = Social Justice</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4 (ആദ്യ ചെയർമാൻ):</strong></span>
+          <p>"<strong>കൺവർ ST-ക്ക്, സൂരജ് SC-ക്ക്</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5 (ഘടന):</strong></span>
+          <p>"<strong>1 + 1 + 3 = 5; 3 വർഷം</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6 (റിപ്പോർട്ട്):</strong></span>
+          <p>"<strong>ഭരണഘടനാ കമ്മീഷൻ → രാഷ്ട്രപതിക്ക്</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7 (ഷെഡ്യൂൾ):</strong></span>
+          <p>"<strong>5-ൽ അഞ്ചാം (വടക്കുകിഴക്ക് ഒഴികെ), 6-ൽ ആറാം (വടക്കുകിഴക്ക് 4)</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8 (നിയമങ്ങൾ):</strong></span>
+          <p>"<strong>പെസ 96, വനാവകാശം 06</strong>."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: PSC കെണികൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 (ആർട്ടിക്കിൾ)</span>
+          <p><strong>Question:</strong> NCST ഏത് ആർട്ടിക്കിൾ?</p>
+          <p><strong>Confusing Options:</strong> 338 / 338A / 338B / 340</p>
+          <p><strong>Fact:</strong> <strong>338A</strong>. 338 = SC, 338B = OBC, 340 = താൽകാലിക കമ്മീഷൻ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 (1999 vs 2003 vs 2004)</span>
+          <p><strong>Question:</strong> NCST എപ്പോൾ നിലവിൽ വന്നു?</p>
+          <p><strong>Confusing Options:</strong> 1999 / 2003 / 2004 / 2006</p>
+          <p><strong>Fact:</strong> മന്ത്രാലയം <strong>1999</strong>; ഭേദഗതി <strong>2003</strong>; NCST <strong>2004</strong>; വനാവകാശം <strong>2006</strong>.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 (65-ാം vs 89-ാം)</span>
+          <p><strong>Question:</strong> സംയുക്ത SC/ST കമ്മീഷൻ ഉണ്ടാക്കിയത്?</p>
+          <p><strong>Confusing Options:</strong> 65-ാം (1990) / 89-ാം (2003) / 102-ാം (2018) / 104-ാം</p>
+          <p><strong>Fact:</strong> <strong>65-ാം</strong> = ഒന്നിച്ച് (സംയുക്തം); <strong>89-ാം</strong> = വിഭജിച്ചു (NCSC, NCST).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 (മന്ത്രാലയം)</span>
+          <p><strong>Question:</strong> NCST ഏത് മന്ത്രാലയത്തിന് കീഴിൽ?</p>
+          <p><strong>Confusing Options:</strong> സാമൂഹ്യ നീതി / ഗോത്രവർഗ്ഗ / ആഭ്യന്തര / ന്യൂനപക്ഷം</p>
+          <p><strong>Fact:</strong> <strong>ഗോത്രവർഗ്ഗ മന്ത്രാലയം</strong>. NCSC = സാമൂഹ്യ നീതി മന്ത്രാലയം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 (ആദ്യ ചെയർമാൻ)</span>
+          <p><strong>Question:</strong> NCST ആദ്യ ചെയർമാൻ?</p>
+          <p><strong>Confusing Options:</strong> സൂരജ് ഭാൻ / കൺവർ സിംഗ് / അന്തർ സിംഗ് ആര്യ / ഭഗവാൻ ലാൽ സാഹ്നി</p>
+          <p><strong>Fact:</strong> <strong>കൺവർ സിംഗ് (2004)</strong>. സൂരജ് ഭാൻ = NCSC ആദ്യം; സാഹ്നി = NCBC ആദ്യം (ഭരണഘടനാ പദവി); അന്തർ സിംഗ് ആര്യ = ഇപ്പോഴത്തെ ⚠️.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 (അംഗങ്ങളുടെ എണ്ണം)</span>
+          <p><strong>Question:</strong> NCST-യിൽ എത്ര അംഗങ്ങൾ?</p>
+          <p><strong>Confusing Options:</strong> 3 / 4 / 5 / 7</p>
+          <p><strong>Fact:</strong> <strong>5</strong> (1 ചെയർമാൻ + 1 വൈസ് ചെയർമാൻ + 3 അംഗങ്ങൾ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 (റിപ്പോർട്ട്)</span>
+          <p><strong>Question:</strong> NCST വാർഷിക റിപ്പോർട്ട് ആർക്ക്?</p>
+          <p><strong>Confusing Options:</strong> പാർലമെന്റ് / രാഷ്ട്രപതി / ഗോത്രവർഗ്ഗ മന്ത്രി / ഗവർണർ</p>
+          <p><strong>Fact:</strong> <strong>രാഷ്ട്രപതിക്ക്</strong>. രാഷ്ട്രപതി പാർലമെന്റിൽ വയ്ക്കും.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 (338A vs 342)</span>
+          <p><strong>Question:</strong> ST പട്ടിക ഏത് ആർട്ടിക്കിൾ?</p>
+          <p><strong>Confusing Options:</strong> 338A / 340 / 342 / 342A</p>
+          <p><strong>Fact:</strong> <strong>342 (ST പട്ടിക)</strong>. 338A = കമ്മീഷൻ. 341 = SC പട്ടിക. 342A = SEBC പട്ടിക.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 9 (ഷെഡ്യൂൾ)</span>
+          <p><strong>Question:</strong> 6-ാം ഷെഡ്യൂൾ ഏത് സംസ്ഥാനങ്ങൾക്ക്?</p>
+          <p><strong>Confusing Options:</strong> അസം, മേഘാലയ, ത്രിപുര, മിസോറം / കേരളം, തമിഴ്നാട് / ആന്ധ്ര, തെലങ്കാന / ബിഹാർ, ജാർഖണ്ഡ്</p>
+          <p><strong>Fact:</strong> <strong>അസം, മേഘാലയ, ത്രിപുര, മിസോറം</strong> (ഗോത്ര മേഖലകൾ, ADC-കൾ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 10 (സിവിൽ കോടതി)</span>
+          <p><strong>Question:</strong> NCST-ക്ക് ഏത് കോടതിയുടെ അധികാരം?</p>
+          <p><strong>Confusing Options:</strong> സുപ്രീം കോടതി / ഹൈക്കോടതി / സിവിൽ കോടതി / ക്രിമിനൽ കോടതി</p>
+          <p><strong>Fact:</strong> <strong>സിവിൽ കോടതി</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: Additional Questions ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. അധിക ചോദ്യങ്ങൾ (Additional Questions)</h2>
+      <div class="section-body">
+        <p><em>(ഇവ ഒറിജിനൽ അല്ല, ഈ അധ്യായത്തിലെ വിവരങ്ങൾ വെച്ച് നിർമ്മിച്ച പുതിയ ചോദ്യങ്ങളാണ്.)</em></p>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. കേരളത്തിൽ പട്ടികവർഗ്ഗ ജനസംഖ്യ ഏറ്റവും കൂടുതലുള്ള ജില്ല ഏത്? ⚠️</div>
+          <div class="options">
+            <span data-opt="A">A. ഇടുക്കി</span>
+            <span data-opt="B">B. വയനാട്</span>
+            <span data-opt="C">C. പാലക്കാട്</span>
+            <span data-opt="D">D. കാസർഗോഡ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) വയനാട്</div>
+            <div class="explanation">പണിയർ, കുറിച്യർ, കുറുമർ തുടങ്ങിയവരുടെ നാട്; ST ജനസംഖ്യയും ശതമാനവും കൂടുതൽ. ഇടുക്കി, പാലക്കാട് (അട്ടപ്പാടി) എന്നിവയും ST ജനസംഖ്യ കൂടുതലുള്ള ജില്ലകളാണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>NCST ഭരണഘടനയുടെ ഭാഗം XVI-ലെ ആർട്ടിക്കിൾ 338A പ്രകാരമുള്ള ഒരു ഭരണഘടനാ സ്ഥാപനമാണ്.</li>
+          <li>1990-ലെ 65-ാം ഭേദഗതിയിൽ സംയുക്ത കമ്മീഷനായി; 2003-ലെ 89-ാം ഭേദഗതിയിൽ NCSC/NCST ആയി വിഭജിച്ചു; 2004 ഫെബ്രുവരി 19-ന് NCST നിലവിൽ വന്നു.</li>
+          <li>ഘടന 5 (1+1+3); കാലാവധി 3 വർഷം; നിയമനം രാഷ്ട്രപതി; റിപ്പോർട്ട് രാഷ്ട്രപതിക്ക്; അധികാരം സിവിൽ കോടതിയുടേത്; നോഡൽ മന്ത്രാലയം ഗോത്രവർഗ്ഗ മന്ത്രാലയം.</li>
+          <li>338 = SC, 338A = ST, 338B = BC (102-ാം ഭേദഗതി).</li>
+          <li>PESA (1996), വനാവകാശ നിയമം (2006), 5-ാം/6-ാം ഷെഡ്യൂൾ എന്നിവ ബന്ധപ്പെട്ടവ.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 2–3 ചോദ്യങ്ങൾ ഉറപ്പായും പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ആർട്ടിക്കിൾ 338A, 89-ാം ഭേദഗതി, ഗോത്രവർഗ്ഗ മന്ത്രാലയം (നോഡൽ), ആദ്യ ചെയർമാൻ (കൺവർ സിംഗ്), റിപ്പോർട്ട് രാഷ്ട്രപതിക്കാണ് എന്നിവ കൃത്യമായി ഓർക്കുക. 338/338A/338B പൊരുത്തപ്പെടുത്തൽ PSC-യുടെ പ്രിയപ്പെട്ട കെണിയാണ്. അടുത്ത അധ്യായം: ദേശീയ പിന്നോക്ക വിഭാഗ കമ്മീഷൻ (NCBC) അല്ലെങ്കിൽ അടുത്ത ഭാഗം.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaNCST126Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
+</script>
+
+<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+</body>
+</html>
