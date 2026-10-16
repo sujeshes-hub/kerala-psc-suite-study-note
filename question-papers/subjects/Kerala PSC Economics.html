@@ -223,7 +223,1269 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <div class="result-detail-list"><h3>❌ Wrong Answers & Skipped / Reviewed</h3><div id="detailList"></div></div>
 <div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
 </div>
+<script>
+const STORAGE_KEY = 'kpsc_economics_100_mock_v1';
+const STORAGE_VERSION = 1;
+const SECONDS_PER_QUESTION = 45;
+const NEGATIVE_MARKING = -0.33;
 
+const sourceQuestions = [
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പഞ്ചവത്സര പദ്ധതികളും ലക്ഷ്യങ്ങളും പൊരുത്തപ്പെടുത്തുക:\na. ഒന്നാം പദ്ധതി - 1. ദാരിദ്ര്യ നിർമ്മാർജ്ജനം (ഗരീബി ഹഠാവോ)\nb. രണ്ടാം പദ്ധതി - 2. കൃഷി\nc. അഞ്ചാം പദ്ധതി - 3. വ്യവസായം", options:["A) a-2, b-3, c-1","B) a-1, b-2, c-3","C) a-3, b-2, c-1","D) a-2, b-1, c-3"], correct:0, explanation:"ഉ: (A)\n\nആദ്യ പദ്ധതി കൃഷിക്കും, രണ്ടാം പദ്ധതി വ്യവസായത്തിനും, അഞ്ചാം പദ്ധതി ദാരിദ്ര്യ നിർമ്മാർജ്ജനത്തിനുമാണ് പ്രാധാന്യം നൽകിയത്.",
+ beginnerNote:"5-Year Plans:\n• 1st (1951-56) — Agriculture\n• 2nd (1956-61) — Industry (Mahalanobis)\n• 5th (1974-79) — Garibi Hatao",
+ optionAnalysis:["A) a-2, b-3, c-1 — ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1st-Agri, 2nd-Ind, 5th-Poverty'.",
+ examTrap:"⚠️ ഒന്നാം പദ്ധതി = കൃഷി."},
 
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നികുതികളും ഇനങ്ങളും പൊരുത്തപ്പെടുത്തുക:\na. ആദായ നികുതി - 1. പരോക്ഷ നികുതി\nb. ജി.എസ്.ടി - 2. നേരിട്ടുള്ള നികുതി (വ്യക്തികൾക്ക്)\nc. കോർപ്പറേറ്റ് നികുതി - 3. നേരിട്ടുള്ള നികുതി (കമ്പനികൾക്ക്)", options:["A) a-2, b-1, c-3","B) a-1, b-2, c-3","C) a-3, b-1, c-2","D) a-2, b-3, c-1"], correct:0, explanation:"ഉ: (A)\n\nആദായ നികുതി വ്യക്തികൾ നേരിട്ട് സർക്കാരിന് നൽകുന്നതാണ്. ജി.എസ്.ടി ഒരു പരോക്ഷ നികുതിയാണ്.",
+ beginnerNote:"Tax Types:\n• Income Tax — Direct (individuals)\n• Corporate Tax — Direct (companies)\n• GST — Indirect",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Income=Direct; GST=Indirect'.",
+ examTrap:"⚠️ GST = പരോക്ഷ നികുതി."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"സാമ്പത്തിക സ്ഥാപനങ്ങളും ആസ്ഥാനവും പൊരുത്തപ്പെടുത്തുക:\na. RBI - 1. ഹൈദരാബാദ്\nb. IRDAI - 2. ലക്നൗ\nc. SIDBI - 3. മുംബൈ", options:["A) a-3, b-1, c-2","B) a-1, b-2, c-3","C) a-2, b-3, c-1","D) a-3, b-2, c-1"], correct:0, explanation:"ഉ: (A)\n\nറിസർവ് ബാങ്ക് മുംബൈയിലും, ഇൻഷുറൻസ് റെഗുലേറ്ററി അതോറിറ്റി ഹൈദരാബാദിലും, സ്മാൾ ഇൻഡസ്ട്രീസ് ഡെവലപ്മെന്റ് ബാങ്ക് ലക്നൗവിലുമാണ്.",
+ beginnerNote:"Headquarters:\n• RBI — Mumbai\n• IRDAI — Hyderabad\n• SIDBI — Lucknow\n• SEBI — Mumbai",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'R-M, I-H, S-L'.",
+ examTrap:"⚠️ RBI = Mumbai."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"വിപ്ലവങ്ങളും മേഖലകളും പൊരുത്തപ്പെടുത്തുക:\na. ഹരിത വിപ്ലവം - 1. മത്സ്യം\nb. ധവള വിപ്ലവം - 2. കാർഷികം (ഭക്ഷ്യധാന്യങ്ങൾ)\nc. നീല വിപ്ലവം - 3. പാൽ", options:["A) a-2, b-3, c-1","B) a-1, b-2, c-3","C) a-3, b-1, c-2","D) a-2, b-1, c-3"], correct:0, explanation:"ഉ: (A)\n\nകാർഷിക മേഖലയിലെ പുരോഗതിയാണ് ഹരിത വിപ്ലവം. വർഗ്ഗീസ് കുര്യന്റെ നേതൃത്വത്തിലുള്ള പാൽ ഉത്പാദനമാണ് ധവള വിപ്ലവം.",
+ beginnerNote:"Revolutions:\n• Green — Agriculture (foodgrains)\n• White — Milk (Verghese Kurien)\n• Blue — Fish\n• Yellow — Oilseeds",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Green-Agri, White-Milk, Blue-Fish'.",
+ examTrap:"⚠️ White Revolution = Milk (Verghese Kurien)."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നീതി ആയോഗ് ഘടന പൊരുത്തപ്പെടുത്തുക:\na. അധ്യക്ഷൻ - 1. ബി.വി.ആർ സുബ്രഹ്മണ്യം\nb. സി.ഇ.ഒ - 2. സുമൻ ബേരി\nc. വൈസ് ചെയർമാൻ - 3. പ്രധാനമന്ത്രി", options:["A) a-3, b-1, c-2","B) a-1, b-2, c-3","C) a-2, b-3, c-1","D) a-3, b-2, c-1"], correct:0, explanation:"ഉ: (A)\n\nപ്രധാനമന്ത്രിയാണ് അധ്യക്ഷൻ. നിലവിലെ വൈസ് ചെയർമാൻ സുമൻ ബേരിയും സി.ഇ.ഒ ബി.വി.ആർ സുബ്രഹ്മണ്യവുമാണ്.",
+ beginnerNote:"NITI Aayog:\n• Chairman — PM\n• Vice-Chairman — Suman Bery\n• CEO — BVR Subrahmanyam",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Chairman=PM, CEO=Subrahmanyam, VC=Bery'.",
+ examTrap:"⚠️ NITI = 2015."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പുതിയ സാമ്പത്തിക നയങ്ങൾ (1991) പൊരുത്തപ്പെടുത്തുക:\na. ഉദാരവൽക്കരണം - 1. സർക്കാർ ഉടമസ്ഥതയിലുള്ളവ സ്വകാര്യ മേഖലയ്ക്ക് കൈമാറുന്നു\nb. സ്വകാര്യവൽക്കരണം - 2. ലോക സമ്പദ്‌വ്യവസ്ഥയുമായി സംയോജിപ്പിക്കുന്നു\nc. ആഗോളവൽക്കരണം - 3. വിപണി നിയന്ത്രണങ്ങളും നിയമങ്ങളും ലഘൂകരിക്കുന്നു", options:["A) a-3, b-1, c-2","B) a-1, b-2, c-3","C) a-2, b-3, c-1","D) a-3, b-2, c-1"], correct:0, explanation:"ഉ: (A)\n\nലിബറലൈസേഷൻ (നിയന്ത്രണങ്ങൾ കുറയ്ക്കൽ), പ്രൈവറ്റൈസേഷൻ (സ്വകാര്യവൽക്കരണം), ഗ്ലോബലൈസേഷൻ (ആഗോള വിപണിയുമായുള്ള ബന്ധം).",
+ beginnerNote:"LPG Reforms (1991):\n• Liberalization — Less regulation\n• Privatization — Private ownership\n• Globalization — Global integration",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'L-Less, P-Private, G-Global'.",
+ examTrap:"⚠️ LPG = 1991, Manmohan Singh FM."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ശരിയായ ജോഡി കണ്ടെത്തുക:", options:["A) പ്ലാനിംഗ് കമ്മീഷൻ രൂപീകരിച്ചത് - 1947","B) നീതി ആയോഗ് നിലവിൽ വന്നത് - 2015 ജനുവരി 1","C) NITI യുടെ പൂർണ്ണരൂപം - National Institute of Technology India","D) ഗാഡ്ഗിൽ യോജന - അഞ്ചാം പദ്ധതി"], correct:1, explanation:"ഉ: (B)\n\nആസൂത്രണ കമ്മീഷന് പകരമായി 2015 ജനുവരി 1-നാണ് നീതി ആയോഗ് രൂപീകരിച്ചത്. NITI എന്നാൽ National Institution for Transforming India.",
+ beginnerNote:"NITI:\n• National Institution for Transforming India\n• Jan 1, 2015",
+ optionAnalysis:["A) ❌ 1950","B) ✅ ശരി","C) ❌ Institution","D) ❌ 3rd Plan"],
+ rejectionTrick:"'NITI = 2015'.",
+ examTrap:"⚠️ Planning Commission = 1950."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ശരിയായ ജോഡി കണ്ടെത്തുക:", options:["A) RBI രൂപീകരിച്ചത് - 1950","B) RBI ദേശസാൽക്കരിച്ചത് - 1947","C) 14 വാണിജ്യ ബാങ്കുകളുടെ ദേശസാൽക്കരണം - 1969","D) SBI രൂപീകരിച്ചത് - 1935"], correct:2, explanation:"ഉ: (C)\n\nഇന്ദിരാഗാന്ധി സർക്കാരിന്റെ കാലത്ത് 1969-ലാണ് 14 പ്രധാന വാണിജ്യ ബാങ്കുകൾ ദേശസാൽക്കരിച്ചത്.",
+ beginnerNote:"Banking history:\n• RBI — 1935\n• SBI — 1955\n• 14 banks — 1969\n• 6 banks — 1980",
+ optionAnalysis:["A) ❌ 1935","B) ❌ 1949","C) ✅ ശരി","D) ❌ 1955"],
+ rejectionTrick:"'1969 = 14 banks'.",
+ examTrap:"⚠️ 1980 = 6 banks."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ശരിയായ ജോഡി കണ്ടെത്തുക:", options:["A) ഇന്ത്യൻ ഹരിത വിപ്ലവത്തിന്റെ പിതാവ് - വർഗ്ഗീസ് കുര്യൻ","B) ലോക ഹരിത വിപ്ലവത്തിന്റെ പിതാവ് - നോർമൻ ബോർലോഗ്","C) ഹരിത വിപ്ലവം ഏറ്റവും കൂടുതൽ ബാധിച്ച വിള - പരുത്തി","D) ഹരിത വിപ്ലവം ആരംഭിച്ച സംസ്ഥാനം - കേരളം"], correct:1, explanation:"ഉ: (B)\n\nഎം.എസ്. സ്വാമിനാഥനാണ് ഇന്ത്യൻ ഹരിത വിപ്ലവത്തിന്റെ പിതാവ്. നോർമൻ ബോർലോഗ് ലോകതലത്തിൽ ഇതിന് തുടക്കം കുറിച്ചു.",
+ beginnerNote:"Green Revolution:\n• World father — Norman Borlaug\n• India father — M.S. Swaminathan\n• Crops — Wheat, Rice",
+ optionAnalysis:["A) ❌ MS Swaminathan","B) ✅ ശരി","C) ❌ Wheat/Rice","D) ❌ Punjab"],
+ rejectionTrick:"'World = Borlaug; India = Swaminathan'.",
+ examTrap:"⚠️ Verghese Kurien = White Revolution."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ശരിയായ ജോഡി കണ്ടെത്തുക:", options:["A) ജി.എസ്.ടി നിലവിൽ വന്നത് - 2016 ജൂലൈ 1","B) ജി.എസ്.ടി കൗൺസിൽ അധ്യക്ഷൻ - പ്രധാനമന്ത്രി","C) ജി.എസ്.ടി നടപ്പിലാക്കിയ ആദ്യ രാജ്യം - ഫ്രാൻസ്","D) ജി.എസ്.ടി ഒരു നേരിട്ടുള്ള നികുതിയാണ്"], correct:2, explanation:"ഉ: (C)\n\nഇന്ത്യയിൽ ജി.എസ്.ടി വന്നത് 2017 ജൂലൈ 1-നാണ്. ആദ്യമായി നടപ്പിലാക്കിയ രാജ്യം ഫ്രാൻസാണ്.",
+ beginnerNote:"GST:\n• India — July 1, 2017\n• First country — France (1954)\n• Council Chairman — Union Finance Minister",
+ optionAnalysis:["A) ❌ 2017","B) ❌ FM","C) ✅ ശരി","D) ❌ Indirect"],
+ rejectionTrick:"'France = First GST country'.",
+ examTrap:"⚠️ India GST = 2017."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ശരിയായ ജോഡി കണ്ടെത്തുക:", options:["A) ആദായ നികുതി - പരോക്ഷ നികുതി","B) കസ്റ്റംസ് ഡ്യൂട്ടി - പരോക്ഷ നികുതി","C) എക്സൈസ് ഡ്യൂട്ടി - നേരിട്ടുള്ള നികുതി","D) ജി.എസ്.ടി - നേരിട്ടുള്ള നികുതി"], correct:1, explanation:"ഉ: (B)\n\nകസ്റ്റംസ്, എക്സൈസ്, ജി.എസ്.ടി എന്നിവ പരോക്ഷ നികുതികളും ആദായ നികുതി നേരിട്ടുള്ള നികുതിയുമാണ്.",
+ beginnerNote:"Indirect Taxes:\n• Customs Duty\n• Excise Duty\n• GST\nDirect: Income Tax, Corporate Tax",
+ optionAnalysis:["A) ❌ Direct","B) ✅ ശരി","C) ❌ Indirect","D) ❌ Indirect"],
+ rejectionTrick:"'Customs = Indirect'.",
+ examTrap:"⚠️ എക്സൈസ് = Indirect."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ശരിയായ ജോഡി കണ്ടെത്തുക:", options:["A) നബാർഡ് രൂപീകരിച്ചത് - 1950","B) സെബി (SEBI) ഓഹരി വിപണിയെ നിയന്ത്രിക്കുന്നു","C) എൽ.ഐ.സി കാർഷിക വായ്പ നൽകുന്നു","D) പ്ലാനിംഗ് കമ്മീഷൻ ഒരു ഭരണഘടനാ സ്ഥാപനമാണ്"], correct:1, explanation:"ഉ: (B)\n\nഇന്ത്യയിലെ ഓഹരി വിപണിയെയും മ്യൂച്വൽ ഫണ്ടുകളെയും നിയന്ത്രിക്കുന്ന സ്ഥാപനമാണ് SEBI.",
+ beginnerNote:"SEBI:\n• Regulates stock market\n• HQ — Mumbai\n• Established — 1988/1992",
+ optionAnalysis:["A) ❌ 1982","B) ✅ ശരി","C) ❌ Life insurance","D) ❌ Non-constitutional"],
+ rejectionTrick:"'SEBI = Stock market regulator'.",
+ examTrap:"⚠️ NABARD = 1982."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായ ജോഡി കണ്ടെത്തുക:", options:["A) ഗാന്ധിയൻ പ്ലാൻ - എസ്.എൻ അഗർവാൾ","B) പീപ്പിൾസ് പ്ലാൻ - എം.എൻ റോയ്","C) ബോംബെ പ്ലാൻ - വ്യവസായികൾ","D) സർവ്വോദയ പ്ലാൻ - ജവഹർലാൽ നെഹ്റു"], correct:3, explanation:"ഉ: (D)\n\nസർവ്വോദയ പ്ലാൻ ആവിഷ്കരിച്ചത് ജയപ്രകാശ് നാരായൺ ആണ്, നെഹ്റുവല്ല.",
+ beginnerNote:"Plans before Independence:\n• Gandhian Plan — S.N. Agarwal\n• People's Plan — M.N. Roy\n• Bombay Plan — Industrialists\n• Sarvodaya Plan — Jayaprakash Narayan",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ JP Narayan"],
+ rejectionTrick:"'Sarvodaya = JP'.",
+ examTrap:"⚠️ Nehru ≠ Sarvodaya."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായ ജോഡി കണ്ടെത്തുക:", options:["A) RBI രൂപീകരിച്ചത് - 1935 ഏപ്രിൽ 1","B) RBI ആസ്ഥാനം - ഡൽഹി","C) RBI ദേശസാൽക്കരിച്ചത് - 1949 ജനുവരി 1","D) RBI യുടെ ആദ്യ ഗവർണർ - ഓസ്ബോൺ സ്മിത്ത്"], correct:1, explanation:"ഉ: (B)\n\nറിസർവ് ബാങ്ക് ഓഫ് ഇന്ത്യയുടെ (RBI) ആസ്ഥാനം മുംബൈയിലാണ്.",
+ beginnerNote:"RBI:\n• Established — April 1, 1935\n• HQ — Mumbai (moved from Kolkata 1937)\n• First Governor — Osborne Smith",
+ optionAnalysis:["A) ✅","B) ❌ Mumbai","C) ✅","D) ✅"],
+ rejectionTrick:"'RBI HQ = Mumbai'.",
+ examTrap:"⚠️ Not Delhi."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായ ജോഡി കണ്ടെത്തുക:", options:["A) GST സ്ലാബുകൾ - 5%, 12%, 18%, 28%","B) GST ബിൽ പാസാക്കിയ ആദ്യ ഇന്ത്യൻ സംസ്ഥാനം - അസം","C) GST കൗൺസിലിനെക്കുറിച്ച് പറയുന്ന ആർട്ടിക്കിൾ - 279A","D) GST കൗൺസിൽ ചെയർമാൻ - RBI ഗവർണർ"], correct:3, explanation:"ഉ: (D)\n\nജി.എസ്.ടി കൗൺസിലിന്റെ അധ്യക്ഷൻ കേന്ദ്ര ധനകാര്യ മന്ത്രിയാണ്.",
+ beginnerNote:"GST Council:\n• Chairman — Union Finance Minister\n• Article 279A\n• Slabs — 0, 5, 12, 18, 28",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ FM"],
+ rejectionTrick:"'GST Council = FM'.",
+ examTrap:"⚠️ Not RBI Governor."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായ ജോഡി കണ്ടെത്തുക:", options:["A) ഒന്നാം പദ്ധതി - ഹരോൾഡ്-ഡോമർ മോഡൽ","B) രണ്ടാം പദ്ധതി - മഹലനോബിസ് മോഡൽ","C) മൂന്നാം പദ്ധതി - ഗാഡ്ഗിൽ യോജന","D) നാലാം പദ്ധതി - റോളിംഗ് പ്ലാൻ"], correct:3, explanation:"ഉ: (D)\n\nമൊറാർജി ദേശായിയുടെ കാലത്ത് അഞ്ചാം പദ്ധതിക്ക് ശേഷമാണ് റോളിംഗ് പ്ലാൻ (1978-80) നടപ്പിലാക്കിയത്.",
+ beginnerNote:"Plans:\n• 1st — Harrod-Domar\n• 2nd — Mahalanobis\n• 3rd — Gadgil Yojana\n• Rolling Plan — 1978-80",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ Rolling = after 5th"],
+ rejectionTrick:"'Rolling = Janata Govt (1978-80)'.",
+ examTrap:"⚠️ 4th Plan = Growth with Stability."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായ ജോഡി കണ്ടെത്തുക:", options:["A) നബാർഡ് - കാർഷിക വികസനം","B) എൽ.ഐ.സി - ലൈഫ് ഇൻഷുറൻസ്","C) ട്രായ് (TRAI) - ബാങ്കിംഗ് നിയന്ത്രണം","D) സിഡ്ബി (SIDBI) - ചെറുകിട വ്യവസായം"], correct:2, explanation:"ഉ: (C)\n\nടെലികോം റെഗുലേറ്ററി അതോറിറ്റി ഓഫ് ഇന്ത്യ (TRAI) രാജ്യത്തെ ടെലികോം മേഖലയെയാണ് നിയന്ത്രിക്കുന്നത്.",
+ beginnerNote:"Regulators:\n• TRAI — Telecom\n• RBI — Banking\n• SEBI — Stock market\n• IRDAI — Insurance",
+ optionAnalysis:["A) ✅","B) ✅","C) ❌ Telecom","D) ✅"],
+ rejectionTrick:"'TRAI = Telecom'.",
+ examTrap:"⚠️ Banking regulator = RBI."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായ ജോഡി കണ്ടെത്തുക:", options:["A) ദാരിദ്ര്യ രേഖ - ടെണ്ടുൽക്കർ കമ്മിറ്റി","B) ബാങ്കിംഗ് പരിഷ്കാരങ്ങൾ - നരസിംഹം കമ്മിറ്റി","C) നികുതി പരിഷ്കാരങ്ങൾ - ചേലയ്യ കമ്മിറ്റി","D) ജി.എസ്.ടി ശുപാർശ - സ്വരൺ സിംഗ് കമ്മിറ്റി"], correct:3, explanation:"ഉ: (D)\n\nഇന്ത്യയിൽ ജി.എസ്.ടി മാതൃക ശുപാർശ ചെയ്തത് വിജയ് കേൽക്കർ കമ്മിറ്റിയാണ് (സ്വരൺ സിംഗ് കമ്മിറ്റി മൗലിക കടമകളുമായി ബന്ധപ്പെട്ടതാണ്).",
+ beginnerNote:"Committees:\n• Tendulkar — Poverty\n• Narasimham — Banking\n• Chelliah — Tax\n• Kelkar — GST",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ Kelkar"],
+ rejectionTrick:"'GST = Kelkar'.",
+ examTrap:"⚠️ Swaran Singh = Fundamental Duties."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?", options:["A) ആദായ നികുതി","B) കോർപ്പറേറ്റ് നികുതി","C) ജി.എസ്.ടി","D) സ്വത്ത് നികുതി"], correct:2, explanation:"ഉ: (C)\n\nജി.എസ്.ടി പരോക്ഷ നികുതിയാണ്. ബാക്കിയുള്ളവ നേരിട്ടുള്ള നികുതികൾ ആണ്.",
+ beginnerNote:"Direct vs Indirect:\n• Direct — Income, Corporate, Wealth\n• Indirect — GST, Customs, Excise",
+ optionAnalysis:["A) Direct","B) Direct","C) ✅ Indirect","D) Direct"],
+ rejectionTrick:"'GST = Indirect'.",
+ examTrap:"⚠️ GST ≠ Direct."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?", options:["A) നീതി ആയോഗ്","B) തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ","C) ധനകാര്യ കമ്മീഷൻ","D) യു.പി.എസ്.സി"], correct:0, explanation:"ഉ: (A)\n\nനീതി ആയോഗ് ഒരു ഭരണഘടനാ സ്ഥാപനമല്ല. മറ്റുള്ളവ ഭരണഘടനയിൽ പ്രതിപാദിക്കുന്നവയാണ്.",
+ beginnerNote:"Constitutional bodies:\n• Election Commission\n• Finance Commission\n• UPSC\n• NITI Aayog = Non-constitutional",
+ optionAnalysis:["A) ✅ Non-Constitutional","B) Constitutional","C) Constitutional","D) Constitutional"],
+ rejectionTrick:"'NITI = Not constitutional'.",
+ examTrap:"⚠️ NITI = Executive order."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?", options:["A) എസ്.ബി.ഐ (SBI)","B) പഞ്ചാബ് നാഷണൽ ബാങ്ക്","C) കാനറ ബാങ്ക്","D) എച്ച്.ഡി.എഫ്.സി"], correct:3, explanation:"ഉ: (D)\n\nഎച്ച്.ഡി.എഫ്.സി ഒരു പ്രൈവറ്റ് സെക്ടർ ബാങ്കാണ്. മറ്റുള്ളവ പൊതുമേഖലാ ബാങ്കുകളാണ്.",
+ beginnerNote:"Public Sector Banks:\n• SBI, PNB, Canara Bank\nPrivate: HDFC, ICICI, Axis",
+ optionAnalysis:["A) Public","B) Public","C) Public","D) ✅ Private"],
+ rejectionTrick:"'HDFC = Private'.",
+ examTrap:"⚠️ PNB = Public."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?", options:["A) റോളിംഗ് പ്ലാൻ","B) പ്ലാൻ ഹോളിഡേ","C) ഗാഡ്ഗിൽ യോജന","D) ധവള വിപ്ലവം"], correct:3, explanation:"ഉ: (D)\n\nധവള വിപ്ലവം പാൽ ഉത്പാദനവുമായി ബന്ധപ്പെട്ടതാണ്. മറ്റുള്ളവ പഞ്ചവത്സര പദ്ധതികളുമായി ബന്ധപ്പെട്ട പദങ്ങളാണ്.",
+ beginnerNote:"Plan terms:\n• Rolling Plan\n• Plan Holiday\n• Gadgil Yojana\nWhite Revolution — Milk",
+ optionAnalysis:["A) Plan","B) Plan","C) Plan","D) ✅ Revolution"],
+ rejectionTrick:"'White = Milk, not Plan'.",
+ examTrap:"⚠️ ≠ Plan term."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?", options:["A) ONGC","B) BHEL","C) SAIL","D) Reliance"], correct:3, explanation:"ഉ: (D)\n\nറിലയൻസ് സ്വകാര്യ കമ്പനിയാണ്. മറ്റുള്ളവ സർക്കാരിന്റെ നിയന്ത്രണത്തിലുള്ള മഹാരത്ന കമ്പനികളാണ്.",
+ beginnerNote:"Maharatna PSUs:\n• ONGC, BHEL, SAIL\nPrivate: Reliance, Tata",
+ optionAnalysis:["A) PSU","B) PSU","C) PSU","D) ✅ Private"],
+ rejectionTrick:"'Reliance = Private'.",
+ examTrap:"⚠️ SAIL = PSU."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?", options:["A) ഗോതമ്പ്","B) നെല്ല്","C) ചോളം","D) റബ്ബർ"], correct:3, explanation:"ഉ: (D)\n\nറബ്ബർ ഒരു നാണ്യവിളയാണ്. മറ്റുള്ളവ പ്രധാന ഭക്ഷ്യവിളകളാണ്.",
+ beginnerNote:"Food crops:\n• Wheat, Rice, Maize\nCash crops:\n• Rubber, Coffee, Tea, Cotton",
+ optionAnalysis:["A) Food","B) Food","C) Food","D) ✅ Cash"],
+ rejectionTrick:"'Rubber = Cash crop'.",
+ examTrap:"⚠️ ≠ Food crop."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Assertion (A): 1991-ൽ ഇന്ത്യ പുതിയ സാമ്പത്തിക നയം നടപ്പിലാക്കി.\nReason (R): 1991-ൽ ഇന്ത്യ കടുത്ത വിദേശനാണ്യ പ്രതിസന്ധിയും സാമ്പത്തിക മാന്ദ്യവും നേരിട്ടിരുന്നു.", options:["A) Both A and R are true, R is the correct explanation","B) Both A and R are true, R is not the correct explanation","C) A is true, R is false","D) A is false, R is true"], correct:0, explanation:"ഉ: (A)\n\nസാമ്പത്തിക തകർച്ചയിൽ നിന്ന് കരകയറാനാണ് ഇന്ത്യ ഐ.എം.എഫ് (IMF) നിബന്ധനകൾ പ്രകാരം എൽ.പി.ജി പരിഷ്കാരങ്ങൾ നടപ്പിലാക്കിയത്.",
+ beginnerNote:"1991 Crisis:\n• Forex reserves low\n• IMF conditions\n• LPG reforms",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Crisis → Reforms'.",
+ examTrap:"⚠️ IMF loan conditions."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Assertion (A): രണ്ടാം പഞ്ചവത്സര പദ്ധതി വ്യവസായങ്ങൾക്ക് വലിയ പ്രാധാന്യം നൽകി.\nReason (R): പി.സി മഹലനോബിസ് തയ്യാറാക്കിയ വ്യവസായവൽക്കരണ മോഡലിനെ അടിസ്ഥാനമാക്കിയായിരുന്നു ഇത്.", options:["A) Both A and R are true, R is the correct explanation","B) Both A and R are true, R is not the correct explanation","C) A is true, R is false","D) A is false, R is true"], correct:0, explanation:"ഉ: (A)\n\nഭിലായ്, ദുർഗാപൂർ, റൂർക്കേല തുടങ്ങിയ വൻകിട ഇരുമ്പുരുക്ക് ശാലകൾ ഈ കാലയളവിലാണ് തുടങ്ങിയത്.",
+ beginnerNote:"2nd Plan (1956-61):\n• Mahalanobis Model\n• Heavy Industries\n• Bhilai, Durgapur, Rourkela steel plants",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'2nd = Mahalanobis = Heavy Industry'.",
+ examTrap:"⚠️ Not agriculture."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Assertion (A): ജി.എസ്.ടി ഒരു പരോക്ഷ നികുതിയാണ്.\nReason (R): പരോക്ഷ നികുതികളിൽ നികുതിഭാരം അന്തിമ ഉപഭോക്താവിലേക്ക് കൈമാറാൻ സാധിക്കുന്നു.", options:["A) Both A and R are true, R is the correct explanation","B) Both A and R are true, R is not the correct explanation","C) A is true, R is false","D) A is false, R is true"], correct:0, explanation:"ഉ: (A)\n\nസാധനങ്ങളും സേവനങ്ങളും വാങ്ങുന്നവരാണ് നികുതി ഭാരം വഹിക്കുന്നത്, അതിനാൽ അതൊരു പരോക്ഷ നികുതിയാണ്.",
+ beginnerNote:"Indirect Tax:\n• Burden transferable\n• Final consumer pays\n• GST is indirect",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'GST = Indirect; burden = consumer'.",
+ examTrap:"⚠️ Correct explanation."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Assertion (A): നബാർഡ് ഇന്ത്യയിലെ കാർഷിക വായ്പകളുടെ പരമോന്നത സ്ഥാപനമാണ്.\nReason (R): ഇത് വാണിജ്യ ബാങ്കുകൾ വഴി അല്ലാതെ നേരിട്ട് കർഷകർക്ക് വായ്പ നൽകുന്നു.", options:["A) Both A and R are true, R is the correct explanation","B) Both A and R are true, R is not the correct explanation","C) A is true, R is false","D) A is false, R is true"], correct:2, explanation:"ഉ: (C)\n\nനബാർഡ് നേരിട്ട് വ്യക്തികൾക്കോ കർഷകർക്കോ വായ്പ നൽകുന്നില്ല. സഹകരണ ബാങ്കുകൾക്കും വാണിജ്യ ബാങ്കുകൾക്കും സാമ്പത്തിക സഹായം നൽകുകയാണ് ചെയ്യുന്നത്.",
+ beginnerNote:"NABARD:\n• Apex agricultural bank\n• Does NOT lend directly\n• Funds banks & co-ops",
+ optionAnalysis:["A) ❌ R wrong","B) ❌","C) ✅ ശരി","D) ❌"],
+ rejectionTrick:"'NABARD = Indirect lending'.",
+ examTrap:"⚠️ Not direct to farmers."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Assertion (A): ഹരിത വിപ്ലവം പഞ്ചാബ്, ഹരിയാന എന്നീ സംസ്ഥാനങ്ങളിൽ വലിയ മുന്നേറ്റമുണ്ടാക്കി.\nReason (R): ഹരിത വിപ്ലവം ഗോതമ്പ്, നെല്ല് എന്നിവയുടെ ഉത്പാദനം കുറയാൻ കാരണമായി.", options:["A) Both A and R are true, R is the correct explanation","B) Both A and R are true, R is not the correct explanation","C) A is true, R is false","D) A is false, R is true"], correct:2, explanation:"ഉ: (C)\n\nഹരിത വിപ്ലവം ഗോതമ്പിന്റെയും നെല്ലിന്റെയും ഉത്പാദനം വൻതോതിൽ വർദ്ധിപ്പിക്കുകയാണ് ചെയ്തത്.",
+ beginnerNote:"Green Revolution:\n• Increased production (not decreased)\n• Punjab & Haryana success\n• Wheat & Rice",
+ optionAnalysis:["A) ❌ R wrong","B) ❌","C) ✅ ശരി","D) ❌"],
+ rejectionTrick:"'GR = Increased, not decreased'.",
+ examTrap:"⚠️ Production ↑."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Assertion (A): റിസർവ് ബാങ്ക് ഓഫ് ഇന്ത്യ ഇന്ത്യയുടെ കേന്ദ്ര ബാങ്കാണ്.\nReason (R): രാജ്യത്തെ കറൻസി നോട്ടുകൾ അച്ചടിക്കുന്നതും വായ്പാ നയം നിയന്ത്രിക്കുന്നതും RBI ആണ്.", options:["A) Both A and R are true, R is the correct explanation","B) Both A and R are true, R is not the correct explanation","C) A is true, R is false","D) A is false, R is true"], correct:0, explanation:"ഉ: (A)\n\nബാങ്കുകളുടെ ബാങ്കായ RBI ആണ് രാജ്യത്തെ നാണയപ്പെരുപ്പവും പണലഭ്യതയും നിയന്ത്രിക്കുന്നത്.",
+ beginnerNote:"RBI functions:\n• Currency issuance\n• Monetary Policy\n• Banker's bank",
+ optionAnalysis:["A) ✅ ശരി","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'RBI = Central Bank'.",
+ examTrap:"⚠️ Monetary Policy authority."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: നീതി ആയോഗ് ഭാരത സർക്കാരിന്റെ ഒരു തിങ്ക് ടാങ്ക് ആയി പ്രവർത്തിക്കുന്നു.\nനിഗമനം: ആസൂത്രണ കമ്മീഷന് പകരമായി 2015 ജനുവരി 1-നാണ് ഇത് നിലവിൽ വന്നത്.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:0, explanation:"ഉ: (A)\n\nരാജ്യത്തിന്റെ വികസന നയങ്ങൾ രൂപീകരിക്കുന്നതിൽ സർക്കാരിനെ സഹായിക്കുന്ന ഉപദേശക സമിതിയാണിത്.",
+ beginnerNote:"NITI:\n• Think tank\n• Jan 1, 2015\n• Replaced Planning Commission",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'NITI = Think Tank 2015'.",
+ examTrap:"⚠️ Both correct."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: ഇന്ത്യയിൽ ജി.എസ്.ടി നടപ്പിലാക്കിയത് 101-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെയാണ്.\nനിഗമനം: ജി.എസ്.ടി വഴി സംസ്ഥാനങ്ങൾക്ക് തങ്ങളുടെ സ്വന്തം ഇഷ്ടപ്രകാരം നികുതി നിരക്ക് തീരുമാനിക്കാനുള്ള അധികാരം ലഭിച്ചു.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:1, explanation:"ഉ: (B)\n\nനികുതി നിരക്കുകൾ തീരുമാനിക്കുന്നത് കേന്ദ്രവും സംസ്ഥാനങ്ങളും ഉൾപ്പെടുന്ന ജി.എസ്.ടി കൗൺസിലാണ്, സംസ്ഥാനങ്ങൾക്ക് തനിച്ച് തീരുമാനിക്കാനാകില്ല.",
+ beginnerNote:"GST:\n• 101st Amendment\n• Council decides rates\n• Not individual states",
+ optionAnalysis:["A) ❌","B) ✅ ശരി","C) ❌","D) ❌"],
+ rejectionTrick:"'GST Council decides rates'.",
+ examTrap:"⚠️ 101st Amendment."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: 1969-ൽ ഇന്ദിരാഗാന്ധി സർക്കാർ 14 പ്രധാന വാണിജ്യ ബാങ്കുകളെ ദേശസാൽക്കരിച്ചു.\nനിഗമനം: ഗ്രാമീണ മേഖലകളിൽ ബാങ്കിംഗ് സേവനങ്ങൾ എത്തിക്കാനും സാധാരണക്കാർക്കും കർഷകർക്കും വായ്പ ലഭ്യമാക്കാനുമാണ് ഇത് ചെയ്തത്.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:0, explanation:"ഉ: (A)\n\nബാങ്കുകൾ രാജ്യത്തിന്റെ വികസനത്തിന് ഉപയോഗിക്കുക എന്നതായിരുന്നു ദേശസാൽക്കരണത്തിന്റെ പ്രധാന ലക്ഷ്യം.",
+ beginnerNote:"1969 Nationalization:\n• 14 banks\n• Indira Gandhi\n• Rural banking goal",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1969 = 14 banks'.",
+ examTrap:"⚠️ Rural development aim."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: സ്വതന്ത്ര ഇന്ത്യയുടെ ആദ്യത്തെ പഞ്ചവത്സര പദ്ധതി 1951-ൽ ആരംഭിച്ചു.\nനിഗമനം: ഹരോൾഡ്-ഡോമർ മോഡലിൽ അധിഷ്ഠിതമായ ഈ പദ്ധതി വ്യവസായങ്ങൾക്കാണ് ഊന്നൽ നൽകിയത്.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:1, explanation:"ഉ: (B)\n\nഒന്നാം പദ്ധതി കൃഷിക്കും ജലസേചനത്തിനുമാണ് പ്രാധാന്യം നൽകിയത്.",
+ beginnerNote:"1st Plan (1951-56):\n• Harrod-Domar Model\n• Agriculture priority\n• Not industry",
+ optionAnalysis:["A) ❌","B) ✅ ശരി","C) ❌","D) ❌"],
+ rejectionTrick:"'1st = Agriculture'.",
+ examTrap:"⚠️ Industry = 2nd Plan."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: ഇന്ത്യയിലെ പുതിയ സാമ്പത്തിക നയം ഉദാരവൽക്കരണം, സ്വകാര്യവൽക്കരണം, ആഗോളവൽക്കരണം (LPG) എന്നിവ ഉൾക്കൊള്ളുന്നു.\nനിഗമനം: ഇത് നടപ്പിലാക്കിയ സമയത്ത് ഡോ. മൻമോഹൻ സിംഗ് ആയിരുന്നു ഇന്ത്യയുടെ പ്രധാനമന്ത്രി.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:1, explanation:"ഉ: (B)\n\nആ സമയത്ത് പി.വി നരസിംഹറാവു ആയിരുന്നു പ്രധാനമന്ത്രി. ഡോ. മൻമോഹൻ സിംഗ് ധനമന്ത്രിയായിരുന്നു.",
+ beginnerNote:"LPG (1991):\n• PM — Narasimha Rao\n• FM — Manmohan Singh",
+ optionAnalysis:["A) ❌","B) ✅ ശരി","C) ❌","D) ❌"],
+ rejectionTrick:"'1991 = Rao PM, Manmohan FM'.",
+ examTrap:"⚠️ Manmohan = FM."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: പ്രത്യക്ഷ നികുതി നേരിട്ട് വ്യക്തികളിൽ നിന്നോ സ്ഥാപനങ്ങളിൽ നിന്നോ സർക്കാരിലേക്ക് അടയ്ക്കുന്നതാണ്.\nനിഗമനം: ആദായ നികുതി ഇതിനൊരു ഉദാഹരണമാണ്.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:0, explanation:"ഉ: (A)\n\nനികുതിഭാരം മറ്റൊരാളിലേക്ക് കൈമാറാൻ കഴിയാത്ത നികുതികളാണ് പ്രത്യക്ഷ നികുതികൾ.",
+ beginnerNote:"Direct Tax:\n• Burden non-transferable\n• Income Tax example",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Income Tax = Direct'.",
+ examTrap:"⚠️ Both correct."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്രസ്താവന: ഇന്ത്യയിൽ പ്ലാനിംഗ് കമ്മീഷൻ രൂപീകരിച്ചത് ഭരണഘടനയുടെ ആർട്ടിക്കിൾ 280 പ്രകാരമാണ്.\nനിഗമനം: ഈ കമ്മീഷൻ സംസ്ഥാനങ്ങൾക്കും കേന്ദ്രത്തിനും ഇടയിൽ നികുതിവരുമാനം വീതിച്ചുനൽകുന്നു.", options:["A) രണ്ടും ശരി","B) പ്രസ്താവന ശരി, നിഗമനം തെറ്റ്","C) പ്രസ്താവന തെറ്റ്, നിഗമനം ശരി","D) രണ്ടും തെറ്റ്"], correct:3, explanation:"ഉ: (D)\n\nആർട്ടിക്കിൾ 280 ധനകാര്യ കമ്മീഷനുമായി (Finance Commission) ബന്ധപ്പെട്ടതാണ്, പ്ലാനിംഗ് കമ്മീഷനുമായല്ല.",
+ beginnerNote:"Article 280:\n• Finance Commission\n• Tax distribution\n• Not Planning Commission",
+ optionAnalysis:["A) ❌","B) ❌","C) ❌","D) ✅ ശരി"],
+ rejectionTrick:"'Art 280 = Finance Commission'.",
+ examTrap:"⚠️ Planning Commission ≠ Constitutional."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കാലഗണനാക്രമത്തിൽ എഴുതുക:\n1. RBI രൂപീകരണം, 2. പ്ലാനിംഗ് കമ്മീഷൻ രൂപീകരണം, 3. NITI ആയോഗ് രൂപീകരണം, 4. 14 ബാങ്കുകളുടെ ദേശസാൽക്കരണം", options:["A) 1, 2, 4, 3","B) 1, 4, 2, 3","C) 2, 1, 4, 3","D) 2, 4, 1, 3"], correct:0, explanation:"ഉ: (A)\n\nRBI (1935), പ്ലാനിംഗ് കമ്മീഷൻ (1950), 14 ബാങ്കുകളുടെ ദേശസാൽക്കരണം (1969), നീതി ആയോഗ് (2015).",
+ beginnerNote:"Chronology:\n• RBI — 1935\n• Planning Commission — 1950\n• 14 Banks — 1969\n• NITI — 2015",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1935 → 1950 → 1969 → 2015'.",
+ examTrap:"⚠️ RBI first."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കാലഗണനാക്രമത്തിൽ എഴുതുക:\n1. പ്ലാൻ ഹോളിഡേ, 2. ഒന്നാം പഞ്ചവത്സര പദ്ധതി, 3. റോളിംഗ് പ്ലാൻ, 4. പന്ത്രണ്ടാം പഞ്ചവത്സര പദ്ധതി", options:["A) 2, 1, 3, 4","B) 1, 2, 3, 4","C) 2, 3, 1, 4","D) 1, 3, 2, 4"], correct:0, explanation:"ഉ: (A)\n\nഒന്നാം പദ്ധതി (1951), പ്ലാൻ ഹോളിഡേ (1966-69), റോളിംഗ് പ്ലാൻ (1978-80), പന്ത്രണ്ടാം പദ്ധതി (2012-17).",
+ beginnerNote:"Timeline:\n• 1st — 1951\n• Plan Holiday — 1966\n• Rolling — 1978\n• 12th — 2012",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1951 → 1966 → 1978 → 2012'.",
+ examTrap:"⚠️ Plan Holiday = 1966-69."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കാലഗണനാക്രമത്തിൽ എഴുതുക:\n1. GST നിലവിൽ വന്നത്, 2. പുതിയ സാമ്പത്തിക നയം (LPG), 3. നോട്ടുനിരോധനം, 4. NABARD രൂപീകരണം", options:["A) 4, 2, 3, 1","B) 4, 3, 2, 1","C) 2, 4, 3, 1","D) 2, 3, 4, 1"], correct:0, explanation:"ഉ: (A)\n\nനബാർഡ് (1982), സാമ്പത്തിക പരിഷ്കാരം (1991), നോട്ടുനിരോധനം (2016), ജി.എസ്.ടി (2017).",
+ beginnerNote:"Chronology:\n• NABARD — 1982\n• LPG — 1991\n• Demonetization — 2016\n• GST — 2017",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1982 → 1991 → 2016 → 2017'.",
+ examTrap:"⚠️ NABARD first."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പഞ്ചവത്സര പദ്ധതികൾ ക്രമത്തിൽ:\n1. ഗാഡ്ഗിൽ യോജന (മൂന്നാം പദ്ധതി), 2. മഹലനോബിസ് മോഡൽ (രണ്ടാം പദ്ധതി), 3. ഹരോൾഡ്-ഡോമർ മോഡൽ (ഒന്നാം പദ്ധതി)", options:["A) 3, 2, 1","B) 1, 2, 3","C) 2, 1, 3","D) 3, 1, 2"], correct:0, explanation:"ഉ: (A)\n\nഒന്നാം പദ്ധതി, രണ്ടാം പദ്ധതി, മൂന്നാം പദ്ധതി എന്ന ക്രമത്തിൽ.",
+ beginnerNote:"Plan Models:\n• 1st — Harrod-Domar\n• 2nd — Mahalanobis\n• 3rd — Gadgil Yojana",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1-HD, 2-M, 3-G'.",
+ examTrap:"⚠️ Chronological."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"കാലഗണനാക്രമത്തിൽ എഴുതുക:\n1. സ്വതന്ത്ര ഇന്ത്യയുടെ ആദ്യ ബജറ്റ്, 2. പ്ലാനിംഗ് കമ്മീഷൻ, 3. ജി.എസ്.ടി കൗൺസിൽ രൂപീകരണം, 4. ദേശീയ വികസന സമിതി (NDC)", options:["A) 1, 2, 4, 3","B) 1, 4, 2, 3","C) 2, 1, 4, 3","D) 1, 2, 3, 4"], correct:0, explanation:"ഉ: (A)\n\nബജറ്റ് (1947), പ്ലാനിംഗ് കമ്മീഷൻ (1950), NDC (1952), GST കൗൺസിൽ (2016).",
+ beginnerNote:"Timeline:\n• Budget — 1947\n• Planning Commission — 1950\n• NDC — 1952\n• GST Council — 2016",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1947 → 1950 → 1952 → 2016'.",
+ examTrap:"⚠️ NDC = 1952."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ബാങ്കിംഗ് ചരിത്രം ക്രമത്തിൽ:\n1. SBI രൂപീകരണം, 2. RBI ദേശസാൽക്കരണം, 3. ആറ് ബാങ്കുകളുടെ ദേശസാൽക്കരണം, 4. 14 ബാങ്കുകളുടെ ദേശസാൽക്കരണം", options:["A) 2, 1, 4, 3","B) 1, 2, 4, 3","C) 2, 4, 1, 3","D) 1, 4, 2, 3"], correct:0, explanation:"ഉ: (A)\n\nRBI ദേശസാൽക്കരണം (1949), SBI (1955), 14 ബാങ്കുകൾ (1969), 6 ബാങ്കുകൾ (1980).",
+ beginnerNote:"Banking timeline:\n• RBI Nationalization — 1949\n• SBI — 1955\n• 14 Banks — 1969\n• 6 Banks — 1980",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'1949 → 1955 → 1969 → 1980'.",
+ examTrap:"⚠️ RBI first."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"RBI രൂപീകരണം (1935), RBI ദേശസാൽക്കരണം (1949), ഇംപീരിയൽ ബാങ്ക് SBI ആയി മാറിയത് (____)", options:["A) 1950","B) 1952","C) 1955","D) 1960"], correct:2, explanation:"ഉ: (C) 1955\n\n1955-ലാണ് ഇംപീരിയൽ ബാങ്ക് ഓഫ് ഇന്ത്യയെ സ്റ്റേറ്റ് ബാങ്ക് ഓഫ് ഇന്ത്യ (SBI) ആയി മാറ്റിയത്.",
+ beginnerNote:"SBI:\n• Imperial Bank → SBI\n• 1955",
+ optionAnalysis:["A) ❌","B) ❌","C) ✅","D) ❌"],
+ rejectionTrick:"'SBI = 1955'.",
+ examTrap:"⚠️ Not 1950."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഒന്നാം പഞ്ചവത്സര പദ്ധതി (1951-1956), രണ്ടാം പദ്ധതി (1956-1961), മൂന്നാം പദ്ധതി (1961-____)", options:["A) 1965","B) 1966","C) 1967","D) 1969"], correct:1, explanation:"ഉ: (B) 1966\n\nഅഞ്ച് വർഷത്തേക്കുള്ള പദ്ധതിയായതിനാൽ മൂന്നാം പദ്ധതി 1961-ൽ ആരംഭിച്ച് 1966-ൽ അവസാനിച്ചു.",
+ beginnerNote:"3rd Plan:\n• 1961-1966\n• Gadgil Yojana",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'5-year cycles'.",
+ examTrap:"⚠️ 1966."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യയിലെ പ്രധാന നോട്ടുനിരോധന വർഷങ്ങൾ: 1946, 1978, ____", options:["A) 2014","B) 2016","C) 2018","D) 2020"], correct:1, explanation:"ഉ: (B) 2016\n\nപ്രധാനമന്ത്രി നരേന്ദ്രമോദിയുടെ നേതൃത്വത്തിൽ 500, 1000 നോട്ടുകൾ നിരോധിച്ചത് 2016-ലാണ്.",
+ beginnerNote:"Demonetization:\n• 1946, 1978, 2016",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'2016 = Nov 8'.",
+ examTrap:"⚠️ Modi govt."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നിലവിലുള്ള പ്രധാന ജി.എസ്.ടി നിരക്കുകൾ (സ്ലാബുകൾ): 5%, 12%, 18%, ____", options:["A) 20%","B) 25%","C) 28%","D) 30%"], correct:2, explanation:"ഉ: (C) 28%\n\n0%, 5%, 12%, 18%, 28% എന്നിവയാണ് ജി.എസ്.ടി നിരക്കുകൾ.",
+ beginnerNote:"GST Slabs:\n• 0%, 5%, 12%, 18%, 28%",
+ optionAnalysis:["A) ❌","B) ❌","C) ✅","D) ❌"],
+ rejectionTrick:"'28% = highest slab'.",
+ examTrap:"⚠️ 5 slabs total."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ബാങ്കുകളുടെ ദേശസാൽക്കരണം: 14 ബാങ്കുകൾ (1969), 6 ബാങ്കുകൾ (____)", options:["A) 1975","B) 1980","C) 1985","D) 1991"], correct:1, explanation:"ഉ: (B) 1980\n\nരണ്ടാം ഘട്ടത്തിൽ 6 വാണിജ്യ ബാങ്കുകളെ ദേശസാൽക്കരിച്ചത് 1980-ലാണ്.",
+ beginnerNote:"Bank Nationalization:\n• 14 Banks — 1969\n• 6 Banks — 1980",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'1980 = 6 banks'.",
+ examTrap:"⚠️ Both Indira Gandhi era."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Analogy: ഒന്നാം പഞ്ചവത്സര പദ്ധതി : ഹരോൾഡ്-ഡോമർ മോഡൽ :: രണ്ടാം പഞ്ചവത്സര പദ്ധതി : ?", options:["A) ഗാഡ്ഗിൽ യോജന","B) മഹലനോബിസ് മോഡൽ","C) ഡി.പി. ധർ മോഡൽ","D) ലിയോൺടിഫ് മോഡൽ"], correct:1, explanation:"ഉ: (B) മഹലനോബിസ് മോഡൽ\n\nവ്യാവസായിക വികസനത്തിന് ഊന്നൽ നൽകിയ രണ്ടാം പദ്ധതി പി.സി മഹലനോബിസ് മോഡലായിരുന്നു.",
+ beginnerNote:"2nd Plan:\n• Mahalanobis Model\n• Heavy Industries",
+ optionAnalysis:["A) 3rd","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'2nd = Mahalanobis'.",
+ examTrap:"⚠️ Not Gadgil."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Analogy: ആദായ നികുതി : പ്രത്യക്ഷ നികുതി :: ചരക്കുസേവന നികുതി (GST) : ?", options:["A) പരോക്ഷ നികുതി","B) വിൽപന നികുതി","C) കസ്റ്റംസ് നികുതി","D) എക്സൈസ് ഡ്യൂട്ടി"], correct:0, explanation:"ഉ: (A) പരോക്ഷ നികുതി (Indirect Tax)\n\nജി.എസ്.ടി ഒരു പരോക്ഷ നികുതിയാണ്.",
+ beginnerNote:"GST:\n• Indirect Tax\n• Burden transferable",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'GST = Indirect'.",
+ examTrap:"⚠️ Not direct."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Analogy: ധവള വിപ്ലവം : പാൽ :: നീല വിപ്ലവം : ?", options:["A) കോഴിമുട്ട","B) സമുദ്രോല്പന്നങ്ങൾ/മത്സ്യം","C) തുകൽ","D) പഴങ്ങൾ"], correct:1, explanation:"ഉ: (B) സമുദ്രോല്പന്നങ്ങൾ/മത്സ്യം\n\nമത്സ്യോല്പാദനം വർദ്ധിപ്പിക്കുന്നതിനായുള്ള പദ്ധതിയാണ് നീല വിപ്ലവം.",
+ beginnerNote:"Revolutions:\n• Blue — Fish\n• White — Milk\n• Silver — Egg",
+ optionAnalysis:["A) Silver","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'Blue = Fish'.",
+ examTrap:"⚠️ Egg = Silver Revolution."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Analogy: RBI യുടെ ആസ്ഥാനം : മുംബൈ :: IRDAI യുടെ ആസ്ഥാനം : ?", options:["A) ഡൽഹി","B) ലക്നൗ","C) ഹൈദരാബാദ്","D) കൊൽക്കത്ത"], correct:2, explanation:"ഉ: (C) ഹൈദരാബാദ്\n\nഇൻഷുറൻസ് റെഗുലേറ്ററി ആൻഡ് ഡെവലപ്മെന്റ് അതോറിറ്റിയുടെ ആസ്ഥാനം ഹൈദരാബാദിലാണ്.",
+ beginnerNote:"IRDAI:\n• HQ — Hyderabad\n• Insurance regulator",
+ optionAnalysis:["A) ❌","B) SIDBI","C) ✅","D) ❌"],
+ rejectionTrick:"'IRDAI = Hyderabad'.",
+ examTrap:"⚠️ Not Delhi."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Analogy: പുതിയ സാമ്പത്തിക നയം : 1991 :: ആസൂത്രണ കമ്മീഷൻ രൂപീകരണം : ?", options:["A) 1947","B) 1950","C) 1952","D) 2015"], correct:1, explanation:"ഉ: (B) 1950\n\nപ്ലാനിംഗ് കമ്മീഷൻ നിലവിൽ വന്നത് 1950 മാർച്ചിലാണ്.",
+ beginnerNote:"Planning Commission:\n• March 1950",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) NITI"],
+ rejectionTrick:"'Planning Commission = 1950'.",
+ examTrap:"⚠️ NITI = 2015."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Analogy: റിസർവ് ബാങ്ക് : ബാങ്കുകളുടെ ബാങ്ക് :: നീതി ആയോഗ് : ?", options:["A) തിങ്ക് ടാങ്ക് (Think Tank)","B) ഫിനാൻസ് ബാങ്ക്","C) സുപ്രീം കോടതി","D) സ്റ്റാറ്റ്യൂട്ടറി ബോഡി"], correct:0, explanation:"ഉ: (A) തിങ്ക് ടാങ്ക്\n\nസർക്കാരിന്റെ നയരൂപീകരണ ഉപദേശക സമിതിയായ തിങ്ക് ടാങ്കാണിത്.",
+ beginnerNote:"NITI:\n• Think Tank\n• Advisory body",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'NITI = Think Tank'.",
+ examTrap:"⚠️ Not a bank."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Coding: സാമ്പത്തിക നയത്തിൽ 'LPG' എന്നത് Liberalization, Privatization, Globalization ആണെങ്കിൽ, 'GST' എന്നത്?", options:["A) General Sales Tax","B) Goods and Services Tax","C) Global Service Tax","D) Gross State Tax"], correct:1, explanation:"ഉ: (B) Goods and Services Tax\n\nചരക്കുസേവന നികുതിയുടെ ഇംഗ്ലീഷ് രൂപമാണിത്.",
+ beginnerNote:"GST:\n• Goods and Services Tax",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'GST = Goods & Services Tax'.",
+ examTrap:"⚠️ Not General."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Coding: NITI = National Institution for Transforming India ആണെങ്കിൽ, NABARD എന്നതിലെ 'R' എന്താണ് സൂചിപ്പിക്കുന്നത്?", options:["A) Regional","B) Reserve","C) Rural","D) Retail"], correct:2, explanation:"ഉ: (C) Rural\n\nNational Bank for Agriculture and Rural Development എന്നാണ് പൂർണ്ണരൂപം.",
+ beginnerNote:"NABARD:\n• National Bank for Agriculture and Rural Development",
+ optionAnalysis:["A) ❌","B) ❌","C) ✅","D) ❌"],
+ rejectionTrick:"'R = Rural'.",
+ examTrap:"⚠️ Not Reserve."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Coding: 1950 നെ 'പ്ലാനിംഗ് കമ്മീഷൻ' എന്ന് വിളിച്ചാൽ, 2015 നെ എന്ത് വിളിക്കാം?", options:["A) നീതി ആയോഗ്","B) ജി.എസ്.ടി","C) എൻ.ഡി.സി","D) സെബി"], correct:0, explanation:"ഉ: (A) നീതി ആയോഗ്\n\nപ്ലാനിംഗ് കമ്മീഷൻ 1950-ലും നീതി ആയോഗ് 2015-ലും നിലവിൽ വന്നു.",
+ beginnerNote:"Chronology:\n• 1950 — Planning Commission\n• 2015 — NITI Aayog",
+ optionAnalysis:["A) ✅","B) 2017","C) 1952","D) 1988"],
+ rejectionTrick:"'2015 = NITI'.",
+ examTrap:"⚠️ Not GST."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Coding: പച്ച (Green) കൃഷിയാണെങ്കിൽ, വെളുപ്പ് (White) പാലാണെങ്കിൽ, മഞ്ഞ (Yellow) എന്തിനെ സൂചിപ്പിക്കുന്നു?", options:["A) എണ്ണക്കുരുക്കൾ (Oilseeds)","B) മുട്ട","C) മാംസം","D) ഉരുളക്കിഴങ്ങ്"], correct:0, explanation:"ഉ: (A) എണ്ണക്കുരുക്കൾ\n\nമഞ്ഞ വിപ്ലവം എണ്ണക്കുരുക്കളുടെ ഉത്പാദനവുമായി ബന്ധപ്പെട്ടതാണ്.",
+ beginnerNote:"Yellow Revolution:\n• Oilseeds",
+ optionAnalysis:["A) ✅","B) Silver","C) ❌","D) ❌"],
+ rejectionTrick:"'Yellow = Oilseeds'.",
+ examTrap:"⚠️ Egg = Silver."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Coding: പ്രത്യക്ഷ നികുതിയെ 'D' എന്നും പരോക്ഷ നികുതിയെ 'I' എന്നും കോഡ് ചെയ്താൽ 'ഇൻകം ടാക്സും ജി.എസ്.ടിയും' യഥാക്രമം:", options:["A) D, I","B) I, D","C) D, D","D) I, I"], correct:0, explanation:"ഉ: (A) D, I\n\nഇൻകം ടാക്സ് നേരിട്ടുള്ളതും (D), ജി.എസ്.ടി പരോക്ഷ നികുതിയുമാണ് (I).",
+ beginnerNote:"Coding:\n• Income Tax = Direct = D\n• GST = Indirect = I",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Income=D, GST=I'.",
+ examTrap:"⚠️ Correct order."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Coding: BANK = 2-1-14-11 (alphabet positions). RBI = ?", options:["A) 18-2-9","B) 17-2-9","C) 18-3-9","D) 19-2-8"], correct:0, explanation:"ഉ: (A) 18-2-9\n\nR ഇംഗ്ലീഷ് അക്ഷരമാലയിലെ 18-ാമത്തെ അക്ഷരമാണ്, B 2-ാമത്തെയും I 9-ാമത്തെയുമാണ്.",
+ beginnerNote:"Alphabet positions:\n• R = 18\n• B = 2\n• I = 9",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'R-B-I = 18-2-9'.",
+ examTrap:"⚠️ Alphabet positions."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പുതിയ സാമ്പത്തിക നയം (1991):\n\n1. ഇത് എൽ.പി.ജി (LPG) നയം എന്ന് അറിയപ്പെടുന്നു.\n2. അക്കാലത്തെ പ്രധാനമന്ത്രി നരസിംഹറാവു ആയിരുന്നു.\n3. ഡോ. മൻമോഹൻ സിംഗ് ആയിരുന്നു അന്ന് ഇന്ത്യയുടെ ധനമന്ത്രി.", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:3, explanation:"ഉ: (D)\n\nഇന്ത്യയിലെ സാമ്പത്തിക പ്രതിസന്ധി മറികടക്കാൻ റാവു-മൻമോഹൻ സഖ്യം കൊണ്ടുവന്ന പരിഷ്കാരങ്ങളാണിവ.",
+ beginnerNote:"1991:\n• PM — Narasimha Rao\n• FM — Manmohan Singh\n• LPG reforms",
+ optionAnalysis:["A) ❌","B) ❌","C) ❌","D) ✅"],
+ rejectionTrick:"'All three correct'.",
+ examTrap:"⚠️ Rao PM, Manmohan FM."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ചരക്കുസേവന നികുതി (GST):\n\n1. ഇത് 2017 ജൂലൈ 1-ന് പ്രാബല്യത്തിൽ വന്നു.\n2. വിജയ് കേൽക്കർ കമ്മിറ്റിയാണ് ജി.എസ്.ടി ശുപാർശ ചെയ്തത്.\n3. ഇതൊരു പ്രത്യക്ഷ നികുതിയാണ് (Direct Tax).", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:0, explanation:"ഉ: (A) 1, 2 ശരി\n\nജി.എസ്.ടി ഇന്ത്യയിലൊട്ടാകെ നിലവിലുള്ള ഒരു പരോക്ഷ നികുതിയാണ് (Indirect Tax), പ്രത്യക്ഷ നികുതിയല്ല.",
+ beginnerNote:"GST:\n• July 1, 2017\n• Kelkar Committee\n• Indirect Tax",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'GST = Indirect, not Direct'.",
+ examTrap:"⚠️ Statement 3 wrong."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"റിസർവ് ബാങ്ക് ഓഫ് ഇന്ത്യ (RBI):\n\n1. 1935 ഏപ്രിൽ 1-ന് സ്ഥാപിതമായി.\n2. ഹിൽട്ടൺ യങ് കമ്മീഷൻ ശുപാർശ പ്രകാരമാണ് ഇത് രൂപീകരിച്ചത്.\n3. ഇതിന്റെ ആദ്യ ഇന്ത്യക്കാരനായ ഗവർണർ സി.ഡി. ദേശ്മുഖ് ആയിരുന്നു.", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:3, explanation:"ഉ: (D)\n\nഇന്ത്യയുടെ കേന്ദ്ര ബാങ്കായ RBI മായി ബന്ധപ്പെട്ട ഈ മൂന്ന് പ്രസ്താവനകളും ശരിയാണ്.",
+ beginnerNote:"RBI:\n• 1935 April 1\n• Hilton Young Commission\n• CD Deshmukh — first Indian Governor",
+ optionAnalysis:["A) ❌","B) ❌","C) ❌","D) ✅"],
+ rejectionTrick:"'All three correct'.",
+ examTrap:"⚠️ Osborne Smith = First Governor (British)."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പഞ്ചവത്സര പദ്ധതികൾ:\n\n1. ഇത് സോവിയറ്റ് യൂണിയനിൽ (റഷ്യ) നിന്നാണ് ഇന്ത്യ കടമെടുത്തത്.\n2. ദേശീയ വികസന സമിതിയാണ് (NDC) ഇതിന് അന്തിമ അംഗീകാരം നൽകിയിരുന്നത്.\n3. ഇന്ത്യയിൽ ആകെ 15 പഞ്ചവത്സര പദ്ധതികൾ നടപ്പിലാക്കി.", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:0, explanation:"ഉ: (A) 1, 2 ശരി\n\nഇന്ത്യയിൽ ആകെ 12 പഞ്ചവത്സര പദ്ധതികൾ മാത്രമേ നടപ്പിലാക്കിയിട്ടുള്ളൂ (12-ാം പദ്ധതി 2012-2017).",
+ beginnerNote:"Plans:\n• Soviet model\n• NDC approval\n• 12 plans total",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'India = 12 plans, not 15'.",
+ examTrap:"⚠️ 12th Plan = last."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഹരിത വിപ്ലവം:\n\n1. ഇന്ത്യയിൽ ഇതിന് തുടക്കം കുറിച്ചത് എം.എസ്. സ്വാമിനാഥനാണ്.\n2. ഉയർന്ന വിളവ് നൽകുന്ന വിത്തുകളുടെ ഉപയോഗമാണ് ഇതിന്റെ പ്രധാന ലക്ഷ്യം.\n3. ഇത് പ്രധാനമായും ഇന്ത്യയുടെ കിഴക്കൻ സംസ്ഥാനങ്ങളിലാണ് (ബംഗാൾ, അസം) വിജയം കണ്ടത്.", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:0, explanation:"ഉ: (A) 1, 2 ശരി\n\nഇന്ത്യയുടെ വടക്കുപടിഞ്ഞാറൻ സംസ്ഥാനങ്ങളായ പഞ്ചാബ്, ഹരിയാന, പടിഞ്ഞാറൻ ഉത്തർപ്രദേശ് എന്നിവിടങ്ങളിലാണ് ഇത് വൻവിജയമായത്.",
+ beginnerNote:"Green Revolution:\n• MS Swaminathan (India)\n• HYV seeds\n• Success: Punjab, Haryana",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Success = Punjab, not East'.",
+ examTrap:"⚠️ Statement 3 wrong."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പ്ലാനിംഗ് കമ്മീഷൻ:\n\n1. ഇത് ഒരു ഭരണഘടനാ സ്ഥാപനമല്ല.\n2. പ്രധാനമന്ത്രിയാണ് ഇതിന്റെ അധ്യക്ഷൻ.\n3. 2014-ൽ ഈ സ്ഥാപനം പിരിച്ചുവിടാൻ സർക്കാർ തീരുമാനിച്ചു.", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:3, explanation:"ഉ: (D)\n\nനരേന്ദ്രമോദി സർക്കാർ അധികാരമേറ്റയുടനെ 2014-ൽ ആസൂത്രണ കമ്മീഷൻ പിരിച്ചുവിട്ടു.",
+ beginnerNote:"Planning Commission:\n• Non-constitutional\n• PM as Chairman\n• Dissolved — 2014",
+ optionAnalysis:["A) ❌","B) ❌","C) ❌","D) ✅"],
+ rejectionTrick:"'All three correct'.",
+ examTrap:"⚠️ Dissolved in 2014."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നാണ്യവിളകൾ (Cash Crops):\n\n1. റബ്ബർ, കാപ്പി, തേയില എന്നിവ നാണ്യവിളകളാണ്.\n2. ഇവ പ്രധാനമായും വിപണിയിൽ വിൽക്കാൻ ലക്ഷ്യമാക്കി കൃഷി ചെയ്യുന്നവയാണ്.\n3. കേരളം റബ്ബർ ഉത്പാദനത്തിൽ ഇന്ത്യയിൽ ഒന്നാം സ്ഥാനത്താണ്.", options:["A) 1, 2 ശരി","B) 2, 3 ശരി","C) 1, 3 ശരി","D) എല്ലാം ശരി"], correct:3, explanation:"ഉ: (D)\n\nഇന്ത്യയിലെ മൊത്തം സ്വാഭാവിക റബ്ബറിന്റെ ഭൂരിഭാഗവും ഉത്പാദിപ്പിക്കുന്നത് കേരളത്തിലാണ്.",
+ beginnerNote:"Cash Crops:\n• Rubber, Coffee, Tea\n• Kerala = Rubber #1",
+ optionAnalysis:["A) ❌","B) ❌","C) ❌","D) ✅"],
+ rejectionTrick:"'All three correct'.",
+ examTrap:"⚠️ Kerala = Rubber capital."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ജി.എസ്.ടിയുമായി ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) അസം ആണ് ജി.എസ്.ടി ബിൽ പാസാക്കിയ ആദ്യ സംസ്ഥാനം.","B) ജി.എസ്.ടി കൗൺസിലിന്റെ അധ്യക്ഷൻ പ്രധാനമന്ത്രിയാണ്.","C) ഇന്ത്യയിൽ ജി.എസ്.ടി നടപ്പിലാക്കിയത് 2017-ലാണ്.","D) പെട്രോളിയം ഉൽപ്പന്നങ്ങളെ ജി.എസ്.ടിയിൽ നിന്ന് ഒഴിവാക്കിയിട്ടുണ്ട്."], correct:1, explanation:"ഉ: (B)\n\nജി.എസ്.ടി കൗൺസിലിന്റെ അധ്യക്ഷൻ കേന്ദ്ര ധനകാര്യ മന്ത്രിയാണ്, പ്രധാനമന്ത്രിയല്ല.",
+ beginnerNote:"GST Council:\n• Chairman — Union FM\n• Not PM",
+ optionAnalysis:["A) ✅","B) ❌ FM","C) ✅","D) ✅"],
+ rejectionTrick:"'GST Council = FM'.",
+ examTrap:"⚠️ Not PM."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"പഞ്ചവത്സര പദ്ധതികളുമായി ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) മൂന്നാം പഞ്ചവത്സര പദ്ധതി 'ഗാഡ്ഗിൽ യോജന' എന്നറിയപ്പെടുന്നു.","B) അഞ്ചാം പദ്ധതിയിൽ 'ഗരീബി ഹഠാവോ' എന്ന മുദ്രാവാക്യം ഉയർത്തി.","C) പന്ത്രണ്ടാം പഞ്ചവത്സര പദ്ധതി 2012-ൽ ആരംഭിച്ച് 2017-ൽ അവസാനിച്ചു.","D) നീതി ആയോഗ് ആണ് പദ്ധതികൾക്ക് അന്തിമ അംഗീകാരം നൽകിയിരുന്നത്."], correct:3, explanation:"ഉ: (D)\n\nപഞ്ചവത്സര പദ്ധതികൾക്ക് അന്തിമ അംഗീകാരം നൽകിയിരുന്നത് ദേശീയ വികസന സമിതിയാണ് (NDC - National Development Council).",
+ beginnerNote:"NDC:\n• Approved 5-Year Plans\n• Not NITI",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ NDC"],
+ rejectionTrick:"'NDC approved plans'.",
+ examTrap:"⚠️ NITI = 2015."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"റിസർവ് ബാങ്കുമായി (RBI) ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) ഇന്ത്യയുടെ കേന്ദ്ര ബാങ്കാണിത്.","B) കറൻസി നോട്ടുകൾ അച്ചടിക്കുന്നതും വിതരണം ചെയ്യുന്നതും RBI ആണ്.","C) പൊതുജനങ്ങൾക്ക് RBI യിൽ നേരിട്ട് അക്കൗണ്ട് തുറക്കാം.","D) ബാങ്കുകളുടെ ബാങ്ക് എന്ന് അറിയപ്പെടുന്നു."], correct:2, explanation:"ഉ: (C)\n\nRBI ബാങ്കുകളുടെ ബാങ്കാണ്. സാധാരണക്കാർക്ക് അവിടെ നേരിട്ട് സേവിംഗ്സ് അക്കൗണ്ട് തുടങ്ങാൻ കഴിയില്ല.",
+ beginnerNote:"RBI:\n• Central Bank\n• Banker's bank\n• No retail accounts",
+ optionAnalysis:["A) ✅","B) ✅","C) ❌ No retail","D) ✅"],
+ rejectionTrick:"'RBI ≠ retail bank'.",
+ examTrap:"⚠️ Not for public."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യൻ സാമ്പത്തിക വ്യവസ്ഥയുമായി ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) ഇന്ത്യയുടേത് ഒരു സമ്മിശ്ര സമ്പദ്‌വ്യവസ്ഥയാണ്.","B) കൃഷി പ്രാഥമിക മേഖലയിൽ ഉൾപ്പെടുന്നു.","C) സേവന മേഖല തൃതീയ മേഖലയിലാണ്.","D) ഇന്ത്യൻ ജി.ഡി.പി യിൽ ഏറ്റവും കൂടുതൽ സംഭാവന നൽകുന്നത് കാർഷിക മേഖലയാണ്."], correct:3, explanation:"ഉ: (D)\n\nഇന്ത്യയിലെ തൊഴിൽ കൂടുതലും കാർഷിക മേഖലയിലാണെങ്കിലും, ജി.ഡി.പി (GDP) യിലേക്ക് ഏറ്റവും കൂടുതൽ പണം വരുന്നത് സേവന മേഖലയിൽ (Service Sector) നിന്നാണ്.",
+ beginnerNote:"India's economy:\n• Mixed economy\n• Agriculture = Primary\n• Services = Tertiary (largest GDP share)",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ Services"],
+ rejectionTrick:"'Services = Largest GDP share'.",
+ examTrap:"⚠️ Not agriculture."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നികുതികളുമായി ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) കോർപ്പറേറ്റ് ടാക്സ് ഒരു പ്രത്യക്ഷ നികുതിയാണ്.","B) ഇൻകം ടാക്സ് ഒരു പ്രത്യക്ഷ നികുതിയാണ്.","C) കസ്റ്റംസ് ഡ്യൂട്ടി ഒരു പ്രത്യക്ഷ നികുതിയാണ്.","D) ചരക്കുസേവന നികുതി (GST) ഒരു പരോക്ഷ നികുതിയാണ്."], correct:2, explanation:"ഉ: (C)\n\nഇറക്കുമതിക്കും കയറ്റുമതിക്കും ചുമത്തുന്ന കസ്റ്റംസ് ഡ്യൂട്ടി ഒരു പരോക്ഷ നികുതിയാണ്.",
+ beginnerNote:"Customs Duty:\n• Indirect Tax",
+ optionAnalysis:["A) ✅","B) ✅","C) ❌ Indirect","D) ✅"],
+ rejectionTrick:"'Customs = Indirect'.",
+ examTrap:"⚠️ Not Direct."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"സാമ്പത്തിക സ്ഥാപനങ്ങളുമായി ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) നബാർഡ് കാർഷിക വായ്പകൾ നൽകുന്നു.","B) സെബി ഓഹരി വിപണിയെ നിയന്ത്രിക്കുന്നു.","C) ഐ.ആർ.ഡി.എ ഇൻഷുറൻസ് മേഖലയെ നിയന്ത്രിക്കുന്നു.","D) ട്രായ് ഇന്ത്യൻ ബാങ്കിംഗ് മേഖലയെ നിയന്ത്രിക്കുന്നു."], correct:3, explanation:"ഉ: (D)\n\nട്രായ് (Telecom Regulatory Authority of India) ടെലികമ്മ്യൂണിക്കേഷൻ മേഖലയെയാണ് നിയന്ത്രിക്കുന്നത്. ബാങ്കിംഗ് മേഖലയെ നിയന്ത്രിക്കുന്നത് RBI ആണ്.",
+ beginnerNote:"Regulators:\n• NABARD — Agriculture\n• SEBI — Stock market\n• IRDAI — Insurance\n• TRAI — Telecom",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ Telecom"],
+ rejectionTrick:"'TRAI = Telecom'.",
+ examTrap:"⚠️ Banking = RBI."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നീതി ആയോഗുമായി ബന്ധപ്പെട്ട് തെറ്റായതേത്?", options:["A) ഇത് പ്ലാനിംഗ് കമ്മീഷന് പകരമായി വന്നതാണ്.","B) മുഖ്യമന്ത്രിമാർ ഇതിന്റെ ഗവേണിംഗ് കൗൺസിൽ അംഗങ്ങളാണ്.","C) ഭരണഘടനയുടെ ആർട്ടിക്കിൾ 280 പ്രകാരമാണ് ഇത് രൂപീകരിച്ചത്.","D) പ്രധാനമന്ത്രിയാണ് ഇതിന്റെ ചെയർമാൻ."], correct:2, explanation:"ഉ: (C)\n\nനീതി ആയോഗ് ഭരണഘടനാ സ്ഥാപനമല്ല. കേന്ദ്ര കാബിനറ്റിന്റെ ഒരു തീരുമാനപ്രകാരം നിലവിൽ വന്നതാണ്.",
+ beginnerNote:"NITI:\n• Non-constitutional\n• Cabinet resolution 2015\n• Not Art 280",
+ optionAnalysis:["A) ✅","B) ✅","C) ❌ Non-constitutional","D) ✅"],
+ rejectionTrick:"'NITI ≠ Constitutional'.",
+ examTrap:"⚠️ Art 280 = Finance Commission."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഏറ്റവും കൂടുതൽ ഊന്നൽ നൽകിയ പഞ്ചവത്സര പദ്ധതി ഏതാണ്?", options:["A) ഒന്നാം പദ്ധതി","B) രണ്ടാം പദ്ധതി","C) അഞ്ചാം പദ്ധതി","D) പത്താം പദ്ധതി"], correct:2, explanation:"ഉ: (C) അഞ്ചാം പദ്ധതി\n\nഇന്ദിരാഗാന്ധി സർക്കാരിന്റെ കാലത്തെ ഗരീബി ഹഠാവോ പ്രഖ്യാപനം ഈ പദ്ധതിയിലാണ്.",
+ beginnerNote:"5th Plan:\n• 1974-79\n• Garibi Hatao",
+ optionAnalysis:["A) Agriculture","B) Industry","C) ✅ Poverty","D) ❌"],
+ rejectionTrick:"'5th = Garibi Hatao'.",
+ examTrap:"⚠️ Poverty focus."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ബാങ്കുകളുടെ ബാങ്ക് എന്ന് ഇന്ത്യയിൽ അറിയപ്പെടുന്നത് ________ ആണ്.", options:["A) എസ്.ബി.ഐ","B) ആർ.ബി.ഐ","C) നബാർഡ്","D) സിഡ്ബി"], correct:1, explanation:"ഉ: (B) ആർ.ബി.ഐ (RBI)\n\nമറ്റ് വാണിജ്യ ബാങ്കുകൾക്കെല്ലാം പണലഭ്യത ഉറപ്പാക്കുന്നത് കേന്ദ്ര ബാങ്കായ RBI ആണ്.",
+ beginnerNote:"RBI:\n• Banker's bank\n• Lender of last resort",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'RBI = Banker's bank'.",
+ examTrap:"⚠️ SBI = Largest commercial bank."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യയിൽ ചരക്കുസേവന നികുതി (GST) നടപ്പിലാക്കാൻ ശുപാർശ ചെയ്തത് ________ കമ്മിറ്റിയാണ്.", options:["A) ടെണ്ടുൽക്കർ കമ്മിറ്റി","B) നരസിംഹം കമ്മിറ്റി","C) വിജയ് കേൽക്കർ കമ്മിറ്റി","D) കെ. കസ്തൂരിരംഗൻ കമ്മിറ്റി"], correct:2, explanation:"ഉ: (C) വിജയ് കേൽക്കർ കമ്മിറ്റി\n\nനികുതി പരിഷ്കാരങ്ങൾക്കായുള്ള ഈ കമ്മിറ്റിയാണ് ജി.എസ്.ടി മാതൃക നിർദ്ദേശിച്ചത്.",
+ beginnerNote:"Kelkar Committee:\n• Recommended GST model",
+ optionAnalysis:["A) Poverty","B) Banking","C) ✅","D) ❌"],
+ rejectionTrick:"'GST = Kelkar'.",
+ examTrap:"⚠️ Tendulkar = Poverty."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യൻ സമ്പദ്‌വ്യവസ്ഥയുടെ നട്ടെല്ല് എന്ന് വിശേഷിപ്പിക്കപ്പെടുന്നത് ________ മേഖലയാണ്.", options:["A) വ്യവസായ","B) കാർഷിക","C) സേവന","D) ഐ.ടി"], correct:1, explanation:"ഉ: (B) കാർഷിക (Agriculture)\n\nഏറ്റവും കൂടുതൽ ആളുകൾ തൊഴിലിനായി ആശ്രയിക്കുന്നത് കാർഷിക മേഖലയെയാണ്.",
+ beginnerNote:"Agriculture:\n• Backbone of Indian economy\n• Largest employer",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'Agriculture = Backbone'.",
+ examTrap:"⚠️ Services = Largest GDP share."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഒരു സാമ്പത്തിക വർഷം എന്ന് ഇന്ത്യയിൽ കണക്കാക്കുന്നത് ________ കാലയളവിനെയാണ്.", options:["A) ജനുവരി 1 മുതൽ ഡിസംബർ 31 വരെ","B) ഏപ്രിൽ 1 മുതൽ മാർച്ച് 31 വരെ","C) ജൂലൈ 1 മുതൽ ജൂൺ 30 വരെ","D) മാർച്ച് 1 മുതൽ ഫെബ്രുവരി 28 വരെ"], correct:1, explanation:"ഉ: (B) ഏപ്രിൽ 1 മുതൽ മാർച്ച് 31 വരെ\n\nസർക്കാരിന്റെയും ആർ.ബി.ഐയുടെയും ഫിനാൻഷ്യൽ ഇയർ ഏപ്രിൽ 1 ന് തുടങ്ങി മാർച്ച് 31 ന് അവസാനിക്കുന്നു.",
+ beginnerNote:"Indian Financial Year:\n• April 1 — March 31",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'April-March'.",
+ examTrap:"⚠️ Not Jan-Dec."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"SEBI യുടെ ആസ്ഥാനം ________ ലാണ്.", options:["A) ഡൽഹി","B) ചെന്നൈ","C) മുംബൈ","D) കൊൽക്കത്ത"], correct:2, explanation:"ഉ: (C) മുംബൈ\n\nഇന്ത്യയുടെ സാമ്പത്തിക തലസ്ഥാനമായ മുംബൈയിലാണ് റിസർവ് ബാങ്ക്, സെബി തുടങ്ങിയവയുടെ ആസ്ഥാനം.",
+ beginnerNote:"SEBI:\n• HQ — Mumbai\n• Stock market regulator",
+ optionAnalysis:["A) ❌","B) ❌","C) ✅","D) ❌"],
+ rejectionTrick:"'SEBI = Mumbai'.",
+ examTrap:"⚠️ Same as RBI."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"നീതി ആയോഗിന്റെ ആദ്യത്തെ വൈസ് ചെയർമാൻ ________ ആയിരുന്നു.", options:["A) രാജീവ് കുമാർ","B) അരവിന്ദ് പനഗരിയ","C) സുമൻ ബേരി","D) അമിതാഭ് കാന്ത്"], correct:1, explanation:"ഉ: (B) അരവിന്ദ് പനഗരിയ\n\nപ്രശസ്ത സാമ്പത്തിക ശാസ്ത്രജ്ഞനായ അദ്ദേഹം 2015-ൽ ചുമതലയേറ്റു.",
+ beginnerNote:"NITI VCs:\n• Arvind Panagariya (First)\n• Rajiv Kumar\n• Suman Bery (Current)",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌ Current","D) ❌ CEO"],
+ rejectionTrick:"'First VC = Panagariya'.",
+ examTrap:"⚠️ Suman Bery = current."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായി പൊരുത്തപ്പെടുത്തിയത് ഏത്?", options:["A) വെളുത്ത വിപ്ലവം - പാൽ","B) മഞ്ഞ വിപ്ലവം - മുട്ട","C) നീല വിപ്ലവം - മത്സ്യം","D) സുവർണ്ണ വിപ്ലവം - പഴങ്ങൾ/തേൻ"], correct:1, explanation:"ഉ: (B)\n\nമഞ്ഞ വിപ്ലവം എണ്ണക്കുരുക്കളുടെ (Oilseeds) ഉത്പാദനവുമായി ബന്ധപ്പെട്ടതാണ്. മുട്ട ഉത്പാദനം സിൽവർ വിപ്ലവമാണ് (Silver Revolution).",
+ beginnerNote:"Revolutions:\n• Yellow — Oilseeds\n• Silver — Egg\n• White — Milk\n• Blue — Fish",
+ optionAnalysis:["A) ✅","B) ❌ Egg = Silver","C) ✅","D) ✅"],
+ rejectionTrick:"'Yellow = Oilseeds'.",
+ examTrap:"⚠️ Egg = Silver."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായി പൊരുത്തപ്പെടുത്തിയത് ഏത്?", options:["A) ആദ്യ പഞ്ചവത്സര പദ്ധതി - 1951-1956","B) റോളിംഗ് പ്ലാൻ - 1978-1980","C) പ്ലാൻ ഹോളിഡേ - 1966-1969","D) പത്താം പഞ്ചവത്സര പദ്ധതി - 1997-2002"], correct:3, explanation:"ഉ: (D)\n\n1997-2002 കാലഘട്ടം ഒൻപതാം പഞ്ചവത്സര പദ്ധതിയായിരുന്നു. പത്താം പദ്ധതി 2002-2007 ലാണ്.",
+ beginnerNote:"Plans:\n• 9th — 1997-2002\n• 10th — 2002-2007",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ 9th"],
+ rejectionTrick:"'10th = 2002-2007'.",
+ examTrap:"⚠️ Not 1997."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായി പൊരുത്തപ്പെടുത്തിയത് ഏത്?", options:["A) RBI യുടെ ദേശസാൽക്കരണം - 1949","B) 14 ബാങ്കുകളുടെ ദേശസാൽക്കരണം - 1969","C) SBI യുടെ രൂപീകരണം - 1935","D) 6 ബാങ്കുകളുടെ ദേശസാൽക്കരണം - 1980"], correct:2, explanation:"ഉ: (C)\n\nഇംപീരിയൽ ബാങ്കിനെ സ്റ്റേറ്റ് ബാങ്ക് ഓഫ് ഇന്ത്യ (SBI) ആക്കി മാറ്റിയത് 1955-ലാണ്.",
+ beginnerNote:"SBI:\n• Imperial Bank → SBI\n• 1955",
+ optionAnalysis:["A) ✅","B) ✅","C) ❌ 1955","D) ✅"],
+ rejectionTrick:"'SBI = 1955'.",
+ examTrap:"⚠️ Not 1935."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായി പൊരുത്തപ്പെടുത്തിയത് ഏത്?", options:["A) SEBI - ഓഹരി വിപണി","B) IRDAI - ഇൻഷുറൻസ്","C) NABARD - കാർഷിക വായ്പ","D) SIDBI - വിദേശ വ്യാപാരം"], correct:3, explanation:"ഉ: (D)\n\nSIDBI (Small Industries Development Bank of India) ചെറുകിട വ്യവസായങ്ങളുടെ വികസനത്തിനായുള്ളതാണ്.",
+ beginnerNote:"SIDBI:\n• Small Industries Development Bank\n• HQ — Lucknow",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ MSME"],
+ rejectionTrick:"'SIDBI = Small Industries'.",
+ examTrap:"⚠️ Not foreign trade."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായി പൊരുത്തപ്പെടുത്തിയത് ഏത്?", options:["A) ഉദാരവൽക്കരണം - വിപണി നിയന്ത്രണങ്ങൾ ലഘൂകരിക്കുന്നു","B) സ്വകാര്യവൽക്കരണം - സർക്കാർ ഉടമസ്ഥതയിലുള്ള സ്ഥാപനങ്ങൾ സ്വകാര്യ മേഖലയ്ക്ക് കൈമാറുന്നു","C) ആഗോളവൽക്കരണം - ദേശീയ സമ്പദ്‌വ്യവസ്ഥയെ ലോക സമ്പദ്‌വ്യവസ്ഥയുമായി ബന്ധിപ്പിക്കുന്നു","D) പണപ്പെരുപ്പം - പണത്തിന്റെ മൂല്യം വർദ്ധിക്കുന്നു"], correct:3, explanation:"ഉ: (D)\n\nപണപ്പെരുപ്പം അഥവാ ഇൻഫ്ലേഷൻ (Inflation) എന്നത് വിലക്കയറ്റം ഉണ്ടാകുകയും പണത്തിന്റെ ക്രയശേഷി (മൂല്യം) കുറയുകയും ചെയ്യുന്ന അവസ്ഥയാണ്.",
+ beginnerNote:"Inflation:\n• Prices rise\n• Money value falls",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ Value falls"],
+ rejectionTrick:"'Inflation = Value falls'.",
+ examTrap:"⚠️ Not value rises."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"തെറ്റായി പൊരുത്തപ്പെടുത്തിയത് ഏത്?", options:["A) കാർഷിക മേഖല - പ്രൈമറി സെക്ടർ","B) വ്യവസായ മേഖല - സെക്കൻഡറി സെക്ടർ","C) സേവന മേഖല - ടെർഷ്യറി സെക്ടർ","D) ഗതാഗതം - പ്രൈമറി സെക്ടർ"], correct:3, explanation:"ഉ: (D)\n\nഗതാഗതം, ബാങ്കിംഗ്, ഐ.ടി തുടങ്ങിയവ സേവന മേഖലയിലുള്ളതാണ് (Tertiary Sector).",
+ beginnerNote:"Sectors:\n• Primary — Agriculture\n• Secondary — Industry\n• Tertiary — Services (transport)",
+ optionAnalysis:["A) ✅","B) ✅","C) ✅","D) ❌ Tertiary"],
+ rejectionTrick:"'Transport = Tertiary'.",
+ examTrap:"⚠️ Not Primary."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Cause and Effect:\n1: 1991-ൽ ഇന്ത്യയിൽ കനത്ത സാമ്പത്തിക മാന്ദ്യവും വിദേശനാണ്യ ശേഖരത്തിൽ കുറവും ഉണ്ടായി.\n2: ഗവൺമെന്റ് പുതിയ സാമ്പത്തിക പരിഷ്കാരങ്ങൾ (LPG) അവതരിപ്പിച്ചു.", options:["A) 1 കാരണം, 2 ഫലം","B) 2 കാരണം, 1 ഫലം","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"], correct:0, explanation:"ഉ: (A) 1 കാരണവും 2 ഫലവുമാണ്.\n\nസാമ്പത്തിക പ്രതിസന്ധിയാണ് സാമ്പത്തിക ഉദാരവൽക്കരണത്തിലേക്ക് സർക്കാരിനെ നയിച്ചത്.",
+ beginnerNote:"Cause-Effect:\n• Crisis (1991) → LPG reforms",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Crisis → Reforms'.",
+ examTrap:"⚠️ IMF conditions."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Cause and Effect:\n1: ഇന്ത്യയിൽ ദാരിദ്ര്യം ഇല്ലാതാക്കാൻ അഞ്ചാം പഞ്ചവത്സര പദ്ധതി ശ്രമിച്ചു.\n2: അഞ്ചാം പദ്ധതിയിൽ 'ഗരീബി ഹഠാവോ' എന്ന മുദ്രാവാക്യം പ്രഖ്യാപിച്ചു.", options:["A) 1 കാരണം, 2 ഫലം","B) 2 കാരണം, 1 ഫലം","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"], correct:0, explanation:"ഉ: (A) 1 കാരണവും 2 ഫലവുമാണ്.\n\nദാരിദ്ര്യ നിർമ്മാർജ്ജനമാണ് ഈ പദ്ധതിയുടെ മുഖ്യ ലക്ഷ്യം.",
+ beginnerNote:"5th Plan:\n• Poverty eradication goal\n• Garibi Hatao slogan",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Goal → Slogan'.",
+ examTrap:"⚠️ 1974-79."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Cause and Effect:\n1: റിസർവ് ബാങ്ക് രാജ്യത്തെ ബാങ്കുകളുടെ ബാങ്കായി പ്രവർത്തിക്കുന്നു.\n2: വാണിജ്യ ബാങ്കുകൾക്ക് പണത്തിന്റെ ആവശ്യകത വരുമ്പോൾ RBI വായ്പ നൽകുന്നു.", options:["A) 1 കാരണം, 2 ഫലം","B) 2 കാരണം, 1 ഫലം","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"], correct:0, explanation:"ഉ: (A) 1 കാരണവും 2 ഫലവുമാണ്.\n\nകേന്ദ്ര ബാങ്ക് എന്ന നിലയിൽ വാണിജ്യ ബാങ്കുകളെ സാമ്പത്തികമായി പിന്തുണയ്ക്കുന്നത് RBI ആണ്.",
+ beginnerNote:"RBI:\n• Banker's bank\n• Lender of last resort",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Role → Action'.",
+ examTrap:"⚠️ RBI = Central Bank."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Cause and Effect:\n1: ഇന്ത്യയിൽ കാർഷിക മേഖലയിൽ ഉത്പാദനം വർദ്ധിപ്പിക്കുന്നതിനായി ഹരിത വിപ്ലവം നടപ്പിലാക്കി.\n2: ഉയർന്ന വിളവ് നൽകുന്ന വിത്തുകളും രാസവളങ്ങളും ഉപയോഗിച്ചതിനാൽ കാർഷികോത്പാദനം വൻതോതിൽ വർദ്ധിച്ചു.", options:["A) 1 കാരണം, 2 ഫലം","B) 2 കാരണം, 1 ഫലം","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"], correct:0, explanation:"ഉ: (A) 1 കാരണവും 2 ഫലവുമാണ്.\n\nവിത്തുകളുടെയും വളങ്ങളുടെയും ആധുനിക ഉപയോഗം കാർഷിക മേഖലയെ കൂടുതൽ മെച്ചപ്പെടുത്തി.",
+ beginnerNote:"Green Revolution:\n• HYV seeds + Fertilizers → Increased production",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Input → Output'.",
+ examTrap:"⚠️ Causal relationship."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Cause and Effect:\n1: കള്ളപ്പണവും വ്യാജ നോട്ട് നിർമ്മാണവും തടയാൻ സർക്കാർ ലക്ഷ്യമിട്ടു.\n2: 2016 നവംബർ 8-ന് 500, 1000 രൂപ നോട്ടുകൾ സർക്കാർ നിരോധിച്ചു.", options:["A) 1 കാരണം, 2 ഫലം","B) 2 കാരണം, 1 ഫലം","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"], correct:0, explanation:"ഉ: (A) 1 കാരണവും 2 ഫലവുമാണ്.\n\nഈ ലക്ഷ്യങ്ങൾ മുൻനിർത്തിയാണ് ഡിമോണിറ്റൈസേഷൻ (നോട്ടുനിരോധനം) നടപ്പിലാക്കിയത്.",
+ beginnerNote:"Demonetization:\n• Goal — Remove black money\n• Action — Ban 500/1000",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Goal → Action'.",
+ examTrap:"⚠️ Nov 8, 2016."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"Cause and Effect:\n1: രാജ്യത്ത് ഒരു ഏകീകൃത പരോക്ഷ നികുതി സമ്പ്രദായം (One Nation, One Tax) നടപ്പിലാക്കേണ്ടത് അത്യാവശ്യമായിരുന്നു.\n2: ഇന്ത്യയിൽ 2017-ൽ ചരക്കുസേവന നികുതി (GST) പ്രാബല്യത്തിൽ വന്നു.", options:["A) 1 കാരണം, 2 ഫലം","B) 2 കാരണം, 1 ഫലം","C) രണ്ടും സ്വതന്ത്ര കാരണങ്ങൾ","D) രണ്ടും സ്വതന്ത്ര ഫലങ്ങൾ"], correct:0, explanation:"ഉ: (A) 1 കാരണവും 2 ഫലവുമാണ്.\n\nവിവിധ സംസ്ഥാനങ്ങളിലെ നികുതി വ്യത്യാസങ്ങൾ ഒഴിവാക്കാനാണ് ജി.എസ്.ടി കൊണ്ടുവന്നത്.",
+ beginnerNote:"GST:\n• Goal — One Nation, One Tax\n• Implemented — 2017",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'Goal → Implementation'.",
+ examTrap:"⚠️ 101st Amendment."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യൻ സമ്പദ്‌വ്യവസ്ഥ ഏതു തരത്തിലുള്ളതാണ്?", options:["A) മുതലാളിത്ത സമ്പദ്‌വ്യവസ്ഥ","B) സോഷ്യലിസ്റ്റ് സമ്പദ്‌വ്യവസ്ഥ","C) സമ്മിശ്ര സമ്പദ്‌വ്യവസ്ഥ","D) കമാൻഡ് സമ്പദ്‌വ്യവസ്ഥ"], correct:2, explanation:"ഉ: (C) സമ്മിശ്ര സമ്പദ്‌വ്യവസ്ഥ\n\nപൊതുമേഖലയും സ്വകാര്യ മേഖലയും ഒരുമിച്ചു പ്രവർത്തിക്കുന്ന സമ്പദ്‌വ്യവസ്ഥയാണിത്.",
+ beginnerNote:"Mixed Economy:\n• Public + Private sectors\n• India's model",
+ optionAnalysis:["A) ❌","B) ❌","C) ✅","D) ❌"],
+ rejectionTrick:"'India = Mixed'.",
+ examTrap:"⚠️ Both sectors."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ആസൂത്രണ കമ്മീഷന് പകരമായി നിലവിൽ വന്ന സ്ഥാപനം ഏത്?", options:["A) ദേശീയ വികസന സമിതി (NDC)","B) നീതി ആയോഗ് (NITI Aayog)","C) ധനകാര്യ കമ്മീഷൻ (Finance Commission)","D) സെബി (SEBI)"], correct:1, explanation:"ഉ: (B) നീതി ആയോഗ്\n\n2015 ജനുവരി 1-നാണ് നീതി ആയോഗ് രൂപീകരിച്ചത്.",
+ beginnerNote:"NITI:\n• Replaced Planning Commission\n• 2015",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'NITI replaced PC'.",
+ examTrap:"⚠️ Not NDC."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ചരക്കുസേവന നികുതി (GST) ബിൽ പാസാക്കിയ ആദ്യ ഇന്ത്യൻ സംസ്ഥാനം ഏത്?", options:["A) കേരളം","B) മഹാരാഷ്ട്ര","C) ഗുജറാത്ത്","D) അസം"], correct:3, explanation:"ഉ: (D) അസം\n\nജി.എസ്.ടി ഭരണഘടനാ ഭേദഗതി ബിൽ അംഗീകരിച്ച ആദ്യ സംസ്ഥാനം അസം ആണ്.",
+ beginnerNote:"GST:\n• First state to ratify — Assam",
+ optionAnalysis:["A) ❌","B) ❌","C) ❌","D) ✅"],
+ rejectionTrick:"'Assam = First to ratify GST'.",
+ examTrap:"⚠️ Not Kerala."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യയിലെ ഏറ്റവും വലിയ പൊതുമേഖലാ ബാങ്ക് ഏതാണ്?", options:["A) സ്റ്റേറ്റ് ബാങ്ക് ഓഫ് ഇന്ത്യ (SBI)","B) പഞ്ചാബ് നാഷണൽ ബാങ്ക് (PNB)","C) ബാങ്ക് ഓഫ് ബറോഡ (BOB)","D) കാനറ ബാങ്ക്"], correct:0, explanation:"ഉ: (A) സ്റ്റേറ്റ് ബാങ്ക് ഓഫ് ഇന്ത്യ (SBI)\n\nസ്വത്തുക്കളുടെയും ബ്രാഞ്ചുകളുടെയും അടിസ്ഥാനത്തിൽ ഇന്ത്യയിലെ ഏറ്റവും വലിയ ബാങ്കാണിത്.",
+ beginnerNote:"SBI:\n• Largest public sector bank\n• Assets, branches",
+ optionAnalysis:["A) ✅","B) ❌","C) ❌","D) ❌"],
+ rejectionTrick:"'SBI = Largest'.",
+ examTrap:"⚠️ SBI formed 1955."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ഇന്ത്യയിൽ ധവള വിപ്ലവത്തിന്റെ പിതാവ് എന്നറിയപ്പെടുന്നത് ആരാണ്?", options:["A) എം.എസ്. സ്വാമിനാഥൻ","B) നോർമൻ ബോർലോഗ്","C) വർഗ്ഗീസ് കുര്യൻ","D) സാം പിത്രോഡ"], correct:2, explanation:"ഉ: (C) വർഗ്ഗീസ് കുര്യൻ\n\nഗുജറാത്തിലെ ആനന്ദ് കേന്ദ്രീകരിച്ച് അമുൽ (Amul) എന്ന പ്രസ്ഥാനം വഴി ഇന്ത്യയെ ലോകത്തെ ഏറ്റവും വലിയ പാൽ ഉത്പാദകരാക്കി മാറ്റിയത് അദ്ദേഹമാണ്.",
+ beginnerNote:"White Revolution:\n• Verghese Kurien\n• Amul, Anand (Gujarat)",
+ optionAnalysis:["A) Green","B) World Green","C) ✅","D) ❌"],
+ rejectionTrick:"'White = Kurien'.",
+ examTrap:"⚠️ Amul = White Revolution."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"ലോട്ടറി ടാക്സ്, മദ്യനികുതി, വിനോദ നികുതി എന്നിവ എന്തുതരം നികുതികൾക്ക് ഉദാഹരണമാണ്?", options:["A) പ്രത്യക്ഷ നികുതി","B) പരോക്ഷ നികുതി","C) കോർപ്പറേറ്റ് നികുതി","D) വെൽത്ത് ടാക്സ്"], correct:1, explanation:"ഉ: (B) പരോക്ഷ നികുതി\n\nഇവ അന്തിമ ഉപഭോക്താവാണ് നൽകുന്നത്, അതിനാൽ ഇവ പരോക്ഷ നികുതികളാണ്.",
+ beginnerNote:"Indirect Taxes:\n• Lottery Tax\n• Excise on Alcohol\n• Entertainment Tax",
+ optionAnalysis:["A) ❌","B) ✅","C) ❌","D) ❌"],
+ rejectionTrick:"'Indirect = Consumer pays'.",
+ examTrap:"⚠️ Not direct."},
+
+{subject:"സാമ്പത്തിക ശാസ്ത്രം", question:"താഴെ പറയുന്നവയിൽ ഇന്ത്യയിലെ ഒരു നവരത്ന/മഹാരത്ന കമ്പനികൾക്ക് ഉദാഹരണമല്ലാത്തത് ഏത്?", options:["A) ONGC","B) BHEL","C) TATA Motors","D) SAIL"], correct:2, explanation:"ഉ: (C) TATA Motors\n\nടാറ്റാ മോട്ടോഴ്സ് ഒരു സ്വകാര്യ കമ്പനിയാണ്, സർക്കാരിന്റെ നിയന്ത്രണത്തിലുള്ള പൊതുമേഖലാ സ്ഥാപനങ്ങൾക്കാണ് മഹാരത്ന/നവരത്ന പദവികൾ നൽകുന്നത്.",
+ beginnerNote:"Maharatna PSUs:\n• ONGC, BHEL, SAIL\n• TATA = Private",
+ optionAnalysis:["A) PSU","B) PSU","C) ✅ Private","D) PSU"],
+ rejectionTrick:"'Tata = Private'.",
+ examTrap:"⚠️ Not a PSU."}
+];
+
+/* ============ STATE ============ */
+let questions = [];
+let currentIndex = 0;
+let timerInterval = null;
+let timeRemaining = 0;
+let isSubmitted = false;
+let isPaused = false;
+let isAutoPaused = false;
+let isStudyPaused = false;
+let questionStates = [];
+let lastSaveTime = 0;
+let saveTimeout = null;
+
+/* ============ AUTOSAVE ============ */
+function saveAttempt() {
+  if (isSubmitted) return;
+  try {
+    const data = { version: STORAGE_VERSION, timestamp: Date.now(), currentIndex: currentIndex, timeRemaining: timeRemaining, questionStates: questionStates, totalQuestions: questions.length };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    lastSaveTime = Date.now();
+    showSaveStatus();
+  } catch(e) {}
+}
+function showSaveStatus() {
+  const el = document.getElementById('saveStatus');
+  if (!el) return;
+  el.textContent = '💾 Saved';
+  el.classList.add('visible');
+  clearTimeout(el._hideT);
+  el._hideT = setTimeout(() => el.classList.remove('visible'), 1500);
+}
+function throttledSave() {
+  const now = Date.now();
+  if (now - lastSaveTime > 2000) saveAttempt();
+  else { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAttempt, 2000 - (now - lastSaveTime)); }
+}
+function getSavedAttempt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || data.version !== STORAGE_VERSION) return null;
+    if (!data.questionStates || !Array.isArray(data.questionStates)) return null;
+    if (data.timeRemaining <= 0) return null;
+    return data;
+  } catch(e) { return null; }
+}
+function formatTimeAgo(ts) {
+  const diff = Math.floor((Date.now() - ts) / 1000);
+  if (diff < 60) return diff + ' seconds ago';
+  if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+  return Math.floor(diff / 86400) + ' day(s) ago';
+}
+function formatTimeLeft(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return h + 'h ' + m + 'm ' + s + 's';
+  return m + 'm ' + s + 's';
+}
+function countAnswered(states) {
+  let n = 0;
+  states.forEach(st => { if (st.status === 'saved') n++; });
+  return n;
+}
+
+/* ============ START / RESUME ============ */
+function checkSavedAndShowBanner() {
+  const saved = getSavedAttempt();
+  if (!saved) { hideBanner(); startNewTest(); return; }
+  const answered = countAnswered(saved.questionStates);
+  document.getElementById('resumeInfo').innerHTML =
+    'Saved at <strong>Q' + (saved.currentIndex + 1) + '/' + saved.totalQuestions + '</strong> · ' +
+    '<strong>' + answered + '</strong> answered · ' +
+    '<strong>' + formatTimeLeft(saved.timeRemaining) + '</strong> left · ' +
+    'saved <strong>' + formatTimeAgo(saved.timestamp) + '</strong>';
+  document.getElementById('resumeBanner').classList.add('visible');
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+}
+function hideBanner() { document.getElementById('resumeBanner').classList.remove('visible'); }
+function resumeAttempt() {
+  const saved = getSavedAttempt();
+  if (!saved) { startFresh(); return; }
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = saved.timeRemaining;
+  currentIndex = Math.min(saved.currentIndex, questions.length - 1);
+  isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = saved.questionStates.map(st => ({ selectedOption: st.selectedOption, status: st.status, markedForReview: st.markedForReview, visited: st.visited }));
+  while (questionStates.length < questions.length) questionStates.push({ selectedOption: null, status: 'idle', markedForReview: false, visited: false });
+  questionStates.length = questions.length;
+  hideBanner();
+  launchTest();
+}
+function startFresh() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  hideBanner();
+  startNewTest();
+}
+function startNewTest() {
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = questions.length * SECONDS_PER_QUESTION;
+  currentIndex = 0; isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = questions.map(() => ({ selectedOption: null, status: 'idle', markedForReview: false, visited: false }));
+  questionStates[0].visited = true;
+  launchTest();
+}
+function launchTest() {
+  document.getElementById('testView').style.display = 'flex';
+  document.getElementById('testHeader').style.display = 'flex';
+  document.getElementById('resultsView').classList.remove('visible');
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 1000);
+  updateTimerDisplay();
+  renderQuestion();
+  renderPalette();
+  updateStats();
+  saveAttempt();
+}
+function initTest() {
+  if (getSavedAttempt()) checkSavedAndShowBanner();
+  else startNewTest();
+}
+
+/* ============ TIMER ============ */
+function tickTimer() {
+  if (isSubmitted || isPaused || isStudyPaused) return;
+  timeRemaining--;
+  updateTimerDisplay();
+  if (timeRemaining <= 0) {
+    timeRemaining = 0;
+    updateTimerDisplay();
+    submitTest(true);
+    return;
+  }
+  if (timeRemaining % 15 === 0) saveAttempt();
+}
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  const h = Math.floor(timeRemaining / 3600);
+  const m = Math.floor((timeRemaining % 3600) / 60);
+  const s = timeRemaining % 60;
+  const pad = n => String(n).padStart(2, '0');
+  el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  const box = document.getElementById('timerBox');
+  if (timeRemaining <= 300 && timeRemaining > 0 && !isPaused && !isStudyPaused) box.classList.add('warning');
+  else box.classList.remove('warning');
+}
+
+/* ============ PAUSE / STUDY PAUSE ============ */
+function togglePause() {
+  if (isSubmitted) return;
+  if (isStudyPaused) { resumeStudy(); return; }
+  if (!isPaused) pauseTest(false); else resumeTest();
+}
+function pauseTest(auto) {
+  if (isPaused || isSubmitted) return;
+  isPaused = true; isAutoPaused = auto;
+  const modal = document.getElementById('pauseModal');
+  const badge = document.getElementById('pauseBadge');
+  const icon = document.getElementById('pauseIcon');
+  const title = document.getElementById('pauseTitle');
+  const message = document.getElementById('pauseMessage');
+  if (auto) {
+    modal.classList.add('auto');
+    badge.style.display = 'inline-block';
+    icon.textContent = '🔒';
+    title.textContent = 'Exam Auto-Paused';
+    message.innerHTML = 'പേജ് minimize / tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  } else {
+    modal.classList.remove('auto');
+    badge.style.display = 'none';
+    icon.textContent = '⏸';
+    title.textContent = 'Exam Paused';
+    message.innerHTML = 'പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  }
+  document.getElementById('pauseOverlay').classList.add('visible');
+  document.getElementById('pauseBtn').textContent = '▶ Resume';
+  document.getElementById('pauseBtn').classList.add('resume');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('questionPanel').classList.add('locked');
+  document.getElementById('sidebar').classList.add('locked');
+}
+function resumeTest() {
+  if (!isPaused || isSubmitted) return;
+  isPaused = false; isAutoPaused = false;
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  updateTimerDisplay();
+}
+function startStudyPause() {
+  if (isStudyPaused || isSubmitted || isPaused) return;
+  isStudyPaused = true;
+  document.getElementById('studyPauseBar').classList.add('visible');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+}
+function resumeStudy() {
+  if (!isStudyPaused) return;
+  isStudyPaused = false;
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('timerBox').classList.remove('paused');
+  updateTimerDisplay();
+}
+
+/* ============ RENDER ============ */
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  st.visited = true;
+
+  document.getElementById('qNumber').textContent = 'Question ' + (currentIndex + 1);
+  document.getElementById('qSubject').textContent = q.subject;
+  document.getElementById('qText').textContent = q.question;
+
+  renderOptions();
+  renderExplanation();
+  renderLearningPanel();
+  renderActionButtons();
+  renderPalette();
+  updateStats();
+  throttledSave();
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise().catch(()=>{});
+  }
+}
+
+function renderOptions() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    if (locked) {
+      btn.classList.add('locked');
+      if (i === q.correct) btn.classList.add('correct-highlight');
+      else if (i === st.selectedOption) btn.classList.add('wrong-highlight');
+    } else {
+      if (i === st.selectedOption) btn.classList.add('selected');
+      btn.onclick = () => {
+        st.selectedOption = i;
+        renderOptions();
+        renderActionButtons();
+        throttledSave();
+      };
+    }
+    list.appendChild(btn);
+  });
+}
+
+function renderExplanation() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const box = document.getElementById('explanationBox');
+  const content = document.getElementById('expContent');
+  if (st.status === 'saved' || st.status === 'revealed') {
+    let prefix = '';
+    if (st.status === 'saved' && st.selectedOption !== null) {
+      if (st.selectedOption === q.correct) {
+        prefix = '<span class="exp-correct">✔ Correct!</span>\n\n';
+      } else {
+        prefix = '<span class="exp-wrong">✘ Wrong.</span> ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '\n\n';
+      }
+    } else if (st.status === 'revealed') {
+      prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '</span>\n\n';
+    }
+    content.innerHTML = prefix + q.explanation;
+    box.classList.add('visible');
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise().catch(()=>{});
+    }
+  } else {
+    box.classList.remove('visible');
+    content.innerHTML = '';
+  }
+}
+
+/* ============ LEARNING PANEL ============ */
+function renderLearningPanel() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const box = document.getElementById('learningPanel');
+  if (!box) return;
+
+  if (st.status !== 'saved' && st.status !== 'revealed') {
+    box.style.display = 'none';
+    return;
+  }
+  box.style.display = 'block';
+
+  const body = document.getElementById('learningBody');
+  let html = '';
+
+  if (q.beginnerNote) {
+    html += '<div class="lp-section"><span class="lp-title beginner">🌱 Beginner\'s Note / തുടക്കക്കാർക്കുള്ള വിശദീകരണം</span>' +
+            '<div class="lp-beginner">' + escapeHtml(q.beginnerNote) + '</div></div>';
+  }
+
+  if (q.optionAnalysis && q.optionAnalysis.length) {
+    html += '<div class="lp-section"><span class="lp-title options">🔍 Option-by-Option Analysis / ഓരോ ഓപ്ഷനും</span>';
+    q.optionAnalysis.forEach((oa, i) => {
+      const cls = i === q.correct ? 'correct' : 'wrong';
+      html += '<div class="lp-option-item ' + cls + '">' + escapeHtml(oa) + '</div>';
+    });
+    html += '</div>';
+  }
+
+  if (q.rejectionTrick) {
+    html += '<div class="lp-section"><span class="lp-title trick">🎯 Option Rejection Trick / ഓപ്ഷൻ ഒഴിവാക്കാനുള്ള വഴി</span>' +
+            '<div class="lp-trick">' + escapeHtml(q.rejectionTrick) + '</div></div>';
+  }
+
+  if (q.examTrap) {
+    html += '<div class="lp-section"><span class="lp-title trap">⚠️ PSC Exam Trap / പരീക്ഷയിലെ കെണി</span>' +
+            '<div class="lp-trap">' + escapeHtml(q.examTrap) + '</div></div>';
+  }
+
+  body.innerHTML = html;
+  document.querySelector('.learning-header')?.classList.remove('open');
+  body.classList.remove('open');
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise().catch(()=>{});
+  }
+}
+
+function toggleLearningPanel(header) {
+  header.classList.toggle('open');
+  document.getElementById('learningBody').classList.toggle('open');
+}
+
+function renderActionButtons() {
+  const st = questionStates[currentIndex];
+  const container = document.getElementById('actionButtons');
+  container.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  function addBtn(label, cls, fn) {
+    const b = document.createElement('button');
+    b.className = 'btn ' + cls;
+    b.textContent = label;
+    b.onclick = fn;
+    container.appendChild(b);
+  }
+
+  if (!locked) {
+    if (st.selectedOption !== null) {
+      addBtn('💾 Save', 'btn-save', saveAnswer);
+      addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    } else {
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    }
+  } else {
+    addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+    addBtn('→ Next', 'btn-next', nextQuestion);
+  }
+}
+
+function renderPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const btn = document.createElement('button');
+    btn.className = 'palette-btn';
+    btn.textContent = i + 1;
+    if (st.status === 'saved') btn.classList.add('answered');
+    else if (st.markedForReview) btn.classList.add('review');
+    else if (st.visited) btn.classList.add('visited-not-answered');
+    else btn.classList.add('not-visited');
+    if (i === currentIndex) btn.classList.add('active');
+    btn.onclick = () => gotoQuestion(i);
+    grid.appendChild(btn);
+  });
+}
+
+function updateStats() {
+  let answered = 0, review = 0, attempted = 0;
+  questionStates.forEach(st => {
+    if (st.status === 'saved') { answered++; attempted++; }
+    if (st.markedForReview) review++;
+  });
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statNotAnswered').textContent = questions.length - answered;
+  document.getElementById('statReview').textContent = review;
+  document.getElementById('statAttempted').textContent = attempted;
+}
+
+/* ============ ACTIONS ============ */
+function saveAnswer() {
+  const st = questionStates[currentIndex];
+  if (st.selectedOption === null) return;
+  st.status = 'saved';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+
+function showAnswer() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+
+function skipAndShow() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  st.markedForReview = true;
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1 && isStudyPaused) {
+      currentIndex++;
+      renderQuestion();
+    }
+  }, 1800);
+}
+
+function markForReview() {
+  const st = questionStates[currentIndex];
+  st.markedForReview = !st.markedForReview;
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1) nextQuestion();
+  }, 400);
+}
+
+function clearResponse() {
+  const st = questionStates[currentIndex];
+  if (st.status === 'saved' || st.status === 'revealed' || st.selectedOption !== null || st.markedForReview) {
+    if (!confirm('ഈ ചോദ്യത്തിന്റെ ഉത്തരം Clear ചെയ്യണോ?')) return;
+  }
+  st.selectedOption = null;
+  st.status = 'idle';
+  st.markedForReview = false;
+  renderQuestion();
+  saveAttempt();
+}
+
+function nextQuestion() {
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    if (!isStudyPaused) {
+      const goSubmit = confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?');
+      if (goSubmit) submitTest(false);
+    }
+  }
+}
+
+function gotoQuestion(i) {
+  if (isStudyPaused) resumeStudy();
+  currentIndex = i;
+  renderQuestion();
+}
+
+/* ============ SUBMIT & RESULTS ============ */
+function submitTest(auto) {
+  if (isSubmitted) return;
+  if (!auto && timeRemaining > 0) {
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ? Submit ചെയ്തതിന് ശേഷം മാറ്റങ്ങൾ വരുത്താൻ സാധിക്കില്ല.')) return;
+  }
+  isSubmitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  renderResults();
+}
+
+function renderResults() {
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('resultsView').classList.add('visible');
+
+  let total = questions.length;
+  let attempted = 0, correct = 0, wrong = 0, unanswered = 0;
+
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (st.status === 'saved') {
+      attempted++;
+      if (st.selectedOption === q.correct) correct++;
+      else wrong++;
+    } else {
+      unanswered++;
+    }
+  });
+
+  const negativeMarks = wrong * 0.33;
+  const score = correct * 1 - negativeMarks;
+
+  const cards = [
+    { label: 'Total Questions', value: total, cls: '' },
+    { label: 'Attempted', value: attempted, cls: '' },
+    { label: 'Correct', value: correct, cls: 'correct-card' },
+    { label: 'Wrong', value: wrong, cls: 'wrong-card' },
+    { label: 'Negative Marks', value: '-' + negativeMarks.toFixed(2), cls: 'negative-card' },
+    { label: 'Total Score', value: score.toFixed(2), cls: 'score-card' },
+    { label: 'Unanswered', value: unanswered, cls: '' }
+  ];
+
+  document.getElementById('summaryCards').innerHTML = cards.map(c =>
+    '<div class="summary-card ' + c.cls + '"><div class="sc-value">' + c.value + '</div><div class="sc-label">' + c.label + '</div></div>'
+  ).join('');
+
+  const subjectMap = {};
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (!subjectMap[q.subject]) subjectMap[q.subject] = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, score: 0 };
+    const s = subjectMap[q.subject];
+    s.total++;
+    if (st.status === 'saved') {
+      s.attempted++;
+      if (st.selectedOption === q.correct) { s.correct++; s.score += 1; }
+      else { s.wrong++; s.score -= 0.33; }
+    } else {
+      s.unanswered++;
+    }
+  });
+
+  let tableHTML = '';
+  Object.keys(subjectMap).forEach(sub => {
+    const s = subjectMap[sub];
+    tableHTML += '<tr><td>' + sub + '</td><td>' + s.total + '</td><td>' + s.attempted + '</td><td>' + s.correct + '</td><td>' + s.wrong + '</td><td>' + s.unanswered + '</td><td>' + s.score.toFixed(2) + '</td></tr>';
+  });
+  document.getElementById('subjectTableBody').innerHTML = tableHTML;
+
+  let detailHTML = '';
+  let count = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const isWrong = st.status === 'saved' && st.selectedOption !== q.correct;
+    const isRevealed = st.status === 'revealed';
+    const isReviewedSkipped = st.status !== 'saved' && st.markedForReview;
+    if (!isWrong && !isRevealed && !isReviewedSkipped) return;
+    count++;
+
+    let typeLabel = '';
+    if (isWrong) typeLabel = '❌ തെറ്റായ ഉത്തരം';
+    else if (isRevealed) typeLabel = '👁 ഉത്തരം കണ്ട ചോദ്യം';
+    else typeLabel = '🔖 Review-ന് അടയാളപ്പെടുത്തിയത്';
+
+    detailHTML += '<div class="detail-item">' +
+      '<div class="di-info"><strong>Q' + (i + 1) + '</strong> · ' + q.subject + ' · ' + typeLabel + '</div>' +
+      '<div class="di-question">' + escapeHtml(q.question) + '</div>' +
+      (st.selectedOption !== null ? '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">' + escapeHtml(q.options[st.selectedOption]) + '</span></div>' : '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>') +
+      '<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">' + escapeHtml(q.options[q.correct]) + '</span></div>' +
+      '<div class="di-explanation">' + escapeHtml(q.explanation) + '</div>' +
+      '</div>';
+  });
+
+  document.getElementById('detailList').innerHTML = count > 0 ? detailHTML : '<p style="color:#8a8f9e;text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise().catch(()=>{});
+  }
+  window.scrollTo(0, 0);
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function restartTest() {
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ? നിലവിലെ ഫലങ്ങൾ നഷ്ടപ്പെടും.')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('resultsView').classList.remove('visible');
+  startNewTest();
+}
+
+/* ============ KEYBOARD ============ */
+document.addEventListener('keydown', (e) => {
+  if (isSubmitted || isPaused) return;
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  const st = questionStates[currentIndex];
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  if (e.key >= '1' && e.key <= '4' && !locked) {
+    const idx = parseInt(e.key, 10) - 1;
+    if (idx < questions[currentIndex].options.length) {
+      st.selectedOption = idx;
+      renderOptions(); renderActionButtons(); throttledSave();
+      e.preventDefault();
+    }
+  } else if (e.key === 'Enter' && !e.shiftKey && !locked && st.selectedOption !== null) {
+    saveAnswer(); e.preventDefault();
+  } else if (e.key === 'Enter' && e.shiftKey && !locked) {
+    skipAndShow(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'r' && !locked) {
+    markForReview(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'c' && !locked) {
+    clearResponse(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'n') {
+    nextQuestion(); e.preventDefault();
+  } else if (e.key === ' ') {
+    if (!locked) { showAnswer(); e.preventDefault(); }
+  } else if (e.key.toLowerCase() === 'p') {
+    togglePause(); e.preventDefault();
+  }
+});
+
+/* ============ AUTO-PAUSE ON TAB SWITCH ============ */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !isSubmitted && !isPaused && !isStudyPaused) {
+    pauseTest(true);
+  }
+});
+
+/* ============ BEFORE UNLOAD ============ */
+window.addEventListener('beforeunload', (e) => {
+  if (!isSubmitted) {
+    saveAttempt();
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+/* ============ INIT ============ */
+initTest();
+</script>
+<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
 </body>
 </html>

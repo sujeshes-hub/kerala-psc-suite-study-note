@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ml">
 <head>
 <meta charset="UTF-8">
@@ -1080,7 +1080,260 @@ hr{border:none;border-top:1px solid var(--border);margin:24px 0;}
   </main>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main > .container > .section'));
 
+  function setOpen(sec, open) {
+    sec.classList.toggle('collapsed', !open);
+    var h2 = sec.querySelector('h2');
+    if (h2) {
+      var icon = h2.querySelector('.toggle-icon');
+      if (icon) icon.textContent = open ? '▾' : '▸';
+    }
+  }
+
+  function openOnly(sec) {
+    sections.forEach(function(s) { setOpen(s, s === sec); });
+  }
+
+  sections.forEach(function(sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    var icon = document.createElement('span');
+    icon.className = 'toggle-icon';
+    icon.textContent = '▾';
+    h2.appendChild(icon);
+    h2.setAttribute('role', 'button');
+    h2.setAttribute('tabindex', '0');
+    h2.setAttribute('aria-expanded', 'true');
+    var toggle = function(e) {
+      if (e.target.closest('a, button')) return;
+      if (sec.classList.contains('collapsed')) {
+        openOnly(sec);
+      } else {
+        setOpen(sec, false);
+      }
+    };
+    h2.addEventListener('click', toggle);
+    h2.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(e); }
+    });
+  });
+
+  if (sections.length) openOnly(sections[0]);
+
+  var expandAll = document.getElementById('expandAll');
+  var collapseAll = document.getElementById('collapseAll');
+  if (expandAll) expandAll.addEventListener('click', function() { sections.forEach(function(s) { setOpen(s, true); }); });
+  if (collapseAll) collapseAll.addEventListener('click', function() { sections.forEach(function(s) { setOpen(s, false); }); });
+
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#tocnav a'));
+  tocLinks.forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      var sec = target.closest('.section');
+      if (sec && sections.indexOf(sec) !== -1) {
+        openOnly(sec);
+        var y = sec.getBoundingClientRect().top + window.pageYOffset - 20;
+        window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+      }
+      tocLinks.forEach(function(l) { l.classList.toggle('active', l === a); });
+      if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+    });
+  });
+
+  var spy = new IntersectionObserver(function(entries) {
+    entries.forEach(function(en) {
+      if (!en.isIntersecting) return;
+      var id = '#' + en.target.id;
+      tocLinks.forEach(function(l) { l.classList.toggle('active', l.getAttribute('href') === id); });
+    });
+  }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+  sections.forEach(function(s) { spy.observe(s); });
+
+  var questionItems = document.querySelectorAll('.question-item');
+  var letters = ['A', 'B', 'C', 'D'];
+
+  questionItems.forEach(function(item, index) {
+    var optionsDiv = item.querySelector('.options');
+    if (!optionsDiv) return;
+    var spans = optionsDiv.querySelectorAll('span');
+    if (spans.length < 2) return;
+    var answerBlock = item.querySelector('.answer-block');
+    if (!answerBlock) return;
+
+    answerBlock.style.display = 'none';
+
+    var answerLabel = answerBlock.querySelector('.answer-label');
+    var correctLetter = null;
+    if (answerLabel) {
+      var m = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (m) correctLetter = m[1];
+    }
+
+    var qObj = {
+      item: item,
+      answerBlock: answerBlock,
+      correctLetter: correctLetter,
+      storageKey: 'keralaIndiaGeo35Q_' + index,
+      selected: null,
+      locked: false
+    };
+
+    spans.forEach(function(span, i) {
+      var letter = letters[i];
+      span.dataset.letter = letter;
+      span.addEventListener('click', function() {
+        if (qObj.locked) return;
+        qObj.selected = letter;
+        item.dataset.selected = letter;
+        item.querySelectorAll('.options > span').forEach(function(btn) {
+          btn.classList.toggle('selected', btn.dataset.letter === letter);
+        });
+      });
+    });
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+    controls.innerHTML =
+      '<button class="btn-save">💾 Save Answer</button>' +
+      '<button class="btn-show">👁 Show Answer</button>' +
+      '<button class="btn-mark">⭐ Mark for Review</button>' +
+      '<button class="btn-lock">🔒 Lock</button>' +
+      '<span class="q-status"></span>';
+    item.appendChild(controls);
+
+    var saveBtn = controls.querySelector('.btn-save');
+    var showBtn = controls.querySelector('.btn-show');
+    var markBtn = controls.querySelector('.btn-mark');
+    var lockBtn = controls.querySelector('.btn-lock');
+    var statusSpan = controls.querySelector('.q-status');
+
+    qObj.lockBtn = lockBtn;
+    qObj.statusSpan = statusSpan;
+    qObj.markBtn = markBtn;
+
+    var savedRaw = localStorage.getItem(qObj.storageKey);
+    if (savedRaw) {
+      try {
+        var saved = JSON.parse(savedRaw);
+        if (saved.selected) {
+          qObj.selected = saved.selected;
+          item.dataset.selected = saved.selected;
+          item.querySelectorAll('.options > span').forEach(function(btn) {
+            btn.classList.toggle('selected', btn.dataset.letter === saved.selected);
+          });
+        }
+        if (saved.saved) {
+          showResult(item, saved.selected, correctLetter);
+          statusSpan.textContent = 'Saved';
+        }
+        if (saved.marked) {
+          markBtn.classList.add('active');
+          markBtn.textContent = '⭐ Marked';
+        }
+        if (saved.locked) {
+          qObj.locked = true;
+          applyLock(qObj, true);
+        }
+      } catch (e) {}
+    }
+
+    saveBtn.addEventListener('click', function() {
+      var selected = qObj.selected;
+      if (!selected) {
+        statusSpan.textContent = 'Select an option first';
+        statusSpan.style.color = '#b45309';
+        return;
+      }
+      var data = { selected: selected, saved: true, marked: markBtn.classList.contains('active'), locked: qObj.locked };
+      localStorage.setItem(qObj.storageKey, JSON.stringify(data));
+      showResult(item, selected, correctLetter);
+      statusSpan.textContent = 'Saved';
+    });
+
+    showBtn.addEventListener('click', function() {
+      answerBlock.style.display = 'block';
+      statusSpan.textContent = 'Answer shown';
+      statusSpan.style.color = '#1e293b';
+    });
+
+    markBtn.addEventListener('click', function() {
+      var marked = markBtn.classList.toggle('active');
+      markBtn.textContent = marked ? '⭐ Marked' : '⭐ Mark for Review';
+      var existing = localStorage.getItem(qObj.storageKey);
+      var data = existing ? JSON.parse(existing) : { selected: qObj.selected || '' };
+      data.marked = marked;
+      data.locked = qObj.locked;
+      localStorage.setItem(qObj.storageKey, JSON.stringify(data));
+    });
+
+    lockBtn.addEventListener('click', function() {
+      if (qObj.locked) {
+        qObj.locked = false;
+        applyLock(qObj, false);
+        var existing = localStorage.getItem(qObj.storageKey);
+        var data = existing ? JSON.parse(existing) : {};
+        data.locked = false;
+        localStorage.setItem(qObj.storageKey, JSON.stringify(data));
+        statusSpan.textContent = 'Unlocked';
+        statusSpan.style.color = '#1e293b';
+      } else {
+        if (!qObj.selected) {
+          statusSpan.textContent = 'Select an option first';
+          statusSpan.style.color = '#b45309';
+          return;
+        }
+        qObj.locked = true;
+        applyLock(qObj, true);
+        var existing = localStorage.getItem(qObj.storageKey);
+        var data = existing ? JSON.parse(existing) : { selected: qObj.selected };
+        data.locked = true;
+        localStorage.setItem(qObj.storageKey, JSON.stringify(data));
+        statusSpan.textContent = 'Locked';
+        statusSpan.style.color = '#b45309';
+      }
+    });
+
+    function showResult(item, selected, correct) {
+      answerBlock.style.display = 'block';
+      var isCorrect = selected === correct;
+      statusSpan.textContent = isCorrect ? '✅ Correct' : '❌ Wrong';
+      statusSpan.style.color = isCorrect ? '#16a34a' : '#dc2626';
+      item.querySelectorAll('.options > span').forEach(function(btn) {
+        btn.classList.remove('correct', 'wrong');
+        if (btn.dataset.letter === correct) btn.classList.add('correct');
+        if (btn.dataset.letter === selected && selected !== correct) btn.classList.add('wrong');
+      });
+    }
+
+    function applyLock(qObj, locked) {
+      var item = qObj.item;
+      var lockBtn = qObj.lockBtn;
+      var statusSpan = qObj.statusSpan;
+      item.querySelectorAll('.options > span').forEach(function(btn) {
+        btn.classList.toggle('locked', locked);
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        lockBtn.classList.add('locked');
+        if (qObj.selected) {
+          showResult(item, qObj.selected, qObj.correctLetter);
+          statusSpan.textContent = 'Locked';
+          statusSpan.style.color = '#b45309';
+        }
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        lockBtn.classList.remove('locked');
+      }
+    }
+  });
+});
+</script>
+<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
 </body>
 </html>

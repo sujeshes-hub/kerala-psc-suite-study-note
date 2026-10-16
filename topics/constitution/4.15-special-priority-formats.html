@@ -320,5 +320,69 @@
 <div class="note">• [ചേർത്തത്] Prepared by Ministry of Home Affairs; for ceremonial/protocol use only.</div>
 <hr class="rule">
 <div class="source-note">അധ്യായം 85 (ധാതുവിഭവങ്ങൾ) ഇപ്പോഴും ബാക്കിയുണ്ട്. കൽക്കരി നിക്ഷേപത്തിൽ ഝാർഖണ്ഡാണോ ഒഡീഷയാണോ മുന്നിൽ എന്നതിൽ ഉറവിടങ്ങൾ വ്യത്യസ്തമായി പറയുന്നു. അത് അടയാളപ്പെടുത്തി ചെയ്തുതരാൻ പറഞ്ഞാൽ മതി.</div>
-</section></main><footer>Kerala PSC study aid • ಮೂಲ ടെക്സ്റ്റിലെ വിവരങ്ങൾ നിലനിർത്തിയ പതിപ്പ്</footer>
+</section></main><footer>Kerala PSC study aid • ಮೂಲ ടെക്സ്റ്റിലെ വിവരങ്ങൾ നിലനിർത്തിയ പതിപ്പ്</footer><script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var cards = Array.from(document.querySelectorAll('.content .card'));
+  var search = document.getElementById('search');
+  var toc = document.getElementById('tocLinks');
+  var tocLinks = [];
+
+  function slug(text, index) {
+    var cleaned = text.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '');
+    return 'study-section-' + (index + 1) + (cleaned ? '-' + cleaned.slice(0, 35) : '');
+  }
+  function setCollapsed(card, collapsed) {
+    card.classList.toggle('collapsed', collapsed);
+    var heading = card.querySelector('h2');
+    if (heading) heading.setAttribute('aria-expanded', String(!collapsed));
+  }
+  cards.forEach(function (card, index) {
+    var heading = card.querySelector('h2');
+    if (!heading) return;
+    if (!card.id) card.id = slug(heading.textContent, index);
+    heading.setAttribute('tabindex', '0');
+    heading.setAttribute('role', 'button');
+    heading.setAttribute('aria-expanded', 'true');
+    heading.addEventListener('click', function () { setCollapsed(card, !card.classList.contains('collapsed')); });
+    heading.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCollapsed(card, !card.classList.contains('collapsed')); }
+    });
+    var a = document.createElement('a');
+    a.href = '#' + card.id;
+    a.textContent = heading.textContent.trim();
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      cards.forEach(function (c) { c.classList.remove('hidden'); });
+      setCollapsed(card, false);
+      tocLinks.forEach(function (link) { link.classList.toggle('active', link === a); });
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    toc.appendChild(a);
+    tocLinks.push(a);
+  });
+
+  // Start with the first section open, matching the sample study HTML.
+  cards.forEach(function (card, index) { setCollapsed(card, index !== 0); });
+
+  document.getElementById('expandAll').addEventListener('click', function () {
+    cards.forEach(function (card) { setCollapsed(card, false); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function () {
+    cards.forEach(function (card) { setCollapsed(card, true); });
+  });
+  document.getElementById('clearSearch').addEventListener('click', function () {
+    search.value = '';
+    cards.forEach(function (card) { card.classList.remove('hidden'); });
+  });
+  search.addEventListener('input', function () {
+    var term = search.value.trim().toLocaleLowerCase();
+    cards.forEach(function (card) {
+      var match = card.innerText.toLocaleLowerCase().includes(term);
+      card.classList.toggle('hidden', !!term && !match);
+      if (term && match) setCollapsed(card, false);
+    });
+  });
+});
+</script><script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
 </body></html>
