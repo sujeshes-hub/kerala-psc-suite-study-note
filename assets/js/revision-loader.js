@@ -22,13 +22,7 @@
   if (isLive) {
     /* Probe the revision file — only inject if it exists */
     fetch(revFile, { method: "HEAD" })
-      .then(function (r) {
-        if (r.ok) return inject(revFile);
-        /* some static hosts reject HEAD — retry with GET before giving up */
-        if (r.status === 405 || r.status === 501) {
-          return fetch(revFile).then(function (g) { if (g.ok) inject(revFile); });
-        }
-      })
+      .then(function (r) { if (r.ok) inject(revFile); })
       .catch(function () { inject(revFile); });
   } else {
     /* file:// or unknown — inject anyway */
@@ -51,12 +45,11 @@
       "box-shadow:0 4px 16px rgba(59,76,204,.35);" +
       "margin:14px 0 6px;transition:transform .15s,box-shadow .15s;";
 
-    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!calm) btn.addEventListener("mouseenter", function () {
+    btn.addEventListener("mouseenter", function () {
       btn.style.transform = "translateY(-2px)";
       btn.style.boxShadow = "0 6px 20px rgba(59,76,204,.45)";
     });
-    if (!calm) btn.addEventListener("mouseleave", function () {
+    btn.addEventListener("mouseleave", function () {
       btn.style.transform = "translateY(0)";
       btn.style.boxShadow = "0 4px 16px rgba(59,76,204,.35)";
     });
