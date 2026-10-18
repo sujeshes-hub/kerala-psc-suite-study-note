@@ -1,7 +1,7 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 6.1 - Shows User UID in account modal
+   Version: 6.2 - Broadcasts auth changes & exposes getCurrentUser()
    ===================================================================== */
 (function () {
   "use strict";
@@ -266,6 +266,10 @@
           currentUser = user;
           updateAccountUI();
           if (user) autoPullOnLoad();
+          
+          // Broadcast auth change so index.html banner can update
+          try { window.dispatchEvent(new Event("kpsc-auth-changed")); } catch(e) {}
+          
           resolve(user);
         });
       });
@@ -1085,11 +1089,15 @@
   }
 
   window.KPSC_Sync = {
-    __version: 6.1,
+    __version: 6.2,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
     isConnected: function () { return !!currentUser || isGistConnected(); },
+    getCurrentUser: function () {
+      if (!currentUser) return null;
+      return { uid: currentUser.uid, email: currentUser.email, displayName: currentUser.displayName };
+    },
     syncNow:     function () { return currentUser ? fbSyncNow() : doGistSyncNow(); },
     push:        function () { return pushNow(); },
     forcePull:   doForcePull,
