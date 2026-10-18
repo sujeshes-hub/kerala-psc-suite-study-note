@@ -1,106 +1,1760 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>5.19 Planning Board - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – സംസ്ഥാന ആസൂത്രണ ബോർഡ് | അധ്യായം 148</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #01579b;
+      --primary-light: #0277bd;
+      --secondary: #1b5e20;
+      --accent: #c62828;
+      --bg: #ffffff;
+      --light-bg: #e1f5fe;
+      --border: #b3e5fc;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #01579b;
+      --table-alt: #e1f5fe;
+      --star: #f9a825;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #89dceb; --primary-light: #74c7ec;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #0277bd; --table-alt: #181825;
+    }
+
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #01579b; --primary-light: #0277bd;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #01579b; --table-alt: #f2ead4;
+    }
+
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn {
+      background: #181825;
+      color: var(--text);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .layout {
+      display: grid; grid-template-columns: 270px 1fr;
+      gap: 20px; max-width: 1400px; margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky; top: 16px;
+      height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(1, 87, 155, 0.1);
+      padding: 16px; align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px; font-weight: 700; color: var(--primary);
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg); color: var(--primary);
+      border-left-color: var(--primary); font-weight: 600;
+    }
+
+    .progress-wrap {
+      margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: 12px; color: var(--text-light);
+      margin-bottom: 6px; display: flex;
+      justify-content: space-between; font-weight: 600;
+    }
+    .progress-track {
+      width: 100%; height: 8px; background: var(--light-bg);
+      border-radius: 4px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .main-container {
+      background: var(--bg); border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(1, 87, 155, 0.12);
+      padding: 24px; min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #01579b 0%, #0277bd 100%);
+      color: #fff; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px;
+    }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    .utility-bar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: space-between; align-items: center;
+      background: var(--light-bg); padding: 10px 16px;
+      border-radius: 10px; margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+    .search-input {
+      flex: 1; min-width: 200px; padding: 8px 12px;
+      border: 1px solid var(--border); border-radius: 6px;
+      background: var(--bg); color: var(--text);
+      font-family: inherit; font-size: 14px;
+    }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn {
+      padding: 7px 12px; font-size: 13px; font-family: inherit;
+      font-weight: 600; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--bg);
+      color: var(--primary); cursor: pointer; transition: all 0.2s;
+    }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+
+    body.recall-mode strong {
+      filter: blur(5px); background: rgba(2, 119, 189, 0.15);
+      border-radius: 4px; padding: 0 4px;
+      cursor: pointer; transition: filter 0.2s ease; user-select: none;
+    }
+    body.recall-mode strong:hover,
+    body.recall-mode strong.revealed { filter: blur(0); }
+
+    .section {
+      margin-bottom: 20px; border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary);
+      padding: 14px 18px; font-size: 18px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s;
+      border-radius: 0; margin: 0; gap: 10px;
+    }
+    .section h2:hover { background: #b3e5fc; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check {
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--secondary); flex-shrink: 0;
+    }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0;
+      border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #01579b; color: #fff; border-left-color: #4fc3f7; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick {
+      display: block; margin-top: 6px; padding: 6px 10px;
+      background: var(--memory-bg); border-left: 4px solid var(--memory-border);
+      border-radius: 6px; font-size: 14.5px; line-height: 1.6;
+    }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results {
+      display: none; text-align: center; padding: 16px; margin-bottom: 16px;
+      color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px;
+    }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0;
+      font-size: 13px; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    thead th {
+      background: var(--table-head); color: #fff;
+      padding: 9px 10px; text-align: left; font-weight: 600;
+    }
+    tbody td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+
+    .quiz-dashboard {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      align-items: center; justify-content: space-between;
+      background: var(--light-bg); padding: 14px 18px;
+      border-radius: 10px; margin-bottom: 16px;
+      border: 2px solid var(--primary);
+      position: sticky; top: 10px; z-index: 50;
+    }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+
+    .question-item {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; margin: 14px 0;
+    }
+    .q-text { font-weight: 600; font-size: 15px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn {
+      display: block; padding: 8px 12px; background: var(--bg);
+      color: var(--text); border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s;
+      font-size: 14px; font-family: inherit; text-align: left; width: 100%;
+    }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; background: var(--bg); color: var(--text);
+      transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px;
+      background: var(--memory-bg); border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    h3 { font-size: 16.5px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px; background: var(--light-bg);
+        border-radius: 20px; border-left: none; font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .chapter-header h1 { font-size: 20px; }
+      .section h2 { font-size: 16.5px; }
+      h3 { font-size: 15.5px; }
+      table { font-size: 11.5px; }
+      thead th, tbody td { padding: 5px 6px; }
+      .q-text { font-size: 14px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        background: #01579b !important; color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #e1f5fe !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">5.19 Planning Board</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. അടിസ്ഥാന വിവരങ്ങൾ</a></li>
+      <li><a href="#sec4">4. ഘടനയും ഭാരവാഹികളും</a></li>
+      <li><a href="#sec5">5. നിലവിലെ ഭാരവാഹികൾ (2026)</a></li>
+      <li><a href="#sec6">6. 8 സാങ്കേതിക വിഭാഗങ്ങൾ</a></li>
+      <li><a href="#sec7">7. പ്രധാന പ്രസിദ്ധീകരണങ്ങൾ</a></li>
+      <li><a href="#sec8">8. Economic Review vs Development Report</a></li>
+      <li><a href="#sec9">9. DPC vs KSPB</a></li>
+      <li><a href="#sec10">10. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec11">11. PSC പരീക്ഷാ വിശകലനം</a></li>
+      <li><a href="#sec12">12. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec13">13. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec14">14. Mnemonics</a></li>
+      <li><a href="#sec15">15. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</a></li>
+      <li><a href="#sec16">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec17">17. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec18">18. Quick Revision</a></li>
+      <li><a href="#sec19">19. One-Page Revision</a></li>
+      <li><a href="#sec20">20. Verification Notes</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള ഭരണസംവിധാനം | അധ്യായം 148</div>
+      <h1>കേരള ഭരണസംവിധാനം – സംസ്ഥാന ആസൂത്രണ ബോർഡ്</h1>
+      <div class="subtitle">Kerala State Planning Board (KSPB) | Kerala PSC Rank File – Verified Notes (2025–26 Edition)</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 കുറിപ്പുകളിൽ തിരയുക (ഉദാ: KSPB, ചന്ദ്രശേഖർ, Economic Review)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0 -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — രൂപീകരണം (1967), ചെയർമാൻ (മുഖ്യമന്ത്രി), Economic Review തയ്യാറാക്കുന്നത്, നിലവിലെ VC (കെ.എം. ചന്ദ്രശേഖർ)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — 8 സാങ്കേതിക വിഭാഗങ്ങൾ (7 + IT), VC = പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ (കാബിനറ്റ് റാങ്ക്), സ്ഥിരം ക്ഷണിതാക്കൾ (CS + Finance ACS), ആസ്ഥാനം (പട്ടം)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — DPC (Art 243ZD), Evaluation Division (1969), Kerala Development Report (2008, Planning Commission), 15-ാം പദ്ധതി (2027–32)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — 2026 പുനഃസംഘടന; 5 മന്ത്രി അംഗങ്ങൾ; നീതി ആയോഗ് (2015); പ്ലാനിംഗ് കമ്മീഷൻ DC vs നീതി ആയോഗ് VC</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — 1974-ൽ സ്ഥിരം വകുപ്പായി (⚠️ verify); EMS 2-ാം മന്ത്രിസഭ (1967–69)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഒറ്റനോട്ടത്തിൽ</span>
+          <ul>
+            <li><strong>രൂപീകരണം:</strong> 1967 സെപ്റ്റംബർ (EMS)</li>
+            <li><strong>ചെയർമാൻ:</strong> മുഖ്യമന്ത്രി</li>
+            <li><strong>VC:</strong> പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ, കാബിനറ്റ് റാങ്ക്</li>
+            <li><strong>പ്രസിദ്ധീകരണം:</strong> Economic Review</li>
+            <li><strong>8 വിഭാഗങ്ങൾ:</strong> 7 + IT Wing</li>
+          </ul>
+          <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>"67 = EMS-ന്റെ രണ്ടാം മന്ത്രിസഭ"</strong> | <strong>"PEA-DIPS + IT"</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1 -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> കേരള സംസ്ഥാനത്തിന്റെ സാമ്പത്തിക വികസന നയങ്ങൾക്കും പഞ്ചവത്സര പദ്ധതികൾക്കും രൂപം നൽകുന്ന ഏറ്റവും വലിയ ഉപദേശക സമിതിയായ <strong>കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് (Kerala State Planning Board)</strong>, അതിന്റെ രൂപീകരണം (1967), സംഘടനാ ഘടന, അധ്യക്ഷൻ, 8 സാങ്കേതിക വിഭാഗങ്ങൾ (Divisions), ബോർഡ് പുറത്തിറക്കുന്ന ഇക്കണോമിക് റിവ്യൂ (Economic Review) എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> സംസ്ഥാന സർക്കാരിന്റെ ബജറ്റ് രൂപീകരണത്തിനും തദ്ദേശ സ്ഥാപനങ്ങളുടെ പദ്ധതി ആസൂത്രണത്തിനും (Decentralised Planning) നേതൃത്വം നൽകുന്ന ഈ സംവിധാനത്തെക്കുറിച്ച് വ്യക്തമായി അറിഞ്ഞിരിക്കേണ്ടത് ഭരണനിർവ്വഹണ പരീക്ഷകൾക്ക് അത്യാവശ്യമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> ബോർഡ് രൂപീകരിച്ച വർഷം (1967), കേരളത്തിന്റെ സാമ്പത്തിക അവലോകന റിപ്പോർട്ട് (Economic Review) തയ്യാറാക്കുന്നത് ആര്, ബോർഡിന്റെ അധ്യക്ഷൻ (മുഖ്യമന്ത്രി), നിലവിലെ വൈസ് ചെയർമാൻ എന്നിവ പി.എസ്.സി പരീക്ഷകളിൽ ആവർത്തിച്ചു ചോദിക്കുന്ന ഭാഗങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ബോർഡിന്റെ സ്വഭാവം:</strong> ഇതൊരു <strong>ഉപദേശക സമിതി (Advisory Board)</strong> ആണ്. സംസ്ഥാന സർക്കാരിനെ, ലഭ്യമായ വിഭവങ്ങളുടെ (ഭൗതികം, മൂലധനം, മാനവ വിഭവം) ശാസ്ത്രീയ വിലയിരുത്തലിന്റെ അടിസ്ഥാനത്തിൽ വികസന പദ്ധതി തയ്യാറാക്കാൻ സഹായിക്കുന്നു.</li>
+        </ul>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KSPB overview">
+            <rect x="10" y="10" width="700" height="200" rx="12" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+            <text x="360" y="38" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#01579b">കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് (KSPB) – അവലോകനം</text>
+
+            <rect x="30" y="60" width="150" height="130" rx="8" fill="#bbdefb" stroke="#0d47a1"/>
+            <text x="105" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#0d47a1">സ്ഥാപനം</text>
+            <text x="105" y="110" text-anchor="middle" font-size="11" fill="#14202b">1967 സെപ്റ്റംബർ</text>
+            <text x="105" y="130" text-anchor="middle" font-size="11" fill="#14202b">EMS സർക്കാർ</text>
+            <text x="105" y="155" text-anchor="middle" font-size="10" fill="#4a5f72">ഉപദേശക സമിതി</text>
+
+            <rect x="200" y="60" width="150" height="130" rx="8" fill="#e8f5e9" stroke="#2e7d32"/>
+            <text x="275" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#2e7d32">നേതൃത്വം</text>
+            <text x="275" y="110" text-anchor="middle" font-size="11" fill="#14202b">ചെയർമാൻ</text>
+            <text x="275" y="128" text-anchor="middle" font-size="10" fill="#4a5f72">= മുഖ്യമന്ത്രി</text>
+            <text x="275" y="150" text-anchor="middle" font-size="11" fill="#14202b">VC = പാർട്ട്-ടൈം</text>
+            <text x="275" y="168" text-anchor="middle" font-size="10" fill="#4a5f72">കാബിനറ്റ് റാങ്ക്</text>
+
+            <rect x="370" y="60" width="150" height="130" rx="8" fill="#fff8e1" stroke="#f9a825"/>
+            <text x="445" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">പ്രവർത്തനം</text>
+            <text x="445" y="110" text-anchor="middle" font-size="11" fill="#14202b">പഞ്ചവത്സര പദ്ധതി</text>
+            <text x="445" y="130" text-anchor="middle" font-size="11" fill="#14202b">വാർഷിക പദ്ധതി</text>
+            <text x="445" y="150" text-anchor="middle" font-size="11" fill="#14202b">Economic Review</text>
+            <text x="445" y="168" text-anchor="middle" font-size="10" fill="#4a5f72">8 ഡിവിഷനുകൾ</text>
+
+            <rect x="540" y="60" width="150" height="130" rx="8" fill="#f3e5f5" stroke="#8e24aa"/>
+            <text x="615" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#6a1b9a">നിലവിലെ (2026)</text>
+            <text x="615" y="110" text-anchor="middle" font-size="11" fill="#14202b">CM: വി.ഡി. സതീശൻ</text>
+            <text x="615" y="130" text-anchor="middle" font-size="11" fill="#14202b">VC: കെ.എം.</text>
+            <text x="615" y="148" text-anchor="middle" font-size="11" fill="#14202b">ചന്ദ്രശേഖർ</text>
+            <text x="615" y="168" text-anchor="middle" font-size="10" fill="#4a5f72">(22 ജൂലൈ 2026)</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 1.1 – KSPB അവലോകനം.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. ചരിത്ര പശ്ചാത്തലം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ദേശീയ തലത്തിൽ സാമ്പത്തിക ആസൂത്രണത്തിനായി 'പ്ലാനിംഗ് കമ്മീഷൻ' (ഇപ്പോഴത്തെ നീതി ആയോഗ്) പ്രവർത്തിക്കുന്നതുപോലെ, കേരള സംസ്ഥാനത്തിന്റെ തനതായ വികസന പദ്ധതികൾ തയ്യാറാക്കാൻ ഒരു ഏജൻസി ആവശ്യമായിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇതിന്റെ ഫലമായി ഇ.എം.എസ്. നമ്പൂതിരിപ്പാടിന്റെ നേതൃത്വത്തിലുള്ള സർക്കാരിന്റെ കാലത്ത് <strong>1967 സെപ്റ്റംബറിലാണ്</strong> കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് രൂപീകരിച്ചത്. 1974-ൽ ഇതൊരു സ്ഥിരം സർക്കാർ വകുപ്പായി (Permanent major Department) മാറി. ⚠️ (സ്രോതസ്സുമായി ഒത്തുനോക്കുക)</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> രൂപീകരണ സമയത്ത് തന്നെ <strong>മുഖ്യമന്ത്രി ചെയർമാനും ഒരു നോൺ-ഒഫീഷ്യൽ പാർട്ട്-ടൈം വൈസ് ചെയർമാനും</strong> എന്ന ഘടനയായിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> നീതി ആയോഗ് <strong>2015</strong>-ലാണ് പ്ലാനിംഗ് കമ്മീഷന് പകരം വന്നത്. പ്ലാനിംഗ് കമ്മീഷന് ഡെപ്യൂട്ടി ചെയർമാനും, നീതി ആയോഗിന് വൈസ് ചെയർപേഴ്സനുമാണ്.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick:</span>
+          <p>"<strong>67 = EMS-ന്റെ രണ്ടാം മന്ത്രിസഭ (1967–69)</strong>" — EMS + 67 ഒരുമിച്ച് ഓർക്കുക.</p>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KSPB timeline">
+            <line x1="30" y1="90" x2="690" y2="90" stroke="#01579b" stroke-width="4" stroke-linecap="round"/>
+            <g font-family="Noto Sans Malayalam, sans-serif" font-size="10" fill="#14202b">
+              <circle cx="90" cy="90" r="8" fill="#b83b2c"/><text x="90" y="72" text-anchor="middle" font-weight="700">1950</text><text x="90" y="115" text-anchor="middle">Planning Commission (Central)</text>
+              <circle cx="240" cy="90" r="10" fill="#01579b"/><text x="240" y="70" text-anchor="middle" font-weight="700" fill="#01579b">1967</text><text x="240" y="118" text-anchor="middle" font-weight="700" fill="#01579b">KSPB രൂപീകരണം</text>
+              <circle cx="390" cy="90" r="8" fill="#ef6c00"/><text x="390" y="72" text-anchor="middle" font-weight="700">1974</text><text x="390" y="115" text-anchor="middle">സ്ഥിരം വകുപ്പ് (⚠️)</text>
+              <circle cx="540" cy="90" r="8" fill="#43a047"/><text x="540" y="72" text-anchor="middle" font-weight="700">2015</text><text x="540" y="115" text-anchor="middle">നീതി ആയോഗ്</text>
+              <circle cx="660" cy="90" r="8" fill="#6a1b9a"/><text x="660" y="72" text-anchor="middle" font-weight="700">2026</text><text x="660" y="115" text-anchor="middle">ചന്ദ്രശേഖർ (2-ാം ഊഴം)</text>
+            </g>
+          </svg>
+          <div class="viz-caption">ചിത്രം 2.1 – KSPB സമയരേഖ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. അടിസ്ഥാന വിവരങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വസ്തുത</th><th>വിവരം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>രൂപീകരണം</strong></td><td>1967 സെപ്റ്റംബർ (EMS സർക്കാർ)</td></tr>
+              <tr><td><strong>ആസ്ഥാനം</strong></td><td>പട്ടം, തിരുവനന്തപുരം</td></tr>
+              <tr><td><strong>മാതൃവകുപ്പ്</strong></td><td>പ്ലാനിംഗ് ആൻഡ് എക്കണോമിക് അഫയേഴ്സ് വകുപ്പ് (Planning and Economic Affairs Department)</td></tr>
+              <tr><td><strong>വെബ്സൈറ്റ്</strong></td><td>spb.kerala.gov.in</td></tr>
+              <tr><td><strong>സ്ഥിരം ക്ഷണിതാക്കൾ</strong></td><td>ചീഫ് സെക്രട്ടറി, ധനകാര്യ വകുപ്പ് അഡീഷണൽ ചീഫ് സെക്രട്ടറി</td></tr>
+              <tr><td><strong>സ്വഭാവം</strong></td><td>ഉപദേശക സമിതി (Advisory Body)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick:</span>
+          <p>"<strong>ചീഫ് + ഫിനാൻസ് = 2 പേർ</strong>" — സ്ഥിരം ക്ഷണിതാക്കൾ അംഗങ്ങളല്ല.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. ബോർഡിന്റെ ഘടനയും ഭാരവാഹികളും</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അധ്യക്ഷൻ (Chairperson):</strong> സംസ്ഥാന <strong>മുഖ്യമന്ത്രിയാണ്</strong> എപ്പോഴും ആസൂത്രണ ബോർഡിന്റെ അധ്യക്ഷൻ (ex-officio).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വൈസ് ചെയർപേഴ്സൺ (Vice-Chairperson):</strong> സാമ്പത്തിക ആസൂത്രണ മേഖലയിലോ പൊതുഭരണത്തിലോ പ്രഗത്ഭനായ ഒരു <strong>നോൺ-ഒഫീഷ്യൽ (പാർട്ട്-ടൈം)</strong> വ്യക്തിയെയാണ് സർക്കാർ വൈസ് ചെയർമാനായി നിയമിക്കുന്നത് (പലപ്പോഴും വിരമിച്ച ഉന്നത ഉദ്യോഗസ്ഥർ). ബോർഡിന്റെ ദൈനംദിന കാര്യങ്ങൾ നോക്കിനടത്തുന്നത് ഇദ്ദേഹമാണ്. <strong>കാബിനറ്റ് മന്ത്രിയുടെ പദവി</strong> ഉണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അംഗങ്ങൾ (Members):</strong> കൃഷി, വ്യവസായം, ഗതാഗതം, ജലവിഭവം, ഊർജ്ജം തുടങ്ങിയ വകുപ്പുകൾ കൈകാര്യം ചെയ്യുന്ന മന്ത്രിമാരും സാമ്പത്തിക വിദഗ്ധരും ബോർഡിലെ അംഗങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സ്ഥിരം ക്ഷണിതാക്കൾ:</strong> സംസ്ഥാന ചീഫ് സെക്രട്ടറിയും ധനകാര്യ വകുപ്പ് അഡീഷണൽ ചീഫ് സെക്രട്ടറിയും (Permanent invitees).</li>
+        </ul>
+
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p>വൈസ് ചെയർമാൻ "ഉദ്യോഗസ്ഥൻ" അല്ല — <strong>പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ</strong> ആണ്. കാബിനറ്റ് മന്ത്രിയുടെ പദവിയുണ്ട്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. നിലവിലെ ഭാരവാഹികൾ (2026) – Current Affairs</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാന സർക്കാർ <strong>2026 ജൂലൈ 22-ന്</strong> ബോർഡ് പുനഃസംഘടിപ്പിച്ചപ്പോൾ, മുഖ്യമന്ത്രി <strong>വി.ഡി. സതീശൻ</strong> ചെയർമാനായും, മുൻ കേന്ദ്ര ക്യാബിനറ്റ് സെക്രട്ടറിയായിരുന്ന <strong>കെ.എം. ചന്ദ്രശേഖർ</strong> വൈസ് ചെയർമാനായും ചുമതലയേറ്റു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇത് ചന്ദ്രശേഖറുടെ <strong>രണ്ടാം ഊഴമാണ്</strong>. ആദ്യം 2011–16 കാലത്ത് ഉമ്മൻ ചാണ്ടി സർക്കാരിൽ വൈസ് ചെയർമാനായിരുന്നു. 🧠 <em>"ചന്ദ്രൻ രണ്ടുവട്ടം – 2011, 2026"</em></li>
+          <li><span class="stars">⭐⭐⭐</span> 1970 ബാച്ച് കേരള കേഡർ IAS ഉദ്യോഗസ്ഥൻ. UDF സർക്കാരിനായി ധവളപത്രം (White Paper) തയ്യാറാക്കിയ സമിതിയുടെ അധ്യക്ഷനായിരുന്നു. സ്പൈസസ് ബോർഡിന്റെ സ്ഥാപക ചെയർമാനും ആയിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>മുൻ വൈസ് ചെയർമാൻ:</strong> വി.കെ. രാമചന്ദ്രൻ (2016–2026, LDF കാലം). 🧠 <em>"ചന്ദ്രശേഖർ → രാമചന്ദ്രൻ → ചന്ദ്രശേഖർ"</em> (UDF–LDF–UDF)</li>
+        </ul>
+
+        <h3>മന്ത്രി അംഗങ്ങൾ (2026 പുനഃസംഘടന)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മന്ത്രി</th><th>വകുപ്പ്</th></tr></thead>
+            <tbody>
+              <tr><td>പി.കെ. കുഞ്ഞാലിക്കുട്ടി</td><td>വ്യവസായം, ഐ.ടി</td></tr>
+              <tr><td>സണ്ണി ജോസഫ്</td><td>വൈദ്യുതി</td></tr>
+              <tr><td>മോൻസ് ജോസഫ്</td><td>ജലവിഭവം</td></tr>
+              <tr><td>ഷിബു ബേബി ജോൺ</td><td>വനം</td></tr>
+              <tr><td>സി.പി. ജോൺ</td><td>ഗതാഗതം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ കൂടുതൽ വിദഗ്ധ അംഗങ്ങൾ</span>
+          <p>പിന്നീട് ഉൾപ്പെടുത്തും.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. ആസൂത്രണ ബോർഡിന്റെ 8 സാങ്കേതിക വിഭാഗങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <p>ബോർഡിന്റെ ഔദ്യോഗിക ചുമതലകൾ പ്രധാനമായും എട്ട് സാങ്കേതിക വിഭാഗങ്ങളിലൂടെയാണ് (Technical Divisions) നിർവ്വഹിക്കുന്നത്. <strong>ഇതിൽ 7 എണ്ണം ഡിവിഷനുകളും, എട്ടാമത്തേത് ഐ.ടി വിംഗും (Wing) ആണ്.</strong></p>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick:</span>
+          <p>"<strong>PEA-DIPS + IT</strong>" — <strong>P</strong>lan Coordination, <strong>E</strong>valuation, <strong>A</strong>griculture, <strong>D</strong>ecentralised, <strong>I</strong>ndustry & Infrastructure, <strong>P</strong>erspective, <strong>S</strong>ocial Service (+ IT Wing).</p>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>#</th><th>വിഭാഗം</th><th>ചുമതല</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Plan Co-ordination Division</strong></td><td>'ഇക്കണോമിക് റിവ്യൂ' തയ്യാറാക്കൽ; വിഭവ വിതരണ റിപ്പോർട്ടുകൾ</td></tr>
+              <tr><td>2</td><td><strong>Agriculture Division</strong></td><td>കൃഷി, മൃഗസംരക്ഷണം, ക്ഷീരവികസനം, ഫിഷറീസ്, വനം-വന്യജീവി, സഹകരണം, ജലവിഭവം</td></tr>
+              <tr><td>3</td><td><strong>Evaluation Division</strong></td><td>പദ്ധതികളുടെ മോണിറ്ററിംഗ്, മൂല്യനിർണ്ണയം (1969 മുതൽ)</td></tr>
+              <tr><td>4</td><td><strong>Social Service Division</strong></td><td>വിദ്യാഭ്യാസം, ആരോഗ്യം, പാർപ്പിടം, തൊഴിൽ</td></tr>
+              <tr><td>5</td><td><strong>Industry & Infrastructure Division</strong></td><td>വ്യവസായം, അടിസ്ഥാന സൗകര്യങ്ങൾ</td></tr>
+              <tr><td>6</td><td><strong>Decentralized Planning Division</strong></td><td>തദ്ദേശ സ്ഥാപനങ്ങളുടെ പദ്ധതികൾക്കുള്ള മാർഗ്ഗനിർദ്ദേശങ്ങൾ</td></tr>
+              <tr><td>7</td><td><strong>Perspective Planning Division</strong></td><td>ദീർഘകാല പദ്ധതികൾ; Kerala Perspective Plan 2030</td></tr>
+              <tr><td>8</td><td><strong>IT Wing</strong></td><td>കമ്പ്യൂട്ടർവൽക്കരണം, സാങ്കേതിക പരിഹാരങ്ങൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick:</span>
+          <p>"<strong>Coordination → Economic Review</strong>".</p>
+          <p>"<strong>ബോർഡ് 1967 → Evaluation 1969 (രണ്ടു വർഷം കഴിഞ്ഞ്)</strong>".</p>
+          <p>"<strong>Perspective = ദീർഘദൃഷ്ടി</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. പ്രധാന പ്രസിദ്ധീകരണങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കേരള ഇക്കണോമിക് റിവ്യൂ (Kerala Economic Review):</strong> കേരള സർക്കാരിന്റെ ബജറ്റ് അവതരണത്തിന് തൊട്ടുമുൻപായി നിയമസഭയിൽ സമർപ്പിക്കുന്ന, സംസ്ഥാനത്തിന്റെ സാമ്പത്തിക സ്ഥിതി വ്യക്തമാക്കുന്ന വാർഷിക അവലോകന റിപ്പോർട്ടാണിത്. ഇത് തയ്യാറാക്കുന്നത് <strong>ആസൂത്രണ ബോർഡാണ്</strong>. 🧠 <em>"അവലോകനം (Review) കഴിഞ്ഞിട്ടേ അവതരണം (Budget)"</em></li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കേരള ഡെവലപ്മെന്റ് റിപ്പോർട്ട് (Kerala Development Report):</strong> സംസ്ഥാനത്തിന്റെ വിവിധ മേഖലകളിലെ വളർച്ചാ നിരക്കുകൾ ഉൾക്കൊള്ളുന്ന റിപ്പോർട്ട്. ഇത് <strong>ആസൂത്രണ ബോർഡിന്റെ പ്രസിദ്ധീകരണമല്ല</strong>; <strong>2008</strong>-ൽ <strong>കേന്ദ്ര പ്ലാനിംഗ് കമ്മീഷൻ</strong> പ്രസിദ്ധീകരിച്ചതാണ്. 🧠 <em>Economic Review = ബോർഡ്; Development Report = പ്ലാനിംഗ് കമ്മീഷൻ</em></li>
+        </ul>
+
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p>കേരള ഡെവലപ്മെന്റ് റിപ്പോർട്ട് തയ്യാറാക്കിയത് ആസൂത്രണ ബോർഡല്ല. ഇത് 2008-ൽ കേന്ദ്ര പ്ലാനിംഗ് കമ്മീഷൻ പ്രസിദ്ധീകരിച്ച റിപ്പോർട്ടാണ്. ⚠️ (verify)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8 -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. Economic Review vs Development Report</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>Kerala Economic Review</th><th>Kerala Development Report</th></tr></thead>
+            <tbody>
+              <tr><td>തയ്യാറാക്കുന്നത്</td><td>കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ്</td><td>കേന്ദ്ര പ്ലാനിംഗ് കമ്മീഷൻ</td></tr>
+              <tr><td>ആവൃത്തി</td><td>വാർഷികം</td><td>ഒറ്റത്തവണ (2008)</td></tr>
+              <tr><td>സമർപ്പണം</td><td>ബജറ്റിന് മുൻപ് നിയമസഭയിൽ</td><td>—</td></tr>
+              <tr><td>ഉള്ളടക്കം</td><td>സാമ്പത്തിക സ്ഥിതി അവലോകനം</td><td>വികസന മേഖലകളിലെ വളർച്ചാ നിരക്കുകൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9 -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. DPC vs KSPB – ബന്ധം</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>DPC (District Planning Committee)</th><th>KSPB (State Planning Board)</th></tr></thead>
+            <tbody>
+              <tr><td>അധ്യക്ഷൻ</td><td>ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</td><td>മുഖ്യമന്ത്രി</td></tr>
+              <tr><td>തലം</td><td>ജില്ല</td><td>സംസ്ഥാനം</td></tr>
+              <tr><td>ചുമതല</td><td>ജില്ലയിലെ പഞ്ചായത്ത്-മുൻസിപ്പാലിറ്റി പദ്ധതികൾ ഏകോപിപ്പിക്കൽ</td><td>സംസ്ഥാന പദ്ധതികളും വാർഷിക ബജറ്റ് വിഹിതവും</td></tr>
+              <tr><td>ഭരണഘടനാ പദവി</td><td>Art. 243ZD</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick:</span>
+          <p>"<strong>ജില്ലാ ആസൂത്രണം → ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10 -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. പ്രധാന വസ്തുതകൾ – ഒറ്റനോട്ടത്തിൽ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വസ്തുത</th><th>വിവരം</th></tr></thead>
+            <tbody>
+              <tr><td>രൂപീകരണം</td><td>1967 സെപ്റ്റംബർ</td></tr>
+              <tr><td>ചെയർമാൻ</td><td>മുഖ്യമന്ത്രി (ex-officio)</td></tr>
+              <tr><td>VC</td><td>പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ (കാബിനറ്റ് റാങ്ക്)</td></tr>
+              <tr><td>നിലവിലെ VC (2026)</td><td>കെ.എം. ചന്ദ്രശേഖർ</td></tr>
+              <tr><td>മുൻ VC</td><td>വി.കെ. രാമചന്ദ്രൻ (2016–2026)</td></tr>
+              <tr><td>ആസ്ഥാനം</td><td>പട്ടം, തിരുവനന്തപുരം</td></tr>
+              <tr><td>സ്ഥിരം ക്ഷണിതാക്കൾ</td><td>ചീഫ് സെക്രട്ടറി + ധനകാര്യ വകുപ്പ് ACS</td></tr>
+              <tr><td>സാങ്കേതിക വിഭാഗങ്ങൾ</td><td>8 (7 ഡിവിഷൻ + IT)</td></tr>
+              <tr><td>Evaluation Division</td><td>1969 മുതൽ</td></tr>
+              <tr><td>പ്രധാന പ്രസിദ്ധീകരണം</td><td>Kerala Economic Review</td></tr>
+              <tr><td>DPC അധ്യക്ഷൻ</td><td>ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</td></tr>
+              <tr><td>15-ാം പദ്ധതി</td><td>2027–32</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11 -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. PSC പരീക്ഷാ വിശകലനം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> രൂപീകരണ വർഷം (1967), ചെയർമാൻ (മുഖ്യമന്ത്രി), Economic Review തയ്യാറാക്കുന്നത് (KSPB).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> നിലവിലെ VC (കെ.എം. ചന്ദ്രശേഖർ), 8 ഡിവിഷനുകൾ, സ്ഥിരം ക്ഷണിതാക്കൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> Evaluation Division (1969), ആസ്ഥാനം (പട്ടം), VC = പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ട്രിക്ക് ചോദ്യങ്ങൾ:</strong> "ബോർഡ് ഉപദേശക സമിതിയാണോ?", "Kerala Development Report ആരുടേത്?", "VC ഉദ്യോഗസ്ഥനോ നോൺ-ഒഫീഷ്യലോ?"</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 12 -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>ചെയർമാൻ (മുഖ്യമന്ത്രി)</strong></td>
+                <td><strong>വൈസ് ചെയർമാൻ (മുൻ ഉദ്യോഗസ്ഥൻ/വിദഗ്ധൻ)</strong></td>
+                <td>അധ്യക്ഷൻ എപ്പോഴും മുഖ്യമന്ത്രി; ധനമന്ത്രിയല്ല. ബോർഡിന്റെ ഭരണകാര്യങ്ങൾ നിർവ്വഹിക്കാൻ സർക്കാർ നിയമിക്കുന്ന നോൺ-ഒഫീഷ്യൽ പാർട്ട്-ടൈം വിദഗ്ധനാണ് VC (കാബിനറ്റ് റാങ്ക്).</td>
+              </tr>
+              <tr>
+                <td><strong>പ്ലാനിംഗ് കമ്മീഷൻ / നീതി ആയോഗ്</strong></td>
+                <td><strong>സംസ്ഥാന ആസൂത്രണ ബോർഡ്</strong></td>
+                <td>രാജ്യത്തിന് മുഴുവൻ സാമ്പത്തിക ആസൂത്രണം നടത്തുന്നത് കേന്ദ്ര ഏജൻസിയായ നീതി ആയോഗ് (അധ്യക്ഷൻ പ്രധാനമന്ത്രി). സംസ്ഥാന തലത്തിലുള്ള സംവിധാനം സംസ്ഥാന ആസൂത്രണ ബോർഡ് (അധ്യക്ഷൻ മുഖ്യമന്ത്രി). നീതി ആയോഗ് പ്ലാനിംഗ് കമ്മീഷന് പകരം വന്നത് 2015-ൽ.</td>
+              </tr>
+              <tr>
+                <td><strong>DPC</strong></td>
+                <td><strong>KSPB</strong></td>
+                <td>ജില്ലയിലെ പഞ്ചായത്ത്-മുൻസിപ്പാലിറ്റി പദ്ധതികൾ ഏകോപിപ്പിക്കുന്നത് DPC (അധ്യക്ഷൻ: ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്). സംസ്ഥാനത്തിന്റെ പദ്ധതികൾ/ബജറ്റ് വിഹിതം KSPB (അധ്യക്ഷൻ: മുഖ്യമന്ത്രി).</td>
+              </tr>
+              <tr>
+                <td><strong>Kerala Economic Review</strong></td>
+                <td><strong>Kerala Development Report</strong></td>
+                <td>Economic Review: ആസൂത്രണ ബോർഡ്, വാർഷികം, ബജറ്റിന് മുൻപ്. Development Report: കേന്ദ്ര പ്ലാനിംഗ് കമ്മീഷൻ (2008).</td>
+              </tr>
+              <tr>
+                <td><strong>സ്ഥിരം ക്ഷണിതാക്കൾ</strong></td>
+                <td><strong>അംഗങ്ങൾ</strong></td>
+                <td>ചീഫ് സെക്രട്ടറിയും ഫിനാൻസ് ACS-ഉം ക്ഷണിതാക്കൾ; മന്ത്രിമാരും വിദഗ്ധരുമാണ് അംഗങ്ങൾ.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13 -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+        <h3>Table 13.1 – 8 സാങ്കേതിക വിഭാഗങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>#</th><th>വിഭാഗം</th><th>പ്രധാന ചുമതല</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Plan Co-ordination</td><td>Economic Review</td></tr>
+              <tr><td>2</td><td>Agriculture</td><td>കൃഷി, മൃഗസംരക്ഷണം, ഫിഷറീസ്</td></tr>
+              <tr><td>3</td><td>Evaluation</td><td>മോണിറ്ററിംഗ് (1969)</td></tr>
+              <tr><td>4</td><td>Social Service</td><td>വിദ്യാഭ്യാസം, ആരോഗ്യം</td></tr>
+              <tr><td>5</td><td>Industry & Infrastructure</td><td>വ്യവസായം, അടിസ്ഥാന സൗകര്യം</td></tr>
+              <tr><td>6</td><td>Decentralized Planning</td><td>തദ്ദേശ സ്ഥാപന പദ്ധതികൾ</td></tr>
+              <tr><td>7</td><td>Perspective Planning</td><td>ദീർഘകാല പദ്ധതികൾ</td></tr>
+              <tr><td>8</td><td>IT Wing</td><td>കമ്പ്യൂട്ടർവൽക്കരണം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 13.2 – KSPB vs DPC</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>KSPB</th><th>DPC</th></tr></thead>
+            <tbody>
+              <tr><td>അധ്യക്ഷൻ</td><td>മുഖ്യമന്ത്രി</td><td>ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</td></tr>
+              <tr><td>തലം</td><td>സംസ്ഥാനം</td><td>ജില്ല</td></tr>
+              <tr><td>ഭരണഘടനാ പദവി</td><td>—</td><td>Art. 243ZD</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14 -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. Mnemonics – ഓർമ്മത്തന്ത്രങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <div class="memory"><span class="box-label">🧠 Trick 1</span><p>"<strong>67 = EMS-ന്റെ രണ്ടാം മന്ത്രിസഭ (1967–69)</strong>".</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 2</span><p>"<strong>PEA-DIPS + IT</strong>" — 8 സാങ്കേതിക വിഭാഗങ്ങൾ.</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 3</span><p>"<strong>Coordination → Economic Review</strong>".</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 4</span><p>"<strong>ബോർഡ് 1967 → Evaluation 1969 (രണ്ടു വർഷം കഴിഞ്ഞ്)</strong>".</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 5</span><p>"<strong>Perspective = ദീർഘദൃഷ്ടി</strong>".</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 6</span><p>"<strong>Economic Review = ബോർഡ്; Development Report = പ്ലാനിംഗ് കമ്മീഷൻ</strong>".</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 7</span><p>"<strong>ജില്ലാ ആസൂത്രണം → ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</strong>".</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 8</span><p>"<strong>ചീഫ് + ഫിനാൻസ് = 2 പേർ</strong>" — സ്ഥിരം ക്ഷണിതാക്കൾ.</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 9</span><p>"<strong>ചന്ദ്രൻ രണ്ടുവട്ടം – 2011, 2026</strong>" (കെ.എം. ചന്ദ്രശേഖർ).</p></div>
+        <div class="memory"><span class="box-label">🧠 Trick 10</span><p>"<strong>ചന്ദ്രശേഖർ → രാമചന്ദ്രൻ → ചന്ദ്രശേഖർ</strong>" (UDF–LDF–UDF).</p></div>
+      </div>
+    </section>
+
+    <!-- SECTION 15 -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>15.1 KSPB ഘടന – ഒറ്റനോട്ടത്തിൽ</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KSPB structure">
+            <rect x="10" y="10" width="700" height="240" rx="12" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+            <text x="360" y="38" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#01579b">KSPB – സംഘടനാ ഘടന</text>
+
+            <rect x="270" y="55" width="180" height="45" rx="8" fill="#0d47a1"/>
+            <text x="360" y="73" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">ചെയർമാൻ</text>
+            <text x="360" y="90" text-anchor="middle" font-size="10" fill="#bbdefb">മുഖ്യമന്ത്രി (ex-officio)</text>
+
+            <rect x="270" y="110" width="180" height="45" rx="8" fill="#1976d2"/>
+            <text x="360" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">വൈസ് ചെയർമാൻ</text>
+            <text x="360" y="145" text-anchor="middle" font-size="10" fill="#e3f2fd">പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ</text>
+
+            <rect x="50" y="175" width="150" height="55" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+            <text x="125" y="195" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32">അംഗങ്ങൾ</text>
+            <text x="125" y="213" text-anchor="middle" font-size="10" fill="#14202b">മന്ത്രിമാർ + വിദഗ്ധർ</text>
+
+            <rect x="215" y="175" width="145" height="55" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="1.5"/>
+            <text x="287" y="195" text-anchor="middle" font-size="12" font-weight="700" fill="#b83b2c">സ്ഥിരം ക്ഷണിതാക്കൾ</text>
+            <text x="287" y="213" text-anchor="middle" font-size="10" fill="#14202b">CS + Finance ACS</text>
+
+            <rect x="375" y="175" width="145" height="55" rx="8" fill="#f3e5f5" stroke="#8e24aa" stroke-width="1.5"/>
+            <text x="447" y="195" text-anchor="middle" font-size="12" font-weight="700" fill="#6a1b9a">8 വിഭാഗങ്ങൾ</text>
+            <text x="447" y="213" text-anchor="middle" font-size="10" fill="#14202b">7 ഡിവിഷൻ + IT</text>
+
+            <rect x="535" y="175" width="150" height="55" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="1.5"/>
+            <text x="610" y="195" text-anchor="middle" font-size="12" font-weight="700" fill="#b83b2c">പ്രസിദ്ധീകരണം</text>
+            <text x="610" y="213" text-anchor="middle" font-size="10" fill="#14202b">Economic Review</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 15.1 – KSPB ഘടന.</div>
+        </div>
+
+        <h3>15.2 8 സാങ്കേതിക വിഭാഗങ്ങൾ – PEA-DIPS + IT</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="8 divisions">
+            <g font-family="Noto Sans Malayalam, sans-serif">
+              <rect x="20" y="20" width="160" height="80" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+              <text x="100" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#0d47a1">P</text>
+              <text x="100" y="68" text-anchor="middle" font-size="10" fill="#14202b">Plan Co-ordination</text>
+              <text x="100" y="85" text-anchor="middle" font-size="9" fill="#4a5f72">Economic Review</text>
+
+              <rect x="195" y="20" width="160" height="80" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+              <text x="275" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#2e7d32">E</text>
+              <text x="275" y="68" text-anchor="middle" font-size="10" fill="#14202b">Evaluation</text>
+              <text x="275" y="85" text-anchor="middle" font-size="9" fill="#4a5f72">1969</text>
+
+              <rect x="370" y="20" width="160" height="80" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+              <text x="450" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">A</text>
+              <text x="450" y="68" text-anchor="middle" font-size="10" fill="#14202b">Agriculture</text>
+              <text x="450" y="85" text-anchor="middle" font-size="9" fill="#4a5f72">കൃഷി, ഫിഷറീസ്</text>
+
+              <rect x="545" y="20" width="160" height="80" rx="8" fill="#f3e5f5" stroke="#8e24aa" stroke-width="2"/>
+              <text x="625" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#6a1b9a">D</text>
+              <text x="625" y="68" text-anchor="middle" font-size="10" fill="#14202b">Decentralised</text>
+              <text x="625" y="85" text-anchor="middle" font-size="9" fill="#4a5f72">തദ്ദേശ പദ്ധതികൾ</text>
+
+              <rect x="20" y="115" width="160" height="80" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+              <text x="100" y="143" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">I</text>
+              <text x="100" y="163" text-anchor="middle" font-size="10" fill="#14202b">Industry &</text>
+              <text x="100" y="178" text-anchor="middle" font-size="10" fill="#14202b">Infrastructure</text>
+
+              <rect x="195" y="115" width="160" height="80" rx="8" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
+              <text x="275" y="143" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">P</text>
+              <text x="275" y="163" text-anchor="middle" font-size="10" fill="#14202b">Perspective</text>
+              <text x="275" y="178" text-anchor="middle" font-size="9" fill="#4a5f72">ദീർഘകാല</text>
+
+              <rect x="370" y="115" width="160" height="80" rx="8" fill="#e8eaf6" stroke="#3f51b5" stroke-width="2"/>
+              <text x="450" y="143" text-anchor="middle" font-size="13" font-weight="700" fill="#3f51b5">S</text>
+              <text x="450" y="163" text-anchor="middle" font-size="10" fill="#14202b">Social Service</text>
+              <text x="450" y="178" text-anchor="middle" font-size="9" fill="#4a5f72">വിദ്യാഭ്യാസം, ആരോഗ്യം</text>
+
+              <rect x="545" y="115" width="160" height="80" rx="8" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+              <text x="625" y="143" text-anchor="middle" font-size="13" font-weight="700" fill="#bf360c">IT</text>
+              <text x="625" y="163" text-anchor="middle" font-size="10" fill="#14202b">IT Wing</text>
+              <text x="625" y="178" text-anchor="middle" font-size="9" fill="#4a5f72">കമ്പ്യൂട്ടർ</text>
+            </g>
+          </svg>
+          <div class="viz-caption">ചിത്രം 15.2 – PEA-DIPS + IT.</div>
+        </div>
+
+        <h3>15.3 Economic Review vs Development Report</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Economic Review vs Development Report">
+            <g font-family="Noto Sans Malayalam, sans-serif">
+              <rect x="20" y="30" width="320" height="120" rx="10" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+              <text x="180" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#01579b">Kerala Economic Review</text>
+              <text x="180" y="82" text-anchor="middle" font-size="11" fill="#14202b">തയ്യാറാക്കുന്നത്: KSPB</text>
+              <text x="180" y="102" text-anchor="middle" font-size="11" fill="#14202b">വാർഷികം</text>
+              <text x="180" y="122" text-anchor="middle" font-size="11" fill="#14202b">ബജറ്റിന് മുൻപ് നിയമസഭയിൽ</text>
+
+              <rect x="380" y="30" width="320" height="120" rx="10" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+              <text x="540" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#b83b2c">Kerala Development Report</text>
+              <text x="540" y="82" text-anchor="middle" font-size="11" fill="#14202b">തയ്യാറാക്കുന്നത്: Planning Commission</text>
+              <text x="540" y="102" text-anchor="middle" font-size="11" fill="#14202b">ഒറ്റത്തവണ (2008)</text>
+              <text x="540" y="122" text-anchor="middle" font-size="11" fill="#14202b">KSPB പ്രസിദ്ധീകരണമല്ല</text>
+            </g>
+          </svg>
+          <div class="viz-caption">ചിത്രം 15.3 – രണ്ട് റിപ്പോർട്ടുകളുടെ വ്യത്യാസം.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16 -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് രൂപീകൃതമായ വർഷം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1956</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1967</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1974</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1996</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1967</div>
+            <div class="explanation">1967 സെപ്റ്റംബർ; EMS സർക്കാർ. 1956 = കേരള സംസ്ഥാന രൂപീകരണം.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. KSPB-യുടെ ex-officio ചെയർമാൻ ആരാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഗവർണ്ണർ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ധനകാര്യ മന്ത്രി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. മുഖ്യമന്ത്രി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ചീഫ് സെക്രട്ടറി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) മുഖ്യമന്ത്രി</div>
+            <div class="explanation">നീതി ആയോഗിന് PM-നെപ്പോലെ.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. 'Kerala Economic Review' തയ്യാറാക്കുന്നത് ഏത് സ്ഥാപനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. I&PRD</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ധനകാര്യ കമ്മീഷൻ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. KSPB</button>
+            <button type="button" class="opt-btn" data-opt="D">D. CDS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) KSPB</div>
+            <div class="explanation">Plan Co-ordination Division നേതൃത്വം നൽകുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. KSPB-യുടെ സ്ഥിരം ക്ഷണിതാക്കൾ ആരൊക്കെ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. DGP, CEO</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഗവർണ്ണറുടെ സെക്രട്ടറി, AG</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ചീഫ് സെക്രട്ടറി, ധനകാര്യ ACS</button>
+            <button type="button" class="opt-btn" data-opt="D">D. എല്ലാ ജില്ലാ കളക്ടർമാർ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ചീഫ് സെക്രട്ടറി, ധനകാര്യ ACS</div>
+            <div class="explanation">ഭരണ ഏകോപനത്തിന്.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. 2026-ലെ പുനഃസംഘടനയിൽ KSPB-യുടെ പുതിയ വൈസ് ചെയർമാൻ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഡോ. തോമസ് ഐസക്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. വി.കെ. രാമചന്ദ്രൻ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. കെ.എം. ചന്ദ്രശേഖർ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. എസ്.എം. വിജയാനന്ദ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കെ.എം. ചന്ദ്രശേഖർ</div>
+            <div class="explanation">2026 ജൂലൈ 22-ന് ചുമതലയേറ്റു (രണ്ടാം ഊഴം).</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. തദ്ദേശ സ്ഥാപനങ്ങളുടെ പദ്ധതികൾ ആസൂത്രണം ചെയ്യുന്ന നിർദ്ദേശങ്ങൾ രൂപീകരിക്കുന്ന വിഭാഗം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Evaluation Division</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Plan Co-ordination</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Decentralized Planning</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Social Service</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Decentralized Planning</div>
+            <div class="explanation">ഗ്രാമീണ-നഗര വികസന പദ്ധതികളുടെ പോളിസികൾ.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>1. KSPB 1967 സെപ്റ്റംബറിൽ രൂപീകൃതമായി.<br>2. വാർഷിക/പഞ്ചവത്സര പദ്ധതികൾ KSPB തയ്യാറാക്കുന്നു.<br>3. 8 സാങ്കേതിക വിഭാഗങ്ങൾ (7 + IT).</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1, 2 മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1, 3 മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2, 3 മാത്രം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1, 2, 3 എല്ലാം</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 എല്ലാം</div>
+            <div class="explanation">മൂന്ന് പ്രസ്താവനകളും ശരി.</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. KSPB-യെക്കുറിച്ച് ശരിയല്ലാത്ത പ്രസ്താവന?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഉപദേശക സമിതി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. VC പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Kerala Development Report KSPB-ന്റെത്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ചീഫ് സെക്രട്ടറി സ്ഥിരം ക്ഷണിതാവ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Kerala Development Report KSPB-ന്റെത്</div>
+            <div class="explanation">Development Report (2008) കേന്ദ്ര പ്ലാനിംഗ് കമ്മീഷന്റെത്.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. ഏത് ഡിവിഷൻ 1969 മുതൽ പ്രവർത്തിക്കുന്നു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Evaluation Division</button>
+            <button type="button" class="opt-btn" data-opt="B">B. IT Wing</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Decentralised Planning</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Social Service</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) Evaluation Division</div>
+            <div class="explanation">🧠 ബോർഡ് 67 + 2 = Evaluation 69.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. DPC-യുടെ അധ്യക്ഷൻ ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ജില്ലാ കളക്ടർ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ജില്ലയിലെ മന്ത്രി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ചീഫ് സെക്രട്ടറി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്</div>
+            <div class="explanation">Art. 243ZD പ്രകാരം.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. KSPB-യുടെ ആസ്ഥാനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. കോഴിക്കോട്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കൊച്ചി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പട്ടം, തിരുവനന്തപുരം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. തൃശൂർ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) പട്ടം, തിരുവനന്തപുരം</div>
+            <div class="explanation">.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. KSPB-യുടെ മാതൃവകുപ്പ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ധനകാര്യ വകുപ്പ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. തദ്ദേശ സ്വയംഭരണ വകുപ്പ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പ്ലാനിംഗ് ആൻഡ് എക്കണോമിക് അഫയേഴ്സ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വ്യവസായ വകുപ്പ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) പ്ലാനിംഗ് ആൻഡ് എക്കണോമിക് അഫയേഴ്സ്</div>
+            <div class="explanation">Planning and Economic Affairs Department.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17 -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. ഉത്തര സൂചിക (Answer Key)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 680px; margin: 0 auto; text-align: center;">
+            <thead><tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>5</td><td>(C)</td><td>9</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>6</td><td>(C)</td><td>10</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>7</td><td>(D)</td><td>11</td><td>(C)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>8</td><td>(C)</td><td>12</td><td>(C)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18 -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</span>
+      </h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>രൂപീകരണം:</strong> 1967 സെപ്റ്റംബർ (EMS). ഉപദേശക സമിതി.</li>
+          <li><strong>ആസ്ഥാനം:</strong> പട്ടം, തിരുവനന്തപുരം.</li>
+          <li><strong>മാതൃവകുപ്പ്:</strong> പ്ലാനിംഗ് ആൻഡ് എക്കണോമിക് അഫയേഴ്സ്.</li>
+          <li><strong>ചെയർമാൻ:</strong> മുഖ്യമന്ത്രി (നിലവിൽ വി.ഡി. സതീശൻ).</li>
+          <li><strong>VC:</strong> കെ.എം. ചന്ദ്രശേഖർ (2011–16, വീണ്ടും 22 ജൂലൈ 2026). പാർട്ട്-ടൈം; കാബിനറ്റ് റാങ്ക്. മുൻഗാമി: വി.കെ. രാമചന്ദ്രൻ.</li>
+          <li><strong>സ്ഥിരം ക്ഷണിതാക്കൾ:</strong> ചീഫ് സെക്രട്ടറി, ധനകാര്യ ACS.</li>
+          <li><strong>ചുമതല:</strong> പഞ്ചവത്സര/വാർഷിക പദ്ധതികൾ; 15-ാം പദ്ധതി (2027–32).</li>
+          <li><strong>പ്രസിദ്ധീകരണം:</strong> Kerala Economic Review (ബജറ്റിന് മുൻപ്).</li>
+          <li><strong>8 വിഭാഗങ്ങൾ:</strong> PEA-DIPS + IT. Evaluation: 1969 മുതൽ.</li>
+          <li><strong>DPC:</strong> അധ്യക്ഷൻ ജില്ലാ പഞ്ചായത്ത് പ്രസിഡന്റ്; Art. 243ZD.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 19 -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. One-Page Revision Sheet</span>
+      </h2>
+      <div class="section-body">
+        <h3>Kerala State Planning Board (KSPB)</h3>
+        <ul>
+          <li><strong>Established:</strong> September 1967 (EMS ministry). Advisory body.</li>
+          <li><strong>Headquarters:</strong> Pattom, Thiruvananthapuram.</li>
+          <li><strong>Chairperson:</strong> Chief Minister of Kerala (ex-officio; currently V.D. Satheesan).</li>
+          <li><strong>Vice-Chairperson:</strong> Currently K.M. Chandrasekhar (Former Union Cabinet Secretary; part-time non-official with Cabinet rank; earlier term 2011–16, reappointed 22 July 2026; predecessor V.K. Ramachandran).</li>
+          <li><strong>Permanent Invitees:</strong> Chief Secretary & Additional Chief Secretary (Finance).</li>
+          <li><strong>Ministers on Board (2026):</strong> P.K. Kunhalikutty, Sunny Joseph, Mons Joseph, Shibu Baby John, C.P. John.</li>
+        </ul>
+
+        <h3>Core Functions</h3>
+        <ul>
+          <li>Formulating Five-Year Plans and Annual Plans for the socio-economic development of the state.</li>
+          <li>Preparing the <strong>Kerala Economic Review</strong>, an annual comprehensive analysis report of Kerala's economy presented before the State Budget.</li>
+          <li>Guiding Local Self Governments through the Decentralized Planning Division.</li>
+          <li>Currently preparing the 15th Five-Year Plan (2027–32).</li>
+          <li><em>Kerala Development Report (2008)</em> is a Planning Commission publication, not KSPB's.</li>
+        </ul>
+
+        <h3>The 8 Technical Divisions (PEA-DIPS + IT)</h3>
+        <ol>
+          <li>Plan Co-ordination Division</li>
+          <li>Agriculture Division</li>
+          <li>Evaluation Division (since 1969)</li>
+          <li>Social Service Division</li>
+          <li>Industry and Infrastructure Division</li>
+          <li>Decentralized Planning Division</li>
+          <li>Perspective Planning Division</li>
+          <li>Information and Technology Wing</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 20 -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. Verification Notes & Teacher's Note</span>
+      </h2>
+      <div class="section-body">
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തലുകൾ</span>
+          <ul>
+            <li>വൈസ് ചെയർമാൻ "ഉദ്യോഗസ്ഥൻ" അല്ല — <strong>പാർട്ട്-ടൈം നോൺ-ഒഫീഷ്യൽ</strong>; കാബിനറ്റ് റാങ്ക്.</li>
+            <li>Kerala Development Report — <strong>കേന്ദ്ര പ്ലാനിംഗ് കമ്മീഷൻ</strong> (2008), KSPB-ന്റെതല്ല.</li>
+            <li>"ബോർഡിന്റെ അംഗീകാരം ലഭിച്ചാലേ ഫണ്ട്" — തെറ്റ്. ബോർഡ് <strong>ഉപദേശക സമിതി</strong> മാത്രം.</li>
+            <li>"8 ഡിവിഷൻ" = <strong>7 സാങ്കേതിക + 1 IT</strong>.</li>
+            <li>"Planning and Economic Affairs" (ഏകവചനം).</li>
+            <li>Q7 വിശദീകരണത്തിലെ "സാമ്പത്തികം, ഗതാഗതം" ഡിവിഷനുകളല്ല — തിരുത്തി.</li>
+          </ul>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ പുതുതായി ചേർത്തവ</span>
+          <ul>
+            <li>ചന്ദ്രശേഖറുടെ രണ്ടാം ഊഴം (22 ജൂലൈ 2026).</li>
+            <li>5 മന്ത്രി അംഗങ്ങൾ (2026).</li>
+            <li>15-ാം പഞ്ചവത്സര പദ്ധതി (2027–32).</li>
+            <li>DPC (Art. 243ZD).</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കേണ്ടവ</span>
+          <ul>
+            <li><strong>1974-ൽ സ്ഥിരം വകുപ്പായി</strong> എന്ന വിവരം ⚠️ (verify).</li>
+            <li><strong>Kerala Development Report (2008)</strong> — ഓർമ്മയിൽ നിന്ന് ചേർത്തത്; ഓൺലൈനിൽ സ്ഥിരീകരിച്ചിട്ടില്ല.</li>
+            <li>15-ാം പദ്ധതി 2027–32 — Current Affairs-ൽ പുതിയ വിവരം ഉറപ്പിക്കുക.</li>
+          </ul>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>പ്രധാന കെണികൾ: (1) ചെയർമാൻ = മുഖ്യമന്ത്രി, ധനമന്ത്രിയല്ല; (2) VC = നോൺ-ഒഫീഷ്യൽ; (3) Economic Review vs Development Report; (4) DPC vs KSPB; (5) 7 vs 8 ഡിവിഷനുകൾ. 12 MCQ-കളും ഡയഗ്രങ്ങളും കുറഞ്ഞത് രണ്ടുതവണ റിവിഷൻ ചെയ്യുക.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>5.19 Planning Board</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'kerala-administration-5.19-planning-board';
-window.PART_TITLE = '5.19 Planning Board';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme148planning');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme148planning', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone148planning_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone148planning_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone148planning_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaPlanning148Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
