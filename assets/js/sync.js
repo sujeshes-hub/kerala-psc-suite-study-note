@@ -1,7 +1,23 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 5.2  — skips the Quick Revision cache, queues saves made during a push, modal focus
+   Version: 6.0
+
+   WHAT CHANGED vs 5.2 (cross-device resume fix)
+   1. Per-key timestamps: the NEWEST write wins (5.2 ignored a newer remote
+      value whenever the key already existed locally).
+   2. Deletions sync (tombstones): submitting a test / "Start fresh" /
+      "Reset quiz" on one device now removes it on the others too.
+   3. Mock-test attempts (objects with questionStates / timeRemaining) are
+      treated as snapshots: the newest whole attempt wins (no half-merging).
+   4. Push is a Firestore TRANSACTION (read -> merge -> write), so a device that
+      just opened can never overwrite newer cloud progress with its own blank state.
+   5. KPSC_Sync.whenReady(ms): pages wait for the first cloud pull BEFORE they
+      decide "resume or start new". Mock tests use this.
+   6. "kpsc-sync-applied" event (cancelable): pages may handle updates
+      themselves instead of the default auto-reload.
+   7. Lossless storage: values are synced as the exact localStorage strings.
+   8. Theme keys and Quick-Revision cache are never synced.
    ===================================================================== */
 (function () {
   "use strict";
@@ -28,32 +44,55 @@
   var TOKEN_KEY     = "kpsc_gh_token";
   var GIST_KEY      = "kpsc_gh_gist_id";
   var LASTS_KEY     = "kpsc_last_sync";
-  var PULLED_SS     = "kpsc_pulled_this_session";
+  var META_KEY      = "kpsc_sync_meta";           /* per-key timestamps + tombstones (never synced) */
   var GIST_FILE     = "kerala-psc-progress.json";
   var FIRESTORE_COL = "users";
   var SAVE_DEBOUNCE = 900;
   var PULL_THROTTLE = 2500;
+  var TOMBSTONE_TTL = 1000 * 60 * 60 * 24 * 45;   /* 45 days */
+  var READY_MAX_WAIT = 5000;
 
   var SKIP_KEYS = {
     "kpsc_gh_token": 1, "kpsc_gh_gist_id": 1,
     "kpsc_last_sync": 1, "kpsc_pulled_this_session": 1,
-    "kp-theme": 1
+    "kpsc_sync_meta": 1, "kp-theme": 1
   };
+  var SKIP_PREFIXES = ["kpsc_qr_cache", "firebase", "__", "keralaTheme"];
+
+  /* keep the ORIGINAL storage methods — we wrap them below */
+  var origSet    = Storage.prototype.setItem;
+  var origRemove = Storage.prototype.removeItem;
 
   var firebaseApp = null, firebaseAuth = null, firestoreDb = null;
   var firebaseReady = false, currentUser = null;
   var pushing = false, pushQueued = false, pulling = false, lastPull = 0;
-  var pushTimer = null, syncing = false, fbSDKPromise = null;
+  var pushTimer = null, fbSDKPromise = null;
+  var applying = false;                /* true while WE write to localStorage (don't stamp) */
+  var firstAuthEvent = true;
+  var usedReady = false;               /* some page is waiting for whenReady() */
+  var initialDone = false, readyResolve = null;
+  var readyPromise = new Promise(function (r) { readyResolve = r; });
+
+  function markReady() {
+    if (initialDone) return;
+    initialDone = true;
+    readyResolve();
+  }
 
   /* =================================================================
      KEY DETECTION
      ================================================================= */
+  function isSkipped(k) {
+    if (SKIP_KEYS[k]) return true;
+    for (var i = 0; i < SKIP_PREFIXES.length; i++) {
+      if (k.indexOf(SKIP_PREFIXES[i]) === 0) return true;
+    }
+    return false;
+  }
+
   function isTrackedKey(k, v) {
     if (!k || typeof k !== "string") return false;
-    if (SKIP_KEYS[k]) return false;
-    if (k.indexOf("kpsc_qr_cache") === 0) return false;
-    if (k.indexOf("firebase") === 0) return false;
-    if (k.indexOf("__") === 0) return false;
+    if (isSkipped(k)) return false;
     if (k.indexOf("kpsc_") === 0)  return true;
     if (k.indexOf("kerala") === 0) return true;
     if (k.indexOf("quiz") === 0)   return true;
@@ -61,7 +100,7 @@
     if (typeof v === "string" && v.length > 8) {
       var first = v.charAt(0);
       if (first === "{" || first === "[") {
-        try { var p = JSON.parse(v); return p && typeof p === "object"; }
+        try { var p = JSON.parse(v); return !!p && typeof p === "object"; }
         catch (e) { return false; }
       }
     }
@@ -79,17 +118,59 @@
   }
 
   /* =================================================================
-     PAYLOAD
+     META  (per-key write time + deletion time)
+     ================================================================= */
+  function readMeta() {
+    try {
+      var m = JSON.parse(localStorage.getItem(META_KEY) || "{}");
+      if (!m || typeof m !== "object") m = {};
+      m.ts  = m.ts  || {};
+      m.del = m.del || {};
+      return m;
+    } catch (e) { return { ts: {}, del: {} }; }
+  }
+  function writeMeta(m) {
+    var now = Date.now();
+    Object.keys(m.del).forEach(function (k) {
+      if (now - m.del[k] > TOMBSTONE_TTL) delete m.del[k];
+    });
+    try { origSet.call(localStorage, META_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function markWrite(k) {
+    var m = readMeta(); m.ts[k] = Date.now(); delete m.del[k]; writeMeta(m);
+  }
+  function markDelete(k) {
+    var m = readMeta(); m.del[k] = Date.now(); delete m.ts[k]; writeMeta(m);
+  }
+
+  /* =================================================================
+     PAYLOAD  (v3: stores = exact strings, tsMap, del)
      ================================================================= */
   function collectPayload() {
-    var keys = scanTrackedKeys();
-    var stores = {};
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i];
-      try { stores[k] = JSON.parse(localStorage.getItem(k)); }
-      catch (e) { try { stores[k] = localStorage.getItem(k); } catch (e2) {} }
+    var meta = readMeta(), stores = {}, tsMap = {}, now = Date.now();
+    scanTrackedKeys().forEach(function (k) {
+      var raw = localStorage.getItem(k);
+      if (raw === null) return;
+      stores[k] = raw;
+      tsMap[k]  = meta.ts[k] || 1;            /* legacy keys (no stamp) lose every conflict */
+    });
+    var del = {};
+    Object.keys(meta.del).forEach(function (k) {
+      if (now - meta.del[k] < TOMBSTONE_TTL && !(k in stores)) del[k] = meta.del[k];
+    });
+    return { v: 3, ts: now, app: APP_ID, stores: stores, tsMap: tsMap, del: del };
+  }
+
+  /* accepts v3 payloads AND old v1/v2 payloads */
+  function normalizeRemote(p) {
+    var out = { stores: {}, tsMap: p.tsMap || {}, del: p.del || {}, ts: p.ts || 0 };
+    function put(k, v) { out.stores[k] = (typeof v === "string") ? v : JSON.stringify(v); }
+    if (p.stores && typeof p.stores === "object") {
+      Object.keys(p.stores).forEach(function (k) { put(k, p.stores[k]); });
+    } else if (p.mock && typeof p.mock === "object") {
+      Object.keys(p.mock).forEach(function (k) { put(k, p.mock[k]); });
     }
-    return { v: 2, ts: Date.now(), app: APP_ID, stores: stores };
+    return out;
   }
 
   function encode(payload) {
@@ -111,125 +192,147 @@
   }
 
   /* =================================================================
-     DEEP MERGE
+     MERGE HELPERS
      ================================================================= */
-  function deepMerge(local, remote) {
-    if (typeof local !== typeof remote) return remote;
-    if (local === null || remote === null) return remote;
-    if (typeof local !== "object") return remote;
-    if (Array.isArray(local) || Array.isArray(remote)) {
-      if (!Array.isArray(local)) return remote;
-      if (!Array.isArray(remote)) return local;
-      var len = Math.max(local.length, remote.length);
-      var merged = new Array(len);
+  /* deepMerge(a, b): union of both; on a conflict b wins */
+  function deepMerge(a, b) {
+    if (typeof a !== typeof b) return b;
+    if (a === null || b === null) return b;
+    if (typeof a !== "object") return b;
+    if (Array.isArray(a) || Array.isArray(b)) {
+      if (!Array.isArray(a)) return b;
+      if (!Array.isArray(b)) return a;
+      var len = Math.max(a.length, b.length), merged = new Array(len);
       for (var i = 0; i < len; i++) {
-        var l = local[i], r = remote[i];
+        var l = a[i], r = b[i];
         if (r === undefined) merged[i] = l;
         else if (l === undefined) merged[i] = r;
-        else if (typeof l === "object" && typeof r === "object" && l && r) merged[i] = deepMerge(l, r);
+        else if (l && r && typeof l === "object" && typeof r === "object") merged[i] = deepMerge(l, r);
         else merged[i] = r;
       }
       return merged;
     }
     var out = {}, k;
-    for (k in local) if (Object.prototype.hasOwnProperty.call(local, k)) out[k] = local[k];
-    for (k in remote) if (Object.prototype.hasOwnProperty.call(remote, k)) {
-      if (Object.prototype.hasOwnProperty.call(out, k)) out[k] = deepMerge(out[k], remote[k]);
-      else out[k] = remote[k];
+    for (k in a) if (Object.prototype.hasOwnProperty.call(a, k)) out[k] = a[k];
+    for (k in b) if (Object.prototype.hasOwnProperty.call(b, k)) {
+      out[k] = Object.prototype.hasOwnProperty.call(out, k) ? deepMerge(out[k], b[k]) : b[k];
     }
     return out;
   }
 
-  /* =================================================================
-     HAS NEW DATA — order-independent check
-     Returns true only if remote contains something local does NOT.
-     This prevents false-positive reloads from key-order differences.
-     ================================================================= */
-  function hasNewData(local, remote) {
-    if (remote === undefined) return false;
-    if (local === undefined) return true;
+  function stable(v) {
+    if (v === null || typeof v !== "object") return JSON.stringify(v);
+    if (Array.isArray(v)) return "[" + v.map(stable).join(",") + "]";
+    return "{" + Object.keys(v).sort().map(function (k) {
+      return JSON.stringify(k) + ":" + stable(v[k]);
+    }).join(",") + "}";
+  }
 
-    if (Array.isArray(remote)) {
-      if (!Array.isArray(local)) return true;
-      if (remote.length > local.length) return true;
-      for (var i = 0; i < remote.length; i++) {
-        if (hasNewData(local[i], remote[i])) return true;
-      }
-      return false;
-    }
+  function tryParse(raw) {
+    try { return { ok: true, val: JSON.parse(raw) }; } catch (e) { return { ok: false }; }
+  }
 
-    if (typeof remote === "object" && remote !== null) {
-      if (typeof local !== "object" || local === null) return true;
-      var keys = Object.keys(remote);
-      for (var j = 0; j < keys.length; j++) {
-        var k = keys[j];
-        if (!(k in local)) return true;
-        if (hasNewData(local[k], remote[k])) return true;
-      }
-      return false;
-    }
-
-    /* Primitive: only count as "new" if local is missing entirely */
-    return false;
+  /* a saved exam attempt: newest WHOLE object wins, never half-merged */
+  function isSnapshot(v) {
+    return !!v && typeof v === "object" && !Array.isArray(v) &&
+           (Array.isArray(v.questionStates) || "timerEndTime" in v || "timeRemaining" in v);
   }
 
   /* =================================================================
-     APPLY PAYLOAD
+     RECONCILE  — apply a remote payload to localStorage
+     returns the list of keys that actually changed on this device
      ================================================================= */
-  function applyPayload(payload) {
-    if (payload.stores && typeof payload.stores === "object") {
-      var addedKeys = 0, changedKeys = 0;
+  function reconcile(remote) {
+    var meta = readMeta(), changed = [];
+    var rStores = remote.stores || {}, rTs = remote.tsMap || {}, rDel = remote.del || {};
+    var legacyTs = remote.ts || 0;
+    var keys = {};
+    Object.keys(rStores).forEach(function (k) { keys[k] = 1; });
+    Object.keys(rDel).forEach(function (k) { keys[k] = 1; });
 
-      Object.keys(payload.stores).forEach(function (k) {
-        if (SKIP_KEYS[k] || k.indexOf("kpsc_qr_cache") === 0) return;
-        var remote = payload.stores[k];
-        var localRaw = localStorage.getItem(k);
+    applying = true;
+    try {
+      Object.keys(keys).forEach(function (k) {
+        if (isSkipped(k)) return;
 
-        if (localRaw === null) {
-          try { localStorage.setItem(k, JSON.stringify(remote)); addedKeys++; } catch (e) {}
+        var lraw   = localStorage.getItem(k);
+        var exists = lraw !== null;
+        var lts    = exists ? (meta.ts[k] || 1) : 0;
+        var ldel   = meta.del[k] || 0;
+        var hasR   = Object.prototype.hasOwnProperty.call(rStores, k);
+        var rraw   = hasR ? rStores[k] : null;
+        var rts    = hasR ? (rTs[k] || legacyTs || 1) : 0;
+        var rdel   = rDel[k] || 0;
+        var newest = Math.max(lts, ldel, rts, rdel);
+        if (!newest) return;
+
+        /* 1) newest event is a REMOTE delete */
+        if (rdel === newest && rdel >= lts && rdel >= rts) {
+          if (exists) { origRemove.call(localStorage, k); changed.push(k); }
+          meta.del[k] = rdel; delete meta.ts[k];
+          return;
+        }
+        /* 2) newest event is a LOCAL delete — keep it deleted (push sends the tombstone) */
+        if (ldel === newest && ldel >= lts && ldel >= rts) return;
+
+        if (!hasR) return;
+
+        /* 3) writes */
+        if (!exists) {
+          origSet.call(localStorage, k, rraw);
+          meta.ts[k] = rts; delete meta.del[k];
+          changed.push(k);
           return;
         }
 
-        var local;
-        try { local = JSON.parse(localRaw); }
-        catch (e) {
-          try { localStorage.setItem(k, JSON.stringify(remote)); changedKeys++; } catch (e2) {}
-          return;
+        var lp = tryParse(lraw), rp = tryParse(rraw), mergedRaw = lraw, differs = false;
+        if (!lp.ok || !rp.ok || isSnapshot(lp.val) || isSnapshot(rp.val)) {
+          if (rts > lts) { mergedRaw = rraw; differs = (lraw !== rraw); }
+        } else {
+          var m = (rts > lts) ? deepMerge(lp.val, rp.val) : deepMerge(rp.val, lp.val);
+          if (stable(m) !== stable(lp.val)) { mergedRaw = JSON.stringify(m); differs = true; }
         }
-
-        /* Only rewrite if remote actually has something new */
-        if (!hasNewData(local, remote)) return;
-
-        var merged = deepMerge(local, remote);
-        try { localStorage.setItem(k, JSON.stringify(merged)); changedKeys++; } catch (e) {}
+        if (differs) { origSet.call(localStorage, k, mergedRaw); changed.push(k); }
+        meta.ts[k] = Math.max(lts, rts);
       });
+    } finally { applying = false; }
 
-      return { addedMock: addedKeys, addedAnswers: changedKeys };
-    }
+    writeMeta(meta);
+    return changed;
+  }
 
-    /* Legacy v1 payload */
-    var addedMock = 0, addedAnswers = 0;
-    Object.keys(payload.mock || {}).forEach(function (k) {
-      var remote = payload.mock[k] || {};
-      var localRaw = localStorage.getItem(k);
-      if (!localRaw) {
-        try { localStorage.setItem(k, JSON.stringify(remote)); addedMock++; } catch (e) {}
-        return;
-      }
-      try {
-        var local = JSON.parse(localRaw);
-        if (!hasNewData(local, remote)) return;
-        var merged = deepMerge(local, remote);
-        localStorage.setItem(k, JSON.stringify(merged));
-        addedAnswers++;
-      } catch (e) {}
-    });
-    return { addedMock: addedMock, addedAnswers: addedAnswers };
+  function applyPayload(payload) { return reconcile(normalizeRemote(payload)); }
+
+  /* =================================================================
+     EVENT — tell the page something arrived from another device.
+     A page can call event.preventDefault() and handle it itself.
+     Otherwise the page reloads so it shows the fresh data.
+     ================================================================= */
+  function notifyApplied(changed, source) {
+    if (!changed || !changed.length) return;
+    var ev;
+    try {
+      ev = new CustomEvent("kpsc-sync-applied", { cancelable: true, detail: { keys: changed, source: source } });
+    } catch (e) { ev = null; }
+    var proceed = ev ? window.dispatchEvent(ev) : true;
+    if (!proceed) return;
+    if (source === "initial" && usedReady) return;      /* page waited for us — no reload needed */
+    setTimeout(function () { location.reload(); }, 300);
   }
 
   /* =================================================================
      FIREBASE
      ================================================================= */
+  function hasAuthHint() {
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf("firebase:authUser:") === 0) return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
   function loadFirebaseSDK() {
     if (fbSDKPromise) return fbSDKPromise;
     if (!ENABLE_FIREBASE) return Promise.reject(new Error("Firebase not configured"));
@@ -254,9 +357,14 @@
       firebaseReady = true;
       return new Promise(function (resolve) {
         firebaseAuth.onAuthStateChanged(function (user) {
+          var first = firstAuthEvent; firstAuthEvent = false;
           currentUser = user;
           updateAccountUI();
-          if (user) autoPullOnLoad();
+          if (user) {
+            runInitialSync(first ? "initial" : "signin");
+          } else {
+            gistInitial();
+          }
           resolve(user);
         });
       });
@@ -265,53 +373,46 @@
     return fbSDKPromise;
   }
 
+  function userDoc() { return firestoreDb.collection(FIRESTORE_COL).doc(currentUser.uid); }
+
   function firebasePull() {
     if (!firebaseReady || !currentUser) return Promise.resolve(null);
-    return firestoreDb.collection(FIRESTORE_COL).doc(currentUser.uid).get()
-      .then(function (doc) { return doc.exists ? (doc.data() || null) : null; });
+    return userDoc().get().then(function (doc) { return doc.exists ? (doc.data() || null) : null; });
   }
 
-  function firebasePush() {
-    if (!firebaseReady || !currentUser) return Promise.resolve(false);
-    if (pushing) { pushQueued = true; return Promise.resolve(false); }
+  /* read -> merge into local -> write merged result, atomically */
+  function firebaseMergePush() {
+    if (!firebaseReady || !currentUser) return Promise.resolve(null);
+    if (pushing) { pushQueued = true; return Promise.resolve(null); }
     pushing = true;
-    var payload = collectPayload();
-    payload.uid     = currentUser.uid;
-    payload.email   = currentUser.email || "";
-    payload.updated = window.firebase.firestore.FieldValue.serverTimestamp();
+    var ref = userDoc(), changed = [];
 
-    return firestoreDb.collection(FIRESTORE_COL).doc(currentUser.uid).set(payload)
-      .then(function () {
-        localStorage.setItem(LASTS_KEY, String(Date.now()));
-        updateStatusUI("ok", "Saved " + new Date().toLocaleTimeString());
-        pushDone();
-        return true;
-      })
-      .catch(function (err) {
-        pushDone();
-        updateStatusUI("err", "Save failed: " + (err.message || err));
-        throw err;
+    return firestoreDb.runTransaction(function (tx) {
+      return tx.get(ref).then(function (snap) {
+        changed = snap.exists ? reconcile(normalizeRemote(snap.data() || {})) : [];
+        var payload = collectPayload();
+        payload.uid     = currentUser.uid;
+        payload.email   = currentUser.email || "";
+        payload.updated = window.firebase.firestore.FieldValue.serverTimestamp();
+        tx.set(ref, payload);
       });
+    }).then(function () {
+      origSet.call(localStorage, LASTS_KEY, String(Date.now()));
+      updateStatusUI("ok", "Saved " + new Date().toLocaleTimeString());
+      pushDone();
+      return changed;
+    }).catch(function (err) {
+      pushDone();
+      updateStatusUI("err", "Save failed: " + (err.message || err));
+      throw err;
+    });
   }
 
-  function fbSyncNow() {
-    if (!firebaseReady || !currentUser || syncing) return Promise.resolve(null);
-    syncing = true;
+  function runInitialSync(source) {
     updateStatusUI("wait", "Syncing…");
-    return firebasePull()
-      .then(function (remote) { return remote ? applyPayload(remote) : { addedMock: 0, addedAnswers: 0 }; })
-      .then(function (added) {
-        return firebasePush().then(function () {
-          syncing = false;
-          updateStatusUI("ok", "Synced " + new Date().toLocaleTimeString());
-          return added;
-        });
-      })
-      .catch(function (err) {
-        syncing = false;
-        updateStatusUI("err", "Sync failed: " + (err.message || err));
-        throw err;
-      });
+    return firebaseMergePush()
+      .then(function (changed) { markReady(); notifyApplied(changed, source); })
+      .catch(function (e) { console.warn("initial sync:", e); markReady(); });
   }
 
   function signInGoogle() {
@@ -319,16 +420,9 @@
     provider.setCustomParameters({ prompt: "select_account" });
     return firebaseAuth.signInWithPopup(provider);
   }
-  function signInEmail(email, password) {
-    return firebaseAuth.signInWithEmailAndPassword(email, password);
-  }
-  function signUpEmail(email, password) {
-    return firebaseAuth.createUserWithEmailAndPassword(email, password);
-  }
-  function signOut() {
-    if (!firebaseReady) return Promise.resolve();
-    return firebaseAuth.signOut();
-  }
+  function signInEmail(email, password) { return firebaseAuth.signInWithEmailAndPassword(email, password); }
+  function signUpEmail(email, password) { return firebaseAuth.createUserWithEmailAndPassword(email, password); }
+  function signOut() { return firebaseReady ? firebaseAuth.signOut() : Promise.resolve(); }
 
   /* =================================================================
      GIST FALLBACK
@@ -338,10 +432,9 @@
   function isGistConnected() { return !!(getToken() && getGistId()); }
 
   function ghFetch(url, opts) {
-    var token = getToken();
     opts = opts || {};
     opts.headers = Object.assign({
-      "Authorization": "token " + token,
+      "Authorization": "token " + getToken(),
       "Accept": "application/vnd.github+json",
       "Content-Type": "application/json"
     }, opts.headers || {});
@@ -357,8 +450,11 @@
     });
   }
 
+  function gistFiles(payload) {
+    var o = {}; o[GIST_FILE] = { content: JSON.stringify(payload) }; return o;
+  }
+
   function createGist(token) {
-    var payload = collectPayload();
     return fetch("https://api.github.com/gists", {
       method: "POST",
       headers: {
@@ -369,7 +465,7 @@
       body: JSON.stringify({
         description: "Kerala PSC Study Suite — progress",
         public: false,
-        files: (function () { var o = {}; o[GIST_FILE] = { content: JSON.stringify(payload) }; return o; })()
+        files: gistFiles(collectPayload())
       })
     }).then(function (res) {
       return res.json().then(function (body) {
@@ -381,29 +477,29 @@
 
   function pullGist() {
     if (!isGistConnected()) return Promise.resolve(null);
-    return ghFetch("https://api.github.com/gists/" + getGistId())
-      .then(function (gist) {
-        var file = gist.files && gist.files[GIST_FILE];
-        if (!file || !file.content) return null;
-        try { return JSON.parse(file.content); } catch (e) { return null; }
-      });
+    return ghFetch("https://api.github.com/gists/" + getGistId()).then(function (gist) {
+      var file = gist.files && gist.files[GIST_FILE];
+      if (!file || !file.content) return null;
+      try { return JSON.parse(file.content); } catch (e) { return null; }
+    });
   }
 
-  function pushGist() {
-    if (!isGistConnected()) return Promise.resolve(false);
-    if (pushing) { pushQueued = true; return Promise.resolve(false); }
+  /* pull -> merge -> push */
+  function gistMergePush() {
+    if (!isGistConnected()) return Promise.resolve(null);
+    if (pushing) { pushQueued = true; return Promise.resolve(null); }
     pushing = true;
-    var payload = collectPayload();
-    return ghFetch("https://api.github.com/gists/" + getGistId(), {
-      method: "PATCH",
-      body: JSON.stringify({
-        files: (function () { var o = {}; o[GIST_FILE] = { content: JSON.stringify(payload) }; return o; })()
-      })
-    }).then(function () {
-      localStorage.setItem(LASTS_KEY, String(Date.now()));
-      updateStatusUI("ok", "Pushed " + new Date().toLocaleTimeString());
+    return pullGist().then(function (remote) {
+      var changed = remote ? reconcile(normalizeRemote(remote)) : [];
+      return ghFetch("https://api.github.com/gists/" + getGistId(), {
+        method: "PATCH",
+        body: JSON.stringify({ files: gistFiles(collectPayload()) })
+      }).then(function () { return changed; });
+    }).then(function (changed) {
+      origSet.call(localStorage, LASTS_KEY, String(Date.now()));
+      updateStatusUI("ok", "Saved " + new Date().toLocaleTimeString());
       pushDone();
-      return true;
+      return changed;
     }).catch(function (err) {
       pushDone();
       updateStatusUI("err", "Push failed: " + err.message);
@@ -411,13 +507,20 @@
     });
   }
 
+  function gistInitial() {
+    if (!isGistConnected()) { markReady(); return Promise.resolve(); }
+    return gistMergePush()
+      .then(function (changed) { markReady(); notifyApplied(changed, "initial"); })
+      .catch(function (e) { console.warn("gist initial:", e); markReady(); });
+  }
+
   /* =================================================================
      AUTO-SYNC
      ================================================================= */
   function pushNow() {
-    if (currentUser) return firebasePush();
-    if (isGistConnected()) return pushGist();
-    return Promise.resolve(false);
+    if (currentUser) return firebaseMergePush();
+    if (isGistConnected()) return gistMergePush();
+    return Promise.resolve(null);
   }
 
   function schedulePush() {
@@ -434,53 +537,64 @@
     if (pushQueued) { pushQueued = false; schedulePush(); }
   }
 
-  (function interceptSetItem() {
-    var orig = localStorage.setItem;
-    localStorage.setItem = function (key, value) {
-      orig.apply(localStorage, arguments);
-      try { if (isTrackedKey(key, value)) schedulePush(); } catch (e) {}
-    };
-  })();
+  /* wrap localStorage writes / deletes (only for localStorage, not sessionStorage) */
+  Storage.prototype.setItem = function (key, value) {
+    origSet.apply(this, arguments);
+    if (this !== window.localStorage || applying) return;
+    try {
+      if (isTrackedKey(key, String(value))) { markWrite(key); schedulePush(); }
+    } catch (e) {}
+  };
+  Storage.prototype.removeItem = function (key) {
+    var track = false;
+    if (this === window.localStorage && !applying) {
+      try {
+        var cur = window.localStorage.getItem(key);
+        track = cur !== null && isTrackedKey(key, cur);
+      } catch (e) {}
+    }
+    origRemove.apply(this, arguments);
+    if (track) { try { markDelete(key); schedulePush(); } catch (e) {} }
+  };
 
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       clearTimeout(pushTimer);
       pushNow().catch(function () {});
     } else {
-      autoPullOnLoad();
+      autoPull();
     }
   });
   window.addEventListener("pagehide", function () {
     clearTimeout(pushTimer);
     pushNow().catch(function () {});
   });
-  window.addEventListener("focus", function () { autoPullOnLoad(); });
+  window.addEventListener("focus", function () { autoPull(); });
 
-  function autoPullOnLoad() {
-    if (pulling) return;
+  /* pull-only refresh (focus / tab visible) */
+  function autoPull() {
+    if (pulling || !initialDone) return;
     if (!currentUser && !isGistConnected()) return;
-
     var now = Date.now();
     if (now - lastPull < PULL_THROTTLE) return;
     lastPull = now;
 
     pulling = true;
-    var doPull = null;
-    if (firebaseReady && currentUser) doPull = firebasePull();
-    else doPull = pullGist();
+    var p = (firebaseReady && currentUser) ? firebasePull() : pullGist();
+    p.then(function (remote) {
+      pulling = false;
+      if (!remote) return;
+      notifyApplied(reconcile(normalizeRemote(remote)), "pull");
+    }).catch(function (e) { pulling = false; console.warn("auto-pull:", e); });
+  }
 
-    doPull
-      .then(function (remote) {
-        pulling = false;
-        if (!remote) return null;
-        var added = applyPayload(remote);
-        if (added.addedMock > 0 || added.addedAnswers > 0) {
-          /* Only reload when new data actually merged */
-          console.log("sync: pulled", added, "— reloading");
-          setTimeout(function () { location.reload(); }, 300);
-        }
-      })
-      .catch(function (e) { pulling = false; console.warn("auto-pull:", e); });
+  /* pages call this BEFORE deciding resume / start-new */
+  function whenReady(ms) {
+    usedReady = true;
+    return Promise.race([
+      readyPromise,
+      new Promise(function (r) { setTimeout(r, ms || READY_MAX_WAIT); })
+    ]);
   }
 
   /* =================================================================
@@ -500,8 +614,8 @@
       "box-shadow:0 0 0 2px #0b5d63;}" +
     ".kpsc-sync-btn.connected::after{background:#3ddc97;}" +
     ".kpsc-sync-btn.error::after{background:#ef4444;}" +
-    ".kpsc-sync-btn.saving::after{background:#f59e0b;animation:pulse 1s ease infinite;}" +
-    "@keyframes pulse{50%{opacity:.4;}}" +
+    ".kpsc-sync-btn.saving::after{background:#f59e0b;animation:kpscpulse 1s ease infinite;}" +
+    "@keyframes kpscpulse{50%{opacity:.4;}}" +
     "@media print{.kpsc-sync-btn{display:none !important;}}" +
     "@media (prefers-reduced-motion:reduce){.kpsc-sync-btn,.kpsc-sync-btn::after,.kpsc-status .dot{animation:none !important;transition:none !important;}}" +
 
@@ -578,7 +692,7 @@
     ".kpsc-status .row{display:flex;gap:8px;align-items:center;}" +
     ".kpsc-status .dot{width:9px;height:9px;border-radius:50%;background:#94a3b8;flex:0 0 auto;}" +
     ".kpsc-status .dot.ok{background:#17a06a;}" +
-    ".kpsc-status .dot.wait{background:#f59e0b;animation:pulse 1s ease infinite;}" +
+    ".kpsc-status .dot.wait{background:#f59e0b;animation:kpscpulse 1s ease infinite;}" +
     ".kpsc-status .dot.err{background:#c5221f;}" +
 
     "@media (max-width:520px){" +
@@ -598,6 +712,7 @@
      MODAL
      ================================================================= */
   function buildModal() {
+    if (document.getElementById("kpscSyncModal")) return document.getElementById("kpscSyncModal");
     var m = document.createElement("div");
     m.className = "kpsc-sync-modal";
     m.id = "kpscSyncModal";
@@ -637,7 +752,7 @@
       '      <div class="kpsc-note" id="kpscAccountNote" style="display:none"></div>',
       '      <div class="kpsc-note info">',
       '        <b>&#8505;&#65039; Auto-save is on.</b>',
-      '        Every answer you give is saved to the cloud within a second.',
+      '        Every answer you give is saved to the cloud within a second. Open the same page on another device and tap <b style="display:inline">Resume</b>.',
       '      </div>',
       '    </div>',
       '    <div id="kpscLoggedOut">',
@@ -674,7 +789,7 @@
       '    <div class="kpsc-note" id="kpscExportInfo"></div>',
       '  </div>',
       '  <div class="kpsc-panel hidden" data-panel="import">',
-      '    <p>Paste a code from another device. Existing answers are kept.</p>',
+      '    <p>Paste a code from another device. Newer progress wins; nothing newer is lost.</p>',
       '    <textarea class="kpsc-code" id="kpscImportCode" placeholder="KPS1...." spellcheck="false"></textarea>',
       '    <div class="kpsc-actions">',
       '      <button type="button" class="primary" id="kpscLoadBtn">&#11014; Load &amp; merge</button>',
@@ -772,17 +887,12 @@
     el.innerHTML = "<b>" + title + "</b>" + (body || "");
   }
 
+  /* ----- sign in / out: onAuthStateChanged runs the merge-sync for us ----- */
   function doGoogle() {
     flash("kpscAuthNote", "info", "Signing in…", "Check the popup window.");
     loadFirebaseSDK()
       .then(function () { return signInGoogle(); })
-      .then(function () { flash("kpscAuthNote", "", "Signed in", "Syncing your progress…"); return firebasePull(); })
-      .then(function (remote) {
-        if (remote) {
-          var added = applyPayload(remote);
-          if (added.addedMock || added.addedAnswers) setTimeout(function () { location.reload(); }, 800);
-        } else { return firebasePush(); }
-      })
+      .then(function () { flash("kpscAuthNote", "", "Signed in", "Syncing your progress…"); })
       .catch(function (err) { flash("kpscAuthNote", "err", "Sign-in failed", err.message || err); });
   }
 
@@ -792,13 +902,7 @@
     if (!email || !pass) { flash("kpscAuthNote", "err", "Missing info", "Enter email and password."); return; }
     loadFirebaseSDK()
       .then(function () { return signInEmail(email, pass); })
-      .then(function () { flash("kpscAuthNote", "", "Signed in", "Syncing…"); return firebasePull(); })
-      .then(function (remote) {
-        if (remote) {
-          var added = applyPayload(remote);
-          if (added.addedMock || added.addedAnswers) setTimeout(function () { location.reload(); }, 800);
-        } else { return firebasePush(); }
-      })
+      .then(function () { flash("kpscAuthNote", "", "Signed in", "Syncing…"); })
       .catch(function (err) { flash("kpscAuthNote", "err", "Sign-in failed", err.message || err); });
   }
 
@@ -808,7 +912,7 @@
     if (!email || !pass || pass.length < 6) { flash("kpscAuthNote", "err", "Password too short", "Use at least 6 characters."); return; }
     loadFirebaseSDK()
       .then(function () { return signUpEmail(email, pass); })
-      .then(function () { flash("kpscAuthNote", "", "Account created", "Syncing your progress…"); return firebasePush(); })
+      .then(function () { flash("kpscAuthNote", "", "Account created", "Syncing your progress…"); })
       .catch(function (err) { flash("kpscAuthNote", "err", "Could not create account", err.message || err); });
   }
 
@@ -819,12 +923,12 @@
 
   function doSyncNow() {
     if (!currentUser) return;
-    fbSyncNow()
-      .then(function (added) {
-        if (added && (added.addedMock || added.addedAnswers)) {
-          flash("kpscAccountNote", "", "Merged new progress",
-            added.addedMock + " key(s), " + added.addedAnswers + " update(s). Reloading…");
-          setTimeout(function () { location.reload(); }, 1200);
+    updateStatusUI("wait", "Syncing…");
+    firebaseMergePush()
+      .then(function (changed) {
+        if (changed && changed.length) {
+          flash("kpscAccountNote", "", "Merged new progress", changed.length + " item(s) updated. Reloading…");
+          notifyApplied(changed, "manual");
         } else { flash("kpscAccountNote", "", "Up to date", "Everything is synced."); }
       })
       .catch(function (err) { flash("kpscAccountNote", "err", "Sync failed", err.message || err); });
@@ -838,31 +942,24 @@
       return;
     }
     if (gistId) {
-      localStorage.setItem(TOKEN_KEY, token);
-      localStorage.setItem(GIST_KEY, gistId);
-      pullGist()
-        .then(function (remote) {
-          if (remote) {
-            var added = applyPayload(remote);
-            flash("kpscSetupNote", "", "Connected", (added.addedMock || added.addedAnswers) ? "Progress pulled. Reloading…" : "");
-            if (added.addedMock || added.addedAnswers) setTimeout(function () { location.reload(); }, 800);
-            else updateAccountUI();
-          } else {
-            flash("kpscSetupNote", "warn", "Connected but empty", "No progress found in this Gist.");
-            updateAccountUI();
-            pushGist().catch(function () {});
-          }
+      origSet.call(localStorage, TOKEN_KEY, token);
+      origSet.call(localStorage, GIST_KEY, gistId);
+      gistMergePush()
+        .then(function (changed) {
+          flash("kpscSetupNote", "", "Connected", (changed && changed.length) ? "Progress pulled. Reloading…" : "");
+          updateAccountUI();
+          notifyApplied(changed, "manual");
         })
         .catch(function (err) {
-          localStorage.removeItem(TOKEN_KEY);
-          localStorage.removeItem(GIST_KEY);
+          origRemove.call(localStorage, TOKEN_KEY);
+          origRemove.call(localStorage, GIST_KEY);
           flash("kpscSetupNote", "err", "Connection failed", err.message);
         });
     } else {
       createGist(token)
         .then(function (gist) {
-          localStorage.setItem(TOKEN_KEY, token);
-          localStorage.setItem(GIST_KEY, gist.id);
+          origSet.call(localStorage, TOKEN_KEY, token);
+          origSet.call(localStorage, GIST_KEY, gist.id);
           flash("kpscSetupNote", "", "Gist created", "Gist ID: <code>" + gist.id + "</code>");
           updateAccountUI();
         })
@@ -872,22 +969,19 @@
 
   function doGistDisconnect() {
     if (!confirm("Disconnect Gist? Local progress stays.")) return;
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(GIST_KEY);
+    origRemove.call(localStorage, TOKEN_KEY);
+    origRemove.call(localStorage, GIST_KEY);
     updateAccountUI();
     flash("kpscSetupNote", "warn", "Disconnected", "");
   }
 
   function doGistSyncNow() {
-    pullGist()
-      .then(function (remote) { return remote ? applyPayload(remote) : null; })
-      .then(function (added) {
-        return pushGist().then(function () {
-          if (added && (added.addedMock || added.addedAnswers)) {
-            flash("kpscSetupNote", "", "Merged", added.addedMock + " key(s), " + added.addedAnswers + " update(s).");
-            setTimeout(function () { location.reload(); }, 1000);
-          }
-        });
+    gistMergePush()
+      .then(function (changed) {
+        if (changed && changed.length) {
+          flash("kpscSetupNote", "", "Merged", changed.length + " item(s) updated.");
+          notifyApplied(changed, "manual");
+        } else { flash("kpscSetupNote", "", "Up to date", ""); }
       })
       .catch(function (err) { flash("kpscSetupNote", "err", "Sync failed", err.message); });
   }
@@ -942,11 +1036,10 @@
     var raw = (ta.value || "").trim();
     if (!raw) { info.className = "kpsc-note warn"; info.innerHTML = "<b>Empty</b>Paste a code first."; return; }
     try {
-      var payload = decode(raw);
-      var res = applyPayload(payload);
+      var changed = applyPayload(decode(raw));
       info.className = "kpsc-note";
-      info.innerHTML = "<b>&#10003; Loaded</b>Merged " + res.addedMock + " key(s), " + res.addedAnswers + " update(s).";
-      setTimeout(function () { location.reload(); }, 1200);
+      info.innerHTML = "<b>&#10003; Loaded</b>" + changed.length + " item(s) updated.";
+      if (changed.length) { schedulePush(); notifyApplied(changed, "import"); }
     } catch (e) {
       info.className = "kpsc-note err";
       info.innerHTML = "<b>Invalid code</b>" + (e.message || e);
@@ -1017,19 +1110,24 @@
     injectButton();
     buildModal();
     bindEvents();
+    updateAccountUI();
     if (ENABLE_FIREBASE) {
       loadFirebaseSDK()
-        .then(function () { updateAccountUI(); autoPullOnLoad(); })
+        .then(function () { updateAccountUI(); })
         .catch(function (err) {
           console.warn("Firebase unavailable:", err.message);
           updateAccountUI();
-          autoPullOnLoad();
+          gistInitial();
         });
     } else {
-      updateAccountUI();
-      autoPullOnLoad();
+      gistInitial();
     }
   }
+
+  /* Nobody signed in & no Gist => nothing to wait for, pages start instantly.
+     Otherwise whenReady() resolves after the first cloud merge (or timeout). */
+  if (!hasAuthHint() && !isGistConnected()) markReady();
+  setTimeout(markReady, READY_MAX_WAIT + 1500);   /* absolute safety net */
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
@@ -1038,13 +1136,14 @@
   }
 
   window.KPSC_Sync = {
-    __version: 5.2,
+    __version: 6.0,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
     isConnected: function () { return !!currentUser || isGistConnected(); },
-    syncNow:     function () { return currentUser ? fbSyncNow() : doGistSyncNow(); },
+    syncNow:     function () { return pushNow(); },
     push:        function () { return pushNow(); },
+    whenReady:   whenReady,
     trackedKeys: scanTrackedKeys
   };
 })();
