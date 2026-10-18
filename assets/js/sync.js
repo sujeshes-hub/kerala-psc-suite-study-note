@@ -1,23 +1,12 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 6.0
-   Changes:
-     - Force-apply newer remote payloads (fixes cross-device sync)
-     - Persistent sync banner on errors (permission denied, network)
-     - "Force pull from cloud" button in Account tab
-     - `?debug=1` URL flag for verbose logging
-     - Prevent push-during-apply loops
-     - file:// warning
-     - Suppress per-setItem pushes during applyPayload
+   Version: 6.1 - Shows User UID in account modal
    ===================================================================== */
 (function () {
   "use strict";
   if (window.KPSC_Sync) return;
 
-  /* -----------------------------------------------------------------
-     Firebase config
-     ----------------------------------------------------------------- */
   var FIREBASE_CONFIG = {
     apiKey:            "AIzaSyAG6V1Iqcve3I7pEbj5VWsFNidiDVsymaA",
     authDomain:        "kerala-psc-suite.firebaseapp.com",
@@ -35,8 +24,8 @@
   var TOKEN_KEY     = "kpsc_gh_token";
   var GIST_KEY      = "kpsc_gh_gist_id";
   var LASTS_KEY     = "kpsc_last_sync";
-  var LASTREMOTE_KEY = "__kpsc_lastRemoteTs";   // ts of last applied remote payload
-  var LASTLOCAL_KEY  = "__kpsc_lastLocalMod";   // ts of last user edit (for debugging)
+  var LASTREMOTE_KEY = "__kpsc_lastRemoteTs";
+  var LASTLOCAL_KEY  = "__kpsc_lastLocalMod";
   var GIST_FILE     = "kerala-psc-progress.json";
   var FIRESTORE_COL = "users";
   var SAVE_DEBOUNCE = 900;
@@ -58,11 +47,8 @@
   var firebaseReady = false, currentUser = null;
   var pushing = false, pushQueued = false, pulling = false;
   var lastPull = 0, pushTimer = null, syncing = false, fbSDKPromise = null;
-  var applyingPayload = false;   // guard: suppress push during applyPayload
+  var applyingPayload = false;
 
-  /* -----------------------------------------------------------------
-     Key detection
-     ----------------------------------------------------------------- */
   function isTrackedKey(k, v) {
     if (!k || typeof k !== "string") return false;
     if (SKIP_KEYS[k]) return false;
@@ -92,9 +78,6 @@
     return out;
   }
 
-  /* -----------------------------------------------------------------
-     Payload
-     ----------------------------------------------------------------- */
   function collectPayload() {
     var keys = scanTrackedKeys();
     var stores = {};
@@ -124,9 +107,6 @@
     return obj;
   }
 
-  /* -----------------------------------------------------------------
-     Deep merge + "has new data" check
-     ----------------------------------------------------------------- */
   function deepMerge(local, remote) {
     if (typeof local !== typeof remote) return remote;
     if (local === null || remote === null) return remote;
@@ -179,14 +159,9 @@
       }
       return false;
     }
-
-    // Primitives: caller decides via `force` when remote is known newer.
     return false;
   }
 
-  /* -----------------------------------------------------------------
-     Apply payload
-     ----------------------------------------------------------------- */
   function applyPayload(payload, opts) {
     opts = opts || {};
     var force = !!opts.force;
@@ -242,9 +217,6 @@
     return { addedMock: added, addedAnswers: changed, totalChanged: added + changed };
   }
 
-  /* -----------------------------------------------------------------
-     Error banner
-     ----------------------------------------------------------------- */
   function showSyncBanner(kind, title, msg) {
     var b = document.getElementById("kpscSyncBanner");
     if (!b) {
@@ -267,9 +239,6 @@
     if (b) b.style.display = "none";
   }
 
-  /* -----------------------------------------------------------------
-     Firebase
-     ----------------------------------------------------------------- */
   function loadFirebaseSDK() {
     if (fbSDKPromise) return fbSDKPromise;
     if (!ENABLE_FIREBASE) return Promise.reject(new Error("Firebase not configured"));
@@ -333,8 +302,7 @@
         var msg = String((err && err.message) || err);
         if (/permission|insufficient|denied/i.test(msg)) {
           showSyncBanner("err", "Cloud write denied",
-            "Firestore security rules are blocking writes. Your progress is saved locally " +
-            "but NOT synced. Fix in Firebase Console → Firestore → Rules.");
+            "Firestore rules are blocking writes. Fix in Firebase Console → Firestore → Rules.");
         } else {
           showSyncBanner("err", "Save failed", msg);
         }
@@ -372,9 +340,6 @@
   function signUpEmail(email, password) { return firebaseAuth.createUserWithEmailAndPassword(email, password); }
   function signOut() { return firebaseReady ? firebaseAuth.signOut() : Promise.resolve(); }
 
-  /* -----------------------------------------------------------------
-     Gist fallback
-     ----------------------------------------------------------------- */
   function getToken()  { return localStorage.getItem(TOKEN_KEY) || ""; }
   function getGistId() { return localStorage.getItem(GIST_KEY)  || ""; }
   function isGistConnected() { return !!(getToken() && getGistId()); }
@@ -454,9 +419,6 @@
     });
   }
 
-  /* -----------------------------------------------------------------
-     Auto-sync
-     ----------------------------------------------------------------- */
   function pushNow() {
     if (currentUser) return firebasePush();
     if (isGistConnected()) return pushGist();
@@ -507,10 +469,7 @@
 
   function autoPullOnLoad() {
     if (pulling) return;
-    if (!currentUser && !isGistConnected()) {
-      dbg("pull skipped: not signed in");
-      return;
-    }
+    if (!currentUser && !isGistConnected()) return;
     var now = Date.now();
     if (now - lastPull < PULL_THROTTLE) return;
     lastPull = now;
@@ -521,40 +480,30 @@
     doPull.then(function (remote) {
       pulling = false;
       if (!remote) {
-        dbg("pull: no remote data");
         if (scanTrackedKeys().length > 0) schedulePush();
         return;
       }
       var added = applyPayload(remote);
       if (added.totalChanged > 0) {
-        dbg("pull: reloading after", added);
         setTimeout(function () { location.reload(); }, 300);
       } else {
-        // Nothing new from cloud — push any local-only keys
         var remoteKeys = Object.keys(remote.stores || {});
         var localKeys  = scanTrackedKeys();
         var localOnly  = localKeys.filter(function (k) { return remoteKeys.indexOf(k) === -1; });
-        if (localOnly.length > 0) {
-          dbg("pull: pushing", localOnly.length, "local-only keys");
-          schedulePush();
-        }
+        if (localOnly.length > 0) schedulePush();
       }
     }).catch(function (e) {
       pulling = false;
       var msg = String((e && e.message) || e);
-      dbg("pull failed:", msg);
       if (/permission|insufficient|denied/i.test(msg)) {
         showSyncBanner("err", "Cloud read denied",
-          "Firestore security rules are blocking reads. Fix in Firebase Console → Firestore → Rules.");
+          "Firestore rules are blocking reads. Fix in Firebase Console → Firestore → Rules.");
       } else if (/network|fetch|offline/i.test(msg)) {
         showSyncBanner("err", "Network error", "Check your connection.");
       }
     });
   }
 
-  /* -----------------------------------------------------------------
-     UI — styles
-     ----------------------------------------------------------------- */
   var CSS =
     ".kpsc-sync-banner{position:fixed;top:0;left:0;right:0;z-index:10000;" +
       "display:none;align-items:center;gap:10px;padding:10px 16px;" +
@@ -661,9 +610,6 @@
     document.head.appendChild(s);
   }
 
-  /* -----------------------------------------------------------------
-     Modal
-     ----------------------------------------------------------------- */
   function buildModal() {
     if (document.getElementById("kpscSyncModal")) return document.getElementById("kpscSyncModal");
     var m = document.createElement("div");
@@ -688,6 +634,7 @@
       '        <div class="info">',
       '          <div class="name" id="kpscDisplayName">&nbsp;</div>',
       '          <div class="email" id="kpscUserEmail">&nbsp;</div>',
+      '          <div class="uid" id="kpscUserUid" style="font-size:.7rem;color:#94a3b8;font-family:monospace;word-break:break-all;"></div>',
       '        </div>',
       '      </div>',
       '      <div class="kpsc-status">',
@@ -811,6 +758,7 @@
       if ($("kpscLoggedOut")) $("kpscLoggedOut").style.display = "none";
       if ($("kpscDisplayName")) $("kpscDisplayName").textContent = currentUser.displayName || currentUser.email || "User";
       if ($("kpscUserEmail"))   $("kpscUserEmail").textContent   = currentUser.email || "";
+      if ($("kpscUserUid"))     $("kpscUserUid").textContent     = currentUser.uid ? "UID: " + currentUser.uid : "";
       var av = $("kpscAvatar");
       if (av) av.src = currentUser.photoURL ||
         "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='20' fill='%230b5d63'/></svg>";
@@ -840,16 +788,12 @@
     el.innerHTML = "<b>" + title + "</b>" + (body || "");
   }
 
-  /* -----------------------------------------------------------------
-     Actions
-     ----------------------------------------------------------------- */
   function doGoogle() {
     flash("kpscAuthNote", "info", "Signing in…", "Check the popup window.");
     loadFirebaseSDK()
       .then(function () { return signInGoogle(); })
       .then(function () {
         flash("kpscAuthNote", "", "Signed in", "Pulling your progress…");
-        // onAuthStateChanged will trigger autoPullOnLoad
       })
       .catch(function (err) { flash("kpscAuthNote", "err", "Sign-in failed", err.message || err); });
   }
@@ -1141,7 +1085,7 @@
   }
 
   window.KPSC_Sync = {
-    __version: 6.0,
+    __version: 6.1,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
