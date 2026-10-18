@@ -1,32 +1,13 @@
 /* =====================================================================
    Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
    Path: assets/js/sync.js
-   Version: 6.0
-
-   WHAT CHANGED vs 5.2 (cross-device resume fix)
-   1. Per-key timestamps: the NEWEST write wins (5.2 ignored a newer remote
-      value whenever the key already existed locally).
-   2. Deletions sync (tombstones): submitting a test / "Start fresh" /
-      "Reset quiz" on one device now removes it on the others too.
-   3. Mock-test attempts (objects with questionStates / timeRemaining) are
-      treated as snapshots: the newest whole attempt wins (no half-merging).
-   4. Push is a Firestore TRANSACTION (read -> merge -> write), so a device that
-      just opened can never overwrite newer cloud progress with its own blank state.
-   5. KPSC_Sync.whenReady(ms): pages wait for the first cloud pull BEFORE they
-      decide "resume or start new". Mock tests use this.
-   6. "kpsc-sync-applied" event (cancelable): pages may handle updates
-      themselves instead of the default auto-reload.
-   7. Lossless storage: values are synced as the exact localStorage strings.
-   8. Theme keys and Quick-Revision cache are never synced.
+   Version: 6.1 - Exposes getCurrentUser for UI badges
    ===================================================================== */
 (function () {
   "use strict";
 
   if (window.KPSC_Sync) return;
 
-  /* =================================================================
-     ▼▼▼  FIREBASE CONFIG  ▼▼▼
-     ================================================================= */
   var FIREBASE_CONFIG = {
     apiKey:            "AIzaSyAG6V1Iqcve3I7pEbj5VWsFNidiDVsymaA",
     authDomain:        "kerala-psc-suite.firebaseapp.com",
@@ -44,12 +25,12 @@
   var TOKEN_KEY     = "kpsc_gh_token";
   var GIST_KEY      = "kpsc_gh_gist_id";
   var LASTS_KEY     = "kpsc_last_sync";
-  var META_KEY      = "kpsc_sync_meta";           /* per-key timestamps + tombstones (never synced) */
+  var META_KEY      = "kpsc_sync_meta";
   var GIST_FILE     = "kerala-psc-progress.json";
   var FIRESTORE_COL = "users";
   var SAVE_DEBOUNCE = 900;
   var PULL_THROTTLE = 2500;
-  var TOMBSTONE_TTL = 1000 * 60 * 60 * 24 * 45;   /* 45 days */
+  var TOMBSTONE_TTL = 1000 * 60 * 60 * 24 * 45;
   var READY_MAX_WAIT = 5000;
 
   var SKIP_KEYS = {
@@ -59,7 +40,6 @@
   };
   var SKIP_PREFIXES = ["kpsc_qr_cache", "firebase", "__", "keralaTheme"];
 
-  /* keep the ORIGINAL storage methods — we wrap them below */
   var origSet    = Storage.prototype.setItem;
   var origRemove = Storage.prototype.removeItem;
 
@@ -67,9 +47,9 @@
   var firebaseReady = false, currentUser = null;
   var pushing = false, pushQueued = false, pulling = false, lastPull = 0;
   var pushTimer = null, fbSDKPromise = null;
-  var applying = false;                /* true while WE write to localStorage (don't stamp) */
+  var applying = false;
   var firstAuthEvent = true;
-  var usedReady = false;               /* some page is waiting for whenReady() */
+  var usedReady = false;
   var initialDone = false, readyResolve = null;
   var readyPromise = new Promise(function (r) { readyResolve = r; });
 
@@ -79,9 +59,6 @@
     readyResolve();
   }
 
-  /* =================================================================
-     KEY DETECTION
-     ================================================================= */
   function isSkipped(k) {
     if (SKIP_KEYS[k]) return true;
     for (var i = 0; i < SKIP_PREFIXES.length; i++) {
@@ -117,9 +94,6 @@
     return out;
   }
 
-  /* =================================================================
-     META  (per-key write time + deletion time)
-     ================================================================= */
   function readMeta() {
     try {
       var m = JSON.parse(localStorage.getItem(META_KEY) || "{}");
@@ -143,16 +117,13 @@
     var m = readMeta(); m.del[k] = Date.now(); delete m.ts[k]; writeMeta(m);
   }
 
-  /* =================================================================
-     PAYLOAD  (v3: stores = exact strings, tsMap, del)
-     ================================================================= */
   function collectPayload() {
     var meta = readMeta(), stores = {}, tsMap = {}, now = Date.now();
     scanTrackedKeys().forEach(function (k) {
       var raw = localStorage.getItem(k);
       if (raw === null) return;
       stores[k] = raw;
-      tsMap[k]  = meta.ts[k] || 1;            /* legacy keys (no stamp) lose every conflict */
+      tsMap[k]  = meta.ts[k] || 1;
     });
     var del = {};
     Object.keys(meta.del).forEach(function (k) {
@@ -161,7 +132,6 @@
     return { v: 3, ts: now, app: APP_ID, stores: stores, tsMap: tsMap, del: del };
   }
 
-  /* accepts v3 payloads AND old v1/v2 payloads */
   function normalizeRemote(p) {
     var out = { stores: {}, tsMap: p.tsMap || {}, del: p.del || {}, ts: p.ts || 0 };
     function put(k, v) { out.stores[k] = (typeof v === "string") ? v : JSON.stringify(v); }
@@ -191,10 +161,6 @@
     return obj;
   }
 
-  /* =================================================================
-     MERGE HELPERS
-     ================================================================= */
-  /* deepMerge(a, b): union of both; on a conflict b wins */
   function deepMerge(a, b) {
     if (typeof a !== typeof b) return b;
     if (a === null || b === null) return b;
@@ -232,16 +198,11 @@
     try { return { ok: true, val: JSON.parse(raw) }; } catch (e) { return { ok: false }; }
   }
 
-  /* a saved exam attempt: newest WHOLE object wins, never half-merged */
   function isSnapshot(v) {
     return !!v && typeof v === "object" && !Array.isArray(v) &&
            (Array.isArray(v.questionStates) || "timerEndTime" in v || "timeRemaining" in v);
   }
 
-  /* =================================================================
-     RECONCILE  — apply a remote payload to localStorage
-     returns the list of keys that actually changed on this device
-     ================================================================= */
   function reconcile(remote) {
     var meta = readMeta(), changed = [];
     var rStores = remote.stores || {}, rTs = remote.tsMap || {}, rDel = remote.del || {};
@@ -266,18 +227,15 @@
         var newest = Math.max(lts, ldel, rts, rdel);
         if (!newest) return;
 
-        /* 1) newest event is a REMOTE delete */
         if (rdel === newest && rdel >= lts && rdel >= rts) {
           if (exists) { origRemove.call(localStorage, k); changed.push(k); }
           meta.del[k] = rdel; delete meta.ts[k];
           return;
         }
-        /* 2) newest event is a LOCAL delete — keep it deleted (push sends the tombstone) */
         if (ldel === newest && ldel >= lts && ldel >= rts) return;
 
         if (!hasR) return;
 
-        /* 3) writes */
         if (!exists) {
           origSet.call(localStorage, k, rraw);
           meta.ts[k] = rts; delete meta.del[k];
@@ -303,11 +261,6 @@
 
   function applyPayload(payload) { return reconcile(normalizeRemote(payload)); }
 
-  /* =================================================================
-     EVENT — tell the page something arrived from another device.
-     A page can call event.preventDefault() and handle it itself.
-     Otherwise the page reloads so it shows the fresh data.
-     ================================================================= */
   function notifyApplied(changed, source) {
     if (!changed || !changed.length) return;
     var ev;
@@ -316,13 +269,10 @@
     } catch (e) { ev = null; }
     var proceed = ev ? window.dispatchEvent(ev) : true;
     if (!proceed) return;
-    if (source === "initial" && usedReady) return;      /* page waited for us — no reload needed */
+    if (source === "initial" && usedReady) return;
     setTimeout(function () { location.reload(); }, 300);
   }
 
-  /* =================================================================
-     FIREBASE
-     ================================================================= */
   function hasAuthHint() {
     try {
       for (var i = 0; i < localStorage.length; i++) {
@@ -380,7 +330,6 @@
     return userDoc().get().then(function (doc) { return doc.exists ? (doc.data() || null) : null; });
   }
 
-  /* read -> merge into local -> write merged result, atomically */
   function firebaseMergePush() {
     if (!firebaseReady || !currentUser) return Promise.resolve(null);
     if (pushing) { pushQueued = true; return Promise.resolve(null); }
@@ -424,9 +373,6 @@
   function signUpEmail(email, password) { return firebaseAuth.createUserWithEmailAndPassword(email, password); }
   function signOut() { return firebaseReady ? firebaseAuth.signOut() : Promise.resolve(); }
 
-  /* =================================================================
-     GIST FALLBACK
-     ================================================================= */
   function getToken()   { return localStorage.getItem(TOKEN_KEY) || ""; }
   function getGistId()  { return localStorage.getItem(GIST_KEY)  || ""; }
   function isGistConnected() { return !!(getToken() && getGistId()); }
@@ -484,7 +430,6 @@
     });
   }
 
-  /* pull -> merge -> push */
   function gistMergePush() {
     if (!isGistConnected()) return Promise.resolve(null);
     if (pushing) { pushQueued = true; return Promise.resolve(null); }
@@ -514,9 +459,6 @@
       .catch(function (e) { console.warn("gist initial:", e); markReady(); });
   }
 
-  /* =================================================================
-     AUTO-SYNC
-     ================================================================= */
   function pushNow() {
     if (currentUser) return firebaseMergePush();
     if (isGistConnected()) return gistMergePush();
@@ -537,7 +479,6 @@
     if (pushQueued) { pushQueued = false; schedulePush(); }
   }
 
-  /* wrap localStorage writes / deletes (only for localStorage, not sessionStorage) */
   Storage.prototype.setItem = function (key, value) {
     origSet.apply(this, arguments);
     if (this !== window.localStorage || applying) return;
@@ -571,7 +512,6 @@
   });
   window.addEventListener("focus", function () { autoPull(); });
 
-  /* pull-only refresh (focus / tab visible) */
   function autoPull() {
     if (pulling || !initialDone) return;
     if (!currentUser && !isGistConnected()) return;
@@ -588,7 +528,6 @@
     }).catch(function (e) { pulling = false; console.warn("auto-pull:", e); });
   }
 
-  /* pages call this BEFORE deciding resume / start-new */
   function whenReady(ms) {
     usedReady = true;
     return Promise.race([
@@ -597,9 +536,6 @@
     ]);
   }
 
-  /* =================================================================
-     UI — styles
-     ================================================================= */
   var CSS =
     ".kpsc-sync-btn{position:fixed;bottom:18px;right:18px;z-index:9998;" +
       "padding:11px 18px;border-radius:999px;border:none;cursor:pointer;" +
@@ -708,9 +644,6 @@
     document.head.appendChild(s);
   }
 
-  /* =================================================================
-     MODAL
-     ================================================================= */
   function buildModal() {
     if (document.getElementById("kpscSyncModal")) return document.getElementById("kpscSyncModal");
     var m = document.createElement("div");
@@ -887,7 +820,6 @@
     el.innerHTML = "<b>" + title + "</b>" + (body || "");
   }
 
-  /* ----- sign in / out: onAuthStateChanged runs the merge-sync for us ----- */
   function doGoogle() {
     flash("kpscAuthNote", "info", "Signing in…", "Check the popup window.");
     loadFirebaseSDK()
@@ -1124,10 +1056,8 @@
     }
   }
 
-  /* Nobody signed in & no Gist => nothing to wait for, pages start instantly.
-     Otherwise whenReady() resolves after the first cloud merge (or timeout). */
   if (!hasAuthHint() && !isGistConnected()) markReady();
-  setTimeout(markReady, READY_MAX_WAIT + 1500);   /* absolute safety net */
+  setTimeout(markReady, READY_MAX_WAIT + 1500);
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
@@ -1136,11 +1066,16 @@
   }
 
   window.KPSC_Sync = {
-    __version: 6.0,
+    __version: 6.1,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
     isConnected: function () { return !!currentUser || isGistConnected(); },
+    getCurrentUser: function() {
+      if (currentUser) return { email: currentUser.email, displayName: currentUser.displayName };
+      if (isGistConnected()) return { email: "GitHub Gist Account", displayName: "Gist User" };
+      return null;
+    },
     syncNow:     function () { return pushNow(); },
     push:        function () { return pushNow(); },
     whenReady:   whenReady,
