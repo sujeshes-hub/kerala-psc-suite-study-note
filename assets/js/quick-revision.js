@@ -11,7 +11,7 @@
 (function () {
   "use strict";
 
-  var CACHE_KEY       = "kpsc_qr_cache_v5";
+  var CACHE_KEY       = "kpsc_qr_cache_v6";
   var CACHE_TTL       = 1000 * 60 * 60 * 24 * 30;   // 30 days
   var MIN_LEN         = 8;
   var MAX_LEN         = 700;
@@ -151,46 +151,53 @@
     return raw.length ? { heading: heading, points: raw } : null;
   }
 
+  var REV_WORDS = ["revision", "quick", "30-second", "one-page", "റിവിഷൻ", "ടോപ്പ്", "ഒരു പേജ്", "30-സെക്കൻഡ്"];
+  var SKIP_WORDS = ["answer key", "ഉത്തര സൂചിക", "ഉപസംഹാരം", "conclusion"];
+
+  function headingOf(sec) {
+    var h2 = sec.querySelector("h2");
+    return h2 ? h2.textContent.toLowerCase() : "";
+  }
+  function isRevisionHeading(t) {
+    for (var s = 0; s < SKIP_WORDS.length; s++) if (t.indexOf(SKIP_WORDS[s]) !== -1) return false;
+    for (var i = 0; i < REV_WORDS.length; i++) if (t.indexOf(REV_WORDS[i]) !== -1) return true;
+    return /\btop\s*\d+/.test(t);
+  }
+
   function extractGroups(doc) {
     var groups = [];
-    var used = [];
     var seen = Object.create(null);
+    var secs = doc.querySelectorAll(".section");
+    var picked = [];
 
+    /* fixed ids (old layout) + any section whose heading says revision / top-N / 30-second / one-page,
+       English or Malayalam. Order = order in the page. */
     ["sec15", "sec16", "sec17"].forEach(function (id) {
-      var sec = doc.getElementById(id);
-      if (!sec || used.indexOf(sec) !== -1) return;
-      used.push(sec);
+      var s = doc.getElementById(id);
+      if (s && picked.indexOf(s) === -1) {
+        var t0 = headingOf(s), skip = false;
+        for (var k = 0; k < SKIP_WORDS.length; k++) if (t0.indexOf(SKIP_WORDS[k]) !== -1) skip = true;
+        if (!skip) picked.push(s);
+      }
+    });
+    for (var i = 0; i < secs.length; i++) {
+      if (picked.indexOf(secs[i]) === -1 && isRevisionHeading(headingOf(secs[i]))) picked.push(secs[i]);
+    }
+    picked.sort(function (a, b) {
+      return (a.compareDocumentPosition(b) & 4) ? -1 : 1;
+    });
+
+    picked.forEach(function (sec) {
       var g = extractGroup(sec);
       if (!g) return;
       var pts = dedupe(g.points, seen);
       if (pts.length) groups.push({ heading: g.heading, points: pts });
     });
-
-    if (!groups.length) {
-      var secs = doc.querySelectorAll(".section");
-      for (var i = 0; i < secs.length; i++) {
-        var sec = secs[i];
-        if (used.indexOf(sec) !== -1) continue;
-        var h2 = sec.querySelector("h2");
-        if (!h2) continue;
-        var t = h2.textContent.toLowerCase();
-        if (t.indexOf("revision") !== -1 ||
-            t.indexOf("quick")    !== -1 ||
-            t.indexOf("30-second") !== -1 ||
-            t.indexOf("one-page") !== -1 ||
-            /\btop\s*\d+/.test(t)) {
-          var g2 = extractGroup(sec);
-          if (!g2) continue;
-          var pts2 = dedupe(g2.points, seen);
-          if (pts2.length) groups.push({ heading: g2.heading, points: pts2 });
-        }
-      }
-    }
     return groups;
   }
 
   function topicTitleFromDoc(topicId, doc) {
-    var h1 = doc.querySelector(".chapter-title");
+    var h1 = doc.querySelector(".chapter-title, .chapter-header h1");
     if (h1 && h1.textContent.trim()) return topicId + " — " + h1.textContent.trim();
     var SYL = window.KPSC_SYLLABUS;
     var ml = (SYL && SYL.TITLE_ML && SYL.TITLE_ML[topicId]) || "";
@@ -406,28 +413,33 @@
     var done = 0, total = fetchQueue.length, ok = 0, fail = 0;
     setProgress(0, total, "Loading 0 / " + total + " topic files…");
 
-    for (var i = 0; i < fetchQueue.length; i++) {
-      var e = fetchQueue[i];
-      try {
-        var res = await fetch(e.path, { cache: "no-cache" });
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        var html = await res.text();
-        var doc = new DOMParser().parseFromString(html, "text/html");
-        var groups = extractGroups(doc);
-        if (groups.length) {
-          var title = topicTitleFromDoc(e.topicId, doc);
-          cache[e.path] = { ts: now, title: title, groups: groups };
-          addTopic(e.topicId, title, groups);
-          ok++;
+    var idx = 0, CONC = 6;
+    async function worker() {
+      while (idx < fetchQueue.length) {
+        var e = fetchQueue[idx++];
+        try {
+          var res = await fetch(e.path, { cache: "no-cache" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          var html = await res.text();
+          var doc = new DOMParser().parseFromString(html, "text/html");
+          var groups = extractGroups(doc);
+          if (groups.length) {
+            var title = topicTitleFromDoc(e.topicId, doc);
+            cache[e.path] = { ts: now, title: title, groups: groups };
+            addTopic(e.topicId, title, groups);
+            ok++;
+          }
+        } catch (err) {
+          fail++;   /* most 404s are topics that simply don't exist yet */
         }
-      } catch (err) {
-        fail++;
-        // silent — most 404s are topics that simply don't exist yet
+        done++;
+        setProgress(done, total, "Loading " + done + " / " + total + " topic files…");
+        if ((done % RERENDER_EVERY) === 0) render();
       }
-      done++;
-      setProgress(done, total, "Loading " + done + " / " + total + " topic files…");
-      if ((done % RERENDER_EVERY) === 0) render();
     }
+    var workers = [];
+    for (var w = 0; w < CONC; w++) workers.push(worker());
+    await Promise.all(workers);
 
     saveCache(cache);
     render();
