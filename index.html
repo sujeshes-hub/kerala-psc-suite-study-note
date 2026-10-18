@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -11,13 +11,33 @@
 .btn.qr:hover{background:linear-gradient(135deg,#0a4f54,#0f7679);color:#fff;text-decoration:none;}
 .hero .badges .qr-badge{background:#fff;color:#0b5d63;border-color:#fff;text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:.35rem;}
 .hero .badges .qr-badge:hover{background:#e6f4f6;color:#0b5d63;text-decoration:none;}
+
+/* Sign-in prompt for first-time visitors */
+.sync-prompt{
+  display:none;align-items:center;gap:12px;
+  background:#e6f6ff;border:1px solid #a9d8f2;border-left:5px solid #0b8ac9;
+  border-radius:12px;padding:12px 16px;margin:.2rem 0 1rem;font-size:.88rem;color:#0b5a86;
+}
+.sync-prompt.show{display:flex;flex-wrap:wrap}
+.sync-prompt .txt{flex:1 1 220px;line-height:1.5}
+.sync-prompt b{display:block;color:#083f44;font-size:.92rem;margin-bottom:2px}
+.sync-prompt button{
+  font-family:inherit;font-weight:700;font-size:.83rem;
+  background:linear-gradient(135deg,#0b5d63,#128a8f);color:#fff;
+  border:none;border-radius:10px;padding:.55rem 1rem;cursor:pointer;
+}
+.sync-prompt button:hover{background:linear-gradient(135deg,#0a4f54,#0f7679)}
+.sync-prompt .close{
+  background:none;border:none;color:#0b5a86;font-size:1.2rem;
+  cursor:pointer;padding:0 6px;line-height:1;
+}
 </style>
 </head>
 <body>
 
 <header class="hero">
   <h1>Kerala PSC Study Suite</h1>
-  <p>573/2025 + 883/2025 - Master Combined Syllabus</p>
+  <p>573/2025 + 883/2025 — Master Combined Syllabus</p>
   <div class="badges">
     <span>Works offline</span>
     <span>17 subjects</span>
@@ -27,6 +47,16 @@
 </header>
 
 <main>
+
+  <div class="sync-prompt" id="syncPrompt">
+    <span style="font-size:1.4rem">💾</span>
+    <div class="txt">
+      <b>Sync across devices</b>
+      Sign in once to save your progress to the cloud — continue on any phone or PC.
+    </div>
+    <button type="button" id="syncPromptBtn">Sign in</button>
+    <button type="button" class="close" id="syncPromptClose" aria-label="Dismiss">&times;</button>
+  </div>
 
   <section>
     <div class="section-head">
@@ -72,45 +102,25 @@
       <li>Tap a <b>chapter</b> to see its topics.</li>
       <li>Tap a <b>topic</b> to open notes + mock test.</li>
       <li>Progress saves automatically in your browser.</li>
+      <li><b>Sign in</b> (bottom-right Sync button) to sync across devices.</li>
     </ul>
   </div>
 
 </main>
 
-<footer>Kerala PSC Study Suite - Works fully offline</footer>
+<footer>Kerala PSC Study Suite — Works fully offline</footer>
 
 <script src="assets/js/syllabus.js"></script>
 <script>
 (async () => {
   await Syllabus.load();
 
-  /* ---------- Mock Tests (three cards) ---------- */
+  /* ---------- Mock Tests ---------- */
   const mtGrid = document.getElementById('mtGrid');
   const EXAMS = [
-    {
-      code: "573",
-      title: "573/2025 Mock Tests",
-      titleMl: "573/2025 മോക്ക് ടെസ്റ്റുകൾ",
-      desc: "Full-length papers for the 573 exam",
-      file: "mock-tests/573.html",
-      tag: "573"
-    },
-    {
-      code: "883",
-      title: "883/2025 Mock Tests",
-      titleMl: "883/2025 മോക്ക് ടെസ്റ്റുകൾ",
-      desc: "Inspecting Assistant (Legal Metrology)",
-      file: "mock-tests/883.html",
-      tag: "883"
-    },
-    {
-      code: "SUB",
-      title: "Subject-wise Mock Tests",
-      titleMl: "വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ",
-      desc: "Chapter mock tests grouped by subject",
-      file: "mock-tests/subjects.html",
-      tag: "BOTH"
-    }
+    { code: "573", title: "573/2025 Mock Tests",       titleMl: "573/2025 മോക്ക് ടെസ്റ്റുകൾ",            desc: "Full-length papers for the 573 exam",        file: "mock-tests/573.html",        tag: "573"  },
+    { code: "883", title: "883/2025 Mock Tests",       titleMl: "883/2025 മോക്ക് ടെസ്റ്റുകൾ",            desc: "Inspecting Assistant (Legal Metrology)",       file: "mock-tests/883.html",        tag: "883"  },
+    { code: "SUB", title: "Subject-wise Mock Tests",   titleMl: "വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ", desc: "Chapter mock tests grouped by subject",        file: "mock-tests/subjects.html",   tag: "BOTH" }
   ];
 
   mtGrid.innerHTML = EXAMS.map(e => {
@@ -123,7 +133,6 @@
       '<h3>📄 ' + e.title + '</h3>' +
       '<p class="desc">' + e.titleMl + '<br>' + e.desc + '</p>' +
       '<div class="meta"><span>Open list →</span></div>' +
-      '<div class="bar"><i style="width:0%"></i></div>' +
     '</a>';
   }).join('');
 
@@ -139,21 +148,49 @@
     return '<a href="subjects/' + S.code + '-' + S.id + '.html" class="card">' +
       '<span class="badge">' + S.code + '</span>' +
       '<h3>' + S.icon + ' ' + S.title + '</h3>' +
-      '<p class="desc">' + S.titleMl + ' - ' + S.desc + '</p>' +
+      '<p class="desc">' + S.titleMl + ' — ' + S.desc + '</p>' +
       '<div class="meta">' +
         '<span>' + S.chapters.length + ' chapter' + (S.chapters.length === 1 ? '' : 's') + '</span>' +
         '<span>' + totalTopics + ' topics</span>' +
       '</div>' +
-      '<div class="bar"><i style="width:0%"></i></div>' +
     '</a>';
   }).join('');
-
-  const s = document.createElement('script');
-  s.src = 'assets/js/sections.js';
-  document.body.appendChild(s);
 })();
 </script>
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+<!-- Sync prompt logic -->
+<script>
+(function () {
+  var DISMISS_KEY = "kpsc_sync_prompt_dismissed";
+  var prompt = document.getElementById("syncPrompt");
+  var btn = document.getElementById("syncPromptBtn");
+  var closeBtn = document.getElementById("syncPromptClose");
+
+  function refreshPrompt() {
+    if (!prompt) return;
+    var dismissed = localStorage.getItem(DISMISS_KEY) === "1";
+    var connected = window.KPSC_Sync && window.KPSC_Sync.isConnected && window.KPSC_Sync.isConnected();
+    if (!dismissed && !connected) prompt.classList.add("show");
+    else prompt.classList.remove("show");
+  }
+
+  if (btn) btn.addEventListener("click", function () {
+    if (window.KPSC_Sync && window.KPSC_Sync.open) window.KPSC_Sync.open();
+  });
+  if (closeBtn) closeBtn.addEventListener("click", function () {
+    localStorage.setItem(DISMISS_KEY, "1");
+    refreshPrompt();
+  });
+
+  // Wait for sync.js (which loads itself once it detects the page) to be ready
+  var tries = 0;
+  var iv = setInterval(function () {
+    if (window.KPSC_Sync || tries > 40) { clearInterval(iv); refreshPrompt(); }
+    tries++;
+  }, 250);
+})();
+</script>
+
+<script src="assets/js/engine.js"></script>
 </body>
 </html>
