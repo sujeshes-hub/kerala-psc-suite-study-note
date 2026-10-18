@@ -1,7 +1,7 @@
 /* =====================================================================
-   Kerala PSC Study Suite — Progress Sync + Login (site-wide auto-save)
+   Kerala PSC Study Suite — Progress Sync + Login
    Path: assets/js/sync.js
-   Version: 6.1 - Exposes getCurrentUser for UI badges
+   Version: 6.2 - Fixes auth event broadcasting for UI banners
    ===================================================================== */
 (function () {
   "use strict";
@@ -17,8 +17,7 @@
     appId:             "1:53850748882:web:2c5002a9b4a4491a663a0b"
   };
 
-  var ENABLE_FIREBASE = FIREBASE_CONFIG.apiKey &&
-                        FIREBASE_CONFIG.apiKey.indexOf("PASTE_") !== 0;
+  var ENABLE_FIREBASE = FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf("PASTE_") !== 0;
 
   var PREFIX        = "KPS1.";
   var APP_ID        = "kerala-psc-suite";
@@ -310,6 +309,10 @@
           var first = firstAuthEvent; firstAuthEvent = false;
           currentUser = user;
           updateAccountUI();
+          
+          // Broadcast to update index.html banner
+          try { window.dispatchEvent(new CustomEvent("kpsc-auth-changed")); } catch(e) {}
+
           if (user) {
             runInitialSync(first ? "initial" : "signin");
           } else {
@@ -1066,7 +1069,7 @@
   }
 
   window.KPSC_Sync = {
-    __version: 6.1,
+    __version: 6.2,
     export:      function () { return encode(collectPayload()); },
     import:      function (code) { return applyPayload(decode(code)); },
     open:        openModal,
