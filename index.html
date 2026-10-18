@@ -10,9 +10,8 @@
 .btn.qr{background:linear-gradient(135deg,#0b5d63,#128a8f);color:#fff;border-color:transparent;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;}
 .btn.qr:hover{background:linear-gradient(135deg,#0a4f54,#0f7679);color:#fff;text-decoration:none;}
 .hero .badges .qr-badge{background:#fff;color:#0b5d63;border-color:#fff;text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:.35rem;}
-.hero .badges .qr-badge:hover{background:#e6f4f6;color:#0b5d63;text-decoration:none;}
 
-/* Sync prompt (Dynamic Banner) */
+/* Live Sync Banner */
 .sync-prompt{
   display:none;align-items:center;gap:12px;
   background:#e6f6ff;border:1px solid #a9d8f2;border-left:5px solid #0b8ac9;
@@ -29,17 +28,12 @@
   font-family:inherit;font-weight:700;font-size:.83rem;
   background:linear-gradient(135deg,#0b5d63,#128a8f);color:#fff;
   border:none;border-radius:10px;padding:.55rem 1rem;cursor:pointer;
-  transition:transform 0.1s;
 }
-.sync-prompt button:active{transform:scale(0.96)}
-.sync-prompt.success button{
-  background:linear-gradient(135deg,#0f7a4f,#17a06a);
-}
+.sync-prompt.success button{background:linear-gradient(135deg,#0f7a4f,#17a06a);}
 .sync-prompt .close{
   background:none!important;border:none;color:inherit;font-size:1.2rem;
   cursor:pointer;padding:0 6px;line-height:1;opacity:0.6;
 }
-.sync-prompt .close:hover{opacity:1}
 </style>
 </head>
 <body>
@@ -64,16 +58,13 @@
       <span id="syncPromptDesc">Sign in once to save your progress to the cloud — continue on any phone or PC.</span>
     </div>
     <button type="button" id="syncPromptBtn">Sign in</button>
-    <button type="button" class="close" id="syncPromptClose" aria-label="Dismiss">&times;</button>
   </div>
 
   <section>
     <div class="section-head">
       <h2>📄 Mock Tests</h2>
     </div>
-    <div class="grid" id="mtGrid">
-      <p class="empty">Loading...</p>
-    </div>
+    <div class="grid" id="mtGrid"></div>
   </section>
 
   <section>
@@ -81,12 +72,9 @@
       <h2>Subjects</h2>
       <div class="actions">
         <a href="all-subjects-quick-revision.html" class="btn qr">⚡ Quick Revision</a>
-        <button class="btn danger" id="resetAllBtn" type="button">Reset all progress</button>
       </div>
     </div>
-    <div class="grid" id="subjectGrid">
-      <p class="empty">Loading...</p>
-    </div>
+    <div class="grid" id="subjectGrid"></div>
   </section>
 
   <section>
@@ -102,18 +90,6 @@
       </div>
     </div>
   </section>
-
-  <div class="howto">
-    <h3>How to use</h3>
-    <ul>
-      <li>Tap <b>📄 Mock Tests</b> → choose <b>573</b>, <b>883</b> or <b>Subject-wise</b>.</li>
-      <li>Tap any <b>subject</b> to see its chapters.</li>
-      <li>Tap a <b>chapter</b> to see its topics.</li>
-      <li>Tap a <b>topic</b> to open notes + mock test.</li>
-      <li>Progress saves automatically in your browser.</li>
-      <li><b>Sign in</b> (bottom-right Sync button) to sync across devices.</li>
-    </ul>
-  </div>
 
 </main>
 
@@ -148,10 +124,6 @@
   /* ---------- Subjects ---------- */
   const grid = document.getElementById('subjectGrid');
   const list = Syllabus.getAllSubjects();
-  if (!list || !list.length) {
-    grid.innerHTML = '<p class="empty">No subjects found.</p>';
-    return;
-  }
   grid.innerHTML = list.map(S => {
     const totalTopics = S.chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
     return '<a href="subjects/' + S.code + '-' + S.id + '.html" class="card">' +
@@ -167,70 +139,55 @@
 })();
 </script>
 
-<!-- Sync prompt logic -->
+<!-- Real-time Sync Banner logic -->
 <script>
 (function () {
-  var DISMISS_KEY = "kpsc_sync_prompt_dismissed";
   var prompt = document.getElementById("syncPrompt");
   var btn = document.getElementById("syncPromptBtn");
-  var closeBtn = document.getElementById("syncPromptClose");
   var titleEl = document.getElementById("syncPromptTitle");
   var descEl = document.getElementById("syncPromptDesc");
   var iconEl = document.getElementById("syncPromptIcon");
 
   function refreshPrompt() {
     if (!prompt) return;
-    var dismissed = localStorage.getItem(DISMISS_KEY) === "1";
-    
-    if (dismissed) {
-      prompt.classList.remove("show");
-      return;
-    }
-
     var connected = window.KPSC_Sync && window.KPSC_Sync.isConnected && window.KPSC_Sync.isConnected();
     var user = window.KPSC_Sync && window.KPSC_Sync.getCurrentUser ? window.KPSC_Sync.getCurrentUser() : null;
 
     if (connected) {
-      // Logged In State
       var email = (user && user.email) ? user.email : "Cloud Account";
-      titleEl.textContent = "Cloud Sync Active";
-      descEl.textContent = "Signed in as " + email + ". Progress is saved automatically.";
-      btn.textContent = "Account";
-      iconEl.textContent = "✅";
+      titleEl.textContent = "Real-Time Sync Active";
+      descEl.textContent = "Signed in as " + email + ". Changes save automatically.";
+      btn.textContent = "Sign Out";
+      iconEl.textContent = "🟢";
       prompt.classList.add("success");
     } else {
-      // Logged Out State
       titleEl.textContent = "Sync across devices";
       descEl.textContent = "Sign in once to save your progress to the cloud — continue on any phone or PC.";
       btn.textContent = "Sign in";
       iconEl.textContent = "💾";
       prompt.classList.remove("success");
     }
-    
     prompt.classList.add("show");
   }
 
-  // Ensure the button always opens the Sync modal
   btn.onclick = function () {
-    if (window.KPSC_Sync && window.KPSC_Sync.open) window.KPSC_Sync.open();
+    if (window.KPSC_Sync && window.KPSC_Sync.isConnected()) {
+      if (confirm("Sign out of cloud sync?")) {
+        if (window.firebase) window.firebase.auth().signOut();
+      }
+    } else {
+      if (window.firebase) {
+        var provider = new window.firebase.auth.GoogleAuthProvider();
+        window.firebase.auth().signInWithPopup(provider);
+      }
+    }
   };
 
-  closeBtn.onclick = function () {
-    localStorage.setItem(DISMISS_KEY, "1");
-    refreshPrompt();
-  };
-
-  // Listen for custom event from sync.js when auth state changes
   window.addEventListener("kpsc-auth-changed", refreshPrompt);
 
-  // Wait for sync.js to finish loading initially
-  var tries = 0;
+  // Wait for sync.js to init
   var iv = setInterval(function () {
-    if (window.KPSC_Sync || tries > 40) { 
-      clearInterval(iv); 
-      refreshPrompt(); 
-    }
-    tries++;
+    if (window.KPSC_Sync) { clearInterval(iv); refreshPrompt(); }
   }, 250);
 })();
 </script>
