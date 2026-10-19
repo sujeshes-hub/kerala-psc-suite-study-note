@@ -195,10 +195,63 @@
     details.card{box-shadow:none;border:1px solid #bbb;break-inside:avoid;}
     details.card:not([open]) > .content{display:block!important;}
   }
+
+  /* ===== v6 upgrade additions (original CSS above is untouched) ===== */
+  html{scroll-behavior:smooth;}
+  details.card{scroll-margin-top:150px;}
+  .b{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:12px;border:1px solid transparent;vertical-align:middle;}
+  .b-new{background:#dcfce7;color:#14532d;border-color:#86efac;}
+  .b-red{background:#fee2e2;color:#991b1b;border-color:#fca5a5;}
+  .b-orange{background:#ffedd5;color:#9a3412;border-color:#fdba74;}
+  .b-green2{background:#dcfce7;color:#166534;border-color:#86efac;}
+  body.dark .b-new{background:#14532d;color:#dcfce7;} body.dark .b-red{background:#7f1d1d;color:#fee2e2;}
+  body.dark .b-orange{background:#7c2d12;color:#ffedd5;} body.dark .b-green2{background:#14532d;color:#dcfce7;}
+  .added{margin-top:20px;padding:14px 14px 10px;border:1px dashed var(--green);border-left:6px solid var(--green);
+    border-radius:12px;background:rgba(15,157,88,.05);}
+  .add-h{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px;}
+  .add-note{font-size:.76rem;color:var(--muted);}
+  .corr{display:block;margin:8px 0 2px;padding:8px 11px;font-size:.86rem;font-weight:400;color:var(--ink);
+    background:rgba(217,48,37,.08);border:1px solid rgba(217,48,37,.3);border-left:5px solid var(--red);border-radius:8px;}
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 16px;}
+  .toc-h{font-weight:800;color:var(--accent2);margin-bottom:8px;}
+  .toc-legend{font-size:.75rem;font-weight:600;color:var(--muted);margin-left:6px;}
+  .toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;}
+  .toc-grid a{display:block;padding:6px 10px;border:1px solid var(--line);border-radius:9px;background:var(--subcard);
+    color:var(--ink);text-decoration:none;font-size:.84rem;font-weight:600;}
+  .toc-grid a:hover,.toc-grid a:focus{background:var(--accent);color:#fff;border-color:var(--accent);outline:none;}
+  .toc-grid .tn{display:inline-block;min-width:22px;color:var(--accent2);font-weight:800;}
+  .toc-grid a:hover .tn,.toc-grid a:focus .tn{color:#fff;}
+  .backtop{position:fixed;right:14px;bottom:14px;z-index:30;background:var(--accent);color:#fff;text-decoration:none;
+    padding:8px 12px;border-radius:22px;font-size:.8rem;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+  .mcq-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0;
+    padding:8px 12px;background:var(--subcard);border:1px solid var(--line);border-radius:10px;font-weight:700;}
+  .mcq{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;background:var(--card);}
+  .mcq h4{margin:0 0 8px;font-size:.95rem;color:var(--ink);}
+  .mcq .opts{display:grid;gap:6px;}
+  .mcq .opt{display:block;width:100%;text-align:left;font:inherit;font-size:.9rem;padding:8px 12px;border-radius:9px;
+    border:1.5px solid var(--line);background:var(--subcard);color:var(--ink);cursor:pointer;}
+  .mcq .opt:hover:not(:disabled),.mcq .opt:focus-visible{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:1px;}
+  .mcq .opt:disabled{cursor:default;}
+  .mcq .opt.right{border-color:var(--green);background:rgba(15,157,88,.14);}
+  .mcq .opt.wrong{border-color:var(--red);background:rgba(217,48,37,.12);}
+  .mcq .exp{display:none;margin-top:8px;padding:8px 11px;font-size:.88rem;border-left:5px solid var(--green);
+    background:rgba(15,157,88,.07);border-radius:8px;}
+  .mcq .exp.show{display:block;}
+  @page{size:A4;margin:12mm;}
+  @media print{
+    .backtop,.mcq-bar button,.toc-grid a .te{display:none!important;}
+    .toc{border:1px solid #bbb;break-inside:avoid;}
+    .added{break-inside:avoid-page;background:#fff;}
+    .mcq{break-inside:avoid;}
+    .mcq .exp{display:block!important;}
+    .mcq .opt{border:1px solid #999;background:#fff;}
+    table{break-inside:avoid;}
+    a{color:#000;text-decoration:none;}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="top">
 
 <header class="hero">
   <h1>⚖️ കേരള PSC ഇന്ത്യൻ ഭരണഘടന — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് (v5 Visual Master)</h1>
@@ -223,7 +276,7 @@
     <button class="tool-btn" type="button" onclick="window.print()">🖨️ Print / PDF</button>
   </div>
   <div class="filter-pills">
-    <button class="pill active" data-filter="all">എല്ലാം (16)</button>
+    <button class="pill active" data-filter="all">എല്ലാം (18)</button>
     <button class="pill" data-filter="5star">⭐⭐⭐⭐⭐ അതിപ്രധാനം</button>
     <button class="pill" data-filter="svg">📐 SVG ഡയഗ്രമുകൾ</button>
     <button class="pill" data-filter="basics">📜 ആമുഖം, മൗലികാവകാശം & DPSP</button>
@@ -231,16 +284,17 @@
     <button class="pill" data-filter="amend">⚡ പട്ടികകൾ, സ്ഥാപനങ്ങൾ & ഭേദഗതികൾ</button>
   </div>
   <div class="revision-meta">
-    <span id="searchStatus">16 വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം</span>
-    <span><span id="reviewCount">0</span> / <span id="totalCount">16</span> വിഭാഗങ്ങൾ ആവർത്തിച്ചു</span>
+    <span id="searchStatus">18 വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം</span>
+    <span><span id="reviewCount">0</span> / <span id="totalCount">18</span> വിഭാഗങ്ങൾ ആവർത്തിച്ചു</span>
   </div>
   <div class="progress-track"><span id="reviewProgress"></span></div>
 </section>
 
 <div class="study-tip"><strong>💡 വിഷ്വൽ ലേണിംഗ് തന്ത്രം:</strong> മുകളിലെ <strong>"🎯 ക്വിസ് മോഡ്"</strong> അമർത്തിയാൽ ആർട്ടിക്കിളുകളും പ്രധാന ഉത്തരങ്ങളും നീല ബോക്സായി മറയും. സ്വയം ഓർത്തെടുത്ത ശേഷം അതിൽ ക്ലിക്ക് ചെയ്താൽ ഉത്തരം കാണാം!</div>
 
+<nav class="toc" aria-label="ഉള്ളടക്ക സൂചിക"><div class="toc-h">📑 ഉള്ളടക്ക സൂചിക <span class="toc-legend">🔴 വളരെ പ്രധാനം · 🟠 പ്രധാനം · 🟢 സഹായക വിവരം</span></div><div class="toc-grid"><a href="#sec-1"><span class="tn">1</span> ഭരണഘടനാ നിർമ്മാണ സഭ <span class="te">🟠</span></a><a href="#sec-2"><span class="tn">2</span> കടമെടുത്ത ആശയങ്ങൾ <span class="te">🔴</span></a><a href="#sec-3"><span class="tn">3</span> ആമുഖം <span class="te">🔴</span></a><a href="#sec-4"><span class="tn">4</span> പട്ടികകളും ഭാഗങ്ങളും <span class="te">🔴</span></a><a href="#sec-5"><span class="tn">5</span> യൂണിയൻ & പൗരത്വം <span class="te">🟠</span></a><a href="#sec-6"><span class="tn">6</span> മൗലികാവകാശങ്ങൾ <span class="te">🔴</span></a><a href="#sec-7"><span class="tn">7</span> 5 റിട്ടുകൾ <span class="te">🔴</span></a><a href="#sec-8"><span class="tn">8</span> DPSP & കർത്തവ്യങ്ങൾ <span class="te">🟠</span></a><a href="#sec-9"><span class="tn">9</span> രാഷ്ട്രപതി & പ്രായപരിധി <span class="te">🔴</span></a><a href="#sec-10"><span class="tn">10</span> പാർലമെന്റ് <span class="te">🟠</span></a><a href="#sec-11"><span class="tn">11</span> കോടതി & ഗവർണ്ണർ <span class="te">🟠</span></a><a href="#sec-12"><span class="tn">12</span> പഞ്ചായത്തീരാജ് <span class="te">🟠</span></a><a href="#sec-13"><span class="tn">13</span> അടിയന്തരാവസ്ഥ & ഭാഷ <span class="te">🟠</span></a><a href="#sec-14"><span class="tn">14</span> ഭരണഘടനാ സ്ഥാപനങ്ങൾ <span class="te">🟠</span></a><a href="#sec-15"><span class="tn">15</span> ഭേദഗതികൾ <span class="te">🔴</span></a><a href="#sec-16"><span class="tn">✓</span> അവസാന റിവിഷൻ <span class="te">🔴</span></a><a href="#sec-mcq"><span class="tn">🆕</span> മാതൃകാ MCQ <span class="te">🟠</span></a><a href="#sec-log"><span class="tn">🆕</span> പരിശോധനാ രേഖ <span class="te">🟢</span></a></div></nav>
 <!-- ================= 1. CONSTITUENT ASSEMBLY & HISTORY ================= -->
-<details class="card" data-tags="5star basics" open>
+<details class="card" id="sec-1" data-tags="5star basics" open>
 <summary><span class="num">1</span><span class="title">ഭരണഘടനാ നിർമ്മാണ സഭയും ചരിത്ര പശ്ചാത്തലവും</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="1"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>🕐 ഭരണഘടനാ നിർമ്മാണത്തിന്റെ നാൾവഴി (Timeline)</h3>
@@ -281,11 +335,23 @@
   <div class="trap"><span class="lbl">PSC TRAP</span>
   • <b>ഭരണഘടന അംഗീകരിച്ചത് (Adopted):</b> <b>1949 നവംബർ 26</b> (നവംബർ 26 = ഭരണഘടനാ ദിനം / നിയമ ദിനം). പൗരത്വം, തിരഞ്ഞെടുപ്പ് എന്നിവ അന്ന് തന്നെ നിലവിൽ വന്നു.<br>
   • <b>ഭരണഘടന പൂർണ്ണമായി പ്രാബല്യത്തിൽ വന്നത് (Enforced):</b> <b>1950 ജനുവരി 26</b> (1929 ലാഹോർ കോൺഗ്രസിലെ പൂർണ്ണ സ്വരാജ് ദിനത്തിന്റെ ഓർമ്മയ്ക്കായി).</div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li>⭐ <b>മൂല ഭരണഘടന:</b> 395 അനുച്ഛേദങ്ങൾ · 22 ഭാഗങ്ങൾ · 8 പട്ടികകൾ. ഇപ്പോൾ 25 ഭാഗങ്ങളും 12 പട്ടികകളും (അനുച്ഛേദങ്ങളുടെ കൃത്യ എണ്ണം ഉറവിടങ്ങളിൽ വ്യത്യാസപ്പെടുന്നു — 'മൂല ഭരണഘടന' എന്ന് ചോദ്യത്തിൽ കണ്ടാൽ 395 / 22 / 8).</li>
+    <li>സഭയിലേക്കുള്ള തിരഞ്ഞെടുപ്പ് 1946-ൽ പ്രവിശ്യാ നിയമസഭകൾ വഴി <b>പരോക്ഷമായി</b> നടന്നു; ആദ്യ യോഗം ഡൽഹിയിലെ കോൺസ്റ്റിറ്റ്യൂഷൻ ഹാളിൽ (ഇന്നത്തെ പാർലമെന്റ് സെൻട്രൽ ഹാൾ); മുസ്ലിം ലീഗ് ആദ്യ യോഗം ബഹിഷ്കരിച്ചു.</li>
+    <li><b>ആർട്ടിക്കിൾ 394:</b> അനുച്ഛേദം 5–9, 60, 324, 366, 367, 379, 380, 388, 391, 392, 393 എന്നിവ <b>1949 നവംബർ 26-ന്</b> തന്നെ പ്രാബല്യത്തിൽ വന്നു; ബാക്കിയുള്ളവ 1950 ജനുവരി 26-ന്.</li>
+    <li>ആമുഖം സഭ ഏറ്റവും ഒടുവിൽ ചർച്ച ചെയ്ത് അംഗീകരിച്ചു (1949 ഒക്ടോബർ 17).</li>
+  </ul>
+  <div class="trick"><span class="lbl">ഓർമ്മക്കോഡ്</span> <b>26 നവംബർ = അംഗീകാരം (Adopted) → നിയമ ദിനം</b> · <b>26 ജനുവരി = പ്രാബല്യം (Enforced) → റിപ്പബ്ലിക് ദിനം</b> · <b>24 ജനുവരി = അവസാന യോഗം + ദേശീയ ഗാനം</b>.</div>
+  <div class="note"><span class="lbl">NEEDS VERIFICATION</span> മുകളിലെ പട്ടികയിലെ <b>"17 മലയാളികൾ"</b> എന്ന എണ്ണം വിവിധ ഉറവിടങ്ങളിൽ വ്യത്യാസപ്പെടുന്നതായി കണ്ടേക്കാം; ഔദ്യോഗിക ഉറവിടത്തിൽ ഉറപ്പിക്കാൻ കഴിഞ്ഞിട്ടില്ല. 3 മലയാളി വനിതകളുടെ പേരുകൾ (അമ്മു സ്വാമിനാഥൻ, ദാക്ഷായണി വേലായുധൻ, ആനി മസ്ക്രീൻ) സ്ഥിരമായി ആവർത്തിക്കുന്ന വസ്തുതയാണ്.</div>
+</div>
 </div>
 </details>
 
 <!-- ================= 2. BORROWED FEATURES ================= -->
-<details class="card" data-tags="5star basics" open>
+<details class="card" id="sec-2" data-tags="5star basics" open>
 <summary><span class="num">2</span><span class="title">വിവിധ രാജ്യങ്ങളിൽ നിന്ന് കടമെടുത്ത ആശയങ്ങൾ</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="tbl-scroll">
@@ -303,11 +369,18 @@
     <tr><td>🇯🇵 <b>ജപ്പാൻ (Japan)</b></td><td><b>'നിയമം അനുശാസിക്കുന്ന നടപടിക്രമം' (Procedure Established by Law — Art. 21)</b></td></tr>
   </table>
   </div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 ഒറ്റനോട്ടത്തിൽ — ആശയം → രാജ്യം</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>ആശയം</th><th>രാജ്യം</th></tr><tr><td>ഭരണരീതി: പാർലമെന്ററി</td><td><b>ബ്രിട്ടൻ</b></td></tr><tr><td>മൗലികാവകാശം, ജുഡീഷ്യൽ റിവ്യൂ</td><td><b>അമേരിക്ക</b></td></tr><tr><td>നിർദ്ദേശക തത്വങ്ങൾ (DPSP)</td><td><b>അയർലൻഡ്</b></td></tr><tr><td>ശക്തമായ കേന്ദ്രമുള്ള ഫെഡറേഷൻ</td><td><b>കാനഡ</b></td></tr><tr><td>സമവർത്തി ലിസ്റ്റ്, സംയുക്ത സമ്മേളനം</td><td><b>ഓസ്ട്രേലിയ</b></td></tr><tr><td>മൗലിക കർത്തവ്യങ്ങൾ</td><td><b>സോവിയറ്റ് യൂണിയൻ</b></td></tr><tr><td>'നിയമം അനുശാസിക്കുന്ന നടപടിക്രമം' (Art. 21)</td><td><b>ജപ്പാൻ</b></td></tr><tr><td>ഭേദഗതി രീതി (Art. 368)</td><td><b>ദക്ഷിണാഫ്രിക്ക</b></td></tr></table></div>
+  <div class="trap"><span class="lbl">PSC TRAP</span> <b>Rule of Law</b> (ബ്രിട്ടൻ) ≠ <b>Procedure Established by Law</b> (ജപ്പാൻ — Art. 21-ൽ) ≠ <b>Due Process of Law</b> (അമേരിക്ക — ഇന്ത്യയിൽ എഴുതപ്പെട്ടിട്ടില്ല; എങ്കിലും മേനക ഗാന്ധി കേസിന് (1978) ശേഷം 21-ാം വകുപ്പ് 'ന്യായവും ഉചിതവും' ആയിരിക്കണമെന്ന വ്യാഖ്യാനം വന്നു).</div>
+  <div class="trick"><span class="lbl">ഓർമ്മക്കോഡ്</span> <b>ബ്രിട്ടൻ = ഭരണം · അമേരിക്ക = അവകാശം · അയർലൻഡ് = നിർദ്ദേശം · റഷ്യ = കർത്തവ്യം · കാനഡ = കേന്ദ്രം · ഓസ്ട്രേലിയ = സമവർത്തി</b></div>
+</div>
 </div>
 </details>
 
 <!-- ================= 3. PREAMBLE WITH SVG ================= -->
-<details class="card" data-tags="5star svg basics" open>
+<details class="card" id="sec-3" data-tags="5star svg basics" open>
 <summary><span class="num">3</span><span class="title">ഭരണഘടനയുടെ ആമുഖം (Preamble) <span class="map-badge">📐 SVG ഡയഗ്രം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="3"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>📐 ആമുഖത്തിന്റെ ഘടനയും തത്വശാസ്ത്രവും (Visual Anatomy)</h3>
@@ -361,7 +434,7 @@
     <tr><th>വിശേഷണം</th><th>പറഞ്ഞ വ്യക്തി</th></tr>
     <tr><td><b>"ഭരണഘടനയുടെ തിരിച്ചറിയൽ കാർഡ്" (Identity Card of the Constitution)</b></td><td><b>എൻ.എ. പൽക്കിവാല (N.A. Palkhivala)</b></td></tr>
     <tr><td><b>"രാഷ്ട്രീയ ജാതകം" (Political Horoscope)</b></td><td><b>കെ.എം. മുൻഷി (K.M. Munshi)</b></td></tr>
-    <tr><td><b>"ഭരണഘടനയുടെ താക്കോൽ" (Key to the Constitution)</b></td><td><b>ഏണസ്റ്റ് ബാർക്കർ (Ernest Barker)</b></td></tr>
+    <tr><td><b>"ഭരണഘടനയുടെ താക്കോൽ" (Key to the Constitution)</b></td><td><b>ഏണസ്റ്റ് ബാർക്കർ (Ernest Barker)</b><div class="corr"><span class="b b-red">⚠️ തിരുത്ത് / വ്യക്തത</span> ബാർക്കർ ഉപയോഗിച്ച ഇംഗ്ലീഷ് പദം <b>'key-note'</b> ആണെന്ന് ചില ഗ്രന്ഥങ്ങൾ രേഖപ്പെടുത്തുന്നു; മലയാള PSC സാഹിത്യത്തിൽ 'താക്കോൽ' എന്നും കാണും — ചോദ്യത്തിൽ രണ്ടിൽ ഏത് രൂപത്തിൽ വന്നാലും ഉത്തരം ബാർക്കർ.</div></td></tr>
     <tr><td><b>"ഭരണഘടനയുടെ ആത്മാവ്" (Soul of the Constitution)</b></td><td><b>താക്കൂർദാസ് ഭാർഗവ</b> (എന്നാൽ 'ഹൃദയവും ആത്മാവും' എന്ന് അംബേദ്കർ വിളിച്ചത് <b>ആർട്ടിക്കിൾ 32</b>-നെയാണ്!)</td></tr>
   </table>
   </div>
@@ -371,11 +444,22 @@
     <li><b>ബെറുബാരി യൂണിയൻ കേസ് (1960):</b> ആമുഖം ഭരണഘടനയുടെ ഭാഗമല്ല എന്ന് സുപ്രീം കോടതി വിധിച്ചു.</li>
     <li><b>കേശവാനന്ദ ഭാരതി കേസ് (1973 ഏപ്രിൽ 24):</b> ആമുഖം ഭരണഘടനയുടെ ഭാഗമാണെന്നും, എന്നാൽ <b>'അടിസ്ഥാന ഘടന' (Basic Structure)</b> മാറ്റാൻ പാർലമെന്റിന് അധികാരമില്ലെന്നും 13 അംഗ ബെഞ്ച് (7:6 ഭൂരിപക്ഷത്തിൽ) വിധിച്ചു.</li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 ആമുഖം — കൂടുതൽ PSC വസ്തുതകൾ</h3>
+  <ul>
+    <li>മൂല ആമുഖത്തിൽ <b>"Sovereign Democratic Republic"</b> മാത്രം; 42-ാം ഭേദഗതി (1976) <b>3 വാക്കുകൾ</b> ചേർത്തു — Socialist, Secular, Integrity.</li>
+    <li>ആമുഖം <b>കോടതിയിൽ നടപ്പാക്കാവുന്നതല്ല</b> (non-justiciable); അധികാരത്തിന്റെ ഉറവിടമോ പാർലമെന്റിന്റെ അധികാരത്തിനുള്ള വിലക്കോ അല്ല.</li>
+    <li><b>എൽ.ഐ.സി. v. യൂണിയൻ ഓഫ് ഇന്ത്യ (1995):</b> ആമുഖം ഭരണഘടനയുടെ അവിഭാജ്യ ഭാഗമാണെന്ന് ആവർത്തിച്ചു. <b>എസ്.ആർ. ബൊമ്മൈ (1994):</b> മതേതരത്വം അടിസ്ഥാന ഘടനയുടെ ഭാഗം.</li>
+    <li><b>റിപ്പബ്ലിക്:</b> രാഷ്ട്രത്തലവൻ തിരഞ്ഞെടുക്കപ്പെടുന്നയാൾ (പാരമ്പര്യമല്ല) | <b>പരമാധികാരം:</b> ആഭ്യന്തര–വിദേശ കാര്യങ്ങളിൽ ബാഹ്യ നിയന്ത്രണമില്ല.</li>
+  </ul>
+  <div class="trick"><span class="lbl">ഓർമ്മക്കോഡ്</span> ആമുഖത്തിലെ 5 വിശേഷണങ്ങൾ: <b>"SSS-DR"</b> = <b>S</b>overeign, <b>S</b>ocialist, <b>S</b>ecular, <b>D</b>emocratic, <b>R</b>epublic (ക്രമം ഇതുതന്നെ).</div>
+</div>
 </div>
 </details>
 
 <!-- ================= 4. 12 SCHEDULES & 25 PARTS ================= -->
-<details class="card" data-tags="5star amend" open>
+<details class="card" id="sec-4" data-tags="5star amend" open>
 <summary><span class="num">4</span><span class="title">12 പട്ടികകളും (Schedules) പ്രധാന ഭാഗങ്ങളും (Parts)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="4"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="trick"><span class="lbl">MNEMONIC — 12 പട്ടികകൾ ക്രമത്തിൽ ഓർക്കാൻ</span>
@@ -389,7 +473,7 @@
     <tr><td><b>2-ാം പട്ടിക</b></td><td>രാഷ്ട്രപതി, ഗവർണ്ണർ, സ്പീക്കർ, ജഡ്ജിമാർ, CAG എന്നിവരുടെ ശമ്പളവും ബത്തകളും.</td></tr>
     <tr><td><b>3-ാം പട്ടിക</b></td><td>മന്ത്രിമാർ, എം.പിമാർ, എം.എൽ.എമാർ, ജഡ്ജിമാർ എന്നിവരുടെ <b>സത്യപ്രതിജ്ഞാ വാചകങ്ങൾ</b> (രാഷ്ട്രപതിയുടെ സത്യപ്രതിജ്ഞ Art. 60-ലും ഗവർണ്ണറുടേത് Art. 159-ലുമാണ്).</td></tr>
     <tr><td><b>4-ാം പട്ടിക</b></td><td>സംസ്ഥാനങ്ങൾക്കും കേന്ദ്രഭരണ പ്രദേശങ്ങൾക്കുമുള്ള <b>രാജ്യസഭാ സീറ്റുകളുടെ വിഭജനം</b>.</td></tr>
-    <tr><td><b>5-ാം പട്ടിക</b></td><td>പട്ടികജാതി–പട്ടികവർഗ്ഗ പ്രദേശങ്ങളുടെ ഭരണവും നിയന്ത്രണവും.</td></tr>
+    <tr><td><b>5-ാം പട്ടിക</b></td><td>പട്ടികജാതി–പട്ടികവർഗ്ഗ പ്രദേശങ്ങളുടെ ഭരണവും നിയന്ത്രണവും.<div class="corr"><span class="b b-red">⚠️ തിരുത്ത് / വ്യക്തത</span> 5-ാം പട്ടിക 'പട്ടിക പ്രദേശങ്ങളുടെയും (Scheduled Areas) പട്ടികവർഗ്ഗക്കാരുടെയും (Scheduled Tribes)' ഭരണത്തെക്കുറിച്ചാണ് — പട്ടികജാതി (SC) പ്രദേശങ്ങൾ എന്ന ആശയം ഇതിലില്ല.</div></td></tr>
     <tr><td><b>6-ാം പട്ടിക</b></td><td><b>അസം, മേഘാലയ, ത്രിപുര, മിസോറാം (കോഡ്: AMTM — മണിപ്പൂർ ഇല്ല!)</b> സംസ്ഥാനങ്ങളിലെ ഗോത്രവർഗ്ഗ പ്രദേശങ്ങളുടെ ഭരണം.</td></tr>
     <tr><td><b>7-ാം പട്ടിക</b></td><td>കേന്ദ്ര–സംസ്ഥാന അധികാര വിഭജനം — 3 ലിസ്റ്റുകൾ: <b>1. യൂണിയൻ ലിസ്റ്റ് (100 വിഷയങ്ങൾ), 2. സ്റ്റേറ്റ് ലിസ്റ്റ് (61 വിഷയങ്ങൾ), 3. കൺകറന്റ് ലിസ്റ്റ് (52 വിഷയങ്ങൾ)</b>. (42-ാം ഭേദഗതിയിലൂടെ വിദ്യാഭ്യാസം, വനം, വന്യജീവി സംരക്ഷണം, അളവുതൂക്കം, നീതിന്യായ ഭരണം എന്നീ 5 വിഷയങ്ങൾ സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്ന് കൺകറന്റ് ലിസ്റ്റിലേക്ക് മാറ്റി).</td></tr>
     <tr><td><b>8-ാം പട്ടിക</b></td><td>ഭരണഘടന അംഗീകരിച്ച <b>22 ഔദ്യോഗിക ഭാഷകൾ</b> (തുടക്കത്തിൽ 14 ഭാഷകൾ; ഇംഗ്ലീഷ് ഇതിൽ ഉൾപ്പെടുന്നില്ല!).</td></tr>
@@ -399,11 +483,24 @@
     <tr><td><b>12-ാം പട്ടിക</b></td><td><b>നഗരപാലിക / മുനിസിപ്പാലിറ്റികൾ (18 വിഷയങ്ങൾ)</b> — <b>74-ാം ഭേദഗതിയിലൂടെ (1992)</b> കൂട്ടിച്ചേർത്തു.</td></tr>
   </table>
   </div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 പ്രധാന ഭാഗങ്ങൾ (Parts) — ഒറ്റനോട്ടത്തിൽ</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>ഭാഗം</th><th>വിഷയം</th><th>അനുച്ഛേദങ്ങൾ</th></tr><tr><td>I</td><td>യൂണിയനും ഭൂപ്രദേശവും</td><td>1–4</td></tr><tr><td>II</td><td>പൗരത്വം</td><td>5–11</td></tr><tr><td>III</td><td>മൗലികാവകാശങ്ങൾ</td><td>12–35</td></tr><tr><td>IV</td><td>നിർദ്ദേശക തത്വങ്ങൾ</td><td>36–51</td></tr><tr><td>IV-A</td><td>മൗലിക കർത്തവ്യങ്ങൾ</td><td>51A</td></tr><tr><td>V</td><td>യൂണിയൻ</td><td>52–151</td></tr><tr><td>VI</td><td>സംസ്ഥാനങ്ങൾ</td><td>152–237</td></tr><tr><td>IX / IX-A / IX-B</td><td>പഞ്ചായത്തുകൾ / മുനിസിപ്പാലിറ്റികൾ / സഹകരണ സംഘങ്ങൾ</td><td>243–243O / 243P–243ZG / 243ZH–243ZT</td></tr><tr><td>XI</td><td>കേന്ദ്ര–സംസ്ഥാന ബന്ധങ്ങൾ</td><td>245–263</td></tr><tr><td>XII</td><td>ധനകാര്യം, സ്വത്ത്, കരാർ</td><td>264–300A</td></tr><tr><td>XIV</td><td>സർവീസുകൾ (UPSC / PSC)</td><td>308–323</td></tr><tr><td>XV</td><td>തിരഞ്ഞെടുപ്പ്</td><td>324–329A</td></tr><tr><td>XVI</td><td>SC/ST തുടങ്ങിയവർക്കുള്ള പ്രത്യേക വ്യവസ്ഥകൾ</td><td>330–342A</td></tr><tr><td>XVII</td><td>ഔദ്യോഗിക ഭാഷ</td><td>343–351</td></tr><tr><td>XVIII</td><td>അടിയന്തരാവസ്ഥ</td><td>352–360</td></tr><tr><td>XX</td><td>ഭരണഘടനാ ഭേദഗതി</td><td>368</td></tr></table></div>
+  <div class="note"><span class="lbl">ശ്രദ്ധിക്കുക</span> ഭാഗം VII (B വിഭാഗ സംസ്ഥാനങ്ങൾ) 7-ാം ഭേദഗതി (1956) വഴി ഒഴിവാക്കി. മൂല ഭരണഘടനയിൽ 22 ഭാഗങ്ങൾ.</div>
+  <h3>🆕 പട്ടികകൾ — അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li><b>5-ാം പട്ടിക</b> → Art. 244(1) | <b>6-ാം പട്ടിക</b> → Art. 244(2) & 275(1) (ജില്ലാ/പ്രാദേശിക സ്വയംഭരണ കൗൺസിലുകൾ).</li>
+    <li><b>8-ാം പട്ടികയിലെ മൂല 14 ഭാഷകൾ:</b> അസമീസ്, ബംഗാളി, ഗുജറാത്തി, ഹിന്ദി, കന്നഡ, കശ്മീരി, <b>മലയാളം</b>, മറാത്തി, ഒഡിയ, പഞ്ചാബി, സംസ്കൃതം, തമിഴ്, തെലുഗു, ഉറുദു.</li>
+    <li>⭐ <b>കേരളം:</b> മലയാളത്തിന് <b>ശ്രേഷ്ഠ ഭാഷാ (Classical) പദവി — 2013 മെയ് 23</b>.</li>
+    <li>മൂല ഭരണഘടനയിൽ 8 പട്ടികകൾ → 9-ാം (1951), 10-ാം (1985), 11-ാം & 12-ാം (1992) പിന്നീട് ചേർത്തു.</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 5. UNION, TERRITORY & CITIZENSHIP ================= -->
-<details class="card" data-tags="basics">
+<details class="card" id="sec-5" data-tags="basics">
 <summary><span class="num">5</span><span class="title">യൂണിയനും ഭൂപ്രദേശവും (ഭാഗം I) & പൗരത്വം (ഭാഗം II)</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="5"> പഠിച്ചു</label></summary>
 <div class="content">
   <ul>
@@ -414,11 +511,20 @@
     <li><b>ആർട്ടിക്കിൾ 11:</b> പൗരത്വവുമായി ബന്ധപ്പെട്ട നിയമങ്ങൾ നിർമ്മിക്കാനുള്ള അധികാരം <b>പാർലമെന്റിനാണ്</b> (ആഭ്യന്തര മന്ത്രാലയം).</li>
     <li><b>ഇന്ത്യൻ പൗരത്വ നിയമം (1955):</b> പൗരത്വം ലഭിക്കാൻ <b>5 വഴികൾ</b> (ജനനം, പിന്തുടർച്ച, രജിസ്ട്രേഷൻ, ചിരവാസത്തിലൂടെ/Naturalisation, പ്രദേശങ്ങളുടെ കൂട്ടിച്ചേർക്കൽ); പൗരത്വം നഷ്ടപ്പെടാൻ <b>3 വഴികൾ</b> (സ്വയം ഉപേക്ഷിക്കൽ/Renunciation, അവസാനിപ്പിക്കൽ/Termination, എടുത്തുമാറ്റൽ/Deprivation).</li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li><b>Art. 2:</b> പുതിയ സംസ്ഥാനങ്ങളെ യൂണിയനിൽ ചേർക്കാനോ സ്ഥാപിക്കാനോ | <b>Art. 3:</b> നിലവിലുള്ള സംസ്ഥാനത്തിന്റെ അതിർത്തി/പേര് മാറ്റാൻ — <b>രാഷ്ട്രപതിയുടെ ശുപാർശ</b> വേണം; ബന്ധപ്പെട്ട സംസ്ഥാന നിയമസഭയുടെ അഭിപ്രായം തേടണം (അത് ബാധകമല്ല) | <b>Art. 4:</b> ഇത്തരം നിയമങ്ങൾ Art. 368 പ്രകാരമുള്ള ഭേദഗതിയായി കണക്കാക്കില്ല.</li>
+    <li><b>ബെറുബാരി കേസ് (1960):</b> ഇന്ത്യയുടെ ഭൂപ്രദേശം മറ്റൊരു രാജ്യത്തിന് വിട്ടുകൊടുക്കാൻ Art. 3 മതിയാവില്ല, <b>Art. 368 പ്രകാരം ഭരണഘടനാ ഭേദഗതി</b> വേണം (അങ്ങനെയാണ് 9-ാം ഭേദഗതി, 1960).</li>
+    <li><b>പൗരത്വ (ഭേദഗതി) നിയമം 2019:</b> അഫ്ഗാനിസ്ഥാൻ, ബംഗ്ലാദേശ്, പാകിസ്ഥാൻ എന്നിവിടങ്ങളിൽ നിന്ന് 2014 ഡിസംബർ 31-നകം ഇന്ത്യയിലെത്തിയ ഹിന്ദു, സിഖ്, ബുദ്ധ, ജൈന, പാഴ്സി, ക്രിസ്ത്യൻ വിഭാഗക്കാർക്ക് പൗരത്വത്തിന് വ്യവസ്ഥ; ചട്ടങ്ങൾ 2024 മാർച്ചിൽ വിജ്ഞാപനം ചെയ്തു.</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 6. FUNDAMENTAL RIGHTS WITH SVG ================= -->
-<details class="card" data-tags="5star svg basics" open>
+<details class="card" id="sec-6" data-tags="5star svg basics" open>
 <summary><span class="num">6</span><span class="title">മൗലികാവകാശങ്ങൾ (ഭാഗം III — ആർട്ടിക്കിൾ 12 മുതൽ 35 വരെ) <span class="map-badge">📐 SVG ഡയഗ്രം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="6"> പഠിച്ചു</label></summary>
 <div class="content">
   <ul>
@@ -474,11 +580,20 @@
   • <b>ഇന്ത്യൻ പൗരന്മാർക്ക് മാത്രമായി ലഭിക്കുന്ന മൗലികാവകാശങ്ങൾ (വിദേശികൾക്ക് ഇല്ല):</b> <b>ആർട്ടിക്കിൾ 15, 16, 19, 29, 30</b>.<br>
   • <b>അടിയന്തരാവസ്ഥക്കാലത്തും റദ്ദ് ചെയ്യാൻ കഴിയാത്ത ആർട്ടിക്കിളുകൾ:</b> <b>ആർട്ടിക്കിൾ 20, ആർട്ടിക്കിൾ 21</b> (44-ാം ഭേദഗതിയിലൂടെ വ്യവസ്ഥ ചെയ്തു).<br>
   • <b>ആർട്ടിക്കിൾ 21A (വിദ്യാഭ്യാസ അവകാശം):</b> 6 മുതൽ 14 വയസ്സുവരെയുള്ള കുട്ടികൾക്ക് സൗജന്യവും നിർബന്ധിതവുമായ വിദ്യാഭ്യാസം — <b>2002-ലെ 86-ാം ഭേദഗതിയിലൂടെ</b> ചേർത്തു (RTE നിയമം പാസാക്കിയത് 2009 ഓഗസ്റ്റ്, പ്രാബല്യത്തിൽ വന്നത് <b>2010 ഏപ്രിൽ 1</b>).</div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 അനുച്ഛേദങ്ങൾ — കൂടുതൽ വിശദാംശങ്ങൾ</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>അനുച്ഛേദം</th><th>പ്രധാന വസ്തുത</th></tr><tr><td><b>Art. 12 & 13</b></td><td>12: 'State'-ന്റെ നിർവചനം | 13: മൗലികാവകാശങ്ങൾക്ക് എതിരായ നിയമങ്ങൾ അസാധു (ജുഡീഷ്യൽ റിവ്യൂവിന്റെ അടിസ്ഥാനം)</td></tr><tr><td><b>Art. 14</b></td><td>നിയമത്തിന് മുന്നിൽ സമത്വം (ബ്രിട്ടൻ) + നിയമങ്ങളുടെ തുല്യ സംരക്ഷണം (അമേരിക്ക)</td></tr><tr><td><b>Art. 15(6) & 16(6)</b></td><td>EWS 10% സംവരണം (103-ാം ഭേദഗതി, 2019)</td></tr><tr><td><b>Art. 19(1)</b></td><td>6 സ്വാതന്ത്ര്യങ്ങൾ: (a) അഭിപ്രായം, (b) സമ്മേളനം, (c) സംഘടന, (d) സഞ്ചാരം, (e) താമസം, (g) തൊഴിൽ/വ്യാപാരം — (f) സ്വത്ത് ഒഴിവാക്കി (44-ാം ഭേദഗതി)</td></tr><tr><td><b>Art. 20</b></td><td>3 സംരക്ഷണങ്ങൾ: മുൻകാല പ്രാബല്യ നിയമം (ex post facto), ഇരട്ട ശിക്ഷ (double jeopardy), സ്വയം കുറ്റാരോപണം (self-incrimination)</td></tr><tr><td><b>Art. 21</b></td><td>ജീവനും വ്യക്തിസ്വാതന്ത്ര്യവും; <b>സ്വകാര്യതയ്ക്കുള്ള അവകാശം</b> Art. 21-ന്റെ ഭാഗം (പുട്ടസ്വാമി കേസ്, 2017)</td></tr><tr><td><b>Art. 22</b></td><td>അറസ്റ്റ്, തടങ്കൽ എന്നിവയിൽ നിന്നുള്ള സംരക്ഷണം (പ്രിവന്റീവ് ഡിറ്റൻഷൻ വ്യവസ്ഥകളും ഇവിടെ)</td></tr><tr><td><b>Art. 17</b></td><td>അയിത്തോച്ചാടനം — പൗരാവകാശ സംരക്ഷണ നിയമം 1955</td></tr></table></div>
+  <ul>
+    <li>⭐ <b>കേരളം:</b> കേശവാനന്ദ ഭാരതി (കാസർഗോഡ് ഇടനീർ മഠാധിപതി) <b>കേരള സർക്കാരിനെതിരെ</b> നൽകിയ കേസാണ് 'അടിസ്ഥാന ഘടന' സിദ്ധാന്തത്തിന് വഴിയൊരുക്കിയത് (1973). <b>ബിജോ ഇമ്മാനുവൽ v. കേരള സംസ്ഥാനം (1986):</b> ദേശീയഗാനം ആലപിക്കാത്തതിന് വിദ്യാർത്ഥികളെ പുറത്താക്കിയ സംഭവത്തിൽ Art. 19(1)(a), 25 എന്നിവ ഉയർത്തിപ്പിടിച്ചു.</li>
+  </ul>
+  <div class="trap"><span class="lbl">PSC TRAP</span> <b>Art. 32 തന്നെ ഒരു മൗലികാവകാശമാണ്</b> (ഭരണഘടനാ പ്രതിവിധിക്കുള്ള അവകാശം). Art. 21 <b>എല്ലാ വ്യക്തികൾക്കും</b> ബാധകം; Art. 19 <b>പൗരന്മാർക്ക് മാത്രം</b>.</div>
+</div>
 </div>
 </details>
 
 <!-- ================= 7. THE 5 WRITS ================= -->
-<details class="card" data-tags="5star basics" open>
+<details class="card" id="sec-7" data-tags="5star basics" open>
 <summary><span class="num">7</span><span class="title">5 ഭരണഘടനാ റിട്ടുകൾ (Writs — Art. 32 & Art. 226)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="7"> പഠിച്ചു</label></summary>
 <div class="content">
   <ul>
@@ -489,18 +604,28 @@
   <div class="tbl-scroll">
   <table class="compact">
     <tr><th>റിട്ട് (Writ)</th><th>വാക്യാർത്ഥം (Literal Meaning)</th><th>ഉദ്ദേശ്യവും PSC സവിശേഷതകളും</th></tr>
-    <tr><td><b>1. ഹേബിയസ് കോർപ്പസ് (Habeas Corpus)</b></td><td><b>"ശരീരം ഹാജരാക്കുക" (To have the body of)</b></td><td>അന്യായമായി തടങ്കലിൽ വെച്ചിരിക്കുന്ന വ്യക്തിയെ കോടതിയിൽ ഹാജരാക്കാൻ ഉത്തരവിടുന്നു; <b>'വ്യക്തിസ്വാതന്ത്ര്യത്തിന്റെ സംരക്ഷകൻ'</b>; സർക്കാരിനും സ്വകാര്യ വ്യക്തികൾക്കും എതിരെ പുറപ്പെടുവിക്കാവുന്ന ഏക റിട്ട്.</td></tr>
+    <tr><td><b>1. ഹേബിയസ് കോർപ്പസ് (Habeas Corpus)</b></td><td><b>"ശരീരം ഹാജരാക്കുക" (To have the body of)</b></td><td>അന്യായമായി തടങ്കലിൽ വെച്ചിരിക്കുന്ന വ്യക്തിയെ കോടതിയിൽ ഹാജരാക്കാൻ ഉത്തരവിടുന്നു; <b>'വ്യക്തിസ്വാതന്ത്ര്യത്തിന്റെ സംരക്ഷകൻ'</b>; സർക്കാരിനും സ്വകാര്യ വ്യക്തികൾക്കും എതിരെ പുറപ്പെടുവിക്കാവുന്ന ഏക റിട്ട്.<div class="corr"><span class="b b-red">⚠️ തിരുത്ത് / വ്യക്തത</span> PSC പാഠപുസ്തക പ്രയോഗമാണിത്: മറ്റ് 4 റിട്ടുകളും സ്വകാര്യ വ്യക്തികൾക്കെതിരെ ലഭ്യമല്ല എന്നതിനാലാണ് 'ഏക' എന്ന് പറയുന്നത്. താരതമ്യ പട്ടിക ഇതേ വിഭാഗത്തിൽ താഴെ.</div></td></tr>
     <tr><td><b>2. മൻഡമസ് (Mandamus)</b></td><td><b>"നാം കൽപ്പിക്കുന്നു" (We Command)</b></td><td>ഒരു പൊതു ഉദ്യോഗസ്ഥനോ സ്ഥാപനമോ തങ്ങളുടെ നിയമപരമായ കർത്തവ്യം ചെയ്യാൻ വിസമ്മതിക്കുമ്പോൾ അത് ചെയ്യാൻ കൽപ്പിക്കുന്ന റിട്ട് (രാഷ്ട്രപതിക്കോ ഗവർണ്ണർക്കോ എതിരെ പുറപ്പെടുവിക്കാനാവില്ല).</td></tr>
     <tr><td><b>3. പ്രൊഹിബിഷൻ (Prohibition)</b></td><td><b>"തടയുക / വിരോധിക്കുക" (To Forbid)</b></td><td>കീഴ്‌ക്കോടതികൾ തങ്ങളുടെ അധികാരപരിധി മറികടന്ന് ഒരു കേസ് പരിഗണിക്കുന്നത് <b>തടയാൻ (Prevention)</b> മേൽക്കോടതി പുറപ്പെടുവിക്കുന്ന റിട്ട്.</td></tr>
     <tr><td><b>4. സെർഷ്യോററി (Certiorari)</b></td><td><b>"സാക്ഷ്യപ്പെടുത്തുക / വിവരം നൽകുക" (To be certified)</b></td><td>കീഴ്‌ക്കോടതി പുറപ്പെടുവിച്ച അധികാരപരിധി വിട്ട ഒരു ഉത്തരവ് <b>റദ്ദാക്കാൻ (Quash / Cure)</b> അല്ലെങ്കിൽ കേസ് മേൽക്കോടതിയിലേക്ക് മാറ്റാൻ പുറപ്പെടുവിക്കുന്ന റിട്ട്.</td></tr>
     <tr><td><b>5. ക്വോ-വാറന്റോ (Quo-Warranto)</b></td><td><b>"എന്ത് അധികാരത്തിൽ?" (By what authority or warrant)</b></td><td>യോഗ്യതയില്ലാത്ത ഒരാൾ നിയമവിരുദ്ധമായി ഒരു പൊതുപദവി കൈവശം വെച്ചിരിക്കുമ്പോൾ അത് ചോദ്യം ചെയ്യാൻ പുറപ്പെടുവിക്കുന്ന റിട്ട്.</td></tr>
   </table>
   </div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 റിട്ടുകൾ — താരതമ്യം</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>റിട്ട്</th><th>ആർക്കെതിരെ ലഭ്യം</th><th>ആർക്കെതിരെ ലഭ്യമല്ല / പരിമിതി</th></tr><tr><td><b>ഹേബിയസ് കോർപ്പസ്</b></td><td>പൊതു അധികാരികൾക്കും സ്വകാര്യ വ്യക്തികൾക്കും എതിരെ</td><td>—  (ഏത് വ്യക്തിക്കും ഹർജി നൽകാം; ഇരയുടെ നേരിട്ടുള്ള ഹർജി നിർബന്ധമല്ല)</td></tr><tr><td><b>മൻഡമസ്</b></td><td>പൊതു ഉദ്യോഗസ്ഥർ, സ്ഥാപനങ്ങൾ, കീഴ്ക്കോടതികൾ</td><td>സ്വകാര്യ വ്യക്തികൾ; രാഷ്ട്രപതി/ഗവർണ്ണർ (വ്യക്തിപരമായി); വിവേചനാധികാരമുള്ള കാര്യങ്ങൾ</td></tr><tr><td><b>പ്രൊഹിബിഷൻ</b></td><td>ജുഡീഷ്യൽ / അർദ്ധ-ജുഡീഷ്യൽ സ്ഥാപനങ്ങൾ</td><td>ഭരണപരം, നിയമനിർമ്മാണം, സ്വകാര്യ സ്ഥാപനങ്ങൾ</td></tr><tr><td><b>സെർഷ്യോററി</b></td><td>ജുഡീഷ്യൽ / അർദ്ധ-ജുഡീഷ്യൽ സ്ഥാപനങ്ങൾ</td><td>ഭരണപരം, നിയമനിർമ്മാണം, സ്വകാര്യ സ്ഥാപനങ്ങൾ</td></tr><tr><td><b>ക്വോ-വാറന്റോ</b></td><td>നിയമപരമായി സൃഷ്ടിക്കപ്പെട്ട പൊതുപദവി (substantive public office)</td><td>മന്ത്രിപദവി, സ്വകാര്യ/ഭരണപര ഓഫീസുകൾ</td></tr></table></div>
+  <div class="trick"><span class="lbl">ഓർമ്മക്കോഡ്</span> <b>പ്രൊഹിബിഷൻ = തീർപ്പിനു മുമ്പ് തടയൽ</b> · <b>സെർഷ്യോററി = തീർപ്പിനു ശേഷം റദ്ദാക്കൽ</b>. ഒരേ കോടതികൾക്കെതിരെ ഇവ രണ്ടും — സമയമാണ് വ്യത്യാസം.</div>
+  <ul>
+    <li><b>Art. 359:</b> അടിയന്തരാവസ്ഥയിൽ രാഷ്ട്രപതിക്ക് മൗലികാവകാശ നടപ്പാക്കൽ (Art. 20, 21 ഒഴികെ) താൽക്കാലികമായി മരവിപ്പിക്കാം.</li>
+    <li><b>Art. 139:</b> മറ്റ് ആവശ്യങ്ങൾക്കും റിട്ട് പുറപ്പെടുവിക്കാനുള്ള അധികാരം സുപ്രീം കോടതിക്ക് പാർലമെന്റ് നൽകാം. <b>Art. 227:</b> ഹൈക്കോടതിയുടെ മേൽനോട്ട അധികാരം (കീഴ്ക്കോടതികളുടെ മേൽ).</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 8. DPSP & FUNDAMENTAL DUTIES ================= -->
-<details class="card" data-tags="5star basics" open>
+<details class="card" id="sec-8" data-tags="5star basics" open>
 <summary><span class="num">8</span><span class="title">നിർദ്ദേശക തത്വങ്ങളും (ഭാഗം IV) മൗലിക കർത്തവ്യങ്ങളും (ഭാഗം IVA)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="8"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>🧭 രാഷ്ട്രനയ നിർദ്ദേശക തത്വങ്ങൾ (DPSP — ഭാഗം IV, ആർട്ടിക്കിൾ 36–51)</h3>
@@ -527,11 +652,25 @@
     <li>കടമെടുത്തത്: <b>സോവിയറ്റ് യൂണിയനിൽ (USSR / റഷ്യ)</b> നിന്ന്.</li>
     <li>തുടക്കത്തിൽ 10 മൗലിക കർത്തവ്യങ്ങൾ → <b>2002-ലെ 86-ാം ഭേദഗതിയിലൂടെ 11-ാമത്തെ കർത്തവ്യം</b> (6–14 വയസ്സുള്ള കുട്ടികൾക്ക് വിദ്യാഭ്യാസം നൽകൽ — Art. 51A(k)) ചേർത്തു.</li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 DPSP-യുടെ വർഗ്ഗീകരണം</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>വിഭാഗം</th><th>പ്രധാന അനുച്ഛേദങ്ങൾ</th></tr><tr><td><b>സോഷ്യലിസ്റ്റ്</b></td><td>38, 39, 39A, 41, 42, 43, 43A, 47</td></tr><tr><td><b>ഗാന്ധിയൻ</b></td><td>40, 43, 43B, 46, 47, 48</td></tr><tr><td><b>ലിബറൽ–ബൗദ്ധിക</b></td><td>44, 45, 48, 48A, 49, 50, 51</td></tr></table></div>
+  <ul>
+    <li><b>Art. 43A</b> (തൊഴിലാളികളുടെ ഭരണപങ്കാളിത്തം) — 42-ാം ഭേദഗതി | <b>Art. 43B</b> (സഹകരണ സംഘങ്ങൾ) — 97-ാം ഭേദഗതി (2011).</li>
+    <li><b>സ്റ്റേറ്റ് ഓഫ് മദ്രാസ് v. ചമ്പകം ദൊരൈരാജൻ (1951):</b> മൗലികാവകാശങ്ങൾക്ക് DPSP-യെക്കാൾ മുൻതൂക്കം. <b>മിനർവ മിൽസ് (1980):</b> മൗലികാവകാശങ്ങളും DPSP-യും തമ്മിലുള്ള സന്തുലനം ഭരണഘടനയുടെ അടിസ്ഥാന ഘടനയുടെ ഭാഗം. <b>Art. 31C:</b> ചില DPSP നടപ്പാക്കുന്ന നിയമങ്ങൾക്ക് സംരക്ഷണം.</li>
+  </ul>
+  <h3>🆕 11 മൗലിക കർത്തവ്യങ്ങൾ (Art. 51A) — ഒറ്റനോട്ടത്തിൽ</h3>
+  <ol>
+    <li>(a) ഭരണഘടന, ദേശീയ പതാക, ദേശീയ ഗാനം എന്നിവയെ ബഹുമാനിക്കുക</li><li>(b) സ്വാതന്ത്ര്യസമര ആദർശങ്ങൾ പിന്തുടരുക</li><li>(c) പരമാധികാരവും ഐക്യവും അഖണ്ഡതയും സംരക്ഷിക്കുക</li><li>(d) രാജ്യത്തെ പ്രതിരോധിക്കുക</li><li>(e) സൗഹാർദ്ദവും സാഹോദര്യവും വളർത്തുക; സ്ത്രീകളുടെ അന്തസ്സിന് ഇടിവുവരുത്തുന്ന ആചാരങ്ങൾ ഉപേക്ഷിക്കുക</li><li>(f) സമ്മിശ്ര സംസ്കാരത്തിന്റെ പൈതൃകം സംരക്ഷിക്കുക</li><li>(g) പരിസ്ഥിതിയും വന്യജീവികളും സംരക്ഷിക്കുക</li><li>(h) ശാസ്ത്രീയ മനോഭാവം, മാനവികത, അന്വേഷണ ത്വര</li><li>(i) പൊതുസ്വത്ത് സംരക്ഷിക്കുക, അക്രമം ഉപേക്ഷിക്കുക</li><li>(j) ഉത്കൃഷ്ടതയ്ക്കായി പരിശ്രമിക്കുക</li><li>(k) 6–14 വയസ്സുള്ള കുട്ടികൾക്ക് വിദ്യാഭ്യാസ അവസരം നൽകുക (86-ാം ഭേദഗതി)</li>
+  </ol>
+  <div class="trap"><span class="lbl">PSC TRAP</span> മൗലിക കർത്തവ്യങ്ങളും <b>കോടതി വഴി നടപ്പാക്കാനാവാത്തവ</b> ആണ്; സ്വരൺ സിംഗ് കമ്മിറ്റി 8 കർത്തവ്യങ്ങളാണ് ശുപാർശ ചെയ്തത് — 42-ാം ഭേദഗതി 10 ആക്കി.</div>
+</div>
 </div>
 </details>
 
 <!-- ================= 9. PRESIDENT, VP, PM & AGE LADDER ================= -->
-<details class="card" data-tags="5star union" open>
+<details class="card" id="sec-9" data-tags="5star union" open>
 <summary><span class="num">9</span><span class="title">രാഷ്ട്രപതി, ഉപരാഷ്ട്രപതി, പ്രധാനമന്ത്രി & പ്രായപരിധി ചാർട്ട് <span class="map-badge">📊 ചാർട്ട്</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="9"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>📊 ഭരണഘടനാ പദവികളിലെ കുറഞ്ഞ പ്രായപരിധി (Minimum Age Ladder)</h3>
@@ -543,6 +682,7 @@
     <div class="bar-row"><span class="lbl">രാഷ്ട്രപതി / ഉപരാഷ്ട്രപതി / ഗവർണ്ണർ</span><div class="bar" style="width:96%;background:#1e3a8a;">35 വയസ്സ്</div></div>
   </div>
 
+<div class="corr"><span class="b b-red">⚠️ തിരുത്ത് / വ്യക്തത</span> മുകളിലെ ചാർട്ടിൽ <b>'PM / CM — 25 വയസ്സ്'</b> എന്നത് വ്യക്തത വേണ്ടതാണ്: പ്രധാനമന്ത്രി ലോക്സഭ (25) <i>അല്ലെങ്കിൽ</i> രാജ്യസഭ (30) അംഗമാകാം; മുഖ്യമന്ത്രി നിയമസഭ (25) <i>അല്ലെങ്കിൽ</i> ലെജിസ്ലേറ്റീവ് കൗൺസിൽ (30) അംഗമാകാം. PM/CM-ന് പ്രത്യേക കുറഞ്ഞ പ്രായം ഭരണഘടനയിൽ പറഞ്ഞിട്ടില്ല. (ഗവർണ്ണർ = 35 ശരിയാണ്; വിഭാഗം 11 കാണുക.)</div>
   <h3>🇮🇳 രാഷ്ട്രപതിയും (Art. 52–62) ഉപരാഷ്ട്രപതിയും (Art. 63–71)</h3>
   <div class="tbl-scroll">
   <table class="compact">
@@ -558,11 +698,24 @@
   • <b>രാഷ്ട്രപതിയെ തിരഞ്ഞെടുക്കുന്ന ഇലക്ടറൽ കോളേജിൽ ഉൾപ്പെടുന്നവർ:</b> പാർലമെന്റിന്റെ ഇരുസഭകളിലെയും <b>തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ</b> + സംസ്ഥാന നിയമസഭകളിലെയും ഡൽഹി, പുതുച്ചേരി നിയമസഭകളിലെയും <b>തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ</b> (നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവരോ ലെജിസ്ലേറ്റീവ് കൗൺസിൽ അംഗങ്ങളോ ഇല്ല!).<br>
   • എന്നാൽ <b>ഇംപീച്ച്മെന്റിൽ</b> പാർലമെന്റിലെ ഇരുസഭകളിലെയും <b>എല്ലാ അംഗങ്ങളും</b> (നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവർ ഉൾപ്പെടെ) പങ്കെടുക്കുന്നു; MLA-മാർ പങ്കെടുക്കുന്നില്ല.<br>
   • <b>രാഷ്ട്രപതി രാജിക്കത്ത് നൽകുന്നത്:</b> <b>ഉപരാഷ്ട്രപതിക്ക്</b> | <b>ഉപരാഷ്ട്രപതി രാജിക്കത്ത് നൽകുന്നത്:</b> <b>രാഷ്ട്രപതിക്ക്</b>.</div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 രാഷ്ട്രപതി / ഉപരാഷ്ട്രപതി — അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li><b>Art. 56:</b> കാലാവധി 5 വർഷം | <b>Art. 58:</b> യോഗ്യത — ഇന്ത്യൻ പൗരൻ, 35 വയസ്സ്, ലോക്സഭാംഗമാകാൻ യോഗ്യത, ലാഭകരമായ പദവിയില്ല.</li>
+    <li><b>തിരഞ്ഞെടുപ്പ് രീതി:</b> ആനുപാതിക പ്രാതിനിധ്യം + ഒറ്റ കൈമാറ്റ വോട്ട് (STV), രഹസ്യ ബാലറ്റ്.</li>
+    <li><b>ഉപരാഷ്ട്രപതിയെ തിരഞ്ഞെടുക്കുന്നത്</b> (Art. 66): പാർലമെന്റിന്റെ ഇരുസഭകളിലെയും <b>എല്ലാ അംഗങ്ങളും</b> (നാമനിർദ്ദേശം ചെയ്യപ്പെട്ടവർ ഉൾപ്പെടെ) — സംസ്ഥാന നിയമസഭാംഗങ്ങൾക്ക് വോട്ടില്ല.</li>
+    <li><b>Art. 72:</b> മാപ്പ് നൽകാനുള്ള അധികാരം — വധശിക്ഷ, പട്ടാള കോടതി ശിക്ഷ, കേന്ദ്ര നിയമ പ്രകാരമുള്ള കുറ്റങ്ങൾ എന്നിവയിൽ.</li>
+    <li><b>Art. 123:</b> ഓർഡിനൻസ് — പാർലമെന്റ് വീണ്ടും സമ്മേളിച്ച് <b>6 ആഴ്ചയ്ക്കകം</b> അംഗീകരിക്കണം, അല്ലെങ്കിൽ അസാധുവാകും.</li>
+    <li>⭐ <b>കേരളം:</b> <b>കെ.ആർ. നാരായണൻ</b> — 10-ാമത് രാഷ്ട്രപതി (1997–2002), ആദ്യ മലയാളി രാഷ്ട്രപതി. <b>ദ്രൗപദി മുർമു</b> — 15-ാമത് രാഷ്ട്രപതി (2022 ജൂലൈ 25 മുതൽ).</li>
+  </ul>
+  <div class="trap"><span class="lbl">PSC TRAP</span> രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പിൽ നാമനിർദ്ദേശം ചെയ്യപ്പെട്ട എംപിമാർക്ക് വോട്ടില്ല; <b>ഉപരാഷ്ട്രപതി തിരഞ്ഞെടുപ്പിൽ ഉണ്ട്</b>. ഇംപീച്ച്മെന്റിൽ (Art. 61) ഇരുസഭകളിലെയും എല്ലാ അംഗങ്ങളും പങ്കെടുക്കും; ഇംപീച്ച്മെന്റിന് നോട്ടീസ് നൽകാൻ സഭാംഗങ്ങളുടെ 1/4 പേർ ഒപ്പിടണം, പ്രമേയം പാസാകാൻ സഭയുടെ ആകെ അംഗസംഖ്യയുടെ 2/3 ഭൂരിപക്ഷം.</div>
+</div>
 </div>
 </details>
 
 <!-- ================= 10. PARLIAMENT WITH SVG ================= -->
-<details class="card" data-tags="5star svg union" open>
+<details class="card" id="sec-10" data-tags="5star svg union" open>
 <summary><span class="num">10</span><span class="title">ഇന്ത്യൻ പാർലമെന്റ് (Art. 79, 80, 81) <span class="map-badge">📐 SVG ഡയഗ്രം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="10"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>📐 ഇന്ത്യൻ പാർലമെന്റിന്റെ ഘടന (ആർട്ടിക്കിൾ 79 — "സരള / Sa-Ra-La" കോഡ്: 79–80–81)</h3>
@@ -608,11 +761,24 @@
     <li><b>പബ്ലിക് അക്കൗണ്ട്സ് കമ്മിറ്റി (PAC):</b> <b>22 അംഗങ്ങൾ</b> (15 ലോക്സഭ + 7 രാജ്യസഭ); ചെയർമാൻ പ്രതിപക്ഷത്ത് നിന്നുള്ള അംഗം; CAG റിപ്പോർട്ട് പരിശോധിക്കുന്നു.</li>
     <li><b>എയിസ്റ്റിമേറ്റ്സ് കമ്മിറ്റി (Estimates Committee):</b> പാർലമെന്റിലെ ഏറ്റവും വലിയ സമിതി — <b>30 അംഗങ്ങൾ (മുഴുവൻ പേരും ലോക്സഭയിൽ നിന്ന് മാത്രം)</b>.</li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 പാർലമെന്റ് — അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li><b>Art. 83:</b> രാജ്യസഭ സ്ഥിരം സഭ — ഓരോ 2 വർഷത്തിലും 1/3 അംഗങ്ങൾ വിരമിക്കുന്നു.</li>
+    <li><b>Art. 85:</b> രണ്ട് സമ്മേളനങ്ങൾക്കിടയിലെ പരമാവധി ഇടവേള 6 മാസം.</li>
+    <li><b>Art. 112 / 114 / 116:</b> വാർഷിക ധനകാര്യ പത്രിക (ബജറ്റ്) / വിനിയോഗ ബിൽ / വോട്ട്-ഓൺ-അക്കൗണ്ട്.</li>
+    <li><b>കൂറുമാറ്റ നിരോധനം:</b> അയോഗ്യത തീരുമാനിക്കുന്നത് സഭാധ്യക്ഷൻ; <b>കിഹോട്ടോ ഹോളോഹാൻ (1992)</b> വിധി — അധ്യക്ഷന്റെ തീരുമാനം ജുഡീഷ്യൽ റിവ്യൂവിന് വിധേയം. 91-ാം ഭേദഗതി (2003) 'കൂട്ടത്തോടെയുള്ള കൂറുമാറ്റ' (വിഭജന) ഇളവ് ഒഴിവാക്കി.</li>
+  </ul>
+  <div class="note"><span class="lbl">🆕 സമകാലികം (2026 ഒക്ടോബർ 19-ന് പരിശോധിച്ചത്)</span>
+  • <b>106-ാം ഭേദഗതി</b> (വനിതാ സംവരണം) നിയമമായെങ്കിലും <b>പ്രാബല്യത്തിൽ വരാൻ കേന്ദ്ര സർക്കാർ വിജ്ഞാപനം വേണം</b> (സെൻസസിനും മണ്ഡല പുനർനിർണ്ണയത്തിനും ശേഷം പ്രതീക്ഷിക്കുന്നു).<br>
+  • <b>131-ാം ഭേദഗതി ബിൽ (2026)</b> — ലോക്സഭാ സീറ്റുകൾ 543 → ഏകദേശം 850 ആക്കാൻ നിർദ്ദേശിച്ചത് 2026 ഏപ്രിൽ 16-ന് അവതരിപ്പിച്ചു; <b>2026 ഏപ്രിൽ 17-ന് ലോക്സഭയിൽ ആവശ്യമായ 2/3 ഭൂരിപക്ഷം ലഭിക്കാതെ പരാജയപ്പെട്ടു</b> (റിപ്പോർട്ടുകൾ പ്രകാരം 298–230; വോട്ടെണ്ണം ഒറ്റ ഉറവിടത്തിൽ നിന്നുള്ളതാണ് — ലോക്സഭാ രേഖകളിൽ ഉറപ്പിക്കണം). 2026 ജൂലൈയിൽ പുതുക്കിയ ബിൽ വീണ്ടും കൊണ്ടുവരുന്നതായി പറയപ്പെടുന്നു — <b>NEEDS VERIFICATION</b>.</div>
+</div>
 </div>
 </details>
 
 <!-- ================= 11. JUDICIARY & STATE GOVT ================= -->
-<details class="card" data-tags="5star union" open>
+<details class="card" id="sec-11" data-tags="5star union" open>
 <summary><span class="num">11</span><span class="title">സുപ്രീം കോടതി (Art. 124), ഹൈക്കോടതി (Art. 214) & ഗവർണ്ണർ</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="11"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="cmp">
@@ -626,13 +792,25 @@
   <ul>
     <li><b>ആർട്ടിക്കിൾ 153:</b> സംസ്ഥാന ഗവർണ്ണർ (ഏഴാം ഭേദഗതി പ്രകാരം ഒരാൾക്ക് ഒന്നിലധികം സംസ്ഥാനങ്ങളുടെ ഗവർണ്ണറാകാം) | നിയമിക്കുന്നത്: <b>രാഷ്ട്രപതി (Art. 155)</b>.</li>
     <li><b>ആർട്ടിക്കിൾ 161:</b> ഗവർണ്ണറുടെ മാപ്പുനൽകാനുള്ള അധികാരം (വധശിക്ഷയോ പട്ടാള കോടതി ശിക്ഷയോ ഒഴിവാക്കാൻ ഗവർണ്ണർക്ക് അധികാരമില്ല) | <b>ആർട്ടിക്കിൾ 213:</b> ഗവർണ്ണറുടെ ഓർഡിനൻസ് അധികാരം.</li>
-    <li>ഇന്ത്യയിലെ ആദ്യ വനിതാ ഗവർണ്ണർ: <b>സരോജിനി നായിഡു (UP)</b> | കേരളത്തിലെ ആദ്യ ഗവർണ്ണർ: <b>ബി. രാമകൃഷ്ണ റാവു</b> | ആദ്യ വനിതാ ഗവർണ്ണർ: <b>ജ്യോതി വെങ്കിടാചലം</b>.</li>
+    <li>ഇന്ത്യയിലെ ആദ്യ വനിതാ ഗവർണ്ണർ: <b>സരോജിനി നായിഡു (UP)</b> | കേരളത്തിലെ ആദ്യ ഗവർണ്ണർ: <b>ബി. രാമകൃഷ്ണ റാവു</b> | ആദ്യ വനിതാ ഗവർണ്ണർ: <b>ജ്യോതി വെങ്കിടാചലം</b>. <span class="corr"><span class="b b-red">⚠️ വ്യക്തത</span> ഇത് <b>കേരളത്തിലെ</b> ആദ്യ വനിതാ ഗവർണ്ണർ (1977–82) ആണ്; ഇന്ത്യയിലെ ആദ്യ വനിതാ ഗവർണ്ണർ മുകളിൽ പറഞ്ഞ സരോജിനി നായിഡു.</span></li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 ജുഡീഷ്യറിയും ഗവർണ്ണറും — അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li>സുപ്രീം കോടതി ജഡ്ജിമാരുടെ എണ്ണം <b>34</b> (ചീഫ് ജസ്റ്റിസ് ഉൾപ്പെടെ) — 2019-ലെ ഭേദഗതി നിയമം പ്രകാരം. <i>(2026-ൽ ജഡ്ജിമാരുടെ എണ്ണം വർദ്ധിപ്പിക്കാനുള്ള ഒരു ബിൽ പരിഗണനയിൽ — NEEDS VERIFICATION.)</i></li>
+    <li><b>അധികാരപരിധി:</b> ഒറിജിനൽ — Art. 131 | അപ്പീൽ — Art. 132–136 | ഉപദേശക — Art. 143 | പുനഃപരിശോധന — Art. 137 | 'പൂർണ്ണ നീതി' — Art. 142 | സുപ്രീം കോടതി വിധി എല്ലാ കോടതികൾക്കും ബാധകം — Art. 141.</li>
+    <li><b>ജഡ്ജിമാരുടെ നീക്കം:</b> Art. 124(4) — പാർലമെന്റിന്റെ ഇരുസഭകളിലും പ്രത്യേക ഭൂരിപക്ഷത്തോടെയുള്ള പ്രമേയം.</li>
+    <li><b>ജഡ്ജിമാരുടെ കേസുകൾ:</b> 1st (എസ്.പി. ഗുപ്ത, 1981) · 2nd (SCAORA, 1993 — കൊളീജിയം) · 3rd (1998 — രാഷ്ട്രപതിയുടെ റഫറൻസ്) · 4th (NJAC, 2015).</li>
+    <li><b>ഗവർണ്ണർ:</b> Art. 157 — പൗരൻ, 35 വയസ്സ് | Art. 156 — 5 വർഷം, രാഷ്ട്രപതിയുടെ ഇഷ്ടാനുസരണം | Art. 159 — സത്യപ്രതിജ്ഞ | Art. 164 — മുഖ്യമന്ത്രിയുടെ നിയമനം | Art. 200 — ബില്ലുകൾക്ക് അനുമതി.</li>
+    <li>⭐ <b>കേരളം:</b> ജസ്റ്റിസ് ഫാത്തിമ ബീവി പിന്നീട് തമിഴ്നാട് ഗവർണ്ണറായും സേവനമനുഷ്ഠിച്ചു (1997–2001).</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 12. PANCHAYATI RAJ & MUNICIPALITIES ================= -->
-<details class="card" data-tags="5star amend" open>
+<details class="card" id="sec-12" data-tags="5star amend" open>
 <summary><span class="num">12</span><span class="title">പഞ്ചായത്തീരാജും നഗരപാലികയും (73 & 74 ഭേദഗതികൾ — 1992)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="12"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>🌾 പഞ്ചായത്തീരാജ് കമ്മിറ്റികൾ — ക്രമത്തിൽ</h3>
@@ -653,11 +831,23 @@
     <li>ഇന്ത്യയിൽ ആദ്യമായി പഞ്ചായത്തീരാജ് ഉദ്ഘാടനം ചെയ്തത്: <b>1959 ഒക്ടോബർ 2-ന് രാജസ്ഥാനിലെ നാഗൗറിൽ</b> (ജവഹർലാൽ നെഹ്‌റു); രണ്ടാമത്തെ സംസ്ഥാനം: ആന്ധ്രാപ്രദേശ്.</li>
     <li>കേരള പഞ്ചായത്തീരാജ് നിയമം നിലവിൽ വന്നത്: <b>1994 ഏപ്രിൽ 23</b> (നഗരപാലിക നിയമം: 1994 മെയ് 30).</li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 പഞ്ചായത്തീരാജ് / നഗരപാലിക — അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li><b>ത്രിതല സംവിധാനം:</b> ഗ്രാമം · ഇടത്തട്ട് (ബ്ലോക്ക്) · ജില്ല — 20 ലക്ഷത്തിൽ താഴെ ജനസംഖ്യയുള്ള സംസ്ഥാനങ്ങൾക്ക് ഇടത്തട്ട് ഒഴിവാക്കാം. കാലാവധി 5 വർഷം; കുറഞ്ഞ പ്രായം 21.</li>
+    <li><b>Art. 243Q:</b> നഗര സ്ഥാപനങ്ങളുടെ 3 തരം — നഗര പഞ്ചായത്ത്, മുനിസിപ്പൽ കൗൺസിൽ, മുനിസിപ്പൽ കോർപ്പറേഷൻ. <b>Art. 243ZE:</b> മെട്രോപൊളിറ്റൻ പ്ലാനിംഗ് കമ്മിറ്റി.</li>
+    <li><b>PESA നിയമം 1996:</b> 5-ാം പട്ടികാ പ്രദേശങ്ങളിലേക്ക് പഞ്ചായത്തീരാജ് വ്യാപിപ്പിച്ചു.</li>
+    <li>രാജീവ് ഗാന്ധി സർക്കാരിന്റെ <b>64-ാം ഭേദഗതി ബിൽ (1989)</b> രാജ്യസഭയിൽ പരാജയപ്പെട്ടു; നരസിംഹറാവു സർക്കാർ 73/74-ാം ഭേദഗതികൾ പാസാക്കി.</li>
+    <li><b>97-ാം ഭേദഗതി (സഹകരണ സംഘങ്ങൾ):</b> 2021 ജൂലൈയിൽ സുപ്രീം കോടതി (യൂണിയൻ ഓഫ് ഇന്ത്യ v. രാജേന്ദ്ര എൻ. ഷാ) സംസ്ഥാന സഹകരണ സംഘങ്ങളെ സംബന്ധിച്ച ഭാഗം റദ്ദാക്കി; മൾട്ടി-സ്റ്റേറ്റ് സഹകരണ സംഘങ്ങൾക്ക് ബാധകമായി നിലനിർത്തി.</li>
+    <li>⭐ <b>കേരളം:</b> 1996 — ജനകീയാസൂത്രണ പ്രസ്ഥാനം (അധികാര വികേന്ദ്രീകരണം).</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 13. EMERGENCY & OFFICIAL LANGUAGES ================= -->
-<details class="card" data-tags="5star basics" open>
+<details class="card" id="sec-13" data-tags="5star basics" open>
 <summary><span class="num">13</span><span class="title">അടിയന്തരാവസ്ഥകളും (ഭാഗം XVIII) ഔദ്യോഗിക ഭാഷകളും (ഭാഗം XVII)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="13"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>🚨 3 തരം അടിയന്തരാവസ്ഥകൾ (ഭാഗം XVIII — ആർട്ടിക്കിൾ 352 മുതൽ 360 വരെ)</h3>
@@ -675,11 +865,22 @@
   • <b>21-ാം ഭേദഗതി (1967):</b> <b>സിന്ധി</b> (15-ാമത്തെ ഭാഷ)<br>
   • <b>71-ാം ഭേദഗതി (1992):</b> <b>കൊ-മ-നേ (KMN)</b> → <b>കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി</b><br>
   • <b>92-ാം ഭേദഗതി (2003):</b> <b>ബോ-ഡോ-മ-സ (BDMS)</b> → <b>ബോഡോ, ഡോഗ്രി, മൈഥിലി, സന്താളി</b></div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 അടിയന്തരാവസ്ഥയും ഭാഷകളും — അധിക വസ്തുതകൾ</h3>
+  <ul>
+    <li><b>Art. 352:</b> പ്രഖ്യാപനത്തിന് കേന്ദ്ര മന്ത്രിസഭയുടെ രേഖാമൂലമുള്ള ശുപാർശ; 1 മാസത്തിനകം പാർലമെന്റിന്റെ പ്രത്യേക ഭൂരിപക്ഷം; തുടർച്ച ഓരോ 6 മാസത്തിലും; പിൻവലിക്കാൻ ലോക്സഭയിൽ സാധാരണ ഭൂരിപക്ഷം മതി; പിൻവലിക്കൽ പ്രമേയത്തിനായി സഭ വിളിച്ചുകൂട്ടാൻ ലോക്സഭാംഗങ്ങളുടെ 1/10 പേർക്ക് ആവശ്യപ്പെടാം.</li>
+    <li><b>Art. 358:</b> യുദ്ധം / വിദേശാക്രമണ അടിയന്തരാവസ്ഥയിൽ <b>Art. 19 സ്വയമേവ</b> റദ്ദാകും (സായുധ കലാപത്തിൽ അല്ല) | <b>Art. 359:</b> മറ്റ് മൗലികാവകാശങ്ങൾ രാഷ്ട്രപതിയുടെ ഉത്തരവിലൂടെ (Art. 20, 21 ഒഴികെ).</li>
+    <li><b>Art. 356:</b> ഓരോ 6 മാസത്തിലും നീട്ടണം; ഒരു വർഷത്തിനപ്പുറം നീട്ടാൻ ദേശീയ അടിയന്തരാവസ്ഥയും തിരഞ്ഞെടുപ്പ് കമ്മീഷന്റെ സാക്ഷ്യപത്രവും വേണം. <b>എസ്.ആർ. ബൊമ്മൈ (1994)</b> — Art. 356 ജുഡീഷ്യൽ റിവ്യൂവിന് വിധേയം.</li>
+    <li><b>ഭാഷകൾ:</b> Art. 343 — ദേവനാഗരി ലിപിയിൽ ഹിന്ദി യൂണിയന്റെ ഔദ്യോഗിക ഭാഷ | Art. 345 — സംസ്ഥാന ഭാഷകൾ | Art. 348 — സുപ്രീം/ഹൈക്കോടതികളുടെ ഭാഷ ഇംഗ്ലീഷ് | Art. 350A — പ്രാഥമിക വിദ്യാഭ്യാസം മാതൃഭാഷയിൽ | Art. 350B — ഭാഷാ ന്യൂനപക്ഷങ്ങൾക്കുള്ള പ്രത്യേക ഓഫീസർ.</li>
+    <li><b>ശ്രേഷ്ഠ ഭാഷകൾ:</b> തമിഴ് (2004), സംസ്കൃതം (2005), തെലുഗു & കന്നഡ (2008), <b>മലയാളം (2013)</b>, ഒഡിയ (2014); 2024 ഒക്ടോബറിൽ മറാത്തി, പാലി, പ്രാകൃത്, അസമീസ്, ബംഗാളി എന്നിവയ്ക്കും പദവി ലഭിച്ചു.</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 14. CONSTITUTIONAL & STATUTORY BODIES ================= -->
-<details class="card" data-tags="5star amend" open>
+<details class="card" id="sec-14" data-tags="5star amend" open>
 <summary><span class="num">14</span><span class="title">ഭരണഘടനാ സ്ഥാപനങ്ങളും നിയമാധിഷ്ഠിത കമ്മീഷനുകളും</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="14"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>🏛️ ഭരണഘടനാ സ്ഥാപനങ്ങൾ (Constitutional Bodies — ആർട്ടിക്കിളും കാലാവധിയും)</h3>
@@ -702,11 +903,22 @@
     <li><b>വിവരാവകാശ നിയമം (RTI Act 2005):</b> പാർലമെന്റ് പാസാക്കിയത് 2005 ജൂൺ 15; പ്രാബല്യത്തിൽ വന്നത്: <b>2005 ഒക്ടോബർ 12</b> (30 ദിവസത്തിനുള്ളിൽ വിവരം നൽകണം; ജീവനും സ്വാതന്ത്ര്യവും സംബന്ധിച്ചതാണെങ്കിൽ <b>48 മണിക്കൂറിനുള്ളിൽ</b>); ആദ്യ മുഖ്യ വിവരാവകാശ കമ്മീഷണർ: <b>വജാഹത്ത് ഹബീബുള്ള</b>.</li>
     <li><b>ലോക്പാൽ & ലോകായുക്ത നിയമം (2013):</b> ഇന്ത്യയുടെ ആദ്യ ലോക്പാൽ: <b>ജസ്റ്റിസ് പിനാക്കി ചന്ദ്ര ഘോഷ് (2019)</b> (ലോക്പാൽ എന്ന പദം നൽകിയത്: എൽ.എം. സിംഗ്‌വി).</li>
   </ul>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-orange">🟠 IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 ഭരണഘടനാ vs നിയമാധിഷ്ഠിത സ്ഥാപനങ്ങൾ — തെറ്റിദ്ധാരണ ഒഴിവാക്കാൻ</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>ഭരണഘടനാ സ്ഥാപനം</th><th>നിയമാധിഷ്ഠിത (Statutory) സ്ഥാപനം</th></tr><tr><td>തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ, UPSC / PSC, ധനകാര്യ കമ്മീഷൻ, CAG, NCSC, NCST, NCBC (2018 മുതൽ), GST കൗൺസിൽ (Art. 279A)</td><td>NHRC, CVC, ലോക്പാൽ, കേന്ദ്ര വിവരാവകാശ കമ്മീഷൻ, ദേശീയ വനിതാ കമ്മീഷൻ, ദേശീയ ന്യൂനപക്ഷ കമ്മീഷൻ</td></tr></table></div>
+  <ul>
+    <li><b>NITI ആയോഗ്</b> (2015 ജനുവരി 1, ആസൂത്രണ കമ്മീഷന് പകരം) — ഭരണഘടനാ സ്ഥാപനമോ നിയമാധിഷ്ഠിതമോ അല്ല (executive resolution).</li>
+    <li><b>തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ:</b> CEC & 2 EC; നിയമനം 2023-ലെ CEC & മറ്റ് EC (നിയമന, സേവന വ്യവസ്ഥകൾ, കാലാവധി) നിയമപ്രകാരം — തിരഞ്ഞെടുപ്പ് സമിതി: പ്രധാനമന്ത്രി, ലോക്സഭാ പ്രതിപക്ഷ നേതാവ്, ഒരു കേന്ദ്ര കാബിനറ്റ് മന്ത്രി. നിലവിലെ CEC: <b>ജ്ഞാനേഷ് കുമാർ</b> (2025 ഫെബ്രുവരി 19 മുതൽ).</li>
+    <li><b>PSC:</b> Art. 316 — നിയമനം (UPSC: രാഷ്ട്രപതി; സംസ്ഥാന PSC: ഗവർണ്ണർ) | Art. 317 — നീക്കം ചെയ്യൽ (സുപ്രീം കോടതി അന്വേഷണത്തിന് ശേഷം രാഷ്ട്രപതി) | Art. 319 — വിരമിച്ച ശേഷമുള്ള നിയമന വിലക്ക്.</li>
+    <li><b>ധനകാര്യ കമ്മീഷൻ:</b> ചെയർമാൻ + 4 അംഗങ്ങൾ; 16-ാം കമ്മീഷൻ 2026–31 കാലയളവിലേക്കുള്ള ശുപാർശകൾ നൽകുന്നു. <b>CAG:</b> Art. 148 — സുപ്രീം കോടതി ജഡ്ജിയെ പോലെ മാത്രമേ നീക്കം ചെയ്യാനാകൂ; റിപ്പോർട്ട് Art. 151 പ്രകാരം രാഷ്ട്രപതിക്ക്.</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 15. MAJOR AMENDMENTS (1 TO 106) WITH SVG ================= -->
-<details class="card" data-tags="5star svg amend" open>
+<details class="card" id="sec-15" data-tags="5star svg amend" open>
 <summary><span class="num">15</span><span class="title">സുപ്രധാന ഭരണഘടനാ ഭേദഗതികൾ (1 മുതൽ 106 വരെ — Art. 368) <span class="map-badge">📐 SVG ഡയഗ്രം</span></span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="15"> പഠിച്ചു</label></summary>
 <div class="content">
   <h3>📐 ഏറ്റവും പുതിയ 7 ഭരണഘടനാ ഭേദഗതികൾ (100 മുതൽ 106 വരെ — Visual Cards)</h3>
@@ -752,6 +964,7 @@
     </svg>
   </div>
 
+<div class="corr"><span class="b b-red">⚠️ തിരുത്ത് / വ്യക്തത</span> 106-ാം ഭേദഗതി നിയമമായെങ്കിലും (2023 സെപ്റ്റംബർ 28) <b>പ്രാബല്യത്തിൽ വരാൻ കേന്ദ്ര വിജ്ഞാപനം വേണം</b>. ഇത് <b>Art. 334A</b> കൂടി ചേർക്കുന്നു (സംവരണ തുടക്കം സെൻസസ്/മണ്ഡല പുനർനിർണ്ണയത്തിന് ശേഷം). മുകളിലെ ചിത്രത്തിലെ 330A, 332A, 239AA എന്നിവയോടൊപ്പം ഇതും ഓർക്കുക.</div>
   <h3>📜 മറ്റ് സുപ്രധാന ഭരണഘടനാ ഭേദഗതികൾ (PSC ക്ലാസിക് പട്ടിക)</h3>
   <div class="tbl-scroll">
   <table class="compact">
@@ -767,14 +980,25 @@
     <tr><td><b>73 & 74 ഭേദഗതികൾ (1992)</b></td><td>പഞ്ചായത്തീരാജ് (11-ാം പട്ടിക) & നഗരപാലിക (12-ാം പട്ടിക) ഭരണഘടനാ പദവി (പി.വി. നരസിംഹറാവു).</td></tr>
     <tr><td><b>86-ാം ഭേദഗതി (2002)</b></td><td>മൗലികാവകാശങ്ങളിൽ <b>ആർട്ടിക്കിൾ 21A (വിദ്യാഭ്യാസ അവകാശം)</b> ചേർത്തു; 11-ാമത്തെ മൗലിക കർത്തവ്യം ചേർത്തു.</td></tr>
     <tr><td><b>91-ാം ഭേദഗതി (2003)</b></td><td>കേന്ദ്ര–സംസ്ഥാന മന്ത്രിസഭയുടെ വലിപ്പം <b>സഭയുടെ ആകെ അംഗസംഖ്യയുടെ 15%</b> ആയി പരിമിതപ്പെടുത്തി (സംസ്ഥാനങ്ങളിൽ കുറഞ്ഞത് 12 പേർ).</td></tr>
-    <tr><td><b>99-ാം ഭേദഗതി (2014)</b></td><td>ദേശീയ ജുഡീഷ്യൽ നിയമന കമ്മീഷൻ (NJAC) — 2015-ൽ സുപ്രീം കോടതി <b>റദ്ദാക്കിയ ഏക ഭരണഘടനാ ഭേദഗതി</b>.</td></tr>
+    <tr><td><b>99-ാം ഭേദഗതി (2014)</b></td><td>ദേശീയ ജുഡീഷ്യൽ നിയമന കമ്മീഷൻ (NJAC) — 2015-ൽ സുപ്രീം കോടതി <b>റദ്ദാക്കിയ ഏക ഭരണഘടനാ ഭേദഗതി</b>.<div class="corr"><span class="b b-red">⚠️ തിരുത്ത് / വ്യക്തത</span> കൂടുതൽ കൃത്യമായ പ്രയോഗം: 99-ാം ഭേദഗതി (NJAC) <b>പൂർണ്ണമായി</b> റദ്ദാക്കപ്പെട്ട ഭേദഗതിയാണ് (2015 ഒക്ടോബർ 16, 4th Judges Case). മറ്റ് ചില ഭേദഗതികളുടെ ഭാഗങ്ങൾ (ഉദാ: 97-ാം, 2021) കോടതി മുമ്പും റദ്ദാക്കിയിട്ടുണ്ട്.</div></td></tr>
   </table>
   </div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 മറ്റ് ഭേദഗതികൾ — പട്ടിക</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>ഭേദഗതി</th><th>വർഷം</th><th>പ്രധാന മാറ്റം</th></tr><tr><td><b>9-ാം</b></td><td>1960</td><td>ഇന്ത്യ–പാക്ക് കരാർ പ്രകാരം ഭൂപ്രദേശ കൈമാറ്റം (ബെറുബാരി)</td></tr><tr><td><b>24-ാം</b></td><td>1971</td><td>മൗലികാവകാശങ്ങളും ഭേദഗതി ചെയ്യാൻ പാർലമെന്റിന് അധികാരം; ഭേദഗതി ബില്ലിൽ രാഷ്ട്രപതി അനുമതി നൽകണം</td></tr><tr><td><b>25-ാം / 26-ാം</b></td><td>1971</td><td>Art. 31C / രാജാക്കന്മാരുടെ പ്രിവി പഴ്സ് നിർത്തലാക്കി</td></tr><tr><td><b>31-ാം</b></td><td>1973</td><td>ലോക്സഭാ അംഗസംഖ്യ 525 → 545</td></tr><tr><td><b>84-ാം / 87-ാം</b></td><td>2001 / 2003</td><td>മണ്ഡല പുനർനിർണ്ണയ മരവിപ്പ് 2026 വരെ / 2001 സെൻസസ് അടിസ്ഥാനമാക്കി</td></tr><tr><td><b>88-ാം</b></td><td>2003</td><td>സേവന നികുതി (Art. 268A)</td></tr><tr><td><b>89-ാം</b></td><td>2003</td><td>പട്ടികവർഗ്ഗ കമ്മീഷൻ (Art. 338A)</td></tr><tr><td><b>93-ാം</b></td><td>2005</td><td>Art. 15(5) — വിദ്യാഭ്യാസ സ്ഥാപനങ്ങളിൽ പിന്നാക്ക സംവരണം</td></tr><tr><td><b>98-ാം</b></td><td>2012</td><td>Art. 371J — ഹൈദരാബാദ്–കർണ്ണാടക മേഖല</td></tr></table></div>
+  <h3>🆕 106-ാം ഭേദഗതിക്ക് ശേഷം (2026 ഒക്ടോബർ 19-ന് പരിശോധിച്ചത്)</h3>
+  <ul>
+    <li><b>പാസായ ഏറ്റവും പുതിയ ഭേദഗതി 106-ാമത്തേത് തന്നെ</b> — 107-ാം ഭേദഗതി നിയമമായതായി വിശ്വസനീയ ഉറവിടങ്ങളിൽ കണ്ടെത്താനായില്ല (<b>NEEDS RE-CHECK</b> — പുതിയ പാർലമെന്റ് സമ്മേളനങ്ങൾക്ക് ശേഷം).</li>
+    <li><b>130-ാം ഭേദഗതി ബിൽ, 2025</b> (2025 ഓഗസ്റ്റ് 20-ന് ലോക്സഭയിൽ): 30 ദിവസം തുടർച്ചയായി തടങ്കലിൽ കഴിയുന്ന മന്ത്രി/മുഖ്യമന്ത്രി/പ്രധാനമന്ത്രിയെ നീക്കം ചെയ്യാനുള്ള വ്യവസ്ഥ (Art. 75, 164, 239AA) — സംയുക്ത പാർലമെന്ററി സമിതിയുടെ (JPC) പരിഗണനയിൽ.</li>
+    <li><b>131-ാം ഭേദഗതി ബിൽ, 2026</b> — ലോക്സഭയിൽ പരാജയപ്പെട്ടു (കാണുക: വിഭാഗം 10).</li>
+  </ul>
+</div>
 </div>
 </details>
 
 <!-- ================= 16. MASTER CHECKLIST ================= -->
-<details class="card" data-tags="5star basics union amend" open>
+<details class="card" id="sec-16" data-tags="5star basics union amend" open>
 <summary><span class="num">✓</span><span class="title">അവസാന വട്ട റിവിഷൻ — പരീക്ഷാ ഹാളിൽ കയറും മുമ്പ് 10 മിനിറ്റ്</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="16"> പഠിച്ചു</label></summary>
 <div class="content">
   <div class="note"><span class="lbl">⚠️ TOP 15 PSC CONSTITUTION TRAPS</span>
@@ -793,12 +1017,61 @@
   13. <b>റിട്ട് അധികാരം:</b> സുപ്രീം കോടതി = <b>Art. 32</b> | ഹൈക്കോടതി = <b>Art. 226</b>.<br>
   14. <b>സംസ്ഥാന PSC അംഗങ്ങൾ:</b> നിയമിക്കുന്നത് ഗവർണ്ണർ, എന്നാൽ <b>നീക്കം ചെയ്യുന്നത് രാഷ്ട്രപതി</b>.<br>
   15. <b>106-ാം ഭേദഗതി (2023 സെപ്റ്റംബർ 28 — 128-ാം ബിൽ):</b> വനിതാ സംവരണ നിയമം (33% — Art. 330A, 332A, 239AA).</div>
+
+  <div class="added"><div class="add-h"><span class="b b-new">🆕 ADDED / UPDATED</span> <span class="b b-red">🔴 VERY IMPORTANT</span> <span class="add-note">— മൂല ഉള്ളടക്കത്തിന് താഴെ ചേർത്ത പരിശോധിച്ച വിവരങ്ങൾ</span></div>
+  <h3>🆕 അനുച്ഛേദം ഫൈൻഡർ — പരീക്ഷയ്ക്ക് മുമ്പ് ഒരു തവണ കൂടി</h3>
+  <div class="tbl-scroll"><table class="compact"><tr><th>അനുച്ഛേദം</th><th>വിഷയം</th><th>അനുച്ഛേദം</th><th>വിഷയം</th></tr><tr><td><b>1</b></td><td>യൂണിയൻ / ഭൂപ്രദേശം</td><td><b>108</b></td><td>സംയുക്ത സമ്മേളനം</td></tr><tr><td><b>3</b></td><td>പുതിയ സംസ്ഥാനങ്ങൾ</td><td><b>110</b></td><td>മണി ബിൽ</td></tr><tr><td><b>14</b></td><td>സമത്വം</td><td><b>123 / 213</b></td><td>ഓർഡിനൻസ് (രാഷ്ട്രപതി / ഗവർണ്ണർ)</td></tr><tr><td><b>17</b></td><td>അയിത്തോച്ചാടനം</td><td><b>124</b></td><td>സുപ്രീം കോടതി</td></tr><tr><td><b>19</b></td><td>6 സ്വാതന്ത്ര്യങ്ങൾ</td><td><b>148</b></td><td>CAG</td></tr><tr><td><b>21 / 21A</b></td><td>ജീവൻ / വിദ്യാഭ്യാസം</td><td><b>153 / 161</b></td><td>ഗവർണ്ണർ / ഗവർണ്ണറുടെ മാപ്പ്</td></tr><tr><td><b>32 / 226</b></td><td>റിട്ട് (സുപ്രീം / ഹൈക്കോടതി)</td><td><b>243</b></td><td>പഞ്ചായത്തുകൾ</td></tr><tr><td><b>44</b></td><td>ഏകീകൃത സിവിൽ കോഡ്</td><td><b>280</b></td><td>ധനകാര്യ കമ്മീഷൻ</td></tr><tr><td><b>51A</b></td><td>മൗലിക കർത്തവ്യങ്ങൾ</td><td><b>315</b></td><td>UPSC / PSC</td></tr><tr><td><b>61 / 72</b></td><td>ഇംപീച്ച്മെന്റ് / മാപ്പ്</td><td><b>324</b></td><td>തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ</td></tr><tr><td><b>76</b></td><td>അറ്റോർണി ജനറൽ</td><td><b>352 / 356 / 360</b></td><td>ദേശീയ / സംസ്ഥാന / സാമ്പത്തിക അടിയന്തരാവസ്ഥ</td></tr><tr><td><b>79 / 80 / 81</b></td><td>പാർലമെന്റ് / രാജ്യസഭ / ലോക്സഭ</td><td><b>368</b></td><td>ഭരണഘടനാ ഭേദഗതി</td></tr></table></div>
+  <div class="note"><span class="lbl">സ്വയം പരീക്ഷ</span> താഴെയുള്ള <b>"മാതൃകാ ചോദ്യങ്ങൾ (MCQ)"</b> വിഭാഗത്തിൽ 21 ചോദ്യങ്ങൾ — ഉത്തരം തിരഞ്ഞെടുത്താൽ ഉടൻ വിശദീകരണം കാണാം; "വീണ്ടും ശ്രമിക്കുക" ബട്ടൺ ഉണ്ട്.</div>
+</div>
 </div>
 </details>
 
+
+<!-- ================= 17. MCQ PRACTICE (NEW) ================= -->
+<details class="card" id="sec-mcq" data-tags="5star basics union amend" open>
+<summary><span class="num">🆕</span><span class="title">മാതൃകാ ചോദ്യങ്ങൾ (MCQ) — സ്വയം പരീക്ഷ <span class="map-badge">🎯 ഇന്ററാക്ടീവ്</span></span><span class="stars">🟠</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="17"> പഠിച്ചു</label></summary>
+<div class="content">
+  <div class="note"><span class="lbl">ലേബൽ</span> ഇവ <b>മാതൃകാ (Model) ചോദ്യങ്ങൾ</b> ആണ് — <b>മുൻ വർഷ PSC ചോദ്യങ്ങൾ (PYQ) അല്ല</b>. സ്ഥിരീകരിച്ച PYQ ഉറവിടം ഇല്ലാത്തതിനാൽ ഒരു ചോദ്യവും PYQ ആയി അവകാശപ്പെട്ടിട്ടില്ല.</div>
+  <div class="mcq-bar"><span id="mcqScore" aria-live="polite">സ്കോർ: 0 / 0 (ആകെ 21)</span><button type="button" class="tool-btn" id="mcqReset">🔄 വീണ്ടും ശ്രമിക്കുക</button></div>
+  <div id="mcqHost"></div>
+</div>
+</details>
+
+<!-- ================= 18. VERIFICATION LOG (NEW) ================= -->
+<details class="card" id="sec-log" data-tags="amend">
+<summary><span class="num">🆕</span><span class="title">പരിശോധനാ രേഖയും മാറ്റങ്ങളും (Change Log)</span><span class="stars">🟢</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="18"> പഠിച്ചു</label></summary>
+<div class="content">
+  <h3>⚠️ തിരുത്തലുകൾ / വ്യക്തത വരുത്തിയവ (മൂല വാചകം മായ്ച്ചിട്ടില്ല — അതതിടത്ത് ചുവന്ന കുറിപ്പായി ചേർത്തു)</h3>
+  <div class="tbl-scroll"><table class="compact">
+    <tr><th>വിഭാഗം</th><th>മൂല പ്രസ്താവന</th><th>പ്രശ്നം / വ്യക്തത</th></tr>
+    <tr><td>4 (5-ാം പട്ടിക)</td><td>"പട്ടികജാതി–പട്ടികവർഗ്ഗ പ്രദേശങ്ങളുടെ ഭരണം"</td><td>Scheduled Areas & Scheduled Tribes എന്നാണ് ശരി</td></tr>
+    <tr><td>9 (പ്രായ ചാർട്ട്)</td><td>"PM / CM — 25 വയസ്സ്"</td><td>PM/CM-ന് പ്രത്യേക പ്രായപരിധിയില്ല (LS/MLA 25; RS/MLC 30)</td></tr>
+    <tr><td>11 (ഗവർണ്ണർ)</td><td>"ആദ്യ വനിതാ ഗവർണ്ണർ: ജ്യോതി വെങ്കിടാചലം"</td><td>കേരളത്തിലെ ആദ്യ വനിതാ ഗവർണ്ണർ; ഇന്ത്യയിൽ സരോജിനി നായിഡു</td></tr>
+    <tr><td>15 (99-ാം ഭേദഗതി)</td><td>"റദ്ദാക്കിയ ഏക ഭേദഗതി"</td><td>പൂർണ്ണമായി റദ്ദാക്കിയ ഭേദഗതി എന്ന് കൃത്യമാക്കണം</td></tr>
+    <tr><td>7 (ഹേബിയസ് കോർപ്പസ്)</td><td>"…ഏക റിട്ട്"</td><td>PSC പാഠപുസ്തക പ്രയോഗം; താരതമ്യ പട്ടിക ചേർത്തു</td></tr>
+    <tr><td>3 (ബാർക്കർ)</td><td>"ഭരണഘടനയുടെ താക്കോൽ"</td><td>ഇംഗ്ലീഷ് പദം 'key-note' — രണ്ട് രൂപങ്ങളും ഓർക്കുക</td></tr>
+    <tr><td>15 (106-ാം ഭേദഗതി)</td><td>330A, 332A, 239AA</td><td>Art. 334A കൂടി; പ്രാബല്യത്തിന് വിജ്ഞാപനം ബാക്കി</td></tr>
+  </table></div>
+  <h3>🆕 ചേർത്തവ</h3>
+  <ul>
+    <li>ഓരോ വിഭാഗത്തിന്റെയും അവസാനം "🆕 ADDED / UPDATED" ബോക്സ് (അധിക വസ്തുതകൾ, താരതമ്യ പട്ടികകൾ, ഓർമ്മക്കോഡുകൾ, PSC കെണികൾ).</li>
+    <li>ഉള്ളടക്ക സൂചിക (TOC) + ശ്രേണീ ലേബലുകൾ (🔴 🟠 🟢), "മുകളിലേക്ക്" ലിങ്ക്, A4 പ്രിന്റ് CSS, 21 ഇന്ററാക്ടീവ് മാതൃകാ MCQ.</li>
+    <li>സമകാലിക വിവരങ്ങൾ <b>2026 ഒക്ടോബർ 19</b>-ന് വെബ് തിരച്ചിൽ വഴി പരിശോധിച്ചു (106-ാം ഭേദഗതി ഏറ്റവും പുതിയ നിയമം; 130-ാം ബിൽ JPC-യിൽ; 131-ാം ബിൽ ലോക്സഭയിൽ പരാജയപ്പെട്ടു; CEC ജ്ഞാനേഷ് കുമാർ).</li>
+  </ul>
+  <h3>❗ പരിഹരിക്കപ്പെടാത്ത / ഉറപ്പുവരുത്തേണ്ടവ</h3>
+  <ul>
+    <li>"17 മലയാളികൾ" എന്ന എണ്ണം ഔദ്യോഗിക ഉറവിടത്തിൽ ഉറപ്പിക്കാനായില്ല.</li>
+    <li>131-ാം ബിൽ വോട്ടെണ്ണം (298–230) ഒറ്റ ഉറവിടം; പുതുക്കിയ ബിൽ സംബന്ധിച്ച വിവരം സ്ഥിരീകരിച്ചിട്ടില്ല.</li>
+    <li>സുപ്രീം കോടതി ജഡ്ജിമാരുടെ എണ്ണം വർദ്ധിപ്പിക്കാനുള്ള 2026-ലെ ബിൽ — സ്ഥിരീകരണം ബാക്കി.</li>
+    <li><b>ചിത്രങ്ങൾ / മാപ്പുകൾ:</b> ഓഫ്‌ലൈൻ JPG ചിത്രങ്ങൾ ഡൗൺലോഡ് ചെയ്ത് ഉൾപ്പെടുത്താൻ ഈ പരിതസ്ഥിതിയിൽ കഴിഞ്ഞില്ല (ബാഹ്യ വെബ്‌സൈറ്റുകളിലേക്ക് നേരിട്ട് ഫയൽ ഡൗൺലോഡ് സാധ്യമല്ല). അതിനാൽ ഈ രേഖയിൽ <b>നിങ്ങളുടെ മൂല SVG ഡയഗ്രമുകൾ മാത്രം</b> നിലനിർത്തി; വ്യാജ/AI ചിത്രങ്ങൾ ചേർത്തിട്ടില്ല. ഔദ്യോഗിക പാഠം: <a href="https://legislative.gov.in/constitution-of-india/" rel="noopener">legislative.gov.in</a> · PRS ബിൽ സംഗ്രഹം: <a href="https://prsindia.org/files/bills_acts/bills_parliament/2026/Summary_Constitution_(131st_A)_Bill_2026.pdf" rel="noopener">131-ാം ഭേദഗതി ബിൽ</a> (ഓൺലൈനിൽ തുറക്കുന്ന ലിങ്കുകൾ).</li>
+  </ul>
+</div>
+</details>
+
+<a class="backtop" href="#top" aria-label="മുകളിലേക്ക് പോകുക">⬆ മുകളിലേക്ക്</a>
 <footer>
   ⚖️ കേരള PSC ഇന്ത്യൻ ഭരണഘടന — വിഷ്വൽ റിവിഷൻ നോട്ട്സ് v5 Visual Master<br>
-  <span style="color:var(--accent);font-weight:700;">16 സമ്പൂർണ്ണ വിഭാഗങ്ങൾ · SVG ഡയഗ്രമുകൾ · ക്വിസ് മോഡ് · 106-ാം ഭേദഗതി വരെ അപ്ഡേറ്റ് ചെയ്തത്</span>
+  <span style="color:var(--accent);font-weight:700;">16 സമ്പൂർണ്ണ വിഭാഗങ്ങൾ + 🆕 MCQ & പരിശോധനാ വിഭാഗങ്ങൾ · SVG ഡയഗ്രമുകൾ · ക്വിസ് മോഡ് · 106-ാം ഭേദഗതി വരെ അപ്ഡേറ്റ് ചെയ്തത്</span>
 </footer>
 
 </div>
@@ -879,6 +1152,63 @@
     document.body.classList.toggle('dark');
     darkBtn.classList.toggle('active');
   });
+})();
+</script>
+
+<script>
+(function(){
+  /* TOC: open the target card, then let the browser scroll to it */
+  document.querySelectorAll('.toc-grid a').forEach(function(a){
+    a.addEventListener('click', function(){
+      var t = document.querySelector(a.getAttribute('href'));
+      if(t){ t.classList.remove('hidden-by-search'); t.open = true; }
+    });
+  });
+
+  /* MCQ engine (vanilla JS) */
+  var data = [{"q": "ഭരണഘടനാ നിർമ്മാണ സഭയുടെ സ്ഥിരം അധ്യക്ഷൻ ആരായിരുന്നു?", "o": ["ഡോ. സച്ചിദാനന്ദ സിൻഹ", "ഡോ. രാജേന്ദ്ര പ്രസാദ്", "ഡോ. ബി.ആർ. അംബേദ്കർ", "ബി.എൻ. റാവു"], "a": 1, "e": "ഉത്തരം: <b>ഡോ. രാജേന്ദ്ര പ്രസാദ്</b> (1946 ഡിസംബർ 11). സിൻഹ — താൽക്കാലിക അധ്യക്ഷൻ; അംബേദ്കർ — കരട് സമിതി ചെയർമാൻ; ബി.എൻ. റാവു — ഭരണഘടനാ ഉപദേഷ്ടാവ്."}, {"q": "ലക്ഷ്യപ്രമേയം (Objectives Resolution) സഭ അംഗീകരിച്ച തീയതി?", "o": ["1947 ജനുവരി 22", "1949 നവംബർ 26", "1946 ഡിസംബർ 9", "1946 ഡിസംബർ 13"], "a": 0, "e": "ഉത്തരം: <b>1947 ജനുവരി 22</b>. 1946 ഡിസംബർ 13 — നെഹ്‌റു അവതരിപ്പിച്ച തീയതി (കെണി!); 1946 ഡിസംബർ 9 — ആദ്യ യോഗം; 1949 നവംബർ 26 — ഭരണഘടന അംഗീകരിച്ച ദിനം."}, {"q": "രാഷ്ട്രനയ നിർദ്ദേശക തത്വങ്ങൾ (DPSP) ഏത് രാജ്യത്തിൽ നിന്ന് കടമെടുത്തതാണ്?", "o": ["കാനഡ", "ഓസ്ട്രേലിയ", "അയർലൻഡ്", "അമേരിക്ക"], "a": 2, "e": "ഉത്തരം: <b>അയർലൻഡ്</b>. അമേരിക്ക — മൗലികാവകാശങ്ങൾ; കാനഡ — ശക്തമായ കേന്ദ്ര ഫെഡറേഷൻ; ഓസ്ട്രേലിയ — സമവർത്തി ലിസ്റ്റ്."}, {"q": "ഭരണഘടനയുടെ ആമുഖം ഇതുവരെ എത്ര തവണ ഭേദഗതി ചെയ്തിട്ടുണ്ട്?", "o": ["ഒരു തവണ", "രണ്ട് തവണ", "മൂന്ന് തവണ", "ഒരിക്കലുമില്ല"], "a": 0, "e": "ഉത്തരം: <b>ഒരു തവണ</b> — 42-ാം ഭേദഗതി (1976): സ്ഥിതിസമത്വം, മതേതരത്വം, അഖണ്ഡത എന്നീ വാക്കുകൾ ചേർത്തു."}, {"q": "താഴെ പറയുന്നവയിൽ ആറാം പട്ടികയിൽ (Sixth Schedule) ഉൾപ്പെടാത്ത സംസ്ഥാനം ഏത്?", "o": ["അസം", "മേഘാലയ", "മണിപ്പൂർ", "മിസോറാം"], "a": 2, "e": "ഉത്തരം: <b>മണിപ്പൂർ</b>. 6-ാം പട്ടിക: അസം, മേഘാലയ, ത്രിപുര, മിസോറാം (കോഡ്: AMTM)."}, {"q": "ഇന്ത്യൻ പൗരന്മാർക്ക് മാത്രം ലഭ്യമായ മൗലികാവകാശം ഏത് അനുച്ഛേദത്തിലാണ്?", "o": ["ആർട്ടിക്കിൾ 14", "ആർട്ടിക്കിൾ 19", "ആർട്ടിക്കിൾ 21", "ആർട്ടിക്കിൾ 20"], "a": 1, "e": "ഉത്തരം: <b>ആർട്ടിക്കിൾ 19</b> (6 സ്വാതന്ത്ര്യങ്ങൾ). Art. 14, 20, 21 — പൗരന്മാർക്കും വിദേശികൾക്കും ബാധകം. (പൗരന്മാർക്ക് മാത്രം: 15, 16, 19, 29, 30)."}, {"q": "'ഭരണഘടനയുടെ ഹൃദയവും ആത്മാവും' എന്ന് അംബേദ്കർ വിശേഷിപ്പിച്ച അനുച്ഛേദം?", "o": ["ആർട്ടിക്കിൾ 14", "ആർട്ടിക്കിൾ 19", "ആർട്ടിക്കിൾ 21", "ആർട്ടിക്കിൾ 32"], "a": 3, "e": "ഉത്തരം: <b>ആർട്ടിക്കിൾ 32</b> (ഭരണഘടനാ പ്രതിവിധികൾ / റിട്ടുകൾ). 'ഭരണഘടനയുടെ ആത്മാവ്' (താക്കൂർദാസ് ഭാർഗവ) = ആമുഖം — ഇത് തമ്മിൽ മാറിപ്പോകരുത്."}, {"q": "'എന്ത് അധികാരത്തിൽ?' എന്ന് ചോദ്യം ചെയ്യുന്ന റിട്ട് ഏത്?", "o": ["സെർഷ്യോററി", "മൻഡമസ്", "ഹേബിയസ് കോർപ്പസ്", "ക്വോ-വാറന്റോ"], "a": 3, "e": "ഉത്തരം: <b>ക്വോ-വാറന്റോ</b> — നിയമവിരുദ്ധമായി പൊതുപദവി വഹിക്കുന്നയാളെ ചോദ്യം ചെയ്യുന്നു. മൻഡമസ് = 'ഞങ്ങൾ കൽപ്പിക്കുന്നു'; ഹേബിയസ് കോർപ്പസ് = 'ശരീരം ഹാജരാക്കുക'; സെർഷ്യോററി = ഉത്തരവ് റദ്ദാക്കൽ."}, {"q": "ദേശീയ അടിയന്തരാവസ്ഥക്കാലത്തും റദ്ദാക്കാൻ കഴിയാത്ത മൗലികാവകാശങ്ങൾ?", "o": ["ആർട്ടിക്കിൾ 14, 15", "ആർട്ടിക്കിൾ 19, 21", "ആർട്ടിക്കിൾ 21, 32", "ആർട്ടിക്കിൾ 20, 21"], "a": 3, "e": "ഉത്തരം: <b>ആർട്ടിക്കിൾ 20, 21</b> (44-ാം ഭേദഗതി). Art. 19 യുദ്ധ/വിദേശാക്രമണ അടിയന്തരാവസ്ഥയിൽ സ്വയമേവ റദ്ദാകും (Art. 358)."}, {"q": "പാർലമെന്റിന്റെ സംയുക്ത സമ്മേളനത്തിൽ (Art. 108) അധ്യക്ഷത വഹിക്കുന്നത് ആര്?", "o": ["രാഷ്ട്രപതി", "ഉപരാഷ്ട്രപതി", "ലോക്സഭാ സ്പീക്കർ", "സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസ്"], "a": 2, "e": "ഉത്തരം: <b>ലോക്സഭാ സ്പീക്കർ</b>. സമ്മേളനം വിളിച്ചുകൂട്ടുന്നത് രാഷ്ട്രപതി (കെണി!). ഉപരാഷ്ട്രപതി രാജ്യസഭാ അധ്യക്ഷനാണ്, സംയുക്ത സമ്മേളനത്തിൽ അല്ല."}, {"q": "മണി ബില്ലിൽ രാജ്യസഭയ്ക്ക് തടഞ്ഞുവെക്കാൻ കഴിയുന്ന പരമാവധി കാലയളവ്?", "o": ["14 ദിവസം", "30 ദിവസം", "21 ദിവസം", "60 ദിവസം"], "a": 0, "e": "ഉത്തരം: <b>14 ദിവസം</b> (Art. 109). സമയം കഴിഞ്ഞാൽ ബിൽ പാസായതായി കണക്കാക്കും; രാജ്യസഭയുടെ ശുപാർശകൾ ലോക്സഭയ്ക്ക് സ്വീകരിക്കാനോ തള്ളാനോ കഴിയും."}, {"q": "മൗലിക കർത്തവ്യങ്ങൾ ഭരണഘടനയിൽ ഉൾപ്പെടുത്തിയ ഭേദഗതി ഏത്?", "o": ["44-ാം ഭേദഗതി", "52-ാം ഭേദഗതി", "42-ാം ഭേദഗതി", "61-ാം ഭേദഗതി"], "a": 2, "e": "ഉത്തരം: <b>42-ാം ഭേദഗതി (1976)</b> — സ്വരൺ സിംഗ് കമ്മിറ്റി ശുപാർശ. 44-ാം: സ്വത്തവകാശം നീക്കി; 52-ാം: കൂറുമാറ്റ നിരോധനം; 61-ാം: വോട്ടിംഗ് പ്രായം 18."}, {"q": "ദേശീയ പഞ്ചായത്തീരാജ് ദിനം ഏത് തീയതിയിൽ?", "o": ["ഏപ്രിൽ 23", "ഒക്ടോബർ 2", "ജൂൺ 1", "ഏപ്രിൽ 24"], "a": 3, "e": "ഉത്തരം: <b>ഏപ്രിൽ 24</b> (73-ാം ഭേദഗതി പ്രാബല്യത്തിൽ വന്നത് 1993). ഏപ്രിൽ 23 — കേരള പഞ്ചായത്തീരാജ് നിയമം (1994); ജൂൺ 1 — 74-ാം ഭേദഗതി പ്രാബല്യം; ഒക്ടോബർ 2 — നാഗൗറിൽ ആദ്യ ഉദ്ഘാടനം (1959)."}, {"q": "8-ാം പട്ടികയിൽ 21-ാം ഭേദഗതി (1967) വഴി ചേർത്ത ഭാഷ ഏത്?", "o": ["സിന്ധി", "കൊങ്കണി", "ബോഡോ", "നേപ്പാളി"], "a": 0, "e": "ഉത്തരം: <b>സിന്ധി</b>. കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി — 71-ാം ഭേദഗതി (1992); ബോഡോ, ഡോഗ്രി, മൈഥിലി, സന്താളി — 92-ാം ഭേദഗതി (2003)."}, {"q": "കേരള ഹൈക്കോടതിയുടെ ആദ്യ ചീഫ് ജസ്റ്റിസ്?", "o": ["അന്ന ചാണ്ടി", "കെ.ടി. കോശി", "ഫാത്തിമ ബീവി", "കെ.ജി. ബാലകൃഷ്ണൻ"], "a": 1, "e": "ഉത്തരം: <b>കെ.ടി. കോശി</b>. അന്ന ചാണ്ടി — ഇന്ത്യയിലെ ആദ്യ വനിതാ ഹൈക്കോടതി ജഡ്ജി; ഫാത്തിമ ബീവി — സുപ്രീം കോടതിയിലെ ആദ്യ വനിതാ ജഡ്ജി; കെ.ജി. ബാലകൃഷ്ണൻ — ആദ്യ മലയാളി CJI."}, {"q": "സംസ്ഥാന PSC അംഗങ്ങളെ സ്ഥാനത്തുനിന്ന് നീക്കം ചെയ്യാൻ അധികാരമുള്ളത് ആർക്ക്?", "o": ["ഗവർണ്ണർ", "മുഖ്യമന്ത്രി", "രാഷ്ട്രപതി", "ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്"], "a": 2, "e": "ഉത്തരം: <b>രാഷ്ട്രപതി</b> (Art. 317). നിയമിക്കുന്നത് ഗവർണ്ണറാണെങ്കിലും നീക്കം ചെയ്യൽ രാഷ്ട്രപതിക്ക് — സുപ്രീം കോടതി അന്വേഷണത്തിന് ശേഷം."}, {"q": "രാഷ്ട്രപതി തിരഞ്ഞെടുപ്പിൽ വോട്ട് ചെയ്യാൻ അർഹതയില്ലാത്തത് ആർക്ക്?", "o": ["ലോക്സഭയിലെ തിരഞ്ഞെടുക്കപ്പെട്ട അംഗം", "ലെജിസ്ലേറ്റീവ് കൗൺസിൽ അംഗം", "ഡൽഹി നിയമസഭാംഗം", "രാജ്യസഭയിലെ തിരഞ്ഞെടുക്കപ്പെട്ട അംഗം"], "a": 1, "e": "ഉത്തരം: <b>ലെജിസ്ലേറ്റീവ് കൗൺസിൽ (MLC) അംഗം</b>. ഇലക്ടറൽ കോളേജ്: പാർലമെന്റിലെ തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ + നിയമസഭകളിലെ (ഡൽഹി, പുതുച്ചേരി ഉൾപ്പെടെ) തിരഞ്ഞെടുക്കപ്പെട്ട അംഗങ്ങൾ."}, {"q": "സാമ്പത്തിക അടിയന്തരാവസ്ഥയെക്കുറിച്ച് പ്രതിപാദിക്കുന്ന അനുച്ഛേദം ഏത്?", "o": ["ആർട്ടിക്കിൾ 352", "ആർട്ടിക്കിൾ 356", "ആർട്ടിക്കിൾ 360", "ആർട്ടിക്കിൾ 365"], "a": 2, "e": "ഉത്തരം: <b>ആർട്ടിക്കിൾ 360</b> — ഇതുവരെ പ്രഖ്യാപിച്ചിട്ടില്ല. 352 — ദേശീയം; 356 — സംസ്ഥാന (രാഷ്ട്രപതി ഭരണം); 365 — കേന്ദ്ര നിർദ്ദേശങ്ങൾ പാലിക്കാത്തത്."}, {"q": "106-ാം ഭരണഘടനാ ഭേദഗതി (2023) എന്തിനെക്കുറിച്ചാണ്?", "o": ["ചരക്ക് സേവന നികുതി (GST)", "മുന്നാക്കക്കാരിലെ പിന്നാക്കക്കാർക്ക് 10% സംവരണം", "ലോക്സഭയിലും നിയമസഭകളിലും സ്ത്രീകൾക്ക് 33% സംവരണം", "ദേശീയ പിന്നാക്ക വിഭാഗ കമ്മീഷൻ"], "a": 2, "e": "ഉത്തരം: <b>വനിതാ സംവരണം (നാരി ശക്തി വന്ദൻ അധിനിയം)</b>. GST = 101-ാം; EWS = 103-ാം; NCBC = 102-ാം ഭേദഗതി."}, {"q": "ദേശീയ ജുഡീഷ്യൽ നിയമന കമ്മീഷൻ (NJAC) ഭരണഘടനാ ഭേദഗതി സുപ്രീം കോടതി റദ്ദാക്കിയ വർഷം?", "o": ["2015", "2014", "2016", "2018"], "a": 0, "e": "ഉത്തരം: <b>2015 (ഒക്ടോബർ 16)</b>. 99-ാം ഭേദഗതി പാസാക്കിയത് 2014-ൽ (കെണി: 2014 തെറ്റ്)."}, {"q": "ത്രിതല പഞ്ചായത്തീരാജ് ശുപാർശ ചെയ്ത കമ്മിറ്റി ഏത്?", "o": ["അശോക് മേത്ത കമ്മിറ്റി", "ബൽവന്ത് റായ് മേത്ത കമ്മിറ്റി", "ജി.വി.കെ. റാവു കമ്മിറ്റി", "എൽ.എം. സിംഗ്‌വി കമ്മിറ്റി"], "a": 1, "e": "ഉത്തരം: <b>ബൽവന്ത് റായ് മേത്ത (1957)</b> — ത്രിതലം. അശോക് മേത്ത (1977) — ദ്വിതല; ജി.വി.കെ. റാവു (1985) — ഗ്രാമവികസന ഭരണം; എൽ.എം. സിംഗ്‌വി (1986) — ഭരണഘടനാ പദവി."}];
+  var host = document.getElementById('mcqHost');
+  var scoreEl = document.getElementById('mcqScore');
+  var resetBtn = document.getElementById('mcqReset');
+  if(!host) return;
+  var score = 0, answered = 0, letters = ['A','B','C','D'];
+
+  function updateScore(){
+    scoreEl.textContent = 'സ്കോർ: ' + score + ' / ' + answered + ' (ആകെ ' + data.length + ')';
+  }
+  function render(){
+    host.innerHTML = '';
+    score = 0; answered = 0; updateScore();
+    data.forEach(function(q, qi){
+      var box = document.createElement('div'); box.className = 'mcq';
+      var h = document.createElement('h4'); h.textContent = 'Q' + (qi+1) + '. ' + q.q; box.appendChild(h);
+      var opts = document.createElement('div'); opts.className = 'opts'; opts.setAttribute('role','group');
+      opts.setAttribute('aria-label','ചോദ്യം ' + (qi+1) + ' ഓപ്ഷനുകൾ');
+      var exp = document.createElement('div'); exp.className = 'exp'; exp.setAttribute('aria-live','polite');
+      var btns = [];
+      q.o.forEach(function(text, oi){
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'opt';
+        b.textContent = letters[oi] + ') ' + text;
+        b.addEventListener('click', function(){
+          if(box.dataset.done) return;
+          box.dataset.done = '1'; answered++;
+          btns.forEach(function(x, xi){
+            x.disabled = true;
+            if(xi === q.a) x.classList.add('right');
+          });
+          var ok = (oi === q.a);
+          if(ok) score++; else b.classList.add('wrong');
+          exp.innerHTML = (ok ? '✅ ശരിയാണ്! ' : '❌ തെറ്റ് — ശരിയായ ഉത്തരം ' + letters[q.a] + '. ') + q.e;
+          exp.classList.add('show');
+          updateScore();
+        });
+        btns.push(b); opts.appendChild(b);
+      });
+      box.appendChild(opts); box.appendChild(exp); host.appendChild(box);
+    });
+  }
+  resetBtn.addEventListener('click', render);
+  render();
 })();
 </script>
 </body>
