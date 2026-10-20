@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Kerala PSC Mock Test</title>
+
+<!-- CHANGE 1: BLOCKING SYNC LOADER (Loads sync.js immediately) -->
+<script>
+  (function(){
+    var p = location.pathname.replace(/\\/g,"/"),
+        m = p.match(/^(.*?\/)(?:topics|chapters|question-papers|mock-tests|subjects)\//),
+        b = m ? m[1] : p.replace(/[^\/]*$/,"");
+    if (!window.KPSC_Sync) document.write('<script src="' + b + 'assets/js/sync.js"><\/script>');
+  })();
+</script>
+
+<style>
+:root{
+  --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
+  --primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;
+  --green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;
+  --gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:10px;--radius-sm:6px;
+  --font:'Noto Sans Malayalam','Manjari','Nirmala UI','Kartika','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;
+  font-size:16px;transition:background 0.2s,color 0.2s;
+}
+[data-theme="dark"]{
+  --bg:#1e1e2e;--panel:#252537;--text:#cdd6f4;--secondary:#a6adc8;--border:#313244;
+  --primary:#cba6f7;--primary-light:#2a2438;--accent:#f9e2af;--green:#a6e3a1;
+  --green-bg:#1e2e1e;--red:#f38ba8;--red-bg:#2e1e24;--orange:#fab387;--orange-bg:#2e241e;
+  --gray:#6c7086;--gray-bg:#1e1e2e;--shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+[data-theme="sepia"]{
+  --bg:#fdf6e3;--panel:#fefcf4;--text:#433422;--secondary:#65533c;--border:#d3cbb7;
+  --primary:#8b5a2b;--primary-light:#f0e6d2;--accent:#b8860b;--green:#2e7d32;
+  --green-bg:#e8f5e9;--red:#c62828;--red-bg:#ffebee;--orange:#e65100;--orange-bg:#fff3e0;
+  --gray:#8a8070;--gray-bg:#f0e8d8;--shadow:0 2px 12px rgba(0,0,0,0.1);
+}
+.header{
+  position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:10px;box-shadow:var(--shadow);
+}
+.header-title{font-size:1.05rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{
+  display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:700;
+  background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--primary);font-variant-numeric:tabular-nums;letter-spacing:1px;
+}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn{
+  padding:8px 16px;border-radius:var(--radius-sm);border:2px solid var(--orange);
+  background:var(--orange-bg);color:var(--orange);font-family:var(--font);font-size:.9rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.pause-btn:hover{background:var(--orange);color:#fff}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.theme-btn{
+  padding:8px 12px;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--panel);color:var(--text);font-family:var(--font);font-size:.85rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:4px;
+}
+.theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.study-pause-bar{
+  display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);
+  padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{
+  padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;
+  font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem;min-height:34px;
+}
+.save-status{
+  font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;
+  background:var(--green-bg);border:1px solid var(--green);white-space:nowrap;opacity:0;transition:opacity .3s;
+}
+.save-status.visible{opacity:1}
+.resume-banner{
+  display:none;background:linear-gradient(135deg,#1e40af,#3730a3);color:#fff;padding:18px 20px;
+  margin:10px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.15);
+}
+.resume-banner.visible{display:block}
+.resume-banner-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+.resume-banner-info{
+  font-size:.88rem;line-height:1.7;margin-bottom:14px;background:rgba(255,255,255,0.12);
+  padding:10px 14px;border-radius:8px;
+}
+.resume-banner-info strong{color:#fef08a}
+.resume-banner-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.banner-btn{
+  padding:10px 20px;border-radius:8px;border:2px solid #fff;background:transparent;
+  color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px;
+}
+.banner-btn:hover{background:#fff;color:#1e40af}
+.banner-btn.primary{background:#fff;color:#1e40af}
+.banner-btn.danger{border-color:#fca5a5;color:#fca5a5}
+.banner-btn.danger:hover{background:#fca5a5;color:#7f1d1d}
+.main-container{
+  display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;
+  align-items:flex-start;
+}
+.question-panel{
+  flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px 28px;min-width:0;transition:filter .3s;
+}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.sidebar{
+  flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px;transition:filter .3s;
+}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{
+  font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);
+  padding:3px 12px;border-radius:20px;
+}
+.q-subject{
+  font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0;
+}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{
+  display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);
+  border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;
+  font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;
+  line-height:1.5;white-space:pre-line;user-select:none;touch-action:manipulation;min-height:48px;
+}
+.option-btn:hover:not(.locked):not(.correct-highlight):not(.wrong-highlight){
+  border-color:var(--primary);background:var(--primary-light);
+}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600;pointer-events:none}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600;pointer-events:none}
+.explanation-box{
+  background:#f8f9fc;border-left:4px solid var(--primary);padding:16px 18px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;
+  line-height:1.7;white-space:pre-line;color:var(--secondary);display:none;
+}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem;text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}.exp-wrong{font-weight:600;color:var(--red)}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
+  font-family:var(--font);font-size:.88rem;font-weight:600;transition:all .2s;
+  touch-action:manipulation;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}
+.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}
+.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.palette-btn{
+  width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;
+  cursor:pointer;transition:all .2s;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px;
+}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,0.85);
+  z-index:9999;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px);
+}
+.pause-overlay.visible{display:flex}
+.pause-modal{
+  background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+.pause-icon{font-size:4rem;margin-bottom:16px;line-height:1}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
+.pause-modal .resume-main-btn{
+  padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);
+  color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px;
+}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{
+  background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px 16px;text-align:center;border-top:4px solid var(--primary);
+}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:var(--bg)}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){
+  .main-container{flex-direction:column;padding:10px;gap:12px}
+  .question-panel{padding:16px}
+  .sidebar{width:100%;flex-direction:column;gap:12px}
+  .header-title{font-size:.9rem}
+  .timer-box{font-size:1.05rem;padding:4px 10px}
+  .pause-btn{font-size:.8rem;padding:6px 12px;min-height:36px}
+  .theme-btn{font-size:.75rem;padding:6px 8px;min-height:36px}
+  .q-text{font-size:.92rem}
+  .option-btn{padding:11px 14px;font-size:.86rem}
+  .btn{padding:8px 12px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="testHeader" style="display:none;">
+<span class="header-title">Kerala PSC Mock Test</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="theme-btn" id="themeBtn" onclick="cycleTheme()">🌙 Dark</button>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+
+<div class="study-pause-bar" id="studyPauseBar">
+<span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+<button onclick="resumeStudy()">▶ Resume Timer</button>
+</div>
+
+<div class="resume-banner" id="resumeBanner" style="display:none;">
+<div class="resume-banner-title">📥 Saved attempt found</div>
+<div class="resume-banner-info" id="resumeInfo">Loading...</div>
+<div class="resume-banner-buttons">
+<button class="banner-btn primary" onclick="resumeAttempt()">▶ Resume</button>
+<button class="banner-btn danger" onclick="startFresh()">🔄 Start Fresh</button>
+</div>
+</div>
+
+<div class="pause-overlay" id="pauseOverlay">
+<div class="pause-modal" id="pauseModal">
+<div class="pause-icon" id="pauseIcon">⏸</div>
+<h2 id="pauseTitle">Exam Paused</h2>
+<p id="pauseMessage">പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
+<button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+</div>
+</div>
+
+<div id="syncLoader" style="text-align:center;margin-top:50px;font-weight:bold;color:var(--primary);font-size:1.2rem;">☁️ Checking cloud for saved progress...</div>
+
+<div class="main-container" id="testView" style="display:none;">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><span id="expContent"></span></div>
+<div class="action-buttons" id="actionButtons"></div>
+</div>
+
+<div class="sidebar" id="sidebar">
+<div class="palette-card">
+<h3>Question Palette</h3>
+<div class="palette-grid" id="paletteGrid"></div>
+</div>
+<div class="stats-card">
+<h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div>
+</div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div>
+</div>
+
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Mock Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section">
+<h3>Subject-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div>
+</div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ ഉത്തരങ്ങളും വിട്ടുകളഞ്ഞവയും</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+
+<script>
+// IMPORTANT: Change this key for every different mock test you create!
+const STORAGE_KEY = 'kpsc_hard_mock_3'; 
+const STORAGE_VERSION = 1;
+const SECONDS_PER_QUESTION = 45;
+const NEGATIVE_MARKING = 0.33;
+
+// --- ADD YOUR 100 QUESTIONS HERE ---
+const sourceQuestions = [
+  { 
+    subject: "ചരിത്രം", 
+    question: "കേരള ചരിത്രവുമായി ബന്ധപ്പെട്ട പ്രാചീന-മധ്യകാല കൃതികളും അവയുടെ കർത്താക്കളും/സമാഹർത്താക്കളും തമ്മിൽ ചേരുംപടി ചേർക്കുക:\n\nപട്ടിക I (കൃതികൾ)\n1. തുഹ്ഫത്തുൽ മുജാഹിദീൻ\n2. മൂഷകവംശം\n3. ഹോർത്തൂസ് മലബാറിക്കസ്\n4. ആശ്ചര്യചൂഡാമണി\n\nപട്ടിക II (കർത്താക്കൾ)\na. അതുലൻ\nb. ശക്തിഭദ്രൻ\nc. ഷെയ്ഖ് സൈനുദ്ദീൻ\nd. അഡ്മിറൽ വാൻ റീഡ്", 
+    options: ["A) 1-a, 2-c, 3-d, 4-b","B) 1-c, 2-a, 3-d, 4-b","C) 1-c, 2-d, 3-a, 4-b","D) 1-c, 2-a, 3-b, 4-d"], 
+    correct: 1, 
+    explanation: "ശരിയായ ഉത്തരം: B (1-c, 2-a, 3-d, 4-b)\n\n• തുഹ്ഫത്തുൽ മുജാഹിദീൻ — ഷെയ്ഖ് സൈനുദ്ദീൻ\n• മൂഷകവംശം — അതുലൻ\n• ഹോർത്തൂസ് മലബാറിക്കസ് — അഡ്മിറൽ വാൻ റീഡ്\n• ആശ്ചര്യചൂഡാമണി — ശക്തിഭദ്രൻ"
+  },
+  { 
+    subject: "ഭൗതികശാസ്ത്രം", 
+    question: "നിശ്ചലാവസ്ഥയിലുള്ള 10 kg മാസുള്ള ഒരു വസ്തുവിൽ 50 N ബലം 4 സെക്കൻഡ് നേരത്തേക്ക് പ്രയോഗിച്ചാൽ, 4 സെക്കൻഡിന് ശേഷം ആ വസ്തുവിന്റെ അന്ത്യപ്രവേഗം (Final Velocity) എത്രയായിരിക്കും?", 
+    options: ["A) 10 m/s","B) 15 m/s","C) 20 m/s","D) 25 m/s"], 
+    correct: 2, 
+    explanation: "ശരിയായ ഉത്തരം: C (20 m/s)\n\n• **Formula:** F = ma ⟹ a = F/m; v = u + at (അല്ലെങ്കിൽ ആക്കവ്യത്യാസം Ft = m(v − u)).\n• **Calculation:** v = (50 × 4)/10 = 200/10 = 20 m/s."
+  },
+  { 
+    subject: "മലയാളം", 
+    question: "'ഉരുളയ്ക്ക് ഉപ്പേരി' എന്ന ശൈലിയുടെ ശരിയായ അർത്ഥം താഴെ പറയുന്നവയിൽ ഏതാണ്?", 
+    options: ["A) ചോദ്യത്തിനോ വിമർശനത്തിനോ ഉടനടി നൽകുന്ന കുറിക്കുകൊള്ളുന്ന മറുപടി","B) വിശന്നിരിക്കുമ്പോൾ ലഭിക്കുന്ന സ്വാദിഷ്ടമായ ഭക്ഷണം","C) ഒരു കാര്യവും ആലോചിക്കാതെ എടുത്തുചാടി പ്രവർത്തിക്കുന്ന രീതി","D) ചെറിയൊരു സഹായത്തിന് പകരമായി വലിയൊരു ഉപകാരം ചെയ്യുന്നത്"], 
+    correct: 0, 
+    explanation: "ശരിയായ ഉത്തരം: A (ചോദ്യത്തിനോ വിമർശനത്തിനോ ഉടനടി നൽകുന്ന കുറിക്കുകൊള്ളുന്ന മറുപടി)\n\nഒരാൾ പറയുന്ന വാക്കിനോ വിമർശനത്തിനോ ഒട്ടും വൈകാതെ അപ്പോൾത്തന്നെ തക്കതായ മറുപടി നൽകുന്നതിനെയാണ് 'ഉരുളയ്ക്ക് ഉപ്പേരി' എന്ന് പറയുന്നത്."
+  }
+];
+
+/* ============================================================
+   STATE & LOGIC
+   ============================================================ */
+let questions = [];
+let currentIndex = 0;
+let timerInterval = null;
+let timeRemaining = 0;
+let isSubmitted = false;
+let isPaused = false;
+let isAutoPaused = false;
+let isStudyPaused = false;
+let questionStates = [];
+let lastSaveTime = 0;
+let saveTimeout = null;
+let themeIndex = 0;
+const THEMES = ['light', 'dark', 'sepia'];
+const THEME_ICONS = ['🌙 Dark', '📜 Sepia', '☀️ Light'];
+
+function cycleTheme() {
+  themeIndex = (themeIndex + 1) % THEMES.length;
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+  try { localStorage.setItem('kpsc_theme', THEMES[themeIndex]); } catch(e) {}
+}
+(function loadTheme() {
+  try {
+    const saved = localStorage.getItem('kpsc_theme');
+    if (saved && THEMES.includes(saved)) {
+      themeIndex = THEMES.indexOf(saved);
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  } catch(e) {}
+})();
+
+function saveAttempt() {
+  if (isSubmitted) return;
+  try {
+    const data = {
+      version: STORAGE_VERSION,
+      timestamp: Date.now(),
+      currentIndex: currentIndex,
+      timeRemaining: timeRemaining,
+      questionStates: questionStates,
+      totalQuestions: questions.length
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    lastSaveTime = Date.now();
+    showSaveStatus();
+  } catch(e) {}
+}
+function showSaveStatus() {
+  const el = document.getElementById('saveStatus');
+  if (!el) return;
+  el.textContent = '💾 Saved';
+  el.classList.add('visible');
+  clearTimeout(el._hideT);
+  el._hideT = setTimeout(() => el.classList.remove('visible'), 1500);
+}
+function throttledSave() {
+  const now = Date.now();
+  if (now - lastSaveTime > 2000) saveAttempt();
+  else { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAttempt, 2000 - (now - lastSaveTime)); }
+}
+function getSavedAttempt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || data.version !== STORAGE_VERSION) return null;
+    if (!data.questionStates || !Array.isArray(data.questionStates)) return null;
+    if (data.timeRemaining <= 0) return null;
+    return data;
+  } catch(e) { return null; }
+}
+function formatTimeAgo(ts) {
+  const diff = Math.floor((Date.now() - ts) / 1000);
+  if (diff < 60) return diff + ' seconds ago';
+  if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+  return Math.floor(diff / 86400) + ' day(s) ago';
+}
+function formatTimeLeft(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return h + 'h ' + m + 'm ' + s + 's';
+  return m + 'm ' + s + 's';
+}
+function countAnswered(states) {
+  let n = 0;
+  states.forEach(st => { if (st.status === 'saved') n++; });
+  return n;
+}
+
+function checkSavedAndShowBanner() {
+  const saved = getSavedAttempt();
+  if (!saved) { hideBanner(); startNewTest(); return; }
+  const answered = countAnswered(saved.questionStates);
+  document.getElementById('resumeInfo').innerHTML =
+    'Saved at <strong>Q' + (saved.currentIndex + 1) + '/' + saved.totalQuestions + '</strong> · ' +
+    '<strong>' + answered + '</strong> answered · ' +
+    '<strong>' + formatTimeLeft(saved.timeRemaining) + '</strong> left · ' +
+    'saved <strong>' + formatTimeAgo(saved.timestamp) + '</strong>';
+  
+  document.getElementById('resumeBanner').style.display = 'block';
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+}
+function hideBanner() { document.getElementById('resumeBanner').style.display = 'none'; }
+
+function resumeAttempt() {
+  const saved = getSavedAttempt();
+  if (!saved) { startFresh(); return; }
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = saved.timeRemaining;
+  currentIndex = Math.min(saved.currentIndex, questions.length - 1);
+  isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = saved.questionStates.map(st => ({
+    selectedOption: st.selectedOption,
+    status: st.status,
+    markedForReview: st.markedForReview,
+    visited: st.visited
+  }));
+  while (questionStates.length < questions.length) {
+    questionStates.push({ selectedOption: null, status: 'idle', markedForReview: false, visited: false });
+  }
+  questionStates.length = questions.length;
+  hideBanner();
+  launchTest();
+}
+function startFresh() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  hideBanner();
+  startNewTest();
+}
+function startNewTest() {
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = questions.length * SECONDS_PER_QUESTION;
+  currentIndex = 0; isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = questions.map(() => ({
+    selectedOption: null, status: 'idle', markedForReview: false, visited: false
+  }));
+  questionStates[0].visited = true;
+  launchTest();
+}
+function launchTest() {
+  document.getElementById('testView').style.display = 'flex';
+  document.getElementById('testHeader').style.display = 'flex';
+  document.getElementById('resultsView').classList.remove('visible');
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 1000);
+  updateTimerDisplay();
+  renderQuestion();
+  renderPalette();
+  updateStats();
+  saveAttempt();
+}
+
+/* CHANGE 2: WAIT FOR CLOUD BEFORE STARTING */
+async function initTest() {
+  if (window.KPSC_Sync && window.KPSC_Sync.whenReady) {
+    await window.KPSC_Sync.whenReady(10000); // wait for the cloud merge (sync.js extends this when signed in)
+  }
+  document.getElementById('syncLoader').style.display = 'none';
+  
+  if (getSavedAttempt()) checkSavedAndShowBanner();
+  else startNewTest();
+}
+
+/* CHANGE 3: PREVENT RELOAD IF EXAM IS ACTIVE */
+function hasProgress() {
+  return questionStates.some(st => st.status !== 'idle' || st.selectedOption !== null || st.markedForReview);
+}
+window.addEventListener('kpsc-sync-applied', function(e) {
+  const keys = (e.detail && e.detail.keys) || [];
+  // not about this test, or the test is already finished -> never reload
+  if (isSubmitted || keys.indexOf(STORAGE_KEY) === -1) { e.preventDefault(); return; }
+  // user is answering on THIS device right now -> keep local; it syncs up on the next save
+  if (hasProgress() && !isPaused) { e.preventDefault(); return; }
+  // otherwise let sync.js reload: the "Saved attempt found" banner shows the other device's attempt
+});
+
+function tickTimer() {
+  if (isSubmitted || isPaused || isStudyPaused) return;
+  timeRemaining--;
+  updateTimerDisplay();
+  if (timeRemaining <= 0) {
+    timeRemaining = 0;
+    updateTimerDisplay();
+    submitTest(true);
+    return;
+  }
+  if (timeRemaining % 15 === 0) saveAttempt();
+}
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  const h = Math.floor(timeRemaining / 3600);
+  const m = Math.floor((timeRemaining % 3600) / 60);
+  const s = timeRemaining % 60;
+  const pad = n => String(n).padStart(2, '0');
+  el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  const box = document.getElementById('timerBox');
+  if (timeRemaining <= 300 && timeRemaining > 0 && !isPaused && !isStudyPaused) box.classList.add('warning');
+  else box.classList.remove('warning');
+}
+
+function togglePause() {
+  if (isSubmitted) return;
+  if (isStudyPaused) { resumeStudy(); return; }
+  if (!isPaused) pauseTest(false); else resumeTest();
+}
+function pauseTest(auto) {
+  if (isPaused || isSubmitted) return;
+  isPaused = true; isAutoPaused = auto;
+  const modal = document.getElementById('pauseModal');
+  const icon = document.getElementById('pauseIcon');
+  const title = document.getElementById('pauseTitle');
+  const message = document.getElementById('pauseMessage');
+  if (auto) {
+    icon.textContent = '🔒';
+    title.textContent = 'Exam Auto-Paused';
+    message.innerHTML = 'Tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  } else {
+    icon.textContent = '⏸';
+    title.textContent = 'Exam Paused';
+    message.innerHTML = 'പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  }
+  document.getElementById('pauseOverlay').classList.add('visible');
+  document.getElementById('pauseBtn').textContent = '▶ Resume';
+  document.getElementById('pauseBtn').classList.add('resume');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('questionPanel').classList.add('locked');
+  document.getElementById('sidebar').classList.add('locked');
+  saveAttempt();
+}
+function resumeTest() {
+  if (!isPaused || isSubmitted) return;
+  isPaused = false; isAutoPaused = false;
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  updateTimerDisplay();
+}
+function startStudyPause() {
+  if (isStudyPaused || isSubmitted || isPaused) return;
+  isStudyPaused = true;
+  document.getElementById('studyPauseBar').classList.add('visible');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+}
+function resumeStudy() {
+  if (!isStudyPaused) return;
+  isStudyPaused = false;
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('timerBox').classList.remove('paused');
+  updateTimerDisplay();
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  st.visited = true;
+
+  document.getElementById('qNumber').textContent = 'Question ' + (currentIndex + 1);
+  document.getElementById('qSubject').textContent = q.subject;
+  document.getElementById('qText').textContent = q.question;
+
+  renderOptions();
+  renderExplanation();
+  renderActionButtons();
+  renderPalette();
+  updateStats();
+  throttledSave();
+}
+
+function renderOptions() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    if (locked) {
+      btn.classList.add('locked');
+      if (i === q.correct) btn.classList.add('correct-highlight');
+      else if (i === st.selectedOption) btn.classList.add('wrong-highlight');
+    } else {
+      if (i === st.selectedOption) btn.classList.add('selected');
+      btn.onclick = () => {
+        st.selectedOption = i;
+        renderOptions();
+        renderActionButtons();
+        throttledSave();
+      };
+    }
+    list.appendChild(btn);
+  });
+}
+
+function renderExplanation() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const box = document.getElementById('explanationBox');
+  const content = document.getElementById('expContent');
+  if (st.status === 'saved' || st.status === 'revealed') {
+    let prefix = '';
+    if (st.status === 'saved' && st.selectedOption !== null) {
+      if (st.selectedOption === q.correct) {
+        prefix = '<span class="exp-correct">✔ ശരി!</span>\n\n';
+      } else {
+        prefix = '<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '\n\n';
+      }
+    } else if (st.status === 'revealed') {
+      prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '</span>\n\n';
+    }
+    content.textContent = prefix + q.explanation;
+    box.classList.add('visible');
+  } else {
+    box.classList.remove('visible');
+    content.textContent = '';
+  }
+}
+
+function renderActionButtons() {
+  const st = questionStates[currentIndex];
+  const container = document.getElementById('actionButtons');
+  container.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  function addBtn(label, cls, fn) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn ' + cls;
+    b.textContent = label;
+    b.onclick = fn;
+    container.appendChild(b);
+  }
+
+  if (!locked) {
+    if (st.selectedOption !== null) {
+      addBtn('💾 Save', 'btn-save', saveAnswer);
+      addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    } else {
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    }
+  } else {
+    addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+    addBtn('→ Next', 'btn-next', nextQuestion);
+  }
+}
+
+function renderPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'palette-btn';
+    btn.textContent = i + 1;
+    if (st.status === 'saved') btn.classList.add('answered');
+    else if (st.markedForReview) btn.classList.add('review');
+    else if (st.visited) btn.classList.add('visited-not-answered');
+    else btn.classList.add('not-visited');
+    if (i === currentIndex) btn.classList.add('active');
+    btn.onclick = () => gotoQuestion(i);
+    grid.appendChild(btn);
+  });
+}
+
+function updateStats() {
+  let answered = 0, review = 0, attempted = 0;
+  questionStates.forEach(st => {
+    if (st.status === 'saved') { answered++; attempted++; }
+    if (st.markedForReview) review++;
+  });
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statNotAnswered').textContent = questions.length - answered;
+  document.getElementById('statReview').textContent = review;
+  document.getElementById('statAttempted').textContent = attempted;
+}
+
+function saveAnswer() {
+  const st = questionStates[currentIndex];
+  if (st.selectedOption === null) return;
+  st.status = 'saved';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+function showAnswer() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+function skipAndShow() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  st.markedForReview = true;
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1 && isStudyPaused) {
+      currentIndex++;
+      renderQuestion();
+    }
+  }, 1800);
+}
+function markForReview() {
+  const st = questionStates[currentIndex];
+  st.markedForReview = !st.markedForReview;
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1) nextQuestion();
+  }, 400);
+}
+function clearResponse() {
+  const st = questionStates[currentIndex];
+  st.selectedOption = null;
+  st.status = 'idle';
+  st.markedForReview = false;
+  renderQuestion();
+  saveAttempt();
+}
+function nextQuestion() {
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    if (!isStudyPaused) {
+      if (confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?')) submitTest(false);
+    }
+  }
+}
+function gotoQuestion(i) {
+  if (isStudyPaused) resumeStudy();
+  currentIndex = i;
+  renderQuestion();
+}
+
+function submitTest(auto) {
+  if (isSubmitted) return;
+  if (!auto && timeRemaining > 0) {
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ?')) return;
+  }
+  isSubmitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  renderResults();
+}
+
+function renderResults() {
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('resultsView').classList.add('visible');
+
+  let total = questions.length;
+  let attempted = 0, correct = 0, wrong = 0, unanswered = 0;
+
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (st.status === 'saved') {
+      attempted++;
+      if (st.selectedOption === q.correct) correct++;
+      else wrong++;
+    } else {
+      unanswered++;
+    }
+  });
+
+  const negativeMarks = wrong * NEGATIVE_MARKING;
+  const score = correct * 1 - negativeMarks;
+
+  const cards = [
+    { label: 'ആകെ ചോദ്യങ്ങൾ', value: total, cls: '' },
+    { label: 'ശ്രമിച്ചവ', value: attempted, cls: '' },
+    { label: 'ശരിയായവ', value: correct, cls: 'correct-card' },
+    { label: 'തെറ്റായവ', value: wrong, cls: 'wrong-card' },
+    { label: 'നെഗറ്റീവ് മാർക്ക്', value: '-' + negativeMarks.toFixed(2), cls: 'negative-card' },
+    { label: 'ആകെ സ്കോർ', value: score.toFixed(2), cls: 'score-card' },
+    { label: 'ഉത്തരം നൽകാത്തവ', value: unanswered, cls: '' }
+  ];
+
+  document.getElementById('summaryCards').innerHTML = cards.map(c =>
+    '<div class="summary-card ' + c.cls + '"><div class="sc-value">' + c.value + '</div><div class="sc-label">' + c.label + '</div></div>'
+  ).join('');
+
+  const subjectMap = {};
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (!subjectMap[q.subject]) subjectMap[q.subject] = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, score: 0 };
+    const s = subjectMap[q.subject];
+    s.total++;
+    if (st.status === 'saved') {
+      s.attempted++;
+      if (st.selectedOption === q.correct) { s.correct++; s.score += 1; }
+      else { s.wrong++; s.score -= NEGATIVE_MARKING; }
+    } else {
+      s.unanswered++;
+    }
+  });
+
+  let tableHTML = '';
+  Object.keys(subjectMap).forEach(sub => {
+    const s = subjectMap[sub];
+    tableHTML += '<tr><td>' + sub + '</td><td>' + s.total + '</td><td>' + s.attempted + '</td><td>' + s.correct + '</td><td>' + s.wrong + '</td><td>' + s.unanswered + '</td><td>' + s.score.toFixed(2) + '</td></tr>';
+  });
+  document.getElementById('subjectTableBody').innerHTML = tableHTML;
+
+  let detailHTML = '';
+  let count = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const isWrong = st.status === 'saved' && st.selectedOption !== q.correct;
+    const isRevealed = st.status === 'revealed';
+    const isReviewedSkipped = st.status !== 'saved' && st.markedForReview;
+    if (!isWrong && !isRevealed && !isReviewedSkipped) return;
+    count++;
+    let typeLabel = isWrong ? '❌ തെറ്റായ ഉത്തരം' : (isRevealed ? '👁 ഉത്തരം കണ്ടത്' : '🔖 Review');
+    detailHTML += '<div class="detail-item">' +
+      '<div class="di-info"><strong>Q' + (i + 1) + '</strong> · ' + q.subject + ' · ' + typeLabel + '</div>' +
+      '<div class="di-question">' + escapeHtml(q.question) + '</div>' +
+      (st.selectedOption !== null ? '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">' + escapeHtml(q.options[st.selectedOption]) + '</span></div>' : '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>') +
+      '<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">' + escapeHtml(q.options[q.correct]) + '</span></div>' +
+      '<div class="di-explanation">' + escapeHtml(q.explanation) + '</div>' +
+      '</div>';
+  });
+  document.getElementById('detailList').innerHTML = count > 0 ? detailHTML : '<p style="color:var(--gray);text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+  window.scrollTo(0, 0);
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function restartTest() {
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('resultsView').classList.remove('visible');
+  startNewTest();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (isSubmitted || isPaused) return;
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  const st = questionStates[currentIndex];
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  if (e.key >= '1' && e.key <= '4' && !locked) {
+    const idx = parseInt(e.key, 10) - 1;
+    if (idx < questions[currentIndex].options.length) {
+      st.selectedOption = idx;
+      renderOptions(); renderActionButtons(); throttledSave();
+      e.preventDefault();
+    }
+  } else if (e.key === 'Enter' && !e.shiftKey && !locked && st.selectedOption !== null) {
+    saveAnswer(); e.preventDefault();
+  } else if (e.key === 'Enter' && e.shiftKey && !locked) {
+    skipAndShow(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'r' && !locked) {
+    markForReview(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'c' && !locked) {
+    clearResponse(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'n') {
+    nextQuestion(); e.preventDefault();
+  } else if (e.key === ' ') {
+    if (!locked) { showAnswer(); e.preventDefault(); }
+  } else if (e.key.toLowerCase() === 'p') {
+    togglePause(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 't') {
+    cycleTheme(); e.preventDefault();
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !isSubmitted && !isPaused && !isStudyPaused) {
+    pauseTest(true);
+  }
+});
+
+window.addEventListener('beforeunload', (e) => {
+  if (!isSubmitted) {
+    saveAttempt();
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTest();
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+});
+</script>
+</body>
+</html>
