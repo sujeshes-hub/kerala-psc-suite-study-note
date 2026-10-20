@@ -15,6 +15,15 @@
   })();
 </script>
 
+<!-- MATHJAX CONFIG (from file 2) -->
+<script>
+window.MathJax = {
+  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']]},
+  svg: {fontCache: 'global'}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
 <style>
 :root{
   --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
@@ -156,11 +165,13 @@ body{
   font-family:var(--font);font-size:.88rem;font-weight:600;transition:all .2s;
   touch-action:manipulation;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
 }
+.btn:active{transform:scale(.96)}
 .btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}
 .btn-skip-show{background:var(--accent);color:#1a1a2e}
 .btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}
 .btn-next{background:var(--gray);color:#fff}
 .btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.keyboard-hint{font-size:.75rem;color:var(--gray);margin-top:8px}
 .palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
 .palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
 .palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
@@ -169,10 +180,19 @@ body{
   background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;
   cursor:pointer;transition:all .2s;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px;
 }
+.palette-btn.not-visited{background:var(--gray-bg);border-color:var(--border);color:var(--gray)}
 .palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
 .palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
 .palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:.75rem;color:var(--secondary)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
+.legend-dot.not-visited{background:var(--gray-bg);border-color:var(--border)}
+.legend-dot.visited-not-answered{background:var(--red-bg);border-color:var(--red)}
+.legend-dot.answered{background:var(--green-bg);border-color:var(--green)}
+.legend-dot.review{background:var(--orange-bg);border-color:var(--orange)}
+.legend-dot.active-dot{background:var(--panel);border-color:#2c3e8f;outline:2px solid #2c3e8f}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
 .stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
@@ -188,10 +208,16 @@ body{
 }
 .pause-icon{font-size:4rem;margin-bottom:16px;line-height:1}
 .pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal.auto h2{color:#8b5cf6}
 .pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
 .pause-modal .resume-main-btn{
   padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);
   color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px;
+}
+.pause-modal .pause-note{font-size:.8rem;color:var(--gray);margin-top:16px}
+.auto-badge{
+  display:inline-block;background:#ede9fe;color:#6d28d9;font-size:.72rem;font-weight:700;
+  padding:3px 10px;border-radius:12px;letter-spacing:.5px;margin-bottom:12px;text-transform:uppercase;
 }
 .results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
 .results-view.visible{display:block}
@@ -217,6 +243,8 @@ body{
 .di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
 .di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
 .di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+math{font-family:'Cambria Math','Latin Modern Math','STIX Two Math',serif;font-size:1.05em}
+.mjx-chtml{font-size:1.05em !important}
 @media (max-width:900px){
   .main-container{flex-direction:column;padding:10px;gap:12px}
   .question-panel{padding:16px}
@@ -259,10 +287,12 @@ body{
 
 <div class="pause-overlay" id="pauseOverlay">
 <div class="pause-modal" id="pauseModal">
+<span class="auto-badge" id="pauseBadge" style="display:none;">AUTO-PAUSED</span>
 <div class="pause-icon" id="pauseIcon">⏸</div>
 <h2 id="pauseTitle">Exam Paused</h2>
 <p id="pauseMessage">പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
 <button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+<p class="pause-note">Note: പരീക്ഷ തുടരുന്നതുവരെ ഉത്തരം നൽകാൻ സാധിക്കില്ല.</p>
 </div>
 </div>
 
@@ -275,12 +305,20 @@ body{
 <div class="options-list" id="optionsList"></div>
 <div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><span id="expContent"></span></div>
 <div class="action-buttons" id="actionButtons"></div>
+<div class="keyboard-hint">Shortcuts: 1-4 Select | Enter Save | Space Show Answer | Shift+Enter Skip | R Review | C Clear | N Next | P Pause | T Theme</div>
 </div>
 
 <div class="sidebar" id="sidebar">
 <div class="palette-card">
 <h3>Question Palette</h3>
 <div class="palette-grid" id="paletteGrid"></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-dot not-visited"></span> Not Visited</span>
+<span class="legend-item"><span class="legend-dot visited-not-answered"></span> Visited</span>
+<span class="legend-item"><span class="legend-dot answered"></span> Answered</span>
+<span class="legend-item"><span class="legend-dot review"></span> Review</span>
+<span class="legend-item"><span class="legend-dot active-dot"></span> Active</span>
+</div>
 </div>
 <div class="stats-card">
 <h3>Live Stats</h3>
@@ -488,6 +526,8 @@ function launchTest() {
   document.getElementById('testHeader').style.display = 'flex';
   document.getElementById('resultsView').classList.remove('visible');
   document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseModal').classList.remove('auto');
+  document.getElementById('pauseBadge').style.display = 'none';
   document.getElementById('pauseBtn').textContent = '⏸ Pause';
   document.getElementById('pauseBtn').classList.remove('resume');
   document.getElementById('questionPanel').classList.remove('locked');
@@ -561,14 +601,19 @@ function pauseTest(auto) {
   if (isPaused || isSubmitted) return;
   isPaused = true; isAutoPaused = auto;
   const modal = document.getElementById('pauseModal');
+  const badge = document.getElementById('pauseBadge');
   const icon = document.getElementById('pauseIcon');
   const title = document.getElementById('pauseTitle');
   const message = document.getElementById('pauseMessage');
   if (auto) {
+    modal.classList.add('auto');
+    badge.style.display = 'inline-block';
     icon.textContent = '🔒';
     title.textContent = 'Exam Auto-Paused';
     message.innerHTML = 'Tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
   } else {
+    modal.classList.remove('auto');
+    badge.style.display = 'none';
     icon.textContent = '⏸';
     title.textContent = 'Exam Paused';
     message.innerHTML = 'പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
@@ -586,6 +631,8 @@ function resumeTest() {
   if (!isPaused || isSubmitted) return;
   isPaused = false; isAutoPaused = false;
   document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseModal').classList.remove('auto');
+  document.getElementById('pauseBadge').style.display = 'none';
   document.getElementById('pauseBtn').textContent = '⏸ Pause';
   document.getElementById('pauseBtn').classList.remove('resume');
   document.getElementById('timerBox').classList.remove('paused');
@@ -623,6 +670,9 @@ function renderQuestion() {
   renderPalette();
   updateStats();
   throttledSave();
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise().catch(()=>{});
+  }
 }
 
 function renderOptions() {
@@ -670,11 +720,15 @@ function renderExplanation() {
     } else if (st.status === 'revealed') {
       prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '</span>\n\n';
     }
-    content.textContent = prefix + q.explanation;
+    // FIXED: use innerHTML so the styled prefix renders properly (from file 2)
+    content.innerHTML = prefix + q.explanation;
     box.classList.add('visible');
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise().catch(()=>{});
+    }
   } else {
     box.classList.remove('visible');
-    content.textContent = '';
+    content.innerHTML = '';
   }
 }
 
@@ -784,6 +838,10 @@ function markForReview() {
 }
 function clearResponse() {
   const st = questionStates[currentIndex];
+  // ADDED: confirmation (from file 2)
+  if (st.status === 'saved' || st.status === 'revealed' || st.selectedOption !== null || st.markedForReview) {
+    if (!confirm('ഈ ചോദ്യത്തിന്റെ ഉത്തരം Clear ചെയ്യണോ?')) return;
+  }
   st.selectedOption = null;
   st.status = 'idle';
   st.markedForReview = false;
@@ -810,7 +868,8 @@ function gotoQuestion(i) {
 function submitTest(auto) {
   if (isSubmitted) return;
   if (!auto && timeRemaining > 0) {
-    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ?')) return;
+    // UPDATED: longer warning text (from file 2)
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ? Submit ചെയ്തതിന് ശേഷം മാറ്റങ്ങൾ വരുത്താൻ സാധിക്കില്ല.')) return;
   }
   isSubmitted = true;
   if (timerInterval) clearInterval(timerInterval);
@@ -897,6 +956,9 @@ function renderResults() {
       '</div>';
   });
   document.getElementById('detailList').innerHTML = count > 0 ? detailHTML : '<p style="color:var(--gray);text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise().catch(()=>{});
+  }
   window.scrollTo(0, 0);
 }
 
@@ -905,7 +967,8 @@ function escapeHtml(str) {
 }
 
 function restartTest() {
-  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?')) return;
+  // UPDATED: longer warning text (from file 2)
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ? നിലവിലെ ഫലങ്ങൾ നഷ്ടപ്പെടും.')) return;
   try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
   document.getElementById('resultsView').classList.remove('visible');
   startNewTest();
