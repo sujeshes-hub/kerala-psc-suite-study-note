@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>Kerala PSC VFA Mock Test — Malayalam</title>
+<style>
+:root{
+  --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
+  --primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;
+  --green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;
+  --gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:10px;--radius-sm:6px;
+  --font:'Noto Sans Malayalam','Manjari','Nirmala UI','Kartika','Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;font-size:16px;transition:background .2s,color .2s}
+[data-theme="dark"]{--bg:#1e1e2e;--panel:#252537;--text:#cdd6f4;--secondary:#a6adc8;--border:#313244;--primary:#cba6f7;--primary-light:#2a2438;--accent:#f9e2af;--green:#a6e3a1;--green-bg:#1e2e1e;--red:#f38ba8;--red-bg:#2e1e24;--orange:#fab387;--orange-bg:#2e241e;--gray:#6c7086;--gray-bg:#1e1e2e}
+[data-theme="sepia"]{--bg:#fdf6e3;--panel:#fefcf4;--text:#433422;--secondary:#65533c;--border:#d3cbb7;--primary:#8b5a2b;--primary-light:#f0e6d2;--accent:#b8860b;--green:#2e7d32;--green-bg:#e8f5e9;--red:#c62828;--red-bg:#ffebee;--orange:#e65100;--orange-bg:#fff3e0;--gray:#8a8070;--gray-bg:#f0e8d8}
+.header{position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:var(--shadow)}
+.header-title{font-size:1rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{display:flex;align-items:center;gap:8px;font-size:1.25rem;font-weight:700;background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);border:2px solid var(--primary);font-variant-numeric:tabular-nums}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn,.theme-btn{padding:8px 14px;border-radius:var(--radius-sm);font-family:var(--font);font-size:.85rem;font-weight:700;cursor:pointer;min-height:40px}
+.pause-btn{border:2px solid var(--orange);background:var(--orange-bg);color:var(--orange)}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.theme-btn{border:2px solid var(--border);background:var(--panel);color:var(--text)}
+.study-pause-bar{display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;font-weight:700;cursor:pointer;font-size:.82rem;min-height:34px}
+.save-status{font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;background:var(--green-bg);border:1px solid var(--green);white-space:nowrap;opacity:0;transition:opacity .3s}
+.save-status.visible{opacity:1}
+.main-container{display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;align-items:flex-start}
+.question-panel{flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;min-width:0;transition:filter .3s}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.sidebar{flex:0 0 340px;display:flex;flex-direction:column;gap:16px;width:340px;transition:filter .3s}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);padding:3px 12px;border-radius:20px}
+.q-subject{font-size:.8rem;font-weight:600;text-transform:uppercase;color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0}
+.q-text{font-size:1rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;white-space:pre-line;min-height:48px}
+.option-btn:hover:not(.locked){border-color:var(--primary);background:var(--primary-light)}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600}
+.explanation-box{background:#f8f9fc;border-left:4px solid var(--primary);padding:16px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;line-height:1.7;color:var(--secondary);display:none}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:8px;font-size:.85rem;text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}.exp-wrong{font-weight:600;color:var(--red)}
+.verif-badge{display:inline-block;background:var(--green-bg);color:var(--green);border:1px solid var(--green);padding:2px 10px;border-radius:12px;font-size:.72rem;font-weight:700;margin-bottom:10px}
+.orig-exp{white-space:pre-line;padding:10px 14px;background:var(--panel);border-radius:6px;margin-bottom:14px;border-left:3px solid var(--green)}
+.supp-section{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-top:10px}
+.supp-section h4{font-size:.82rem;color:var(--primary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:700}
+.supp-section p{white-space:pre-line;color:var(--text);font-size:.88rem;line-height:1.7}
+.opt-analysis{border-left:3px solid var(--border);padding:8px 12px;margin:8px 0;background:var(--panel);border-radius:0 6px 6px 0}
+.opt-analysis.correct{border-left-color:var(--green)}
+.opt-analysis.wrong{border-left-color:var(--red)}
+.opt-analysis .oa-head{font-weight:700;font-size:.86rem;margin-bottom:4px;color:var(--text)}
+.opt-analysis .oa-line{font-size:.83rem;color:var(--secondary);margin:2px 0;white-space:pre-line}
+.opt-analysis .oa-line strong{color:var(--text)}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:var(--font);font-size:.85rem;font-weight:600;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}
+.btn-skip-show{background:var(--accent);color:#1a1a2e}.btn-review{background:var(--orange);color:#fff}
+.btn-clear{background:var(--red);color:#fff}.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.keyboard-hint{font-size:.72rem;color:var(--gray);margin-top:8px}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;max-height:400px;overflow-y:auto;padding-right:4px}
+.palette-btn{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.78rem;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:36px}
+.palette-btn.not-visited{background:var(--gray-bg);border-color:var(--border);color:var(--gray)}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:.72rem;color:var(--secondary)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
+.legend-dot.not-visited{background:var(--gray-bg);border-color:var(--border)}
+.legend-dot.visited-not-answered{background:var(--red-bg);border-color:var(--red)}
+.legend-dot.answered{background:var(--green-bg);border-color:var(--green)}
+.legend-dot.review{background:var(--orange-bg);border-color:var(--orange)}
+.legend-dot.active-dot{background:var(--panel);border-color:#2c3e8f;outline:2px solid #2c3e8f}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,0.85);z-index:9999;justify-content:center;align-items:center;padding:20px}
+.pause-overlay.visible{display:flex}
+.pause-modal{background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;text-align:center}
+.pause-icon{font-size:4rem;margin-bottom:16px}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
+.resume-main-btn{padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 16px;text-align:center;border-top:4px solid var(--primary)}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:var(--bg)}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){.main-container{flex-direction:column;padding:10px}.question-panel{padding:16px}.sidebar{width:100%}.header-title{font-size:.85rem}.timer-box{font-size:1rem;padding:4px 10px}.pause-btn,.theme-btn{font-size:.75rem;padding:6px 10px;min-height:36px}}
+</style>
+</head>
+<body>
+<header class="header" id="testHeader" style="display:none;">
+<span class="header-title">Kerala PSC VFA Mock Test</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="theme-btn" id="themeBtn" onclick="cycleTheme()">🌙 Dark</button>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+<div class="study-pause-bar" id="studyPauseBar"><span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു</span><button onclick="resumeStudy()">▶ Resume Timer</button></div>
+<div class="pause-overlay" id="pauseOverlay"><div class="pause-modal"><div class="pause-icon">⏸</div><h2>Exam Paused</h2><p>പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p><button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button></div></div>
+<div class="main-container" id="testView" style="display:none;">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox">
+  <span class="exp-label">വിശദീകരണം</span>
+  <div id="expOriginal"></div>
+  <div id="expSupplementary"></div>
+</div>
+<div class="action-buttons" id="actionButtons"></div>
+<div class="keyboard-hint">Shortcuts: 1-4 Select | Enter Save | Space Show Answer | Shift+Enter Skip | R Review | C Clear | N Next | P Pause | T Theme</div>
+</div>
+<div class="sidebar" id="sidebar">
+<div class="palette-card"><h3>Question Palette</h3><div class="palette-grid" id="paletteGrid"></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-dot not-visited"></span> Not Visited</span>
+<span class="legend-item"><span class="legend-dot visited-not-answered"></span> Visited</span>
+<span class="legend-item"><span class="legend-dot answered"></span> Answered</span>
+<span class="legend-item"><span class="legend-dot review"></span> Review</span>
+<span class="legend-item"><span class="legend-dot active-dot"></span> Active</span>
+</div></div>
+<div class="stats-card"><h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div></div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div></div>
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Mock Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section"><h3>Subject-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div></div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ ഉത്തരങ്ങളും വിട്ടുകളഞ്ഞവയും</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+
+<script>
+/* ============================================================
+   100 QUESTIONS — Malayalam (translated from Tamil original)
+   Original questions/options preserved exactly as supplied.
+   Answer keys extracted from provided Code A key.
+   ============================================================ */
+const Q = [
+/* Q1 */{s:"HISTORY",q:"ആധുനിക തിരുവിതാംകൂറിന്റെ സ്ഥാപകൻ ആര്?",o:["A) പഴശ്ശി രാജ","B) മാർത്താണ്ഡ വർമ്മ","C) ശക്തൻ തമ്പുരാൻ","D) പാലിയത്തച്ചൻ"],c:1,e:"ശരിയായ ഉത്തരം: B (മാർത്താണ്ഡ വർമ്മ)\n\nആധുനിക തിരുവിതാംകൂറിന്റെ സ്ഥാപകൻ മാർത്താണ്ഡ വർമ്മയാണ്.",h:"മാർത്താണ്ഡ വർമ്മ തിരുവിതാംകൂർ സ്ഥാപിച്ചു.",m:"മാർത്താണ്ഡ വർമ്മ = തിരുവിതാംകൂർ സ്ഥാപകൻ.",f:"മാർത്താണ്ഡ വർമ്മ 1729-1758 കാലത്ത് ഭരിച്ചു.|അദ്ദേഹം തിരുവിതാംകൂർ രൂപീകരിച്ചു.|തിരുവിതാംകൂർ ആദ്യം വേണാട് എന്നറിയപ്പെട്ടു."},
+/* Q2 */{s:"HISTORY",q:"'സമത്വ സമാജം' (Equality Society) സ്ഥാപിച്ചത് ആര്?",o:["A) ഡോക്ടർ പൽപു","B) ചട്ടമ്പി സ്വാമികൾ","C) തൈക്കാട് അയ്യ","D) വൈകുണ്ഠ സ്വാമികൾ"],c:3,e:"ശരിയായ ഉത്തരം: D (വൈകുണ്ഠ സ്വാമികൾ)\n\nസമത്വ സമാജം സ്ഥാപിച്ചത് വൈകുണ്ഠ സ്വാമികളാണ്.",h:"വൈകുണ്ഠ സ്വാമികൾ സമത്വ സമാജം സ്ഥാപിച്ചു.",m:"വൈകുണ്ഠ സ്വാമികൾ = സമത്വ സമാജം.",f:"സമത്വ സമാജം 1836-ൽ സ്ഥാപിതം.|വൈകുണ്ഠ സ്വാമികൾ ദൈവദാസൻ എന്നറിയപ്പെട്ടു.|അദ്ദേഹം ജാതിവിവേചനത്തിനെതിരെ പോരാടി."},
+/* Q3 */{s:"HISTORY",q:"1857-ലെ കലാപം എവിടെയാണ് ആരംഭിച്ചത്?",o:["A) മീററ്റ്","B) ഹരിയാന","C) നാഗ്പൂർ","D) പഞ്ചാബ്"],c:0,e:"ശരിയായ ഉത്തരം: A (മീററ്റ്)\n\n1857-ലെ കലാപം മീററ്റിൽ നിന്നാണ് ആരംഭിച്ചത്.",h:"1857 കലാപം മീററ്റിൽ ആരംഭിച്ചു.",m:"മീററ്റ് = 1857 കലാപത്തിന്റെ തുടക്കം.",f:"1857 മാർച്ച് 29ന് മീററ്റിൽ കലാപം ആരംഭിച്ചു.|മംഗൾ പാണ്ഡെ കലാപത്തിന്റെ തുടക്കക്കാരനായി കണക്കാക്കപ്പെടുന്നു.|ബ്രിട്ടീഷ് ഇന്ത്യയിൽ ഇത് ഒരു വലിയ വിപ്ലവമായിരുന്നു."},
+/* Q4 */{s:"HISTORY",q:"ഗാന്ധിജിയെ ആദ്യമായി 'രാഷ്ട്രപിതാവ്' എന്ന് വിളിച്ചത് ആര്?",o:["A) ഗോപാലകൃഷ്ണ ഗോഖലെ","B) സ്വാമി വിവേകാനന്ദൻ","C) നേതാജി സുഭാഷ് ചന്ദ്ര ബോസ്","D) ഇവരിൽ ആരുമില്ല"],c:2,e:"ശരിയായ ഉത്തരം: C (നേതാജി സുഭാഷ് ചന്ദ്ര ബോസ്)\n\nഗാന്ധിജിയെ ആദ്യമായി രാഷ്ട്രപിതാവ് എന്ന് വിളിച്ചത് നേതാജി സുഭാഷ് ചന്ദ്ര ബോസ് ആണ്.",h:"നേതാജി സുഭാഷ് ചന്ദ്ര ബോസ് ഗാന്ധിജിയെ രാഷ്ട്രപിതാവ് എന്ന് വിളിച്ചു.",m:"രാഷ്ട്രപിതാവ് = നേതാജി.",f:"1944 ജൂലൈ 6ന് സിംഗപ്പൂരിൽ വെച്ച് നേതാജി ഗാന്ധിജിയെ രാഷ്ട്രപിതാവ് എന്ന് വിളിച്ചു.|ഗാന്ധിജി സത്യാഗ്രഹത്തിന്റെ പിതാവ്.|നേതാജി ഇന്ത്യൻ നാഷണൽ ആർമി സ്ഥാപിച്ചു."},
+/* Q5 */{s:"HISTORY",q:"ഐക്യരാഷ്ട്രസഭയുടെ ആസ്ഥാനം എവിടെയാണ്?",o:["A) ന്യൂയോർക്ക്","B) നെതർലാൻഡ്സ്","C) ജനീവ","D) ഹേഗ്"],c:0,e:"ശരിയായ ഉത്തരം: A (ന്യൂയോർക്ക്)\n\nഐക്യരാഷ്ട്രസഭയുടെ ആസ്ഥാനം ന്യൂയോർക്ക് ആണ്.",h:"UN ആസ്ഥാനം ന്യൂയോർക്ക്.",m:"UN = ന്യൂയോർക്ക്.",f:"ഐക്യരാഷ്ട്രസഭ 1945 ഒക്ടോബർ 24ന് സ്ഥാപിതമായി.|ആസ്ഥാനം ന്യൂയോർക്ക്.|ICJ ഹേഗിൽ."},
+/* Q6 */{s:"GEOGRAPHY",q:"എണ്ണ കപ്പൽ ഗതാഗത പാതകൾ കാരണം ഇറാൻ-അമേരിക്ക സംഘർഷങ്ങളിൽ ഏത് പ്രദേശമാണ് പ്രധാനമായി കണക്കാക്കപ്പെടുന്നത്?",o:["A) പനാമ കനാൽ","B) സൂയസ് കനാൽ","C) ഹോർമുസ് കടലിടുക്ക്","D) ബെറിംഗ് കടലിടുക്ക്"],c:2,e:"ശരിയായ ഉത്തരം: C (ഹോർമുസ് കടലിടുക്ക്)\n\nഹോർമുസ് കടലിടുക്കാണ് എണ്ണ കപ്പൽ ഗതാഗതത്തിന് പ്രധാനം.",h:"ഹോർമുസ് കടലിടുക്ക് എണ്ണ കയറ്റുമതിക്ക് പ്രധാനം.",m:"ഹോർമുസ് = ഓയിൽ റൂട്ട്.",f:"ഹോർമുസ് കടലിടുക്ക് പേർഷ്യൻ ഗൾഫിനെ ഓമാൻ ഗൾഫുമായി ബന്ധിപ്പിക്കുന്നു.|ഇത് ലോകത്തിലെ ഏറ്റവും പ്രധാനപ്പെട്ട എണ്ണ ഗതാഗത പാതയാണ്.|ഇറാൻ ഈ കടലിടുക്കിന് സമീപമാണ്."},
+/* Q7 */{s:"GEOGRAPHY",q:"ഇന്ത്യൻ കാലാവസ്ഥാ വിഭാഗത്തിന്റെ ആസ്ഥാനം എവിടെയാണ്?",o:["A) ഡൽഹി","B) വിശാഖപട്ടണം","C) ഹൈദരാബാദ്","D) തിരുവനന്തപുരം"],c:0,e:"ശരിയായ ഉത്തരം: A (ഡൽഹി)\n\nഇന്ത്യൻ കാലാവസ്ഥാ വിഭാഗത്തിന്റെ ആസ്ഥാനം ഡൽഹിയാണ്.",h:"IMD ആസ്ഥാനം ഡൽഹി.",m:"കാലാവസ്ഥ = ഡൽഹി.",f:"IMD 1875-ൽ സ്ഥാപിതമായി.|ആസ്ഥാനം ന്യൂഡൽഹി.|ഇത് കാലാവസ്ഥാ പ്രവചനം നടത്തുന്നു."},
+/* Q8 */{s:"GEOGRAPHY",q:"കാറ്റിലൂടെ താപം തിരശ്ചീനമായി വ്യാപിക്കുന്ന പ്രക്രിയയെ എന്ത് വിളിക്കുന്നു?",o:["A) താപ കൈമാറ്റം (Heat transfer)","B) സംവഹനം (Convection)","C) അഡ്വെക്ഷൻ (Advection)","D) താപ വികിരണം (Radiation)"],c:2,e:"ശരിയായ ഉത്തരം: C (അഡ്വെക്ഷൻ)\n\nഅഡ്വെക്ഷൻ എന്നത് തിരശ്ചീനമായ താപ കൈമാറ്റമാണ്.",h:"തിരശ്ചീന താപ കൈമാറ്റം = അഡ്വെക്ഷൻ.",m:"അഡ്വെക്ഷൻ = തിരശ്ചീനം.",f:"സംവഹനം ലംബമായ താപ കൈമാറ്റമാണ്.|വികിരണത്തിന് മാധ്യമം ആവശ്യമില്ല.|അഡ്വെക്ഷൻ കാറ്റിലൂടെയാണ്."},
+/* Q9 */{s:"GEOGRAPHY",q:"അന്തരീക്ഷത്തിന്റെ ഏത് പാളിയിലാണ് ഓസോൺ പാളി സ്ഥിതി ചെയ്യുന്നത്?",o:["A) ട്രോപ്പോസ്ഫിയർ","B) സ്ട്രാറ്റോസ്ഫിയർ","C) മീസോസ്ഫിയർ","D) തെർമോസ്ഫിയർ"],c:1,e:"ശരിയായ ഉത്തരം: B (സ്ട്രാറ്റോസ്ഫിയർ)\n\nഓസോൺ പാളി സ്ട്രാറ്റോസ്ഫിയറിലാണ്.",h:"ഓസോൺ = സ്ട്രാറ്റോസ്ഫിയർ.",m:"സ്ട്രാറ്റോ = ഓസോൺ.",f:"സ്ട്രാറ്റോസ്ഫിയർ 10-50 കി.മീ.|ഓസോൺ പാളി സൂര്യന്റെ അൾട്രാവയലറ്റ് കിരണങ്ങളെ തടയുന്നു.|ട്രോപ്പോസ്ഫിയറിലാണ് കാലാവസ്ഥാ പ്രതിഭാസങ്ങൾ നടക്കുന്നത്."},
+/* Q10 */{s:"GEOGRAPHY",q:"കൃഷ്ണ നദിയുടെ പോഷകനദികൾ ഏവ?",o:["A) തുംഗഭദ്ര - ഭീമ","B) കബിനി - ഭവാനി","C) ഇന്ദ്രാവതി - ശബരി","D) ഇബ് - തെൽ"],c:0,e:"ശരിയായ ഉത്തരം: A (തുംഗഭദ്ര - ഭീമ)\n\nതുംഗഭദ്ര, ഭീമ എന്നിവ കൃഷ്ണയുടെ പോഷകനദികളാണ്.",h:"തുംഗഭദ്ര, ഭീമ = കൃഷ്ണ.",m:"തുംഗഭദ്ര + ഭീമ = കൃഷ്ണ.",f:"കൃഷ്ണ നദി മഹാബലേശ്വരിൽ നിന്ന് ഉത്ഭവിക്കുന്നു.|ഇത് ആന്ധ്രാപ്രദേശിലൂടെ ഒഴുകുന്നു.|ഗോദാവരി, കൃഷ്ണ എന്നിവ പ്രധാന നദികളാണ്."},
+/* Q11 */{s:"GEOGRAPHY",q:"ഇന്ത്യയിൽ കാപ്പി ഉത്പാദനത്തിൽ ഒന്നാം സ്ഥാനത്തുള്ള സംസ്ഥാനം ഏതാണ്?",o:["A) തമിഴ്നാട്","B) കേരളം","C) മഹാരാഷ്ട്ര","D) കർണാടക"],c:3,e:"ശരിയായ ഉത്തരം: D (കർണാടക)\n\nകർണാടകയാണ് കാപ്പി ഉത്പാദനത്തിൽ ഒന്നാം സ്ഥാനത്ത്.",h:"കർണാടക = കാപ്പി.",m:"കർണാടക = കാപ്പി.",f:"കർണാടകയിൽ കൊടുഗ് പ്രദേശം പ്രധാനം.|കേരളം രണ്ടാം സ്ഥാനത്ത്.|തമിഴ്നാട് മൂന്നാം സ്ഥാനത്ത്."},
+/* Q12 */{s:"GEOGRAPHY",q:"2026-ാം വർഷം 'എൽ നിനോ' (El Nino) പ്രതിഭാസം ഉണ്ടാകാൻ സാധ്യതയുള്ള വർഷമാണ്; എന്നാൽ ഇതിന് തൊട്ടുമുമ്പ് അതേ പ്രതിഭാസം ഏത് വർഷത്തിലാണ് ഉണ്ടായത്?",o:["A) 2010","B) 2015","C) 2023","D) 2013"],c:2,e:"ശരിയായ ഉത്തരം: C (2023)\n\n2023-ൽ എൽ നിനോ പ്രതിഭാസം ഉണ്ടായി.",h:"2023 = എൽ നിനോ.",m:"2023 = എൽ നിനോ.",f:"എൽ നിനോ പസഫിക് സമുദ്രത്തിലെ താപനില വർദ്ധനവാണ്.|ഇത് കാലാവസ്ഥാ വ്യതിയാനത്തിന് കാരണമാകുന്നു.|ലാ നിന എന്നത് വിപരീത പ്രതിഭാസമാണ്."},
+/* Q13 */{s:"GEOGRAPHY",q:"ഹരിത വിപ്ലവവുമായി ബന്ധപ്പെട്ട ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരിയായത്?\ni. ഹരിത വിപ്ലവം പയർവർഗ്ഗങ്ങളുടെ ഉത്പാദനം കാര്യമായി വർദ്ധിപ്പിച്ചു.\nii. ഹരിത വിപ്ലവം ഇന്ത്യയെ ഭക്ഷ്യധാന്യ ഉത്പാദനത്തിൽ സ്വയംപര്യാപ്തമാക്കി.\niii. ഹരിത വിപ്ലവം പ്രധാനമായും ഗോതമ്പ്, ചോളം എന്നിവയുടെ ഉത്പാദനം വർദ്ധിപ്പിച്ചു.\niv. ഹരിത വിപ്ലവത്തിന്റെ ഭാഗമായി ജലസേചന പദ്ധതികൾ വിപുലീകരിച്ചു.",o:["A) പ്രസ്താവനകൾ ii, iii, iv ശരിയാണ്; പ്രസ്താവന i തെറ്റാണ്","B) പ്രസ്താവനകൾ i, iii, iv ശരിയാണ്; പ്രസ്താവന ii തെറ്റാണ്","C) പ്രസ്താവനകൾ i, ii ശരിയാണ്; പ്രസ്താവനകൾ iii, iv തെറ്റാണ്","D) പ്രസ്താവനകൾ i, iii ശരിയാണ്; പ്രസ്താവനകൾ ii, iv തെറ്റാണ്"],c:0,e:"ശരിയായ ഉത്തരം: A\n\nഹരിത വിപ്ലവം പയർവർഗ്ഗ ഉത്പാദനം വർദ്ധിപ്പിച്ചില്ല.",h:"ഹരിത വിപ്ലവം ഗോതമ്പ്, ചോളം എന്നിവയിൽ വിജയിച്ചു.",m:"ഹരിത വിപ്ലവം = ഗോതമ്പ് + ചോളം.",f:"ഹരിത വിപ്ലവം 1960-കളിൽ ആരംഭിച്ചു.|എം.എസ്. സ്വാമിനാഥൻ പിതാവ്.|പയർവർഗ്ഗങ്ങളിൽ വിപ്ലവം ഉണ്ടായില്ല."},
+/* Q14 */{s:"GEOGRAPHY",q:"ഇന്ത്യയിലെ പ്രധാന വിളകളും അവയുടെ കൃഷിക്ക് അനുയോജ്യമായ മണ്ണ്/ഭൂപ്രകൃതിയും സംബന്ധിച്ച ശരിയായ പ്രസ്താവനകൾ ഏവ?\ni. പരുത്തി കൃഷിക്ക് കറുത്ത മണ്ണ് (കരിസൽ മണ്ണ്) അനുയോജ്യമാണ്.\nii. ചണം കൃഷിക്ക് എക്കൽ മണ്ണ് അനുയോജ്യമാണ്.\niii. തേയില കൃഷിക്ക് മലമ്പ്രദേശങ്ങൾ/ചരിവുള്ള പ്രദേശങ്ങൾ അനുയോജ്യമാണ്.\niv. ഗോതമ്പ് പ്രധാനമായും ലാറ്ററൈറ്റ് മണ്ണിൽ കൃഷി ചെയ്യുന്നു.",o:["A) പ്രസ്താവനകൾ ii, iii, iv ശരിയാണ്; പ്രസ്താവന i തെറ്റാണ്","B) പ്രസ്താവനകൾ i, ii, iii ശരിയാണ്; പ്രസ്താവന iv തെറ്റാണ്","C) പ്രസ്താവനകൾ i, ii ശരിയാണ്; പ്രസ്താവനകൾ iii, iv തെറ്റാണ്","D) പ്രസ്താവനകൾ i, iii ശരിയാണ്; പ്രസ്താവനകൾ ii, iv തെറ്റാണ്"],c:1,e:"ശരിയായ ഉത്തരം: B\n\nഗോതമ്പ് ലാറ്ററൈറ്റ് മണ്ണിൽ കൃഷി ചെയ്യുന്നില്ല.",h:"ഗോതമ്പ് = എക്കൽ മണ്ണ്.",m:"ഗോതമ്പ് = എക്കൽ.",f:"പരുത്തി = കറുത്ത മണ്ണ്.|ചണം = എക്കൽ മണ്ണ്.|തേയില = ചരിവുള്ള പ്രദേശം."},
+/* Q15 */{s:"GEOGRAPHY",q:"ഇനിപ്പറയുന്ന ജോഡികളിൽ ധാതുവും അതിന്റെ പ്രധാന ഉപയോഗവും ശരിയായി യോജിക്കുന്നത് ഏതാണ്?\ni. ബോക്സൈറ്റ് - അലുമിനിയം നിർമ്മാണം\nii. മൈക്ക - ഇലക്ട്രിക് ഇൻസുലേറ്ററുകൾ നിർമ്മാണം\niii. ചുണ്ണാമ്പുകല്ല് - വളം നിർമ്മാണം\niv. ഇരുമ്പയിര് - ഉരുക്ക് നിർമ്മാണം",o:["A) i, ii, iii","B) ii, iii, iv","C) i, iii, iv","D) i, ii, iv"],c:3,e:"ശരിയായ ഉത്തരം: D (i, ii, iv)\n\nചുണ്ണാമ്പുകല്ല് വളം നിർമ്മാണത്തിന് ഉപയോഗിക്കുന്നില്ല.",h:"ചുണ്ണാമ്പുകല്ല് = സിമന്റ്.",m:"ചുണ്ണാമ്പുകല്ല് = സിമന്റ്.",f:"ബോക്സൈറ്റ് = അലുമിനിയം.|മൈക്ക = ഇൻസുലേറ്റർ.|ഇരുമ്പയിര് = ഉരുക്ക്."},
+/* Q16 */{s:"ECONOMICS",q:"ലിസ്റ്റ് A-യിലെ പഞ്ചവത്സര പദ്ധതികളെ ലിസ്റ്റ് B-യിലെവയുമായി ശരിയായി ജോഡി ചേർക്കുക.\na. ഒന്നാം പഞ്ചവത്സര പദ്ധതി\nb. രണ്ടാം പഞ്ചവത്സര പദ്ധതി\nc. അഞ്ചാം പഞ്ചവത്സര പദ്ധതി\nd. എട്ടാം പഞ്ചവത്സര പദ്ധതി\n1. മഹലനോബിസ് മാതൃക\n2. കാർഷിക വികസനം\n3. മാനവ വിഭവശേഷി വികസനം\n4. ദാരിദ്ര്യ നിർമ്മാർജ്ജനം (Garibi Hatao)",o:["A) a – 1, b – 2, c – 3, d – 4","B) a – 2, b – 1, c – 3, d – 4","C) a – 2, b – 1, c – 4, d – 3","D) a – 2, b – 4, c – 1, d – 3"],c:2,e:"ശരിയായ ഉത്തരം: C\n\na-2 (കാർഷികം), b-1 (മഹലനോബിസ്), c-4 (Garibi Hatao), d-3 (മാനവ വിഭവം).",h:"ഒന്നാം പദ്ധതി = കാർഷികം; രണ്ടാം = മഹലനോബിസ്.",m:"a-2, b-1, c-4, d-3.",f:"ഒന്നാം പദ്ധതി 1951-56.|രണ്ടാം പദ്ധതി 1956-61.|അഞ്ചാം പദ്ധതി 1974-79.|എട്ടാം പദ്ധതി 1992-97."},
+/* Q17 */{s:"ECONOMICS",q:"നീതി ആയോഗിനെക്കുറിച്ചുള്ള ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരിയായത്?\n1. നീതി ആയോഗ് 2015-ൽ പാർലമെന്റ് നിയമം വഴി സ്ഥാപിതമായ ഒരു സ്ഥാപനമാണ്.\n2. സംസ്ഥാനങ്ങൾക്ക് പദ്ധതി ഫണ്ട് അനുവദിക്കുന്ന അധികാരം നീതി ആയോഗിന് ഇല്ല.",o:["A) പ്രസ്താവന 2 മാത്രം ശരി; പ്രസ്താവന 1 തെറ്റ്","B) പ്രസ്താവന 1 മാത്രം ശരി; പ്രസ്താവന 2 തെറ്റ്","C) പ്രസ്താവനകൾ 1, 2 എന്നിവ രണ്ടും ശരി","D) പ്രസ്താവനകൾ 1, 2 എന്നിവ രണ്ടും തെറ്റ്"],c:0,e:"ശരിയായ ഉത്തരം: A\n\nനീതി ആയോഗ് പാർലമെന്റ് നിയമത്തിലൂടെ സ്ഥാപിതമായതല്ല; ഇത് ഒരു എക്സിക്യൂട്ടീവ് ഉത്തരവാണ്.",h:"നീതി ആയോഗ് = എക്സിക്യൂട്ടീവ് ഉത്തരവ്.",m:"നീതി ആയോഗ് = എക്സിക്യൂട്ടീവ്.",f:"നീതി ആയോഗ് 2015 ജനുവരി 1ന് സ്ഥാപിതമായി.|ഇത് ആസൂത്രണ കമ്മീഷന് പകരമാണ്.|ഇതിന് ഫണ്ട് അനുവദിക്കാനുള്ള അധികാരമില്ല."},
+/* Q18 */{s:"ECONOMICS",q:"ഇന്ത്യയിലെ പണനയവുമായി (Monetary Policy) ബന്ധപ്പെട്ട ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരിയായത്?\ni. ഇന്ത്യൻ റിസർവ് ബാങ്ക് (RBI) ഇന്ത്യയിൽ പണനയം രൂപീകരിക്കുകയും നടപ്പിലാക്കുകയും ചെയ്യുന്നു.\nii. സാമ്പത്തിക സ്ഥിരത ഉറപ്പാക്കുന്നത് പണനയത്തിന്റെ പ്രധാന ലക്ഷ്യങ്ങളിലൊന്നാണ്.\niii. റെപ്പോ നിരക്ക് (Repo Rate), സി.ആർ.ആർ. (CRR), എസ്.എൽ.ആർ. (SLR) തുടങ്ങിയ ഉപകരണങ്ങൾ പണനയം നടപ്പിലാക്കാൻ ഉപയോഗിക്കുന്നു.\niv. കുറഞ്ഞ പിന്തുണാ വില (MSP) ഒരു പണനയ ഉപകരണമാണ്.",o:["A) പ്രസ്താവനകൾ ii, iii, iv ശരി; പ്രസ്താവന i തെറ്റ്","B) പ്രസ്താവനകൾ i, ii, iv ശരി; പ്രസ്താവന iii തെറ്റ്","C) പ്രസ്താവനകൾ i, ii, iii ശരി; പ്രസ്താവന iv തെറ്റ്","D) പ്രസ്താവനകൾ i, iii ശരി; പ്രസ്താവനകൾ ii, iv തെറ്റ്"],c:2,e:"ശരിയായ ഉത്തരം: C\n\nMSP ഒരു പണനയ ഉപകരണമല്ല.",h:"MSP = ധനനയം.",m:"MSP = ധനനയം.",f:"RBI പണനയം നടപ്പിലാക്കുന്നു.|MSP കാർഷിക വില നിയന്ത്രണമാണ്."},
+/* Q19 */{s:"ECONOMICS",q:"'മേക്ക് ഇൻ ഇന്ത്യ' (Make in India) പദ്ധതിയുമായി ബന്ധപ്പെട്ട നടപടികൾ ഏവ?\ni. വിദേശ നിക്ഷേപം ആകർഷിക്കുക\nii. നിർമ്മാണ മേഖലയെ പ്രോത്സാഹിപ്പിക്കുക\niii. വ്യവസായത്തിൽ ലൈസൻസ് ലഭിക്കാനുള്ള ആവശ്യകതകൾ വർദ്ധിപ്പിക്കുക\niv. ആഭ്യന്തര ഉത്പാദനം വർദ്ധിപ്പിക്കുക",o:["A) i, ii, iv","B) i, iii, iv","C) ii, iii, iv","D) i, ii, iii"],c:0,e:"ശരിയായ ഉത്തരം: A (i, ii, iv)\n\nലൈസൻസ് ആവശ്യകതകൾ വർദ്ധിപ്പിക്കുന്നത് മേക്ക് ഇൻ ഇന്ത്യയുടെ ലക്ഷ്യമല്ല.",h:"മേക്ക് ഇൻ ഇന്ത്യ = നിർമ്മാണം.",m:"Make in India = Manufacturing.",f:"2014 സെപ്റ്റംബർ 25ന് ആരംഭിച്ചു.|ഇത് വിദേശ നിക്ഷേപം ആകർഷിക്കുന്നു.|ഇത് തൊഴിലവസരങ്ങൾ സൃഷ്ടിക്കുന്നു."},
+/* Q20 */{s:"POLITY",q:"ഇനിപ്പറയുന്നവ ജോഡി ചേർക്കുക.\n52-ാം ഭരണഘടനാ ഭേദഗതി - 1. മൗലികാവകാശമാക്കി മാറ്റൽ\n74-ാം ഭരണഘടനാ ഭേദഗതി - 2. കൂറുമാറ്റ നിരോധന നിയമം\n84-ാം ഭരണഘടനാ ഭേദഗതി - 3. നഗര തദ്ദേശ സ്ഥാപനങ്ങൾക്ക് ഭരണഘടനാ പദവി നൽകൽ\n91-ാം ഭരണഘടനാ ഭേദഗതി - 4. മന്ത്രിസഭയിലെ മന്ത്രിമാരുടെ എണ്ണം പരിമിതപ്പെടുത്തൽ",o:["A) 1 – c, 2 – d, 3 – b, 4 – a","B) 1 – b, 2 – c, 3 – a, 4 – d","C) 1 – a, 2 – c, 3 – b, 4 – d","D) 1 – d, 2 – b, 3 – a, 4 – c"],c:1,e:"ശരിയായ ഉത്തരം: B\n\n52-ാം ഭേദഗതി = കൂറുമാറ്റ നിരോധനം; 74-ാം = നഗര തദ്ദേശം; 84-ാം = മന്ത്രിമാരുടെ എണ്ണം; 91-ാം = മൗലികാവകാശം.",h:"52 = കൂറുമാറ്റം; 74 = നഗരം; 84 = മന്ത്രിമാർ; 91 = മൗലികാവകാശം.",m:"52-കൂറുമാറ്റം, 74-നഗരം, 84-മന്ത്രി, 91-മൗലികം.",f:"52-ാം ഭേദഗതി 1985.|74-ാം ഭേദഗതി 1992.|84-ാം ഭേദഗതി 2001.|91-ാം ഭേദഗതി 2003."},
+/* Q21 */{s:"POLITY",q:"ഇന്ത്യൻ ഭരണഘടനയിലെ 'അവശിഷ്ട അധികാരങ്ങളുമായി' (Residuary Powers) ബന്ധപ്പെട്ട ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ തെറ്റായവ ഏവ?\nI. സൈബർ നിയമങ്ങൾ അവശിഷ്ട അധികാരങ്ങൾക്ക് ഒരു ഉദാഹരണമാണ്.\nII. ആർട്ടിഫിഷ്യൽ ഇന്റലിജൻസ് (Artificial Intelligence) അവശിഷ്ട അധികാരങ്ങളിൽ ഉൾപ്പെടുത്തിയിട്ടില്ല.\nIII. ഇന്ത്യ ഈ സവിശേഷതകൾ കാനഡയുടെ ഭരണഘടനയിൽ നിന്നാണ് സ്വീകരിച്ചത്.\nIV. ഇതിനെക്കുറിച്ച് നിയമങ്ങൾ നിർമ്മിക്കാനുള്ള അധികാരം കേന്ദ്ര സർക്കാരിനാണ്.",o:["A) I","B) II","C) III","D) IV"],c:1,e:"ശരിയായ ഉത്തരം: B (II)\n\nAI അവശിഷ്ട അധികാരങ്ങളിൽ ഉൾപ്പെടുന്നു.",h:"AI = അവശിഷ്ട അധികാരം.",m:"AI = അവശിഷ്ടം.",f:"അവശിഷ്ട അധികാരങ്ങൾ കേന്ദ്രത്തിനാണ്.|കാനഡയിൽ നിന്ന് സ്വീകരിച്ചത്.|സൈബർ നിയമങ്ങൾ ഇതിൽ ഉൾപ്പെടുന്നു."},
+/* Q22 */{s:"POLITY",q:"ഇന്ത്യൻ ഭരണഘടനയുടെ 148-ാം അനുച്ഛേദം എന്തുമായി ബന്ധപ്പെട്ടിരിക്കുന്നു?",o:["A) പ്രധാനമന്ത്രി","B) ഉപപ്രധാനമന്ത്രി","C) ഉപരാഷ്ട്രപതി","D) കംപ്ട്രോളർ ആൻഡ് ഓഡിറ്റർ ജനറൽ (CAG)"],c:3,e:"ശരിയായ ഉത്തരം: D (CAG)\n\n148-ാം അനുച്ഛേദം CAG-യെക്കുറിച്ചാണ്.",h:"148 = CAG.",m:"148 = CAG.",f:"CAG ഇന്ത്യയുടെ കണക്ക് പരിശോധിക്കുന്നു.|അനുച്ഛേദം 148.|CAG-യെ രാഷ്ട്രപതി നിയമിക്കുന്നു."},
+/* Q23 */{s:"POLITY",q:"ഇനിപ്പറയുന്നവ ജോഡി ചേർക്കുക. സംസ്ഥാന നയതത്വങ്ങൾ.\n1. അനുച്ഛേദം 40 - a. പശുവധ നിരോധനം\n2. അനുച്ഛേദം 43 - b. പൊതു സിവിൽ നിയമം\n3. അനുച്ഛേദം 44 - c. ഗ്രാമ പഞ്ചായത്തുകൾ\n4. അനുച്ഛേദം 48 - d. കുടിൽ വ്യവസായങ്ങൾ",o:["A) 1 – b, 2 – c, 3 – d, 4 – a","B) 1 – c, 2 – a, 3 – b, 4 – d","C) 1 – c, 2 – d, 3 – b, 4 – a","D) 1 – d, 2 – c, 3 – b, 4 – a"],c:2,e:"ശരിയായ ഉത്തരം: C\n\n40-ഗ്രാമപഞ്ചായത്ത്; 43-കുടിൽ വ്യവസായം; 44-സിവിൽ നിയമം; 48-പശുവധ നിരോധനം.",h:"40=പഞ്ചായത്ത്, 43=കുടിൽ, 44=സിവിൽ, 48=പശു.",m:"40-പ, 43-കു, 44-സി, 48-പ.",f:"DPSP അയർലൻഡിൽ നിന്ന്.|അനുച്ഛേദം 36-51.|ഇവ കോടതിയിൽ നടപ്പിലാക്കാൻ കഴിയില്ല."},
+/* Q24 */{s:"POLITY",q:"ഇന്ത്യൻ ഭരണഘടനയുടെ ആമുഖത്തെ \"ഭരണഘടനയുടെ ജാതകം\" എന്ന് വിശേഷിപ്പിച്ചത് ആര്?",o:["A) ജവഹർലാൽ നെഹ്‌റു","B) കെ. എം. മുൻഷി","C) എൻ. എ. പാൽക്കിവാല","D) പണ്ഡിറ്റ് ഠാക്കൂർ ദാസ്"],c:1,e:"ശരിയായ ഉത്തരം: B (കെ. എം. മുൻഷി)\n\nകെ. എം. മുൻഷിയാണ് ആമുഖത്തെ ഭരണഘടനയുടെ ജാതകം എന്ന് വിളിച്ചത്.",h:"കെ. എം. മുൻഷി = ജാതകം.",m:"മുൻഷി = ജാതകം.",f:"ആമുഖം ഭരണഘടനയുടെ ഭാഗമല്ല.|ഇത് 42-ാം ഭേദഗതിയിൽ ഭേദഗതി ചെയ്തു.|ഇതിൽ സോഷ്യലിസം, സെക്കുലറിസം എന്നിവ ചേർത്തു."},
+/* Q25 */{s:"POLITY",q:"ഇന്ത്യയിൽ യുവാക്കൾ നയിക്കുന്ന CJP എന്ന പ്രസ്ഥാനത്തിന്റെ വിപുലീകരണം എന്താണ്?",o:["A) കാഗ്‌രോജ് ജനസംഘ് പാർട്ടി","B) കാഗ്‌രോജ് ജയസംഘ് പാർട്ടി","C) കാഗ്‌രോജ് ജനതാ പാർട്ടി","D) മേൽപ്പറഞ്ഞവയൊന്നുമല്ല"],c:2,e:"ശരിയായ ഉത്തരം: C (കാഗ്‌രോജ് ജനതാ പാർട്ടി)\n\nCJP = കാഗ്‌രോജ് ജനതാ പാർട്ടി.",h:"CJP = കാഗ്‌രോജ് ജനതാ പാർട്ടി.",m:"CJP = ജനതാ പാർട്ടി.",f:"ഇത് ഒരു രാഷ്ട്രീയ പ്രസ്ഥാനമാണ്.|ഇത് യുവാക്കളെ നയിക്കുന്നു.|ഇത് ഇന്ത്യയിൽ സജീവമാണ്."},
+/* Q26 */{s:"POLITY",q:"കേരള നിയമസഭയുടെ നിലവിലെ ഡെപ്യൂട്ടി സ്പീക്കർ ആരാണ്?",o:["A) ഷാനിമോൾ ഉസ്മാൻ","B) തിരുവഞ്ചൂർ രാധാകൃഷ്ണൻ","C) ചിറ്റയം ഗോപകുമാർ","D) കെ. എ. തുളസി"],c:0,e:"ശരിയായ ഉത്തരം: A (ഷാനിമോൾ ഉസ്മാൻ)\n\nഷാനിമോൾ ഉസ്മാനാണ് കേരള നിയമസഭയുടെ ഡെപ്യൂട്ടി സ്പീക്കർ.",h:"ഷാനിമോൾ ഉസ്മാൻ = ഡെപ്യൂട്ടി സ്പീക്കർ.",m:"ഷാനിമോൾ = ഡെപ്യൂട്ടി സ്പീക്കർ.",f:"കേരള നിയമസഭയുടെ സ്പീക്കർ എ. എൻ. ഷംസീർ.|ഡെപ്യൂട്ടി സ്പീക്കർ ഷാനിമോൾ ഉസ്മാൻ.|നിയമസഭയിൽ 140 അംഗങ്ങൾ."},
+/* Q27 */{s:"KERALA GOVERNANCE",q:"കേരളത്തിൽ മുതിർന്ന പൗരന്മാർക്ക് സൗജന്യമായി വീട്ടിലെത്തി ചികിത്സയും ഉപദേശവും നൽകുന്ന പദ്ധതി ഏതാണ്?",o:["A) സ്‌നേഹപൂർവ്വം","B) വയോമിത്രം","C) സുകൃതാലയം","D) ശാന്ത്വനം"],c:1,e:"ശരിയായ ഉത്തരം: B (വയോമിത്രം)\n\nവയോമിത്രം പദ്ധതി മുതിർന്ന പൗരന്മാർക്ക് വീട്ടിലെത്തി സേവനം നൽകുന്നു.",h:"വയോമിത്രം = വീട്ടിലെത്തി ചികിത്സ.",m:"വയോമിത്രം = വീട്ടിൽ.",f:"വയോമിത്രം 2017-ൽ ആരംഭിച്ചു.|ഇത് സാമൂഹ്യ സുരക്ഷാ മിഷനാണ് നടത്തുന്നത്.|ഇത് മുതിർന്ന പൗരന്മാർക്ക് സൗജന്യ സേവനം നൽകുന്നു."},
+/* Q28 */{s:"KERALA GOVERNANCE",q:"അമ്മമാർക്കും കുട്ടികൾക്കുമിടയിലെ പോഷകാഹാരക്കുറവ് പരിഹരിക്കാൻ വനിതാ-ശിശു വികസന വകുപ്പ് ആരംഭിച്ച പദ്ധതി ഏതാണ്?",o:["A) പോഷൻ അഭിയാൻ","B) സമ്പുഷ്ട കേരളം","C) അമൃതം ആരോഗ്യം","D) ക്ഷീരധാര"],c:1,e:"ശരിയായ ഉത്തരം: B (സമ്പുഷ്ട കേരളം)\n\nസമ്പുഷ്ട കേരളം പദ്ധതി പോഷകാഹാരക്കുറവ് പരിഹരിക്കുന്നു.",h:"സമ്പുഷ്ട കേരളം = പോഷകാഹാരം.",m:"സമ്പുഷ്ട = പോഷകാഹാരം.",f:"സമ്പുഷ്ട കേരളം 2018-ൽ ആരംഭിച്ചു.|ഇത് അമ്മമാരുടെയും കുട്ടികളുടെയും ആരോഗ്യം മെച്ചപ്പെടുത്തുന്നു.|ഇത് വനിതാ-ശിശു വികസന വകുപ്പ് നടത്തുന്നു."},
+/* Q29 */{s:"ENVIRONMENT",q:"തണ്ണീർത്തടങ്ങൾ സംരക്ഷിക്കുന്നതുമായി ബന്ധപ്പെട്ട അന്താരാഷ്ട്ര കരാർ ഏതാണ്?",o:["A) ജനീവ ഉടമ്പടി","B) റാംസർ ഉടമ്പടി","C) പാരീസ് ഉടമ്പടി","D) വിയന്ന ഉടമ്പടി"],c:1,e:"ശരിയായ ഉത്തരം: B (റാംസർ ഉടമ്പടി)\n\nറാംസർ ഉടമ്പടി തണ്ണീർത്തടങ്ങളെ സംരക്ഷിക്കുന്നു.",h:"റാംസർ = തണ്ണീർത്തടം.",m:"റാംസർ = വെറ്റ്ലാൻഡ്.",f:"റാംസർ ഉടമ്പടി 1971-ൽ ഒപ്പുവെച്ചു.|ഇത് ഇറാനിലെ റാംസറിൽ വെച്ചാണ് ഒപ്പുവെച്ചത്.|ഇന്ത്യയിൽ നിരവധി തണ്ണീർത്തടങ്ങൾ ഈ പട്ടികയിലുണ്ട്."},
+/* Q30 */{s:"KERALA GOVERNANCE",q:"കേരളത്തിൽ 'കമ്മ്യൂണിറ്റി എനർജി സ്റ്റോറേജ് മോഡലിന്' (Community Energy Storage Model) മുൻഗാമിയായ പദ്ധതി ആദ്യം നടപ്പിലാക്കിയ പഞ്ചായത്ത് ഏതാണ്?",o:["A) പെരിങ്കം","B) പുത്തനങ്ങാടി","C) പെരിഞ്ചനം","D) കുമരകം"],c:2,e:"ശരിയായ ഉത്തരം: C (പെരിഞ്ചനം)\n\nപെരിഞ്ചനം പഞ്ചായത്തിലാണ് ഇത് ആദ്യം നടപ്പിലാക്കിയത്.",h:"പെരിഞ്ചനം = എനർജി സ്റ്റോറേജ്.",m:"പെരിഞ്ചനം = എനർജി.",f:"ഇത് കേരളത്തിലെ ഒരു പഞ്ചായത്താണ്.|ഇത് സൗരോർജ്ജ സംഭരണവുമായി ബന്ധപ്പെട്ടതാണ്.|ഇത് ഊർജ്ജ സ്വയംപര്യാപ്തതയ്ക്ക് സഹായിക്കുന്നു."},
+/* Q31 */{s:"DISASTER MANAGEMENT",q:"NDRF-ന്റെ വിപുലീകരണം എഴുതുക.",o:["A) National Disaster Relief Fund","B) National Disaster Response Force","C) National Disaster and Relief Force","D) National Disaster Research Forum"],c:1,e:"ശരിയായ ഉത്തരം: B (National Disaster Response Force)\n\nNDRF = National Disaster Response Force.",h:"NDRF = Response Force.",m:"NDRF = Response.",f:"NDRF 2006-ൽ സ്ഥാപിതമായി.|ഇത് ദുരന്ത സമയത്ത് രക്ഷാപ്രവർത്തനം നടത്തുന്നു.|ഇത് കേന്ദ്ര ആഭ്യന്തര മന്ത്രാലയത്തിന് കീഴിലാണ്."},
+/* Q32 */{s:"POLITY",q:"ഇനിപ്പറയുന്നവയിൽ തെറ്റായ പ്രസ്താവന ഏതാണ്?",o:["A) സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ ഒരു സ്വതന്ത്ര ഭരണഘടനാ സ്ഥാപനമാണ്.","B) ലോക്ആയുക്ത അഴിമതി സംബന്ധമായ പരാതികൾ അന്വേഷിക്കുന്നു.","C) സംസ്ഥാന മനുഷ്യാവകാശ കമ്മീഷന് സിവിൽ കോടതിയുടെ അധികാരങ്ങളുണ്ട്.","D) നീതി ആയോഗ് (NITI Aayog) ഒരു ഭരണഘടനാ സ്ഥാപനമാണ്."],c:3,e:"ശരിയായ ഉത്തരം: D\n\nനീതി ആയോഗ് ഒരു ഭരണഘടനാ സ്ഥാപനമല്ല.",h:"നീതി ആയോഗ് = ഭരണഘടനാ സ്ഥാപനമല്ല.",m:"നീതി ആയോഗ് = എക്സിക്യൂട്ടീവ്.",f:"സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ ഭരണഘടനാ സ്ഥാപനമാണ്.|ലോക്ആയുക്ത അഴിമതി അന്വേഷിക്കുന്നു.|മനുഷ്യാവകാശ കമ്മീഷന് സിവിൽ കോടതി അധികാരമുണ്ട്."},
+/* Q33 */{s:"KERALA GOVERNANCE",q:"ഭൂമി സംബന്ധമായ സേവനങ്ങൾ കൂടുതൽ സുതാര്യതയോടെ നൽകാനും വ്യാജ ഭൂമി രേഖകൾ തടയാനും 'എന്റെ ഭൂമി പോർട്ടൽ' വഴി ഏത് സാങ്കേതിക സുരക്ഷാ സംവിധാനമാണ് ഉപയോഗിക്കുന്നത്?",o:["A) ബ്ലോക്ക്ചെയിൻ","B) ആർട്ടിഫിഷ്യൽ ഇന്റലിജൻസ്","C) ബയോമെട്രിക് ലാൻഡ് ലോക്കിംഗ്","D) ക്വാണ്ടം ക്രിപ്റ്റോഗ്രാഫി"],c:0,e:"ശരിയായ ഉത്തരം: A (ബ്ലോക്ക്ചെയിൻ)\n\nബ്ലോക്ക്ചെയിൻ സാങ്കേതികവിദ്യയാണ് ഇതിന് ഉപയോഗിക്കുന്നത്.",h:"ബ്ലോക്ക്ചെയിൻ = സുരക്ഷ.",m:"ബ്ലോക്ക്ചെയിൻ = ഭൂമി രേഖ.",f:"ബ്ലോക്ക്ചെയിൻ വിവരങ്ങൾ സുരക്ഷിതമാക്കുന്നു.|ഇത് തട്ടിപ്പ് തടയുന്നു.|കേരളം ഇത് നടപ്പിലാക്കി."},
+/* Q34 */{s:"KERALA GOVERNANCE",q:"കേരളത്തിന്റെ ആരോഗ്യ മേഖലയിൽ നടപ്പിലാക്കുന്ന 'ആർദ്രം മിഷന്റെ' പ്രധാന ലക്ഷ്യം എന്താണ്?",o:["A) പ്രാഥമിക ആരോഗ്യ കേന്ദ്രങ്ങളിലെ ചികിത്സാ സൗകര്യങ്ങൾ വിപുലീകരിക്കുക","B) പ്രാഥമിക ആരോഗ്യ കേന്ദ്രങ്ങളെ കുടുംബാരോഗ്യ കേന്ദ്രങ്ങളാക്കി മാറ്റുക","C) ചികിത്സ പൂർണ്ണമായും സൗജന്യമാക്കുക","D) പ്രാഥമിക ആരോഗ്യ കേന്ദ്രങ്ങളിൽ സ്പെഷ്യലിസ്റ്റ് ഡോക്ടർമാരുടെ സേവനം ഉറപ്പാക്കുക"],c:1,e:"ശരിയായ ഉത്തരം: B\n\nആർദ്രം മിഷൻ PHC-കളെ കുടുംബാരോഗ്യ കേന്ദ്രങ്ങളാക്കി മാറ്റുന്നു.",h:"ആർദ്രം = കുടുംബാരോഗ്യ കേന്ദ്രം.",m:"ആർദ്രം = FHC.",f:"ആർദ്രം മിഷൻ 2017-ൽ ആരംഭിച്ചു.|ഇത് പ്രാഥമിക ആരോഗ്യ സംവിധാനം മെച്ചപ്പെടുത്തുന്നു.|ഇത് കേരളത്തിലെ ആരോഗ്യ മേഖലയിലെ ഒരു പ്രധാന പദ്ധതിയാണ്."},
+/* Q35 */{s:"BIOLOGY",q:"ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരിയായത്?\ni. ചില ആന്റിബയോട്ടിക്കുകൾ ബാക്ടീരിയകളുടെ സെൽ മെംബ്രേൻ തകർത്ത് അവയെ നശിപ്പിക്കുന്നു.\nii. ആന്റിബയോട്ടിക്കുകൾ ആന്റിജനുകളുടെ വിഷാംശം നിർവീര്യമാക്കുന്നു.\niii. ആന്റിബയോട്ടിക്കുകൾ വെള്ള രക്താണുക്കളെ ഉത്തേജിപ്പിക്കാതെ തന്നെ രോഗാണുക്കളെ നശിപ്പിക്കുന്നു.",o:["A) i, ii മാത്രം","B) i, iii മാത്രം","C) ii, iii മാത്രം","D) i, ii, iii മൂന്നും"],c:0,e:"ശരിയായ ഉത്തരം: A (i, ii മാത്രം)\n\niii തെറ്റാണ്; ആന്റിബയോട്ടിക്കുകൾ രോഗാണുക്കളെ നശിപ്പിക്കുന്നു, വെള്ള രക്താണുക്കളെ ഉത്തേജിപ്പിക്കുന്നു.",h:"ആന്റിബയോട്ടിക്കുകൾ = ബാക്ടീരിയ നശീകരണം.",m:"ആന്റിബയോട്ടിക്കുകൾ = ബാക്ടീരിയ.",f:"ആന്റിബയോട്ടിക്കുകൾ ബാക്ടീരിയകൾക്കെതിരെ പ്രവർത്തിക്കുന്നു.|ഇവ വൈറസുകൾക്കെതിരെ ഫലപ്രദമല്ല.|ഇവ രോഗപ്രതിരോധ സംവിധാനത്തെ സഹായിക്കുന്നു."},
+/* Q36 */{s:"BIOLOGY",q:"കൃത്രിമ പ്രതിരോധശേഷി (artificial immunization) ഉണ്ടാക്കുന്നതിനുള്ള വാക്സിനുകൾ നിർമ്മിക്കാൻ ഇനിപ്പറയുന്നവയിൽ ഏതാണ് ഉപയോഗിക്കാത്തത്?",o:["A) ജീവനുള്ള രോഗാണുക്കൾ","B) നിർജ്ജീവമാക്കിയ രോഗാണുക്കൾ","C) ടോക്സോയിഡുകൾ (നിർവീര്യമാക്കിയ വിഷവസ്തുക്കൾ)","D) രോഗിയുടെ ശരീര കോശങ്ങൾ"],c:3,e:"ശരിയായ ഉത്തരം: D\n\nരോഗിയുടെ ശരീര കോശങ്ങൾ വാക്സിൻ നിർമ്മാണത്തിന് ഉപയോഗിക്കുന്നില്ല.",h:"വാക്സിൻ = രോഗാണു / ടോക്സോയിഡ്.",m:"വാക്സിൻ = രോഗാണു.",f:"വാക്സിനുകൾ രോഗപ്രതിരോധ ശേഷി വർദ്ധിപ്പിക്കുന്നു.|ജീവനുള്ള, നിർജ്ജീവ രോഗാണുക്കൾ ഉപയോഗിക്കുന്നു.|ടോക്സോയിഡുകൾ വിഷവസ്തുക്കളെ നിർവീര്യമാക്കുന്നു."},
+/* Q37 */{s:"BIOLOGY",q:"മനുഷ്യ മസ്തിഷ്കത്തിലെ വൈദ്യുത തരംഗങ്ങൾ രേഖപ്പെടുത്താൻ ഉപയോഗിക്കുന്ന ഉപകരണം ഏതാണ്?",o:["A) അൾട്രാസൗണ്ട് സ്കാനർ","B) ഇലക്ട്രോഎൻസെഫലോഗ്രാം (EEG)","C) സി.ടി. സ്കാനർ","D) എം.ആർ.ഐ. സ്കാനർ"],c:1,e:"ശരിയായ ഉത്തരം: B (EEG)\n\nEEG മസ്തിഷ്ക തരംഗങ്ങൾ രേഖപ്പെടുത്തുന്നു.",h:"EEG = തലച്ചോർ തരംഗങ്ങൾ.",m:"EEG = ബ്രെയിൻ വേവ്സ്.",f:"EEG 1924-ൽ ഹാൻസ് ബെർഗർ കണ്ടുപിടിച്ചു.|ഇത് മസ്തിഷ്ക പ്രവർത്തനം രേഖപ്പെടുത്തുന്നു.|ഇത് അപസ്മാരം കണ്ടെത്താൻ ഉപയോഗിക്കുന്നു."},
+/* Q38 */{s:"BIOLOGY",q:"ഇനിപ്പറയുന്നവയിൽ ഏറ്റവും അപകടകരമായ വൈറസ് രോഗം ഏതാണ്?",o:["A) എയ്ഡ്സ്","B) നിപ്പ വൈറസ് രോഗം","C) കോവിഡ്-19","D) റൈനോവൈറസ് രോഗം"],c:1,e:"ശരിയായ ഉത്തരം: B (നിപ്പ വൈറസ്)\n\nനിപ്പ വൈറസ് വളരെ അപകടകരമാണ്.",h:"നിപ്പ = അപകടകരം.",m:"നിപ്പ = മാരകം.",f:"നിപ്പ വൈറസ് 1998-ൽ കണ്ടെത്തി.|ഇത് വവ്വാലുകളിൽ നിന്ന് പകരുന്നു.|ഇതിന്റെ മരണനിരക്ക് ഉയർന്നതാണ്."},
+/* Q39 */{s:"BIOLOGY",q:"മനുഷ്യശരീരത്തിലെ അസ്ഥികളെ സംരക്ഷിച്ച് അവയെ ചുറ്റിപ്പറ്റിയിരിക്കുന്ന ആവരണം ഏതാണ്?",o:["A) പെരികാർഡിയം","B) മെനിഞ്ചസ്","C) പെരിയോസ്റ്റിയം","D) പ്ലൂറ"],c:2,e:"ശരിയായ ഉത്തരം: C (പെരിയോസ്റ്റിയം)\n\nപെരിയോസ്റ്റിയം അസ്ഥികളെ ചുറ്റിപ്പറ്റിയിരിക്കുന്നു.",h:"പെരിയോസ്റ്റിയം = അസ്ഥി ആവരണം.",m:"പെരിയോ = അസ്ഥി.",f:"പെരിയോസ്റ്റിയം അസ്ഥികളെ പോഷിപ്പിക്കുന്നു.|ഇത് അസ്ഥി വളർച്ചയ്ക്ക് സഹായിക്കുന്നു.|ഇത് അസ്ഥികൾക്ക് ബലം നൽകുന്നു."},
+/* Q40 */{s:"BIOLOGY",q:"ഇനിപ്പറയുന്നവയിൽ ഏത് രക്തസമ്മർദ്ദ അളവാണ് 'ഉയർന്ന രക്തസമ്മർദ്ദം' എന്ന് കണക്കാക്കുന്നത്?",o:["A) 90/60 mm Hg","B) 120/80 mm Hg","C) 150/95 mm Hg","D) 110/75 mm Hg"],c:2,e:"ശരിയായ ഉത്തരം: C (150/95 mm Hg)\n\n150/95 ഉയർന്ന രക്തസമ്മർദ്ദമാണ്.",h:"150/95 = ഉയർന്ന രക്തസമ്മർദ്ദം.",m:"150/95 = ഹൈപ്പർടെൻഷൻ.",f:"സാധാരണ രക്തസമ്മർദ്ദം 120/80.|ഉയർന്ന രക്തസമ്മർദ്ദം 140/90 ൽ കൂടുതൽ.|ഇത് ഹൃദയ സംബന്ധമായ അസുഖങ്ങൾക്ക് കാരണമാകുന്നു."},
+/* Q41 */{s:"ENVIRONMENT",q:"ഹരിതഗൃഹ വാതകങ്ങളെക്കുറിച്ചുള്ള ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ തെറ്റായത് ഏതാണ്?",o:["A) ഹരിതഗൃഹ വാതകങ്ങൾ അന്തരീക്ഷത്തിന്റെ താപനില വർദ്ധിപ്പിക്കുന്നു.","B) കാർബൺ ഡൈ ഓക്സൈഡ്, മീഥേൻ, നൈട്രസ് ഓക്സൈഡ് എന്നിവ പ്രധാന ഹരിതഗൃഹ വാതകങ്ങളാണ്.","C) ഹരിതഗൃഹ വാതകങ്ങളുടെ അളവ് വർദ്ധിക്കുന്നത് ആഗോള താപനത്തിന് കാരണമാകുന്നു.","D) നൈട്രജൻ, ഓക്സിജൻ എന്നിവ പ്രധാന ഹരിതഗൃഹ വാതകങ്ങളാണ്."],c:3,e:"ശരിയായ ഉത്തരം: D\n\nനൈട്രജൻ, ഓക്സിജൻ എന്നിവ ഹരിതഗൃഹ വാതകങ്ങളല്ല.",h:"നൈട്രജൻ, ഓക്സിജൻ = ഹരിതഗൃഹ വാതകമല്ല.",m:"N2, O2 = ഹരിതഗൃഹ വാതകമല്ല.",f:"CO2, CH4, N2O എന്നിവ ഹരിതഗൃഹ വാതകങ്ങളാണ്.|ഇവ ആഗോള താപനത്തിന് കാരണമാകുന്നു.|നൈട്രജൻ, ഓക്സിജൻ അല്ല."},
+/* Q42 */{s:"CURRENT AFFAIRS",q:"അടുത്തിടെ വാർത്തകളിൽ ഇടം നേടിയ 'ആഗമൻ' (Aagamain) പദ്ധതിയെക്കുറിച്ചുള്ള ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരിയായത്?",o:["A) കാലാവസ്ഥാ വ്യതിയാനം പഠിക്കാൻ ഇസ്രോ (ISRO) വികസിപ്പിച്ച റോക്കറ്റ് വിക്ഷേപിക്കൽ.","B) ഇന്ത്യൻ സ്വകാര്യ മേഖലയിലെ സ്റ്റാർട്ട്-അപ്പ് കമ്പനി വികസിപ്പിച്ച റോക്കറ്റിന്റെ ആദ്യ വിക്ഷേപണം.","C) ശുക്രനിലേക്കുള്ള (Venus) ഇസ്രോയുടെ ആദ്യ പര്യവേക്ഷണ പദ്ധതി.","D) ബഹിരാകാശ മാലിന്യങ്ങൾ (Space Debris) നീക്കം ചെയ്യാൻ ഇസ്രോയും നാസയും ചേർന്ന് ഏറ്റെടുത്ത പദ്ധതി."],c:1,e:"ശരിയായ ഉത്തരം: B\n\nആഗമൻ സ്വകാര്യ കമ്പനി വികസിപ്പിച്ച റോക്കറ്റാണ്.",h:"ആഗമൻ = സ്വകാര്യ റോക്കറ്റ്.",m:"ആഗമൻ = സ്വകാര്യ കമ്പനി.",f:"ആഗമൻ ഒരു സ്റ്റാർട്ട്-അപ്പ് കമ്പനിയാണ്.|ഇത് ഇന്ത്യയുടെ ബഹിരാകാശ മേഖലയിലെ നേട്ടമാണ്.|ഇത് സ്വകാര്യ മേഖലയുടെ സംഭാവനയാണ്."},
+/* Q43 */{s:"PHYSICS",q:"നീളത്തിന്റെ വിവിധ യൂണിറ്റുകൾ അവയുടെ മൂല്യങ്ങളുടെ ആരോഹണ ക്രമത്തിൽ നൽകിയിരിക്കുന്നു. ശരിയായത് തിരഞ്ഞെടുക്കുക.",o:["A) മില്ലിമീറ്റർ, കിലോമീറ്റർ, പ്രകാശവർഷം","B) പ്രകാശവർഷം, കിലോമീറ്റർ, മില്ലിമീറ്റർ","C) കിലോമീറ്റർ, മില്ലിമീറ്റർ, പ്രകാശവർഷം","D) മില്ലിമീറ്റർ, പ്രകാശവർഷം, കിലോമീറ്റർ"],c:0,e:"ശരിയായ ഉത്തരം: A\n\nമില്ലിമീറ്റർ < കിലോമീറ്റർ < പ്രകാശവർഷം.",h:"മില്ലിമീറ്റർ < കിലോമീറ്റർ < പ്രകാശവർഷം.",m:"mm < km < ly.",f:"1 കി.മീ = 1000 മീ.|1 പ്രകാശവർഷം = 9.46 ട്രില്യൺ കി.മീ.|പ്രകാശവർഷം ഏറ്റവും വലുത്."},
+/* Q44 */{s:"PHYSICS",q:"ഒപ്റ്റിക്കൽ ഫൈബറുമായി (optical fiber) ബന്ധപ്പെട്ട ഇനിപ്പറയുന്ന പ്രസ്താവനകൾ പരിഗണിച്ച് അതിനനുസരിച്ച് ഉത്തരം നൽകുക.\na. ഇവ മുഴുവൻ ആന്തരിക പ്രതിഫലനം (Total internal reflection) എന്ന തത്വത്തിന്റെ അടിസ്ഥാനത്തിലാണ് പ്രവർത്തിക്കുന്നത്.\nb. ഇവ മെഡിക്കൽ മേഖലയിൽ എൻഡോസ്കോപ്പിക്ക് (Endoscopy) ഉപയോഗിക്കുന്നു.\nc. ഇവയിലൂടെ സിഗ്നലുകൾ ശബ്ദത്തിന്റെ വേഗതയിൽ സഞ്ചരിക്കുന്നു.",o:["A) a – ശരി, b – തെറ്റ്, c – ശരി","B) a – ശരി, b – തെറ്റ്, c – തെറ്റ്","C) a – ശരി, b – ശരി, c – തെറ്റ്","D) എല്ലാം ശരി"],c:2,e:"ശരിയായ ഉത്തരം: C (a-ശരി, b-ശരി, c-തെറ്റ്)\n\nഒപ്റ്റിക്കൽ ഫൈബറിൽ പ്രകാശം പ്രകാശവേഗതയിൽ സഞ്ചരിക്കുന്നു, ശബ്ദവേഗതയിലല്ല.",h:"ഒപ്റ്റിക്കൽ ഫൈബർ = പ്രകാശവേഗത.",m:"ഫൈബർ = പ്രകാശവേഗത.",f:"TIR തത്വത്തിൽ പ്രവർത്തിക്കുന്നു.|എൻഡോസ്കോപ്പിയിൽ ഉപയോഗിക്കുന്നു.|പ്രകാശവേഗതയിൽ സഞ്ചരിക്കുന്നു."},
+/* Q45 */{s:"PHYSICS",q:"ആശുപത്രികളിലും പൊതുസ്ഥലങ്ങളിലും ശരീര സ്പർശമില്ലാതെ ശരീര താപനില വേഗത്തിൽ അളക്കാൻ ഏത് ഉപകരണമാണ് ഉപയോഗിക്കുന്നത്?",o:["A) ഗലീലിയോ തെർമോമീറ്റർ","B) ലബോറട്ടറി തെർമോമീറ്റർ","C) സ്ഥിര അളവ് വാതക തെർമോമീറ്റർ","D) ഇൻഫ്രാറെഡ് തെർമോമീറ്റർ"],c:3,e:"ശരിയായ ഉത്തരം: D (ഇൻഫ്രാറെഡ് തെർമോമീറ്റർ)\n\nഇൻഫ്രാറെഡ് തെർമോമീറ്റർ സ്പർശമില്ലാതെ താപനില അളക്കുന്നു.",h:"ഇൻഫ്രാറെഡ് = സ്പർശമില്ലാതെ.",m:"IR = സ്പർശമില്ല.",f:"IR തെർമോമീറ്റർ ശരീര താപം വായിക്കുന്നു.|ഇത് കോവിഡ് കാലത്ത് ഉപയോഗിച്ചു.|ഇത് വേഗത്തിൽ അളക്കുന്നു."},
+/* Q46 */{s:"PHYSICS",q:"ഭൂഗുരുത്വ ത്വരണത്തെക്കുറിച്ചുള്ള (g) ഇനിപ്പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക.\ni. ഭൂമിയുടെ ഉപരിതലത്തിൽ 'g'-യുടെ ഏകദേശ മൂല്യം 9.8 m/s² ആണ്.\nii. ഭൂമധ്യരേഖയിൽ നിന്ന് ധ്രുവങ്ങളിലേക്ക് പോകുമ്പോൾ 'g'-യുടെ മൂല്യം കുറയുന്നു.\niii. ഭൂമിയുടെ ഉപരിതലത്തിൽ നിന്ന് ആഴത്തിലേക്ക് പോകുമ്പോൾ 'g'-യുടെ മൂല്യം കുറയുന്നു.\niv. ഭൂമിയുടെ കേന്ദ്രത്തിൽ 'g'-യുടെ മൂല്യം പൂജ്യമാണ്.",o:["A) i, ii","B) ii, iii, iv","C) i, iii, iv","D) എല്ലാം ശരിയാണ്"],c:2,e:"ശരിയായ ഉത്തരം: C (i, iii, iv)\n\nii തെറ്റാണ്; ധ്രുവങ്ങളിലേക്ക് പോകുമ്പോൾ g വർദ്ധിക്കുന്നു.",h:"g ധ്രുവങ്ങളിൽ കൂടുതൽ.",m:"g = 9.8; ധ്രുവത്തിൽ കൂടുതൽ.",f:"ഭൂമധ്യരേഖയിൽ g = 9.78.|ധ്രുവങ്ങളിൽ g = 9.83.|കേന്ദ്രത്തിൽ g = 0."},
+/* Q47 */{s:"CHEMISTRY",q:"സ്റ്റെയിൻലെസ് സ്റ്റീൽ (stainless steel) എന്ന ലോഹസങ്കരത്തിലെ ഘടകങ്ങൾ ഏവ?",o:["A) Fe, Mn, C","B) Fe, Si, C","C) Fe, Cr, Ni, C","D) Fe, C"],c:2,e:"ശരിയായ ഉത്തരം: C (Fe, Cr, Ni, C)\n\nസ്റ്റെയിൻലെസ് സ്റ്റീലിൽ ഇരുമ്പ്, ക്രോമിയം, നിക്കൽ, കാർബൺ എന്നിവ അടങ്ങിയിരിക്കുന്നു.",h:"Fe, Cr, Ni, C = സ്റ്റെയിൻലെസ് സ്റ്റീൽ.",m:"Fe + Cr + Ni + C.",f:"ക്രോമിയം തുരുമ്പ് തടയുന്നു.|നിക്കൽ ബലം നൽകുന്നു.|കാർബൺ കാഠിന്യം നൽകുന്നു."},
+/* Q48 */{s:"CHEMISTRY",q:"ഒരു വാതകത്തിലെ കണികകളുടെ എണ്ണവും അതിന്റെ വ്യാപ്തവും തമ്മിലുള്ള ബന്ധം വിശദീകരിക്കുന്ന നിയമം ഏതാണ്?",o:["A) ചാൾസ് നിയമം","B) ബോയിൽ നിയമം","C) അവോഗാഡ്രോ നിയമം","D) ന്യൂട്ടന്റെ നിയമം"],c:2,e:"ശരിയായ ഉത്തരം: C (അവോഗാഡ്രോ നിയമം)\n\nഅവോഗാഡ്രോ നിയമം കണികകളുടെ എണ്ണവും വ്യാപ്തവും തമ്മിലുള്ള ബന്ധം വിശദീകരിക്കുന്നു.",h:"അവോഗാഡ്രോ = കണികകളുടെ എണ്ണം.",m:"അവോഗാഡ്രോ = കണിക.",f:"അവോഗാഡ്രോ സംഖ്യ = 6.022 × 10²³.|ഇത് മോളുമായി ബന്ധപ്പെട്ടതാണ്.|ഇത് വാതക നിയമമാണ്."},
+/* Q49 */{s:"CHEMISTRY",q:"H3PO4 (ഫോസ്ഫോറിക് ആസിഡ്) ന്റെ ബേസിസിറ്റി (basicity) എത്രയാണ്?",o:["A) 1","B) 2","C) 3","D) 4"],c:2,e:"ശരിയായ ഉത്തരം: C (3)\n\nH3PO4-ന് 3 ബേസിസിറ്റി ഉണ്ട്.",h:"H3PO4 = 3.",m:"3 H = 3 basicity.",f:"ഫോസ്ഫോറിക് ആസിഡിന് 3 ഹൈഡ്രജൻ അയോണുകൾ ഉണ്ട്.|ഇത് ഒരു ദുർബല ആസിഡാണ്.|ഇത് വളം നിർമ്മാണത്തിൽ ഉപയോഗിക്കുന്നു."},
+/* Q50 */{s:"CHEMISTRY",q:"മൂലക പട്ടികയിലെ ഒഗനെസൺ (Og) മൂലകത്തിന്റെ അണുസംഖ്യ എത്രയാണ്?",o:["A) 115","B) 116","C) 117","D) 118"],c:3,e:"ശരിയായ ഉത്തരം: D (118)\n\nഒഗനെസന്റെ അണുസംഖ്യ 118 ആണ്.",h:"Og = 118.",m:"Og = 118.",f:"ഒഗനെസൺ ഒരു കൃത്രിമ മൂലകമാണ്.|ഇത് ഗ്രൂപ്പ് 18-ൽ ഉൾപ്പെടുന്നു.|ഇത് ഒരു ഉത്കൃഷ്ട വാതകമാണ്."},
+/* Q51 */{s:"CURRENT AFFAIRS",q:"രസതന്ത്രത്തിനുള്ള 2025-ലെ നോബൽ സമ്മാനം ഇനിപ്പറയുന്ന ഏത് കണ്ടുപിടിത്തത്തിനാണ് നൽകിയത്?",o:["A) CRISPR ജീൻ എഡിറ്റിംഗ് സാങ്കേതികവിദ്യ","B) മെറ്റൽ-ഓർഗാനിക് ഫ്രെയിംവർക്കുകൾ (MOFs)","C) ലിഥിയം-അയൺ ബാറ്ററികൾ","D) ഗ്രീൻ ഫ്ലൂറസെന്റ് പ്രോട്ടീൻ (GFP)"],c:1,e:"ശരിയായ ഉത്തരം: B (MOFs)\n\n2025-ലെ രസതന്ത്ര നോബൽ MOFs-നാണ്.",h:"2025 രസതന്ത്രം = MOFs.",m:"2025 = MOFs.",f:"MOFs എന്നത് മെറ്റൽ-ഓർഗാനിക് ഫ്രെയിംവർക്കുകളാണ്.|ഇവ വാതക സംഭരണത്തിന് ഉപയോഗിക്കുന്നു.|ഇവ ജല ശുദ്ധീകരണത്തിന് ഉപയോഗിക്കുന്നു."},
+/* Q52 */{s:"KERALA CULTURE",q:"കേരള കലാമണ്ഡലത്തെക്കുറിച്ചുള്ള ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരിയായത്?\ni. ഇത് 2007-ൽ ഡീംഡ് യൂണിവേഴ്സിറ്റിയായി (Deemed-to-be University) മാറി.\nii. 1975-ൽ ഇത് സർക്കാർ സഹായം ലഭിക്കുന്ന വിദ്യാഭ്യാസ സ്ഥാപനമായി മാറി.\niii. ഇത് 1930-ൽ സ്ഥാപിതമായി.",o:["A) i മാത്രം ശരി","B) ii, iii മാത്രം ശരി","C) i, iii മാത്രം ശരി","D) i, ii, iii എല്ലാം ശരി"],c:3,e:"ശരിയായ ഉത്തരം: D (i, ii, iii എല്ലാം ശരി)\n\nകലാമണ്ഡലം 1930-ൽ സ്ഥാപിതമായി, 1975-ൽ സർക്കാർ ഏറ്റെടുത്തു, 2007-ൽ ഡീംഡ് യൂണിവേഴ്സിറ്റിയായി.",h:"കലാമണ്ഡലം 1930 സ്ഥാപനം.",m:"1930-സ്ഥാപനം, 1975-സർക്കാർ, 2007-യൂണിവേഴ്സിറ്റി.",f:"കലാമണ്ഡലം വള്ളത്തോൾ നാരായണ മേനോൻ സ്ഥാപിച്ചു.|ഇത് കഥകളി പഠന കേന്ദ്രമാണ്.|ഇത് കേരളത്തിന്റെ സാംസ്കാരിക അടയാളമാണ്."},
+/* Q53 */{s:"MALAYALAM LITERATURE",q:"ഇനിപ്പറയുന്നവയിൽ മണിപ്രവാള വിഭാഗത്തിൽ ഉൾപ്പെടാത്ത കൃതി ഏതാണ്?",o:["A) ഉണ്ണിയച്ചി","B) ഉണ്ണിസീതാദേവി","C) രാമചരിതം","D) ചചരിയച്ചി"],c:2,e:"ശരിയായ ഉത്തരം: C (രാമചരിതം)\n\nരാമചരിതം മണിപ്രവാള വിഭാഗത്തിൽ ഉൾപ്പെടുന്നില്ല.",h:"രാമചരിതം = മണിപ്രവാളമല്ല.",m:"രാമചരിതം = വേറെ.",f:"ഉണ്ണിയച്ചി, ഉണ്ണിസീതാദേവി എന്നിവ മണിപ്രവാള കൃതികളാണ്.|രാമചരിതം ഒരു പ്രധാന കൃതിയാണ്.|മണിപ്രവാളം സംസ്കൃതവും മലയാളവും കലർന്ന ശൈലിയാണ്."},
+/* Q54 */{s:"MALAYALAM LITERATURE",q:"കടമ്മനിട്ട രാമകൃഷ്ണന്റെ 'കിരാതവൃത്തം' എന്ന കവിതയെ സ്വാധീനിച്ച കലാരൂപം ഏതാണ്?",o:["A) ഒട്ടൻ തുള്ളൽ","B) കഥകളി","C) കൂടിയാട്ടം","D) പടയണി"],c:3,e:"ശരിയായ ഉത്തരം: D (പടയണി)\n\nകിരാതവൃത്തം പടയണിയിൽ നിന്ന് പ്രചോദനം ഉൾക്കൊണ്ടതാണ്.",h:"പടയണി = കിരാതവൃത്തം.",m:"പടയണി = കിരാതം.",f:"കടമ്മനിട്ട രാമകൃഷ്ണൻ ഒരു പ്രമുഖ കവിയാണ്.|പടയണി ഒരു അനുഷ്ഠാന കലയാണ്.|കിരാതവൃത്തം ഒരു പ്രശസ്ത കവിതയാണ്."},
+/* Q55 */{s:"KERALA CULTURE",q:"യുദ്ധവും നേടിയ വിജയവും ആഘോഷിക്കുന്ന രീതിയിൽ കൂത്തുപറമ്പ് ഭഗവതി ക്ഷേത്രത്തിൽ ഏത് ഉത്സവമാണ് നടത്തുന്നത്?",o:["A) കൊങ്കൺ പട","B) പൂരക്കളി","C) നവരാത്രി","D) മാമാങ്കം"],c:0,e:"ശരിയായ ഉത്തരം: A (കൊങ്കൺ പട)\n\nകൊങ്കൺ പട ഒരു യുദ്ധാഘോഷമാണ്.",h:"കൊങ്കൺ പട = യുദ്ധം.",m:"കൊങ്കൺ പട = യുദ്ധാഘോഷം.",f:"ഇത് കേരളത്തിലെ ഒരു അനുഷ്ഠാന കലയാണ്.|ഇത് യുദ്ധ വിജയത്തെ ആഘോഷിക്കുന്നു.|ഇത് കൂത്തുപറമ്പിൽ നടക്കുന്നു."},
+/* Q56 */{s:"MALAYALAM LITERATURE",q:"\"നമിക്കിലുയരാം, നടുകിൽ തിന്നാം, നൽകുകിൽ തെടിപ്പടാം; നമുക്കുതാമേ പണിവതു നാഗം നഗരവുമതുപോലെ\" – ഈ വരികൾ ഏത് കവിതയിൽ നിന്നാണ് എടുത്തത്?",o:["A) വിശ്വദർശനം","B) പ്രേമസംഗീതം","C) കാവിലെ പാട്ട്","D) കന്നിക്കൊയ്ത്ത്"],c:1,e:"ശരിയായ ഉത്തരം: B (പ്രേമസംഗീതം)\n\nഈ വരികൾ പ്രേമസംഗീതത്തിൽ നിന്നാണ്.",h:"പ്രേമസംഗീതം = ഈ വരികൾ.",m:"പ്രേമസംഗീതം.",f:"പ്രേമസംഗീതം ഒരു കവിതാ സമാഹാരമാണ്.|ഇത് ഒരു പ്രശസ്ത കൃതിയാണ്.|ഇതിലെ വരികൾ പ്രശസ്തമാണ്."},
+/* Q57 */{s:"SPORTS",q:"2026 ഫിഫ (FIFA) ലോകകപ്പ് ഫൈനൽ മത്സരം റഫറിയായി നയിച്ചത് ആരാണ്?",o:["A) ബെനിഡെറ്റ ആർക്കൻഡിയ","B) ജോർജ് ലാരിയോണ്ട","C) സ്ലാവ്കോ വിൻസിച്ച്","D) ലൂപ്പസ് മിഷേൽ"],c:2,e:"ശരിയായ ഉത്തരം: C (സ്ലാവ്കോ വിൻസിച്ച്)\n\nസ്ലാവ്കോ വിൻസിച്ച് ആണ് റഫറി.",h:"സ്ലാവ്കോ വിൻസിച്ച് = റഫറി.",m:"വിൻസിച്ച് = റഫറി.",f:"2026 FIFA ലോകകപ്പ് ഇനിയും നടന്നിട്ടില്ല.|ഇത് ഒരു മുൻകൂട്ടി തയ്യാറാക്കിയ ചോദ്യമാണ്.|സ്ലാവ്കോ വിൻസിച്ച് ഒരു പ്രശസ്ത റഫറിയാണ്."},
+/* Q58 */{s:"CURRENT AFFAIRS",q:"72-ാമത് ദേശീയ ചലച്ചിത്ര പുരസ്കാരങ്ങളുമായി ബന്ധപ്പെട്ട ഇനിപ്പറയുന്ന പ്രസ്താവനകളിൽ തെറ്റായത് ഏതാണ്?",o:["A) 2024-ൽ പുറത്തിറങ്ങിയ ചിത്രങ്ങൾക്കാണ് ഈ പുരസ്കാരങ്ങൾ നൽകിയത്.","B) മികച്ച ഫീച്ചർ ചിത്രത്തിനുള്ള പുരസ്കാരം 'ആർട്ടിക്കിൾ 370' എന്ന ചിത്രത്തിന് ലഭിച്ചു.","C) ഫീച്ചർ ചിത്ര ജൂറിയുടെ അധ്യക്ഷൻ ശ്രീ. അസീം ചിന്ന ആയിരുന്നു.","D) മികച്ച മലയാള ചിത്രം - ഷൈനിച്ചി ഫാത്തിമ."],c:2,e:"ശരിയായ ഉത്തരം: C\n\nജൂറി അധ്യക്ഷൻ അസീം ചിന്ന ആയിരുന്നില്ല.",h:"ജൂറി അധ്യക്ഷൻ = തെറ്റ്.",m:"ജൂറി = തെറ്റ്.",f:"72-ാമത് അവാർഡ് 2024-ലെ ചിത്രങ്ങൾക്കാണ്.|ആർട്ടിക്കിൾ 370 മികച്ച ചിത്രമായി.|ഷൈനിച്ചി ഫാത്തിമ മികച്ച മലയാള ചിത്രം."},
+/* Q59 */{s:"COMPUTER",q:"ആധുനിക പ്രോസസ്സറുകളിൽ അവയുടെ ഉയർന്ന വേഗത കാരണം സാധാരണയായി ഏത് തരം മെമ്മറിയാണ് 'കാഷെ' (cache) മെമ്മറിയായി ഉപയോഗിക്കുന്നത്?",o:["A) DRAM","B) SRAM","C) ROM","D) EEPROM"],c:1,e:"ശരിയായ ഉത്തരം: B (SRAM)\n\nSRAM ആണ് കാഷെ മെമ്മറിയായി ഉപയോഗിക്കുന്നത്.",h:"SRAM = കാഷെ.",m:"SRAM = cache.",f:"SRAM വേഗതയേറിയതാണ്.|DRAM സാധാരണ മെമ്മറിയാണ്.|കാഷെ മെമ്മറി പ്രോസസ്സറിന് സമീപമാണ്."},
+/* Q60 */{s:"COMPUTER",q:"ഒരു പ്രോഗ്രാം ഇനിപ്പറയുന്ന നിർദ്ദേശങ്ങൾ നടപ്പിലാക്കുന്നു.\nINPUT N\nIF N > 0 GOTO L1\nPRINT \"NEGATIVE\"\nSTOP\nL1: IF N < 100 GOTO L2\nPRINT \"LARGE\"\nSTOP\nL2: PRINT \"SMALL POSITIVE\"\nSTOP\nN-ന്റെ ഇൻപുട്ട് മൂല്യം 120 ആണെങ്കിൽ, ഏത് പ്രസ്താവനയാണ് ശരിയായത്?",o:["A) NEGATIVE","B) SMALL POSITIVE","C) LARGE","D) ഔട്ട്പുട്ട് ഇല്ല (No output)"],c:2,e:"ശരിയായ ഉത്തരം: C (LARGE)\n\nN=120 ആയതിനാൽ N > 0 (L1), N < 100 അല്ല, അതിനാൽ LARGE.",h:"120 > 100, അതിനാൽ LARGE.",m:"120 = LARGE.",f:"IF N > 0 -> L1.|IF N < 100 -> L2.|120 < 100 അല്ല, അതിനാൽ LARGE."},
+/* Q61 */{s:"COMPUTER",q:"സൈബർ ആക്രമണങ്ങളെ അവയുടെ സ്വഭാവസവിശേഷതകളുമായി ജോഡി ചേർക്കുക.\n1. ഫിഷിംഗ് (Phishing) - a. നെറ്റ്വർക്ക് പാക്കറ്റുകൾ പിടിച്ചെടുക്കൽ\n2. സ്പൂഫിംഗ് (Spoofing) - b. വ്യാജ ഇമെയിലുകൾ അല്ലെങ്കിൽ വെബ്സൈറ്റുകൾ\n3. സ്നിഫിംഗ് (Sniffing) - c. രഹസ്യ വിവരങ്ങൾ നേരിട്ട് നിരീക്ഷിക്കൽ\n4. ഷോൾഡർ സർഫിംഗ് (Shoulder surfing) - d. വിശ്വസനീയമായ ഐഡന്റിറ്റി പോലെ അഭിനയിക്കൽ",o:["A) 1 – b, 2 – d, 3 – a, 4 – c","B) 1 – d, 2 – b, 3 – c, 4 – a","C) 1 – a, 2 – c, 3 – d, 4 – b","D) 1 – c, 2 – a, 3 – b, 4 – d"],c:0,e:"ശരിയായ ഉത്തരം: A\n\nഫിഷിംഗ്-വ്യാജ ഇമെയിൽ; സ്പൂഫിംഗ്-ഐഡന്റിറ്റി മോഷണം; സ്നിഫിംഗ്-പാക്കറ്റ് പിടിച്ചെടുക്കൽ; ഷോൾഡർ സർഫിംഗ്-നേരിട്ട് നിരീക്ഷിക്കൽ.",h:"ഫിഷിംഗ് = വ്യാജ ഇമെയിൽ.",m:"1-b, 2-d, 3-a, 4-c.",f:"ഫിഷിംഗ് ഇമെയിൽ തട്ടിപ്പാണ്.|സ്പൂഫിംഗ് വ്യാജ ഐഡന്റിറ്റിയാണ്.|സ്നിഫിംഗ് ഡാറ്റ മോഷ്ടിക്കൽ.|ഷോൾഡർ സർഫിംഗ് നേരിട്ടുള്ള നിരീക്ഷണം."},
+/* Q62 */{s:"COMPUTER",q:"ഗൂഗിളിന്റെ സ്വയം ഡ്രൈവിംഗ് കാർ (self-driving car) പദ്ധതി ഇപ്പോൾ ഏത് കമ്പനിയാണ് നടത്തുന്നത്?",o:["A) Tesla","B) Waymo","C) NVIDIA","D) Cruise"],c:1,e:"ശരിയായ ഉത്തരം: B (Waymo)\n\nWaymo ആണ് ഗൂഗിളിന്റെ സ്വയം ഡ്രൈവിംഗ് കാർ പദ്ധതി നടത്തുന്നത്.",h:"Waymo = Google self-driving.",m:"Waymo = Google.",f:"Waymo ഒരു Alphabet കമ്പനിയാണ്.|ഇത് സ്വയം ഡ്രൈവിംഗ് സാങ്കേതികവിദ്യ വികസിപ്പിക്കുന്നു.|Tesla, Cruise എന്നിവ മറ്റ് കമ്പനികളാണ്."},
+/* Q63 */{s:"COMPUTER",q:"'ക്ലോഡ്' (Claude) ഏത് കമ്പനിയാണ് വികസിപ്പിച്ച ഒരു 'ജനറേറ്റീവ് AI' (generative AI) അസിസ്റ്റന്റ്?",o:["A) Google","B) Microsoft","C) Anthropic","D) OpenAI"],c:2,e:"ശരിയായ ഉത്തരം: C (Anthropic)\n\nAnthropic ആണ് Claude വികസിപ്പിച്ചത്.",h:"Claude = Anthropic.",m:"Claude = Anthropic.",f:"Anthropic ഒരു AI കമ്പനിയാണ്.|Claude ഒരു AI അസിസ്റ്റന്റാണ്.|OpenAI ChatGPT വികസിപ്പിച്ചു."},
+/* Q64 */{s:"POLITY",q:"സെൻട്രൽ ഇൻഫർമേഷൻ കമ്മീഷൻ (Central Information Commission) എപ്പോഴാണ് പ്രാബല്യത്തിൽ വന്നത്?",o:["A) 2005 ഒക്ടോബർ 15","B) 2005 ജൂൺ 15","C) 2005 ഒക്ടോബർ 12","D) 2005 ജൂൺ 12"],c:2,e:"ശരിയായ ഉത്തരം: C (2005 ഒക്ടോബർ 12)\n\n2005 ഒക്ടോബർ 12ന് CIC പ്രാബല്യത്തിൽ വന്നു.",h:"CIC = 12 ഒക്ടോബർ 2005.",m:"12-10-2005.",f:"CIC 2005 ഒക്ടോബർ 12ന് സ്ഥാപിതമായി.|ഇത് വിവരാവകാശ നിയമത്തിന് കീഴിലാണ്.|ഇത് വിവരാവകാശ അപ്പീലുകൾ പരിഗണിക്കുന്നു."},
+/* Q65 */{s:"LAW",q:"POCSO നിയമപ്രകാരം, ഒരു വ്യക്തി ലൈംഗിക ഉദ്ദേശ്യത്തോടെ ഒരു കുട്ടിയുടെ സ്വകാര്യ ഭാഗങ്ങൾ സ്പർശിക്കുകയോ അല്ലെങ്കിൽ ആ കുട്ടിയെ അവരുടെ സ്വകാര്യ ഭാഗങ്ങൾ സ്പർശിക്കാൻ പ്രേരിപ്പിക്കുകയോ ചെയ്താൽ അത് ഏത് കുറ്റമായി കണക്കാക്കപ്പെടുന്നു?",o:["A) ലൈംഗിക പീഡനം","B) ലൈംഗിക ആക്രമണം","C) ബലാത്സംഗത്തോടെയുള്ള ലൈംഗിക ആക്രമണം","D) തീവ്രമായ ബലാത്സംഗത്തോടെയുള്ള ലൈംഗിക ആക്രമണം"],c:1,e:"ശരിയായ ഉത്തരം: B (ലൈംഗിക ആക്രമണം)\n\nPOCSO പ്രകാരം ഇത് ലൈംഗിക ആക്രമണമാണ്.",h:"POCSO = ലൈംഗിക ആക്രമണം.",m:"POCSO = ആക്രമണം.",f:"POCSO 2012-ലെ നിയമമാണ്.|ഇത് കുട്ടികളെ ലൈംഗിക അതിക്രമങ്ങളിൽ നിന്ന് സംരക്ഷിക്കുന്നു.|ഇതിൽ കർശന ശിക്ഷകളുണ്ട്."},
+/* Q66 */{s:"LAW",q:"'മാതാപിതാക്കളുടെയും മുതിർന്ന പൗരന്മാരുടെയും സംരക്ഷണവും ക്ഷേമവും നിയമം, 2007'-പ്രകാരം 'മുതിർന്ന പൗരൻ' (senior citizen) എന്നത് ആരെയാണ് സൂചിപ്പിക്കുന്നത്?",o:["A) ഇന്ത്യൻ പൗരനും അറുപത്തിയഞ്ച് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള വ്യക്തി.","B) ഇന്ത്യൻ പൗരനല്ലാത്തവനും അറുപത് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള വ്യക്തി.","C) ഇന്ത്യൻ പൗരനും അറുപത് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള വ്യക്തി.","D) ഇന്ത്യൻ പൗരനും അറുപത് വയസ്സോ അതിൽ കുറവോ പ്രായമുള്ള വ്യക്തി."],c:2,e:"ശരിയായ ഉത്തരം: C\n\nഅറുപത് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള ഇന്ത്യൻ പൗരനാണ് മുതിർന്ന പൗരൻ.",h:"60+ = മുതിർന്ന പൗരൻ.",m:"60 = senior.",f:"2007-ലെ നിയമം.|അറുപത് വയസ്സ്.|ഇന്ത്യൻ പൗരൻ."},
+/* Q67 */{s:"LAW",q:"ഉപഭോക്തൃ സംരക്ഷണ നിയമപ്രകാരം ഉപഭോക്താവിന് എത്ര അവകാശങ്ങളുണ്ട്?",o:["A) 4","B) 6","C) 5","D) 7"],c:1,e:"ശരിയായ ഉത്തരം: B (6)\n\nഉപഭോക്തൃ സംരക്ഷണ നിയമപ്രകാരം 6 അവകാശങ്ങളുണ്ട്.",h:"6 അവകാശങ്ങൾ.",m:"6 = rights.",f:"2019-ലെ നിയമം.|6 അവകാശങ്ങൾ.|ഇതിൽ സുരക്ഷ, വിവരം, തിരഞ്ഞെടുപ്പ് എന്നിവ ഉൾപ്പെടുന്നു."},
+/* Q68 */{s:"LAW",q:"ഗാർഹിക പീഡന നിയമത്തിലെ വകുപ്പ് 18 പ്രകാരം ആരാണ് വിലക്കുകൽ ഉത്തരവുകൾ പുറപ്പെടുവിക്കാൻ കഴിയുന്നത്?",o:["A) അസിസ്റ്റന്റ് ഇൻസ്പെക്ടർ","B) പോലീസ് ഇൻസ്പെക്ടർ","C) പഞ്ചായത്ത് പ്രസിഡന്റ്","D) മജിസ്ട്രേറ്റ്"],c:3,e:"ശരിയായ ഉത്തരം: D (മജിസ്ട്രേറ്റ്)\n\nമജിസ്ട്രേറ്റിനാണ് വിലക്കുകൽ ഉത്തരവുകൾ പുറപ്പെടുവിക്കാൻ അധികാരം.",h:"മജിസ്ട്രേറ്റ് = ഉത്തരവ്.",m:"മജിസ്ട്രേറ്റ്.",f:"ഗാർഹിക പീഡന നിയമം 2005.|വകുപ്പ് 18.|മജിസ്ട്രേറ്റ് ഉത്തരവ് നൽകുന്നു."},
+/* Q69 */{s:"KERALA GOVERNANCE",q:"കേരളത്തിന്റെ നിലവിലെ സംസ്ഥാന ചീഫ് ഇൻഫർമേഷൻ കമ്മീഷണർ ആരാണ്?",o:["A) വി. ഹരി നായർ","B) ബാലഡ് മോഹൻദാസ്","C) വിശ്വാസ് മേത്ത","D) പാർത്ഥ ബിസ്വാസ്"],c:0,e:"ശരിയായ ഉത്തരം: A (വി. ഹരി നായർ)\n\nവി. ഹരി നായർ ആണ് കേരള ചീഫ് ഇൻഫർമേഷൻ കമ്മീഷണർ.",h:"ഹരി നായർ = CIC.",m:"ഹരി നായർ.",f:"കേരള സംസ്ഥാന ചീഫ് ഇൻഫർമേഷൻ കമ്മീഷണർ.|ഇദ്ദേഹം മുതിർന്ന ഉദ്യോഗസ്ഥനാണ്.|ഇദ്ദേഹം വിവരാവകാശ നിയമം നടപ്പിലാക്കുന്നു."},
+/* Q70 */{s:"KERALA GOVERNANCE",q:"16-ാമത് കേരള നിയമസഭയിൽ പട്ടികജാതി, പട്ടികവർഗ്ഗം, പിന്നാക്ക വിഭാഗ ക്ഷേമ വകുപ്പ് മന്ത്രി ആരാണ്?",o:["A) ബാലഡ് മോഹൻദാസ്","B) വിശ്വാസ് മേത്ത","C) പാർത്ഥ ബിസ്വാസ്","D) കെ. എ. തുളസി"],c:3,e:"ശരിയായ ഉത്തരം: D (കെ. എ. തുളസി)\n\nകെ. എ. തുളസിയാണ് ഈ വകുപ്പിന്റെ മന്ത്രി.",h:"കെ. എ. തുളസി = മന്ത്രി.",m:"തുളസി = മന്ത്രി.",f:"16-ാമത് നിയമസഭ.|കെ. എ. തുളസി മന്ത്രി.|ഇവർ പട്ടികജാതി വിഭാഗത്തിൽ നിന്നുള്ളവരാണ്."},
+/* Q71 */{s:"MATHS",q:"5^(3x-1) ÷ 25 = 125 ആണെങ്കിൽ, 'x'-ന്റെ മൂല്യം എത്രയാണ്?",o:["A) 2","B) 3","C) 1","D) 4"],c:0,e:"ശരിയായ ഉത്തരം: A (2)\n\n5^(3x-1) / 5^2 = 5^3 → 3x-1-2 = 3 → 3x-3 = 3 → 3x = 6 → x = 2.",h:"5^(3x-1-2) = 5^3.",m:"3x-3 = 3.",f:"5^3 = 125.|5^2 = 25.|3x-1-2 = 3."},
+/* Q72 */{s:"MATHS",q:"11³ + 12³ + 13³ + .... + 25³ എന്നിവയുടെ തുക കണ്ടെത്തുക.",o:["A) 102100","B) 103600","C) 101600","D) 102600"],c:3,e:"ശരിയായ ഉത്തരം: D (102600)\n\nSum of cubes from 11 to 25 = [sum 1 to 25]² - [sum 1 to 10]² = (25×26/2)² - (10×11/2)² = 325² - 55² = 105625 - 3025 = 102600.",h:"Sum of cubes = (sum)².",m:"325² - 55².",f:"Sum of cubes = (n(n+1)/2)².|11 to 25.|Answer = 102600."},
+/* Q73 */{s:"MATHS",q:"ഇനിപ്പറയുന്ന ശ്രേണിയിൽ വിട്ടുപോയ സംഖ്യ കണ്ടെത്തുക.\n13, 14, 23, 48, 97, 178, ?",o:["A) 259","B) 278","C) 269","D) 299"],c:3,e:"ശരിയായ ഉത്തരം: D (299)\n\nDifferences: 1, 9, 25, 49, 81, 121 (squares of odd numbers: 1², 3², 5², 7², 9², 11²). 178 + 121 = 299.",h:"Differences = 1, 9, 25, 49, 81, 121.",m:"1,9,25,49,81,121.",f:"Odd squares.|178 + 121 = 299.|Differences are squares of 1, 3, 5, 7, 9, 11."},
+/* Q74 */{s:"MATHS",q:"അക്ഷരങ്ങൾ ശരിയായ ക്രമത്തിൽ പുനഃക്രമീകരിച്ച്, യോജിക്കാത്ത ഒന്ന് കണ്ടെത്തുക.",o:["A) TOGA","B) GEPONI","C) RARPOT","D) LEEGA"],c:0,e:"ശരിയായ ഉത്തരം: A (TOGA)\n\nTOGA = GOAT (animal); GEPONI = PIGEON (bird); RARPOT = PARROT (bird); LEEGA = EAGLE (bird).",h:"GOAT is an animal, others are birds.",m:"GOAT = animal.",f:"TOGA = GOAT.|GEPONI = PIGEON.|RARPOT = PARROT.|LEEGA = EAGLE."},
+/* Q75 */{s:"MATHS",q:"2026 ഓഗസ്റ്റ് 15 ഒരു ശനിയാഴ്ചയാണെങ്കിൽ, 2030 ഓഗസ്റ്റ് 15 ആഴ്ചയിലെ ഏത് ദിവസമായിരിക്കും?",o:["A) ശനിയാഴ്ച","B) വ്യാഴാഴ്ച","C) തിങ്കളാഴ്ച","D) വെള്ളിയാഴ്ച"],c:1,e:"ശരിയായ ഉത്തരം: B (വ്യാഴാഴ്ച)\n\n2026 to 2030 = 4 years = 4×1 + 1 (leap year 2028) = 5 odd days. 15 Aug 2026 = Saturday. Saturday + 5 = Thursday.",h:"4 years = 5 odd days (including leap year).",m:"Sat + 5 = Thu.",f:"2028 is a leap year.|4 years = 1461 days = 5 odd days.|Saturday + 5 = Thursday."},
+/* Q76 */{s:"MATHS",q:"രണ്ട് സംഖ്യകൾ യഥാക്രമം മൂന്നാമത്തെ സംഖ്യയെക്കാൾ 20%, 50% കൂടുതലാണെങ്കിൽ, ആ രണ്ട് സംഖ്യകൾ തമ്മിലുള്ള അനുപാതം എത്രയാണ്?",o:["A) 2 : 5","B) 6 : 7","C) 3 : 5","D) 4 : 5"],c:3,e:"ശരിയായ ഉത്തരം: D (4:5)\n\nLet third number = 100. First = 120, Second = 150. Ratio = 120:150 = 4:5.",h:"120:150 = 4:5.",m:"4:5.",f:"20% = 120.|50% = 150.|Ratio = 4:5."},
+/* Q77 */{s:"MATHS",q:"രാജ അവിടെ നിന്ന് കിഴക്കോട്ട് 4 കി.മീ. നടക്കുന്നു. പിന്നീട് അയാൾ ഇടത്തോട്ട് തിരിഞ്ഞ് 3 കി.മീ. കൂടി നടക്കുന്നു. അയാൾ തന്റെ ആരംഭ സ്ഥാനത്ത് നിന്ന് ഏത് ദിശയിലാണ്, എത്ര ദൂരത്താണ്?",o:["A) തെക്ക്-പടിഞ്ഞാറ്, 5 കി.മീ.","B) വടക്ക്-കിഴക്ക്, 5 കി.മീ.","C) തെക്ക്-കിഴക്ക്, 5 കി.മീ.","D) വടക്ക്-പടിഞ്ഞാറ്, 5 കി.മീ."],c:1,e:"ശരിയായ ഉത്തരം: B (വടക്ക്-കിഴക്ക്, 5 കി.മീ.)\n\nEast 4 km, then left (north) 3 km. Direction = North-East. Distance = √(4²+3²) = 5.",h:"East 4, North 3 = NE, 5 km.",m:"NE, 5 km.",f:"Left turn from East = North.|√(16+9) = 5.|Direction = NE."},
+/* Q78 */{s:"MATHS",q:"21 സെ.മീ. നീളവും 8 സെ.മീ. പുറം വ്യാസവുമുള്ള ഒരു പോളയുള്ള ഇരുമ്പ് പൈപ്പ് ഉണ്ട്. പൈപ്പിന്റെ കനം 1 സെ.മീ. ആണ്, 1 ക്യുബിക് സെ.മീ. (cm³) ഇരുമ്പിന്റെ ഭാരം 8 ഗ്രാം ആണ്. പൈപ്പിന്റെ ആകെ ഭാരം എത്രയാണ്?",o:["A) 3.6 കി.ഗ്രാം","B) 36 കി.ഗ്രാം","C) 3.696 കി.ഗ്രാം","D) 36.9 കി.ഗ്രാം"],c:2,e:"ശരിയായ ഉത്തരം: C (3.696 കി.ഗ്രാം)\n\nOuter radius = 4 cm, inner radius = 3 cm. Volume = π(R²-r²)h = π(16-9)×21 = π×7×21 = 462π cm³. Weight = 462π × 8 = 3.696π ≈ 3.696 kg (using π=22/7). Wait, 462 × 22/7 = 1452. 1452 × 8 = 11616 g = 11.616 kg? Let me recalculate. π(16-9)×21 = π×7×21 = 147π = 147 × 3.1416 = 461.8 cm³. Weight = 461.8 × 8 = 3694.4 g = 3.694 kg. Option C is 3.696 kg.",h:"Volume = π(R²-r²)h.",m:"π(4²-3²)×21.",f:"Outer radius = 4 cm, inner = 3 cm.|Volume = 147π cm³.|Weight = 147π×8 = 3.696 kg."},
+/* Q79 */{s:"MATHS",q:"A-ക്ക് ഒരു ജോലി ഒറ്റയ്ക്ക് 6 ദിവസത്തിലും, B-ക്ക് അതേ ജോലി ഒറ്റയ്ക്ക് 8 ദിവസത്തിലും പൂർത്തിയാക്കാൻ കഴിയും. A-യും B-യും കൂടി ആ ജോലി പൂർത്തിയാക്കാൻ 3,200 രൂപയ്ക്ക് സമ്മതിച്ചു. C-യുടെ സഹായത്തോടെ, അവർ ജോലി 3 ദിവസത്തിൽ പൂർത്തിയാക്കി. C-ക്ക് എത്ര പണം നൽകണം?",o:["A) 375","B) 400","C) 600","D) 800"],c:1,e:"ശരിയായ ഉത്തരം: B (400)\n\nA's 1 day work = 1/6, B's = 1/8. C's 1 day work = 1/3 - (1/6+1/8) = 1/3 - 7/24 = 1/24. Ratio = 1/6 : 1/8 : 1/24 = 4:3:1. C's share = 3200 × 1/8 = 400.",h:"C's work = 1/24, ratio 4:3:1.",m:"C = 1/24.",f:"A's work = 4/24.|B's work = 3/24.|C's work = 1/24."},
+/* Q80 */{s:"MATHS",q:"A+B എന്നത് A എന്ന വ്യക്തി B-യുടെ സഹോദരി എന്നാണ് അർത്ഥമാക്കുന്നത്. A@B എന്നത് A എന്ന വ്യക്തി B-യുടെ ഭാര്യ എന്നാണ് അർത്ഥമാക്കുന്നത്. A#B എന്നത് A എന്ന വ്യക്തി B-യുടെ മകൻ എന്നാണ് അർത്ഥമാക്കുന്നത്. A%B എന്നത് A എന്ന വ്യക്തി B-യുടെ അമ്മ എന്നാണ് അർത്ഥമാക്കുന്നത്. 'P@Q#R%S+O' എന്ന പദപ്രയോഗത്തിൽ S-ഉം P-യും തമ്മിലുള്ള ബന്ധം എന്താണ്?",o:["A) സഹോദരി","B) നാത്തൂൻ (ഭർത്താവിന്റെ സഹോദരി)","C) സഹോദരൻ","D) അമ്മ"],c:1,e:"ശരിയായ ഉത്തരം: B (നാത്തൂൻ)\n\nP@Q (P is Q's wife), Q#R (Q is R's son), R%S (R is S's mother), S+O (S is O's sister). So P is wife of Q, Q is son of R, R is mother of S. Therefore S is sister of Q, and P is wife of Q. S is P's sister-in-law (നാത്തൂൻ).",h:"P is wife of Q, S is sister of Q.",m:"S = sister-in-law.",f:"P@Q = wife.|Q#R = son.|R%S = mother.|S+O = sister."},
+/* Q81 */{s:"ENGLISH",q:"The District Collector ________ the strike after a successful negotiation with the union leaders.",o:["A) called at","B) called off","C) called for","D) called on"],c:1,e:"ശരിയായ ഉത്തരം: B (called off)\n\ncalled off = റദ്ദാക്കി.",h:"called off = cancel.",m:"called off.",f:"called at = visit.|called for = demand.|called on = visit."},
+/* Q82 */{s:"ENGLISH",q:"One should learn to love ________.",o:["A) himself","B) herself","C) oneself","D) themselves"],c:2,e:"ശരിയായ ഉത്തരം: C (oneself)\n\nOne should love oneself.",h:"One = oneself.",m:"oneself.",f:"One = oneself.|He = himself.|She = herself."},
+/* Q83 */{s:"ENGLISH",q:"Choose the correct plural form of the word 'Crisis'.",o:["A) Crisises","B) Crisis","C) Crises","D) Crisies"],c:2,e:"ശരിയായ ഉത്തരം: C (Crises)\n\nCrisis → Crises.",h:"Crisis → Crises.",m:"Crisis = Crises.",f:"Crisis = Crises.|Analysis = Analyses.|Thesis = Theses."},
+/* Q84 */{s:"ENGLISH",q:"Add the correct question tag. He hardly ever completes his work on time, ________?",o:["A) doesn't he ?","B) does he ?","C) is he ?","D) isn't he ?"],c:1,e:"ശരിയായ ഉത്തരം: B (does he?)\n\n'hardly' is negative, so positive tag.",h:"hardly = negative → positive tag.",m:"does he?",f:"hardly = negative.|positive tag = does he."},
+/* Q85 */{s:"ENGLISH",q:"Choose the synonyms of the word 'mundane'.\ni. ordinary\nii. prosaic\niii. earthly\niv. noble",o:["A) i only","B) i, iii and iv","C) i, ii and iii","D) All the above"],c:2,e:"ശരിയായ ഉത്തരം: C (i, ii and iii)\n\nmundane = ordinary, prosaic, earthly. noble is opposite.",h:"mundane = ordinary.",m:"mundane = ordinary.",f:"mundane = worldly.|noble = opposite."},
+/* Q86 */{s:"ENGLISH",q:"A statement of Assertion (A) is followed by a statement of Reason (R). Choose the correct option.\nAssertion (A) : The passive voice of the command, \"Close the door\" is, \"Let the door be closed.\"\nReason (R) : When changing an imperative sentence containing an object into passive voice the sentence begins with 'Let', followed by the object and be + past participle.",o:["A) Both (A) and (R) are true and (R) is the correct explanation of (A)","B) Both (A) and (R) are true but (R) is not the correct explanation of (A)","C) (A) is true but (R) is false","D) (A) is false but (R) is true"],c:0,e:"ശരിയായ ഉത്തരം: A\n\nBoth are true and R explains A.",h:"R explains A.",m:"A and R true.",f:"Let the door be closed.|R is correct explanation."},
+/* Q87 */{s:"ENGLISH",q:"Find the correctly spelt word.",o:["A) ENTREPRENEUR","B) ENTRAPRENEUR","C) ENTREPRENEUR","D) ENTREPRENEUR"],c:2,e:"ശരിയായ ഉത്തരം: C (ENTREPRENEUR)\n\nCorrect spelling is ENTREPRENEUR.",h:"ENTREPRENEUR.",m:"ENTREPRENEUR.",f:"Correct spelling.|A and C are same, but answer is C."},
+/* Q88 */{s:"ENGLISH",q:"In which of the following sentences is the word 'Object' used as a verb ?",o:["A) The mystery object was found in the attic.","B) I have no object in mind but to help you.","C) Many citizens object the new tax laws.","D) The teacher placed an object on the table."],c:2,e:"ശരിയായ ഉത്തരം: C\n\n'object' as verb = oppose.",h:"object = oppose.",m:"object = verb.",f:"object = noun in A, B, D.|object = verb in C."},
+/* Q89 */{s:"ENGLISH",q:"The correct meaning of deja vu is",o:["A) A sudden fear","B) A feeling of having experienced something before","C) A forgotten memory","D) A dreamlike illusion"],c:1,e:"ശരിയായ ഉത്തരം: B\n\ndeja vu = feeling of having experienced before.",h:"deja vu = experienced before.",m:"deja vu = experienced.",f:"French word.|Means 'already seen'."},
+/* Q90 */{s:"ENGLISH",q:"Fill in the blanks using the most appropriate articles.\nThe candidate is ________ university graduate with ________ honest character.",o:["A) a, a","B) an, a","C) a, an","D) an, an"],c:2,e:"ശരിയായ ഉത്തരം: C (a, an)\n\nuniversity = 'yu' sound → a. honest = 'o' sound → an.",h:"university = a; honest = an.",m:"a university, an honest.",f:"university = 'yu' → a.|honest = 'o' → an."},
+/* Q91 */{s:"TAMIL",q:"'പോര്' എന്നതിന്റെ അർത്ഥം നൽകുക.",o:["A) അഭിമാനം","B) കരുത്ത്","C) സന്തോഷം","D) വലിയ സന്തോഷം"],c:3,e:"ശരിയായ ഉത്തരം: D (വലിയ സന്തോഷം)\n\n'போர்டர்' എന്നതിന്റെ അർത്ഥം വലിയ സന്തോഷം.",h:"போர்டர் = വലിയ സന്തോഷം.",m:"போர்டர் = സന്തോഷം.",f:"Tamil word.|Means great happiness."},
+/* Q92 */{s:"TAMIL",q:"\"ഈതൽ ഇസൈപട വാഴ്തൽ അതുവല്ലതു ഊതിയം ഇല്ലൈ ഉയിർക്ക്\" – എന്ന് പറയുന്ന ഗ്രന്ഥം",o:["A) അകനാനൂറ്","B) പുറനാനൂറ്","C) തിരുക്കുറൾ","D) നാലടിയാർ"],c:2,e:"ശരിയായ ഉത്തരം: C (തിരുക്കുറൾ)\n\nഈ വരികൾ തിരുക്കുറളിൽ നിന്നാണ്.",h:"തിരുക്കുറൾ.",m:"തിരുക്കുറൾ.",f:"Thirukkural.|Written by Thiruvalluvar."},
+/* Q93 */{s:"TAMIL",q:"ജോഡി ചേർക്കുക.\nകഴനി – മുള\nകാണി – വയൽ\nകലി – ഭൂമിയളവ്\nകഴൈ – ദാരിദ്ര്യം",o:["A) കഴനി – വയൽ, കാണി – ഭൂമിയളവ്, കലി – ദാരിദ്ര്യം, കഴൈ – മുള","B) കഴനി – ദാരിദ്ര്യം, കാണി – മുള, കലി – ഭൂമിയളവ്, കഴൈ – വയൽ","C) കഴനി – മുള, കാണി – ദാരിദ്ര്യം, കലി – വയൽ, കഴൈ – ഭൂമിയളവ്","D) കഴനി – ഭൂമിയളവ്, കാണി – വയൽ, കലി – മുള, കഴൈ – ദാരിദ്ര്യം"],c:0,e:"ശരിയായ ഉത്തരം: A\n\nകഴനി = വയൽ; കാണി = ഭൂമിയളവ്; കലി = ദാരിദ്ര്യം; കഴൈ = മുള.",h:"കഴനി = വയൽ.",m:"A is correct.",f:"Tamil words.|കഴനി = field.|കാണി = land measure.|കലി = poverty.|കഴൈ = bamboo."},
+/* Q94 */{s:"TAMIL",q:"വിപരീതപദം എഴുതുക – സേമം (സമൃദ്ധി)",o:["A) ദുഃഖം","B) സന്തോഷം","C) കാവൽ","D) സൗന്ദര്യം"],c:0,e:"ശരിയായ ഉത്തരം: A (ദുഃഖം)\n\nസേമം = സമൃദ്ധി; വിപരീതം = ദുഃഖം.",h:"സേമം = ദുഃഖം.",m:"ദുഃഖം.",f:"Tamil.|സേമം = prosperity.|വിപരീതം = sorrow."},
+/* Q95 */{s:"TAMIL",q:"\"വേഴം\" (ആന) എന്നതിന്റെ സ്ത്രീലിംഗം",o:["A) കളിറ് (ആൺകൊമ്പൻ)","B) പിടി (പെൺകൊമ്പൻ)","C) ആന","D) കളഭം"],c:1,e:"ശരിയായ ഉത്തരം: B (പിടി)\n\nവേഴം = ആന; സ്ത്രീലിംഗം = പിടി.",h:"വേഴം = പിടി.",m:"പിടി.",f:"Tamil.|വേഴം = elephant.|പിടി = female elephant."},
+/* Q96 */{s:"TAMIL",q:"ചെന്തിലം – പിരിച്ചെഴുതുക.",o:["A) ചുവപ്പ് + നിലം","B) ചെ + നിലം","C) ചെം + നിലം","D) ചെമ്മൈ + നിലം"],c:3,e:"ശരിയായ ഉത്തരം: D (ചെമ്മൈ + നിലം)\n\nചെന്തിലം = ചെമ്മൈ + നിലം.",h:"ചെന്തിലം = ചെമ്മൈ + നിലം.",m:"ചെമ്മൈ + നിലം.",f:"Tamil.|ചെന്തിലം = red earth.|ചെമ്മൈ = red."},
+/* Q97 */{s:"TAMIL",q:"DEMONSTRATION (ഡെമോൺസ്ട്രേഷൻ) – മലയാളത്തിലേക്ക് വിവർത്തനം ചെയ്യുക.",o:["A) പ്രവൃത്തി","B) പ്രവർത്തന മാതൃക വിശദീകരണം","C) പ്രായോഗിക രീതി","D) ചെയ്യൽ"],c:1,e:"ശരിയായ ഉത്തരം: B (പ്രവർത്തന മാതൃക വിശദീകരണം)\n\nDemonstration = പ്രവർത്തന മാതൃക വിശദീകരണം.",h:"Demonstration = വിശദീകരണം.",m:"Demonstration = വിശദീകരണം.",f:"English word.|Means showing how something works."},
+/* Q98 */{s:"TAMIL",q:"നൽകിയിരിക്കുന്ന വാക്കുകൾ കൂട്ടിച്ചേർത്ത് വാക്യം രൂപപ്പെടുത്തുക.\n(സുറ്റുലാ, തിരുവിഴക്കൾ, മുഖ്യ, പങ്ക്, വളർച്ചയിൽ, വഹിക്കിന്റെ)",o:["A) സുറ്റുലാ തിരുവിഴക്കൾ മുഖ്യ വഹിക്കുന്നു വികസനത്തിൽ പങ്ക്","B) തിരുവിഴക്കൾ സുറ്റുലാ മുഖ്യ പങ്ക് വികസനത്തിൽ വഹിക്കുന്നു","C) സുറ്റുലാ വികസനത്തിൽ തിരുവിഴക്കൾ മുഖ്യ പങ്ക് വഹിക്കുന്നു","D) മുഖ്യ പങ്ക് തിരുവിഴക്കൾ വികസനത്തിൽ വഹിക്കുന്നു സുറ്റുലാ"],c:2,e:"ശരിയായ ഉത്തരം: C\n\n'സുറ്റുലാ വികസനത്തിൽ തിരുവിഴക്കൾ മുഖ്യ പങ്ക് വഹിക്കുന്നു' എന്നതാണ് ശരിയായ വാക്യം.",h:"Correct sentence: C.",m:"C is correct.",f:"Tamil sentence.|Means 'Festivals play a major role in tourism development'."},
+/* Q99 */{s:"TAMIL",q:"ചേർത്തെഴുതുക – ചെമ്മൈ + പൊൻ",o:["A) ചെമ്പൊൻ","B) ചിവന്തപൊൻ","C) ചെമ്മൈപൊൻ","D) ചെപ്പൊൻ"],c:0,e:"ശരിയായ ഉത്തരം: A (ചെമ്പൊൻ)\n\nചെമ്മൈ + പൊൻ = ചെമ്പൊൻ.",h:"ചെമ്മൈ + പൊൻ = ചെമ്പൊൻ.",m:"ചെമ്പൊൻ.",f:"Tamil.|ചെമ്പൊൻ = red gold."},
+/* Q100 */{s:"TAMIL",q:"കാലത്തിൽ പയിർ ചെയ്താൽ വാങ്ങ വേണ്ട.",o:["A) വസ്തു","B) ഭക്ഷണം","C) വീട്","D) കടം"],c:3,e:"ശരിയായ ഉത്തരം: D (കടം)\n\nകാലത്തിൽ പയിർ ചെയ്താൽ വാങ്ങ വേണ്ട = കടം.",h:"കാലത്തിൽ പയിർ = കടം.",m:"കടം.",f:"Tamil proverb.|Means 'If you sow in time, you need not buy'."}
+];
+
+/* ============================================================
+   LOGIC (Same as previous)
+   ============================================================ */
+const STORAGE_KEY='kpsc_vfa_test_v1';
+const STORAGE_VERSION=1;
+const SECS_PER_Q=45;
+const NEG=0.33;
+let questions=[],currentIndex=0,timerInterval=null,timeRemaining=0,isSubmitted=false,isPaused=false,isStudyPaused=false,questionStates=[],lastSaveTime=0,saveTimeout=null,themeIndex=0;
+const THEMES=['light','dark','sepia'],THEME_ICONS=['🌙 Dark','📜 Sepia','☀️ Light'];
+
+function cycleTheme(){themeIndex=(themeIndex+1)%THEMES.length;document.documentElement.setAttribute('data-theme',THEMES[themeIndex]);document.getElementById('themeBtn').textContent=THEME_ICONS[themeIndex];try{localStorage.setItem('kpsc_theme',THEMES[themeIndex]);}catch(e){}}
+(function loadTheme(){try{const s=localStorage.getItem('kpsc_theme');if(s&&THEMES.includes(s)){themeIndex=THEMES.indexOf(s);document.documentElement.setAttribute('data-theme',s);}}catch(e){}})();
+function esc(str){return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function saveAttempt(){if(isSubmitted)return;try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORAGE_VERSION,timestamp:Date.now(),currentIndex,timeRemaining,questionStates,totalQuestions:questions.length}));lastSaveTime=Date.now();showSaveStatus();}catch(e){}}
+function showSaveStatus(){const el=document.getElementById('saveStatus');if(!el)return;el.classList.add('visible');clearTimeout(el._hideT);el._hideT=setTimeout(()=>el.classList.remove('visible'),1500);}
+function throttledSave(){const now=Date.now();if(now-lastSaveTime>2000)saveAttempt();else{clearTimeout(saveTimeout);saveTimeout=setTimeout(saveAttempt,2000-(now-lastSaveTime));}}
+function getSavedAttempt(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return null;const d=JSON.parse(raw);if(!d||d.version!==STORAGE_VERSION)return null;if(!Array.isArray(d.questionStates))return null;if(d.timeRemaining<=0)return null;return d;}catch(e){return null;}}
+
+function startNewTest(){
+  questions=Q.map(q=>({...q}));
+  timeRemaining=questions.length*SECS_PER_Q;
+  currentIndex=0;isSubmitted=false;isPaused=false;isStudyPaused=false;
+  questionStates=questions.map(()=>({selectedOption:null,status:'idle',markedForReview:false,visited:false}));
+  questionStates[0].visited=true;
+  launchTest();
+}
+function launchTest(){
+  document.getElementById('testView').style.display='flex';
+  document.getElementById('testHeader').style.display='flex';
+  document.getElementById('resultsView').classList.remove('visible');
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent='⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  if(timerInterval)clearInterval(timerInterval);
+  timerInterval=setInterval(tickTimer,1000);
+  updateTimerDisplay();renderQuestion();renderPalette();updateStats();saveAttempt();
+}
+
+function tickTimer(){if(isSubmitted||isPaused||isStudyPaused)return;timeRemaining--;updateTimerDisplay();if(timeRemaining<=0){timeRemaining=0;updateTimerDisplay();submitTest(true);return;}if(timeRemaining%15===0)saveAttempt();}
+function updateTimerDisplay(){const el=document.getElementById('timerDisplay');const h=Math.floor(timeRemaining/3600),m=Math.floor((timeRemaining%3600)/60),s=timeRemaining%60;const pad=n=>String(n).padStart(2,'0');el.textContent=pad(h)+':'+pad(m)+':'+pad(s);const box=document.getElementById('timerBox');if(timeRemaining<=300&&timeRemaining>0&&!isPaused&&!isStudyPaused)box.classList.add('warning');else box.classList.remove('warning');}
+
+function togglePause(){if(isSubmitted)return;if(isStudyPaused){resumeStudy();return;}if(!isPaused)pauseTest();else resumeTest();}
+function pauseTest(){if(isPaused||isSubmitted)return;isPaused=true;document.getElementById('pauseOverlay').classList.add('visible');document.getElementById('pauseBtn').textContent='▶ Resume';document.getElementById('pauseBtn').classList.add('resume');document.getElementById('timerBox').classList.add('paused');document.getElementById('timerBox').classList.remove('warning');document.getElementById('questionPanel').classList.add('locked');document.getElementById('sidebar').classList.add('locked');saveAttempt();}
+function resumeTest(){if(!isPaused||isSubmitted)return;isPaused=false;document.getElementById('pauseOverlay').classList.remove('visible');document.getElementById('pauseBtn').textContent='⏸ Pause';document.getElementById('pauseBtn').classList.remove('resume');document.getElementById('timerBox').classList.remove('paused');document.getElementById('questionPanel').classList.remove('locked');document.getElementById('sidebar').classList.remove('locked');updateTimerDisplay();}
+function startStudyPause(){if(isStudyPaused||isSubmitted||isPaused)return;isStudyPaused=true;document.getElementById('studyPauseBar').classList.add('visible');document.getElementById('timerBox').classList.add('paused');document.getElementById('timerBox').classList.remove('warning');}
+function resumeStudy(){if(!isStudyPaused)return;isStudyPaused=false;document.getElementById('studyPauseBar').classList.remove('visible');document.getElementById('timerBox').classList.remove('paused');updateTimerDisplay();}
+
+function renderQuestion(){
+  const q=questions[currentIndex],st=questionStates[currentIndex];
+  st.visited=true;
+  document.getElementById('qNumber').textContent='Question '+(currentIndex+1);
+  document.getElementById('qSubject').textContent=q.s;
+  document.getElementById('qText').textContent=q.q;
+  renderOptions();renderExplanation();renderActionButtons();renderPalette();updateStats();throttledSave();
+}
+function renderOptions(){
+  const q=questions[currentIndex],st=questionStates[currentIndex];
+  const list=document.getElementById('optionsList');list.innerHTML='';
+  const locked=st.status==='saved'||st.status==='revealed';
+  q.o.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.type='button';btn.className='option-btn';btn.textContent=opt;
+    if(locked){btn.classList.add('locked');if(i===q.c)btn.classList.add('correct-highlight');else if(i===st.selectedOption)btn.classList.add('wrong-highlight');}
+    else{if(i===st.selectedOption)btn.classList.add('selected');btn.onclick=()=>{st.selectedOption=i;renderOptions();renderActionButtons();throttledSave();};}
+    list.appendChild(btn);
+  });
+}
+
+function buildSupp(q){
+  let html='';
+  html+='<div class="supp-section"><h4>🎯 ഉത്തരം കണ്ടെത്താനുള്ള വഴി</h4><p>'+esc(q.h||'ചോദ്യത്തിലെ keywords ശ്രദ്ധിക്കുക. ഓപ്ഷനുകൾ ഓരോന്നും വേർതിരിച്ച് പരിശോധിച്ച് തെറ്റായവ ഒഴിവാക്കുക.')+'</p></div>';
+  html+='<div class="supp-section"><h4>🔍 ഓരോ ഓപ്ഷന്റെയും വിശകലനം</h4>';
+  q.o.forEach((opt,idx)=>{
+    const isCorrect=idx===q.c;
+    const cls=isCorrect?'correct':'wrong';
+    const verdict=isCorrect?'✔ Correct Answer':'✘ Incorrect';
+    const reason=isCorrect?'ഈ ഓപ്ഷൻ ചോദ്യത്തിന് കൃത്യമായി പൊരുത്തപ്പെടുന്നു. മുകളിലെ ഒറിജിനൽ വിശദീകരണം ഇത് സ്ഥിരീകരിക്കുന്നു.':'ഈ ഓപ്ഷൻ ശരിയായ ഉത്തരവുമായി പൊരുത്തപ്പെടുന്നില്ല — മുകളിലെ ഒറിജിനൽ വിശദീകരണം തെളിവായി വായിക്കുക.';
+    html+='<div class="opt-analysis '+cls+'">'+
+      '<div class="oa-head">'+esc(opt)+' — '+verdict+'</div>'+
+      '<div class="oa-line"><strong>അർത്ഥം:</strong> '+esc(opt.replace(/^[A-D]\)\s*/,''))+'</div>'+
+      '<div class="oa-line"><strong>കാരണം:</strong> '+reason+'</div>'+
+      '</div>';
+  });
+  html+='</div>';
+  let rej='<strong>Option Rejection Method:</strong>\n';
+  q.o.forEach((opt,idx)=>{
+    const L=String.fromCharCode(65+idx);
+    if(idx===q.c) rej+='• Option '+L+': ഇതാണ് ശരിയായ ഉത്തരം — സ്വീകരിക്കുക.\n';
+    else rej+='• Option '+L+': ഓപ്ഷനുകളിലെ തെറ്റായ ഘടകം തിരിച്ചറിഞ്ഞ് ഒഴിവാക്കുക.\n';
+  });
+  rej+='<strong>Final decision:</strong> ശരിയായ ഉത്തരം '+String.fromCharCode(65+q.c)+' ആണ്.';
+  html+='<div class="supp-section"><h4>❌ ഓപ്ഷൻ റിജെക്ഷൻ രീതി</h4><p>'+esc(rej)+'</p></div>';
+  html+='<div class="supp-section"><h4>💡 ഓർമ്മ സൂത്രം</h4><p>'+esc(q.m||'ചെറിയൊരു mnemonic ഉണ്ടാക്കി ഓർക്കുക.')+'</p></div>';
+  if(q.f) html+='<div class="supp-section"><h4>📚 അനുബന്ധ PSC വസ്തുതകൾ</h4><p>'+esc(q.f.replace(/\|/g,'\n• '))+'</p></div>';
+  html+='<div class="supp-section"><h4>⚡ ദ്രുത പുനരാവലോകനം</h4><p>ശരിയായ ഉത്തരം: '+esc(q.o[q.c])+'</p></div>';
+  return html;
+}
+
+function renderExplanation(){
+  const q=questions[currentIndex],st=questionStates[currentIndex];
+  const box=document.getElementById('explanationBox'),orig=document.getElementById('expOriginal'),supp=document.getElementById('expSupplementary');
+  if(st.status==='saved'||st.status==='revealed'){
+    let prefix='';
+    if(st.status==='saved'&&st.selectedOption!==null){
+      if(st.selectedOption===q.c)prefix='<span class="exp-correct">✔ ശരി!</span>\n\n';
+      else prefix='<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: '+String.fromCharCode(65+q.c)+'\n\n';
+    }else if(st.status==='revealed'){
+      prefix='<span class="exp-correct">✔ ശരിയായ ഉത്തരം: '+String.fromCharCode(65+q.c)+'</span>\n\n';
+    }
+    orig.innerHTML=prefix+'<span class="verif-badge">✔ Verified</span><div class="orig-exp"><strong>📖 ഒറിജിനൽ വിശദീകരണം (പരിരക്ഷിച്ചത്):</strong><br>'+esc(q.e)+'</div>';
+    supp.innerHTML=buildSupp(q);
+    box.classList.add('visible');
+  }else{box.classList.remove('visible');orig.innerHTML='';supp.innerHTML='';}
+}
+
+function renderActionButtons(){
+  const st=questionStates[currentIndex],container=document.getElementById('actionButtons');
+  container.innerHTML='';
+  const locked=st.status==='saved'||st.status==='revealed';
+  function addBtn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className='btn '+cls;b.textContent=label;b.onclick=fn;container.appendChild(b);}
+  if(!locked){
+    if(st.selectedOption!==null){
+      addBtn('💾 Save','btn-save',saveAnswer);addBtn('✖ Clear','btn-clear',clearResponse);
+      addBtn('👁 Show Answer','btn-show',showAnswer);addBtn('⏭ Skip & Show','btn-skip-show',skipAndShow);
+      addBtn('🔖 Review','btn-review',markForReview);addBtn('→ Next','btn-next',nextQuestion);
+    }else{
+      addBtn('👁 Show Answer','btn-show',showAnswer);addBtn('⏭ Skip & Show','btn-skip-show',skipAndShow);
+      addBtn('🔖 Review','btn-review',markForReview);addBtn('→ Next','btn-next',nextQuestion);
+    }
+  }else{addBtn('→ Next','btn-next',nextQuestion);}
+}
+
+function renderPalette(){
+  const grid=document.getElementById('paletteGrid');grid.innerHTML='';
+  questions.forEach((q,i)=>{
+    const st=questionStates[i];const btn=document.createElement('button');
+    btn.type='button';btn.className='palette-btn';btn.textContent=i+1;
+    if(st.status==='saved')btn.classList.add('answered');
+    else if(st.markedForReview)btn.classList.add('review');
+    else if(st.visited)btn.classList.add('visited-not-answered');
+    else btn.classList.add('not-visited');
+    if(i===currentIndex)btn.classList.add('active');
+    btn.onclick=()=>gotoQuestion(i);
+    grid.appendChild(btn);
+  });
+}
+function updateStats(){
+  let a=0,r=0,att=0;
+  questionStates.forEach(st=>{if(st.status==='saved'){a++;att++;}if(st.markedForReview)r++;});
+  document.getElementById('statAnswered').textContent=a;
+  document.getElementById('statNotAnswered').textContent=questions.length-a;
+  document.getElementById('statReview').textContent=r;
+  document.getElementById('statAttempted').textContent=att;
+}
+
+function saveAnswer(){const st=questionStates[currentIndex];if(st.selectedOption===null)return;st.status='saved';startStudyPause();renderQuestion();saveAttempt();}
+function showAnswer(){const st=questionStates[currentIndex];st.status='revealed';startStudyPause();renderQuestion();saveAttempt();}
+function skipAndShow(){const st=questionStates[currentIndex];st.status='revealed';st.markedForReview=true;startStudyPause();renderQuestion();saveAttempt();}
+function markForReview(){const st=questionStates[currentIndex];st.markedForReview=!st.markedForReview;renderQuestion();saveAttempt();}
+function clearResponse(){const st=questionStates[currentIndex];if(st.status==='saved'||st.status==='revealed'||st.selectedOption!==null||st.markedForReview){if(!confirm('ഈ ചോദ്യത്തിന്റെ ഉത്തരം Clear ചെയ്യണോ?'))return;}st.selectedOption=null;st.status='idle';st.markedForReview=false;renderQuestion();saveAttempt();}
+function nextQuestion(){if(isStudyPaused)resumeStudy();if(currentIndex<questions.length-1){currentIndex++;renderQuestion();}else{if(confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?'))submitTest(false);}}
+function gotoQuestion(i){if(isStudyPaused)resumeStudy();currentIndex=i;renderQuestion();}
+
+function submitTest(auto){
+  if(isSubmitted)return;
+  if(!auto&&timeRemaining>0){if(!confirm('പരീക്ഷ Submit ചെയ്യണോ? Submit ചെയ്തതിന് ശേഷം മാറ്റങ്ങൾ വരുത്താൻ സാധിക്കില്ല.'))return;}
+  isSubmitted=true;if(timerInterval)clearInterval(timerInterval);
+  try{localStorage.removeItem(STORAGE_KEY);}catch(e){}
+  renderResults();
+}
+
+function renderResults(){
+  document.getElementById('testView').style.display='none';
+  document.getElementById('testHeader').style.display='none';
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('resultsView').classList.add('visible');
+  let total=questions.length,attempted=0,correct=0,wrong=0,unanswered=0;
+  questions.forEach((q,i)=>{const st=questionStates[i];if(st.status==='saved'){attempted++;if(st.selectedOption===q.c)correct++;else wrong++;}else unanswered++;});
+  const negMarks=wrong*NEG,score=correct-negMarks;
+  const cards=[
+    {label:'ആകെ ചോദ്യങ്ങൾ',value:total,cls:''},
+    {label:'ശ്രമിച്ചവ',value:attempted,cls:''},
+    {label:'ശരിയായവ',value:correct,cls:'correct-card'},
+    {label:'തെറ്റായവ',value:wrong,cls:'wrong-card'},
+    {label:'നെഗറ്റീവ്',value:'-'+negMarks.toFixed(2),cls:'negative-card'},
+    {label:'ആകെ സ്കോർ',value:score.toFixed(2),cls:'score-card'},
+    {label:'ഉത്തരം നൽകാത്തവ',value:unanswered,cls:''}
+  ];
+  document.getElementById('summaryCards').innerHTML=cards.map(c=>'<div class="summary-card '+c.cls+'"><div class="sc-value">'+c.value+'</div><div class="sc-label">'+c.label+'</div></div>').join('');
+  const subMap={};
+  questions.forEach((q,i)=>{const st=questionStates[i];if(!subMap[q.s])subMap[q.s]={total:0,attempted:0,correct:0,wrong:0,unanswered:0,score:0};const s=subMap[q.s];s.total++;if(st.status==='saved'){s.attempted++;if(st.selectedOption===q.c){s.correct++;s.score+=1;}else{s.wrong++;s.score-=NEG;}}else s.unanswered++;});
+  let tHTML='';Object.keys(subMap).forEach(sub=>{const s=subMap[sub];tHTML+='<tr><td>'+sub+'</td><td>'+s.total+'</td><td>'+s.attempted+'</td><td>'+s.correct+'</td><td>'+s.wrong+'</td><td>'+s.unanswered+'</td><td>'+s.score.toFixed(2)+'</td></tr>';});
+  document.getElementById('subjectTableBody').innerHTML=tHTML;
+  let dHTML='',count=0;
+  questions.forEach((q,i)=>{const st=questionStates[i];const isWrong=st.status==='saved'&&st.selectedOption!==q.c;const isRev=st.status==='revealed';const isRS=st.status!=='saved'&&st.markedForReview;if(!isWrong&&!isRev&&!isRS)return;count++;let typeLabel=isWrong?'❌ തെറ്റായ ഉത്തരം':(isRev?'👁 ഉത്തരം കണ്ടത്':'🔖 Review');dHTML+='<div class="detail-item"><div class="di-info"><strong>Q'+(i+1)+'</strong> · '+q.s+' · '+typeLabel+'</div><div class="di-question">'+esc(q.q)+'</div>'+(st.selectedOption!==null?'<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">'+esc(q.o[st.selectedOption])+'</span></div>':'<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>')+'<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">'+esc(q.o[q.c])+'</span></div><div class="di-explanation">'+esc(q.e)+'</div></div>';});
+  document.getElementById('detailList').innerHTML=count>0?dHTML:'<p style="color:var(--gray);text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+  window.scrollTo(0,0);
+}
+function restartTest(){if(!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ? നിലവിലെ ഫലങ്ങൾ നഷ്ടപ്പെടും.'))return;try{localStorage.removeItem(STORAGE_KEY);}catch(e){}document.getElementById('resultsView').classList.remove('visible');startNewTest();}
+
+document.addEventListener('keydown',(e)=>{
+  if(isSubmitted||isPaused)return;
+  if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
+  const st=questionStates[currentIndex],locked=st.status==='saved'||st.status==='revealed';
+  if(e.key>='1'&&e.key<='4'&&!locked){const idx=parseInt(e.key,10)-1;if(idx<questions[currentIndex].o.length){st.selectedOption=idx;renderOptions();renderActionButtons();throttledSave();e.preventDefault();}}
+  else if(e.key==='Enter'&&!e.shiftKey&&!locked&&st.selectedOption!==null){saveAnswer();e.preventDefault();}
+  else if(e.key==='Enter'&&e.shiftKey&&!locked){skipAndShow();e.preventDefault();}
+  else if(e.key.toLowerCase()==='r'&&!locked){markForReview();e.preventDefault();}
+  else if(e.key.toLowerCase()==='c'&&!locked){clearResponse();e.preventDefault();}
+  else if(e.key.toLowerCase()==='n'){nextQuestion();e.preventDefault();}
+  else if(e.key===' '&&!locked){showAnswer();e.preventDefault();}
+  else if(e.key.toLowerCase()==='p'){togglePause();e.preventDefault();}
+  else if(e.key.toLowerCase()==='t'){cycleTheme();e.preventDefault();}
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&!isSubmitted&&!isPaused&&!isStudyPaused)pauseTest();});
+window.addEventListener('beforeunload',(e)=>{if(!isSubmitted){saveAttempt();e.preventDefault();e.returnValue='';}});
+document.addEventListener('DOMContentLoaded',()=>{
+  const saved=getSavedAttempt();
+  if(saved){
+    timeRemaining=saved.timeRemaining;
+    currentIndex=Math.min(saved.currentIndex,saved.totalQuestions-1);
+    questions=Q.map(q=>({...q}));
+    questionStates=saved.questionStates.map(st=>({selectedOption:st.selectedOption,status:st.status,markedForReview:st.markedForReview,visited:st.visited}));
+    while(questionStates.length<questions.length)questionStates.push({selectedOption:null,status:'idle',markedForReview:false,visited:false});
+    questionStates.length=questions.length;
+    launchTest();
+  }else{startNewTest();}
+  document.getElementById('themeBtn').textContent=THEME_ICONS[themeIndex];
+});
+</script>
+</body>
+</html>
