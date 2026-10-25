@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Village Field Assistant 571/2025 – Mock Test (Paper 85/26-M, Booklet A)</title>
+
+<!-- BLOCKING SYNC LOADER (loads sync.js immediately; harmless if the file is absent) -->
+<script>
+  (function(){
+    var p = location.pathname.replace(/\\/g,"/"),
+        m = p.match(/^(.*?\/)(?:topics|chapters|question-papers|mock-tests|subjects)\//),
+        b = m ? m[1] : p.replace(/[^\/]*$/,"");
+    if (!window.KPSC_Sync) document.write('<script src="' + b + 'assets/js/sync.js"><\/script>');
+  })();
+</script>
+
+<style>
+:root{
+  --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
+  --primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;
+  --green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;
+  --gray:#8a8f9e;--gray-bg:#eef0f4;--exp-bg:#f8f9fc;--shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:10px;--radius-sm:6px;
+  --font:'Noto Sans Malayalam','Manjari','Nirmala UI','Kartika','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;
+  font-size:16px;transition:background .2s,color .2s;
+}
+[data-theme="dark"]{
+  --bg:#1e1e2e;--panel:#252537;--text:#cdd6f4;--secondary:#a6adc8;--border:#313244;
+  --primary:#cba6f7;--primary-light:#2a2438;--accent:#f9e2af;--green:#a6e3a1;
+  --green-bg:#1e2e1e;--red:#f38ba8;--red-bg:#2e1e24;--orange:#fab387;--orange-bg:#2e241e;
+  --gray:#6c7086;--gray-bg:#1e1e2e;--exp-bg:#1f1f2f;--shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+[data-theme="sepia"]{
+  --bg:#fdf6e3;--panel:#fefcf4;--text:#433422;--secondary:#65533c;--border:#d3cbb7;
+  --primary:#8b5a2b;--primary-light:#f0e6d2;--accent:#b8860b;--green:#2e7d32;
+  --green-bg:#e8f5e9;--red:#c62828;--red-bg:#ffebee;--orange:#e65100;--orange-bg:#fff3e0;
+  --gray:#8a8070;--gray-bg:#f0e8d8;--exp-bg:#f7efdc;--shadow:0 2px 12px rgba(0,0,0,0.1);
+}
+.header{
+  position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:10px;box-shadow:var(--shadow);
+}
+.header-title{font-size:1.05rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-title small{display:block;font-size:.7rem;font-weight:500;color:var(--secondary)}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{
+  display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:700;
+  background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--primary);font-variant-numeric:tabular-nums;letter-spacing:1px;
+}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn{
+  padding:8px 16px;border-radius:var(--radius-sm);border:2px solid var(--orange);
+  background:var(--orange-bg);color:var(--orange);font-family:var(--font);font-size:.9rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.pause-btn:hover{background:var(--orange);color:#fff}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.theme-btn{
+  padding:8px 12px;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--panel);color:var(--text);font-family:var(--font);font-size:.85rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:4px;
+}
+.theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.study-pause-bar{
+  display:none;background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange);
+  padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{
+  padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;
+  font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem;min-height:34px;
+}
+.save-status{
+  font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;
+  background:var(--green-bg);border:1px solid var(--green);white-space:nowrap;opacity:0;transition:opacity .3s;
+}
+.save-status.visible{opacity:1}
+.resume-banner{
+  display:none;background:linear-gradient(135deg,#1e40af,#3730a3);color:#fff;padding:18px 20px;
+  margin:10px auto;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.15);max-width:760px;width:calc(100% - 20px);
+}
+.resume-banner-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+.resume-banner-info{font-size:.88rem;line-height:1.7;margin-bottom:14px;background:rgba(255,255,255,0.12);padding:10px 14px;border-radius:8px}
+.resume-banner-info strong{color:#fef08a}
+.resume-banner-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.banner-btn{
+  padding:10px 20px;border-radius:8px;border:2px solid #fff;background:transparent;
+  color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px;
+}
+.banner-btn:hover{background:#fff;color:#1e40af}
+.banner-btn.primary{background:#fff;color:#1e40af}
+.banner-btn.danger{border-color:#fca5a5;color:#fca5a5}
+.banner-btn.danger:hover{background:#fca5a5;color:#7f1d1d}
+
+/* Instructions / start screen */
+.intro{max-width:760px;width:calc(100% - 20px);margin:20px auto;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px;display:none}
+.intro h1{font-size:1.3rem;color:var(--primary);margin-bottom:4px}
+.intro .sub{color:var(--secondary);font-size:.9rem;margin-bottom:16px}
+.intro ul{margin:0 0 18px 20px;color:var(--secondary);font-size:.92rem}
+.intro li{margin-bottom:6px}
+.intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:18px}
+.intro-grid div{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center}
+.intro-grid b{display:block;font-size:1.3rem;color:var(--primary)}
+.intro-grid span{font-size:.72rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.start-btn{padding:13px 30px;border-radius:var(--radius-sm);border:none;background:var(--primary);color:var(--panel);font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:48px}
+
+.main-container{
+  display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;align-items:flex-start;
+}
+.question-panel{flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;min-width:0;transition:filter .3s}
+.question-panel.locked,.sidebar.locked{filter:blur(6px) grayscale(60%);pointer-events:none;user-select:none}
+.sidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px;transition:filter .3s}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);padding:3px 12px;border-radius:20px}
+.q-subject{font-size:.82rem;font-weight:600;letter-spacing:.7px;color:var(--accent);background:var(--panel);padding:3px 12px;border-radius:20px;border:1px solid var(--accent)}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.75}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{
+  display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);
+  border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;
+  font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;
+  line-height:1.5;white-space:pre-line;user-select:none;touch-action:manipulation;min-height:48px;
+}
+.option-btn:hover:not(.locked){border-color:var(--primary);background:var(--primary-light)}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600}
+.explanation-box{
+  background:var(--exp-bg);border-left:4px solid var(--primary);padding:16px 18px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;
+  line-height:1.75;white-space:pre-line;color:var(--secondary);display:none;
+}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem}
+.exp-correct{font-weight:700;color:var(--green)}.exp-wrong{font-weight:700;color:var(--red)}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
+  font-family:var(--font);font-size:.88rem;font-weight:600;transition:all .2s;
+  touch-action:manipulation;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:var(--panel)}
+.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}
+.btn-next{background:var(--gray);color:#fff}.btn-prev{background:var(--gray-bg);color:var(--text);border:1px solid var(--border)}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%;justify-content:center}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.palette-btn{
+  width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;
+  cursor:pointer;transition:all .2s;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px;
+}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.revealed{background:var(--primary-light);border-color:var(--primary);color:var(--primary)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;font-size:.72rem;color:var(--secondary)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:2px solid}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{
+  display:none;position:fixed;inset:0;background:rgba(20,25,50,0.9);
+  z-index:9999;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(8px);
+}
+.pause-overlay.visible{display:flex}
+.pause-modal{background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.pause-icon{font-size:4rem;margin-bottom:16px;line-height:1}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
+.pause-modal .resume-main-btn{padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px}
+
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:6px}
+.results-sub{text-align:center;color:var(--secondary);font-size:.85rem;margin-bottom:22px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 16px;text-align:center;border-top:4px solid var(--primary)}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section,.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px}
+.results-table-section{overflow-x:auto}
+.results-table-section h3,.result-detail-list h3{margin-bottom:12px;color:var(--text)}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:var(--font);font-size:.8rem;font-weight:600;cursor:pointer}
+.filter-btn.active{background:var(--primary);color:var(--panel);border-color:var(--primary)}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:var(--bg)}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){
+  .main-container{flex-direction:column;padding:10px;gap:12px}
+  .question-panel{padding:16px}
+  .sidebar{width:100%;flex:1 1 auto;gap:12px}
+  .header{padding:8px 12px}
+  .header-title{font-size:.9rem}
+  .timer-box{font-size:1.05rem;padding:4px 10px}
+  .pause-btn{font-size:.8rem;padding:6px 12px;min-height:36px}
+  .theme-btn{font-size:.75rem;padding:6px 8px;min-height:36px}
+  .q-text{font-size:.95rem}
+  .option-btn{padding:11px 14px;font-size:.9rem}
+  .btn{padding:8px 12px;font-size:.8rem}
+  .intro{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="testHeader" style="display:none;">
+  <span class="header-title">Village Field Assistant – Mock Test<small>Paper 85/26-M · Booklet A · 19-Sep-2026</small></span>
+  <div class="header-right">
+    <div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+    <span class="save-status" id="saveStatus">💾 Saved</span>
+    <button class="theme-btn" id="themeBtn" type="button">🌙 Dark</button>
+    <button class="pause-btn" id="pauseBtn" type="button">⏸ Pause</button>
+  </div>
+</header>
+
+<div class="study-pause-bar" id="studyPauseBar">
+  <span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+  <button type="button" id="resumeStudyBtn">▶ Resume Timer</button>
+</div>
+
+<div class="resume-banner" id="resumeBanner">
+  <div class="resume-banner-title">📥 Saved attempt found</div>
+  <div class="resume-banner-info" id="resumeInfo">Loading...</div>
+  <div class="resume-banner-buttons">
+    <button class="banner-btn primary" type="button" id="resumeBtn">▶ Resume</button>
+    <button class="banner-btn danger" type="button" id="freshBtn">🔄 Start Fresh</button>
+  </div>
+</div>
+
+<div class="pause-overlay" id="pauseOverlay">
+  <div class="pause-modal">
+    <div class="pause-icon" id="pauseIcon">⏸</div>
+    <h2 id="pauseTitle">Exam Paused</h2>
+    <p id="pauseMessage"></p>
+    <button class="resume-main-btn" type="button" id="overlayResumeBtn">▶ Resume Exam</button>
+  </div>
+</div>
+
+<div id="syncLoader" style="text-align:center;margin-top:50px;font-weight:bold;color:var(--primary);font-size:1.2rem;">☁️ Checking cloud for saved progress...</div>
+
+<section class="intro" id="introView">
+  <h1>VILLAGE FIELD ASSISTANT 571/2025 – Mock Test</h1>
+  <div class="sub">TVM, PTA, IDK, MLP, WYD · Question Paper Code 85/26-M · Booklet A · Test date 19-Sep-2026</div>
+  <div class="intro-grid">
+    <div><b id="iTotal">100</b><span>Questions</span></div>
+    <div><b id="iTime">90</b><span>Minutes</span></div>
+    <div><b>+1</b><span>Correct</span></div>
+    <div><b>−⅓</b><span>Wrong</span></div>
+  </div>
+  <ul>
+    <li>ചോദ്യങ്ങളും ഓപ്ഷനുകളും യഥാർത്ഥ ചോദ്യപേപ്പറിലേതുപോലെ തന്നെയാണ്; ക്രമം മാറ്റുകയോ ഷഫിൾ ചെയ്യുകയോ ഇല്ല.</li>
+    <li>ഉത്തരസൂചിക: PSC പ്രസിദ്ധീകരിച്ച Provisional Answer Key (Booklet A).</li>
+    <li>ഓരോ തെറ്റായ ഉത്തരത്തിനും 1/3 മാർക്ക് കുറയും; ഉത്തരം എഴുതാത്തവയ്ക്ക് നെഗറ്റീവ് ഇല്ല.</li>
+    <li>‘Save’ / ‘Show Answer’ അമർത്തിയാൽ ഉത്തരവും വിശദീകരണവും കാണാം; ആ സമയം ടൈമർ നിൽക്കും (Study Pause). ‘Show Answer’ ഉപയോഗിച്ച ചോദ്യത്തിന് മാർക്ക് ലഭിക്കില്ല.</li>
+    <li>Tab മാറിയാൽ പരീക്ഷ സ്വയം Pause ആകും. പുരോഗതി ഓട്ടോമാറ്റിക്കായി സേവ് ചെയ്യപ്പെടും.</li>
+    <li>Shortcuts: 1–4 ഉത്തരം തിരഞ്ഞെടുക്കാൻ · Enter = Save · Space = Show Answer · N = Next · P = Previous · R = Review · C = Clear · T = Theme · Esc/Pause = Pause</li>
+  </ul>
+  <button class="start-btn" type="button" id="startBtn">▶ Start Test</button>
+</section>
+
+<div class="main-container" id="testView" style="display:none;">
+  <div class="question-panel" id="questionPanel">
+    <div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+    <div class="q-text" id="qText">Loading...</div>
+    <div class="options-list" id="optionsList"></div>
+    <div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><span id="expContent"></span></div>
+    <div class="action-buttons" id="actionButtons"></div>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+    <div class="palette-card">
+      <h3>Question Palette</h3>
+      <div class="palette-grid" id="paletteGrid"></div>
+      <div class="legend">
+        <span><i style="background:var(--green-bg);border-color:var(--green)"></i>Answered</span>
+        <span><i style="background:var(--primary-light);border-color:var(--primary)"></i>Shown</span>
+        <span><i style="background:var(--orange-bg);border-color:var(--orange)"></i>Review</span>
+        <span><i style="background:var(--red-bg);border-color:var(--red)"></i>Not answered</span>
+        <span><i style="background:var(--gray-bg);border-color:var(--border)"></i>Not visited</span>
+      </div>
+    </div>
+    <div class="stats-card">
+      <h3>Live Stats</h3>
+      <div class="stats-grid">
+        <div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+        <div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+        <div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+        <div class="stat-item"><span class="stat-value" id="statShown">0</span><span class="stat-label">Shown</span></div>
+      </div>
+    </div>
+    <button class="btn btn-submit" type="button" id="submitBtn">Submit Test</button>
+  </div>
+</div>
+
+<div class="results-view" id="resultsView">
+  <h2 class="results-title">📋 Mock Test Results</h2>
+  <div class="results-sub" id="resultsSub"></div>
+  <div class="summary-cards" id="summaryCards"></div>
+  <div class="results-table-section">
+    <h3>Subject-wise Analysis</h3>
+    <table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th><th>Accuracy</th></tr></thead><tbody id="subjectTableBody"></tbody></table>
+  </div>
+  <div class="result-detail-list">
+    <h3>🔍 Question Review</h3>
+    <div class="filter-row" id="filterRow"></div>
+    <div id="detailList"></div>
+  </div>
+  <div style="text-align:center;padding:20px;"><button class="btn btn-next" type="button" id="restartBtn">🔄 Restart Test</button></div>
+</div>
+
+<script>
+'use strict';
+/* ============================================================
+   CONFIG  – change STORAGE_KEY for every different mock test
+   ============================================================ */
+const STORAGE_KEY      = 'kpsc_vfa_571_2025_paper_85_26_M_A';
+const STORAGE_VERSION  = 2;
+const TOTAL_TIME_SEC   = 90 * 60;      // 90 minutes (as per paper)
+const NEGATIVE_MARKING = 1 / 3;        // 1/3 mark for each wrong answer
+const MARK_PER_Q       = 1;
+
+/* ------------------------------------------------------------
+   ANSWER-KEY CORRECTIONS (optional)
+   Questions & options below are NEVER edited. If PSC publishes a
+   FINAL key that differs from the provisional one, just add the
+   question number and the right letter here. Example:  { 44: 'A' }
+   Questions cancelled/dropped by PSC:  DROPPED_QUESTIONS = [20, 57]
+   (dropped questions are excluded from scoring.)
+   ------------------------------------------------------------ */
+const KEY_OVERRIDES     = {};
+const DROPPED_QUESTIONS = [];
+
+/* ============================================================
+   QUESTION DATA  – verbatim from Question Paper 85/26-M (Booklet A)
+   Answers: PSC Provisional Answer Key, column A.
+   ============================================================ */
+const sourceQuestions = [
+ {
+  "no": 1,
+  "subject": "ചരിത്രം",
+  "question": "ആധുനിക തിരുവിതാംകൂറിന്റെ സ്ഥാപകൻ",
+  "options": [
+   "A) പഴശ്ശിരാജ",
+   "B) മാർത്താണ്ഡവർമ്മ",
+   "C) ശക്തൻ തമ്പുരാൻ",
+   "D) പാലിയത്തച്ഛൻ"
+  ],
+  "correct": 1,
+  "explanation": "മാർത്താണ്ഡവർമ്മ (1729–1758) ആണ് ആധുനിക തിരുവിതാംകൂറിന്റെ ശില്പി. 1741-ലെ കുളച്ചൽ യുദ്ധത്തിൽ ഡച്ചുകാരെ തോൽപ്പിച്ചു."
+ },
+ {
+  "no": 2,
+  "subject": "ചരിത്രം",
+  "question": "സമത്വസമാജം സ്ഥാപിച്ചതാര് ?",
+  "options": [
+   "A) ഡോക്ടർ പൽപ്പു",
+   "B) ചട്ടമ്പി സ്വാമികൾ",
+   "C) തൈക്കാട് അയ്യ",
+   "D) വൈകുണ്ഠ സ്വാമികൾ"
+  ],
+  "correct": 3,
+  "explanation": "വൈകുണ്ഠ സ്വാമികൾ 1836-ൽ സമത്വസമാജം (സമത്വ സമാജം) സ്ഥാപിച്ചു."
+ },
+ {
+  "no": 3,
+  "subject": "ചരിത്രം",
+  "question": "1857-ലെ വിപ്ലവം ആരംഭിച്ച സ്ഥലം",
+  "options": [
+   "A) മീററ്റ്",
+   "B) ഹരിയാന",
+   "C) നാഗ്പൂർ",
+   "D) പഞ്ചാബ്"
+  ],
+  "correct": 0,
+  "explanation": "1857 മേയ് 10-ന് ഉത്തർപ്രദേശിലെ മീററ്റിൽ വിപ്ലവം ആരംഭിച്ചു."
+ },
+ {
+  "no": 4,
+  "subject": "ചരിത്രം",
+  "question": "''രാഷ്ട്രപിതാവ് '' എന്ന് ഗാന്ധിജിയെ ആദ്യമായി അഭിസംബോധന ചെയ്തത് ആര് ?",
+  "options": [
+   "A) ഗോപാലകൃഷ്ണഗോഖലെ",
+   "B) സ്വാമി വിവേകാനന്ദൻ",
+   "C) നേതാജി സുഭാഷ്ചന്ദ്രബോസ്",
+   "D) ഇവരാരുമല്ല"
+  ],
+  "correct": 2,
+  "explanation": "1944-ൽ റംഗൂൺ റേഡിയോയിലൂടെ സുഭാഷ് ചന്ദ്രബോസ് ആണ് ഗാന്ധിജിയെ 'രാഷ്ട്രപിതാവ്' എന്ന് ആദ്യമായി വിളിച്ചത്."
+ },
+ {
+  "no": 5,
+  "subject": "പൊതുവിജ്ഞാനം",
+  "question": "ഐക്യരാഷ്ട്ര സംഘടനയുടെ ആസ്ഥാനം എവിടെയാണ് ?",
+  "options": [
+   "A) ന്യൂയോർക്ക്",
+   "B) നെതർലാൻഡ്",
+   "C) ജെനീവ",
+   "D) ഹേഗ്"
+  ],
+  "correct": 0,
+  "explanation": "UN ആസ്ഥാനം: ന്യൂയോർക്ക് (മാൻഹട്ടൻ). അന്താരാഷ്ട്ര നീതിന്യായ കോടതി ഹേഗിലാണ്."
+ },
+ {
+  "no": 6,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "എണ്ണഷിപ്പിങ് റൂട്ടുകൾ കാരണം ഇറാൻ-അമേരിക്ക സംഘർഷങ്ങൾക്ക് തന്ത്രപരമായി പ്രധാനപ്പെട്ട മേഖല ഏതാണ് ?",
+  "options": [
+   "A) പനാമ കനാൽ",
+   "B) സൂയസ് കനാൽ",
+   "C) ഹോർമുസ് കടലിടുക്ക്",
+   "D) ബെറിങ് കടലിടുക്ക്"
+  ],
+  "correct": 2,
+  "explanation": "പേർഷ്യൻ ഗൾഫിനെ ഒമാൻ ഉൾക്കടലുമായി ബന്ധിപ്പിക്കുന്ന ഹോർമുസ് കടലിടുക്കിലൂടെയാണ് ലോകത്തെ എണ്ണ കയറ്റുമതിയുടെ വലിയൊരു പങ്കും കടന്നുപോകുന്നത്."
+ },
+ {
+  "no": 7,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "ഇന്ത്യൻ കാലാവസ്ഥ വകുപ്പിന്റെ ആസ്ഥാനം എവിടെ ?",
+  "options": [
+   "A) ഡൽഹി",
+   "B) വിശാഖപട്ടണം",
+   "C) ഹൈദ്രാബാദ്",
+   "D) തിരുവനന്തപുരം"
+  ],
+  "correct": 0,
+  "explanation": "IMD ആസ്ഥാനം: ന്യൂഡൽഹി (സ്ഥാപിതം 1875)."
+ },
+ {
+  "no": 8,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "കാറ്റിലൂടെ തിരശ്ചീനതലത്തിൽ താപം വ്യാപിക്കുന്ന പ്രക്രിയ ഏത് പേരിൽ അറിയപ്പെടുന്നു ?",
+  "options": [
+   "A) താപചലനം",
+   "B) സംവഹനം",
+   "C) അഭിവഹനം",
+   "D) വികിരണം"
+  ],
+  "correct": 2,
+  "explanation": "തിരശ്ചീന (horizontal) താപ കൈമാറ്റം = അഭിവഹനം (Advection); ലംബമായ (vertical) കൈമാറ്റം = സംവഹനം (Convection)."
+ },
+ {
+  "no": 9,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "ഓസോൺ പാളി സ്ഥിതി ചെയ്യുന്നത് ഏത് അന്തരീക്ഷ പാളിയിൽ ?",
+  "options": [
+   "A) ട്രോപ്പോസ്ഫിയർ",
+   "B) സ്ട്രാറ്റോസ്ഫിയർ",
+   "C) മെസോസ്ഫിയർ",
+   "D) തെർമോസ്ഫിയർ"
+  ],
+  "correct": 1,
+  "explanation": "ഓസോൺ പാളി സ്ട്രാറ്റോസ്ഫിയറിലാണ് (ഏകദേശം 15–35 km)."
+ },
+ {
+  "no": 10,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "കൃഷ്ണ നദിയുടെ പോഷകനദികൾ ഏതെല്ലാം ?",
+  "options": [
+   "A) തുംഗഭദ്ര – ഭീമ",
+   "B) കബനി – ഭവാനി",
+   "C) ഇന്ദ്രാവതി – ശബരി",
+   "D) ഇബ് – ടെൽ"
+  ],
+  "correct": 0,
+  "explanation": "കൃഷ്ണയുടെ പോഷകനദികൾ: തുംഗഭദ്ര, ഭീമ, മുസി, കൊയ്ന, ഘടപ്രഭ, മലപ്രഭ. (കബനി, ഭവാനി – കാവേരി; ഇന്ദ്രാവതി, ശബരി – ഗോദാവരി; ഇബ്, ടെൽ – മഹാനദി.)"
+ },
+ {
+  "no": 11,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "ഇന്ത്യയിലെ കാപ്പി ഉൽപാദനത്തിൽ ഒന്നാം സ്ഥാനത്തുള്ള സംസ്ഥാനം",
+  "options": [
+   "A) തമിഴ്നാട്",
+   "B) കേരളം",
+   "C) മഹാരാഷ്ട്ര",
+   "D) കർണ്ണാടക"
+  ],
+  "correct": 3,
+  "explanation": "കർണാടകം (പ്രത്യേകിച്ച് കൊടഗ്) ആണ് ഇന്ത്യയിലെ കാപ്പി ഉൽപാദനത്തിൽ ഒന്നാമത്."
+ },
+ {
+  "no": 12,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "2026 എൽനിനോ പ്രതിഭാസം ഉണ്ടായ വർഷമാണ് എന്നാൽ ഇതേ പ്രതിഭാസം ഇതിന് തൊട്ട് മുൻപ് ഉണ്ടായ വർഷം ഏത് ?",
+  "options": [
+   "A) 2010",
+   "B) 2015",
+   "C) 2023",
+   "D) 2013"
+  ],
+  "correct": 2,
+  "explanation": "ചോദ്യത്തിൽ നൽകിയ ഡാറ്റ പ്രകാരം തൊട്ടുമുൻപത്തെ എൽനിനോ വർഷം 2023 (2023–24 എൽനിനോ)."
+ },
+ {
+  "no": 13,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "താഴെ നല്കിയിരിക്കുന്ന പ്രസ്താവനകളിൽ ഹരിതവിപ്ലവവുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏതെല്ലാം ?\ni. ഹരിത വിപ്ലവം പയർവർഗ്ഗങ്ങളുടെ ഉൽപ്പാദനം ഗണ്യമായി വർദ്ധിപ്പിച്ചു.\nii. ഹരിത വിപ്ലവം ഭക്ഷ്യധാന്യ ഉൽപ്പാദനത്തിൽ ഇന്ത്യയെ സ്വയംപര്യാപ്തതയിലേക്ക് നയിച്ചു.\niii. ഹരിത വിപ്ലവം പ്രധാനമായും ഗോതമ്പിന്റെയും നെല്ലിന്റെയും ഉൽപ്പാദനം വർദ്ധിപ്പിച്ചു.\niv. ഹരിത വിപ്ലവത്തിന്റെ ഭാഗമായി ജലസേചന പദ്ധതികളുടെ വ്യാപനം നടന്നു.",
+  "options": [
+   "A) പ്രസ്താവനകൾ ii, iii, iv ശരിയാണ് പ്രസ്താവന i ശരിയല്ല",
+   "B) പ്രസ്താവനകൾ i, iii, iv ശരിയാണ് പ്രസ്താവന ii ശരിയല്ല",
+   "C) പ്രസ്താവനകൾ i, ii ശരിയാണ് പ്രസ്താവനകൾ iii, iv ശരിയല്ല",
+   "D) പ്രസ്താവനകൾ i, iii ശരിയാണ് പ്രസ്താവനകൾ ii, iv ശരിയല്ല"
+  ],
+  "correct": 0,
+  "explanation": "ഹരിതവിപ്ലവം പ്രധാനമായും ഗോതമ്പ്, നെല്ല് എന്നിവയ്ക്കാണ് ഗുണം ചെയ്തത്; പയർവർഗ്ഗങ്ങൾക്കല്ല (i തെറ്റ്)."
+ },
+ {
+  "no": 14,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "ഇന്ത്യയിലെ പ്രധാനവിളകളും അവയ്ക്ക് അനുയോജ്യമായ മണ്ണ്/ഭൂപ്രകൃതി എന്നിവയെ സംബന്ധിച്ചുള്ള താഴെപ്പറയുന്ന പ്രസ്താവനകളിൽ ശരിയായവ ഏവ ?\ni. പരുത്തിക്ക് കറുത്ത മണ്ണ് അനുയോജ്യമാണ്.\nii. ജ്യൂട്ടിന് അലൂവിയൽ മണ്ണ് അനുയോജ്യമാണ്.\niii. ചായയ്ക്ക് ചരിവുള്ള പ്രദേശങ്ങൾ അനുയോജ്യമാണ്.\niv. ഗോതമ്പ് പ്രധാനമായും ലാറ്ററൈറ്റ് മണ്ണിലാണ് കൃഷി ചെയ്യുന്നത്.",
+  "options": [
+   "A) പ്രസ്താവനകൾ ii, iii, iv ശരിയാണ് പ്രസ്താവന i ശരിയല്ല",
+   "B) പ്രസ്താവനകൾ i, ii, iii ശരിയാണ് പ്രസ്താവന iv ശരിയല്ല",
+   "C) പ്രസ്താവനകൾ i, ii ശരിയാണ് പ്രസ്താവനകൾ iii, iv ശരിയല്ല",
+   "D) പ്രസ്താവനകൾ i, iii ശരിയാണ് പ്രസ്താവനകൾ ii, iv ശരിയല്ല"
+  ],
+  "correct": 1,
+  "explanation": "ഗോതമ്പ് പ്രധാനമായും എക്കൽ (അലൂവിയൽ) മണ്ണിലാണ്; ലാറ്ററൈറ്റ് മണ്ണിലല്ല (iv തെറ്റ്)."
+ },
+ {
+  "no": 15,
+  "subject": "ഭൂമിശാസ്ത്രം",
+  "question": "താഴെപ്പറയുന്നവയിൽ ധാതുവും അതിന്റെ പ്രധാന ഉപയോഗവും ശരിയായി യോജിപ്പിച്ചിട്ടുള്ള ജോഡികൾ ഏവ ?\ni. ബോക്സൈറ്റ് – അലുമിനിയം നിർമ്മാണം\nii. മൈക്ക – വൈദ്യുത ഇൻസുലേറ്റർ നിർമ്മാണം\niii. ചുണ്ണാമ്പുകല്ല് – രാസവള നിർമ്മാണം\niv. ഇരുമ്പയിര് – സ്റ്റീൽ നിർമ്മാണം",
+  "options": [
+   "A) i, ii, iii",
+   "B) ii, iii, iv",
+   "C) i, iii, iv",
+   "D) i, ii, iv"
+  ],
+  "correct": 3,
+  "explanation": "ചുണ്ണാമ്പുകല്ലിന്റെ പ്രധാന ഉപയോഗം സിമന്റ് നിർമ്മാണം (iii തെറ്റ്)."
+ },
+ {
+  "no": 16,
+  "subject": "സാമ്പത്തികശാസ്ത്രം",
+  "question": "കോളം A യിലെ പഞ്ചവത്സരപദ്ധതികളെ, കോളം B യുമായി ഉചിതമായി യോജിപ്പിച്ച് ഉത്തരം തിരഞ്ഞെടുക്കുക.\n\nA\na. ഒന്നാം പഞ്ചവത്സര പദ്ധതി\nb. രണ്ടാം പഞ്ചവത്സര പദ്ധതി\nc. അഞ്ചാം പഞ്ചവത്സര പദ്ധതി\nd. എട്ടാം പഞ്ചവത്സര പദ്ധതി\n\nB\n1. മഹാലനോബിസ് മാതൃക\n2. കാർഷിക വികസനം\n3. മാനവ വിഭവശേഷി വികസനം\n4. ഗരീബി ഹട്ടാവോ (Garibi Hatao)",
+  "options": [
+   "A) a – 1, b – 2, c – 3, d – 4",
+   "B) a – 2, b – 1, c – 3, d – 4",
+   "C) a – 2, b – 1, c – 4, d – 3",
+   "D) a – 2, b – 4, c – 1, d – 3"
+  ],
+  "correct": 2,
+  "explanation": "1st: കാർഷിക വികസനം; 2nd: മഹലനോബിസ് മാതൃക (വ്യവസായം); 5th: ഗരീബി ഹഠാവോ; 8th: മാനവ വിഭവശേഷി വികസനം."
+ },
+ {
+  "no": 17,
+  "subject": "സാമ്പത്തികശാസ്ത്രം",
+  "question": "NITI Aayog-നെ സംബന്ധിച്ച് താഴെ പറയുന്ന പ്രസ്താവനകളിൽ ശരിയായവ ഏവ ?\n1. NITI Aayog 2015-ൽ പാർലമെന്റ് നിയമം വഴി രൂപീകരിച്ച സ്ഥാപനമാണ്.\n2. സംസ്ഥാനങ്ങൾക്ക് പദ്ധതി ഫണ്ട് അനുവദിക്കാനുള്ള അധികാരം NITI Aayog-ന് ഇല്ല.",
+  "options": [
+   "A) പ്രസ്താവന 2 മാത്രം ശരിയാണ്; പ്രസ്താവന 1 ശരിയല്ല",
+   "B) പ്രസ്താവന 1 മാത്രം ശരിയാണ്; പ്രസ്താവന 2 ശരിയല്ല",
+   "C) പ്രസ്താവനകൾ 1 ഉം 2 ഉം ശരിയാണ്",
+   "D) പ്രസ്താവനകൾ 1 ഉം 2 ഉം ശരിയല്ല"
+  ],
+  "correct": 0,
+  "explanation": "NITI Aayog 2015 ജനുവരി 1-ന് ഒരു ക്യാബിനറ്റ് പ്രമേയം വഴി രൂപീകരിച്ചതാണ് (പാർലമെന്റ് നിയമം വഴിയല്ല). ഫണ്ട് അനുവദിക്കാൻ അധികാരമില്ല – ഇത് ഒരു ഉപദേശക ചിന്താസമിതിയാണ്."
+ },
+ {
+  "no": 18,
+  "subject": "സാമ്പത്തികശാസ്ത്രം",
+  "question": "ഇന്ത്യയിലെ പണനയം (Monetary Policy) സംബന്ധിച്ച് താഴെ പറയുന്ന പ്രസ്താവനകളിൽ ശരിയായവ ഏതെല്ലാം ?\ni. ഇന്ത്യയിൽ പണനയം രൂപീകരിക്കുകയും നടപ്പാക്കുകയും ചെയ്യുന്നത് റിസർവ് ബാങ്ക് ഓഫ് ഇന്ത്യ (RBI) ആണ്.\nii. പണനയത്തിന്റെ പ്രധാന ലക്ഷ്യങ്ങളിൽ ഒന്ന് സാമ്പത്തികസ്ഥിരത (Economic Stability) ഉറപ്പാക്കലാണ്.\niii. പണനയം നടപ്പിലാക്കുന്നതിന് റിപ്പോ നിരക്ക്, CRR, SLR തുടങ്ങിയ ഉപാധികൾ ഉപയോഗിക്കുന്നു.\niv. താങ്ങുവില (Minimum Support Price (MSP)) പണനയ ഉപകരണമാണ്.\n\nശരിയായ പ്രസ്താവനകൾ ഏതെല്ലാം ?",
+  "options": [
+   "A) പ്രസ്താവനകൾ ii, iii, iv ശരിയാണ് പ്രസ്താവന i ശരിയല്ല",
+   "B) പ്രസ്താവനകൾ i, ii, iv ശരിയാണ് പ്രസ്താവന iii ശരിയല്ല",
+   "C) പ്രസ്താവനകൾ i, ii, iii ശരിയാണ് പ്രസ്താവന iv ശരിയല്ല",
+   "D) പ്രസ്താവനകൾ i, iii ശരിയാണ് പ്രസ്താവനകൾ ii, iv ശരിയല്ല"
+  ],
+  "correct": 2,
+  "explanation": "MSP ഒരു കാർഷിക വിലനയ ഉപകരണമാണ്, പണനയ ഉപകരണമല്ല."
+ },
+ {
+  "no": 19,
+  "subject": "സാമ്പത്തികശാസ്ത്രം",
+  "question": "താഴെപ്പറയുന്നവയിൽ “Make in India’’ പദ്ധതിയുമായി ബന്ധപ്പെട്ട നടപടികൾ ഏതെല്ലാമാണ് ?\ni. വിദേശ നിക്ഷേപം ആകർഷിക്കൽ\nii. നിർമ്മാണ മേഖല പ്രോത്സാഹിപ്പിക്കൽ\niii. വ്യവസായ മേഖലയിൽ ലൈസൻസ് നിയന്ത്രണം വർദ്ധിപ്പിക്കൽ\niv. ആഭ്യന്തര ഉൽപ്പാദനം വർദ്ധിപ്പിക്കൽ",
+  "options": [
+   "A) i, ii, iv",
+   "B) i, iii, iv",
+   "C) ii, iii, iv",
+   "D) i, ii, iii"
+  ],
+  "correct": 0,
+  "explanation": "Make in India (2014) – ലൈസൻസ് നിയന്ത്രണം കുറയ്ക്കുകയാണ് ലക്ഷ്യം (iii തെറ്റ്)."
+ },
+ {
+  "no": 20,
+  "subject": "ഭരണഘടന",
+  "question": "ചേരുംപടി ചേർക്കുക.\n\nA\n1. 52-ാം ഭരണഘടനാ ഭേദഗതി\n2. 74-ാം ഭരണഘടനാ ഭേദഗതി\n3. 84-ാം ഭരണഘടനാ ഭേദഗതി\n4. 91-ാം ഭരണഘടനാ ഭേദഗതി\n\nB\na. വിദ്യാഭ്യാസം മൗലികാവകാശം\nb. കൂറുമാറ്റ നിരോധന നിയമം\nc. നഗര തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങൾക്ക് ഭരണഘടനാ പദവി\nd. മന്ത്രിസഭയിലെ മന്ത്രിമാരുടെ എണ്ണം പരിമിതപ്പെടുത്തി",
+  "options": [
+   "A) 1 – c, 2 – d, 3 – b, 4 – a",
+   "B) 1 – b, 2 – c, 3 – a, 4 – d",
+   "C) 1 – a, 2 – c, 3 – b, 4 – d",
+   "D) 1 – d, 2 – b, 3 – a, 4 – c"
+  ],
+  "correct": 1,
+  "explanation": "52 – കൂറുമാറ്റ നിരോധനം; 74 – നഗരസഭകൾ; 91 – മന്ത്രിമാരുടെ എണ്ണം 15% വരെ. വിദ്യാഭ്യാസ മൗലികാവകാശം യഥാർത്ഥത്തിൽ 86-ാം ഭേദഗതി (2002) ആണ്; ചോദ്യത്തിൽ '84' എന്ന് അച്ചടിച്ചിരിക്കുന്നു – കീ പ്രകാരം ഉത്തരം B."
+ },
+ {
+  "no": 21,
+  "subject": "ഭരണഘടന",
+  "question": "താഴെ തന്നിരിക്കുന്നവയിൽ ഇന്ത്യൻ ഭരണഘടനയിലെ അവശിഷ്ടാധികാരങ്ങളുമായി (Residuary Powers) ബന്ധപ്പെട്ട തെറ്റായ പ്രസ്താവന/പ്രസ്താവനകൾ ഏവ ?\nI. സൈബർ നിയമങ്ങൾ ഇതിന് ഉദാഹരണമാണ്.\nII. ആർട്ടിഫിഷ്യൽ ഇന്റലിജൻസ് അവശിഷ്ടാധികാരങ്ങളിൽ ഉൾപ്പെടുന്നില്ല.\nIII. ഇന്ത്യ ഇതിന്റെ സവിശേഷതകൾ കടമെടുത്തത് കാനഡയുടെ ഭരണഘടനയിൽ നിന്നുമാണ്.\nIV. ഇതിൽ നിന്നും നിയമം നിർമ്മിക്കാൻ അധികാരം കേന്ദ്രഗവൺമെന്റിനാണ്.",
+  "options": [
+   "A) I",
+   "B) II",
+   "C) III",
+   "D) IV"
+  ],
+  "correct": 1,
+  "explanation": "പട്ടികകളിൽ (Union/State/Concurrent) ഇല്ലാത്ത വിഷയങ്ങളിൽ നിയമം നിർമ്മിക്കാൻ പാർലമെന്റിനാണ് അധികാരം (വകുപ്പ് 248). AI പോലുള്ള പുതിയ വിഷയങ്ങൾ ഇതിൽ വരും – അതിനാൽ II തെറ്റ്. കാനഡയിൽ നിന്നാണ് കടമെടുത്തത്."
+ },
+ {
+  "no": 22,
+  "subject": "ഭരണഘടന",
+  "question": "ഇന്ത്യൻ ഭരണഘടനയിലെ വകുപ്പ് 148 എന്തുമായി ബന്ധപ്പെട്ടതാണ് ?",
+  "options": [
+   "A) പ്രധാനമന്ത്രി",
+   "B) ഉപപ്രധാനമന്ത്രി",
+   "C) ഉപരാഷ്ട്രപതി",
+   "D) കംപ്ട്രോളർ ആൻഡ് ഓഡിറ്റർ ജനറൽ"
+  ],
+  "correct": 3,
+  "explanation": "വകുപ്പ് 148 – CAG."
+ },
+ {
+  "no": 23,
+  "subject": "ഭരണഘടന",
+  "question": "ചേരുംപടി ചേർക്കുക. (നിർദ്ദേശക തത്ത്വങ്ങൾ)\n\nA\n1. വകുപ്പ് 40\n2. വകുപ്പ് 43\n3. വകുപ്പ് 44\n4. വകുപ്പ് 48\n\nB\na. ഗോവധം നിരോധിക്കൽ\nb. ഏകീകൃത സിവിൽകോഡ്\nc. വില്ലേജ് പഞ്ചായത്ത്\nd. കുടിൽ വ്യവസായം",
+  "options": [
+   "A) 1 – b, 2 – c, 3 – d, 4 – a",
+   "B) 1 – c, 2 – a, 3 – b, 4 – d",
+   "C) 1 – c, 2 – d, 3 – b, 4 – a",
+   "D) 1 – d, 2 – c, 3 – b, 4 – a"
+  ],
+  "correct": 2,
+  "explanation": "40 – ഗ്രാമപഞ്ചായത്ത്; 43 – കുടിൽ വ്യവസായം; 44 – ഏകീകൃത സിവിൽ കോഡ്; 48 – ഗോവധ നിരോധനം/കൃഷി, മൃഗപരിപാലനം."
+ },
+ {
+  "no": 24,
+  "subject": "ഭരണഘടന",
+  "question": "''ഭരണഘടനയുടെ ജാതകം'' എന്ന് ഇന്ത്യൻ ഭരണഘടനയുടെ ആമുഖത്തെ വിശേഷിപ്പിച്ചത് ആരാണ് ?",
+  "options": [
+   "A) ജവഹർലാൽ നെഹ്റു",
+   "B) കെ. എം. മുൻഷി",
+   "C) എൻ. എ. പാൽഖിവാല",
+   "D) പണ്ഡിറ്റ് താക്കൂർ ദാസ്"
+  ],
+  "correct": 1,
+  "explanation": "ആമുഖത്തെ 'ഭരണഘടനയുടെ ജാതകം' എന്ന് വിളിച്ചത് കെ. എം. മുൻഷി (ഠാക്കൂർദാസ് ഭാർഗവ: 'ഭരണഘടനയുടെ ആത്മാവ്'; പാൽഖിവാല: 'ഭരണഘടനയുടെ തിരിച്ചറിയൽ കാർഡ്')."
+ },
+ {
+  "no": 25,
+  "subject": "പൊതുവിജ്ഞാനം",
+  "question": "ഇന്ത്യയിലെ യുവാക്കൾ നയിക്കുന്ന പ്രസ്ഥാനമായ CJP യുടെ പൂർണ്ണരൂപം എന്ത് ?",
+  "options": [
+   "A) കോക്രോച്ച് ജനസംഘ് പാർട്ടി",
+   "B) കോക്രോച്ച് ജയസംഘ് പാർട്ടി",
+   "C) കോക്രോച്ച് ജനതാ പാർട്ടി",
+   "D) ഇവയൊന്നുമല്ല"
+  ],
+  "correct": 2,
+  "explanation": "കീ പ്രകാരം ഉത്തരം C (കോക്രോച്ച് ജനതാ പാർട്ടി)."
+ },
+ {
+  "no": 26,
+  "subject": "കേരളം",
+  "question": "കേരള നിയമനിർമ്മാണ സഭയിലെ ഇപ്പോഴത്തെ ഡെപ്യൂട്ടിസ്പീക്കർ ആരാണ് ?",
+  "options": [
+   "A) ഷാനിമോൾ ഒസ്മാൻ",
+   "B) തിരുവഞ്ചൂർ രാധാകൃഷ്ണൻ",
+   "C) ചിറ്റയം ഗോപകുമാർ",
+   "D) കെ. എ. തുളസി"
+  ],
+  "correct": 0,
+  "explanation": "കീ പ്രകാരം ഉത്തരം A (ഷാനിമോൾ ഒസ്മാൻ). ഈ പദവിയിൽ മാറ്റം വരാം – കറന്റ് അഫയേഴ്സ് ആയി ഉറപ്പിക്കുക."
+ },
+ {
+  "no": 27,
+  "subject": "കേരളം",
+  "question": "കേരളത്തിലെ മുതിർന്ന പൗരന്മാർക്ക് വീടുകളിൽ ചെന്നുള്ള സൗജന്യ ചികിത്സയും കൗൺസിലിംഗും ഉറപ്പാക്കുന്ന പദ്ധതി ഏതാണ് ?",
+  "options": [
+   "A) സ്നേഹപൂർവ്വം",
+   "B) വയോമിത്രം",
+   "C) സുകൃതലയം",
+   "D) സാന്ത്വനം"
+  ],
+  "correct": 1,
+  "explanation": "വയോമിത്രം – 65 വയസ്സിനു മുകളിലുള്ളവർക്ക് (തദ്ദേശ സ്ഥാപനങ്ങൾ വഴി) സൗജന്യ മരുന്നും ചികിത്സയും കൗൺസിലിംഗും."
+ },
+ {
+  "no": 28,
+  "subject": "കേരളം",
+  "question": "അമ്മമാരുടേയും കുഞ്ഞുങ്ങളുടേയും പോഷകാഹാരക്കുറവ് പരിഹരിക്കുന്നതിനായി വനിത ശിശു വികസന വകുപ്പ് ആരംഭിച്ച പദ്ധതി",
+  "options": [
+   "A) പോഷൺ അഭിയാൻ",
+   "B) സമ്പുഷ്ട കേരളം",
+   "C) അമൃതം ആരോഗ്യം",
+   "D) ക്ഷീരധാര"
+  ],
+  "correct": 1,
+  "explanation": "'സമ്പുഷ്ട കേരളം' – വനിത ശിശുവികസന വകുപ്പിന്റെ പോഷകാഹാരക്കുറവ് പരിഹാര പദ്ധതി."
+ },
+ {
+  "no": 29,
+  "subject": "പൊതുവിജ്ഞാനം",
+  "question": "താഴെ പറയുന്നവയിൽ തണ്ണീർതട സംരക്ഷണവുമായി ബന്ധപ്പെട്ട അന്താരാഷ്ട്ര കരാർ ഏത് ?",
+  "options": [
+   "A) ജനീവ കൺവെൻഷൻ",
+   "B) റാംസർ കൺവെൻഷൻ",
+   "C) പാരീസ് കരാർ",
+   "D) വിയന്ന കൺവെൻഷൻ"
+  ],
+  "correct": 1,
+  "explanation": "റാംസർ കൺവെൻഷൻ (1971, ഇറാൻ) – തണ്ണീർത്തടങ്ങൾ. വിയന്ന – ഓസോൺ; പാരീസ് – കാലാവസ്ഥ."
+ },
+ {
+  "no": 30,
+  "subject": "കേരളം",
+  "question": "കേരളത്തിൽ ആദ്യമായി കമ്മ്യൂണിറ്റി എനർജി സ്റ്റോറേജ് മോഡൽ പൈലറ്റ് പദ്ധതി നടപ്പിലാക്കിയ പഞ്ചായത്ത് ഏതാണ് ?",
+  "options": [
+   "A) പെരിങ്ങോം",
+   "B) പുത്തനങ്ങാടി",
+   "C) പെരിഞ്ഞനം",
+   "D) കുമരകം"
+  ],
+  "correct": 2,
+  "explanation": "കീ പ്രകാരം ഉത്തരം C (പെരിഞ്ഞനം)."
+ },
+ {
+  "no": 31,
+  "subject": "പൊതുവിജ്ഞാനം",
+  "question": "NDRF-ന്റെ പൂർണ്ണരൂപം എഴുതുക.",
+  "options": [
+   "A) National Disaster Relief Fund",
+   "B) National Disaster Response Force",
+   "C) National Disaster and Relief Force",
+   "D) National Disater Research Forum"
+  ],
+  "correct": 1,
+  "explanation": "NDRF = National Disaster Response Force (ദേശീയ ദുരന്ത നിവാരണ സേന), 2006-ൽ രൂപീകൃതം."
+ },
+ {
+  "no": 32,
+  "subject": "ഭരണഘടന",
+  "question": "തെറ്റായ പ്രസ്താവന ഏത് ?",
+  "options": [
+   "A) സംസ്ഥാന തെരെഞ്ഞെടുപ്പ് കമ്മീഷൻ ഒരു സ്വതന്ത്ര ഭരണഘടന സ്ഥാപനമാണ്.",
+   "B) ലോകയുക്ത അഴിമതി അന്വേഷിക്കുന്നു.",
+   "C) സംസ്ഥാന മനുഷ്യാവകാശ കമ്മീഷൻ, സിവിൽ കോടതിയുടെ അധികാരമുണ്ട്.",
+   "D) നീതി അയോഗ് ഒരു ഭരണഘടനാ സ്ഥാപനമാണ്."
+  ],
+  "correct": 3,
+  "explanation": "നീതി ആയോഗ് ഭരണഘടനാ സ്ഥാപനമോ നിയമാനുസൃത സ്ഥാപനമോ അല്ല; ഒരു എക്സിക്യൂട്ടീവ് (ക്യാബിനറ്റ് പ്രമേയം) സ്ഥാപനമാണ്."
+ },
+ {
+  "no": 33,
+  "subject": "ശാസ്ത്രം",
+  "question": "എന്റെ ഭൂമി പോർട്ടൽ വഴി ഭൂമി സംബന്ധമായ സേവനങ്ങൾ കൂടുതൽ സുതാര്യമാക്കുന്നതിനും വ്യാജ ആധാരങ്ങൾ തടയുന്നതിനും ഉപയോഗിക്കുന്ന സാങ്കേതിക സുരക്ഷ സംവിധാനം ഏതാണ് ?",
+  "options": [
+   "A) ബ്ലോക്ക് ചെയിൻ",
+   "B) ആർട്ടിഫിഷ്യൽ ഇന്റലിജൻസ്",
+   "C) ബയോമെട്രിക്ക് ലാൻഡ് ലോക്കിങ്",
+   "D) ക്വാണ്ടം ക്രിപ്റ്റോഗ്രഫി"
+  ],
+  "correct": 0,
+  "explanation": "കീ പ്രകാരം ഉത്തരം A (ബ്ലോക്ക് ചെയിൻ)."
+ },
+ {
+  "no": 34,
+  "subject": "കേരളം",
+  "question": "കേരളത്തിലെ ആരോഗ്യ സംരക്ഷണ മേഖലയിൽ നടപ്പിലാക്കിവരുന്ന ആർദ്രം മിഷന്റെ പ്രധാന ലക്ഷ്യം എന്താണ് ?",
+  "options": [
+   "A) പ്രാഥമിക ആരോഗ്യകേന്ദ്രങ്ങളിലെ ചികിത്സാരീതികൾ വിപുലീകരിക്കുക.",
+   "B) പ്രാഥമിക ആരോഗ്യകേന്ദ്രങ്ങളെ കുടുംബ ആരോഗ്യ കേന്ദ്രങ്ങളാക്കി മാറ്റുക.",
+   "C) ചികിത്സ പൂർണ്ണമായും സൗജന്യമാക്കുക.",
+   "D) സ്പെഷ്യലിസ്റ്റ് ഡോക്ടർമാരുടെ സേവനം പ്രാഥമിക ആരോഗ്യ കേന്ദ്രങ്ങളിൽ ഉറപ്പാക്കുക."
+  ],
+  "correct": 1,
+  "explanation": "ആർദ്രം മിഷൻ (2016) – PHC-കളെ ജനസൗഹൃദ കുടുംബാരോഗ്യ കേന്ദ്രങ്ങളാക്കി മാറ്റൽ. (നവകേരളം കർമ്മപദ്ധതിയുടെ ഭാഗം.)"
+ },
+ {
+  "no": 35,
+  "subject": "ശാസ്ത്രം",
+  "question": "താഴെ തന്നിരിക്കുന്ന പ്രസ്താവനകളിൽ ശരിയായത് ഏത്/ഏവ ?\ni. ചില ആന്റീബോഡികൾ ബാക്ടീരിയയുടെ കോശസ്തരത്തെ ശിഥിലീകരിച്ച് അവയെ നശിപ്പിക്കുന്നു.\nii. ആന്റീബോഡികൾ ആന്റീജനുകളുടെ വിഷാംശത്തെ നിർവീര്യമാക്കുന്നു.\niii. ആന്റീബോഡികൾ മറ്റു ശ്വേതരക്താണുക്കളെ ഉത്തേജിപ്പിക്കാതെ രോഗാണുക്കളെ നശിപ്പിക്കുന്നു.",
+  "options": [
+   "A) i, ii മാത്രം",
+   "B) i, iii മാത്രം",
+   "C) ii, iii മാത്രം",
+   "D) i, ii, iii ഇവയെല്ലാം"
+  ],
+  "correct": 0,
+  "explanation": "ആന്റിബോഡികൾ മറ്റ് ശ്വേതരക്താണുക്കളെ (മാക്രോഫേജ് തുടങ്ങിയവ) ഉത്തേജിപ്പിച്ചാണ് രോഗാണുക്കളെ നശിപ്പിക്കാൻ സഹായിക്കുന്നത് – iii തെറ്റ്."
+ },
+ {
+  "no": 36,
+  "subject": "ശാസ്ത്രം",
+  "question": "കൃത്രിമ പ്രതിരോധ വൽക്കരണത്തിനുവേണ്ടി വാക്സിനുകൾ നിർമ്മിക്കുവാൻ താഴെ തന്നിരിക്കുന്നവയിൽ ഉപയോഗിക്കാത്തവ ഏതാണ് ?",
+  "options": [
+   "A) ജീവനുള്ള രോഗാണുക്കൾ",
+   "B) ജീവനില്ലാത്ത രോഗാണുക്കൾ",
+   "C) നിർവീര്യമാക്കപ്പെട്ട വിഷവസ്തുക്കൾ",
+   "D) രോഗിയുടെ ശരീര കോശങ്ങൾ"
+  ],
+  "correct": 3,
+  "explanation": "വാക്സിൻ: ദുർബല/നിർജ്ജീവ രോഗാണുക്കൾ, നിർവീര്യ വിഷവസ്തുക്കൾ (ടോക്സോയ്ഡ്) എന്നിവ ഉപയോഗിക്കുന്നു; രോഗിയുടെ ശരീരകോശങ്ങൾ ഉപയോഗിക്കുന്നില്ല."
+ },
+ {
+  "no": 37,
+  "subject": "ശാസ്ത്രം",
+  "question": "മനുഷ്യ മസ്തിഷ്കത്തിലെ വൈദ്യുത തരംഗങ്ങളെ രേഖപ്പെടുത്താൻ ഉപയോഗിക്കുന്ന ഉപകരണം ഏത് ?",
+  "options": [
+   "A) അൾട്രാസൗണ്ട് സ്കാനർ",
+   "B) ഇലക്ട്രോ എൻസഫലോ ഗ്രാം",
+   "C) സി. ടി. സ്കാനർ",
+   "D) എം. ആർ. ഐ. സ്കാനർ"
+  ],
+  "correct": 1,
+  "explanation": "EEG – തലച്ചോറിലെ വൈദ്യുത പ്രവർത്തനം; ECG – ഹൃദയം; EMG – പേശി."
+ },
+ {
+  "no": 38,
+  "subject": "ശാസ്ത്രം",
+  "question": "താഴെ തന്നിരിക്കുന്നവയിൽ ഏറ്റവും മാരകമായ വൈറസ് രോഗം ഏതാണ് ?",
+  "options": [
+   "A) എയ്ഡ്സ്",
+   "B) നിപ വൈറസ് രോഗം",
+   "C) കോവിഡ്-19",
+   "D) റിനോ വൈറസ് രോഗം"
+  ],
+  "correct": 1,
+  "explanation": "നിപ വൈറസ് രോഗത്തിന്റെ മരണനിരക്ക് ഏകദേശം 40–75% (വളരെ ഉയർന്നത്)."
+ },
+ {
+  "no": 39,
+  "subject": "ശാസ്ത്രം",
+  "question": "മനുഷ്യശരീരത്തിലെ അസ്ഥികളെ പൊതിഞ്ഞു സംരക്ഷിക്കുന്ന ആവരണം ഏതാണ് ?",
+  "options": [
+   "A) പെരികാർഡിയം",
+   "B) മെനിഞ്ചസ്",
+   "C) പെരിയോസ്റ്റിയം",
+   "D) പ്ലൂറ"
+  ],
+  "correct": 2,
+  "explanation": "പെരിയോസ്റ്റിയം – അസ്ഥിയെ പൊതിയുന്ന ആവരണം. പെരികാർഡിയം – ഹൃദയം; മെനിഞ്ചസ് – തലച്ചോർ; പ്ലൂറ – ശ്വാസകോശം."
+ },
+ {
+  "no": 40,
+  "subject": "ശാസ്ത്രം",
+  "question": "താഴെ തന്നിരിക്കുന്നവയിൽ ഏത് അളവിൽ രക്തസമ്മർദ്ദം ഉണ്ടെങ്കിലാണ് അത് അമിത രക്തസമ്മർദ്ദമായി കണക്കാക്കപ്പെടുന്നത് ?",
+  "options": [
+   "A) 90/60 mm Hg",
+   "B) 120/80 mm Hg",
+   "C) 150/95 mm Hg",
+   "D) 110/75 mm Hg"
+  ],
+  "correct": 2,
+  "explanation": "സാധാരണ രക്തസമ്മർദ്ദം 120/80 mm Hg. 140/90 ന് മുകളിൽ ഹൈപ്പർടെൻഷൻ."
+ },
+ {
+  "no": 41,
+  "subject": "ശാസ്ത്രം",
+  "question": "ഹരിത ഗൃഹവാതകങ്ങളെക്കുറിച്ച് താഴെ പറയുന്ന പ്രസ്താവനകളിൽ തെറ്റായത് ഏത് ?",
+  "options": [
+   "A) ഹരിത ഗൃഹവാതകങ്ങൾ അന്തരീക്ഷത്തിന്റെ താപനില ഉയർത്തുന്നു.",
+   "B) കാർബൺ ഡൈഓക്സൈഡ്, മീഥെയ്ൻ, നൈട്രസ് ഓക്സൈഡ് എന്നിവ പ്രധാന ഹരിത ഗൃഹവാതകങ്ങളാണ്.",
+   "C) ഹരിത ഗൃഹവാതകങ്ങളുടെ അളവ് കൂടുന്നത് ആഗോള താപനത്തിന് കാരണമാകുന്നു.",
+   "D) നൈട്രജൻ, ഓക്സിജൻ എന്നിവ പ്രധാന ഹരിത ഗൃഹവാതകങ്ങളാണ്."
+  ],
+  "correct": 3,
+  "explanation": "നൈട്രജനും ഓക്സിജനും ഹരിതഗൃഹവാതകങ്ങളല്ല (അന്തരീക്ഷത്തിന്റെ ~99%)."
+ },
+ {
+  "no": 42,
+  "subject": "ശാസ്ത്രം",
+  "question": "അടുത്തിടെ വാർത്തകളിൽ നിറഞ്ഞ ''ആഗമൻ'' (Aagaman) ദൗത്യത്തെക്കുറിച്ച് താഴെ പറയുന്ന പ്രസ്താവനകളിൽ ഏതാണ് ശരി ?",
+  "options": [
+   "A) കാലാവസ്ഥാ വ്യതിയാനത്തെക്കുറിച്ച് പഠിക്കാനായി ISRO നിർമ്മിച്ച റോക്കന്റിന്റെ വിക്ഷേപണം.",
+   "B) സ്വകാര്യമേഖലയിലെ ഒരു ഇന്ത്യൻ സ്റ്റാർട്ടപ്പ് കമ്പനി നിർമ്മിച്ച റോക്കന്റിന്റെ ആദ്യ വിക്ഷേപണം.",
+   "C) ISRO യുടെ ശുക്രനിലേക്കുള്ള (Venus) ആദ്യപര്യവേക്ഷണ ദൗത്യം.",
+   "D) ബഹിരാകാശ അവശിഷ്ടങ്ങൾ (Space Debris) ഇല്ലാതാക്കാൻ ISRO യും നാസയും (NASA) ചേർന്ന് സംയുക്തമായി നടത്തുന്ന പദ്ധതി."
+  ],
+  "correct": 1,
+  "explanation": "കീ പ്രകാരം ഉത്തരം B."
+ },
+ {
+  "no": 43,
+  "subject": "ശാസ്ത്രം",
+  "question": "നീളത്തിന്റെ വിവിധ യൂണിറ്റുകളെ അവയുടെ മൂല്യത്തിന്റെ ആരോഹണ ക്രമത്തിൽ എഴുതിയിരിക്കുന്നു. ശരിയായത് തെരഞ്ഞെടുത്തെഴുതുക.",
+  "options": [
+   "A) മില്ലിമീറ്റർ, കിലോമീറ്റർ, പ്രകാശവർഷം",
+   "B) പ്രകാശവർഷം, കിലോമീറ്റർ, മില്ലിമീറ്റർ",
+   "C) കിലോമീറ്റർ, മില്ലിമീറ്റർ, പ്രകാശവർഷം",
+   "D) മില്ലിമീറ്റർ, പ്രകാശവർഷം, കിലോമീറ്റർ"
+  ],
+  "correct": 0,
+  "explanation": "1 mm < 1 km < 1 പ്രകാശവർഷം (≈ 9.46 × 10¹² km)."
+ },
+ {
+  "no": 44,
+  "subject": "ശാസ്ത്രം",
+  "question": "ഒപ്റ്റിക്കൽ ഫൈബറുകളെ (Optical fibre) സംബന്ധിച്ചുള്ള താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിഗണിച്ച് ഉത്തരമെഴുതുക.\na. ഇവ പ്രവർത്തിക്കുന്നത് പൂർണ്ണാന്തര പ്രതിഫലനം (Total internal reflection) എന്ന തത്വത്തിലാണ്.\nb. മെഡിക്കൽ രംഗത്ത് എൻഡോസ്കോപ്പി (Endoscopy) ചെയ്യാൻവേണ്ടി ഉപയോഗിക്കുന്നു.\nc. ഇതിലൂടെ സിഗ്നലുകൾ സഞ്ചരിക്കുന്നത് ശബ്ദത്തിന്റെ വേഗതയിലാണ്.",
+  "options": [
+   "A) a – ശരി, b – തെറ്റ്, c – ശരി",
+   "B) a – ശരി, b – തെറ്റ്, c – തെറ്റ്",
+   "C) a – ശരി, b – ശരി, c – തെറ്റ്",
+   "D) എല്ലാം ശരിയാണ്"
+  ],
+  "correct": 2,
+  "explanation": "ഒപ്റ്റിക്കൽ ഫൈബറിൽ സിഗ്നലുകൾ സഞ്ചരിക്കുന്നത് പ്രകാശത്തിന്റെ വേഗതയിലാണ്, ശബ്ദത്തിന്റേതല്ല."
+ },
+ {
+  "no": 45,
+  "subject": "ശാസ്ത്രം",
+  "question": "ആശുപത്രികളിലും പൊതുസ്ഥലങ്ങളിലും സമ്പർക്കമില്ലാതെ ശരീരതാപനില വേഗത്തിൽ അളക്കാൻ ഉപയോഗിക്കുന്ന ഉപകരണം ഏത് ?",
+  "options": [
+   "A) ഗലീലിയോ തെർമോമീറ്റർ",
+   "B) ലബോറട്ടറി തെർമോമീറ്റർ",
+   "C) കോൺസ്റ്റന്റ് വോള്യം ഗ്യാസ് തെർമോമീറ്റർ",
+   "D) ഇൻഫ്രാറെഡ് തെർമോമീറ്റർ"
+  ],
+  "correct": 3,
+  "explanation": "ഇൻഫ്രാറെഡ് തെർമോമീറ്റർ – ശരീരത്തിൽ നിന്നുള്ള IR വികിരണം അളക്കുന്നു."
+ },
+ {
+  "no": 46,
+  "subject": "ശാസ്ത്രം",
+  "question": "ഭൂഗുരുത്വ ത്വരണവുമായി (g) ബന്ധപ്പെട്ട് താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക.\ni. ഭൂമിയുടെ ഉപരിതലത്തിൽ ‘g’-യുടെ ഏകദേശ മൂല്യം 9.8 m/s² ആണ്.\nii. ഭൂമധ്യരേഖയിൽ നിന്ന് ധ്രുവങ്ങളിലേക്ക് പോകുന്തോറും ‘g’-യുടെ മൂല്യം കുറയുന്നു.\niii. ഭൂമിയുടെ ഉപരിതലത്തിൽ നിന്നും താഴേക്ക് (ഉള്ളിലേക്ക്) പോകുന്തോറും ‘g’-യുടെ മൂല്യം കുറയുന്നു.\niv. ഭൂകേന്ദ്രത്തിൽ ‘g’-യുടെ മൂല്യം പൂജ്യം ആണ്.\n\nമുകളിൽ കൊടുത്ത പ്രസ്താവനകളിൽ ശരിയായത് ഏവ ?",
+  "options": [
+   "A) i, ii",
+   "B) ii, iii and iv",
+   "C) i, iii and iv",
+   "D) എല്ലാം ശരിയാണ്"
+  ],
+  "correct": 2,
+  "explanation": "ഭൂമധ്യരേഖയിൽ നിന്ന് ധ്രുവങ്ങളിലേക്ക് പോകുമ്പോൾ g കൂടുന്നു (ii തെറ്റ്)."
+ },
+ {
+  "no": 47,
+  "subject": "ശാസ്ത്രം",
+  "question": "ലോഹസങ്കരമായ (Alloy) സ്റ്റെയിൻലസ് സ്റ്റീലിൽ അടങ്ങിയിരിക്കുന്ന ഘടകമൂലകങ്ങൾ ഏതാണ് ?",
+  "options": [
+   "A) Fe, Mn, C",
+   "B) Fe, Si, C",
+   "C) Fe, Cr, Ni, C",
+   "D) Fe, C"
+  ],
+  "correct": 2,
+  "explanation": "സ്റ്റെയിൻലസ് സ്റ്റീൽ = ഇരുമ്പ് (Fe) + ക്രോമിയം (Cr) + നിക്കൽ (Ni) + കാർബൺ (C)."
+ },
+ {
+  "no": 48,
+  "subject": "ശാസ്ത്രം",
+  "question": "വാതകങ്ങളിലെ കണികകളുടെ എണ്ണവും അതിന്റെ വ്യാപ്തവും തമ്മിലുള്ള ബന്ധം കാണിക്കുന്ന നിയമമാണ്",
+  "options": [
+   "A) ചാൾസ് നിയമം",
+   "B) ബോയിൽ നിയമം",
+   "C) അവൊഗാഡ്രോ നിയമം",
+   "D) ന്യൂട്ടൺ നിയമം"
+  ],
+  "correct": 2,
+  "explanation": "അവൊഗാഡ്രോ നിയമം: ഒരേ താപനിലയിലും മർദ്ദത്തിലും തുല്യ വ്യാപ്തമുള്ള വാതകങ്ങളിൽ തുല്യ എണ്ണം തന്മാത്രകൾ."
+ },
+ {
+  "no": 49,
+  "subject": "ശാസ്ത്രം",
+  "question": "H₃PO₄ (ഫോസ്ഫോറിക് ആസിഡ്)ന്റെ ബേസികത",
+  "options": [
+   "A) 1",
+   "B) 2",
+   "C) 3",
+   "D) 4"
+  ],
+  "correct": 2,
+  "explanation": "H₃PO₄ ൽ മൂന്ന് replaceable H ഉള്ളതിനാൽ ബേസികത 3."
+ },
+ {
+  "no": 50,
+  "subject": "ശാസ്ത്രം",
+  "question": "ആവർത്തനപട്ടികയിലെ മൂലകമായ ഒഗാനെസോൺ (Og) ന്റെ അറ്റോമിക നമ്പർ എത്രയാണ് ?",
+  "options": [
+   "A) 115",
+   "B) 116",
+   "C) 117",
+   "D) 118"
+  ],
+  "correct": 3,
+  "explanation": "ഒഗാനെസോൺ – അറ്റോമിക നമ്പർ 118 (ഗ്രൂപ്പ് 18, നോബിൾ വാതകം). 115 – മോസ്കോവിയം; 116 – ലിവർമോറിയം; 117 – ടെനെസ്സിൻ."
+ },
+ {
+  "no": 51,
+  "subject": "ശാസ്ത്രം",
+  "question": "2025-ലെ രസതന്ത്രത്തിനുള്ള നോബൽ സമ്മാനം താഴെപ്പറയുന്ന ഏത് കണ്ടുപിടിത്തത്തിന്റെ വികസനത്തിനാണ് നൽകപ്പെട്ടത് ?",
+  "options": [
+   "A) ക്രിസ്പർ ജീൻ എഡിറ്റിംഗ് സാങ്കേതികവിദ്യ",
+   "B) മെറ്റൽ-ഓർഗാനിക് ഫ്രെയിംവർക്ക്സ്",
+   "C) ലിഥിയം-അയൺ ബാറ്ററികൾ",
+   "D) ഗ്രീൻ ഫ്ലൂറസെന്റ് പ്രോട്ടീൻ"
+  ],
+  "correct": 1,
+  "explanation": "2025 രസതന്ത്ര നോബൽ – Metal-Organic Frameworks (MOFs) വികസനത്തിന് (സുസുമു കിറ്റഗാവ, റിച്ചാർഡ് റോബ്സൺ, ഒമർ യാഗി)."
+ },
+ {
+  "no": 52,
+  "subject": "കേരളം",
+  "question": "കേരള കലാമണ്ഡലത്തെ സംബന്ധിച്ച് ശരിയായ പ്രസ്താവനകൾ ഏതൊക്കെ ?\ni. 2007 മുതലാണ് കല്പിത സർവ്വകലാശാലയായത്.\nii. 1975-ൽ ഒരു ഗ്രാന്റ്-ഇൻ-എയ്ഡ് വിദ്യാഭ്യാസ സ്ഥാപനമായി.\niii. 1930-ൽ സ്ഥാപിതമായി.",
+  "options": [
+   "A) i മാത്രം ശരി",
+   "B) ii ഉം iii ഉം മാത്രം ശരി",
+   "C) i ഉം iii ഉം മാത്രം ശരി",
+   "D) i ഉം ii ഉം iii ഉം ശരി"
+  ],
+  "correct": 3,
+  "explanation": "കലാമണ്ഡലം: 1930-ൽ വള്ളത്തോളും മുകുന്ദരാജയും ചേർന്ന് സ്ഥാപിച്ചു; 1975 സർക്കാർ ഗ്രാന്റ്-ഇൻ-എയ്ഡ് സ്ഥാപനം; 2006/2007 മുതൽ കല്പിത സർവ്വകലാശാല."
+ },
+ {
+  "no": 53,
+  "subject": "മലയാളം",
+  "question": "താഴെപ്പറയുന്നവയിൽ മണിപ്രവാളകൃതിയിൽപ്പെടാത്തതേത് ?",
+  "options": [
+   "A) ഉണ്ണിയച്ചി",
+   "B) ഉണ്ണിച്ചിരുതേവി",
+   "C) രാമചരിതം",
+   "D) ചെറിയച്ചി"
+  ],
+  "correct": 2,
+  "explanation": "രാമചരിതം പാട്ട് പ്രസ്ഥാനത്തിലെ കൃതിയാണ് (ചീരാമകവി). ഉണ്ണിയച്ചീചരിതം, ഉണ്ണിച്ചിരുതേവീചരിതം, ചെറിയച്ചീചരിതം – മണിപ്രവാള കൃതികൾ."
+ },
+ {
+  "no": 54,
+  "subject": "മലയാളം",
+  "question": "കടമ്മനിട്ടരാമകൃഷ്ണന്റെ ‘കിരാതവൃത്തം’ എന്ന കവിതയെ സ്വാധീനിച്ച കലാരൂപമേത് ?",
+  "options": [
+   "A) ഓട്ടൻ തുള്ളൽ",
+   "B) കഥകളി",
+   "C) കൂടിയാട്ടം",
+   "D) പടയണി"
+  ],
+  "correct": 3,
+  "explanation": "കടമ്മനിട്ടയുടെ കവിതകൾ പടയണിയുടെ സ്വാധീനത്തിലാണ്."
+ },
+ {
+  "no": 55,
+  "subject": "കേരളം",
+  "question": "യുദ്ധവിജയവുമായി ബന്ധപ്പെട്ട് ചിറ്റൂർ ഭഗവതിക്കാവിൽ നടത്തുന്ന ഉത്സവമേത് ?",
+  "options": [
+   "A) കൊങ്ങൻപട",
+   "B) പൂരക്കളി",
+   "C) നവരാത്രി",
+   "D) മാമാങ്കം"
+  ],
+  "correct": 0,
+  "explanation": "ചിറ്റൂർ ഭഗവതിക്കാവിലെ കൊങ്ങൻപട (കൊച്ചി–കൊങ്ങൻ യുദ്ധവിജയ സ്മരണ)."
+ },
+ {
+  "no": 56,
+  "subject": "മലയാളം",
+  "question": "''നമിക്കിലുയരാം, നടുകിൽത്തിന്നാം, നൽകുകിൽ നേടീടാം;\nനമുക്കു നാമേ പണിവതുനാകം നരകവുമതുപോലെ.''\nഏതു കവിതയിലെ വരികളാണിത് ?",
+  "options": [
+   "A) വിശ്വദർശനം",
+   "B) പ്രേമസംഗീതം",
+   "C) കാവിലെ പാട്ട്",
+   "D) കന്നിക്കൊയ്ത്ത്"
+  ],
+  "correct": 1,
+  "explanation": "കീ പ്രകാരം ഉത്തരം B (പ്രേമസംഗീതം)."
+ },
+ {
+  "no": 57,
+  "subject": "പൊതുവിജ്ഞാനം",
+  "question": "ഫിഫ വേൾഡ്കപ്പ് 2026 ഫൈനൽ മത്സരം നിയന്ത്രിച്ച റഫറിയാര് ?",
+  "options": [
+   "A) ബെനിറ്റോ അർച്ചുഡിയ",
+   "B) ജോർജ്ജ് ലാരിയോണ്ട",
+   "C) സ്ലാവ്കോ വിൻസിച്ച്",
+   "D) ലുബോസ് മിഷെൽ"
+  ],
+  "correct": 2,
+  "explanation": "കീ പ്രകാരം ഉത്തരം C (സ്ലാവ്കോ വിൻസിച്ച്)."
+ },
+ {
+  "no": 58,
+  "subject": "പൊതുവിജ്ഞാനം",
+  "question": "72-ാമത് ദേശീയ ചലച്ചിത്ര അവാർഡുമായി ബന്ധപ്പെട്ട് ശരിയല്ലാത്ത പ്രസ്താവന ഏത് ?",
+  "options": [
+   "A) 2024-ലെ ചിത്രങ്ങൾക്കാണ് അവാർഡ് നല്കിയത്",
+   "B) മികച്ച ഫീച്ചർ ഫിലിം - ‘ആർട്ടിക്കിൾ 370’ ആണ്",
+   "C) ഫീച്ചർ ഫിലിം ജൂറി ചെയർപേഴ്സൺ ശ്രീ. അസീം സിൻഹയായിരുന്നു",
+   "D) മികച്ച മലയാള ചിത്രം – ഫെമിനിച്ചി ഫാത്തിമ"
+  ],
+  "correct": 2,
+  "explanation": "കീ പ്രകാരം ശരിയല്ലാത്ത പ്രസ്താവന C."
+ },
+ {
+  "no": 59,
+  "subject": "ശാസ്ത്രം",
+  "question": "ഉയർന്ന വേഗത കാരണം ആധുനിക പ്രോസസറുകളിൽ കാഷ് മെമ്മറിയായി (Cache Memory) സാധാരണയായി ഉപയോഗിക്കുന്ന മെമ്മറി ഏതാണ് ?",
+  "options": [
+   "A) DRAM",
+   "B) SRAM",
+   "C) ROM",
+   "D) EEPROM"
+  ],
+  "correct": 1,
+  "explanation": "കാഷ് മെമ്മറി സാധാരണയായി SRAM ആണ് (DRAM പ്രധാന മെമ്മറിക്ക്)."
+ },
+ {
+  "no": 60,
+  "subject": "ശാസ്ത്രം",
+  "question": "ഒരു പ്രോഗ്രാം താഴെപ്പറയുന്ന നിർദ്ദേശങ്ങൾ നടപ്പിലാക്കുന്നു.\nINPUT N\nIF N > 0 GOTO L1\nPRINT “NEGATIVE”\nSTOP\nL1:\nIF N < 100 GOTO L2\nPRINT “LARGE”\nSTOP\nL2:\nPRINT “SMALL POSITIVE”\nSTOP\nN-ന്റെ ഇൻപുട്ട് മൂല്യം 120 ആണെങ്കിൽ, താഴെപ്പറയുന്നവയിൽ ഏത് പ്രസ്താവനയാണ് ശരി ?",
+  "options": [
+   "A) നെഗറ്റീവ്",
+   "B) സ്മോൾ പോസിറ്റീവ്",
+   "C) ലാർജ്",
+   "D) ഔട്ട്പുട്ട് ഇല്ല"
+  ],
+  "correct": 2,
+  "explanation": "N = 120 > 0 → L1; 120 < 100 തെറ്റ് → PRINT “LARGE”."
+ },
+ {
+  "no": 61,
+  "subject": "ശാസ്ത്രം",
+  "question": "സൈബർ ആക്രമണങ്ങളെ അവയുടെ സവിശേഷതകളുമായി പൊരുത്തപ്പെടുത്തുക.\n\nആക്രമണം\n1. ഫിഷിംഗ്\n2. സ്പൂഫിംഗ്\n3. സ്നിഫിംഗ്\n4. ഷോൾഡർ സർഫിംഗ്\n\nസവിശേഷത\na. നെറ്റ്വർക്ക് പാക്കറ്റുകൾ പിടിച്ചെടുക്കൽ\nb. വ്യാജ ഇ-മെയിലുകളോ വെബ്സൈറ്റുകളോ\nc. രഹസ്യ വിവരങ്ങൾ നേരിട്ട് നിരീക്ഷിക്കൽ\nd. വിശ്വസനീയമായ വ്യക്തി/സ്ഥാപനം എന്ന വ്യാജേന പ്രത്യക്ഷപ്പെടൽ\n\nശരിയായ ഉത്തരം തിരഞ്ഞെടുക്കുക.",
+  "options": [
+   "A) 1 – b, 2 – d, 3 – a, 4 – c",
+   "B) 1 – d, 2 – b, 3 – c, 4 – a",
+   "C) 1 – a, 2 – c, 3 – d, 4 – b",
+   "D) 1 – c, 2 – a, 3 – b, 4 – d"
+  ],
+  "correct": 0,
+  "explanation": "ഫിഷിംഗ് – വ്യാജ ഇ-മെയിൽ/സൈറ്റ്; സ്പൂഫിംഗ് – വിശ്വസ്തനായി ആൾമാറാട്ടം; സ്നിഫിംഗ് – പാക്കറ്റ് പിടിച്ചെടുക്കൽ; ഷോൾഡർ സർഫിംഗ് – നേരിട്ട് നോക്കി രഹസ്യം ചോർത്തൽ."
+ },
+ {
+  "no": 62,
+  "subject": "ശാസ്ത്രം",
+  "question": "ഗൂഗിളിന്റെ സ്വയം നിയന്ത്രിത കാർ (സെൽഫ് ഡ്രൈവിംഗ് കാർ) പദ്ധതി നിലവിൽ ഏത് കമ്പനിയാണ് നടത്തുന്നത് ?",
+  "options": [
+   "A) ടെസ്ല",
+   "B) വെയ്മോ",
+   "C) എൻവിഡിയ",
+   "D) ക്രൂസ്"
+  ],
+  "correct": 1,
+  "explanation": "ഗൂഗിളിന്റെ സെൽഫ് ഡ്രൈവിംഗ് പദ്ധതി ഇപ്പോൾ ആൽഫബെറ്റിന്റെ കീഴിലുള്ള വെയ്മോ (Waymo) ആണ്."
+ },
+ {
+  "no": 63,
+  "subject": "ശാസ്ത്രം",
+  "question": "ക്ലൗഡ് (Claude) എന്ന ജനറേറ്റീവ് AI അസിസ്റ്റന്റ് വികസിപ്പിച്ചെടുത്തത് ഏത് കമ്പനിയാണ് ?",
+  "options": [
+   "A) ഗൂഗിൾ",
+   "B) മൈക്രോസോഫ്റ്റ്",
+   "C) ആന്ത്രോപിക്",
+   "D) ഓപ്പൺഎഐ"
+  ],
+  "correct": 2,
+  "explanation": "Claude – Anthropic."
+ },
+ {
+  "no": 64,
+  "subject": "ഭരണഘടന",
+  "question": "കേന്ദ്ര വിവരാവകാശ കമ്മീഷൻ നിലവിൽ വന്നത്",
+  "options": [
+   "A) 2005 ഒക്ടോബർ 15",
+   "B) 2005 ജൂൺ 15",
+   "C) 2005 ഒക്ടോബർ 12",
+   "D) 2005 ജൂൺ 12"
+  ],
+  "correct": 2,
+  "explanation": "വിവരാവകാശ നിയമം പാസായത് 2005 ജൂൺ 15 (പൂർണ്ണമായി പ്രാബല്യത്തിൽ: ഒക്ടോബർ 12); കേന്ദ്ര വിവരാവകാശ കമ്മീഷൻ – 2005 ഒക്ടോബർ 12."
+ },
+ {
+  "no": 65,
+  "subject": "ഭരണഘടന",
+  "question": "പോക്സോ നിയമപ്രകാരം ഒരു വ്യക്തി ലൈംഗീക ഉദ്ദേശത്തോടെ ഒരു കുട്ടിയെ സ്വകാര്യ ഭാഗങ്ങളിൽ സ്പർശിക്കുകയോ, സ്പർശിക്കുവാൻ പ്രേരിപ്പിക്കുകയോ ചെയ്താൽ, അത് എന്ത് കുറ്റമായി കണക്കാക്കുന്നത് ?",
+  "options": [
+   "A) ലൈംഗീക പീഡനം",
+   "B) ലൈംഗീകാതിക്രമം",
+   "C) പ്രവേശിത ലൈംഗീകാതിക്രമം",
+   "D) ഗൗരവതരമായ പ്രവേശിത ലൈംഗീകാതിക്രമം"
+  ],
+  "correct": 1,
+  "explanation": "POCSO: ലൈംഗിക ഉദ്ദേശ്യത്തോടെയുള്ള സ്പർശനം = Sexual Assault (ലൈംഗികാതിക്രമം)."
+ },
+ {
+  "no": 66,
+  "subject": "ഭരണഘടന",
+  "question": "മാതാപിതാക്കളുടെയും മുതിർന്ന പൗരന്മാരുടെയും സംരക്ഷണവും ക്ഷേമവും ആക്ട്, 2007 പ്രകാരം ''മുതിർന്ന പൗരൻ'' എന്നാൽ",
+  "options": [
+   "A) അറുപത്തിയഞ്ച് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള, ഇന്ത്യൻ പൗരനായ ഏതൊരു വ്യക്തിയെയും അർത്ഥമാക്കുന്നു.",
+   "B) അറുപത് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള, ഇന്ത്യൻ പൗരനല്ലാത്ത ഏതൊരു വ്യക്തിയെയും അർത്ഥമാക്കുന്നു.",
+   "C) അറുപത് വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള, ഇന്ത്യൻ പൗരനായ ഏതൊരു വ്യക്തിയെയും അർത്ഥമാക്കുന്നു.",
+   "D) അറുപത് വയസ്സോ അതിൽ താഴെ പ്രായമുള്ള, ഇന്ത്യൻ പൗരനായ ഏതൊരു വ്യക്തിയെയും അർത്ഥമാക്കുന്നു."
+  ],
+  "correct": 2,
+  "explanation": "2007 ആക്ട് പ്രകാരം 60 വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള ഇന്ത്യൻ പൗരൻ."
+ },
+ {
+  "no": 67,
+  "subject": "ഭരണഘടന",
+  "question": "ഉപഭോക്തൃ സംരക്ഷണ നിയമപ്രകാരം ഉപഭോക്താക്കൾക്ക് എത്ര അവകാശങ്ങളുണ്ട് ?",
+  "options": [
+   "A) 4",
+   "B) 6",
+   "C) 5",
+   "D) 7"
+  ],
+  "correct": 1,
+  "explanation": "കീ പ്രകാരം ഉത്തരം B (6)."
+ },
+ {
+  "no": 68,
+  "subject": "ഭരണഘടന",
+  "question": "ഗാർഹിക പീഡന നിയമത്തിലെ സെക്ഷൻ 18 പ്രകാരം ആർക്കാണ് സംരക്ഷണ ഉത്തരവുകൾ നൽകാൻ കഴിയുക ?",
+  "options": [
+   "A) സബ് ഇൻസ്പെക്ടർ",
+   "B) ഇൻസ്പെക്ടർ ഓഫ് പോലീസ്",
+   "C) പഞ്ചായത്ത് പ്രസിഡന്റ്",
+   "D) മജിസ്ട്രേറ്റ്"
+  ],
+  "correct": 3,
+  "explanation": "ഗാർഹിക പീഡന നിരോധന നിയമം 2005, സെക്ഷൻ 18 – സംരക്ഷണ ഉത്തരവ് നൽകാൻ അധികാരം മജിസ്ട്രേറ്റിന്."
+ },
+ {
+  "no": 69,
+  "subject": "കേരളം",
+  "question": "കേരളത്തിൽ നിലവിലെ മുഖ്യ വിവരാവകാശ കമ്മീഷണർ ആരാണ് ?",
+  "options": [
+   "A) വി. ഹരി നായർ",
+   "B) പാലാട്ട് മോഹന്ദാസ്",
+   "C) വിശ്വാസ് മെഹ്ത",
+   "D) പാർത്ഥ ബിശ്വാസ്"
+  ],
+  "correct": 0,
+  "explanation": "കീ പ്രകാരം ഉത്തരം A (വി. ഹരി നായർ). ഇത്തരം പദവികൾ മാറാം – കറന്റ് അഫയേഴ്സ് ആയി ഉറപ്പിക്കുക."
+ },
+ {
+  "no": 70,
+  "subject": "കേരളം",
+  "question": "പതിനാറാം കേരള നിയമസഭയിലെ പട്ടികജാതി പട്ടികവർഗ്ഗ, പിന്നോക്ക വിഭാഗ ക്ഷേമ വകുപ്പ് മന്ത്രി",
+  "options": [
+   "A) പാലാട്ട് മോഹന്ദാസ്",
+   "B) വിശ്വാസ് മെഹ്ത",
+   "C) പാർത്ഥ ബിശ്വാസ്",
+   "D) കെ. എ. തുളസി"
+  ],
+  "correct": 3,
+  "explanation": "കീ പ്രകാരം ഉത്തരം D."
+ },
+ {
+  "no": 71,
+  "subject": "ഗണിതം",
+  "question": "5^(3x − 1) ÷ 25 = 125 ആണെങ്കിൽ ‘x’ ന്റെ വില എത്ര ?",
+  "options": [
+   "A) 2",
+   "B) 3",
+   "C) 1",
+   "D) 4"
+  ],
+  "correct": 0,
+  "explanation": "5^(3x−1) = 125 × 25 = 5³ × 5² = 5⁵ ⇒ 3x − 1 = 5 ⇒ x = 2."
+ },
+ {
+  "no": 72,
+  "subject": "ഗണിതം",
+  "question": "11³ + 12³ + 13³ + .... + 25³ ന്റെ തുക കാണുക.",
+  "options": [
+   "A) 102100",
+   "B) 103600",
+   "C) 101600",
+   "D) 102600"
+  ],
+  "correct": 3,
+  "explanation": "Σn³ = [n(n+1)/2]². 1 മുതൽ 25 വരെ = 325² = 105625; 1 മുതൽ 10 വരെ = 55² = 3025. ഉത്തരം = 105625 − 3025 = 102600."
+ },
+ {
+  "no": 73,
+  "subject": "ഗണിതം",
+  "question": "ശ്രേണിയിലെ അടുത്ത പദം കണ്ടെത്തുക.\n13, 14, 23, 48, 97, 178, ?",
+  "options": [
+   "A) 259",
+   "B) 278",
+   "C) 269",
+   "D) 299"
+  ],
+  "correct": 3,
+  "explanation": "വ്യത്യാസങ്ങൾ: 1, 9, 25, 49, 81 (ഒറ്റസംഖ്യകളുടെ വർഗ്ഗം 1², 3², 5², 7², 9²). അടുത്തത് 11² = 121 ⇒ 178 + 121 = 299."
+ },
+ {
+  "no": 74,
+  "subject": "ഗണിതം",
+  "question": "അക്ഷരങ്ങൾ സ്വാഭാവിക ക്രമത്തിൽ പുനഃക്രമീകരിച്ച് ഒറ്റയാനെ കണ്ടെത്തുക.",
+  "options": [
+   "A) TOGA",
+   "B) GEPONI",
+   "C) RARPOT",
+   "D) LEEGA"
+  ],
+  "correct": 0,
+  "explanation": "TOGA = GOAT (മൃഗം); GEPONI = PIGEON, RARPOT = PARROT, LEEGA = EAGLE (പക്ഷികൾ). ഒറ്റയാൻ: TOGA."
+ },
+ {
+  "no": 75,
+  "subject": "ഗണിതം",
+  "question": "2026 ആഗസ്റ്റ് 15 ശനിയാഴ്ച ആണെങ്കിൽ 2030 ആഗസ്റ്റ് 15 ഏത് ദിവസം ആയിരിക്കും ?",
+  "options": [
+   "A) ശനിയാഴ്ച",
+   "B) വ്യാഴാഴ്ച",
+   "C) തിങ്കളാഴ്ച",
+   "D) വെള്ളിയാഴ്ച"
+  ],
+  "correct": 1,
+  "explanation": "4 വർഷം ഇടയിൽ ഒരു അധിവർഷം (2028) ⇒ 365×4 + 1 = 1461 ദിവസം = 208 ആഴ്ച + 5 ദിവസം. ശനി + 5 = വ്യാഴം."
+ },
+ {
+  "no": 76,
+  "subject": "ഗണിതം",
+  "question": "രണ്ട് സംഖ്യകൾ ഒരു മൂന്നാമത്തെ സംഖ്യയേക്കാൾ യഥാക്രമം 20%, 50% കൂടുതലാണ് എങ്കിൽ ആ രണ്ട് സംഖ്യകൾ തമ്മിലുള്ള അനുപാതം എത്രയാണ് ?",
+  "options": [
+   "A) 2 : 5",
+   "B) 6 : 7",
+   "C) 3 : 5",
+   "D) 4 : 5"
+  ],
+  "correct": 3,
+  "explanation": "മൂന്നാമത്തെ സംഖ്യ = 100 ⇒ സംഖ്യകൾ 120, 150 ⇒ 120 : 150 = 4 : 5."
+ },
+ {
+  "no": 77,
+  "subject": "ഗണിതം",
+  "question": "രാജു കിഴക്കോട്ട് 4 കിലോമീറ്റർ നടക്കുന്നു. പിന്നീട് അയാൾ ഇടത്തോട്ട് തിരിഞ്ഞ് വീണ്ടും 3 കിലോമീറ്റർ നടക്കുന്നു. അയാൾ തന്റെ പ്രാരംഭ സ്ഥാനത്തിൽ നിന്ന് ഏത് ദിശയിലാണ്, എത്ര ദൂരത്താണ് ?",
+  "options": [
+   "A) തെക്ക്-പടിഞ്ഞാറ്, 5 km",
+   "B) വടക്ക്-കിഴക്ക്, 5 km",
+   "C) തെക്ക്-കിഴക്ക്, 5 km",
+   "D) വടക്ക്-പടിഞ്ഞാറ്, 5 km"
+  ],
+  "correct": 1,
+  "explanation": "കിഴക്കോട്ട് നടക്കുമ്പോൾ ഇടത്തോട്ട് = വടക്ക്. 4 km കിഴക്ക്, 3 km വടക്ക് ⇒ ദൂരം = √(4² + 3²) = 5 km, ദിശ വടക്ക്-കിഴക്ക്."
+ },
+ {
+  "no": 78,
+  "subject": "ഗണിതം",
+  "question": "21 സെന്റീമീറ്റർ നീളവും 8 സെന്റീമീറ്റർ പുറം വ്യാസവുമുള്ള ഒരു പൊള്ളയായ ഇരുമ്പ് പൈപ്പ് ഉണ്ട്. പൈപ്പിന്റെ കനം 1 സെന്റീമീറ്ററും, 1 ഘന സെന്റീമീറ്റർ (cm³) ഇരുമ്പിന്റെ ഭാരം 8 ഗ്രാമും ആണെങ്കിൽ പൈപ്പിന്റെ ആകെ ഭാരം എത്രയാണ് ?",
+  "options": [
+   "A) 3.6 kg",
+   "B) 36 kg",
+   "C) 3.696 kg",
+   "D) 36.9 kg"
+  ],
+  "correct": 2,
+  "explanation": "പുറം ആരം R = 4, അകത്തെ ആരം r = 3. വ്യാപ്തം = π(R² − r²)h = (22/7) × 7 × 21 = 462 cm³. ഭാരം = 462 × 8 = 3696 g = 3.696 kg."
+ },
+ {
+  "no": 79,
+  "subject": "ഗണിതം",
+  "question": "A ഒറ്റയ്ക്ക് ഒരു ജോലി ചെയ്യാൻ 6 ദിവസവും B ഒറ്റയ്ക്ക് അതേ ജോലി ചെയ്യാൻ 8 ദിവസവും വേണം. A യും B യും ചേർന്ന് ആ ജോലി 3,200 രൂപയ്ക്ക് ചെയ്യാമെന്ന് കരാർ എടുത്തു. C യുടെ സഹായത്തോടെ അവർ ആ ജോലി 3 ദിവസം കൊണ്ട് പൂർത്തിയാക്കി എങ്കിൽ C യ്ക്ക് എത്ര രൂപയാണ് നൽകേണ്ടത് ?",
+  "options": [
+   "A) 375",
+   "B) 400",
+   "C) 600",
+   "D) 800"
+  ],
+  "correct": 1,
+  "explanation": "3 ദിവസത്തെ ജോലി: A = 3/6 = 1/2, B = 3/8, C = 1 − 1/2 − 3/8 = 1/8. C യുടെ വിഹിതം = 3200 × 1/8 = ₹400."
+ },
+ {
+  "no": 80,
+  "subject": "ഗണിതം",
+  "question": "A+B എന്നാൽ A എന്നത് B യുടെ സഹോദരിയാണ്. A@B എന്നാൽ A എന്നത് B യുടെ ഭാര്യയാണ്. A#B എന്നാൽ A എന്നത് B യുടെ മകനാണ്. A%B എന്നാൽ A എന്നത് B യുടെ അമ്മയാണ്.\n‘P@Q#R%S+O’ എന്ന വാക്യത്തിൽ S ഉം P ഉം തമ്മിലുള്ള ബന്ധം എന്താണ് ?",
+  "options": [
+   "A) സഹോദരി",
+   "B) നാത്തൂൻ",
+   "C) സഹോദരൻ",
+   "D) അമ്മ"
+  ],
+  "correct": 1,
+  "explanation": "P = Q വിന്റെ ഭാര്യ; Q = R ന്റെ മകൻ; R = S ന്റെ അമ്മ ⇒ S = Q വിന്റെ സഹോദരി; S + O ⇒ S സ്ത്രീ. അപ്പോൾ S = P യുടെ ഭർത്താവിന്റെ സഹോദരി = നാത്തൂൻ."
+ },
+ {
+  "no": 81,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "The District Collector ___________ the strike after a successful negotiation with the union leaders.",
+  "options": [
+   "A) called at",
+   "B) called off",
+   "C) called for",
+   "D) called on"
+  ],
+  "correct": 1,
+  "explanation": "call off = cancel/withdraw (റദ്ദാക്കുക)."
+ },
+ {
+  "no": 82,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "One should learn to love",
+  "options": [
+   "A) himself",
+   "B) herself",
+   "C) oneself",
+   "D) themselves"
+  ],
+  "correct": 2,
+  "explanation": "'One' എന്ന subject ന് reflexive pronoun 'oneself'."
+ },
+ {
+  "no": 83,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "Choose the correct plural form of the word ‘Crisis’.",
+  "options": [
+   "A) Crisises",
+   "B) Crisis",
+   "C) Crises",
+   "D) Crisies"
+  ],
+  "correct": 2,
+  "explanation": "Crisis → Crises (Greek origin: -is → -es; analysis→analyses, basis→bases)."
+ },
+ {
+  "no": 84,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "Add the correct question tag.\nHe hardly ever completes his work on time, ______ ?",
+  "options": [
+   "A) doesn’t he ?",
+   "B) does he ?",
+   "C) is he ?",
+   "D) isn’t he ?"
+  ],
+  "correct": 1,
+  "explanation": "hardly ever = negative meaning ⇒ tag positive: does he?"
+ },
+ {
+  "no": 85,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "Choose the synonyms of the word ‘mundane’.\ni. ordinary  ii. prosaic  iii. earthly  iv. noble",
+  "options": [
+   "A) i only",
+   "B) i, iii and iv",
+   "C) i, ii and iii",
+   "D) All the above"
+  ],
+  "correct": 2,
+  "explanation": "mundane = ordinary, prosaic, earthly. 'noble' is not a synonym."
+ },
+ {
+  "no": 86,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "A statement of Assertion (A) is followed by a statement of Reason (R). Choose the correct option.\n\nAssertion (A) : The passive voice of the command, “Close the door” is, “Let the door be closed.”\n\nReason (R) : When changing an imperative sentence containing an object into passive voice the sentence begins with ‘Let’, followed by the object and be + past participle.",
+  "options": [
+   "A) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+   "B) Both (A) and (R) are true but (R) is not the correct explanation of (A)",
+   "C) (A) is true but (R) is false",
+   "D) (A) is false but (R) is true"
+  ],
+  "correct": 0,
+  "explanation": "Imperative → passive: Let + object + be + V3. (A), (R) രണ്ടും ശരി; (R) ആണ് (A) ന് വിശദീകരണം."
+ },
+ {
+  "no": 87,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "Find the correctly spelt word.",
+  "options": [
+   "A) ENTREPRANEUR",
+   "B) ENTRAPRENEUR",
+   "C) ENTREPRENEUR",
+   "D) ENTREPRENUER"
+  ],
+  "correct": 2,
+  "explanation": "ശരിയായ സ്പെല്ലിംഗ്: ENTREPRENEUR."
+ },
+ {
+  "no": 88,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "In which of the following sentences is the word ‘Object’ used as a verb ?",
+  "options": [
+   "A) The mystery object was found in the attic.",
+   "B) I have no object in mind but to help you.",
+   "C) Many citizens object the new tax laws.",
+   "D) The teacher placed an object on the table."
+  ],
+  "correct": 2,
+  "explanation": "'object' = എതിർക്കുക (verb) – Many citizens object ... . മറ്റുള്ളവയിൽ noun (വസ്തു/ലക്ഷ്യം)."
+ },
+ {
+  "no": 89,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "The correct meaning of déjà vu is",
+  "options": [
+   "A) A sudden fear",
+   "B) A feeling of having experienced something before",
+   "C) A forgotten memory",
+   "D) A dreamlike illusion"
+  ],
+  "correct": 1,
+  "explanation": "déjà vu = മുൻപ് അനുഭവിച്ചതുപോലെയുള്ള തോന്നൽ."
+ },
+ {
+  "no": 90,
+  "subject": "ഇംഗ്ലീഷ്",
+  "question": "Fill in the blanks using the most appropriate articles.\n\nThe candidate is _______________ university graduate with ________ honest character.",
+  "options": [
+   "A) a, a",
+   "B) an, a",
+   "C) a, an",
+   "D) an, an"
+  ],
+  "correct": 2,
+  "explanation": "university – /ju:/ ശബ്ദം ⇒ 'a'; honest – 'h' നിശ്ശബ്ദം, സ്വരശബ്ദം ⇒ 'an'."
+ },
+ {
+  "no": 91,
+  "subject": "മലയാളം",
+  "question": "പെരുങ്കായം എന്ന പദം പിരിച്ചെഴുതുന്നത് എങ്ങനെ ?",
+  "options": [
+   "A) പെരു + കായം",
+   "B) പെര് + കായം",
+   "C) പെരും + കായം",
+   "D) പെരുൻ + കായം"
+  ],
+  "correct": 2,
+  "explanation": "പെരുങ്കായം = പെരും + കായം."
+ },
+ {
+  "no": 92,
+  "subject": "മലയാളം",
+  "question": "താഴെ കൊടുത്തിരിക്കുന്നതിൽ സമാനാർത്ഥം ഉള്ള പദം അല്ലാത്തതേത് ?",
+  "options": [
+   "A) കപി",
+   "B) ഗവലം",
+   "C) ബാഹുകം",
+   "D) കീശം"
+  ],
+  "correct": 1,
+  "explanation": "കപി, ബാഹുകം, കീശം = കുരങ്ങ്. ഗവലം = പോത്ത് (എരുമ)."
+ },
+ {
+  "no": 93,
+  "subject": "മലയാളം",
+  "question": "നിഷാദൻ എന്ന പദത്തിന്റെ എതിർലിംഗം ഏത് ?",
+  "options": [
+   "A) നിഷൂദി",
+   "B) നിഷാദിത",
+   "C) നിഷാദിണി",
+   "D) നിഷാദി"
+  ],
+  "correct": 3,
+  "explanation": "നിഷാദൻ – നിഷാദി (സ്ത്രീലിംഗം)."
+ },
+ {
+  "no": 94,
+  "subject": "മലയാളം",
+  "question": "ഉന്മീലനം എന്ന വാക്കിന്റെ വിപരീതപദം ഏത് ?",
+  "options": [
+   "A) സമീലനം",
+   "B) നിർമ്മീലനം",
+   "C) നിരുന്മീലനം",
+   "D) നിമീലനം"
+  ],
+  "correct": 3,
+  "explanation": "ഉന്മീലനം (കണ്ണ് തുറക്കൽ) × നിമീലനം (കണ്ണ് അടയ്ക്കൽ)."
+ },
+ {
+  "no": 95,
+  "subject": "മലയാളം",
+  "question": "ആയില്യക്കൊടി കെട്ടുക എന്ന ശൈലിയുടെ അർത്ഥം എന്ത് ?",
+  "options": [
+   "A) മംഗളമാക്കുക",
+   "B) തുടക്കം കുറിക്കുക",
+   "C) ശണ്ഠയ്ക്ക് പുറപ്പെടുക",
+   "D) സർവ്വവും നശിപ്പിക്കുക"
+  ],
+  "correct": 2,
+  "explanation": "ആയില്യക്കൊടി കെട്ടുക = ശണ്ഠയ്ക്ക് (കലഹത്തിന്) പുറപ്പെടുക."
+ },
+ {
+  "no": 96,
+  "subject": "മലയാളം",
+  "question": "താഴെ കൊടുത്തിരിക്കുന്ന പദങ്ങളിൽ ശരിയായ പദം അല്ലാത്തവ ഏതെല്ലാം ?\n1. നീഢം\n2. അന്തഃക്ഷോഭം\n3. സൃഷ്ടാവ്\n4. ദൃഢപ്രജ്ഞൻ",
+  "options": [
+   "A) 1, 3, 4",
+   "B) 1, 2, 3",
+   "C) 2, 4",
+   "D) 1, 3"
+  ],
+  "correct": 3,
+  "explanation": "ശരിയായ രൂപങ്ങൾ: സ്രഷ്ടാവ് (സൃഷ്ടാവ് തെറ്റ്); നീഡം (കീ പ്രകാരം 1-ഉം തെറ്റ്). അന്തഃക്ഷോഭം, ദൃഢപ്രജ്ഞൻ എന്നിവ ശരിയായ പദങ്ങൾ."
+ },
+ {
+  "no": 97,
+  "subject": "മലയാളം",
+  "question": "പറഞ്ഞയച്ചവൻ എന്ന വാക്കിന്റെ ഒറ്റപ്പദം",
+  "options": [
+   "A) പ്രേഷകൻ",
+   "B) പ്രേക്ഷകൻ",
+   "C) പ്രേക്ഷിതൻ",
+   "D) പ്രേക്ഷിതാവ്"
+  ],
+  "correct": 0,
+  "explanation": "പ്രേഷകൻ = അയച്ചവൻ. (പ്രേക്ഷകൻ = കാണുന്നവൻ.)"
+ },
+ {
+  "no": 98,
+  "subject": "മലയാളം",
+  "question": "സലിംഗ ബഹുവചന രൂപം ഏത് ?",
+  "options": [
+   "A) മനുഷ്യർ",
+   "B) മക്കൾ",
+   "C) ബന്ധുക്കൾ",
+   "D) ബാലികമാർ"
+  ],
+  "correct": 3,
+  "explanation": "സലിംഗ ബഹുവചനം – ലിംഗഭേദം സൂചിപ്പിക്കുന്ന ബഹുവചനം: ബാലികമാർ (സ്ത്രീലിംഗം)."
+ },
+ {
+  "no": 99,
+  "subject": "മലയാളം",
+  "question": "മഞ്ഞിന്റെ പര്യായം അല്ലാത്ത പദം ഏത് ?",
+  "options": [
+   "A) തുഷാരം",
+   "B) നീഹാരം",
+   "C) പ്രാലേയം",
+   "D) ധൗതം"
+  ],
+  "correct": 3,
+  "explanation": "തുഷാരം, നീഹാരം, പ്രാലേയം = മഞ്ഞ്. ധൗതം = കഴുകിയത്/വെളുത്തത്."
+ },
+ {
+  "no": 100,
+  "subject": "മലയാളം",
+  "question": "ശരിയായ വാക്യം കണ്ടെത്തുക.",
+  "options": [
+   "A) ഞാൻ ആവർത്തിച്ചു പറയുകയാണ് സൂക്ഷിച്ചാൽ ദു:ഖിക്കണ്ട.",
+   "B) പ്രായപൂർത്തി തികഞ്ഞവർക്ക് വോട്ടവകാശമുണ്ട്.",
+   "C) ഞാൻ പലതവണ വിവാഹം കഴിക്കണമെന്നു വിചാരിച്ചിട്ടും നടന്നില്ല.",
+   "D) ഞാൻ സാധാരണ ശ്രദ്ധിച്ച് വണ്ടി ഓടിക്കുകയാണ് പതിവ്."
+  ],
+  "correct": 0,
+  "explanation": "കീ പ്രകാരം ഉത്തരം A."
+ }
+];
+
+/* ============================================================
+   DATA INTEGRITY
+   ============================================================ */
+(function prepareData(){
+  sourceQuestions.forEach((q, i) => {
+    q.no = q.no || (i + 1);
+    const ov = KEY_OVERRIDES[q.no];
+    if (ov) q.correct = 'ABCD'.indexOf(String(ov).toUpperCase());
+    q.dropped = DROPPED_QUESTIONS.indexOf(q.no) !== -1;
+    if (!q.options || q.options.length !== 4 || !(q.correct >= 0 && q.correct < 4)) {
+      console.error('Invalid question data at Q' + q.no);
+    }
+    Object.freeze(q.options); Object.freeze(q);
+  });
+  Object.freeze(sourceQuestions);
+})();
+/* Fingerprint of question text + options (answers/explanations excluded), so a
+   saved attempt is discarded only if the questions themselves change. */
+const DATA_HASH = (function(){
+  let h = 5381;
+  const s = sourceQuestions.map(q => q.question + '|' + q.options.join('|')).join('||');
+  for (let i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+})();
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let questions = [];
+let questionStates = [];
+let currentIndex = 0;
+let timerInterval = null;
+let timeRemaining = 0;          // seconds (float-safe: we keep integer display)
+let lastTick = 0;
+let isSubmitted = false, isPaused = false, isAutoPaused = false, isStudyPaused = false;
+let lastSaveTime = 0, saveTimeout = null;
+let startedAt = 0, reviewFilter = 'all';
+
+const THEMES = ['light', 'dark', 'sepia'];
+const THEME_LABELS = ['🌙 Dark', '📜 Sepia', '☀️ Light'];   // label = what the NEXT click gives
+let themeIndex = 0;
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+
+/* ---------- safe text helpers (no raw HTML from data) ---------- */
+function escapeHtml(str){
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function richText(str){            // escape, then allow **bold**
+  return escapeHtml(str).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+
+/* ============================================================
+   THEME
+   ============================================================ */
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+  $('themeBtn').textContent = THEME_LABELS[themeIndex];
+}
+function cycleTheme(){
+  themeIndex = (themeIndex + 1) % THEMES.length;
+  applyTheme();
+  try { localStorage.setItem('kpsc_theme', THEMES[themeIndex]); } catch(e) {}
+}
+(function loadTheme(){
+  try {
+    const saved = localStorage.getItem('kpsc_theme');
+    if (saved && THEMES.includes(saved)) themeIndex = THEMES.indexOf(saved);
+  } catch(e) {}
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+})();
+
+/* ============================================================
+   SAVE / RESTORE
+   ============================================================ */
+function saveAttempt(){
+  if (isSubmitted || !questions.length) return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      version: STORAGE_VERSION, hash: DATA_HASH, timestamp: Date.now(),
+      currentIndex, timeRemaining, startedAt,
+      questionStates, totalQuestions: questions.length
+    }));
+    lastSaveTime = Date.now();
+    showSaveStatus();
+  } catch(e) {}
+}
+function showSaveStatus(){
+  const el = $('saveStatus'); if (!el) return;
+  el.classList.add('visible');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('visible'), 1500);
+}
+function throttledSave(){
+  const now = Date.now();
+  if (now - lastSaveTime > 2000) saveAttempt();
+  else { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAttempt, 2000 - (now - lastSaveTime)); }
+}
+function getSavedAttempt(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d || d.version !== STORAGE_VERSION || d.hash !== DATA_HASH) return null;
+    if (!Array.isArray(d.questionStates) || d.questionStates.length !== sourceQuestions.length) return null;
+    if (!(d.timeRemaining > 0)) return null;
+    return d;
+  } catch(e) { return null; }
+}
+const formatTimeAgo = ts => {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return s + ' sec ago';
+  if (s < 3600) return Math.floor(s / 60) + ' min ago';
+  if (s < 86400) return Math.floor(s / 3600) + ' hr ago';
+  return Math.floor(s / 86400) + ' day(s) ago';
+};
+const formatTimeLeft = sec => {
+  sec = Math.max(0, Math.floor(sec));
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  return (h > 0 ? h + 'h ' : '') + m + 'm ' + s + 's';
+};
+
+/* ============================================================
+   START / RESUME
+   ============================================================ */
+function blankState(){ return { selectedOption: null, status: 'idle', markedForReview: false, visited: false }; }
+
+function showIntro(){
+  $('introView').style.display = 'block';
+  $('iTotal').textContent = sourceQuestions.length;
+  $('iTime').textContent = Math.round(TOTAL_TIME_SEC / 60);
+}
+function checkSavedAndShowBanner(saved){
+  const answered = saved.questionStates.filter(s => s.status === 'saved').length;
+  $('resumeInfo').innerHTML =
+    'Saved at <strong>Q' + (saved.currentIndex + 1) + '/' + saved.totalQuestions + '</strong> · ' +
+    '<strong>' + answered + '</strong> answered · ' +
+    '<strong>' + formatTimeLeft(saved.timeRemaining) + '</strong> left · ' +
+    'saved <strong>' + formatTimeAgo(saved.timestamp) + '</strong>';
+  $('resumeBanner').style.display = 'block';
+}
+function hideBanner(){ $('resumeBanner').style.display = 'none'; }
+
+function resumeAttempt(){
+  const saved = getSavedAttempt();
+  if (!saved) { startFresh(); return; }
+  questions = sourceQuestions;
+  timeRemaining = saved.timeRemaining;
+  startedAt = saved.startedAt || Date.now();
+  currentIndex = Math.min(Math.max(saved.currentIndex | 0, 0), questions.length - 1);
+  isSubmitted = isPaused = isAutoPaused = isStudyPaused = false;
+  questionStates = saved.questionStates.map(st => Object.assign(blankState(), {
+    selectedOption: st.selectedOption, status: st.status,
+    markedForReview: !!st.markedForReview, visited: !!st.visited
+  }));
+  hideBanner(); $('introView').style.display = 'none';
+  launchTest();
+}
+function startFresh(){
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  hideBanner();
+  showIntro();
+}
+function startNewTest(){
+  questions = sourceQuestions;
+  timeRemaining = TOTAL_TIME_SEC;
+  startedAt = Date.now();
+  currentIndex = 0; reviewFilter = 'all';
+  isSubmitted = isPaused = isAutoPaused = isStudyPaused = false;
+  questionStates = questions.map(blankState);
+  questionStates[0].visited = true;
+  $('introView').style.display = 'none';
+  launchTest();
+}
+function launchTest(){
+  $('testView').style.display = 'flex';
+  $('testHeader').style.display = 'flex';
+  $('resultsView').classList.remove('visible');
+  $('pauseOverlay').classList.remove('visible');
+  $('pauseBtn').textContent = '⏸ Pause';
+  $('pauseBtn').classList.remove('resume');
+  $('questionPanel').classList.remove('locked');
+  $('sidebar').classList.remove('locked');
+  $('timerBox').classList.remove('paused', 'warning');
+  $('studyPauseBar').classList.remove('visible');
+  applyTheme();
+  lastTick = Date.now();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 500);
+  updateTimerDisplay();
+  renderQuestion();
+  saveAttempt();
+}
+
+/* Wait for cloud sync (if sync.js present) before deciding */
+async function initTest(){
+  try {
+    if (window.KPSC_Sync && window.KPSC_Sync.whenReady) await window.KPSC_Sync.whenReady(4000);
+  } catch(e) {}
+  $('syncLoader').style.display = 'none';
+  const saved = getSavedAttempt();
+  if (saved) checkSavedAndShowBanner(saved); else showIntro();
+}
+/* Never let a background cloud merge reload the page mid-exam */
+window.addEventListener('kpsc-sync-applied', function(e){
+  if (!isSubmitted) { e.preventDefault(); console.log('Cloud data merged in background.'); }
+});
+
+/* ============================================================
+   TIMER  (uses real elapsed time, so throttled tabs cannot drift)
+   ============================================================ */
+function tickTimer(){
+  const now = Date.now();
+  const delta = (now - lastTick) / 1000;
+  lastTick = now;
+  if (isSubmitted || isPaused || isStudyPaused) return;
+  const before = Math.ceil(timeRemaining);
+  timeRemaining = Math.max(0, timeRemaining - delta);
+  if (Math.ceil(timeRemaining) !== before) updateTimerDisplay();
+  if (timeRemaining <= 0) { submitTest(true); return; }
+  if (Math.ceil(timeRemaining) % 15 === 0 && now - lastSaveTime > 5000) saveAttempt();
+}
+function updateTimerDisplay(){
+  const t = Math.ceil(timeRemaining);
+  $('timerDisplay').textContent = pad(Math.floor(t / 3600)) + ':' + pad(Math.floor((t % 3600) / 60)) + ':' + pad(t % 60);
+  const box = $('timerBox');
+  box.classList.toggle('warning', t <= 300 && t > 0 && !isPaused && !isStudyPaused);
+}
+
+/* ============================================================
+   PAUSE
+   ============================================================ */
+function togglePause(){
+  if (isSubmitted) return;
+  if (isStudyPaused) { resumeStudy(); return; }
+  isPaused ? resumeTest() : pauseTest(false);
+}
+function pauseTest(auto){
+  if (isPaused || isSubmitted) return;
+  isPaused = true; isAutoPaused = auto;
+  $('pauseIcon').textContent  = auto ? '🔒' : '⏸';
+  $('pauseTitle').textContent = auto ? 'Exam Auto-Paused' : 'Exam Paused';
+  $('pauseMessage').innerHTML = auto
+    ? 'Tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.'
+    : 'പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  $('pauseOverlay').classList.add('visible');
+  $('pauseBtn').textContent = '▶ Resume'; $('pauseBtn').classList.add('resume');
+  $('timerBox').classList.add('paused'); $('timerBox').classList.remove('warning');
+  $('questionPanel').classList.add('locked'); $('sidebar').classList.add('locked');
+  saveAttempt();
+}
+function resumeTest(){
+  if (!isPaused || isSubmitted) return;
+  isPaused = isAutoPaused = false;
+  lastTick = Date.now();
+  $('pauseOverlay').classList.remove('visible');
+  $('pauseBtn').textContent = '⏸ Pause'; $('pauseBtn').classList.remove('resume');
+  $('timerBox').classList.remove('paused');
+  $('questionPanel').classList.remove('locked'); $('sidebar').classList.remove('locked');
+  updateTimerDisplay();
+}
+function startStudyPause(){
+  if (isStudyPaused || isSubmitted || isPaused) return;
+  isStudyPaused = true;
+  $('studyPauseBar').classList.add('visible');
+  $('timerBox').classList.add('paused'); $('timerBox').classList.remove('warning');
+}
+function resumeStudy(){
+  if (!isStudyPaused) return;
+  isStudyPaused = false; lastTick = Date.now();
+  $('studyPauseBar').classList.remove('visible');
+  $('timerBox').classList.remove('paused');
+  updateTimerDisplay();
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const isLocked = st => st.status === 'saved' || st.status === 'revealed';
+
+function renderQuestion(){
+  const q = questions[currentIndex], st = questionStates[currentIndex];
+  st.visited = true;
+  $('qNumber').textContent = 'Question ' + (currentIndex + 1) + ' / ' + questions.length;
+  $('qSubject').textContent = q.subject;
+  $('qText').textContent = q.question;
+  renderOptions(); renderExplanation(); renderActionButtons(); renderPalette(); updateStats();
+  throttledSave();
+}
+function renderOptions(){
+  const q = questions[currentIndex], st = questionStates[currentIndex];
+  const list = $('optionsList'); list.innerHTML = '';
+  const locked = isLocked(st);
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'option-btn'; btn.textContent = opt;
+    if (locked) {
+      btn.classList.add('locked');
+      if (i === q.correct) btn.classList.add('correct-highlight');
+      else if (i === st.selectedOption) btn.classList.add('wrong-highlight');
+    } else {
+      if (i === st.selectedOption) btn.classList.add('selected');
+      btn.onclick = () => selectOption(i);
+    }
+    list.appendChild(btn);
+  });
+}
+function selectOption(i){
+  const st = questionStates[currentIndex];
+  if (isLocked(st)) return;
+  st.selectedOption = i;
+  renderOptions(); renderActionButtons(); throttledSave();
+}
+function renderExplanation(){
+  const q = questions[currentIndex], st = questionStates[currentIndex];
+  const box = $('explanationBox'), content = $('expContent');
+  if (!isLocked(st)) { box.classList.remove('visible'); content.innerHTML = ''; return; }
+  const letter = 'ABCD'[q.correct];
+  let prefix = '';
+  if (q.dropped) prefix = '<span class="exp-wrong">⚠ ഈ ചോദ്യം PSC ഒഴിവാക്കി (scoring ഇല്ല).</span>\n\n';
+  else if (st.status === 'saved' && st.selectedOption === q.correct) prefix = '<span class="exp-correct">✔ ശരി!</span>\n\n';
+  else if (st.status === 'saved') prefix = '<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: <b>' + letter + '</b>\n\n';
+  else prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + letter + '</span>\n\n';
+  const ans = '<b>ഉത്തരം: ' + escapeHtml(q.options[q.correct]) + '</b>';
+  content.innerHTML = prefix + ans + (q.explanation ? '\n\n' + richText(q.explanation) : '');
+  box.classList.add('visible');
+}
+function renderActionButtons(){
+  const st = questionStates[currentIndex];
+  const c = $('actionButtons'); c.innerHTML = '';
+  const add = (label, cls, fn) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn ' + cls; b.textContent = label; b.onclick = fn; c.appendChild(b);
+  };
+  if (currentIndex > 0) add('← Prev', 'btn-prev', prevQuestion);
+  if (!isLocked(st)) {
+    if (st.selectedOption !== null) add('💾 Save', 'btn-save', saveAnswer);
+    if (st.selectedOption !== null) add('✖ Clear', 'btn-clear', clearResponse);
+    add('👁 Show Answer', 'btn-show', showAnswer);
+    add('🔖 ' + (st.markedForReview ? 'Unmark Review' : 'Mark for Review'), 'btn-review', markForReview);
+  } else {
+    add('✖ Clear Response', 'btn-clear', clearResponse);
+  }
+  add('Next →', 'btn-next', nextQuestion);
+}
+function renderPalette(){
+  const grid = $('paletteGrid'); grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'palette-btn'; b.textContent = i + 1;
+    b.setAttribute('aria-label', 'Question ' + (i + 1));
+    if (st.status === 'saved') b.classList.add('answered');
+    else if (st.markedForReview) b.classList.add('review');
+    else if (st.status === 'revealed') b.classList.add('revealed');
+    else if (st.visited) b.classList.add('visited-not-answered');
+    if (i === currentIndex) b.classList.add('active');
+    b.onclick = () => gotoQuestion(i);
+    grid.appendChild(b);
+  });
+}
+function updateStats(){
+  let answered = 0, review = 0, shown = 0;
+  questionStates.forEach(st => {
+    if (st.status === 'saved') answered++;
+    if (st.status === 'revealed') shown++;
+    if (st.markedForReview) review++;
+  });
+  $('statAnswered').textContent = answered;
+  $('statNotAnswered').textContent = questions.length - answered - shown;
+  $('statReview').textContent = review;
+  $('statShown').textContent = shown;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+function saveAnswer(){
+  const st = questionStates[currentIndex];
+  if (st.selectedOption === null || isLocked(st)) return;
+  st.status = 'saved'; startStudyPause(); renderQuestion(); saveAttempt();
+}
+function showAnswer(){
+  const st = questionStates[currentIndex];
+  if (isLocked(st)) return;
+  st.status = 'revealed'; startStudyPause(); renderQuestion(); saveAttempt();
+}
+function markForReview(){
+  const st = questionStates[currentIndex];
+  st.markedForReview = !st.markedForReview;
+  renderQuestion(); saveAttempt();
+  if (st.markedForReview && currentIndex < questions.length - 1) setTimeout(() => {
+    if (!isSubmitted && !isPaused) nextQuestion(true);
+  }, 350);
+}
+function clearResponse(){
+  const st = questionStates[currentIndex];
+  st.selectedOption = null; st.status = 'idle'; st.markedForReview = false;
+  renderQuestion(); saveAttempt();
+}
+function nextQuestion(silent){
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); window.scrollTo(0, 0); }
+  else if (silent !== true && confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?')) submitTest(false);
+}
+function prevQuestion(){
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex > 0) { currentIndex--; renderQuestion(); window.scrollTo(0, 0); }
+}
+function gotoQuestion(i){
+  if (isStudyPaused) resumeStudy();
+  currentIndex = i; renderQuestion(); window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   SUBMIT & RESULTS
+   ============================================================ */
+function submitTest(auto){
+  if (isSubmitted) return;
+  if (!auto) {
+    const unanswered = questionStates.filter(s => s.status !== 'saved').length;
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ?\n\nഉത്തരം നൽകാത്തവ: ' + unanswered)) return;
+  }
+  isSubmitted = true;
+  clearInterval(timerInterval);
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  renderResults();
+}
+
+function evaluate(){
+  const r = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, dropped: 0, subjects: {} };
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (!r.subjects[q.subject]) r.subjects[q.subject] = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, score: 0 };
+    const s = r.subjects[q.subject];
+    if (q.dropped) { r.dropped++; return; }
+    r.total++; s.total++;
+    if (st.status === 'saved' && st.selectedOption !== null) {
+      r.attempted++; s.attempted++;
+      if (st.selectedOption === q.correct) { r.correct++; s.correct++; s.score += MARK_PER_Q; }
+      else { r.wrong++; s.wrong++; s.score -= NEGATIVE_MARKING; }
+    } else { r.unanswered++; s.unanswered++; }
+  });
+  r.negative = r.wrong * NEGATIVE_MARKING;
+  r.score = r.correct * MARK_PER_Q - r.negative;
+  return r;
+}
+
+function renderResults(){
+  $('testView').style.display = 'none';
+  $('testHeader').style.display = 'none';
+  $('pauseOverlay').classList.remove('visible');
+  $('studyPauseBar').classList.remove('visible');
+  $('resultsView').classList.add('visible');
+
+  const r = evaluate();
+  const used = Math.min(TOTAL_TIME_SEC, TOTAL_TIME_SEC - Math.ceil(timeRemaining));
+  $('resultsSub').textContent = 'Time used: ' + formatTimeLeft(used) + ' of ' + Math.round(TOTAL_TIME_SEC / 60) + ' min · Max marks: ' + (r.total * MARK_PER_Q) +
+    (r.dropped ? ' · Dropped questions: ' + r.dropped : '');
+
+  const cards = [
+    { label: 'ആകെ ചോദ്യങ്ങൾ', value: r.total, cls: '' },
+    { label: 'ശ്രമിച്ചവ', value: r.attempted, cls: '' },
+    { label: 'ശരിയായവ', value: r.correct, cls: 'correct-card' },
+    { label: 'തെറ്റായവ', value: r.wrong, cls: 'wrong-card' },
+    { label: 'നെഗറ്റീവ് മാർക്ക്', value: '−' + r.negative.toFixed(2), cls: 'negative-card' },
+    { label: 'ആകെ സ്കോർ', value: r.score.toFixed(2), cls: 'score-card' },
+    { label: 'ഉത്തരം നൽകാത്തവ', value: r.unanswered, cls: '' },
+    { label: 'കൃത്യത (Accuracy)', value: (r.attempted ? Math.round(r.correct / r.attempted * 100) : 0) + '%', cls: '' }
+  ];
+  $('summaryCards').innerHTML = cards.map(c =>
+    '<div class="summary-card ' + c.cls + '"><div class="sc-value">' + c.value + '</div><div class="sc-label">' + c.label + '</div></div>').join('');
+
+  $('subjectTableBody').innerHTML = Object.keys(r.subjects).map(sub => {
+    const s = r.subjects[sub];
+    return '<tr><td>' + escapeHtml(sub) + '</td><td>' + s.total + '</td><td>' + s.attempted + '</td><td>' + s.correct +
+      '</td><td>' + s.wrong + '</td><td>' + s.unanswered + '</td><td>' + s.score.toFixed(2) + '</td><td>' +
+      (s.attempted ? Math.round(s.correct / s.attempted * 100) + '%' : '–') + '</td></tr>';
+  }).join('');
+
+  reviewFilter = 'issues';
+  renderFilters();
+  renderReviewList();
+  window.scrollTo(0, 0);
+}
+
+const FILTERS = [
+  ['issues', '❌ തെറ്റ് / വിട്ടവ'], ['wrong', 'തെറ്റായവ'], ['skipped', 'വിട്ടുകളഞ്ഞവ'],
+  ['revealed', '👁 ഉത്തരം കണ്ടവ'], ['review', '🔖 Review'], ['all', 'എല്ലാം']
+];
+function renderFilters(){
+  const row = $('filterRow'); row.innerHTML = '';
+  FILTERS.forEach(f => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'filter-btn' + (f[0] === reviewFilter ? ' active' : '');
+    b.textContent = f[1];
+    b.onclick = () => { reviewFilter = f[0]; renderFilters(); renderReviewList(); };
+    row.appendChild(b);
+  });
+}
+function renderReviewList(){
+  let html = '', count = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const attempted = st.status === 'saved' && st.selectedOption !== null;
+    const isWrong = attempted && st.selectedOption !== q.correct;
+    const isSkipped = !attempted && st.status !== 'revealed';
+    const isRevealed = st.status === 'revealed';
+    const pass = {
+      issues:   isWrong || isSkipped || isRevealed,
+      wrong:    isWrong, skipped: isSkipped, revealed: isRevealed,
+      review:   st.markedForReview, all: true
+    }[reviewFilter];
+    if (!pass) return;
+    count++;
+    const label = isWrong ? '❌ തെറ്റായ ഉത്തരം' : isRevealed ? '👁 ഉത്തരം കണ്ടത്' : attempted ? '✅ ശരി' : '⏭ ഉത്തരം നൽകിയില്ല';
+    html += '<div class="detail-item">' +
+      '<div class="di-info"><strong>Q' + (i + 1) + '</strong> · ' + escapeHtml(q.subject) + ' · ' + label + (st.markedForReview ? ' · 🔖' : '') + '</div>' +
+      '<div class="di-question">' + escapeHtml(q.question) + '</div>' +
+      '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: ' + (st.selectedOption !== null
+          ? '<span class="' + (st.selectedOption === q.correct ? 'di-correct' : 'di-wrong') + '">' + escapeHtml(q.options[st.selectedOption]) + '</span>'
+          : '<em>നൽകിയിട്ടില്ല</em>') + '</div>' +
+      '<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">' + escapeHtml(q.options[q.correct]) + '</span></div>' +
+      (q.explanation ? '<div class="di-explanation">' + richText(q.explanation) + '</div>' : '') +
+      '</div>';
+  });
+  $('detailList').innerHTML = count ? html :
+    '<p style="color:var(--gray);text-align:center;padding:20px;">ഈ വിഭാഗത്തിൽ ചോദ്യങ്ങളൊന്നുമില്ല 🎉</p>';
+}
+
+function restartTest(){
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  $('resultsView').classList.remove('visible');
+  startNewTest();
+}
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+document.addEventListener('keydown', e => {
+  if (isSubmitted || !questions.length || $('testView').style.display === 'none') return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const tag = e.target && e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+  const key = e.key.toLowerCase();
+  if (isPaused) { if (key === 'p' || key === 'escape') { togglePause(); e.preventDefault(); } return; }
+  const st = questionStates[currentIndex], locked = isLocked(st);
+  if (key >= '1' && key <= '4' && !locked) { selectOption(parseInt(key, 10) - 1); e.preventDefault(); }
+  else if (key === 'enter' && !locked && st.selectedOption !== null) { saveAnswer(); e.preventDefault(); }
+  else if (key === ' ' && !locked) { showAnswer(); e.preventDefault(); }
+  else if (key === 'r' && !locked) { markForReview(); e.preventDefault(); }
+  else if (key === 'c') { clearResponse(); e.preventDefault(); }
+  else if (key === 'n' || key === 'arrowright') { nextQuestion(); e.preventDefault(); }
+  else if (key === 'arrowleft') { prevQuestion(); e.preventDefault(); }
+  else if (key === 'p' || key === 'escape') { togglePause(); e.preventDefault(); }
+  else if (key === 't') { cycleTheme(); e.preventDefault(); }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && questions.length && !isSubmitted && !isPaused && !isStudyPaused) pauseTest(true);
+  if (document.hidden) saveAttempt();
+});
+window.addEventListener('pagehide', saveAttempt);   // autosave on close/refresh – no annoying prompt needed
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('themeBtn').onclick       = cycleTheme;
+  $('pauseBtn').onclick       = togglePause;
+  $('overlayResumeBtn').onclick = togglePause;
+  $('resumeStudyBtn').onclick = resumeStudy;
+  $('submitBtn').onclick      = () => submitTest(false);
+  $('restartBtn').onclick     = restartTest;
+  $('startBtn').onclick       = startNewTest;
+  $('resumeBtn').onclick      = resumeAttempt;
+  $('freshBtn').onclick       = startFresh;
+  applyTheme();
+  initTest();
+});
+</script>
+</body>
+</html>
