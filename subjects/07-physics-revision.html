@@ -4,979 +4,1642 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>കേരള PSC ഭൗതികശാസ്ത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ്</title>
+<title>കേരള PSC ഭൗതികശാസ്ത്രം — സമ്പൂർണ്ണ വിഷ്വൽ റിവിഷൻ നോട്ട്സ്</title>
 <style>
   :root{
     --bg:#f4f6fb;--card:#ffffff;--ink:#1c2340;--muted:#5a6485;
-    --accent:#1d4ed8;--accent2:#1e40af;--gold:#e8a600;--green:#0f9d58;
+    --accent:#1d4ed8;--accent2:#1e40af;--gold:#d97706;--green:#0f9d58;
     --red:#d93025;--line:#e3e7f3;--purple:#6d28d9;--cyan:#0891b2;
+    --surface:#f8faff;
   }
   *{box-sizing:border-box;}
   body{
-    margin:0;padding:18px 12px 60px;
+    margin:0;padding:18px 12px 70px;
     background:linear-gradient(180deg,#eef2ff 0%,#f7f9fc 100%);
     font-family:"Noto Sans Malayalam","Manjari","Meera",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     color:var(--ink);line-height:1.75;font-size:16px;
   }
-  .wrap{max-width:1080px;margin:0 auto;}
+  .wrap{max-width:1120px;margin:0 auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
 
   header.hero{
-    background:linear-gradient(135deg,#1d4ed8 0%,#6d28d9 55%,#0891b2 100%);
-    color:#fff;border-radius:20px;padding:26px 24px;
-    box-shadow:0 10px 30px rgba(29,78,216,.28);margin-bottom:20px;
+    background:linear-gradient(135deg,#1e3a8a 0%,#4f46e5 52%,#0891b2 100%);
+    color:#fff;border-radius:20px;padding:28px 24px;
+    box-shadow:0 12px 32px rgba(29,78,216,.26);margin-bottom:20px;
+    position:relative;overflow:hidden;
   }
-  header.hero h1{margin:0 0 6px;font-size:1.6rem;}
-  header.hero p{margin:0;opacity:.95;font-size:.95rem;}
-  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;font-size:.82rem;}
+  header.hero h1{margin:0 0 8px;font-size:1.65rem;line-height:1.35;}
+  header.hero p{margin:0;opacity:.95;font-size:.96rem;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-size:.82rem;}
   .legend span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
-    padding:4px 10px;border-radius:30px;}
+    padding:4px 11px;border-radius:30px;backdrop-filter:blur(4px);}
 
-  .revision-tools{position:sticky;top:8px;z-index:20;background:rgba(255,255,255,.97);
-    border:1px solid var(--line);box-shadow:0 5px 20px rgba(28,35,64,.10);
-    border-radius:14px;padding:12px;margin:0 0 18px;backdrop-filter:blur(8px)}
-  .search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .search-row input{flex:1;min-width:180px;border:1px solid #c7d2fe;border-radius:10px;
-    padding:11px 12px;font:inherit;background:#fff;color:var(--ink)}
-  .tool-btn{border:1px solid #c7d2fe;background:#eef2ff;color:var(--accent);
-    padding:9px 12px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
-  .tool-btn:hover{background:var(--accent);color:#fff}
-  .revision-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
-    font-size:.82rem;color:var(--muted);margin-top:9px}
-  .progress-track{height:7px;background:#e5e9fb;border-radius:9px;overflow:hidden;margin-top:7px}
-  .progress-track span{display:block;width:0;height:100%;
-    background:linear-gradient(90deg,#0f9d58,#1d4ed8);transition:width .2s}
-  .study-tip{background:#eef2ff;border:1px dashed #a5b4fc;border-radius:12px;
-    padding:12px 14px;margin:0 0 16px}
-  .study-tip strong{color:var(--accent2)}
+  .revision-tools{
+    position:sticky;top:calc(8px + env(safe-area-inset-top,0px));z-index:25;
+    background:rgba(255,255,255,.97);border:1px solid var(--line);
+    box-shadow:0 6px 22px rgba(28,35,64,.10);border-radius:14px;
+    padding:12px 14px;margin:0 0 18px;backdrop-filter:blur(10px);
+  }
+  .search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .search-row input{
+    flex:1;min-width:200px;border:1px solid #c7d2fe;border-radius:10px;
+    padding:10px 13px;font:inherit;background:#fff;color:var(--ink);
+  }
+  .tool-btn{
+    border:1px solid #c7d2fe;background:#eef2ff;color:var(--accent);
+    padding:9px 12px;border-radius:10px;font:inherit;font-size:.88rem;
+    font-weight:700;cursor:pointer;transition:.15s;
+  }
+  .tool-btn:hover,.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .revision-meta{
+    display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
+    font-size:.82rem;color:var(--muted);margin-top:9px;
+  }
+  .progress-track{height:8px;background:#e5e9fb;border-radius:9px;overflow:hidden;margin-top:7px;}
+  .progress-track span{
+    display:block;width:0;height:100%;
+    background:linear-gradient(90deg,#0f9d58,#1d4ed8,#6d28d9);transition:width .25s;
+  }
+  .chips{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:4px;}
+  .chips a{
+    flex:0 0 auto;font-size:.78rem;font-weight:700;padding:3px 11px;
+    border-radius:99px;border:1px solid #c7d2fe;background:#eef2ff;
+    color:var(--accent);text-decoration:none;white-space:nowrap;
+  }
+  .chips a:hover{background:#dbeafe;}
+  .chips a.done{background:var(--green);border-color:var(--green);color:#fff;}
 
-  details.card{background:var(--card);border-radius:16px;margin-bottom:14px;
+  .study-tip{
+    background:#eef2ff;border:1px dashed #a5b4fc;border-radius:12px;
+    padding:12px 15px;margin:0 0 16px;font-size:.93rem;
+  }
+  .study-tip strong{color:var(--accent2);}
+
+  details.card{
+    background:var(--card);border-radius:16px;margin-bottom:15px;
     box-shadow:0 3px 14px rgba(28,35,64,.07);border:1px solid var(--line);
-    overflow:hidden;transition:.25s;}
+    overflow:hidden;transition:.25s;scroll-margin-top:165px;
+  }
   details.card[open]{box-shadow:0 8px 26px rgba(28,35,64,.12);}
-  summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;
+  summary{
+    cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;
     padding:16px 18px;background:linear-gradient(90deg,#eef2ff,#ffffff);
-    border-bottom:1px solid transparent;font-weight:700;user-select:none;}
+    border-bottom:1px solid transparent;font-weight:700;user-select:none;
+  }
   details[open] > summary{border-bottom:1px solid var(--line);}
   summary::-webkit-details-marker{display:none;}
-  summary::after{content:"▾";margin-left:auto;color:var(--accent);
-    font-size:1.1rem;transition:transform .25s;}
-  details[open] summary::after{transform:rotate(180deg);}
-  .num{flex:0 0 auto;background:linear-gradient(135deg,#1d4ed8,#6d28d9);
-    color:#fff;font-size:.72rem;font-weight:700;min-width:32px;height:28px;
-    padding:0 6px;border-radius:9px;display:flex;align-items:center;justify-content:center;}
-  .title{font-size:1rem;flex:1;}
-  .stars{flex:0 0 auto;font-size:.85rem;letter-spacing:-1px;
-    background:#fff8e1;border:1px solid #ffe08a;padding:2px 8px;
-    border-radius:20px;color:var(--gold);}
-  .content{padding:16px 18px 20px;}
+  summary::after{
+    content:"▾";margin-left:auto;color:var(--accent);
+    font-size:1.1rem;transition:transform .25s;
+  }
+  details[open] > summary::after{transform:rotate(180deg);}
+  .num{
+    flex:0 0 auto;background:linear-gradient(135deg,#1d4ed8,#6d28d9);
+    color:#fff;font-size:.75rem;font-weight:800;min-width:36px;height:28px;
+    padding:0 7px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  }
+  .title{font-size:1.02rem;flex:1;}
+  .stars{
+    flex:0 0 auto;font-size:.82rem;white-space:nowrap;
+    background:#fff8e1;border:1px solid #ffe08a;padding:2px 9px;
+    border-radius:20px;color:#b45309;
+  }
+  .content{padding:16px 18px 22px;}
 
-  h3{font-size:.95rem;margin:18px 0 8px;color:var(--accent2);
-    border-left:4px solid var(--accent2);padding-left:9px;}
+  h3{
+    font-size:.97rem;margin:20px 0 9px;color:var(--accent2);
+    border-left:4px solid var(--accent2);padding-left:10px;
+    display:flex;align-items:center;gap:6px;
+  }
   h3:first-child{margin-top:0;}
   ul{margin:6px 0 10px;padding-left:22px;}
   li{margin:5px 0;}
-  .hl{background:#fef3c7;padding:0 4px;border-radius:4px;font-weight:700;}
+  .hl{background:#fef3c7;padding:1px 5px;border-radius:4px;font-weight:700;color:#92400e;}
   b{color:#0f172a;}
 
-  .trap{background:#fff4f2;border:1px solid #ffd4cd;border-left:5px solid var(--red);
-    border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.94rem;}
-  .trap .lbl{display:inline-block;background:var(--red);color:#fff;font-size:.72rem;
-    font-weight:700;padding:1px 8px;border-radius:6px;margin-bottom:4px;}
-  .trick{background:#eef7ff;border:1px solid #cfe6ff;border-left:5px solid #1a73e8;
-    border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.94rem;}
-  .trick .lbl{display:inline-block;background:#1a73e8;color:#fff;font-size:.72rem;
-    font-weight:700;padding:1px 8px;border-radius:6px;margin-bottom:4px;}
-  .note{background:#f0fdf4;border:1px solid #bbf7d0;border-left:5px solid var(--green);
-    border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.94rem;}
-  .note .lbl{display:inline-block;background:var(--green);color:#fff;font-size:.72rem;
-    font-weight:700;padding:1px 8px;border-radius:6px;margin-bottom:4px;}
-  .new-badge{background:#0f9d58;color:#fff;font-size:.68rem;padding:1px 7px;
-    border-radius:10px;font-weight:700;vertical-align:middle;margin-left:4px;}
+  .trap{
+    background:#fff4f2;border:1px solid #ffd4cd;border-left:5px solid var(--red);
+    border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.93rem;
+  }
+  .trap .lbl{
+    display:inline-block;background:var(--red);color:#fff;font-size:.7rem;
+    font-weight:800;padding:1px 8px;border-radius:6px;margin-right:6px;
+  }
+  .trick{
+    background:#eef7ff;border:1px solid #cfe6ff;border-left:5px solid #1a73e8;
+    border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.93rem;
+  }
+  .trick .lbl{
+    display:inline-block;background:#1a73e8;color:#fff;font-size:.7rem;
+    font-weight:800;padding:1px 8px;border-radius:6px;margin-right:6px;
+  }
+  .note{
+    background:#f0fdf4;border:1px solid #bbf7d0;border-left:5px solid var(--green);
+    border-radius:10px;padding:11px 14px;margin:12px 0;font-size:.93rem;
+  }
+  .note .lbl{
+    display:inline-block;background:var(--green);color:#fff;font-size:.7rem;
+    font-weight:800;padding:1px 8px;border-radius:6px;margin-right:6px;
+  }
+  .new-badge{
+    background:#0f9d58;color:#fff;font-size:.66rem;padding:1px 7px;
+    border-radius:10px;font-weight:700;vertical-align:middle;margin-left:4px;
+  }
 
   ul.tl{list-style:none;padding-left:0;margin:10px 0;}
   ul.tl li{position:relative;padding-left:26px;margin:7px 0;}
-  ul.tl li::before{content:"";position:absolute;left:6px;top:.62em;
+  ul.tl li::before{
+    content:"";position:absolute;left:6px;top:.62em;
     width:9px;height:9px;border-radius:50%;background:var(--accent);
-    box-shadow:0 0 0 3px #e0e7ff;}
-  ul.tl li::after{content:"";position:absolute;left:10px;top:1.3em;
-    width:1.5px;height:calc(100% - .5em);background:#e0e7ff;}
+    box-shadow:0 0 0 3px #e0e7ff;
+  }
+  ul.tl li::after{
+    content:"";position:absolute;left:10px;top:1.3em;
+    width:1.5px;height:calc(100% - .5em);background:#e0e7ff;
+  }
   ul.tl li:last-child::after{display:none;}
 
   table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem;}
-  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
   th{background:#eef2ff;color:var(--accent2);font-weight:700;}
   tr:nth-child(even) td{background:#fafbff;}
   .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  table.compact td, table.compact th{padding:6px 8px;font-size:.85rem;}
+  table.compact td, table.compact th{padding:6px 9px;font-size:.85rem;}
 
-  .htl{display:flex;overflow-x:auto;gap:0;padding:14px 4px 20px;margin:10px 0;}
-  .htl .node{flex:0 0 auto;min-width:110px;text-align:center;position:relative;padding:0 6px;}
-  .htl .node .dot{width:16px;height:16px;border-radius:50%;
+  .htl{display:flex;overflow-x:auto;gap:0;padding:14px 4px 18px;margin:10px 0;}
+  .htl .node{flex:0 0 auto;min-width:118px;text-align:center;position:relative;padding:0 6px;}
+  .htl .node .dot{
+    width:16px;height:16px;border-radius:50%;
     background:linear-gradient(135deg,var(--accent),var(--purple));
-    margin:0 auto 8px;position:relative;z-index:2;box-shadow:0 0 0 4px #e0e7ff;}
-  .htl .node .yr{font-weight:800;font-size:.85rem;color:var(--accent2);}
+    margin:0 auto 8px;position:relative;z-index:2;box-shadow:0 0 0 4px #e0e7ff;
+  }
+  .htl .node .yr{font-weight:800;font-size:.84rem;color:var(--accent2);}
   .htl .node .ev{font-size:.75rem;color:var(--muted);line-height:1.35;margin-top:2px;}
-  .htl .node::before{content:"";position:absolute;top:7px;left:0;width:100%;
-    height:3px;background:#e0e7ff;z-index:1;}
+  .htl .node::before{
+    content:"";position:absolute;top:7px;left:0;width:100%;
+    height:3px;background:#e0e7ff;z-index:1;
+  }
   .htl .node:first-child::before{left:50%;width:50%;}
   .htl .node:last-child::before{width:50%;}
 
-  .cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:10px;margin:12px 0;}
-  .cmp .col{border-radius:12px;padding:12px;border:1px solid var(--line);background:#fbfcff;}
-  .cmp .col h4{margin:0 0 6px;font-size:.85rem;padding:4px 8px;border-radius:6px;
-    color:#fff;text-align:center;}
-  .cmp .col ul{padding-left:16px;margin:4px 0;font-size:.82rem;}
+  .cmp{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:10px;margin:12px 0;
+  }
+  .cmp .col{border-radius:12px;padding:12px;border:1px solid var(--line);background:var(--surface);}
+  .cmp .col h4{
+    margin:0 0 7px;font-size:.86rem;padding:5px 8px;border-radius:6px;
+    color:#fff;text-align:center;
+  }
+  .cmp .col ul{padding-left:17px;margin:4px 0;font-size:.84rem;}
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-    gap:10px;margin:12px 0;}
-  .stat{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #c7d2fe;
-    border-radius:12px;padding:12px;text-align:center;}
-  .stat .big{font-size:1.15rem;font-weight:800;color:var(--accent2);}
-  .stat .small{font-size:.75rem;color:var(--muted);margin-top:2px;}
+  .stats{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+    gap:10px;margin:12px 0;
+  }
+  .stat{
+    background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #c7d2fe;
+    border-radius:12px;padding:11px;text-align:center;
+  }
+  .stat .big{font-size:1.02rem;font-weight:800;color:var(--accent2);overflow-wrap:anywhere;}
+  .stat .small{font-size:.75rem;color:var(--muted);margin-top:3px;}
 
-  .formula{background:#f8faff;border:1.5px solid #c7d2fe;border-radius:10px;
-    padding:10px 14px;margin:8px 0;font-size:.95rem;font-family:"Courier New",monospace;
-    font-weight:700;color:var(--accent2);text-align:center;letter-spacing:.3px;}
+  .formula{
+    background:#f8faff;border:1.5px solid #c7d2fe;border-radius:10px;
+    padding:10px 14px;margin:8px 0;font-size:.94rem;
+    font-family:ui-monospace,"Courier New","Noto Sans Malayalam","Manjari",monospace;
+    font-weight:700;color:var(--accent2);text-align:center;line-height:1.6;
+    overflow-wrap:anywhere;
+  }
 
   .icon-list{list-style:none;padding-left:0;}
-  .icon-list li{padding-left:26px;position:relative;margin:6px 0;}
-  .icon-list li::before{content:"★";position:absolute;left:0;color:var(--gold);font-size:1rem;}
+  .icon-list li{padding-left:24px;position:relative;margin:6px 0;}
+  .icon-list li::before{content:"★";position:absolute;left:0;color:#e8a600;font-size:.95rem;}
 
-  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px;padding:16px;}
+  .fig{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:14px 12px;margin:14px 0;text-align:center;
+  }
+  .fig-title{font-weight:800;font-size:.9rem;color:var(--accent2);margin-bottom:10px;display:block;}
+  .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:8px;align-items:start;}
+  .fg figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;}
+  .fg svg,.fig svg{width:100%;max-width:100%;height:auto;display:block;margin:0 auto;}
+  .fig text{fill:var(--ink);font-family:inherit;font-size:11px;font-weight:600;}
+  .fig .sub-lbl{fill:var(--muted);font-size:9.5px;font-weight:500;}
+  .fg figcaption,.fig .cap{font-size:.8rem;line-height:1.45;color:var(--muted);margin-top:7px;text-align:center;}
+  .fig .ax{stroke:var(--muted);stroke-width:1.4;fill:none;}
+  .fig .ln{fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;}
 
-  .review-check{display:inline-flex;gap:7px;align-items:center;font-size:.8rem;
-    color:var(--muted);font-weight:600;white-space:nowrap}
-  .review-check input{accent-color:#0f9d58;width:17px;height:17px}
-  .hidden-by-search{display:none!important}
+  .bars{display:grid;gap:8px;margin-top:10px;text-align:left;}
+  .brow{display:grid;grid-template-columns:7.5em 1fr 4em;gap:8px;align-items:center;font-size:.84rem;}
+  .brow i{display:block;height:18px;border-radius:5px;background:var(--c);width:var(--w);min-width:4px;}
+  .brow b{text-align:right;}
 
-  @media(max-width:600px){
-    body{font-size:15px;padding:12px 8px 50px;}
+  .vib{display:flex;border-radius:9px;overflow:hidden;margin-top:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+  .vib span{flex:1;padding:10px 2px;text-align:center;font-size:.72rem;font-weight:700;line-height:1.3;color:#fff;}
+  .dbbar{height:16px;border-radius:8px;margin-top:10px;background:linear-gradient(90deg,#0f9d58 0%,#e8a600 55%,#d93025 100%);}
+  .chipset{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px;font-size:.79rem;}
+  .chipset span{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:2px 10px;}
+
+  .qa{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 12px;background:var(--surface);}
+  .qa summary{background:none;padding:10px 0;font-weight:600;gap:8px;font-size:.93rem;}
+  .qa summary::after{content:"👁️ ഉത്തരം";font-size:.75rem;background:#eef2ff;padding:2px 8px;border-radius:6px;}
+  .qa[open] summary::after{content:"▴ മറയ്ക്കുക";transform:none;}
+  .qa .ans{padding:6px 0 12px;color:var(--green);font-weight:700;border-top:1px dashed var(--line);font-size:.92rem;}
+
+  .review-check{
+    display:inline-flex;gap:6px;align-items:center;font-size:.79rem;
+    color:var(--muted);font-weight:600;white-space:nowrap;
+  }
+  .review-check input{accent-color:#0f9d58;width:16px;height:16px;cursor:pointer;}
+  .hidden-by-search{display:none!important;}
+
+  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:32px;padding:18px;}
+  #toTop{
+    position:fixed;right:calc(14px + env(safe-area-inset-right,0px));
+    bottom:calc(14px + env(safe-area-inset-bottom,0px));width:44px;height:44px;
+    border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:1.2rem;
+    cursor:pointer;display:none;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:30;
+  }
+  #toTop.show{display:block;}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+
+  @media(max-width:640px){
+    body{font-size:15px;padding:10px 8px 55px;}
     .title{font-size:.94rem;}
-    .stars{font-size:.75rem;padding:2px 6px;}
+    .stars{font-size:.74rem;padding:2px 6px;}
     summary{padding:13px 12px;gap:8px;flex-wrap:wrap;}
     .content{padding:13px 12px 16px;}
-    .htl .node{min-width:95px;}
-    .revision-tools{position:static}
-    .stat .big{font-size:1rem;}
+    .revision-tools{position:static;}
+    .fg{grid-template-columns:1fr;}
   }
   @media print{
-    body{background:#fff;padding:0;color:#000;font-size:11pt}
-    .wrap{max-width:none}.hero{box-shadow:none!important}
-    .controls,.revision-tools{display:none!important}
-    details.card{box-shadow:none;border:1px solid #bbb;break-inside:avoid}
-    details.card:not([open]) > .content{display:block!important}
-    .content{padding:10px}
+    body{background:#fff;padding:0;color:#000;font-size:10.5pt;}
+    .wrap{max-width:none;}
+    .hero{box-shadow:none!important;background:#1e3a8a!important;color:#fff!important;}
+    .revision-tools,#toTop{display:none!important;}
+    details.card{box-shadow:none;border:1px solid #bbb;break-inside:avoid;}
+    details.card:not([open]) > .content{display:block!important;}
   }
-  .fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;margin:12px 0;text-align:center}
-  .fig svg{max-width:100%;height:auto}.fig text{fill:#1c2340;font-size:12px}.fig .cap{font-size:.8rem;color:var(--muted);margin-top:4px}
-  .fig .ax{stroke:#5a6485;stroke-width:1.2;fill:none}.fig .ln{fill:none;stroke-width:2.2}
-
-
-  .wrap{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-  .revision-tools{top:calc(8px + env(safe-area-inset-top,0px))}
-  details.card{scroll-margin-top:150px}
-  :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .chips{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:2px}
-  .chips a{flex:0 0 auto;font-size:.8rem;font-weight:700;padding:2px 11px;border-radius:99px;border:1px solid #c7d2fe;background:#eef2ff;color:var(--accent);text-decoration:none}
-  .chips a.done{background:var(--green);border-color:var(--green);color:#fff}
-  .qa{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 12px;background:#fbfcff}
-  .qa summary{background:none;padding:10px 0;font-weight:600;gap:8px}
-  .qa summary::after{display:none}
-  .qa .ans{padding:0 0 10px;color:var(--green);font-weight:700}
-  #toTop{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:1.2rem;cursor:pointer;display:none;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:30}
-  #toTop.show{display:block}
-  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
   @media(prefers-color-scheme:dark){
-    :root{--bg:#12151c;--card:#1b2029;--ink:#e6e9f2;--muted:#9aa4bf;--accent:#7aa2ff;--accent2:#a9c0ff;--line:#2e3646}
-    body{background:var(--bg)}b{color:#fff}
-    .revision-tools{background:rgba(27,32,41,.96)}
-    .search-row input{background:var(--bg);border-color:var(--line)}
-    .tool-btn,.chips a{background:#232a38;border-color:var(--line)}
-    .chips a.done{background:var(--green)}
-    .study-tip,th,.stat,.formula,.cmp .col,.qa,summary{background:#222937;border-color:var(--line)}
-    .qa summary{background:none}
-    tr:nth-child(even) td{background:#1f2531}
-    .progress-track{background:#2a3140}
-    .hl{background:#5c4a05}
-    .stars{background:#3a3210;border-color:#6b5a14}
-    .trap{background:#3a1f1c;border-color:#6b2e28}
-    .trick{background:#172a40;border-color:#25476e}
-    .note{background:#14301f;border-color:#256b3c}
-    .fig{background:var(--card)}.fig text{fill:#e6e9f2}
+    :root{
+      --bg:#0f131a;--card:#181e29;--ink:#e6e9f2;--muted:#9aa4bf;
+      --accent:#7aa2ff;--accent2:#a9c0ff;--line:#2b3346;--surface:#131822;
+    }
+    body{background:var(--bg);}
+    b{color:#fff;}
+    .revision-tools{background:rgba(24,30,41,.96);}
+    .search-row input{background:var(--bg);border-color:var(--line);color:var(--ink);}
+    .tool-btn,.chips a{background:#222a3a;border-color:var(--line);color:var(--accent2);}
+    .chips a.done{background:var(--green);color:#fff;}
+    .study-tip,th,.stat,.formula,.cmp .col,.qa,summary{background:#202736;border-color:var(--line);}
+    .qa summary{background:none;}
+    .qa summary::after{background:#2b3548;}
+    tr:nth-child(even) td{background:#1b2230;}
+    .progress-track{background:#2a3140;}
+    .hl{background:#5c4a05;color:#fde68a;}
+    .stars{background:#3a3210;border-color:#6b5a14;color:#fcd34d;}
+    .trap{background:#351c1a;border-color:#6b2e28;}
+    .trick{background:#16283d;border-color:#25476e;}
+    .note{background:#132d1e;border-color:#256b3c;}
+    .fig{background:var(--surface);}
+    .fg figure{background:var(--card);}
+    .fig text{fill:#e6e9f2;}
   }
-  .stars{letter-spacing:0;white-space:nowrap}
-  .formula{letter-spacing:0;line-height:1.6;overflow-wrap:anywhere;font-family:ui-monospace,"Courier New","Noto Sans Malayalam","Manjari",monospace}
-  .stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-  .stat .big{font-size:1.02rem;overflow-wrap:anywhere}
-  .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:8px}
-  .fg figure{margin:0}.fg svg{width:100%;height:auto;display:block}
-  .fg figcaption,.fig .cap{font-size:.8rem;line-height:1.5;color:var(--muted);margin-top:4px;text-align:center}
-  .bars{display:grid;gap:8px;margin-top:10px;text-align:left}
-  .brow{display:grid;grid-template-columns:6.5em 1fr 3.4em;gap:8px;align-items:center;font-size:.85rem}
-  .brow i{display:block;height:18px;border-radius:5px;background:var(--c);width:var(--w);min-width:2px}
-  .brow b{text-align:right}
-  .vib{display:flex;border-radius:8px;overflow:hidden;margin-top:10px}
-  .vib span{flex:1;padding:9px 1px;text-align:center;font-size:.68rem;line-height:1.3;color:#fff;word-break:break-all}
-  .dbbar{height:16px;border-radius:8px;margin-top:10px;background:linear-gradient(90deg,#0f9d58,#e8a600,#d93025)}
-  .chipset{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px;font-size:.8rem}
-  .chipset span{border:1px solid var(--line);border-radius:99px;padding:1px 10px}
-  .npn{display:flex;gap:4px;justify-content:center;padding-top:14px}
-  .npn span{flex:0 0 52px;padding:12px 2px;border-radius:6px;color:#fff;font-weight:700;font-size:.8rem;line-height:1.4}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header class="hero">
-  <h1>⚛️ കേരള PSC ഭൗതികശാസ്ത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ്</h1>
-  <p>അളവുകൾ · ചലനം · പ്രകാശം · ശബ്ദം · ബലം · ഗുരുത്വം · താപം · ഊർജ്ജം · ഇലക്ട്രോണിക്സ് — എല്ലാം ഒരുമിച്ച്. ആവർത്തനങ്ങൾ ഒഴിവാക്കി, PSC പ്രാധാന്യം അനുസരിച്ച് സ്റ്റാർ റേറ്റിംഗ്.</p>
+  <h1>⚛️ കേരള PSC ഭൗതികശാസ്ത്രം — സമ്പൂർണ്ണ വിഷ്വൽ റിവിഷൻ നോട്ട്സ്</h1>
+  <p>അളവുകൾ · ചലനം · പ്രകാശം · ശബ്ദം · ബലം & ഉത്തോലകങ്ങൾ · ഗുരുത്വം · താപം · ഊർജ്ജം · ഇലക്ട്രോണിക്സ് · വൈദ്യുതി · കാന്തികത · ആണവ ഭൗതികശാസ്ത്രം — PSC പരീക്ഷകൾക്ക് ആവശ്യമായ എല്ലാ വിവരങ്ങളും ചിത്രങ്ങളും ഒരിടത്ത്.</p>
   <div class="legend">
-    <span>⭐⭐⭐⭐⭐ അതിപ്രധാനം</span>
+    <span>⭐⭐⭐⭐⭐ അതിപ്രധാനം (Must Study)</span>
     <span>⭐⭐⭐⭐ പ്രധാനം</span>
-    <span>⭐⭐⭐ ഉപകാരപ്രദം</span>
-    <span>🔴 PSC കെണി</span>
-    <span>🔵 ഓർമ്മവഴി</span>
+    <span>🔴 PSC കെണി (Traps)</span>
+    <span>🔵 ഓർമ്മവഴി (Mnemonics)</span>
+    <span>📊 വിഷ്വൽ SVG ഡയഗ്രമുകൾ</span>
   </div>
 </header>
 
 <section class="revision-tools" aria-label="Revision tools">
   <div class="search-row">
-    <input id="noteSearch" type="search" placeholder="🔎 സൂത്രം / യൂണിറ്റ് / ഉപകരണം തിരയുക..." aria-label="Search notes">
+    <input id="noteSearch" type="search" placeholder="🔎 സൂത്രം / യൂണിറ്റ് / നിയമം / ഉപകരണം തിരയുക (ഉദാ: ഓം, ലെൻസ്, 4°C, ISRO)..." aria-label="Search notes">
+    <button class="tool-btn" type="button" id="filterStar">⭐ 5-Star മാത്രം</button>
     <button class="tool-btn" type="button" id="openAll">📂 എല്ലാം തുറക്കുക</button>
     <button class="tool-btn" type="button" id="closeAll">📁 എല്ലാം അടയ്ക്കുക</button>
     <button class="tool-btn" type="button" onclick="window.print()">🖨️ Print / PDF</button>
   </div>
   <div class="revision-meta">
-    <span id="searchStatus">10 വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം</span>
-    <span><span id="reviewCount">0</span> / <span id="totalCount">10</span> വിഭാഗങ്ങൾ ആവർത്തിച്ചു</span>
+    <span id="searchStatus">14 വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം</span>
+    <span>പഠന പുരോഗതി: <strong id="reviewCount">0</strong> / <strong id="totalCount">13</strong> അധ്യായങ്ങൾ പൂർത്തിയായി</span>
   </div>
   <div class="progress-track"><span id="reviewProgress"></span></div>
 </section>
 
-<div class="study-tip"><strong>📌 പഠന തന്ത്രം:</strong> ആദ്യം ⭐⭐⭐⭐⭐ വിഭാഗങ്ങൾ (അളവുകൾ, ചലനം, പ്രകാശം, പ്രവൃത്തി-ഊർജ്ജം) → പിന്നീട് ശബ്ദം, ബലം, ഗുരുത്വം, താപം, ഇലക്ട്രോണിക്സ് → അവസാനം 🔴 PSC കെണികളും സൂത്രങ്ങളും. “പഠിച്ചു” ചെക്ക്ബോക്സ് ടിക്ക് ചെയ്താൽ പുരോഗതി ട്രാക്ക് ചെയ്യാം.</div>
+<div class="study-tip">
+  <strong>📌 PSC പഠന തന്ത്രം:</strong> ആദ്യം ⭐⭐⭐⭐⭐ അധ്യായങ്ങൾ (അളവുകൾ, ചലനം, പ്രകാശം, ഊർജ്ജം, വൈദ്യുതി, കാന്തികത) പഠിക്കുക → തുടർന്ന് ശബ്ദം, ദ്രവബലങ്ങൾ, ഗുരുത്വം, താപം, ഇലക്ട്രോണിക്സ്, ആണവ ഭൗതികം → അവസാനം <b>പരിശീലന കണക്കുകളും</b> <b>PSC കെണികളും</b> ആവർത്തിക്കുക.
+</div>
 
 <!-- ================= 7.1 ================= -->
-<details class="card" open>
-<summary><span class="num">7.1</span><span class="title">അളവുകൾ, യൂണിറ്റുകൾ, ഉപകരണങ്ങൾ</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="1"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">7.1</span>
+  <span class="title">അളവുകൾ, യൂണിറ്റുകൾ, ഉപകരണങ്ങൾ, കണ്ടുപിടിത്തങ്ങൾ</span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="1"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>📐 SI സമ്പ്രദായം</h3>
+  <h3>📐 SI സമ്പ്രദായം (International System of Units)</h3>
   <ul class="icon-list">
-    <li>SI നിലവിൽ വന്നത്: <b>1960</b> | പുനർനിർവ്വചനം: <b>2019</b></li>
-    <li>7 അടിസ്ഥാന അളവുകൾ + 2 സപ്ലിമെന്ററി യൂണിറ്റുകൾ</li>
+    <li>SI രീതി നിലവിൽ വന്നത്: <b>1960</b> (ജനറൽ കോൺഫറൻസ് ഓൺ വെയിറ്റ്സ് & മെഷേഴ്സ്) | പുനർനിർവ്വചനം: <b>2019 മെയ് 20</b></li>
+    <li>ആകെ <b>7 അടിസ്ഥാന അളവുകൾ</b> + <b>2 സപ്ലിമെന്ററി യൂണിറ്റുകൾ</b></li>
+    <li>CGS: സെന്റീമീറ്റർ – ഗ്രാം – സെക്കൻഡ് | MKS: മീറ്റർ – കിലോഗ്രാം – സെക്കൻഡ് | FPS: ഫൂട്ട് – പൗണ്ട് – സെക്കൻഡ്</li>
   </ul>
 
-  <h3>📊 7 അടിസ്ഥാന യൂണിറ്റുകൾ</h3>
+  <h3>📊 7 അടിസ്ഥാന അളവുകളും സപ്ലിമെന്ററി യൂണിറ്റുകളും</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>അളവ്</th><th>യൂണിറ്റ്</th><th>ചിഹ്നം</th></tr>
-    <tr><td>നീളം</td><td>മീറ്റർ</td><td>m</td></tr>
-    <tr><td>മാസ്</td><td>കിലോഗ്രാം</td><td>kg</td></tr>
-    <tr><td>സമയം</td><td>സെക്കൻഡ്</td><td>s</td></tr>
-    <tr><td>കറന്റ്</td><td>ആമ്പിയർ</td><td>A</td></tr>
-    <tr><td>താപനില</td><td>കെൽവിൻ</td><td>K</td></tr>
-    <tr><td>പ്രകാശതീവ്രത</td><td>കാൻഡല</td><td>cd</td></tr>
-    <tr><td>പദാർത്ഥത്തിന്റെ അളവ്</td><td>മോൾ</td><td>mol</td></tr>
+    <tr><th>ക്രമം</th><th>അടിസ്ഥാന അളവ്</th><th>SI യൂണിറ്റ്</th><th>ചിഹ്നം</th><th>ഡൈമെൻഷൻ</th></tr>
+    <tr><td>1</td><td>നീളം (Length)</td><td>മീറ്റർ (Meter)</td><td>m</td><td>[L]</td></tr>
+    <tr><td>2</td><td>മാസ് / പിണ്ഡം (Mass)</td><td>കിലോഗ്രാം (Kilogram)</td><td>kg</td><td>[M]</td></tr>
+    <tr><td>3</td><td>സമയം (Time)</td><td>സെക്കൻഡ് (Second)</td><td>s</td><td>[T]</td></tr>
+    <tr><td>4</td><td>വൈദ്യുത പ്രവാഹം (Electric Current)</td><td>ആമ്പിയർ (Ampere)</td><td>A</td><td>[A] അല്ലെങ്കിൽ [I]</td></tr>
+    <tr><td>5</td><td>താപഗതിക താപനില (Temperature)</td><td>കെൽവിൻ (Kelvin)</td><td>K</td><td>[K] അല്ലെങ്കിൽ [θ]</td></tr>
+    <tr><td>6</td><td>പ്രകാശതീവ്രത (Luminous Intensity)</td><td>കാൻഡല (Candela)</td><td>cd</td><td>[cd]</td></tr>
+    <tr><td>7</td><td>പദാർത്ഥത്തിന്റെ അളവ് (Amount of Substance)</td><td>മോൾ (Mole)</td><td>mol</td><td>[mol]</td></tr>
+    <tr><td>➕ 1</td><td>തലകോൺ (Plane Angle - സപ്ലിമെന്ററി)</td><td>റേഡിയൻ (Radian)</td><td>rad</td><td>—</td></tr>
+    <tr><td>➕ 2</td><td>ഘനകോൺ (Solid Angle - സപ്ലിമെന്ററി)</td><td>സ്റ്റെറേഡിയൻ (Steradian)</td><td>sr</td><td>—</td></tr>
   </table>
   </div>
 
-  <h3>➕ സപ്ലിമെന്ററി യൂണിറ്റുകൾ</h3>
-  <ul>
-    <li><b>തലകോൺ (Plane angle):</b> റേഡിയൻ (rad)</li>
-    <li><b>ഘനകോൺ (Solid angle):</b> സ്റ്റെറേഡിയൻ (sr)</li>
-  </ul>
-
-  <h3>📊 പ്രധാന വ്യുൽപ്പന്ന യൂണിറ്റുകൾ</h3>
+  <h3>📊 പ്രധാന വ്യുൽപ്പന്ന യൂണിറ്റുകളും (Derived Units) ബന്ധങ്ങളും</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>അളവ്</th><th>യൂണിറ്റ്</th><th>ബന്ധം</th></tr>
-    <tr><td>ബലം</td><td>ന്യൂട്ടൺ (N)</td><td>1 N = 10⁵ dyne</td></tr>
-    <tr><td>ഊർജ്ജം / പ്രവൃത്തി</td><td>ജൂൾ (J)</td><td>1 J = 10⁷ erg; 1 cal = 4.18 J</td></tr>
-    <tr><td>പവർ</td><td>വാട്ട് (W)</td><td>1 HP = 746 W</td></tr>
-    <tr><td>മർദ്ദം</td><td>പാസ്കൽ (Pa)</td><td>1 bar = 10⁵ Pa</td></tr>
-    <tr><td>ആവൃത്തി</td><td>ഹെർട്സ് (Hz)</td><td>—</td></tr>
-    <tr><td>ചാർജ്</td><td>കൂളോം (C)</td><td>—</td></tr>
-    <tr><td>പ്രതിരോധം</td><td>ഓം (Ω)</td><td>—</td></tr>
-    <tr><td>കാന്തിക ഫ്ലക്സ്</td><td>വെബർ (Wb)</td><td>—</td></tr>
-    <tr><td>ഫ്ലക്സ് സാന്ദ്രത</td><td>ടെസ്ല (T)</td><td>—</td></tr>
-    <tr><td>റേഡിയോ ആക്ടിവിറ്റി</td><td>ബെക്വറൽ (Bq)</td><td>1 Ci = 3.7×10¹⁰ Bq</td></tr>
-    <tr><td>റേഡിയേഷൻ ഡോസ്</td><td>ഗ്രേ (Gy) / സീവർട്ട് (Sv)</td><td>—</td></tr>
-    <tr><td>ശബ്ദ ഉച്ചതാ നില (Sound Level)</td><td>ഡെസിബൽ (dB)</td><td>—</td></tr>
-    <tr><td>ലെൻസ് പവർ</td><td>ഡയോപ്റ്റർ (D)</td><td>P = 1/f</td></tr>
+    <tr><th>ഭൗതിക അളവ്</th><th>SI യൂണിറ്റ്</th><th>മറ്റ് യൂണിറ്റുകൾ / പ്രധാന ബന്ധം</th><th>ഡൈമെൻഷൻ</th></tr>
+    <tr><td>ബലം (Force)</td><td>ന്യൂട്ടൺ (N = kg·m/s²)</td><td>CGS: ഡൈൻ (dyne) | <span class="hl">1 N = 10⁵ dyne</span></td><td>[MLT⁻²]</td></tr>
+    <tr><td>പ്രവൃത്തി / ഊർജ്ജം / താപം</td><td>ജൂൾ (J = N·m)</td><td>CGS: എർഗ് (erg) | <span class="hl">1 J = 10⁷ erg</span>; 1 cal = 4.186 J</td><td>[ML²T⁻²]</td></tr>
+    <tr><td>പവർ (Power)</td><td>വാട്ട് (W = J/s)</td><td><span class="hl">1 HP (കുതിരശക്തി) = 746 W</span></td><td>[ML²T⁻³]</td></tr>
+    <tr><td>മർദ്ദം (Pressure) / സ്ട്രെസ്സ്</td><td>പാസ്കൽ (Pa = N/m²)</td><td>1 bar = 10⁵ Pa; 1 atm = 1.013×10⁵ Pa = 760 mmHg (Torr)</td><td>[ML⁻¹T⁻²]</td></tr>
+    <tr><td>ആവൃത്തി (Frequency)</td><td>ഹെർട്സ് (Hz = s⁻¹)</td><td>1 ചക്രം/സെക്കൻഡ്</td><td>[T⁻¹]</td></tr>
+    <tr><td>വൈദ്യുത ചാർജ് (Charge)</td><td>കൂളോം (C = A·s)</td><td>1 C = 6.25×10¹⁸ ഇലക്ട്രോണുകൾ</td><td>[AT]</td></tr>
+    <tr><td>പൊട്ടൻഷ്യൽ വ്യത്യാസം / EMF</td><td>വോൾട്ട് (V = J/C)</td><td>—</td><td>[ML²T⁻³A⁻¹]</td></tr>
+    <tr><td>പ്രതിരോധം (Resistance)</td><td>ഓം (Ω = V/A)</td><td>ചാലകത (Conductance): സീമൻസ് (S) / മോ (mho, Ω⁻¹)</td><td>[ML²T⁻³A⁻²]</td></tr>
+    <tr><td>പ്രതിരോധകത (Resistivity)</td><td>ഓം-മീറ്റർ (Ω·m)</td><td>ചാലകത (Conductivity): S/m</td><td>[ML³T⁻³A⁻²]</td></tr>
+    <tr><td>കപ്പാസിറ്റൻസ് (Capacitance)</td><td>ഫാരഡ് (F = C/V)</td><td>സാധാരണയായി μF, pF ഉപയോഗിക്കുന്നു</td><td>[M⁻¹L⁻²T⁴A²]</td></tr>
+    <tr><td>ഇൻഡക്ടൻസ് (Inductance)</td><td>ഹെൻറി (H)</td><td>—</td><td>[ML²T⁻²A⁻²]</td></tr>
+    <tr><td>കാന്തിക ഫ്ലക്സ് (Magnetic Flux)</td><td>വെബർ (Wb)</td><td>CGS: മാക്സ്‌വെൽ | <span class="hl">1 Wb = 10⁸ maxwell</span></td><td>[ML²T⁻²A⁻¹]</td></tr>
+    <tr><td>കാന്തിക ഫ്ലക്സ് സാന്ദ്രത</td><td>ടെസ്ല (T = Wb/m²)</td><td>CGS: ഗോസ് (Gauss) | <span class="hl">1 T = 10⁴ gauss</span></td><td>[MT⁻²A⁻¹]</td></tr>
+    <tr><td>പ്രകാശ ഫ്ലക്സ് (Luminous Flux)</td><td>ലൂമൻ (lm)</td><td>ദീപ്തി (Illuminance): ലക്സ് (Lux = lm/m²)</td><td>—</td></tr>
+    <tr><td>റേഡിയോ ആക്ടിവിറ്റി</td><td>ബെക്വറൽ (Bq)</td><td>1 Ci (ക്യൂറി) = 3.7×10¹⁰ Bq; 1 റൂഥർഫോർഡ് = 10⁶ Bq</td><td>[T⁻¹]</td></tr>
+    <tr><td>റേഡിയേഷൻ ഡോസ്</td><td>ഗ്രേ (Gy) / സീവർട്ട് (Sv)</td><td>എക്സ്പോഷർ: റോൺട്ജൻ (R)</td><td>—</td></tr>
+    <tr><td>ലെൻസ് പവർ</td><td>ഡയോപ്റ്റർ (D = m⁻¹)</td><td>P = 1/f (f മീറ്ററിൽ)</td><td>[L⁻¹]</td></tr>
+    <tr><td>ഓസോൺ കനം</td><td>ഡോബ്സൺ യൂണിറ്റ് (DU)</td><td>1 DU = 0.01 mm കനം</td><td>—</td></tr>
   </table>
   </div>
 
-  <h3>⚖️ അദിശം vs സദിശം</h3>
+  <h3>⚖️ അദിശ അളവുകൾ (Scalar) vs സദിശ അളവുകൾ (Vector)</h3>
   <div class="cmp">
-    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">അദിശം (Scalar)</h4>
-      <ul><li>ദൂരം, വേഗത</li><li>മാസ്, സമയം, താപനില</li><li>പ്രവൃത്തി, ഊർജ്ജം, പവർ</li><li>മർദ്ദം, വ്യാപ്തം, സാന്ദ്രത</li><li>കറന്റ്</li></ul></div>
-    <div class="col" style="border-color:#ddd6fe;"><h4 style="background:#6d28d9;">സദിശം (Vector)</h4>
-      <ul><li>സ്ഥാനാന്തരം, പ്രവേഗം</li><li>ത്വരണം, ബലം, ഭാരം</li><li>ആക്കം (Momentum)</li><li>ആവേഗം (Impulse)</li><li>ടോർക്ക്</li></ul></div>
+    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">അദിശ അളവുകൾ (പരിമാണം മാത്രം)</h4>
+      <ul>
+        <li>ദൂരം (Distance), വേഗത (Speed)</li>
+        <li>മാസ് (Mass), സമയം, താപനില</li>
+        <li><b>പ്രവൃത്തി, ഊർജ്ജം, പവർ</b></li>
+        <li><b>മർദ്ദം (Pressure)</b>, വ്യാപ്തം, സാന്ദ്രത</li>
+        <li><b>വൈദ്യുത പ്രവാഹം (Current)</b>, പൊട്ടൻഷ്യൽ, ചാർജ്, ആവൃത്തി</li>
+      </ul>
+    </div>
+    <div class="col" style="border-color:#ddd6fe;"><h4 style="background:#6d28d9;">സദിശ അളവുകൾ (പരിമാണവും ദിശയും)</h4>
+      <ul>
+        <li>സ്ഥാനാന്തരം (Displacement), പ്രവേഗം (Velocity)</li>
+        <li>ത്വരണം (Acceleration), മന്ദീകരണം</li>
+        <li><b>ബലം (Force), ഭാരം (Weight)</b>, പ്രതലബലം</li>
+        <li><b>ആക്കം (Momentum), ആവേഗം (Impulse)</b></li>
+        <li>ടോർക്ക്, കോണീയ ആക്കം, വൈദ്യുത/കാന്തിക മണ്ഡല തീവ്രത</li>
+      </ul>
+    </div>
   </div>
 
-  <h3>📏 ദൂര യൂണിറ്റുകൾ</h3>
+  <h3>📏 ദൂര യൂണിറ്റുകൾ (വലിയതും ചെറുതും)</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>യൂണിറ്റ്</th><th>മൂല്യം</th></tr>
-    <tr><td>AU (Astronomical Unit)</td><td>1.496×10¹¹ m</td></tr>
-    <tr><td>പ്രകാശവർഷം (ly)</td><td>9.46×10¹⁵ m</td></tr>
-    <tr><td>പാർസെക് (pc)</td><td>3.26 ly</td></tr>
-    <tr><td>നോട്ടിക്കൽ മൈൽ</td><td>1.852 km</td></tr>
-    <tr><td>മൈക്രോൺ</td><td>10⁻⁶ m</td></tr>
-    <tr><td>നാനോമീറ്റർ</td><td>10⁻⁹ m</td></tr>
-    <tr><td>ആംഗ്സ്ട്രോം (Å)</td><td>10⁻¹⁰ m</td></tr>
-    <tr><td>ഫെർമി</td><td>10⁻¹⁵ m</td></tr>
-    <tr><td>ഫാതം (Fathom)</td><td>6 ft</td></tr>
+    <tr><th>യൂണിറ്റ്</th><th>മൂല്യം</th><th>ഉപയോഗം / പ്രത്യേകത</th></tr>
+    <tr><td>1 അസ്ട്രോണമിക്കൽ യൂണിറ്റ് (AU)</td><td>1.496 × 10¹¹ m (≈ 15 കോടി km)</td><td>സൂര്യനും ഭൂമിയും തമ്മിലുള്ള ശരാശരി ദൂരം</td></tr>
+    <tr><td>1 പ്രകാശവർഷം (Light Year - ly)</td><td>9.46 × 10¹⁵ m = 9.46 × 10¹² km</td><td>പ്രകാശം ശൂന്യതയിൽ ഒരു വർഷം സഞ്ചരിക്കുന്ന ദൂരം</td></tr>
+    <tr><td>1 പാർസെക് (Parsec - pc)</td><td><b>3.26 പ്രകാശവർഷം</b> (3.08 × 10¹⁶ m)</td><td>ജ്യോതിശാസ്ത്രത്തിലെ ഏറ്റവും വലിയ ദൂര യൂണിറ്റ്</td></tr>
+    <tr><td>1 നോട്ടിക്കൽ മൈൽ (Nautical Mile)</td><td><b>1.852 km</b> (1852 m)</td><td>സമുദ്ര-വ്യോമ ദൂരം (വേഗത: Knot = 1 നോട്ടിക്കൽ മൈൽ/മണിക്കൂർ)</td></tr>
+    <tr><td>1 ഫാതം (Fathom)</td><td>6 അടി (1.828 m)</td><td>കടലിന്റെ ആഴം അളക്കുന്ന യൂണിറ്റ്</td></tr>
+    <tr><td>1 മൈക്രോൺ (Micrometer - μm)</td><td>10⁻⁶ m</td><td>കോശങ്ങളുടെ വലിപ്പം</td></tr>
+    <tr><td>1 നാനോമീറ്റർ (nm)</td><td>10⁻⁹ m</td><td>തന്മാത്രകൾ, പ്രകാശ തരംഗദൈർഘ്യം</td></tr>
+    <tr><td>1 ആംഗ്സ്ട്രോം (Å)</td><td><b>10⁻¹⁰ m</b></td><td>ആറ്റത്തിന്റെ വലിപ്പം, X-ray തരംഗദൈർഘ്യം</td></tr>
+    <tr><td>1 ഫെർമി (Femtometer - fm)</td><td><b>10⁻¹⁵ m</b></td><td>ആറ്റത്തിന്റെ ന്യൂക്ലിയസിന്റെ ആരം അളക്കാൻ</td></tr>
   </table>
   </div>
 
-  <h3>🔬 ഉപകരണങ്ങൾ</h3>
+  <div class="trick"><span class="lbl">TRICK</span> <b>ചെറുതിൽ നിന്ന് വലുതിലേക്ക്:</b> ഫെർമി (10⁻¹⁵) &lt; പൈക്കോ (10⁻¹²) &lt; ആംഗ്സ്ട്രോം (10⁻¹⁰) &lt; നാനോ (10⁻⁹) &lt; മൈക്രോൺ (10⁻⁶) &lt; മില്ലി (10⁻³). <br><b>വെർണിയർ കാലിപ്പർ LC = 0.1 mm (0.01 cm)</b> | <b>സ്ക്രൂ ഗേജ് LC = 0.01 mm (0.001 cm)</b>.</div>
+
+  <h3>🔬 പ്രധാന ശാസ്ത്ര ഉപകരണങ്ങൾ (PSC ആവർത്തിക്കുന്നവ)</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>ഉപകരണം</th><th>അളക്കുന്നത്</th></tr>
-    <tr><td>ബാരോമീറ്റർ</td><td>അന്തരീക്ഷ മർദ്ദം</td></tr>
-    <tr><td>ഹൈഗ്രോമീറ്റർ</td><td>ആർദ്രത (ഈർപ്പം)</td></tr>
-    <tr><td>ഹൈഡ്രോമീറ്റർ</td><td>ആപേക്ഷിക സാന്ദ്രത</td></tr>
-    <tr><td>ലാക്ടോമീറ്റർ</td><td>പാൽ ശുദ്ധി</td></tr>
-    <tr><td>ഫാത്തോമീറ്റർ</td><td>കടലാഴം</td></tr>
-    <tr><td>ആൾട്ടിമീറ്റർ</td><td>ഉയരം</td></tr>
-    <tr><td>അനിമോമീറ്റർ</td><td>കാറ്റിന്റെ വേഗത</td></tr>
-    <tr><td>പൈറോമീറ്റർ</td><td>ഉയർന്ന താപനില</td></tr>
-    <tr><td>ക്രെസ്കോഗ്രാഫ്</td><td>സസ്യവളർച്ച</td></tr>
-    <tr><td>GM കൗണ്ടർ</td><td>റേഡിയേഷൻ</td></tr>
+    <tr><th>ഉപകരണം</th><th>ഉപയോഗം</th><th>ഉപകരണം</th><th>ഉപയോഗം</th></tr>
+    <tr><td><b>ബാരോമീറ്റർ</b> (ടോറിസെല്ലി)</td><td>അന്തരീക്ഷ മർദ്ദം</td><td><b>ഹൈഗ്രോമീറ്റർ</b></td><td>അന്തരീക്ഷ ആർദ്രത (ഈർപ്പം)</td></tr>
+    <tr><td><b>ഹൈഡ്രോമീറ്റർ</b></td><td>ദ്രാവകങ്ങളുടെ ആപേക്ഷിക സാന്ദ്രത</td><td><b>ലാക്ടോമീറ്റർ</b></td><td>പാലിന്റെ ശുദ്ധി (ആപേക്ഷിക സാന്ദ്രത)</td></tr>
+    <tr><td><b>ഫാത്തോമീറ്റർ</b></td><td>കടലിന്റെ ആഴം (ശബ്ദതരംഗം)</td><td><b>ആൾട്ടിമീറ്റർ</b></td><td>വിമാനങ്ങളുടെ ഉയരം (മർദ്ദവ്യത്യാസം)</td></tr>
+    <tr><td><b>അനിമോമീറ്റർ</b></td><td>കാറ്റിന്റെ വേഗതയും ശക്തിയും</td><td><b>വിൻഡ് വെയിൻ</b></td><td>കാറ്റിന്റെ ദിശ</td></tr>
+    <tr><td><b>പൈറോമീറ്റർ</b></td><td>വളരെ ഉയർന്ന താപനില (സൂര്യൻ, ചൂള)</td><td><b>ക്രയോമീറ്റർ</b></td><td>വളരെ താഴ്ന്ന താപനില</td></tr>
+    <tr><td><b>പൈർഹീലിയോമീറ്റർ</b></td><td>സൗരവികിരണം അളക്കാൻ</td><td><b>ബോളോമീറ്റർ</b></td><td>താപ വികിരണങ്ങൾ അളക്കാൻ</td></tr>
+    <tr><td><b>ക്രെസ്കോഗ്രാഫ്</b> (J.C. ബോസ്)</td><td>സസ്യങ്ങളുടെ വളർച്ച</td><td><b>ഓക്സനോമീറ്റർ</b></td><td>സസ്യവളർച്ചാ നിരക്ക്</td></tr>
+    <tr><td><b>സ്ഫിഗ്മോമാനോമീറ്റർ</b></td><td>രക്തസമ്മർദ്ദം (സാധാരണം: 120/80 mmHg)</td><td><b>സ്റ്റെതസ്കോപ്പ്</b> (റെനെ ലെനക്)</td><td>ഹൃദയമിടിപ്പ് (ശബ്ദത്തിന്റെ ആവർത്തന പ്രതിപതനം)</td></tr>
+    <tr><td><b>ഗൈഗർ-മുള്ളർ (GM) കൗണ്ടർ</b></td><td>റേഡിയോ ആക്ടീവ് വികിരണം</td><td><b>സീസ്മോഗ്രാഫ്</b></td><td>ഭൂകമ്പ തീവ്രത (റിക്ടർ സ്കെയിൽ, മെർക്കാലി സ്കെയിൽ)</td></tr>
+    <tr><td><b>ടാക്കോമീറ്റർ</b></td><td>ഭ്രമണ വേഗത (RPM - വിമാനം/മോട്ടോർ)</td><td><b>ഒഡോമീറ്റർ / സ്പീഡോമീറ്റർ</b></td><td>വാഹനം സഞ്ചരിച്ച ദൂരം / തൽസമയ വേഗത</td></tr>
+    <tr><td><b>സൊണോമീറ്റർ</b></td><td>കമ്പികളുടെ കമ്പന ആവൃത്തി</td><td><b>വിസ്കോമീറ്റർ</b></td><td>ദ്രാവകങ്ങളുടെ ശ്യാനത (Viscosity)</td></tr>
+    <tr><td><b>കലോറിമീറ്റർ</b> (ചെമ്പ്)</td><td>താപത്തിന്റെ അളവ്</td><td><b>മാക്സ്‌വെൽ ബ്രിഡ്ജ് / വീറ്റ്സ്റ്റൺ</b></td><td>ഇൻഡക്ടൻസ് / പ്രതിരോധം കൃത്യമായി അളക്കാൻ</td></tr>
   </table>
   </div>
 
-  <h3>🔭 കണ്ടുപിടിത്തങ്ങൾ</h3>
+  <h3>🔭 കണ്ടുപിടിത്തങ്ങളും ഭൗതികശാസ്ത്രജ്ഞരും</h3>
   <ul>
-    <li><b>ഇലക്ട്രോൺ</b> — തോംസൺ | <b>ന്യൂട്രോൺ</b> — ചാഡ്വിക് | <b>പ്രോട്ടോൺ</b> — റൂഥർഫോർഡ്</li>
-    <li><b>X-റേ</b> — റോൺട്ജൻ | <b>റേഡിയോ ആക്ടിവിറ്റി</b> — ബെക്വറൽ | <b>രാമൻ പ്രഭാവം</b> — C.V. രാമൻ</li>
+    <li><b>ഇലക്ട്രോൺ:</b> ജെ.ജെ. തോംസൺ (1897) | <b>പ്രോട്ടോൺ:</b> ഏണസ്റ്റ് റൂഥർഫോർഡ് (1919, പേരിട്ടത്) / ഗോൾഡ്സ്റ്റീൻ | <b>ന്യൂട്രോൺ:</b> ജെയിംസ് ചാഡ്വിക് (1932) | <b>പോസിട്രോൺ (ആന്റി-ഇലക്ട്രോൺ):</b> കാൾ ആൻഡേഴ്സൺ</li>
+    <li><b>X-റേ:</b> വിൽഹെം റോൺട്ജൻ (1895 - ഭൗതികശാസ്ത്രത്തിലെ ആദ്യ നൊബേൽ, 1901) | <b>റേഡിയോ ആക്ടിവിറ്റി:</b> ഹെൻറി ബെക്വറൽ (1896) | <b>റേഡിയം, പൊളോണിയം:</b> മേരി ക്യൂറി & പിയറി ക്യൂറി</li>
+    <li><b>ഭാരതീയ ശാസ്ത്രജ്ഞർ:</b>
+      <ul>
+        <li><b>സി.വി. രാമൻ:</b> രാമൻ പ്രഭാവം (പ്രകാശ വിസരണം) — 1928 ഫെബ്രുവരി 28 (ദേശീയ ശാസ്ത്രദിനം), <b>1930-ൽ നൊബേൽ</b>.</li>
+        <li><b>എസ്. ചന്ദ്രശേഖർ:</b> നക്ഷത്ര പരിണാമം, <b>ചന്ദ്രശേഖർ പരിധി (1.44 സൗരപിണ്ഡം)</b> — 1983-ൽ നൊബേൽ.</li>
+        <li><b>സത്യേന്ദ്രനാഥ് ബോസ്:</b> ബോസ്-ഐൻസ്റ്റീൻ സ്റ്റാറ്റിസ്റ്റിക്സ്, ബോസോൺ കണങ്ങൾ, ദ്രവ്യത്തിന്റെ 5-ാം അവസ്ഥ (BEC).</li>
+        <li><b>ഹോമി ജെ. ഭാഭ:</b> ഇന്ത്യൻ ആണവ പരിപാടിയുടെ പിതാവ്, കോസ്മിക് കിരണ പഠനം.</li>
+        <li><b>വിക്രം സാരാഭായ്:</b> ഇന്ത്യൻ ബഹിരാകാശ പദ്ധതിയുടെ പിതാവ്.</li>
+      </ul>
+    </li>
   </ul>
 
-  <h3>🔢 സ്ഥിരാങ്കങ്ങൾ</h3>
+  <h3>🔢 പ്രധാന ഭൗതിക സ്ഥിരാങ്കങ്ങൾ (Physical Constants)</h3>
   <div class="stats">
-    <div class="stat"><div class="big">c = 3×10⁸</div><div class="small">m/s — പ്രകാശവേഗം</div></div>
-    <div class="stat"><div class="big">g = 9.8</div><div class="small">m/s² — ഗുരുത്വ ത്വരണം</div></div>
-    <div class="stat"><div class="big">G = 6.67×10⁻¹¹</div><div class="small">N·m²/kg²</div></div>
-    <div class="stat"><div class="big">h = 6.626×10⁻³⁴</div><div class="small">J·s — പ്ലാങ്ക്</div></div>
-    <div class="stat"><div class="big">e = 1.6×10⁻¹⁹</div><div class="small">C — ഇലക്ട്രോൺ ചാർജ്</div></div>
-    <div class="stat"><div class="big">Nₐ = 6.022×10²³</div><div class="small">/mol — അവൊഗാഡ്രോ</div></div>
+    <div class="stat"><div class="big">c = 3×10⁸ m/s</div><div class="small">ശൂന്യതയിലെ പ്രകാശവേഗം</div></div>
+    <div class="stat"><div class="big">g = 9.8 m/s²</div><div class="small">ഗുരുത്വ ത്വരണം (ശരാശരി)</div></div>
+    <div class="stat"><div class="big">G = 6.67×10⁻¹¹</div><div class="small">N·m²/kg² — ഗുരുത്വ സ്ഥിരാങ്കം</div></div>
+    <div class="stat"><div class="big">h = 6.626×10⁻³⁴</div><div class="small">J·s — പ്ലാങ്ക് സ്ഥിരാങ്കം</div></div>
+    <div class="stat"><div class="big">e = 1.6×10⁻¹⁹ C</div><div class="small">മൗലിക ചാർജ്</div></div>
+    <div class="stat"><div class="big">Nₐ = 6.022×10²³</div><div class="small">/mol — അവൊഗാഡ്രോ സംഖ്യ</div></div>
   </div>
-
-  <h3>🔤 പ്രിഫിക്സുകൾ</h3>
-  <ul>
-    <li>kilo 10³ | milli 10⁻³ | micro 10⁻⁶ | nano 10⁻⁹ | pico 10⁻¹²</li>
-  </ul>
-
-  <div class="trick"><span class="lbl">TRICK</span> വെർണിയർ കാലിപ്പർ LC = <b>0.1 mm</b> | സ്ക്രൂ ഗേജ് LC = <b>0.01 mm</b> — "വെർണിയർ പത്തിൽ ഒന്ന്, സ്ക്രൂ നൂറിൽ ഒന്ന്"</div>
-  <div class="note"><span class="lbl">➕ NEW</span> ചെറിയ → വലിയ ക്രമം: ഫെർമി &lt; ആംഗ്സ്ട്രോം &lt; നാനോമീറ്റർ &lt; മൈക്രോൺ.</div>
-  <div class="trick"><span class="lbl">TRICK</span> "ഫെർമി ആംഗ്സ്ട്രോമിനെ നാനോയിൽ മൈക്രോൺ കടത്തി" (F-A-N-M)</div>
 </div>
 </details>
 
 <!-- ================= 7.2 ================= -->
-<details class="card" open>
-<summary><span class="num">7.2</span><span class="title">ചലനവും ചലന നിയമങ്ങളും</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="2"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">7.2</span>
+  <span class="title">ചലനവും ന്യൂട്ടന്റെ ചലന നിയമങ്ങളും</span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="2"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>📐 പ്രധാന സൂത്രങ്ങൾ</h3>
-  <div class="formula">p = mv &nbsp;|&nbsp; I = Ft = mv − mu &nbsp;|&nbsp; a = (v − u)/t</div>
-  <div class="formula">F = ma = dp/dt</div>
-  <div class="formula">v = u + at &nbsp;|&nbsp; s = ut + ½at² &nbsp;|&nbsp; v² = u² + 2as</div>
+  <h3>📐 ചലന സമവാക്യങ്ങളും പ്രധാന സൂത്രവാക്യങ്ങളും</h3>
+  <div class="formula">പ്രവേഗം v = s/t &nbsp;|&nbsp; ത്വരണം a = (v − u)/t &nbsp;|&nbsp; ആക്കം p = mv (kg·m/s)</div>
+  <div class="formula">ചലന സമവാക്യങ്ങൾ: (1) v = u + at &nbsp;|&nbsp; (2) s = ut + ½at² &nbsp;|&nbsp; (3) v² = u² + 2as</div>
+  <div class="formula">ബലം F = ma = (mv − mu)/t &nbsp;|&nbsp; ആവേഗം (Impulse) I = F × t = mv − mu (യൂണിറ്റ്: N·s അല്ലെങ്കിൽ kg·m/s)</div>
 
-  <div class="trick"><span class="lbl">TRICK</span> km/h → m/s: <b>× 5/18</b> | m/s → km/h: <b>× 18/5</b></div>
+  <div class="trick"><span class="lbl">TRICK</span> <b>വേഗത മാറ്റാൻ:</b> km/h → m/s ആക്കാൻ <b>× 5/18</b> ചെയ്യുക (ഉദാ: 36 km/h = 10 m/s, 72 km/h = 20 m/s, 90 km/h = 25 m/s) | m/s → km/h ആക്കാൻ <b>× 18/5</b>.</div>
 
-  <h3>⚖️ ദൂരം vs സ്ഥാനാന്തരം</h3>
+  <h3>⚖️ ദൂരം (Distance) vs സ്ഥാനാന്തരം (Displacement)</h3>
   <div class="cmp">
     <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">ദൂരം (Distance)</h4>
-      <ul><li>അദിശം</li><li>ഒരു ചുറ്റ് = ആകെ പാത</li><li>ഒരിക്കലും ഋണമല്ല</li></ul></div>
+      <ul>
+        <li>സഞ്ചരിച്ച പാതയുടെ ആകെ നീളം (അദിശം)</li>
+        <li>ഒരിക്കലും പൂജ്യമോ ഋണമോ (Negative) ആകില്ല (ചലിക്കുന്ന വസ്തുവിന്)</li>
+        <li>r ആരമുള്ള വൃത്തത്തിൽ ഒരു ചുറ്റ് = <b>2πr</b>; അർദ്ധവൃത്തം = <b>πr</b></li>
+      </ul>
+    </div>
     <div class="col" style="border-color:#ddd6fe;"><h4 style="background:#6d28d9;">സ്ഥാനാന്തരം (Displacement)</h4>
-      <ul><li>സദിശം</li><li>ഒരു ചുറ്റ് = 0</li><li>ഋണമാകാം</li></ul></div>
+      <ul>
+        <li>ആരംഭബിന്ദുവും അന്ത്യബിന്ദുവും തമ്മിലുള്ള ഏറ്റവും കുറഞ്ഞ നേർരേഖാ ദൂരം (സദിശം)</li>
+        <li>പൂജ്യമോ ഋണമോ ആകാം; ദൂരത്തേക്കാൾ ഒരിക്കലും കൂടുകയുമില്ല (സ്ഥാനാന്തരം ≤ ദൂരം)</li>
+        <li>വൃത്തത്തിൽ ഒരു പൂർണ്ണ ചുറ്റ് = <b>0</b>; അർദ്ധവൃത്തം = <b>2r (വ്യാസം)</b></li>
+      </ul>
+    </div>
   </div>
 
-  <h3>📈 ഗ്രാഫ് സവിശേഷതകൾ</h3>
-  <ul>
-    <li><b>s–t ചരിവ്</b> = വേഗത</li>
-    <li><b>v–t ചരിവ്</b> = ത്വരണം</li>
-    <li><b>v–t വിസ്തീർണം</b> = സ്ഥാനാന്തരം</li>
-  </ul>
-
-  <h3>🚀 ന്യൂട്ടന്റെ ചലന നിയമങ്ങൾ</h3>
+  <h3>🚀 ന്യൂട്ടന്റെ ചലന നിയമങ്ങൾ (Principia Mathematica - 1687)</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>നിയമം</th><th>പ്രധാന വസ്തുത</th></tr>
-    <tr><td>1-ാം നിയമം (ജഡത്വ നിയമം)</td><td>ജഡത്വം മാസിന് നേരനുപാതം; നിശ്ചല, ചലന, ദിശ ജഡത്വം</td></tr>
-    <tr><td>2-ാം നിയമം</td><td>F = ma = dp/dt</td></tr>
-    <tr><td>3-ാം നിയമം</td><td>രണ്ട് വസ്തുക്കളിൽ പ്രവർത്തിക്കുന്നു; റോക്കറ്റ്, റീകോയിൽ, നടത്തം, നീന്തൽ</td></tr>
+    <tr><th>നിയമം</th><th>നിർവ്വചനം / തത്വം</th><th>പ്രായോഗിക ഉദാഹരണങ്ങൾ (PSC ചോദ്യങ്ങൾ)</th></tr>
+    <tr>
+      <td><b>ഒന്നാം നിയമം</b><br>(ജഡത്വ നിയമം - ഗലീലിയോ)</td>
+      <td>ബലത്തിന്റെ നിർവ്വചനം നൽകുന്നു. ജഡത്വം (Inertia) വസ്തുവിന്റെ <b>മാസിന് നേരനുപാതത്തിലാണ്</b>.</td>
+      <td>
+        • <b>നിശ്ചല ജഡത്വം:</b> ബസ് പെട്ടെന്ന് എടുക്കുമ്പോൾ പിന്നോട്ട് ആയുന്നു; മാവിൻ കൊമ്പ് കുലുക്കുമ്പോൾ മാങ്ങ വീഴുന്നു; കാർപ്പറ്റ് തല്ലുമ്പോൾ പൊടി വേർപെടുന്നു.<br>
+        • <b>ചലന ജഡത്വം:</b> ബസ് പെട്ടെന്ന് നിർത്തുമ്പോൾ മുന്നോട്ട് ആയുന്നു; ലോങ്ങ് ജമ്പ് ചാടുന്നതിന് മുമ്പ് ഓടുന്നു; ഓടുന്ന ബസ്സിൽ നിന്ന് ഇറങ്ങുമ്പോൾ മുന്നോട്ട് ഓടുന്നു.<br>
+        • <b>ദിശാ ജഡത്വം:</b> വളവ് തിരിയുമ്പോൾ യാത്രക്കാർ പുറത്തേക്ക് ചരിയുന്നു; ചക്രത്തിൽ നിന്ന് ചെളി തൊടുവരയിലൂടെ (Tangent) തെറിക്കുന്നു.
+      </td>
+    </tr>
+    <tr>
+      <td><b>രണ്ടാം നിയമം</b><br>(ബലത്തിന്റെ അളവ്)</td>
+      <td>ആക്കവ്യത്യാസ നിരക്ക് പ്രയോഗിച്ച ബലത്തിന് നേരനുപാതത്തിലാണ്: <b>F = ma</b>.</td>
+      <td>
+        • ക്രിക്കറ്റ് ബോൾ പിടിക്കുമ്പോൾ ഫീൽഡർ കൈ പിന്നോട്ട് വലിക്കുന്നു (സമയം t കൂട്ടുമ്പോൾ ആഘാതബലം F കുറയുന്നു — Impulsive Force).<br>
+        • ഹൈജമ്പ് താരം സ്പോഞ്ച് ബെഡിലേക്ക് ചാടുന്നു; വാഹനങ്ങളിലെ ഷോക്ക് അബ്സോർബർ.
+      </td>
+    </tr>
+    <tr>
+      <td><b>മൂന്നാം നിയമം</b><br>(പ്രവർത്തന-പ്രതിപ്രവർത്തനം)</td>
+      <td>ഏതൊരു പ്രവർത്തനത്തിനും തുല്യവും വിപരീതവുമായ പ്രതിപ്രവർത്തനം ഉണ്ടായിരിക്കും (രണ്ട് വ്യത്യസ്ത വസ്തുക്കളിൽ പ്രവർത്തിക്കുന്നു).</td>
+      <td>
+        • <b>റോക്കറ്റ് വിക്ഷേപണം</b> (രേഖീയ ആക്ക സംരക്ഷണ നിയമവും), തോക്കിന്റെ റീകോയിൽ (Recoil of gun).<br>
+        • തോണിയിൽ നിന്ന് കരയിലേക്ക് ചാടുമ്പോൾ തോണി പിന്നോട്ട് നീങ്ങുന്നു; നടത്തം, നീന്തൽ, പക്ഷികളുടെ പറക്കൽ.
+      </td>
+    </tr>
   </table>
   </div>
 
-  <h3>🎯 പ്രൊജക്ടൈൽ ചലനം</h3>
-  <ul class="icon-list">
-    <li>പഥം: <b>പരാബൊള</b></li>
-    <li>പരമാവധി ദൂരം: <b>45°</b> | പരമാവധി ഉയരം: <b>90°</b></li>
-    <li>പൂരക കോണുകൾ (30° & 60°) → <b>തുല്യ ദൂരം</b></li>
-  </ul>
-
-  <h3>🔄 വർത്തുള ചലനം</h3>
+  <h3>🎯 പ്രൊജക്ടൈൽ ചലനം, വർത്തുള ചലനം, കോണീയ ആക്കം</h3>
   <ul>
-    <li><b>അഭികേന്ദ്ര ബലം:</b> F = mv²/r (കേന്ദ്രത്തിലേക്ക്)</li>
-    <li><b>അപകേന്ദ്ര ബലം:</b> കപടബലം (Centrifugal)</li>
-    <li>ഏകീകൃത വർത്തുള ചലനം <b>ത്വരിത ചലനം</b> ആണ്</li>
-    <li><b>ബാങ്കിംഗ്:</b> tanθ = v²/rg</li>
+    <li><b>പ്രൊജക്ടൈൽ പഥം (Trajectory):</b> പരാബൊള (Parabola) | <b>പരമാവധി തിരശ്ചീന ദൂരം (Range):</b> <span class="hl">45°</span> കോണിൽ എറിയുമ്പോൾ ($R_{\max} = u^2/g$) | <b>പരമാവധി ഉയരം:</b> 90°.</li>
+    <li><b>പൂരക കോണുകൾ (Complementary angles, θ & 90°−θ):</b> തുക 90° വരുന്ന രണ്ട് കോണുകളിൽ (ഉദാ: <b>30° & 60°</b> അല്ലെങ്കിൽ <b>20° & 70°</b>) എറിയുന്ന വസ്തുക്കൾ <b>ഒരേ ദൂരത്തിൽ (Equal Range)</b> പതിക്കുന്നു.</li>
+    <li><b>അഭികേന്ദ്ര ബലം (Centripetal Force):</b> വൃത്തകേന്ദ്രത്തിലേക്ക് പ്രവർത്തിക്കുന്ന യഥാർത്ഥ ബലം ($F = mv^2/r$). ഗ്രഹങ്ങളുടെ പരിക്രമണം, ഇലക്ട്രോൺ കറക്കം എന്നിവയ്ക്ക് കാരണം.</li>
+    <li><b>അപകേന്ദ്ര ബലം (Centrifugal Force):</b> കേന്ദ്രത്തിന് പുറത്തേക്ക് അനുഭവപ്പെടുന്ന കപടബലം (Pseudo force). <b>ഉപയോഗം:</b> പാലിൽ നിന്ന് വെണ്ണ വേർതിരിക്കൽ (Cream separator), വാഷിംഗ് മെഷീൻ ഡ്രയർ, രക്തപരിശോധനയിലെ സെൻട്രിഫ്യൂജ്.</li>
+    <li><b>വളവുകളിലെ ബാങ്കിംഗ് (Banking of Roads):</b> വാഹനങ്ങൾ തെന്നിമാറാതിരിക്കാൻ റോഡിന്റെ പുറംഭാഗം ഉയർത്തി നിർമ്മിക്കുന്നത് ($\tan\theta = v^2/rg$).</li>
+    <li><b>കോണീയ ആക്ക സംരക്ഷണം ($L = I\omega = \text{സ്ഥിരം}$):</b> ഐസ് സ്കേറ്റിംഗ് താരം / ബാലെ നർത്തകി കൈകൾ ശരീരത്തോട് ചേർക്കുമ്പോൾ ജഡത്വ മൊമന്റ് ($I$) കുറയുകയും കറക്കത്തിന്റെ കോണീയ പ്രവേഗം ($\omega$) കൂടുകയും ചെയ്യുന്നു <span class="new-badge">NEW</span>.</li>
   </ul>
 
-  <h3>🛗 ലിഫ്റ്റ് (Apparent Weight)</h3>
+  <h3>🛗 ലിഫ്റ്റിലെ പ്രകടഭാരം (Apparent Weight in a Lift)</h3>
   <ul>
-    <li>മുകളിലേക്ക്: <b>m(g+a)</b></li>
-    <li>താഴേക്ക്: <b>m(g−a)</b></li>
-    <li>സ്വതന്ത്ര പതനം: <b>0</b></li>
+    <li>ലിഫ്റ്റ് നിശ്ചലമെങ്കിൽ / സമപ്രവേഗത്തിലെങ്കിൽ: <b>W = mg</b> (യഥാർത്ഥ ഭാരം)</li>
+    <li>ലിഫ്റ്റ് $a$ ത്വരണത്തിൽ <b>മുകളിലേക്ക്</b> ഉയരുമ്പോൾ: <b>W = m(g + a)</b> (ഭാരം കൂടുന്നു)</li>
+    <li>ലിഫ്റ്റ് $a$ ത്വരണത്തിൽ <b>താഴേക്ക്</b> ഇറങ്ങുമ്പോൾ: <b>W = m(g − a)</b> (ഭാരം കുറയുന്നു)</li>
+    <li>ലിഫ്റ്റിന്റെ കയർ പൊട്ടി <b>നിർബാധം താഴേക്ക് പതിക്കുമ്പോൾ ($a = g$):</b> <b>W = 0</b> (ഭാരമില്ലായ്മ / Weightlessness)</li>
   </ul>
 
-  <h3>🚀 ISRO — കാലക്രമം</h3>
-  <div class="htl">
-    <div class="node"><div class="dot"></div><div class="yr">1969</div><div class="ev">ISRO<br>ഓഗസ്റ്റ് 15</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1975</div><div class="ev">ആര്യഭട്ട</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">1980</div><div class="ev">രോഹിണി<br>(SLV-3)</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">2023</div><div class="ev">ചന്ദ്രയാൻ-3</div></div>
-    <div class="node"><div class="dot"></div><div class="yr">ഓഗ 23</div><div class="ev">ബഹിരാകാശ ദിനം</div></div>
+  <div class="fig">
+    <span class="fig-title">📊 ചലന ഗ്രാഫുകളും പ്രൊജക്ടൈൽ പഥവും (Annotated Visuals)</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 150" role="img" aria-label="സ്ഥാനാന്തര-സമയ ഗ്രാഫ്">
+          <defs><marker id="arr1" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 1L10 5L0 9z" fill="#5a6485"/></marker></defs>
+          <path class="ax" d="M32 15V125H195" marker-start="url(#arr1)" marker-end="url(#arr1)"/>
+          <path class="ln" stroke="#1d4ed8" d="M32 125L175 28"/>
+          <path class="ln" stroke="#d97706" stroke-dasharray="4 3" d="M32 82H180"/>
+          <path d="M110 72H145V48" fill="none" stroke="#0f9d58" stroke-width="1.5"/>
+          <text x="150" y="64" fill="#0f9d58">Δs</text>
+          <text x="122" y="84" fill="#0f9d58">Δt</text>
+          <text x="108" y="34" fill="#1d4ed8">സമപ്രവേഗം</text>
+          <text x="125" y="96" fill="#d97706">നിശ്ചലാവസ്ഥ</text>
+          <text x="8" y="25">s (m)</text>
+          <text x="155" y="142">സമയം t (s)</text>
+        </svg>
+        <figcaption><b>s–t ഗ്രാഫ്:</b> ചരിവ് (Slope = Δs/Δt) = <b>പ്രവേഗം (Velocity)</b></figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 150" role="img" aria-label="പ്രവേഗ-സമയ ഗ്രാഫ്">
+          <path class="ax" d="M32 15V125H195" marker-start="url(#arr1)" marker-end="url(#arr1)"/>
+          <polygon points="32,95 175,30 175,125 32,125" fill="#0f9d58" opacity="0.18"/>
+          <path class="ln" stroke="#0f9d58" d="M32 95L175 30"/>
+          <text x="65" y="42" fill="#0f9d58">ചരിവ് = ത്വരണം (a)</text>
+          <text x="58" y="98">വിസ്തീർണം = സ്ഥാനാന്തരം (s)</text>
+          <text x="14" y="98" class="sub-lbl">u</text>
+          <text x="6" y="25">v (m/s)</text>
+          <text x="155" y="142">സമയം t (s)</text>
+        </svg>
+        <figcaption><b>v–t ഗ്രാഫ്:</b> ചരിവ് = <b>ത്വരണം (a)</b>; ഗ്രാഫിനടിയിലെ വിസ്തീർണം = <b>സ്ഥാനാന്തരം (s)</b></figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 150" role="img" aria-label="പ്രൊജക്ടൈൽ പഥങ്ങൾ">
+          <path class="ax" d="M18 125H198" marker-end="url(#arr1)"/>
+          <path class="ax" d="M18 125V15" marker-end="url(#arr1)"/>
+          <!-- 60 deg -->
+          <path class="ln" stroke="#d93025" d="M18 125 Q78 -15 138 125"/>
+          <!-- 45 deg max range -->
+          <path class="ln" stroke="#1d4ed8" stroke-width="2.8" d="M18 125 Q105 18 192 125"/>
+          <!-- 30 deg -->
+          <path class="ln" stroke="#e8a600" stroke-dasharray="4 2" d="M18 125 Q78 68 138 125"/>
+          <text x="62" y="26" fill="#d93025">60°</text>
+          <text x="115" y="58" fill="#1d4ed8">45° (പരമാവധി ദൂരം)</text>
+          <text x="72" y="108" fill="#d97706">30°</text>
+          <circle cx="138" cy="125" r="3.5" fill="#d93025"/>
+          <circle cx="192" cy="125" r="3.5" fill="#1d4ed8"/>
+          <text x="85" y="142" class="sub-lbl">30° &amp; 60° → ഒരേ ദൂരം</text>
+        </svg>
+        <figcaption><b>പ്രൊജക്ടൈൽ:</b> 45° → പരമാവധി ദൂരം; പൂരക കോണുകൾ (30°, 60°) → തുല്യ ദൂരം</figcaption>
+      </figure>
+    </div>
   </div>
 
-  <div class="note"><span class="lbl">KEY</span> ശരാശരി വേഗത = ആകെ ദൂരം / ആകെ സമയം | ശരാശരി പ്രവേഗം = സ്ഥാനാന്തരം / ആകെ സമയം</div>
-  <div class="fig"><b>📊 ചലന ഗ്രാഫുകൾ & പ്രൊജക്ടൈൽ</b><div class="fg"><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 130" role="img" aria-label="s–t ഗ്രാഫ്: ചരിവ് = വേഗത"><path class="ax" d="M20 5V120H160"/><path class="ln" stroke="#1d4ed8" d="M20 120L150 20"/></svg><figcaption>s–t ഗ്രാഫ്: ചരിവ് = വേഗത</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 130" role="img" aria-label="v–t ഗ്രാഫ്: ചരിവ് = ത്വരണം; വിസ്തീർണം = സ്ഥാനാന്തരം"><path class="ax" d="M20 5V120H160"/><path d="M20 100L150 30V120H20Z" fill="#0f9d58" opacity=".18"/><path class="ln" stroke="#0f9d58" d="M20 100L150 30"/></svg><figcaption>v–t ഗ്രാഫ്: ചരിവ് = ത്വരണം; വിസ്തീർണം = സ്ഥാനാന്തരം</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 130" role="img" aria-label="പ്രൊജക്ടൈൽ: 45° (നീല ഡാഷ്) → പരമാവധി ദൂരം"><path class="ax" d="M10 120H160"/><path class="ln" stroke="#d93025" d="M10 120Q70 -40 130 120"/><path class="ln" stroke="#1d4ed8" stroke-dasharray="4" d="M10 120Q85 20 160 120"/><path class="ln" stroke="#e8a600" d="M10 120Q40 60 100 120"/></svg><figcaption>പ്രൊജക്ടൈൽ: 45° (നീല ഡാഷ്) → പരമാവധി ദൂരം</figcaption></figure></div></div>
-  <div class="note"><span class="lbl">➕ NEW</span> ആവേഗം (Impulse) = ആക്കത്തിലെ മാറ്റം; യൂണിറ്റ് N·s = kg·m/s (ആക്കത്തിന്റെ അതേ യൂണിറ്റ്).</div>
+  <h3>🚀 ISRO — ബഹിരാകാശ നാഴികക്കല്ലുകൾ</h3>
+  <div class="htl">
+    <div class="node"><div class="dot"></div><div class="yr">1969 ഓഗ 15</div><div class="ev">ISRO സ്ഥാപിതമായി<br>(ആസ്ഥാനം: ബെംഗളൂരു)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1975 ഏപ്രിൽ 19</div><div class="ev">ആര്യഭട്ട<br>(ആദ്യ ഉപഗ്രഹം)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">1980</div><div class="ev">രോഹിണി RS-1<br>(SLV-3, കലാം)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">2008 ഒക്ടോ 22</div><div class="ev">ചന്ദ്രയാൻ-1<br>(PSLV-C11)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">2013 നവം 5</div><div class="ev">മംഗൾയാൻ (MOM)<br>(PSLV-C25)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">2023 ഓഗ 23</div><div class="ev">ചന്ദ്രയാൻ-3 ലാൻഡിംഗ്<br>(ശിവശക്തി പോയിന്റ്)</div></div>
+    <div class="node"><div class="dot"></div><div class="yr">2023 സെപ്റ്റം 2</div><div class="ev">ആദിത്യ-L1<br>(സൗരദൗത്യം, PSLV-C57)</div></div>
+  </div>
 </div>
 </details>
 
 <!-- ================= 7.3 ================= -->
-<details class="card" open>
-<summary><span class="num">7.3</span><span class="title">പ്രകാശം</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="3"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">7.3</span>
+  <span class="title">പ്രകാശം (Optics — ദർപ്പണങ്ങൾ, ലെൻസുകൾ, പ്രതിഭാസങ്ങൾ)</span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="3"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
   <h3>💡 അടിസ്ഥാന വസ്തുതകൾ</h3>
   <ul class="icon-list">
-    <li>പ്രകാശവേഗം: <b>c = 3×10⁸ m/s</b> (റോമർ കണ്ടെത്തി)</li>
-    <li>തിരശ്ചീന EM തരംഗം; ദൃശ്യ പ്രകാശം: <b>400–700 nm</b></li>
-    <li>ആവൃത്തി നിറം നിർണ്ണയിക്കുന്നു</li>
+    <li>പ്രകാശം ഒരു <b>തിരശ്ചീന വൈദ്യുതകാന്തിക തരംഗമാണ്</b> (Transverse EM Wave) — സഞ്ചരിക്കാൻ മാധ്യമം ആവശ്യമില്ല.</li>
+    <li>ശൂന്യതയിലെ പ്രകാശവേഗം: <b>c = 3×10⁸ m/s</b> (ആദ്യമായി കണക്കാക്കിയത്: <b>ഒലേ റോമർ</b>, വ്യാഴത്തിന്റെ ഉപഗ്രഹങ്ങളെ നിരീക്ഷിച്ച്).</li>
+    <li>പ്രകാശവേഗം ക്രമം: <b>ശൂന്യത &gt; വായു &gt; ജലം (2.25×10⁸ m/s) &gt; ഗ്ലാസ് (2×10⁸ m/s) &gt; വജ്രം (1.24×10⁸ m/s)</b>.</li>
+    <li>സൂര്യപ്രകാശം ഭൂമിയിലെത്താൻ: <b>8 മിനിറ്റ് 20 സെക്കൻഡ് (500 s)</b> | ചന്ദ്രനിൽ നിന്നുള്ള പ്രകാശം: <b>1.3 സെക്കൻഡ്</b>.</li>
+    <li>ദൃശ്യപ്രകാശത്തിന്റെ തരംഗദൈർഘ്യം: <b>400 nm (വയലറ്റ്) മുതൽ 700 nm (ചുവപ്പ്) വരെ</b> (4000 Å – 7000 Å).</li>
   </ul>
 
-  <h3>🪞 ദർപ്പണങ്ങൾ</h3>
+  <h3>🪞 ദർപ്പണങ്ങൾ (Mirrors — പ്രതിപതനം)</h3>
   <div class="cmp">
-    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">സമതല ദർപ്പണം</h4>
-      <ul><li>മിഥ്യ, നിവർന്ന പ്രതിബിംബം</li><li>m = +1</li><li>പാർശ്വിക വിപര്യയം</li><li>n = (360/θ) − 1</li></ul></div>
-    <div class="col" style="border-color:#c8ecd4;"><h4 style="background:#0f9d58;">കോൺകേവ്</h4>
-      <ul><li>ഷേവിംഗ്, ദന്തഡോക്ടർ, ഹെഡ്‌ലൈറ്റ്</li><li>f = R/2</li></ul></div>
-    <div class="col" style="border-color:#fde68a;"><h4 style="background:#d97706;">കോൺവെക്സ്</h4>
-      <ul><li>റിയർവ്യൂ മിറർ</li><li>വിശാല കാഴ്ച</li></ul></div>
+    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">സമതല ദർപ്പണം (Plane Mirror)</h4>
+      <ul>
+        <li>എപ്പോഴും <b>മിഥ്യ (Virtual), നിവർന്നത്, വസ്തുവിന്റെ അതേ വലിപ്പം</b> (m = +1)</li>
+        <li><b>പാർശ്വിക വിപര്യയം (Lateral Inversion):</b> ഇടത്-വലത് മാറ്റം (AMBULANCE തലതിരിച്ചെഴുതാൻ കാരണം)</li>
+        <li>പൂർണ്ണരൂപം കാണാൻ ദർപ്പണത്തിന് വസ്തുവിന്റെ <b>പകുതി ഉയരം (H/2)</b> മതി</li>
+        <li>θ കോണിൽ വെച്ച രണ്ട് ദർപ്പണങ്ങൾക്കിടയിലെ പ്രതിബിംബങ്ങളുടെ എണ്ണം: <b>n = (360/θ) − 1</b></li>
+      </ul>
+    </div>
+    <div class="col" style="border-color:#c8ecd4;"><h4 style="background:#0f9d58;">കോൺകേവ് ദർപ്പണം (സംവ്രജന ദർപ്പണം)</h4>
+      <ul>
+        <li>പ്രകാശരശ്മികളെ ഒരു ബിന്ദുവിലേക്ക് കേന്ദ്രീകരിക്കുന്നു (Converging)</li>
+        <li><b>ഉപയോഗങ്ങൾ:</b> ഷേവിംഗ് മിറർ, മേക്കപ്പ് മിറർ, ദന്തഡോക്ടർമാരുടെ ദർപ്പണം, സോളാർ കുക്കർ, വാഹനങ്ങളുടെ ഹെഡ്‌ലൈറ്റ്, ടോർച്ച് റിഫ്ലക്ടർ, പ്രതിപതന ടെലിസ്കോപ്പ്</li>
+        <li>ഫോക്കസ് ദൂരം <b>f = R/2</b> (നെഗറ്റീവ്)</li>
+      </ul>
+    </div>
+    <div class="col" style="border-color:#fde68a;"><h4 style="background:#d97706;">കോൺവെക്സ് ദർപ്പണം (വിവ്രജന ദർപ്പണം)</h4>
+      <ul>
+        <li>പ്രകാശരശ്മികളെ വികേന്ദ്രീകരിക്കുന്നു (Diverging)</li>
+        <li>എപ്പോഴും <b>മിഥ്യയും നിവർന്നതും ചെറുതുമായ</b> പ്രതിബിംബം നൽകുന്നു</li>
+        <li>വിശാലമായ കാഴ്ചവട്ടം (Wide field of view)</li>
+        <li><b>ഉപയോഗങ്ങൾ:</b> വാഹനങ്ങളിലെ <b>റിയർവ്യൂ മിറർ (സൈഡ് മിറർ)</b>, റോഡുകളിലെ കൊടുംവളവുകളിലെ ദർപ്പണം, ATM സുരക്ഷാ മിറർ</li>
+      </ul>
+    </div>
   </div>
 
-  <h3>🌊 അപവർത്തനം (Refraction)</h3>
-  <ul>
-    <li>ആവൃത്തി <b>മാറില്ല</b>; n = c/v</li>
-    <li>സ്നെൽ നിയമം: <b>sin i / sin r = n</b></li>
-  </ul>
-
-  <h3>✨ പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (TIR)</h3>
-  <ul class="icon-list">
-    <li>സംഭവിക്കാൻ: i > C; sin C = 1/n</li>
-    <li>ഉപയോഗം: ഫൈബർ ഒപ്റ്റിക്സ് (കപാനി), എൻഡോസ്കോപ്പി, മരീചിക</li>
-    <li>വജ്രം: n = 2.42; C ≈ <b>24.4°</b></li>
-  </ul>
-
-  <h3>👁️ കണ്ണ് & കാഴ്ചവൈകല്യങ്ങൾ</h3>
+  <h3>📋 കോൺകേവ് ദർപ്പണത്തിലെയും കോൺവെക്സ് ലെൻസിലെയും പ്രതിബിംബ രൂപീകരണം <span class="new-badge">PSC FAVORITE</span></h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>വൈകല്യം</th><th>പരിഹാര ലെൻസ്</th></tr>
-    <tr><td>മയോപ്പിയ (ഹ്രസ്വദൃഷ്ടി)</td><td>കോൺകേവ്</td></tr>
-    <tr><td>ഹൈപ്പർമെട്രോപ്പിയ (ദൂരദൃഷ്ടി)</td><td>കോൺവെക്സ്</td></tr>
-    <tr><td>പ്രെസ്ബയോപ്പിയ (വയോജന ദൃഷ്ടി)</td><td>ബൈഫോക്കൽ</td></tr>
-    <tr><td>അസ്റ്റിഗ്മാറ്റിസം</td><td>സിലിണ്ട്രിക്കൽ</td></tr>
+    <tr><th>വസ്തുവിന്റെ സ്ഥാനം</th><th>പ്രതിബിംബത്തിന്റെ സ്ഥാനം</th><th>വലിപ്പം</th><th>സ്വഭാവം</th></tr>
+    <tr><td>അനന്തതയിൽ (At ∞)</td><td>ഫോക്കസിൽ (At F)</td><td>വളരെ ചെറുത് (ബിന്ദു പോലെ)</td><td>യഥാർത്ഥം, തലകീഴായത് (Real & Inverted)</td></tr>
+    <tr><td>C-യ്ക്ക് അപ്പുറം (Beyond C / 2F)</td><td>F-നും C-യ്ക്കും ഇടയിൽ</td><td>ചെറുത് (Diminished)</td><td>യഥാർത്ഥം, തലകീഴായത്</td></tr>
+    <tr><td><b>വക്രതാ കേന്ദ്രത്തിൽ (At C / 2F)</b></td><td><b>C-യിൽ തന്നെ (At C / 2F)</b></td><td><b>വസ്തുവിന്റെ അതേ വലിപ്പം (m = −1)</b></td><td>യഥാർത്ഥം, തലകീഴായത്</td></tr>
+    <tr><td>C-യ്ക്കും F-നും ഇടയിൽ</td><td>C-യ്ക്ക് അപ്പുറം</td><td>വലുത് (Magnified)</td><td>യഥാർത്ഥം, തലകീഴായത്</td></tr>
+    <tr><td>ഫോക്കസിൽ (At F)</td><td>അനന്തതയിൽ (At ∞)</td><td>വളരെ വലുത്</td><td>യഥാർത്ഥം, തലകീഴായത്</td></tr>
+    <tr><td><b>F-നും P/O-യ്ക്കും ഇടയിൽ</b></td><td>ദർപ്പണത്തിന് പിന്നിൽ / വസ്തുവിന്റെ അതേ വശത്ത്</td><td><b>വലുത് (Magnified)</b></td><td><b>മിഥ്യ, നിവർന്നത് (Virtual & Erect)</b></td></tr>
   </table>
   </div>
 
-  <div class="formula">ലെൻസ് പവർ: P = 1/f (ഡയോപ്റ്റർ)</div>
-  <div class="formula">ദർപ്പണം: 1/f = 1/v + 1/u &nbsp;|&nbsp; ലെൻസ്: 1/f = 1/v − 1/u &nbsp;|&nbsp; ദർപ്പണം: m = −v/u &nbsp;|&nbsp; ലെൻസ്: m = v/u</div>
-
-  <div class="note"><span class="lbl">KEY</span> സമീപബിന്ദു: <b>25 cm</b> | കാഴ്ചസ്ഥിരത (Persistence of vision): <b>1/16 s</b></div>
-  <div class="note"><span class="lbl">➕ NEW</span> പ്രകാശം സൂര്യനിൽ നിന്ന് ഭൂമിയിലെത്താൻ ≈ 8 മിനിറ്റ് 20 സെക്കൻഡ്; ചന്ദ്രനിൽ നിന്ന് ≈ 1.3 സെക്കൻഡ്. ദൃശ്യ പ്രകാശത്തിൽ തരംഗദൈർഘ്യം കൂടിയത് ചുവപ്പ്, കുറഞ്ഞത് വയലറ്റ്; സൂര്യോദയ/അസ്തമയ സമയത്ത് ചുവപ്പ് കാരണം: വിസരണം ഏറ്റവും കുറവ്.</div>
-
-  <h3>🌈 പ്രകീർണ്ണനം & വിസരണം</h3>
+  <h3>🌊 അപവർത്തനവും (Refraction) പൂർണ്ണ ആന്തരിക പ്രതിഫലനവും (TIR)</h3>
   <ul>
-    <li><b>പ്രകീർണ്ണനം:</b> വയലറ്റ് കൂടുതൽ വ്യതിയാനം; മഴവില്ല് = അപവർത്തനം + പ്രകീർണ്ണനം + ആന്തരിക പ്രതിഫലനം</li>
-    <li><b>വിസരണം:</b> I ∝ 1/λ⁴ — നീല ആകാശം; ടിൻഡൽ പ്രഭാവം; രാമൻ പ്രഭാവം (1930, നൊബേൽ)</li>
-    <li><b>ഇന്റർഫെറൻസ്:</b> സോപ്പുകുമിള | <b>ഡിഫ്രാക്ഷൻ:</b> CD</li>
-    <li><b>ലേസർ:</b> മെയ്മാൻ (1960)</li>
+    <li><b>സ്നെൽ നിയമം (Snell's Law):</b> $\sin i / \sin r = n$ (അപവർത്തനാങ്കം $n = c/v$). അപവർത്തനം നടക്കുമ്പോൾ പ്രകാശത്തിന്റെ വേഗതയും തരംഗദൈർഘ്യവും മാറും, എന്നാൽ <b>ആവൃത്തി (Frequency) മാറില്ല</b>.</li>
+    <li><b>അപവർത്തനാങ്കങ്ങൾ (Refractive Index):</b> ശൂന്യത = 1 | വായു = 1.0003 | ഐസ് = 1.31 | <b>ജലം = 1.33</b> | മണ്ണെണ്ണ = 1.44 | ക്രൗൺ ഗ്ലാസ് = 1.52 | <b>വജ്രം = 2.42 (ഏറ്റവും കൂടുതൽ, ക്രിട്ടിക്കൽ കോൺ 24.4°)</b>.</li>
+    <li><b>പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (TIR) നടക്കാനുള്ള 2 നിബന്ധനകൾ:</b>
+      <ol>
+        <li>പ്രകാശം <b>പ്രകാശിക സാന്ദ്രത കൂടിയ മാധ്യമത്തിൽ നിന്ന് കുറഞ്ഞ മാധ്യമത്തിലേക്ക്</b> സഞ്ചരിക്കണം.</li>
+        <li>ആപതന കോൺ ക്രിട്ടിക്കൽ കോണിനേക്കാൾ കൂടുതലായിരിക്കണം (<b>i &gt; C</b>, ഇവിടെ $\sin C = 1/n$).</li>
+      </ol>
+    </li>
   </ul>
 
-  <h3>🎨 വർണ്ണങ്ങൾ</h3>
-  <ul>
-    <li>പ്രാഥമികം: <b>RGB</b> | ദ്വിതീയം: <b>Y/C/M</b> | പൂരകം → വെളുപ്പ്</li>
-    <li>പെയിന്റ്: RYB | പ്രിന്റ്: CMYK</li>
-  </ul>
+  <h3>🌈 പ്രകാശ പ്രതിഭാസങ്ങളും കാരണങ്ങളും (ഒറ്റനോട്ടത്തിൽ)</h3>
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>പ്രതിഭാസം</th><th>ശാസ്ത്രീയ കാരണം</th></tr>
+    <tr><td>നക്ഷത്രങ്ങളുടെ മിന്നിത്തിളക്കം, സൂര്യോദയത്തിന് 2 മിനിറ്റ് മുമ്പും അസ്തമയത്തിന് 2 മിനിറ്റ് ശേഷവും സൂര്യനെ കാണുന്നത്, വെള്ളത്തിൽ താഴ്ത്തിയ കമ്പ് വളഞ്ഞതായി തോന്നുന്നത്, കുളത്തിന്റെ ആഴം കുറഞ്ഞു തോന്നുന്നത്</td><td><b>അപവർത്തനം (Refraction)</b></td></tr>
+    <tr><td><b>വജ്രത്തിന്റെ തിളക്കം, മരീചിക (Mirage), ഒപ്റ്റിക്കൽ ഫൈബർ (നരീന്ദർ സിംഗ് കപാനി), എൻഡോസ്കോപ്പി</b></td><td><b>പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (Total Internal Reflection)</b></td></tr>
+    <tr><td>ആകാശത്തിന്റെ നീലനിറം, ഉദയാസ്തമയ സൂര്യന്റെ ചുവപ്പുനിറം, അപകട സിഗ്നലുകൾക്ക് ചുവപ്പ് ഉപയോഗിക്കുന്നത്, ടിൻഡൽ പ്രഭാവം, രാമൻ പ്രഭാവം (ചന്ദ്രനിൽ അന്തരീക്ഷമില്ലാത്തതിനാൽ ആകാശം <b>കറുപ്പ്</b>)</td><td><b>വിസരണം (Scattering — റെയ്‌ലി നിയമം: $I \propto 1/\lambda^4$)</b></td></tr>
+    <tr><td>മഴവില്ല് (Rainbow — എപ്പോഴും സൂര്യന് എതിർദിശയിൽ), പ്രിസത്തിലൂടെ സമന്വിത പ്രകാശം 7 നിറങ്ങളായി വേർപിരിയുന്നത്</td><td><b>പ്രകീർണ്ണനം (Dispersion)</b> + അപവർത്തനം + ആന്തരിക പ്രതിഫലനം</td></tr>
+    <tr><td>സോപ്പുകുമിളയിലും വെള്ളത്തിന് മുകളിലെ എണ്ണപ്പാടയിലും കാണുന്ന വർണ്ണങ്ങൾ, ഹോളോഗ്രാഫി</td><td><b>വ്യതികരണം (Interference)</b></td></tr>
+    <tr><td>CD / DVD-യിൽ കാണുന്ന മഴവിൽ നിറങ്ങൾ, നിഴലുകളുടെ അരികുകൾ അവ്യക്തമാകുന്നത്</td><td><b>വിഭംഗനം (Diffraction)</b></td></tr>
+    <tr><td>3D സിനിമകൾ, പോളറോയിഡ് സൺഗ്ലാസുകൾ (പ്രകാശം തിരശ്ചീന തരംഗമാണെന്ന് തെളിയിക്കുന്ന പ്രതിഭാസം)</td><td><b>ധ്രുവീകരണം (Polarization)</b></td></tr>
+  </table>
+  </div>
 
-  <div class="trick"><span class="lbl">TRICK</span> ആപതന കോൺ = പ്രതിപതന കോൺ; കിരണങ്ങളും ലംബവും ഒരേ തലത്തിൽ</div>
-  <div class="fig"><b>📊 പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (TIR)</b><div class="fg"><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 130" role="img" aria-label="i &lt; C: അപവർത്തനം"><rect x="0" y="65" width="150" height="65" fill="#0891b2" opacity=".18"/><path class="ax" d="M0 65H150"/><path class="ax" stroke-dasharray="3" d="M75 5V125"/><path class="ln" stroke="#1d4ed8" d="M35 120L75 65"/><path class="ln" stroke="#6d28d9" d="M75 65L115 15"/></svg><figcaption>i &lt; C: അപവർത്തനം</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 130" role="img" aria-label="i = C: അപവർത്തന കോൺ 90°"><rect x="0" y="65" width="150" height="65" fill="#0891b2" opacity=".18"/><path class="ax" d="M0 65H150"/><path class="ax" stroke-dasharray="3" d="M75 5V125"/><path class="ln" stroke="#1d4ed8" d="M25 115L75 65"/><path class="ln" stroke="#0f9d58" d="M75 65L145 65"/></svg><figcaption>i = C: അപവർത്തന കോൺ 90°</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 130" role="img" aria-label="i &gt; C: പൂർണ്ണ ആന്തരിക പ്രതിഫലനം"><rect x="0" y="65" width="150" height="65" fill="#0891b2" opacity=".18"/><path class="ax" d="M0 65H150"/><path class="ax" stroke-dasharray="3" d="M75 5V125"/><path class="ln" stroke="#1d4ed8" d="M15 110L75 65"/><path class="ln" stroke="#d93025" d="M75 65L135 110"/></svg><figcaption>i &gt; C: പൂർണ്ണ ആന്തരിക പ്രതിഫലനം</figcaption></figure></div><div class="cap">സാന്ദ്രത കൂടിയ → കുറഞ്ഞ മാധ്യമം; sin C = 1/n<br>ഉപയോഗം: ഫൈബർ ഒപ്റ്റിക്സ്, മരീചിക, വജ്രത്തിന്റെ തിളക്കം</div></div>
-  <div class="fig"><b>📊 VIBGYOR: തരംഗദൈർഘ്യം (400→700 nm)</b><div class="vib"><span style="background:#7f00ff">വയലറ്റ്</span><span style="background:#4b0082">ഇൻഡിഗോ</span><span style="background:#0000ff">നീല</span><span style="background:#00a000">പച്ച</span><span style="background:#c9a800">മഞ്ഞ</span><span style="background:#ff8800">ഓറഞ്ച്</span><span style="background:#ff0000">ചുവപ്പ്</span></div><div class="cap">← തരംഗദൈർഘ്യം കുറവ്, ആവൃത്തി കൂടുതൽ, വ്യതിയാനം കൂടുതൽ &nbsp;|&nbsp; തരംഗദൈർഘ്യം കൂടുതൽ →</div></div>
-  <div class="fig"><b>📊 കാഴ്ചവൈകല്യങ്ങൾ</b><div class="fg"><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 80" role="img" aria-label="സാധാരണം: റെറ്റിനയിൽ ഫോക്കസ്"><ellipse class="ax" cx="70" cy="40" rx="62" ry="32"/><path class="ln" stroke="#5a6485" stroke-width="4" d="M122 22Q134 40 122 58"/><path class="ln" stroke="#1d4ed8" d="M0 20L35 33M0 60L35 47M35 33L122 40M35 47L122 40"/></svg><figcaption>സാധാരണം: റെറ്റിനയിൽ ഫോക്കസ്</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 80" role="img" aria-label="മയോപ്പിയ: റെറ്റിനയ്ക്ക് മുന്നിൽ → കോൺകേവ് ലെൻസ്"><ellipse class="ax" cx="70" cy="40" rx="62" ry="32"/><path class="ln" stroke="#5a6485" stroke-width="4" d="M122 22Q134 40 122 58"/><path class="ln" stroke="#d93025" d="M0 20L35 33M0 60L35 47M35 33L95 40M35 47L95 40"/></svg><figcaption>മയോപ്പിയ: റെറ്റിനയ്ക്ക് മുന്നിൽ → കോൺകേവ് ലെൻസ്</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 80" role="img" aria-label="ഹൈപ്പർമെട്രോപ്പിയ: റെറ്റിനയ്ക്ക് പിന്നിൽ → കോൺവെക്സ് ലെൻസ്"><ellipse class="ax" cx="70" cy="40" rx="62" ry="32"/><path class="ln" stroke="#5a6485" stroke-width="4" d="M122 22Q134 40 122 58"/><path class="ln" stroke="#e8a600" d="M0 20L35 33M0 60L35 47M35 33L148 40M35 47L148 40"/></svg><figcaption>ഹൈപ്പർമെട്രോപ്പിയ: റെറ്റിനയ്ക്ക് പിന്നിൽ → കോൺവെക്സ് ലെൻസ്</figcaption></figure></div></div>
+  <h3>👁️ മനുഷ്യനേത്രവും കാഴ്ചവൈകല്യങ്ങളും</h3>
+  <ul>
+    <li>വ്യക്തമായ കാഴ്ചയ്ക്കുള്ള ഏറ്റവും കുറഞ്ഞ ദൂരം (Least distance of distinct vision): <b>25 cm</b> | ഫാർ പോയിന്റ്: <b>അനന്തത (Infinity)</b></li>
+    <li><b>കാഴ്ചസ്ഥിരത (Persistence of Vision):</b> <b>1/16 സെക്കൻഡ്</b> | റെറ്റിനയിൽ ഉണ്ടാകുന്ന പ്രതിബിംബം: <b>യഥാർത്ഥവും തലകീഴായതും (Real & Inverted)</b>.</li>
+    <li>കണ്ണിലെ ലെൻസ്: <b>ബയോ-കോൺവെക്സ് ലെൻസ്</b> | നിറങ്ങൾ തിരിച്ചറിയുന്ന കോശങ്ങൾ: <b>കോൺ കോശങ്ങൾ</b> | മങ്ങിയ വെളിച്ചത്തിൽ കാഴ്ച നൽകുന്നവ: <b>റോഡ് കോശങ്ങൾ (റോഡോപ്സിൻ - വിറ്റാമിൻ A)</b>.</li>
+  </ul>
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>കാഴ്ചവൈകല്യം</th><th>കാരണം / ലക്ഷണം</th><th>പരിഹാര ലെൻസ്</th></tr>
+    <tr><td><b>മയോപ്പിയ (ഹ്രസ്വദൃഷ്ടി / Short-sight)</b></td><td>അടുത്തുള്ളവ കാണാം, ദൂരെയുള്ളവ കാണില്ല. പ്രതിബിംബം <b>റെറ്റിനയ്ക്ക് മുന്നിൽ</b> രൂപപ്പെടുന്നു (നേത്രഗോളം വലുതാകുന്നു / പവർ കൂടുന്നു).</td><td><b>കോൺകേവ് ലെൻസ്</b> (പവർ നെഗറ്റീവ്, −D)</td></tr>
+    <tr><td><b>ഹൈപ്പർമെട്രോപ്പിയ (ദീർഘദൃഷ്ടി / Long-sight)</b></td><td>ദൂരെയുള്ളവ കാണാം, അടുത്തുള്ളവ കാണില്ല. പ്രതിബിംബം <b>റെറ്റിനയ്ക്ക് പിന്നിൽ</b> രൂപപ്പെടുന്നു (നേത്രഗോളം ചെറുതാകുന്നു).</td><td><b>കോൺവെക്സ് ലെൻസ്</b> (പവർ പോസിറ്റീവ്, +D)</td></tr>
+    <tr><td><b>പ്രെസ്ബയോപ്പിയ (വെള്ളെഴുത്ത്)</b></td><td>പ്രായമാകുമ്പോൾ സീലിയറി പേശികളുടെ ഇലാസ്തികത കുറയുന്നു.</td><td><b>ബൈഫോക്കൽ ലെൻസ്</b> (ബെഞ്ചമിൻ ഫ്രാങ്ക്ലിൻ)</td></tr>
+    <tr><td><b>അസ്റ്റിഗ്മാറ്റിസം (വിഷമദൃഷ്ടി)</b></td><td>കോർണിയയുടെ വക്രതയിലുള്ള അപാകത.</td><td><b>സിലിണ്ട്രിക്കൽ ലെൻസ്</b></td></tr>
+  </table>
+  </div>
+
+  <div class="formula">ദർപ്പണ സമവാക്യം: 1/f = 1/v + 1/u &nbsp;|&nbsp; ലെൻസ് സമവാക്യം: 1/f = 1/v − 1/u &nbsp;|&nbsp; ലെൻസ് പവർ: P = 1/f (മീറ്ററിൽ)</div>
+
+  <div class="fig">
+    <span class="fig-title">📊 പ്രകാശം: TIR, കാഴ്ചവൈകല്യങ്ങൾ &amp; RGB വർണ്ണ ത്രികോണം</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 145" role="img" aria-label="പൂർണ്ണ ആന്തരിക പ്രതിഫലനം">
+          <rect x="0" y="72" width="220" height="73" fill="#0891b2" opacity="0.2"/>
+          <line x1="0" y1="72" x2="220" y2="72" stroke="#0891b2" stroke-width="1.8"/>
+          <!-- Normals -->
+          <line x1="45" y1="15" x2="45" y2="132" stroke="#5a6485" stroke-dasharray="3 2"/>
+          <line x1="115" y1="15" x2="115" y2="132" stroke="#5a6485" stroke-dasharray="3 2"/>
+          <line x1="180" y1="15" x2="180" y2="132" stroke="#5a6485" stroke-dasharray="3 2"/>
+          <!-- Case 1: i < C -->
+          <path class="ln" stroke="#1d4ed8" d="M22 128 L45 72 L75 22"/>
+          <text x="15" y="140">1. i &lt; C (അപവർത്തനം)</text>
+          <!-- Case 2: i = C -->
+          <path class="ln" stroke="#0f9d58" d="M85 128 L115 72 L152 72"/>
+          <text x="92" y="140">2. i = C (r=90°)</text>
+          <!-- Case 3: i > C -->
+          <path class="ln" stroke="#d93025" d="M148 128 L180 72 L212 128"/>
+          <text x="158" y="140" fill="#d93025">3. i &gt; C (TIR)</text>
+          <text x="8" y="25" class="sub-lbl">വായു (സാന്ദ്രത കുറവ്)</text>
+          <text x="8" y="90" class="sub-lbl">ജലം/ഗ്ലാസ് (സാന്ദ്രത കൂടുതൽ)</text>
+        </svg>
+        <figcaption><b>പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (TIR):</b> i &gt; C ആകുമ്പോൾ പ്രകാശം അതേ മാധ്യമത്തിലേക്ക് പ്രതിഫലിക്കുന്നു</figcaption>
+      </figure>
+
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 145" role="img" aria-label="കാഴ്ചവൈകല്യങ്ങളും പരിഹാരവും">
+          <!-- Myopia -->
+          <ellipse cx="78" cy="40" rx="34" ry="24" fill="none" stroke="#5a6485" stroke-width="1.5"/>
+          <path d="M12 28 Q16 40 12 52 L18 52 Q14 40 18 28 Z" fill="#0891b2" opacity="0.45" stroke="#0891b2"/>
+          <ellipse cx="48" cy="40" rx="4" ry="14" fill="#93c5fd"/>
+          <path class="ln" stroke="#d93025" stroke-dasharray="2 2" d="M0 32 L48 32 L95 40 L48 48 L0 48"/>
+          <path class="ln" stroke="#0f9d58" d="M15 32 L48 30 L112 40 L48 50 L15 48"/>
+          <text x="122" y="36" fill="#d93025">മയോപ്പിയ</text>
+          <text x="122" y="50" class="sub-lbl">→ കോൺകേവ് ലെൻസ്</text>
+
+          <!-- Hypermetropia -->
+          <ellipse cx="78" cy="105" rx="34" ry="24" fill="none" stroke="#5a6485" stroke-width="1.5"/>
+          <ellipse cx="15" cy="105" rx="4" ry="15" fill="#0891b2" opacity="0.45" stroke="#0891b2"/>
+          <ellipse cx="48" cy="105" rx="4" ry="14" fill="#93c5fd"/>
+          <path class="ln" stroke="#d97706" stroke-dasharray="2 2" d="M0 97 L48 97 L126 105 L48 113 L0 113"/>
+          <path class="ln" stroke="#0f9d58" d="M15 97 L48 99 L112 105 L48 111 L15 113"/>
+          <text x="122" y="102" fill="#d97706">ഹൈപ്പർമെട്രോപ്പിയ</text>
+          <text x="122" y="116" class="sub-lbl">→ കോൺവെക്സ് ലെൻസ്</text>
+        </svg>
+        <figcaption><b>കാഴ്ചവൈകല്യങ്ങൾ:</b> മയോപ്പിയ (റെറ്റിനയ്ക്ക് മുന്നിൽ) vs ഹൈപ്പർമെട്രോപ്പിയ (റെറ്റിനയ്ക്ക് പിന്നിൽ)</figcaption>
+      </figure>
+
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 145" role="img" aria-label="RGB വർണ്ണ ത്രികോണം">
+          <polygon points="110,16 38,124 182,124" fill="none" stroke="#5a6485" stroke-width="2"/>
+          <line x1="110" y1="16" x2="110" y2="124" stroke="#9aa4bf" stroke-dasharray="3 2"/>
+          <line x1="38" y1="124" x2="146" y2="70" stroke="#9aa4bf" stroke-dasharray="3 2"/>
+          <line x1="182" y1="124" x2="74" y2="70" stroke="#9aa4bf" stroke-dasharray="3 2"/>
+          <!-- Primary vertices -->
+          <circle cx="110" cy="18" r="14" fill="#dc2626"/>
+          <text x="105" y="22" fill="#fff">R</text>
+          <circle cx="38" cy="122" r="14" fill="#16a34a"/>
+          <text x="33" y="126" fill="#fff">G</text>
+          <circle cx="182" cy="122" r="14" fill="#2563eb"/>
+          <text x="177" y="126" fill="#fff">B</text>
+          <!-- Secondary midpoints -->
+          <circle cx="72" cy="70" r="12" fill="#eab308"/>
+          <text x="68" y="74" fill="#000">Y</text>
+          <circle cx="148" cy="70" r="12" fill="#d946ef"/>
+          <text x="143" y="74" fill="#fff">M</text>
+          <circle cx="110" cy="124" r="12" fill="#06b6d4"/>
+          <text x="105" y="128" fill="#000">C</text>
+          <!-- Center White -->
+          <circle cx="110" cy="86" r="13" fill="#ffffff" stroke="#1c2340" stroke-width="1.5"/>
+          <text x="104" y="90" fill="#000">W</text>
+        </svg>
+        <figcaption><b>വർണ്ണ ത്രികോണം:</b> പ്രാഥമികം (R,G,B) | ദ്വിതീയം: R+G=മഞ്ഞ(Y), R+B=മജന്ത(M), G+B=സയൻ(C) | പൂരകം: R+C=W, G+M=W, B+Y=W</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="fig">
+    <span class="fig-title">📊 ദൃശ്യപ്രകാശ സ്പെക്ട്രം (VIBGYOR: 400 nm → 700 nm)</span>
+    <div class="vib">
+      <span style="background:#7f00ff">വയലറ്റ് (V)<br>400 nm</span>
+      <span style="background:#4b0082">ഇൻഡിഗോ (I)</span>
+      <span style="background:#1d4ed8">നീല (B)</span>
+      <span style="background:#15803d">പച്ച (G)<br>(കണ്ണിന് സുഖകരം)</span>
+      <span style="background:#ca8a04">മഞ്ഞ (Y)<br>(സംവേദനക്ഷമത ↑)</span>
+      <span style="background:#ea580c">ഓറഞ്ച് (O)</span>
+      <span style="background:#dc2626">ചുവപ്പ് (R)<br>700 nm</span>
+    </div>
+    <div class="cap">← <b>വയലറ്റ്:</b> തരംഗദൈർഘ്യം (λ) ഏറ്റവും കുറവ് | ആവൃത്തി (f), ഊർജ്ജം (E), വ്യതിയാനം (Deviation), വിസരണം ഏറ്റവും കൂടുതൽ &nbsp;||&nbsp; <b>ചുവപ്പ്:</b> തരംഗദൈർഘ്യം, വേഗത ഏറ്റവും കൂടുതൽ →</div>
+  </div>
 </div>
 </details>
 
 <!-- ================= 7.4 ================= -->
-<details class="card">
-<summary><span class="num">7.4</span><span class="title">ശബ്ദം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="4"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="4">
+<summary>
+  <span class="num">7.4</span>
+  <span class="title">ശബ്ദവും തരംഗങ്ങളും (Sound &amp; Waves)</span>
+  <span class="stars">⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="4"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>🔊 അടിസ്ഥാന വസ്തുതകൾ</h3>
+  <h3>🔊 തരംഗങ്ങളും ശബ്ദത്തിന്റെ അടിസ്ഥാന വസ്തുതകളും</h3>
   <ul class="icon-list">
-    <li>അനുദൈർഘ്യ യാന്ത്രിക തരംഗം; <b>ശൂന്യതയിൽ സഞ്ചരിക്കില്ല</b></li>
-    <li>v = fλ</li>
-    <li>സ്ഥായി ↔ ആവൃത്തി | ഉച്ചത ↔ ആയതി (dB) | ഗുണം ↔ തിരിച്ചറിയൽ</li>
+    <li>ശബ്ദം ഒരു <b>അനുദൈർഘ്യ യാന്ത്രിക തരംഗമാണ് (Longitudinal Mechanical Wave)</b> — സഞ്ചരിക്കാൻ മാധ്യമം അത്യന്താപേക്ഷിതമാണ്; <b>ശൂന്യതയിൽ (Vacuum) ശബ്ദം സഞ്ചരിക്കില്ല</b> (അതിനാൽ ചന്ദ്രനിൽ ശബ്ദം കേൾക്കില്ല).</li>
+    <li>ശബ്ദത്തിന് <b>ധ്രുവീകരണം (Polarization) സംഭവിക്കുന്നില്ല</b> (കാരണം അത് അനുദൈർഘ്യ തരംഗമാണ്).</li>
+    <li>തരംഗ സമവാക്യം: <b>v = fλ</b> (പ്രവേഗം = ആവൃത്തി × തരംഗദൈർഘ്യം) | ആവൃത്തി $f = 1/T$.</li>
+    <li><b>ശബ്ദത്തിന്റെ 3 സവിശേഷതകൾ:</b>
+      <ol>
+        <li><b>സ്ഥായി / കൂർമ്മത (Pitch):</b> <b>ആവൃത്തിയെ (Frequency)</b> ആശ്രയിച്ചിരിക്കുന്നു (സ്ത്രീകളുടെയും കൊതുകിന്റെയും ശബ്ദത്തിന് ആവൃത്തി/സ്ഥായി കൂടുതൽ; സിംഹത്തിന്റെ ഗർജ്ജനത്തിന് ഉച്ചത കൂടുതൽ, സ്ഥായി കുറവ്).</li>
+        <li><b>ഉച്ചത (Loudness):</b> <b>ആയതിയെ (Amplitude)</b> ആശ്രയിച്ചിരിക്കുന്നു; അളക്കുന്ന യൂണിറ്റ്: <b>ഡെസിബൽ (dB)</b> (ബെൽ-ന്റെ പത്തിലൊന്ന്).</li>
+        <li><b>ഗുണം (Quality / Timbre):</b> ഒരേ സ്ഥായിയും ഉച്ചതയുമുള്ള രണ്ട് സംഗീത ഉപകരണങ്ങളുടെയോ വ്യക്തികളുടെയോ ശബ്ദം വേർതിരിച്ചറിയാൻ സഹായിക്കുന്നു.</li>
+      </ol>
+    </li>
   </ul>
 
-  <h3>📊 ശബ്ദവേഗത</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>മാധ്യമം</th><th>വേഗത (m/s)</th></tr>
-    <tr><td>അലുമിനിയം</td><td>6420</td></tr>
-    <tr><td>സ്റ്റീൽ</td><td>5940</td></tr>
-    <tr><td>ജലം</td><td>1480</td></tr>
-    <tr><td>വായു (20°C)</td><td>340</td></tr>
-    <tr><td>വായു (0°C)</td><td>331</td></tr>
-  </table>
+  <div class="fig">
+    <span class="fig-title">📊 അനുദൈർഘ്യ തരംഗം (ശബ്ദം) vs തിരശ്ചീന തരംഗം (പ്രകാശം)</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 95" role="img" aria-label="അനുദൈർഘ്യ തരംഗം">
+          <!-- Compression & Rarefaction lines -->
+          <g stroke="#1d4ed8" stroke-width="2">
+            <!-- C1 -->
+            <line x1="15" y1="20" x2="15" y2="70"/><line x1="20" y1="20" x2="20" y2="70"/><line x1="25" y1="20" x2="25" y2="70"/><line x1="30" y1="20" x2="30" y2="70"/>
+            <!-- R1 -->
+            <line x1="45" y1="20" x2="45" y2="70" opacity=".5"/><line x1="62" y1="20" x2="62" y2="70" opacity=".5"/><line x1="80" y1="20" x2="80" y2="70" opacity=".5"/>
+            <!-- C2 -->
+            <line x1="95" y1="20" x2="95" y2="70"/><line x1="100" y1="20" x2="100" y2="70"/><line x1="105" y1="20" x2="105" y2="70"/><line x1="110" y1="20" x2="110" y2="70"/>
+            <!-- R2 -->
+            <line x1="125" y1="20" x2="125" y2="70" opacity=".5"/><line x1="142" y1="20" x2="142" y2="70" opacity=".5"/><line x1="160" y1="20" x2="160" y2="70" opacity=".5"/>
+            <!-- C3 -->
+            <line x1="175" y1="20" x2="175" y2="70"/><line x1="180" y1="20" x2="180" y2="70"/><line x1="185" y1="20" x2="185" y2="70"/><line x1="190" y1="20" x2="190" y2="70"/>
+          </g>
+          <path d="M22 12 H102" stroke="#d93025" stroke-width="1.5"/>
+          <text x="55" y="10" fill="#d93025">λ</text>
+          <text x="16" y="86">C (ഉച്ചമർദ്ദം)</text>
+          <text x="50" y="86" class="sub-lbl">R (നീചമർദ്ദം)</text>
+          <text x="96" y="86">C</text>
+          <text x="135" y="86" class="sub-lbl">R</text>
+          <text x="176" y="86">C</text>
+        </svg>
+        <figcaption><b>അനുദൈർഘ്യ തരംഗം (ശബ്ദം):</b> കണികകൾ തരംഗദിശയ്ക്ക് സമാന്തരമായി കമ്പനം ചെയ്യുന്നു (C–R–C)</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 95" role="img" aria-label="തിരശ്ചീന തരംഗം">
+          <line x1="10" y1="48" x2="230" y2="48" stroke="#5a6485" stroke-dasharray="3 2"/>
+          <path class="ln" stroke="#6d28d9" d="M10 48 Q35 5 60 48 Q85 91 110 48 Q135 5 160 48 Q185 91 210 48"/>
+          <line x1="35" y1="15" x2="135" y2="15" stroke="#d93025" stroke-width="1.5"/>
+          <text x="80" y="12" fill="#d93025">λ (തരംഗദൈർഘ്യം)</text>
+          <line x1="35" y1="26" x2="35" y2="48" stroke="#0f9d58" stroke-width="1.8"/>
+          <text x="40" y="40" fill="#0f9d58">A</text>
+          <text x="18" y="24" class="sub-lbl">ശൃംഗം (Crest)</text>
+          <text x="65" y="88" class="sub-lbl">ഗർത്തം (Trough)</text>
+        </svg>
+        <figcaption><b>തിരശ്ചീന തരംഗം (പ്രകാശം):</b> കണികകൾ തരംഗദിശയ്ക്ക് ലംബമായി കമ്പനം ചെയ്യുന്നു</figcaption>
+      </figure>
+    </div>
   </div>
 
-  <div class="trick"><span class="lbl">TRICK</span> ക്രമം: <b>ഖരം > ദ്രാവകം > വാതകം</b> | താപനില/ആർദ്രത കൂട്ടും; മർദ്ദം ബാധിക്കില്ല | ന്യൂട്ടൺ: isothermal; ലാപ്ലേസ്: adiabatic</div>
-  <div class="fig"><b>📊 ശബ്ദവേഗത (m/s)</b><div class="bars"><div class="brow"><span>അലുമിനിയം</span><i style="--w:100%;--c:#1d4ed8"></i><b>6420</b></div><div class="brow"><span>സ്റ്റീൽ</span><i style="--w:92.5%;--c:#6d28d9"></i><b>5940</b></div><div class="brow"><span>ജലം</span><i style="--w:23%;--c:#0891b2"></i><b>1480</b></div><div class="brow"><span>വായു 20°C</span><i style="--w:5.3%;--c:#0f9d58"></i><b>340</b></div></div></div>
-
-  <h3>🎵 ശ്രവണപരിധി</h3>
-  <ul>
-    <li>മനുഷ്യൻ: <b>20 Hz – 20 kHz</b></li>
-    <li>ഇൻഫ്രാസോണിക്: ആന, തിമിംഗലം</li>
-    <li>അൾട്രാസോണിക്: വവ്വാൽ, ഡോൾഫിൻ, SONAR</li>
-  </ul>
-
-  <h3>🔊 പ്രതിധ്വനി & ഡോപ്ലർ</h3>
-  <ul>
-    <li>ശ്രവണസ്ഥിരത: <b>1/10 s</b> | പ്രതിധ്വനി: <b>≥17 m</b> (ജലം ≈74–75 m)</li>
-    <li>ഡോപ്ലർ പ്രഭാവം (1842): അടുത്തു വരുമ്പോൾ സ്ഥായി ↑</li>
-    <li>മാക് നമ്പർ: &lt;1 സബ് | >1 സൂപ്പർ | >5 ഹൈപ്പർ</li>
-    <li>ഉപയോഗം: പോലീസ് റഡാർ, റെഡ്ഷിഫ്റ്റ്</li>
-    <li>സോണാർ = SOund NAvigation and Ranging | റഡാർ = RAdio Detection And Ranging <span class="new-badge">NEW</span></li>
-    <li>പ്രകാശത്തിന്റെ ഡോപ്ലർ → റെഡ് ഷിഫ്റ്റ് (അകലുന്ന നക്ഷത്രങ്ങൾ) <span class="new-badge">NEW</span></li>
-    <li>അൾട്രാസോണിക് ഉപയോഗം: SONAR, USG സ്കാൻ, വവ്വാൽ വഴികാണൽ <span class="new-badge">NEW</span></li>
-  </ul>
-
-  <h3>📊 ഡെസിബൽ (dB) നിലകൾ</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>dB</th><th>അർത്ഥം</th></tr>
-    <tr><td>0</td><td>ശ്രവണ പരിധി</td></tr>
-    <tr><td>50–60</td><td>സംഭാഷണം</td></tr>
-    <tr><td>45–55</td><td>WHO അനുവദനീയം</td></tr>
-    <tr><td>&gt;80</td><td>മലിനീകരണം</td></tr>
-    <tr><td>&gt;120</td><td>വേദന പരിധി</td></tr>
-  </table>
+  <h3>📊 വിവിധ മാധ്യമങ്ങളിലെ ശബ്ദവേഗത</h3>
+  <div class="fig">
+    <div class="bars">
+      <div class="brow"><span>അലുമിനിയം</span><i style="--w:100%;--c:#1d4ed8"></i><b>6420 m/s</b></div>
+      <div class="brow"><span>സ്റ്റീൽ / ഇരുമ്പ്</span><i style="--w:92.5%;--c:#6d28d9"></i><b>5940 m/s</b></div>
+      <div class="brow"><span>ജലം (ശുദ്ധജലം)</span><i style="--w:23%;--c:#0891b2"></i><b>1480 m/s</b></div>
+      <div class="brow"><span>വായു (20°C)</span><i style="--w:5.3%;--c:#0f9d58"></i><b>340 m/s</b></div>
+      <div class="brow"><span>വായു (0°C)</span><i style="--w:5.1%;--c:#d97706"></i><b>331 m/s</b></div>
+    </div>
   </div>
+  <div class="trick"><span class="lbl">TRICK</span> <b>ശബ്ദവേഗത ക്രമം:</b> <b>ഖരം &gt; ദ്രാവകം &gt; വാതകം</b> (പ്രകാശത്തിന് നേരെ വിപരീതം!). <br>വായുവിൽ താപനില <b>1°C കൂടുമ്പോൾ ശബ്ദവേഗത 0.61 m/s വീതം കൂടുന്നു</b> ($v_t = 331 + 0.61t$). ആർദ്രത (ഈർപ്പം) കൂടിയാലും ശബ്ദവേഗത കൂടും. എന്നാൽ താപനില സ്ഥിരമായിരിക്കുമ്പോൾ <b>മർദ്ദം മാറിയാൽ വായുവിലെ ശബ്ദവേഗത മാറില്ല!</b></div>
 
-  <div class="formula">ബീറ്റ്സ് = |f₁ − f₂| &nbsp;|&nbsp; dB = 10 log(I/I₀)</div>
-  <div class="note"><span class="lbl">KEY</span> തീവ്രത യൂണിറ്റ്: W/m²</div>
-  <div class="fig"><b>📊 ഡെസിബൽ സ്കെയിൽ</b><div class="dbbar"></div><div class="chipset"><span>0 dB: ശ്രവണ പരിധി</span><span>45–55: WHO അനുവദനീയം</span><span>50–60: സംഭാഷണം</span><span>&gt;80: മലിനീകരണം</span><span>&gt;120: വേദന</span></div></div>
+  <h3>🎵 ശ്രവണപരിധിയും (Audible Range) പ്രതിധ്വനിയും</h3>
+  <ul>
+    <li><b>ശ്രവ്യ ശബ്ദം (Audible):</b> <b>20 Hz – 20,000 Hz (20 kHz)</b> — മനുഷ്യന് കേൾക്കാൻ കഴിയുന്നത്.</li>
+    <li><b>ഇൻഫ്രാസോണിക് (&lt; 20 Hz):</b> ഭൂകമ്പ തരംഗങ്ങൾ, ആന, തിമിംഗലം, കാണ്ടാമൃഗം എന്നിവ പുറപ്പെടുവിക്കുന്ന ശബ്ദം; പെൻഡുലത്തിന്റെ കമ്പനം.</li>
+    <li><b>അൾട്രാസോണിക് (&gt; 20 kHz):</b> വവ്വാൽ, ഡോൾഫിൻ, നായ എന്നിവയ്ക്ക് കേൾക്കാം. <b>ഉപയോഗങ്ങൾ:</b> <b>SONAR</b> (SOund NAvigation and Ranging — കടലാഴം അളക്കാൻ), എക്കോ കാർഡിയോഗ്രാഫി (ECG അല്ല, Echo), അൾട്രാസൗണ്ട് സ്കാനിംഗ്, വൃക്കയിലെ കല്ല് പൊട്ടിക്കാൻ, ഗാൾട്ടൺ വിസിൽ (നായ്ക്കളെ വിളിക്കാൻ).</li>
+    <li><b>ശ്രവണസ്ഥിരത (Persistence of Audibility):</b> <b>1/10 സെക്കൻഡ് (0.1 s)</b>.</li>
+    <li><b>പ്രതിധ്വനി (Echo):</b> വായുവിൽ പ്രതിധ്വനി വ്യക്തമായി കേൾക്കാനുള്ള കുറഞ്ഞ ദൂരം = $v \times t / 2 = 340 \times 0.1 / 2 =$ <b>17 മീറ്റർ</b> (ജലത്തിൽ ≈ 74–75 m).</li>
+    <li><b>അനുരണനം (Reverberation):</b> വലിയ ഹാളുകളിൽ ആവർത്തന പ്രതിപതനം മൂലം ശബ്ദം മുഴങ്ങുന്നത്. ഇത് കുറയ്ക്കാൻ ഭിത്തികളിൽ ശബ്ദാഗിരണ വസ്തുക്കൾ (കാർപ്പറ്റ്, കർട്ടൻ, ഫൈബർ ബോർഡ്) ഉപയോഗിക്കുന്നു.</li>
+    <li><b>അനുനാദം (Resonance):</b> സ്വാഭാവിക ആവൃത്തിയും പ്രേരിത ആവൃത്തിയും തുല്യമാകുമ്പോൾ ആയതി വൻതോതിൽ കൂടുന്നത് (പാലങ്ങളിലൂടെ പട്ടാളക്കാർ മാർച്ച് ചെയ്യുമ്പോൾ ചുവടുകൾ തെറ്റിക്കാൻ പറയുന്നതിന്റെ കാരണം).</li>
+    <li><b>ഡോപ്ലർ പ്രഭാവം (ക്രിസ്റ്റ്യൻ ഡോപ്ലർ, 1842):</b> ശബ്ദസ്രോതസ്സും ശ്രോതാവും തമ്മിൽ ആപേക്ഷിക ചലനമുണ്ടാകുമ്പോൾ ആവൃത്തിയിൽ (സ്ഥായിയിൽ) അനുഭവപ്പെടുന്ന മാറ്റം.
+      <br><b>മാക് നമ്പർ (Mach Number):</b> വസ്തുവിന്റെ വേഗത / ശബ്ദവേഗത (&lt;1 സബ്സോണിക്, =1 ട്രാൻസോണിക്, &gt;1 സൂപ്പർസോണിക്, &gt;5 ഹൈപ്പർസോണിക്).</li>
+  </ul>
+
+  <div class="fig">
+    <span class="fig-title">📊 ഡെസിബൽ (dB) ശബ്ദമലിനീകരണ സ്കെയിൽ</span>
+    <div class="dbbar"></div>
+    <div class="chipset">
+      <span><b>0 dB:</b> ശ്രവണ പരിധി</span>
+      <span><b>20 dB:</b> ഇലകളുടെ മർമ്മരം</span>
+      <span><b>45–55 dB:</b> WHO സുരക്ഷിത പരിധി</span>
+      <span><b>50–60 dB:</b> സാധാരണ സംഭാഷണം</span>
+      <span><b>&gt;80 dB:</b> ശബ്ദമലിനീകരണം</span>
+      <span><b>&gt;120 dB:</b> വേദന പരിധി (ജെറ്റ് വിമാനം)</span>
+    </div>
+  </div>
 </div>
 </details>
 
 <!-- ================= 7.5 ================= -->
-<details class="card">
-<summary><span class="num">7.5</span><span class="title">ബലവും ദ്രവബലങ്ങളും</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="5"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="4">
+<summary>
+  <span class="num">7.5</span>
+  <span class="title">ബലവും ദ്രവബലങ്ങളും ലഘുയന്ത്രങ്ങളും (Force, Fluids &amp; Levers)</span>
+  <span class="stars">⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="5"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>💪 ബലം</h3>
-  <ul class="icon-list">
-    <li>സദിശം; യൂണിറ്റ്: N; <b>1 N = 10⁵ dyne</b></li>
-    <li>ശക്ത ക്രമം: <b>ശക്ത ന്യൂക്ലിയർ > വൈദ്യുതകാന്തിക > ക്ഷീണ ന്യൂക്ലിയർ > ഗുരുത്വം</b></li>
-  </ul>
+  <h3>💪 പ്രപഞ്ചത്തിലെ 4 അടിസ്ഥാന ബലങ്ങൾ (Fundamental Forces)</h3>
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>ബലം (ശക്തിയുടെ അവരോഹണ ക്രമത്തിൽ)</th><th>ആപേക്ഷിക ശക്തി</th><th>പരിധി (Range)</th><th>വിനിമയ കണം (Boson)</th></tr>
+    <tr><td><b>1. ശക്ത ന്യൂക്ലിയർ ബലം (Strong Nuclear)</b> — ഏറ്റവും ശക്തം</td><td>1 (10³⁸)</td><td>വളരെ കുറവ് (10⁻¹⁵ m)</td><td>ഗ്ലുവോൺ / പൈ മീസോൺ</td></tr>
+    <tr><td><b>2. വൈദ്യുതകാന്തിക ബലം (Electromagnetic)</b></td><td>10⁻² (10³⁶)</td><td>അനന്തം (∞)</td><td>ഫോട്ടോൺ (Photon)</td></tr>
+    <tr><td><b>3. ക്ഷീണ ന്യൂക്ലിയർ ബലം (Weak Nuclear)</b> (ബീറ്റാ വിഘടനം)</td><td>10⁻¹³ (10²⁵)</td><td>വളരെ കുറവ് (10⁻¹⁸ m)</td><td>W, Z ബോസോണുകൾ</td></tr>
+    <tr><td><b>4. ഗുരുത്വാകർഷണ ബലം (Gravitational)</b> — ഏറ്റവും ദുർബലം</td><td>10⁻³⁸ (1)</td><td>അനന്തം (∞)</td><td>ഗ്രാവിറ്റോൺ (Graviton)</td></tr>
+  </table>
+  </div>
 
-  <h3>🔗 ഘർഷണം</h3>
+  <h3>⚙️ ലഘുയന്ത്രങ്ങൾ — ഉത്തോലകങ്ങൾ (Levers: 1st, 2nd &amp; 3rd Order) <span class="new-badge">VERY IMPORTANT</span></h3>
+  <div class="trick"><span class="lbl">TRICK</span> മധ്യത്തിൽ വരുന്ന ഭാഗം ഓർക്കാൻ കോഡ്: <b>"FLE — 1 2 3"</b><br>
+  • <b>1-ാം വർഗ്ഗം:</b> <b>F</b>ulcrum (ധാരം) നടുവിൽ | <b>2-ാം വർഗ്ഗം:</b> <b>L</b>oad (രോധം) നടുവിൽ | <b>3-ാം വർഗ്ഗം:</b> <b>E</b>ffort (യത്നം) നടുവിൽ.<br>
+  • <b>യാന്ത്രിക ലാഭം (Mechanical Advantage, MA)</b> = രോധം (L) / യത്നം (E) = യത്നഭുജം / രോധഭുജം.</div>
+
+  <div class="fig">
+    <span class="fig-title">📊 ഒന്ന്, രണ്ട്, മൂന്ന് വർഗ്ഗ ഉത്തോലകങ്ങൾ (FLE — 1 2 3 Visual)</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 95" role="img" aria-label="ഒന്നാം വർഗ്ഗ ഉത്തോലകം">
+          <line x1="20" y1="50" x2="180" y2="50" stroke="#1c2340" stroke-width="4"/>
+          <polygon points="100,52 88,75 112,75" fill="#1d4ed8"/>
+          <rect x="24" y="26" width="26" height="22" rx="3" fill="#d93025"/>
+          <text x="32" y="41" fill="#fff">L</text>
+          <path d="M165 18 V46" stroke="#0f9d58" stroke-width="3" marker-end="url(#arr1)"/>
+          <text x="160" y="14" fill="#0f9d58">E (യത്നം)</text>
+          <text x="75" y="90" fill="#1d4ed8">F (ധാരം നടുവിൽ)</text>
+        </svg>
+        <figcaption><b>1-ാം വർഗ്ഗം (F നടുവിൽ):</b> കത്രിക, സീസോ, പ്ലെയർ, സാധാരണ തുലാസ്, നെയിൽ പുള്ളർ (MA = 1, &gt;1, അല്ലെങ്കിൽ &lt;1)</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 95" role="img" aria-label="രണ്ടാം വർഗ്ഗ ഉത്തോലകം">
+          <line x1="20" y1="50" x2="180" y2="50" stroke="#1c2340" stroke-width="4"/>
+          <polygon points="32,52 20,75 44,75" fill="#1d4ed8"/>
+          <rect x="87" y="26" width="26" height="22" rx="3" fill="#d93025"/>
+          <text x="95" y="41" fill="#fff">L</text>
+          <path d="M165 78 V54" stroke="#0f9d58" stroke-width="3" marker-end="url(#arr1)"/>
+          <text x="150" y="90" fill="#0f9d58">E</text>
+          <text x="26" y="90" fill="#1d4ed8">F</text>
+          <text x="72" y="20" fill="#d93025">L (രോധം നടുവിൽ)</text>
+        </svg>
+        <figcaption><b>2-ാം വർഗ്ഗം (L നടുവിൽ):</b> അടയ്ക്കാവെട്ടി, വീൽബാരോ, നാരങ്ങാ ഞെക്കി, ബോട്ടിൽ ഓപ്പണർ (<b>MA എപ്പോഴും &gt; 1</b>)</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 95" role="img" aria-label="മൂന്നാം വർഗ്ഗ ഉത്തോലകം">
+          <line x1="20" y1="50" x2="180" y2="50" stroke="#1c2340" stroke-width="4"/>
+          <polygon points="32,52 20,75 44,75" fill="#1d4ed8"/>
+          <rect x="152" y="26" width="26" height="22" rx="3" fill="#d93025"/>
+          <text x="160" y="41" fill="#fff">L</text>
+          <path d="M100 78 V54" stroke="#0f9d58" stroke-width="3" marker-end="url(#arr1)"/>
+          <text x="72" y="90" fill="#0f9d58">E (യത്നം നടുവിൽ)</text>
+          <text x="26" y="90" fill="#1d4ed8">F</text>
+        </svg>
+        <figcaption><b>3-ാം വർഗ്ഗം (E നടുവിൽ):</b> ചൂണ്ട, കൊടിൽ (Forceps/Tongs), മനുഷ്യന്റെ കൈത്തണ്ട, ചൂൽ (<b>MA എപ്പോഴും &lt; 1</b>)</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <h3>🌊 മർദ്ദവും ദ്രവബലങ്ങളും (Fluid Mechanics)</h3>
+  <div class="formula">മർദ്ദം P = F/A (Pa) &nbsp;|&nbsp; ദ്രവമർദ്ദം P = hdg &nbsp;|&nbsp; തുടർച്ചാ സമവാക്യം A₁v₁ = A₂v₂</div>
   <ul>
-    <li>ക്രമം: <b>ഉരുളൽ &lt; നിരങ്ങൽ &lt; സ്ഥിത ഘർഷണം</b></li>
-    <li>സമ്പർക്ക വിസ്തീർണം ബാധിക്കില്ല</li>
+    <li><b>ഘർഷണം (Friction):</b> <b>ഉരുളൽ ഘർഷണം (Rolling) &lt; നിരങ്ങൽ ഘർഷണം (Sliding) &lt; സ്ഥിത ഘർഷണം (Static)</b>. ബോൾ ബെയറിംഗുകൾ നിരങ്ങൽ ഘർഷണത്തെ ഉരുളൽ ഘർഷണമാക്കി കുറയ്ക്കുന്നു.</li>
+    <li><b>ആർക്കിമിഡീസ് തത്വം:</b> ദ്രവത്തിൽ ഭാഗികമായോ പൂർണ്ണമായോ മുങ്ങിയിരിക്കുന്ന വസ്തുവിൽ അനുഭവപ്പെടുന്ന പ്ലവക്ഷമബലം (Buoyant force), ആ വസ്തു ആദേശം ചെയ്ത ദ്രവത്തിന്റെ ഭാരത്തിന് തുല്യമായിരിക്കും. (കപ്പൽ, അന്തർവാഹിനി, ഹൈഡ്രോമീറ്റർ, ലാക്ടോമീറ്റർ).
+      <br>• മഞ്ഞുകട്ട (Iceberg) വെള്ളത്തിൽ പൊങ്ങിക്കിടക്കുമ്പോൾ <b>9/10 ഭാഗം (90%) വെള്ളത്തിനടിയിലും 1/10 ഭാഗം (10%) മുകളിലും</b> ആയിരിക്കും. ഗ്ലാസിലെ ഐസ് ഉരുകിയാൽ ജലനിരപ്പ് <b>മാറില്ല</b>.</li>
+    <li><b>പാസ്കൽ നിയമം:</b> അടച്ചുവെച്ച ദ്രാവകത്തിൽ പ്രയോഗിക്കുന്ന മർദ്ദം എല്ലാ ഭാഗത്തേക്കും തുല്യമായി വ്യാപിക്കുന്നു. <b>ഉദാ:</b> ഹൈഡ്രോളിക് ബ്രേക്ക്, ഹൈഡ്രോളിക് ജാക്ക്, ഹൈഡ്രോളിക് ലിഫ്റ്റ്, JCB.</li>
+    <li><b>ബെർണോളി തത്വം:</b> ഒഴുകുന്ന ദ്രവത്തിന്റെ വേഗത കൂടുമ്പോൾ മർദ്ദം കുറയുന്നു ($P + \frac{1}{2}\rho v^2 + \rho gh = \text{സ്ഥിരം}$). <b>ഉദാ:</b> വിമാനച്ചിറകിന്റെ (Aerofoil) നിർമ്മാണം, അതിവേഗ ട്രെയിൻ വരുമ്പോൾ പ്ലാറ്റ്‌ഫോമിൽ നിൽക്കുന്നവർ ട്രെയിനിലേക്ക് ആകർഷിക്കപ്പെടുന്നത്, കൊടുങ്കാറ്റിൽ മേൽക്കൂര പറന്നുപോകുന്നത്, അറ്റോമൈസർ/സ്പ്രേയർ, ബൻസൺ ബർണർ, ക്രിക്കറ്റ് ബോളിന്റെ സ്വിംഗ് (മാഗ്നസ് പ്രഭാവം).</li>
+    <li><b>പ്രതലബലം (Surface Tension, N/m):</b> മഴത്തുള്ളികളും രസത്തുള്ളികളും ഗോളാകൃതി സ്വീകരിക്കുന്നതിനും പ്രാണികൾ വെള്ളത്തിന് മുകളിലൂടെ നടക്കുന്നതിനും കാരണം. <b>താപനില കൂട്ടുമ്പോഴും സോപ്പ്/ഡിറ്റർജന്റ് ചേർക്കുമ്പോഴും പ്രതലബലം കുറയുന്നു</b>.</li>
+    <li><b>കേശികത്വം (Capillarity):</b> തിരിയിലൂടെ മണ്ണെണ്ണ കയറുന്നത്, സസ്യങ്ങൾ സൈലം വഴി ജലം വലിച്ചെടുക്കുന്നത്, ബ്ലോട്ടിംഗ് പേപ്പർ മഷി ഒപ്പിയെടുക്കുന്നത്, വേനൽക്കാലത്ത് മണ്ണ് കിളച്ചിടുന്നത്.
+      <br>• <b>സഞ്ജാത ബലം (Cohesion):</b> ഒരേ ഇനം തന്മാത്രകൾ തമ്മിലുള്ള ആകർഷണം (രസം ഗ്ലാസിൽ ഒട്ടിപ്പിടിക്കാത്തതിന് കാരണം; കോൺവെക്സ് മെനിസ്കസ്).
+      <br>• <b>വിജാത ബലം (Adhesion):</b> വ്യത്യസ്ത ഇനം തന്മാത്രകൾ തമ്മിലുള്ള ആകർഷണം (വെള്ളം ഗ്ലാസ് നനയ്ക്കുന്നതിന് കാരണം; കോൺകേവ് മെനിസ്കസ്).</li>
+    <li><b>ശ്യാനത (Viscosity):</b> ദ്രവപാളികൾക്കിടയിലെ ഘർഷണം (ചലിക്കുന്ന ദ്രവങ്ങളുടെ ജഡത്വം). യൂണിറ്റ്: <b>പൊയ്സ് (Poise)</b> / Pa·s. ചൂടാക്കുമ്പോൾ <b>ദ്രാവകങ്ങളുടെ ശ്യാനത കുറയുന്നു, എന്നാൽ വാതകങ്ങളുടെ ശ്യാനത കൂടുന്നു</b>.</li>
   </ul>
-
-  <h3>🌊 മർദ്ദം</h3>
-  <div class="formula">P = F/A (Pa, അദിശം) &nbsp;|&nbsp; ദ്രവമർദ്ദം P = hdg</div>
-  <ul>
-    <li>1 atm = 760 mmHg = 1.013×10⁵ Pa</li>
-  </ul>
-
-  <h3>⚓ ആർക്കിമിഡീസ് തത്വം</h3>
-  <ul class="icon-list">
-    <li>പ്ലവക്ഷമബലം = ആദേശം ചെയ്ത ദ്രവത്തിന്റെ ഭാരം</li>
-    <li>ആപേക്ഷിക സാന്ദ്രത: ജലം <b>1</b>, മണ്ണെണ്ണ <b>0.81</b>, തേൻ <b>1.45</b></li>
-    <li>ഐസ്ബർഗ്: <b>9/10</b> വെള്ളത്തിനടിയിൽ</li>
-  </ul>
-
-  <h3>🛞 പാസ്കൽ & ബെർണോളി</h3>
-  <ul>
-    <li><b>പാസ്കൽ:</b> ഹൈഡ്രോളിക് ജാക്ക്, ബ്രേക്ക്</li>
-    <li><b>ബെർണോളി:</b> വേഗം ↑ → മർദ്ദം ↓ (വിമാനച്ചിറക്, Aerofoil)</li>
-  </ul>
-
-  <h3>💧 പ്രതലബലം (N/m)</h3>
-  <ul>
-    <li>ചൂടും സോപ്പും കുറയ്ക്കും; ഉപ്പ് കൂട്ടും</li>
-    <li>കേശികത്വം: നേർത്ത കുഴൽ → കൂടുതൽ ഉയരം</li>
-  </ul>
-
-  <h3>🍯 വിസ്കോസിറ്റി</h3>
-  <ul>
-    <li>യൂണിറ്റ്: SI → <b>Pa·s</b> | CGS → <b>പൊയ്സ് (Poise)</b>; 1 Pa·s = 10 poise</li>
-    <li>ദ്രാവകം ചൂടായാൽ കുറയും; വാതകം കൂടും</li>
-    <li>സ്റ്റോക്സ് നിയമം: F = 6πηrv → ടെർമിനൽ പ്രവേഗം</li>
-  </ul>
-
-  <div class="formula">തുടർച്ചാ സമവാക്യം: A₁V₁ = A₂V₂</div>
-  <div class="note"><span class="lbl">KEY</span> റെയ്നോൾഡ്സ് നമ്പർ → ഒഴുക്കിന്റെ സ്വഭാവം (ലാമിനാർ/ടർബുലന്റ്)</div>
 </div>
 </details>
 
 <!-- ================= 7.6 ================= -->
-<details class="card">
-<summary><span class="num">7.6</span><span class="title">ഗുരുത്വാകർഷണം</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="6"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="4">
+<summary>
+  <span class="num">7.6</span>
+  <span class="title">ഗുരുത്വാകർഷണവും ഉപഗ്രഹങ്ങളും (Gravitation &amp; Satellites)</span>
+  <span class="stars">⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="6"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>🌍 ന്യൂട്ടന്റെ ഗുരുത്വ നിയമം</h3>
-  <div class="formula">F = Gm₁m₂/d²</div>
+  <h3>🌍 ന്യൂട്ടന്റെ സാർവത്രിക ഗുരുത്വാകർഷണ നിയമം</h3>
+  <div class="formula">F = G m₁m₂ / d² &nbsp;|&nbsp; g = GM / R² = 9.8 m/s²</div>
   <ul class="icon-list">
-    <li>G = <b>6.67×10⁻¹¹</b> N·m²/kg² (കാവൻഡിഷ്)</li>
-    <li>പ്രപഞ്ചത്തിലെ <b>ദുർബലതമ ബലം</b></li>
+    <li>ഗുരുത്വ സ്ഥിരാങ്കം <b>G = 6.67×10⁻¹¹ N·m²/kg²</b> (കണ്ടെത്തിയത്: <b>ഹെൻറി കാവൻഡിഷ്</b>) — പ്രപഞ്ചത്തിൽ എല്ലായിടത്തും സ്ഥിരമാണ്.</li>
+    <li>ഭൂമിയുടെ ആകൃതി <b>ജിയോയിഡ് / ഒബ്ലേറ്റ് സ്ഫീറോയിഡ്</b> ആണ് (മധ്യരേഖാ ആരം ധ്രുവ ആരത്തേക്കാൾ ≈ 21 km കൂടുതൽ). അതിനാൽ $g$ മൂല്യം ധ്രുവങ്ങളിൽ കൂടുതലും മധ്യരേഖയിൽ കുറവുമാണ്.</li>
   </ul>
 
-  <h3>📊 g-യുടെ വ്യതിയാനം</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>സ്ഥലം</th><th>g (m/s²)</th></tr>
-    <tr><td>ധ്രുവം</td><td>9.83 (പരമാവധി)</td></tr>
-    <tr><td>മധ്യരേഖ</td><td>9.78 (പരമകുറവ്)</td></tr>
-    <tr><td>ഭൂമിയുടെ കേന്ദ്രം</td><td>0</td></tr>
-    <tr><td>ചന്ദ്രൻ</td><td>1.62</td></tr>
-  </table>
+  <div class="fig">
+    <span class="fig-title">📊 ഭൂമിയിലെ g-യുടെ വ്യതിയാനവും പലായന പ്രവേഗവും</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 135" role="img" aria-label="ഭൂമിയിലെ g വ്യതിയാനം">
+          <ellipse cx="105" cy="70" rx="68" ry="52" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+          <line x1="37" y1="70" x2="173" y2="70" stroke="#0891b2" stroke-dasharray="4 2"/>
+          <line x1="105" y1="18" x2="105" y2="122" stroke="#6d28d9" stroke-dasharray="4 2"/>
+          <circle cx="105" cy="70" r="4" fill="#d93025"/>
+          <circle cx="105" cy="18" r="4" fill="#1d4ed8"/>
+          <circle cx="173" cy="70" r="4" fill="#0f9d58"/>
+          <text x="68" y="13" fill="#1d4ed8">ധ്രുവം: g = 9.83 m/s² (Max)</text>
+          <text x="112" y="66" fill="#d93025">കേന്ദ്രം: g = 0</text>
+          <text x="112" y="84" class="sub-lbl">R_e &gt; R_p (21 km)</text>
+          <text x="52" y="133" fill="#0f9d58">മധ്യരേഖ: g = 9.78 m/s² (Min)</text>
+        </svg>
+        <figcaption><b>g-യുടെ മൂല്യം:</b> ധ്രുവങ്ങളിൽ പരമാവധി (9.83), മധ്യരേഖയിൽ കുറവ് (9.78), ഭൂകേന്ദ്രത്തിൽ പൂജ്യം (0), ചന്ദ്രനിൽ 1.62 m/s² (ഭൂമിയുടെ 1/6)</figcaption>
+      </figure>
+      <figure>
+        <div class="bars" style="margin-top:4px;">
+          <div class="brow"><span>ധ്രുവം (Pole)</span><i style="--w:100%;--c:#1d4ed8"></i><b>9.83 m/s²</b></div>
+          <div class="brow"><span>മധ്യരേഖ</span><i style="--w:98%;--c:#0891b2"></i><b>9.78 m/s²</b></div>
+          <div class="brow"><span>ചന്ദ്രൻ (1/6 g)</span><i style="--w:16.5%;--c:#6d28d9"></i><b>1.62 m/s²</b></div>
+          <div class="brow"><span>ഭൂകേന്ദ്രം</span><i style="--w:2%;--c:#d93025"></i><b>0 m/s²</b></div>
+        </div>
+        <figcaption style="margin-top:12px;">ഭൂമിയിൽ നിന്ന് മുകളിലേക്ക് പോകുന്തോറും ആഴത്തിലേക്ക് പോകുന്തോറും <b>g കുറയുന്നു</b>. ഭൂമിയുടെ ഭ്രമണവേഗം കൂടിയാൽ മധ്യരേഖയിൽ g കുറയും.</figcaption>
+      </figure>
+    </div>
   </div>
 
-  <h3>⚖️ മാസ് vs ഭാരം</h3>
+  <h3>⚖️ മാസ് (പിണ്ഡം) vs ഭാരം (Weight)</h3>
   <div class="cmp">
-    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">മാസ് (Mass)</h4>
-      <ul><li>kg</li><li>സ്ഥിരം</li><li>അദിശം</li></ul></div>
-    <div class="col" style="border-color:#ddd6fe;"><h4 style="background:#6d28d9;">ഭാരം (Weight)</h4>
-      <ul><li>N</li><li>g-യനുസരിച്ച് മാറും</li><li>സദിശം</li></ul></div>
+    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">മാസ് / പിണ്ഡം (Mass - m)</h4>
+      <ul>
+        <li>വസ്തുവിലടങ്ങിയിരിക്കുന്ന ദ്രവ്യത്തിന്റെ അളവ്</li>
+        <li>SI യൂണിറ്റ്: <b>കിലോഗ്രാം (kg)</b> | അദിശ അളവ്</li>
+        <li>സാധാരണ തുലാസ് (Common Balance) ഉപയോഗിച്ച് അളക്കുന്നു</li>
+        <li>പ്രപഞ്ചത്തിൽ എവിടെയും <b>മാറുന്നില്ല</b> (ഭൂകേന്ദ്രത്തിലും ചന്ദ്രനിലും തുല്യം)</li>
+      </ul>
+    </div>
+    <div class="col" style="border-color:#ddd6fe;"><h4 style="background:#6d28d9;">ഭാരം (Weight - W = mg)</h4>
+      <ul>
+        <li>വസ്തുവിന്മേൽ ഭൂമി പ്രയോഗിക്കുന്ന ഗുരുത്വാകർഷണ ബലം</li>
+        <li>SI യൂണിറ്റ്: <b>ന്യൂട്ടൺ (N)</b> | സദിശ അളവ്</li>
+        <li>സ്പ്രിംഗ് തുലാസ് (Spring Balance) ഉപയോഗിച്ച് അളക്കുന്നു</li>
+        <li>g മാറുന്നതിനനുസരിച്ച് മാറുന്നു (ധ്രുവങ്ങളിൽ ഭാരം കൂടുതൽ, ഭൂകേന്ദ്രത്തിൽ <b>ഭാരം = 0</b>)</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="note"><span class="lbl">KEY</span> നിർബാധ പതനം (Free fall) — പ്രകടഭാരം <b>0</b></div>
-
-  <h3>🚀 പലായന പ്രവേഗം</h3>
+  <h3>🚀 പലായന പ്രവേഗം (Escape Velocity) &amp; കൃത്രിമോപഗ്രഹങ്ങൾ</h3>
   <ul>
-    <li>ഭൂമി: <b>11.2 km/s</b></li>
-    <li>ചന്ദ്രൻ: <b>2.38 km/s</b></li>
-    <li>ഭ്രമണ പ്രവേഗം (v = √(GM/r)): ഭൂമിയിൽ ≈7.9 km/s</li>
+    <li><b>പലായന പ്രവേഗം ($v_e = \sqrt{2gR} = \sqrt{2GM/R}$):</b> വസ്തുവിന്റെ മാസിനെ ആശ്രയിക്കുന്നില്ല.
+      <br>• ഭൂമിയിൽ: <b>11.2 km/s</b> | ചന്ദ്രനിൽ: <b>2.38 km/s</b> (അന്തരീക്ഷമില്ലാത്തതിന് കാരണം) | സൂര്യനിൽ: <b>618 km/s</b> | വ്യാഴത്തിൽ: 59.5 km/s.</li>
+    <li><b>ഓർബിറ്റൽ പ്രവേഗം ($v_o = \sqrt{gR}$):</b> ഭൂമിയോട് ചേർന്ന് കറങ്ങുന്ന ഉപഗ്രഹത്തിന് ≈ <b>7.9 km/s</b> ($v_e = \sqrt{2} \times v_o$).</li>
+    <li><b>ഭൂസ്ഥിര ഉപഗ്രഹങ്ങൾ (Geostationary Satellites):</b> ഉയരം ≈ <b>35,800 km (36,000 km)</b>; പരിക്രമണ കാലം = <b>24 മണിക്കൂർ</b>; വാർത്താവിനിമയത്തിനും കാലാവസ്ഥാ പ്രവചനത്തിനും ഉപയോഗിക്കുന്നു (ഉദാ: INSAT, GSAT).</li>
+    <li><b>ധ്രുവീയ ഉപഗ്രഹങ്ങൾ (Polar / Sun-synchronous Satellites):</b> ഉയരം 500–800 km; വിദൂര സംവേദനം (Remote Sensing), ഭൂപട നിർമ്മാണം എന്നിവയ്ക്ക് ഉപയോഗിക്കുന്നു (ഉദാ: IRS, Cartosat).</li>
+    <li><b>കെപ്ലറുടെ ഗ്രഹചലന നിയമങ്ങൾ:</b> (1) ഗ്രഹങ്ങളുടെ പഥം ദീർഘവൃത്താകൃതിയിലാണ് (സൂര്യൻ ഒരു ഫോക്കസിൽ), (2) സമവിസ്തീർണ നിയമം, (3) $T^2 \propto r^3$.</li>
   </ul>
-
-  <h3>🛰️ ഉപഗ്രഹങ്ങൾ</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>തരം</th><th>വിവരം</th></tr>
-    <tr><td>ഭൂസ്ഥിരം (Geostationary)</td><td>≈35,800 km; 24 h; മധ്യരേഖ; പടിഞ്ഞാറ്→കിഴക്ക്</td></tr>
-    <tr><td>ധ്രുവ ഉപഗ്രഹം</td><td>≈100 min</td></tr>
-  </table>
-  </div>
-
-  <h3>⏱️ പെൻഡുലം</h3>
-  <ul>
-    <li>g ↓ → T ↑</li>
-    <li>സെക്കൻഡ്സ് പെൻഡുലം: T = 2 s; l ≈ <b>99.4 cm</b></li>
-  </ul>
-
-  <h3>🌀 കെപ്ലറുടെ നിയമങ്ങൾ</h3>
-  <ul>
-    <li>1. ദീർഘവൃത്ത പഥം</li>
-    <li>2. സമവിസ്തീർണ നിയമം</li>
-    <li>3. T² ∝ a³</li>
-  </ul>
-
-  <div class="formula">g_h = g(1 − 2h/R) &nbsp;|&nbsp; g_d = g(1 − d/R)</div>
-  <div class="note"><span class="lbl">➕ NEW</span> ഗുരുത്വ തരംഗങ്ങൾ: <b>LIGO 2015</b></div>
-  <div class="note"><span class="lbl">➕ NEW</span> ഭാരം: ചന്ദ്രനിൽ ഭൂമിയിലെ 1/6; ഭൂമിയുടെ കേന്ദ്രത്തിൽ g = 0 പക്ഷേ മാസ് മാറില്ല.</div>
-  <div class="trick"><span class="lbl">TRICK</span> ധ്രുവത്തിൽ g പരമാവധി → ഭാരം കൂടും; മധ്യരേഖയിൽ കുറയും.</div>
-  <div class="fig"><b>📊 g-യുടെ വ്യതിയാനം (m/s²)</b><div class="bars"><div class="brow"><span>ധ്രുവം</span><i style="--w:100%;--c:#1d4ed8"></i><b>9.83</b></div><div class="brow"><span>മധ്യരേഖ</span><i style="--w:99.5%;--c:#0891b2"></i><b>9.78</b></div><div class="brow"><span>ചന്ദ്രൻ</span><i style="--w:16.5%;--c:#6d28d9"></i><b>1.62</b></div><div class="brow"><span>ഭൂകേന്ദ്രം</span><i style="--w:0%;--c:#d93025"></i><b>0</b></div></div></div>
 </div>
 </details>
 
 <!-- ================= 7.7 ================= -->
-<details class="card">
-<summary><span class="num">7.7</span><span class="title">താപവും ഊഷ്മാവും</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="7"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="4">
+<summary>
+  <span class="num">7.7</span>
+  <span class="title">താപവും തെർമോഡൈനാമിക്സും (Heat &amp; Thermodynamics)</span>
+  <span class="stars">⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="7"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>🔥 താപം vs താപനില</h3>
-  <div class="cmp">
-    <div class="col" style="border-color:#fbcfe8;"><h4 style="background:#be185d;">താപം (Heat)</h4>
-      <ul><li>ആകെ KE (ലളിത രൂപം)</li><li>താപനില വ്യത്യാസം മൂലം കൈമാറുന്ന ഊർജ്ജം</li><li>യൂണിറ്റ്: J</li><li>ഊർജ്ജ രൂപം</li></ul></div>
-    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">താപനില (Temperature)</h4>
-      <ul><li>ശരാശരി KE</li><li>യൂണിറ്റ്: K</li><li>0 K = −273.15°C</li></ul></div>
+  <h3>🌡️ താപനില സ്കെയിലുകളും പരിവർത്തനവും</h3>
+  <div class="formula">(C − 0)/100 = (F − 32)/180 = (K − 273.15)/100 = (R − 0)/80 &nbsp;|&nbsp; F = (9/5)C + 32</div>
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>സവിശേഷത</th><th>സെൽഷ്യസ് (°C)</th><th>ഫാരൻഹീറ്റ് (°F)</th><th>കെൽവിൻ (K - SI)</th><th>റ്യൂമർ (°R)</th></tr>
+    <tr><td>ജലത്തിന്റെ ഖരീകരണാങ്കം (Ice point)</td><td>0°C</td><td>32°F</td><td>273.15 K</td><td>0°R</td></tr>
+    <tr><td>ജലത്തിന്റെ തിളനില (Steam point)</td><td>100°C</td><td>212°F</td><td>373.15 K</td><td>80°R</td></tr>
+    <tr><td>മനുഷ്യശരീരത്തിന്റെ സാധാരണ താപനില</td><td><b>37°C (36.9°C)</b></td><td><b>98.6°F (98.4°F)</b></td><td><b>310 K</b></td><td>29.6°R</td></tr>
+    <tr><td>കേവല ശൂന്യത (Absolute Zero — തന്മാത്രാ ചലനം നിലയ്ക്കുന്നത്)</td><td><b>−273.15°C</b></td><td><b>−459.67°F</b></td><td><b>0 K</b></td><td>−218.5°R</td></tr>
+  </table>
+  </div>
+  <div class="note"><span class="lbl">PSC POINTS</span>
+    • സെൽഷ്യസും ഫാരൻഹീറ്റും ഒരേ മൂല്യം കാണിക്കുന്ന താപനില: <b>−40° (−40°C = −40°F)</b>.<br>
+    • ഫാരൻഹീറ്റും കെൽവിനും ഒരേ മൂല്യം കാണിക്കുന്ന താപനില: <b>574.25°</b>.<br>
+    • ക്ലിനിക്കൽ തെർമോമീറ്ററിന്റെ അളവ് പരിധി: <b>35°C മുതൽ 42°C വരെ (94°F – 108°F)</b>. ഇതിൽ രസം (Mercury) ഉപയോഗിക്കുന്നു (രസത്തിന്റെ ഖരീകരണാങ്കം −39°C, തിളനില 357°C; കൊടുംതണുപ്പുള്ള പ്രദേശങ്ങളിൽ ആൽക്കഹോൾ തെർമോമീറ്റർ ഉപയോഗിക്കുന്നു).
   </div>
 
-  <h3>🌡️ താപനില പരിവർത്തനം</h3>
-  <div class="formula">F = (C × 9/5) + 32 &nbsp;|&nbsp; K = C + 273.15</div>
+  <h3>💧 ജലത്തിന്റെ അസാധാരണ വികാസം (Anomalous Expansion of Water — 0°C to 4°C)</h3>
+  <p>സാധാരണ ദ്രാവകങ്ങൾ ചൂടാക്കുമ്പോൾ വികസിക്കുകയും തണുപ്പിക്കുമ്പോൾ ചുരുങ്ങുകയും ചെയ്യുന്നു. എന്നാൽ <b>0°C മുതൽ 4°C വരെ ജലം ചൂടാക്കുമ്പോൾ വ്യാപ്തം കുറയുകയും (ചുരുങ്ങുകയും) സാന്ദ്രത കൂടുകയും ചെയ്യുന്നു</b>. 4°C-ന് മുകളിൽ സാധാരണ പോലെ വികസിക്കുന്നു.</p>
+  <div class="fig">
+    <span class="fig-title">📊 4°C-ലെ ജലത്തിന്റെ വ്യാപ്തവും സാന്ദ്രതയും (PSC ആവർത്തിക്കുന്ന ഗ്രാഫ്)</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 130" role="img" aria-label="വ്യാപ്തം-താപനില ഗ്രാഫ്">
+          <path class="ax" d="M32 15V108H195" marker-start="url(#arr1)" marker-end="url(#arr1)"/>
+          <path class="ln" stroke="#d93025" d="M32 45 Q82 105 182 28"/>
+          <line x1="88" y1="73" x2="88" y2="108" stroke="#1d4ed8" stroke-dasharray="3 2"/>
+          <circle cx="88" cy="73" r="4" fill="#d93025"/>
+          <text x="58" y="65" fill="#d93025">ഏറ്റവും കുറഞ്ഞ വ്യാപ്തം</text>
+          <text x="80" y="122" fill="#1d4ed8">4°C</text>
+          <text x="28" y="122">0°C</text>
+          <text x="6" y="25">വ്യാപ്തം (V)</text>
+          <text x="145" y="122">താപനില (°C)</text>
+        </svg>
+        <figcaption><b>വ്യാപ്തം vs താപനില:</b> <b>4°C-ൽ</b> ജലത്തിന് <b>ഏറ്റവും കുറഞ്ഞ വ്യാപ്തം</b> (V-ആകൃതിയിലുള്ള ഗ്രാഫ്)</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 130" role="img" aria-label="സാന്ദ്രത-താപനില ഗ്രാഫ്">
+          <path class="ax" d="M32 15V108H195" marker-start="url(#arr1)" marker-end="url(#arr1)"/>
+          <path class="ln" stroke="#0f9d58" d="M32 78 Q88 2 182 92"/>
+          <line x1="88" y1="38" x2="88" y2="108" stroke="#1d4ed8" stroke-dasharray="3 2"/>
+          <circle cx="88" cy="38" r="4" fill="#0f9d58"/>
+          <text x="48" y="28" fill="#0f9d58">പരമാവധി സാന്ദ്രത (1000 kg/m³)</text>
+          <text x="80" y="122" fill="#1d4ed8">4°C</text>
+          <text x="28" y="122">0°C</text>
+          <text x="4" y="25">സാന്ദ്രത (d)</text>
+          <text x="145" y="122">താപനില (°C)</text>
+        </svg>
+        <figcaption><b>സാന്ദ്രത vs താപനില:</b> <b>4°C-ൽ</b> ജലത്തിന് <b>ഏറ്റവും കൂടിയ സാന്ദ്രത</b> (1 g/cm³ = 1000 kg/m³)</figcaption>
+      </figure>
+    </div>
+    <div class="cap">തണുപ്പുകാലത്ത് തടാകങ്ങളുടെ മുകൾഭാഗം തണുത്തുറഞ്ഞ് ഐസ് ആകുമ്പോഴും അടിത്തട്ടിലെ ജലം <b>4°C</b>-ൽ ദ്രാവകാവസ്ഥയിൽ തുടരുന്നതിനാൽ ജലജീവികൾക്ക് ജീവിക്കാൻ സാധിക്കുന്നു.</div>
+  </div>
+
+  <h3>🔥 താപ പ്രേഷണം, വിശിഷ്ട താപധാരിത, ലീനതാപം</h3>
   <ul>
-    <li>C = F at <b>−40°</b></li>
-    <li>ശരീര താപനില: <b>37°C = 98.6°F = 310 K</b></li>
+    <li><b>ചാലനം (Conduction):</b> ഖരവസ്തുക്കളിൽ തന്മാത്രകളുടെ സ്ഥാനമാറ്റമില്ലാതെ താപം പ്രവഹിക്കുന്ന രീതി (ഏറ്റവും നല്ല താപചാലകം: <b>വെള്ളി</b>; അലോഹം: വജ്രം/ഗ്രാഫൈറ്റ്).</li>
+    <li><b>സംവഹനം (Convection):</b> ദ്രാവകങ്ങളിലും വാതകങ്ങളിലും തന്മാത്രകളുടെ സ്ഥാനമാറ്റത്തിലൂടെ താപം പ്രവഹിക്കുന്നത്. <b>ഉദാ:</b> കടൽക്കാറ്റും (പകൽ: കടലിൽ നിന്ന് കരയിലേക്ക്) കരക്കാറ്റും (രാത്രി: കരയിൽ നിന്ന് കടലിലേക്ക്). തിരശ്ചീനമായ വായുപ്രവാഹം വഴി താപം കൈമാറുന്നത്: <b>അഭിവഹനം (Advection)</b>.</li>
+    <li><b>വികിരണം (Radiation):</b> മാധ്യമത്തിന്റെ സഹായമില്ലാതെ പ്രകാശവേഗതയിൽ താപം സഞ്ചരിക്കുന്ന രീതി (സൂര്യതാപം ഭൂമിയിലെത്തുന്നത്).</li>
+    <li><b>തെർമോസ് ഫ്ലാസ്ക് (Dewar Flask - ജെയിംസ് ഡ്യൂവർ):</b> ചാലനം, സംവഹനം, വികിരണം എന്നീ മൂന്ന് രീതികളിലൂടെയുമുള്ള താപനഷ്ടം തടയുന്നു.</li>
+    <li><b>വിശിഷ്ട താപധാരിത (Specific Heat Capacity, $Q = mc\Delta T$):</b> ഏറ്റവും കൂടിയ ദ്രാവകം: <b>ജലം (4200 J/kg·K)</b> (അതിനാൽ വാഹനങ്ങളിലെ റേഡിയേറ്ററുകളിൽ കൂളന്റായി ജലം ഉപയോഗിക്കുന്നു) | ഏറ്റവും കൂടിയ മൂലകം: <b>ഹൈഡ്രജൻ</b>.</li>
+    <li><b>ലീനതാപം (Latent Heat):</b> അവസ്ഥാന്തര സമയത്ത് താപനില മാറാതെ ആഗിരണം ചെയ്യപ്പെടുന്ന താപം.
+      <br>• ഐസിന്റെ ദ്രവീകരണ ലീനതാപം = <b>80 cal/g (336×10³ J/kg)</b> | ജലത്തിന്റെ ബാഷ്പീകരണ ലീനതാപം = <b>540 cal/g (2260×10³ J/kg)</b> (തിളച്ച വെള്ളത്തേക്കാൾ നീരാവി (Steam) കൊണ്ട് പൊള്ളലേറ്റാൽ കൂടുതൽ ഗുരുതരമാകാൻ കാരണം!).</li>
+    <li><b>മർദ്ദത്തിന്റെ സ്വാധീനം:</b> മർദ്ദം കൂടുമ്പോൾ ജലത്തിന്റെ തിളനില കൂടുന്നു (പ്രഷർ കുക്കറിൽ ജലം ≈ <b>120°C</b>-ൽ തിളയ്ക്കുന്നു; കുന്നിൻ മുകളിൽ മർദ്ദം കുറവായതിനാൽ 100°C-ന് താഴെ തിളയ്ക്കുന്നു). മർദ്ദം കൂടുമ്പോൾ ഐസിന്റെ ദ്രവണാങ്കം കുറയുന്നു (<b>പുനർഹിമായനം / Regelation</b> — രണ്ട് ഐസ് കട്ടകൾ അമർത്തിപ്പിടിച്ചാൽ ഒട്ടിപ്പിടിക്കുന്നത്).</li>
   </ul>
 
-  <h3>🔥 താപ പ്രേഷണം</h3>
-  <ul class="icon-list">
-    <li>ചാലനം (Conduction) | സംവഹനം (Convection)</li>
-    <li>അഭിവഹനം (Advection) | വികിരണം (Radiation) — <b>മാധ്യമം വേണ്ട, ഏറ്റവും വേഗം</b></li>
-    <li>വെള്ളി ഏറ്റവും നല്ല താപചാലകം</li>
-  </ul>
-
-  <h3>💧 വിശിഷ്ട താപധാരിത</h3>
+  <h3>📜 വാതക നിയമങ്ങളും തെർമോഡൈനാമിക്സ് നിയമങ്ങളും <span class="new-badge">NEW</span></h3>
   <ul>
-    <li>ജലം: <b>4200 J/kg·K</b></li>
-    <li>മൂലകം: <b>ഹൈഡ്രജൻ</b></li>
+    <li><b>ബോയിൽ നിയമം (സ്ഥിര താപനിലയിൽ):</b> $P \propto 1/V$ ($P_1V_1 = P_2V_2$) — വെള്ളത്തിനടിയിൽ നിന്നുള്ള വായുകുമിള മുകളിലേക്ക് വരുമ്പോൾ വലുതാകുന്നു.</li>
+    <li><b>ചാൾസ് നിയമം (സ്ഥിര മർദ്ദത്തിൽ):</b> $V \propto T$ ($V_1/T_1 = V_2/T_2$) — ചൂടുവായു ബലൂൺ ഉയരുന്നു.</li>
+    <li><b>അവൊഗാഡ്രോ നിയമം (സ്ഥിര T, P):</b> $V \propto n$ | ആദർശ വാതക സമവാക്യം: <b>PV = nRT</b>.</li>
+    <li><b>തെർമോഡൈനാമിക്സ് നിയമങ്ങൾ:</b> <b>പൂജ്യം നിയമം:</b> താപസന്തുലനം (താപനിലയുടെ നിർവ്വചനം) | <b>ഒന്നാം നിയമം:</b> ഊർജ്ജ സംരക്ഷണ നിയമം ($\Delta Q = \Delta U + \Delta W$) | <b>രണ്ടാം നിയമം:</b> എൻട്രോപ്പി / താപപ്രവാഹ ദിശ.</li>
   </ul>
-
-  <div class="note"><span class="lbl">KEY</span> ജലത്തിന് <b>4°C</b>-ൽ പരമാവധി സാന്ദ്രത</div>
-
-  <h3>❄️ ലീനതാപം</h3>
-  <ul>
-    <li>ഐസ്: <b>80 cal/g</b></li>
-    <li>നീരാവി: <b>540 cal/g</b></li>
-  </ul>
-
-  <h3>⚙️ മർദ്ദത്തിന്റെ ഫലങ്ങൾ</h3>
-  <ul>
-    <li>മർദ്ദം ↑ → തിളനില ↑ (പ്രഷർ കുക്കർ ≈ <b>120°C</b>)</li>
-    <li>മർദ്ദം ↑ → ഐസ് ദ്രവണാങ്കം ↓ (പുനർഹിമായനം / Regelation)</li>
-  </ul>
-
-  <h3>✨ ഉത്പതനം & അതിചാലകത</h3>
-  <ul>
-    <li>ഉത്പതനം (Sublimation): കർപ്പൂരം, ഡ്രൈ ഐസ്</li>
-    <li>അതിചാലകത: ഓൺസ് 1911 (Hg, 4.2 K)</li>
-  </ul>
-
-  <h3>📈 താപ വികാസം</h3>
-  <ul>
-    <li>ക്രമം: <b>വാതകം > ദ്രാവകം > ഖരം</b></li>
-    <li>β = 2α &nbsp;|&nbsp; γ = 3α</li>
-  </ul>
-
-  <div class="formula">കലോറിമെട്രി: നഷ്ടം = നേട്ടം &nbsp;|&nbsp; Q = mcΔT</div>
-
-  <div class="note"><span class="lbl">KEY</span> കടൽക്കാറ്റ്: പകൽ (കടൽ→കര) | കരക്കാറ്റ്: രാത്രി (കര→കടൽ)</div>
-  <div class="note"><span class="lbl">➕ NEW</span> ജലത്തിന്റെ വിശിഷ്ട താപധാരിത കൂടുതലായതിനാൽ തീരപ്രദേശങ്ങളിൽ കാലാവസ്ഥ മിതം; താപനില അളക്കാൻ: തെർമോമീറ്റർ (സാധാരണം), പൈറോമീറ്റർ (ഉയർന്നത്), സിക്സ്'സ് തെർമോമീറ്റർ (കൂടിയതും കുറഞ്ഞതും).</div>
 </div>
 </details>
 
 <!-- ================= 7.8 ================= -->
-<details class="card" open>
-<summary><span class="num">7.8</span><span class="title">പ്രവൃത്തി, ഊർജ്ജം, പവർ</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="8"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">7.8</span>
+  <span class="title">പ്രവൃത്തി, ഊർജ്ജം, പവർ (Work, Energy &amp; Power)</span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="8"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
   <h3>💼 പ്രവൃത്തി (Work)</h3>
-  <div class="formula">W = Fs cosθ</div>
+  <div class="formula">W = F × s × cosθ &nbsp;|&nbsp; യൂണിറ്റ്: ജൂൾ (J = N·m); CGS: എർഗ് (1 J = 10⁷ erg)</div>
   <ul>
-    <li>ഘർഷണം: <b>ഋണ പ്രവൃത്തി</b></li>
-    <li>90° കോണിൽ: <b>പ്രവൃത്തി = 0</b></li>
+    <li><b>ധന പ്രവൃത്തി (Positive Work, θ = 0°):</b> ബലത്തിന്റെ ദിശയിൽ സ്ഥാനാന്തരം ഉണ്ടാകുമ്പോൾ (ഉദാ: താഴേക്ക് വീഴുന്ന വസ്തുവിൽ ഗുരുത്വബലം ചെയ്യുന്ന പ്രവൃത്തി).</li>
+    <li><b>ഋണ പ്രവൃത്തി (Negative Work, θ = 180°):</b> ബലത്തിന് എതിർദിശയിൽ സ്ഥാനാന്തരം ഉണ്ടാകുമ്പോൾ (ഉദാ: <b>ഘർഷണബലം</b> ചെയ്യുന്ന പ്രവൃത്തി, മുകളിലേക്ക് എറിയുന്ന കല്ലിൽ ഗുരുത്വബലം ചെയ്യുന്ന പ്രവൃത്തി).</li>
+    <li><b>പൂജ്യം പ്രവൃത്തി (Zero Work, θ = 90° അല്ലെങ്കിൽ s = 0):</b> തലച്ചുമടുമായി നിരപ്പായ റോഡിലൂടെ നടക്കുന്ന ചുമട്ടുതൊഴിലാളി ഗുരുത്വബലത്തിനെതിരെ ചെയ്യുന്ന പ്രവൃത്തി = <b>0</b>; വൃത്തപാതയിൽ കറങ്ങുന്ന വസ്തുവിൽ അഭികേന്ദ്രബലം ചെയ്യുന്ന പ്രവൃത്തി = <b>0</b>; ഭിത്തിയിൽ തള്ളിയിട്ടും നീങ്ങിയില്ലെങ്കിൽ പ്രവൃത്തി = <b>0</b>.</li>
   </ul>
 
-  <h3>📊 ഊർജ്ജ യൂണിറ്റുകൾ</h3>
-  <ul class="icon-list">
-    <li>1 J = <b>10⁷ erg</b></li>
-    <li>1 kWh = <b>3.6×10⁶ J</b></li>
-    <li>1 cal = <b>4.186 J</b></li>
-    <li>1 eV = <b>1.6×10⁻¹⁹ J</b></li>
-    <li>kWh = ഊർജ്ജ യൂണിറ്റ്; kW = പവർ യൂണിറ്റ്</li>
-  </ul>
-
-  <h3>⚡ ഗതിക ഊർജ്ജം & സ്ഥിതിക ഊർജ്ജം</h3>
-  <div class="formula">KE = ½mv² = p²/2m &nbsp;|&nbsp; PE = mgh</div>
-  <div class="trick"><span class="lbl">TRICK</span> വേഗത ×2 → KE ×4 (വർഗ്ഗ ബന്ധം)</div>
-  <div class="formula">സ്പ്രിംഗ് PE = ½kx²</div>
-
-  <h3>🔄 ഊർജ്ജ സംരക്ഷണം</h3>
-  <ul>
-    <li>ഊർജ്ജം സൃഷ്ടിക്കാനോ നശിപ്പിക്കാനോ കഴിയില്ല</li>
-    <li><b>E = mc² (1905, ഐൻസ്റ്റീൻ)</b></li>
-    <li>സൂര്യന്റെ ഊർജ്ജം: <b>അണുസംയോജനം (Fusion, ബെഥെ)</b></li>
-  </ul>
-
-  <h3>💪 പവർ (Power)</h3>
-  <div class="formula">P = W/t = Fv &nbsp;|&nbsp; 1 HP = 746 W</div>
-
-  <h3>🔌 ഊർജ്ജ പരിവർത്തനങ്ങൾ</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>ഉപകരണം</th><th>പരിവർത്തനം</th></tr>
-    <tr><td>ഡൈനാമോ</td><td>യാന്ത്രിക → വൈദ്യുതി</td></tr>
-    <tr><td>മോട്ടോർ</td><td>വൈദ്യുതി → യാന്ത്രിക</td></tr>
-    <tr><td>സോളാർ സെൽ</td><td>പ്രകാശ → വൈദ്യുതി</td></tr>
-    <tr><td>സ്പീക്കർ</td><td>വൈദ്യുതി → ശബ്ദം</td></tr>
-    <tr><td>മൈക്രോഫോൺ</td><td>ശബ്ദം → വൈദ്യുതി</td></tr>
-    <tr><td>ബാറ്ററി</td><td>രാസ → വൈദ്യുതി</td></tr>
-  </table>
+  <h3>⚡ ഗതിക ഊർജ്ജം (Kinetic Energy) &amp; സ്ഥിതിക ഊർജ്ജം (Potential Energy)</h3>
+  <div class="formula">KE = ½mv² = p² / (2m) &nbsp;|&nbsp; PE = mgh &nbsp;|&nbsp; സ്പ്രിംഗ് PE = ½kx²</div>
+  <div class="trick"><span class="lbl">PSC NUMERICAL TRICK</span>
+    • ഒരു വസ്തുവിന്റെ പ്രവേഗം (v) <b>ഇരട്ടിയായാൽ (×2)</b> ഗതിക ഊർജ്ജം <b>4 മടങ്ങാകും (×4)</b>; പ്രവേഗം 3 മടങ്ങായാൽ KE <b>9 മടങ്ങാകും</b>.<br>
+    • മാസ് (m) ഇരട്ടിയായാൽ ഗതിക ഊർജ്ജം <b>ഇരട്ടിയാകും (×2)</b>.<br>
+    • ഗതിക ഊർജ്ജം 4 മടങ്ങായാൽ ആക്കം (Momentum, $p = \sqrt{2m \cdot KE}$) <b>ഇരട്ടിയാകും (×2)</b>.
   </div>
 
-  <div class="formula">കാര്യക്ഷമത = (ഔട്ട്പുട്ട് / ഇൻപുട്ട്) × 100%</div>
+  <div class="fig">
+    <span class="fig-title">📊 സിമ്പിൾ പെൻഡുലത്തിലെ ഊർജ്ജ സംരക്ഷണവും സെക്കൻഡ്സ് പെൻഡുലവും</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 140" style="max-width:460px;" role="img" aria-label="സിമ്പിൾ പെൻഡുലം ഊർജ്ജം">
+      <line x1="140" y1="12" x2="240" y2="12" stroke="#1c2340" stroke-width="3"/>
+      <!-- Left extreme A -->
+      <line x1="190" y1="12" x2="105" y2="92" stroke="#5a6485" stroke-dasharray="4 2" stroke-width="1.6"/>
+      <circle cx="105" cy="92" r="12" fill="#d93025"/>
+      <text x="100" y="96" fill="#fff">A</text>
+      <!-- Mean position O -->
+      <line x1="190" y1="12" x2="190" y2="115" stroke="#1d4ed8" stroke-width="2"/>
+      <circle cx="190" cy="115" r="12" fill="#0f9d58"/>
+      <text x="185" y="119" fill="#fff">O</text>
+      <!-- Right extreme B -->
+      <line x1="190" y1="12" x2="275" y2="92" stroke="#5a6485" stroke-dasharray="4 2" stroke-width="1.6"/>
+      <circle cx="275" cy="92" r="12" fill="#d93025"/>
+      <text x="270" y="96" fill="#fff">B</text>
+      <!-- Arc -->
+      <path d="M115 102 Q190 132 265 102" fill="none" stroke="#6d28d9" stroke-dasharray="3 2"/>
+      <text x="12" y="78" fill="#d93025">അഗ്രസ്ഥാനം (A)</text>
+      <text x="12" y="94" class="sub-lbl">PE = പരമാവധി, KE = 0</text>
+      <text x="288" y="78" fill="#d93025">അഗ്രസ്ഥാനം (B)</text>
+      <text x="288" y="94" class="sub-lbl">PE = പരമാവധി, KE = 0</text>
+      <text x="135" y="136" fill="#0f9d58">മധ്യസ്ഥാനം (O): KE = പരമാവധി, PE = കുറവ്</text>
+    </svg>
+    <div class="cap">പെൻഡുലം സമവാക്യം: <b>T = 2π√(l/g)</b> (ആന്ദോളന കാലം ബോബിന്റെ മാസിനെ ആശ്രയിക്കുന്നില്ല!) | <b>സെക്കൻഡ്സ് പെൻഡുലം:</b> T = 2 സെക്കൻഡ്, നീളം l ≈ <b>99.4 cm (≈ 1 m)</b>.</div>
+  </div>
+
+  <h3>💪 പവറും (Power) ഊർജ്ജ പരിവർത്തന ഉപകരണങ്ങളും</h3>
+  <div class="formula">പവർ P = W/t = F × v (വാട്ട്, W) &nbsp;|&nbsp; 1 HP = 746 W &nbsp;|&nbsp; 1 kWh (1 യൂണിറ്റ് വൈദ്യുതി) = 3.6 × 10⁶ J</div>
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>ഉപകരണം</th><th>ഊർജ്ജ പരിവർത്തനം</th><th>ഉപകരണം</th><th>ഊർജ്ജ പരിവർത്തനം</th></tr>
+    <tr><td><b>ഡൈനാമോ / ജനറേറ്റർ</b></td><td>യാന്ത്രികോർജ്ജം → വൈദ്യുതോർജ്ജം</td><td><b>ഇലക്ട്രിക് മോട്ടോർ</b></td><td>വൈദ്യുതോർജ്ജം → യാന്ത്രികോർജ്ജം</td></tr>
+    <tr><td><b>മൈക്രോഫോൺ</b></td><td>ശബ്ദോർജ്ജം → വൈദ്യുതോർജ്ജം</td><td><b>ലൗഡ് സ്പീക്കർ</b></td><td>വൈദ്യുതോർജ്ജം → ശബ്ദോർജ്ജം</td></tr>
+    <tr><td><b>സോളാർ സെൽ (ഫോട്ടോവോൾട്ടായിക്)</b></td><td>പ്രകാശോർജ്ജം → വൈദ്യുതോർജ്ജം</td><td><b>വൈദ്യുത സെൽ / ബാറ്ററി</b></td><td>രാസോർജ്ജം → വൈദ്യുതോർജ്ജം</td></tr>
+    <tr><td><b>ഇലക്ട്രിക് ബൾബ് / LED</b></td><td>വൈദ്യുതോർജ്ജം → പ്രകാശോർജ്ജം + താപം</td><td><b>പീസോ ഇലക്ട്രിക് ക്രിസ്റ്റൽ</b></td><td>യാന്ത്രിക മർദ്ദം ↔ വൈദ്യുതോർജ്ജം</td></tr>
+  </table>
+  </div>
 </div>
 </details>
 
 <!-- ================= 7.9 ================= -->
-<details class="card">
-<summary><span class="num">7.9</span><span class="title">ഇലക്ട്രോണിക്സ്</span><span class="stars">⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="9"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="4">
+<summary>
+  <span class="num">7.9</span>
+  <span class="title">ഇലക്ട്രോണിക്സും ലോജിക് ഗേറ്റുകളും (Electronics &amp; Digital Logic)</span>
+  <span class="stars">⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="9"> പഠിച്ചു</label>
+</summary>
 <div class="content">
 
-  <h3>🔲 അർദ്ധചാലകങ്ങൾ (Semiconductors)</h3>
+  <h3>🔲 അർദ്ധചാലകങ്ങളും (Semiconductors) ഡോപ്പിംഗും</h3>
   <ul class="icon-list">
-    <li>Band gap: Si <b>1.1 eV</b>, Ge <b>0.7 eV</b></li>
-    <li>താപനില ↑ → പ്രതിരോധം ↓ (Negative coefficient)</li>
+    <li>പ്രധാന അർദ്ധചാലകങ്ങൾ: <b>സിലിക്കൺ (Si — ബാൻഡ് ഗ്യാപ്പ് 1.1 eV), ജെർമേനിയം (Ge — 0.7 eV)</b> (വാലൻസി = 4, ഗ്രൂപ്പ് 14).</li>
+    <li>അർദ്ധചാലകങ്ങളുടെ താപനില കൂടുമ്പോൾ ചാലകത കൂടുകയും <b>പ്രതിരോധം കുറയുകയും ചെയ്യുന്നു (Negative Temperature Coefficient of Resistance)</b>. കേവല ശൂന്യതയിൽ (0 K) ശുദ്ധമായ അർദ്ധചാലകം ഒരു <b>ഇൻസുലേറ്റർ (കുചാലകം)</b> ആയി പ്രവർത്തിക്കുന്നു.</li>
+    <li><b>ഡോപ്പിംഗ് (Doping):</b> അർദ്ധചാലകത്തിന്റെ ചാലകത കൂട്ടാൻ അപദ്രവ്യങ്ങൾ ചേർക്കുന്ന പ്രക്രിയ.</li>
   </ul>
 
-  <h3>⚡ N-ടൈപ്പ് vs P-ടൈപ്പ്</h3>
   <div class="cmp">
-    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">N-ടൈപ്പ്</h4>
-      <ul><li>പെന്റാവാലന്റ് (P, As, Sb, Bi)</li><li>ഇലക്ട്രോൺ വാഹകർ</li></ul></div>
-    <div class="col" style="border-color:#fde68a;"><h4 style="background:#d97706;">P-ടൈപ്പ്</h4>
-      <ul><li>ട്രൈവാലന്റ് (B, Al, Ga, In)</li><li>ഹോൾ വാഹകർ</li></ul></div>
+    <div class="col" style="border-color:#a5b4fc;"><h4 style="background:#1d4ed8;">N-ടൈപ്പ് അർദ്ധചാലകം</h4>
+      <ul>
+        <li><b>പെന്റാവാലന്റ് (വാലൻസി 5, ഗ്രൂപ്പ് 15)</b> മൂലകങ്ങൾ ചേർക്കുന്നു: <b>ഫോസ്ഫറസ് (P), ആർസെനിക് (As), ആന്റിമണി (Sb), ബിസ്മത്ത് (Bi)</b></li>
+        <li>ഭൂരിപക്ഷ ചാർജ് വാഹകർ: <b>ഇലക്ട്രോണുകൾ (Electrons)</b></li>
+        <li>ഡോണർ (Donor) അപദ്രവ്യങ്ങൾ എന്നറിയപ്പെടുന്നു</li>
+      </ul>
+    </div>
+    <div class="col" style="border-color:#fde68a;"><h4 style="background:#d97706;">P-ടൈപ്പ് അർദ്ധചാലകം</h4>
+      <ul>
+        <li><b>ട്രൈവാലന്റ് (വാലൻസി 3, ഗ്രൂപ്പ് 13)</b> മൂലകങ്ങൾ ചേർക്കുന്നു: <b>ബോറോൺ (B), അലുമിനിയം (Al), ഗാലിയം (Ga), ഇൻഡിയം (In)</b></li>
+        <li>ഭൂരിപക്ഷ ചാർജ് വാഹകർ: <b>ഹോളുകൾ (Holes)</b></li>
+        <li>അക്സെപ്റ്റർ (Acceptor) അപദ്രവ്യങ്ങൾ എന്നറിയപ്പെടുന്നു</li>
+      </ul>
+    </div>
   </div>
-  <div class="note"><span class="lbl">➕ NEW</span> P-ടൈപ്പ്: ഹോൾ ഭൂരിപക്ഷ വാഹകർ; N-ടൈപ്പ്: ഇലക്ട്രോൺ.</div>
-  <div class="trick"><span class="lbl">TRICK</span> "പെന്റാ = അഞ്ച് = N", "ട്രൈ = മൂന്ന് = P". അടിസ്ഥാന ഗേറ്റുകൾ: AND, OR, NOT; "NAND-NOR സർവ്വരും" = സാർവത്രികം.</div>
-  <div class="formula">n_e · n_h = n_i²</div>
 
-  <h3>🔷 ഡയോഡ് (Diode)</h3>
+  <h3>🔷 ഡയോഡ്, റെക്ടിഫയർ, ട്രാൻസിസ്റ്റർ</h3>
   <ul>
-    <li>Barrier: Si <b>0.7 V</b>, Ge <b>0.3 V</b></li>
-    <li>ഉപയോഗങ്ങൾ:</li>
+    <li><b>PN ജംഗ്ഷൻ ഡയോഡ്:</b> വൈദ്യുതിയെ ഒരു ദിശയിൽ മാത്രം കടത്തിവിടുന്നു. <b>AC-യെ DC ആക്കി മാറ്റുന്ന ഉപകരണം: റെക്ടിഫയർ (Rectifier)</b> (DC-യെ AC ആക്കുന്നത്: <b>ഇൻവെർട്ടർ / ഓസിലേറ്റർ</b>).
+      <br>• ഹാഫ്-വേവ് റെക്ടിഫയർ കാര്യക്ഷമത: <b>40.6%</b> (1 ഡയോഡ്) | ഫുൾ-വേവ് / ബ്രിഡ്ജ് റെക്ടിഫയർ: <b>81.2%</b> (സെന്റർ ടാപ്പിൽ 2 ഡയോഡ്, ബ്രിഡ്ജിൽ 4 ഡയോഡ്).</li>
+    <li><b>സെനർ ഡയോഡ് (Zener Diode):</b> വോൾട്ടേജ് റെഗുലേറ്ററായി ഉപയോഗിക്കുന്നു (റിവേഴ്സ് ബയസിൽ പ്രവർത്തിക്കുന്നു).</li>
+    <li><b>LED (Light Emitting Diode):</b> ഫോർവേഡ് ബയസിൽ പ്രവർത്തിക്കുന്നു; ഫിലമെന്റ് ഇല്ല.</li>
+    <li><b>ട്രാൻസിസ്റ്റർ (1947 — ബാർഡീൻ, ബ്രാറ്റെയ്ൻ, ഷോക്‌ലി):</b> ആംപ്ലിഫയറായും സ്വിച്ചായും ഉപയോഗിക്കുന്നു. 3 ടെർമിനലുകൾ: <b>എമിറ്റർ (E), ബേസ് (B), കളക്ടർ (C)</b>. സമവാക്യം: <b>I_E = I_B + I_C</b>. IC ചിപ്പുകൾ നിർമ്മിക്കുന്നത്: <b>സിലിക്കൺ</b> (ജാക്ക് കിൽബി, 1958).</li>
   </ul>
+
+  <h3>🔢 ലോജിക് ഗേറ്റുകൾ (Logic Gates — ബൂൾ ആൾജിബ്ര)</h3>
+  <div class="fig">
+    <span class="fig-title">📊 പ്രധാന ലോജിക് ഗേറ്റുകളും ചിഹ്നങ്ങളും (Digital Logic Gates)</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 70" role="img" aria-label="AND ഗേറ്റ്">
+          <line x1="15" y1="22" x2="55" y2="22" stroke="#1c2340" stroke-width="2"/>
+          <line x1="15" y1="48" x2="55" y2="48" stroke="#1c2340" stroke-width="2"/>
+          <path d="M55 12 H90 A23 23 0 0 1 90 58 H55 Z" fill="#eef2ff" stroke="#1d4ed8" stroke-width="2.2"/>
+          <line x1="113" y1="35" x2="155" y2="35" stroke="#1c2340" stroke-width="2"/>
+          <text x="5" y="25">A</text><text x="5" y="52">B</text>
+          <text x="68" y="39" fill="#1d4ed8">AND</text>
+          <text x="135" y="28">Y = A·B</text>
+        </svg>
+        <figcaption><b>AND ഗേറ്റ് (Y = A·B):</b> എല്ലാ ഇൻപുട്ടും 1 ആയാൽ മാത്രം ഔട്ട്പുട്ട് 1</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 70" role="img" aria-label="OR ഗേറ്റ്">
+          <line x1="15" y1="22" x2="58" y2="22" stroke="#1c2340" stroke-width="2"/>
+          <line x1="15" y1="48" x2="58" y2="48" stroke="#1c2340" stroke-width="2"/>
+          <path d="M50 12 Q85 12 115 35 Q85 58 50 58 Q68 35 50 12 Z" fill="#f0fdf4" stroke="#0f9d58" stroke-width="2.2"/>
+          <line x1="115" y1="35" x2="155" y2="35" stroke="#1c2340" stroke-width="2"/>
+          <text x="5" y="25">A</text><text x="5" y="52">B</text>
+          <text x="68" y="39" fill="#0f9d58">OR</text>
+          <text x="130" y="28">Y = A+B</text>
+        </svg>
+        <figcaption><b>OR ഗേറ്റ് (Y = A+B):</b> ഏതെങ്കിലും ഒരു ഇൻപുട്ട് 1 ആയാൽ ഔട്ട്പുട്ട് 1</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 70" role="img" aria-label="NOT ഗേറ്റ്">
+          <line x1="15" y1="35" x2="55" y2="35" stroke="#1c2340" stroke-width="2"/>
+          <polygon points="55,14 55,56 102,35" fill="#fff4f2" stroke="#d93025" stroke-width="2.2"/>
+          <circle cx="107" cy="35" r="4.5" fill="#fff" stroke="#d93025" stroke-width="2"/>
+          <line x1="112" y1="35" x2="155" y2="35" stroke="#1c2340" stroke-width="2"/>
+          <text x="5" y="39">A</text>
+          <text x="60" y="39" fill="#d93025">NOT</text>
+          <text x="135" y="28">Y = A'</text>
+        </svg>
+        <figcaption><b>NOT ഗേറ്റ് (Inverter, Y = A'):</b> 0 നൽകിയാൽ 1, 1 നൽകിയാൽ 0</figcaption>
+      </figure>
+    </div>
+    <div class="cap"><b>സാർവത്രിക ഗേറ്റുകൾ (Universal Gates):</b> <b>NAND, NOR</b> (ഇവ ഉപയോഗിച്ച് മറ്റ് ഏത് ഗേറ്റും നിർമ്മിക്കാം) | <b>ഡി മോർഗൻ നിയമങ്ങൾ:</b> (A+B)' = A'·B' മറുവശത്ത് (A·B)' = A'+B'.</div>
+  </div>
+</div>
+</details>
+
+<!-- ================= 7.10 (NEW: ELECTRICITY) ================= -->
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">7.10</span>
+  <span class="title">വൈദ്യുതി (Electricity — സ്ഥിതവൈദ്യുതിയും പ്രവാഹവൈദ്യുതിയും) <span class="new-badge">NEW</span></span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="10"> പഠിച്ചു</label>
+</summary>
+<div class="content">
+
+  <h3>⚡ ഓം നിയമം, പ്രതിരോധം, ജൂൾ നിയമം</h3>
+  <div class="formula">കറന്റ് I = Q/t &nbsp;|&nbsp; ഓം നിയമം: V = IR &nbsp;|&nbsp; പ്രതിരോധം R = ρl / A &nbsp;|&nbsp; ജൂൾ താപനിയമം: H = I²Rt = VIt</div>
+  <div class="formula">വൈദ്യുത പവർ: P = VI = I²R = V²/R (W) &nbsp;|&nbsp; 1 യൂണിറ്റ് (B.O.T) = 1 kWh = 1000 W × 3600 s = 3.6 × 10⁶ J</div>
+
+  <div class="fig">
+    <span class="fig-title">📊 ഓം നിയമം ത്രികോണവും ശ്രേണി-സമാന്തര പ്രതിരോധ സർക്യൂട്ടുകളും</span>
+    <div class="fg">
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 115" role="img" aria-label="ഓം നിയമം ത്രികോണം">
+          <polygon points="90,10 25,102 155,102" fill="#eef2ff" stroke="#1d4ed8" stroke-width="2.2"/>
+          <line x1="57" y1="56" x2="123" y2="56" stroke="#1d4ed8" stroke-width="2"/>
+          <line x1="90" y1="56" x2="90" y2="102" stroke="#1d4ed8" stroke-width="2"/>
+          <text x="84" y="45" fill="#d93025" style="font-size:16px;font-weight:800;">V</text>
+          <text x="64" y="86" fill="#0f9d58" style="font-size:15px;font-weight:800;">I</text>
+          <text x="106" y="86" fill="#6d28d9" style="font-size:15px;font-weight:800;">R</text>
+        </svg>
+        <figcaption><b>ഓം നിയമം (ജോർജ് സൈമൺ ഓം):</b> V = I×R | I = V/R | R = V/I (താപനില സ്ഥിരമായിരിക്കുമ്പോൾ)</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 115" role="img" aria-label="ശ്രേണി രീതി">
+          <line x1="15" y1="55" x2="45" y2="55" stroke="#1c2340" stroke-width="2"/>
+          <rect x="45" y="43" width="48" height="24" rx="4" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+          <text x="61" y="59" fill="#1d4ed8">R₁</text>
+          <line x1="93" y1="55" x2="117" y2="55" stroke="#1c2340" stroke-width="2"/>
+          <rect x="117" y="43" width="48" height="24" rx="4" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+          <text x="133" y="59" fill="#1d4ed8">R₂</text>
+          <line x1="165" y1="55" x2="195" y2="55" stroke="#1c2340" stroke-width="2"/>
+          <text x="42" y="26" fill="#1d4ed8">ശ്രേണി രീതി (Series)</text>
+          <text x="35" y="95" class="sub-lbl">കറന്റ് (I) തുല്യം; വോൾട്ടേജ് (V) വിഭജിക്കുന്നു</text>
+        </svg>
+        <figcaption><b>ശ്രേണി രീതി:</b> <b>R = R₁ + R₂</b> (സഫല പ്രതിരോധം കൂടുന്നു; ഫ്യൂസ്, അമ്മീറ്റർ എന്നിവ ഘടിപ്പിക്കുന്നത്)</figcaption>
+      </figure>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 115" role="img" aria-label="സമാന്തര രീതി">
+          <line x1="15" y1="58" x2="45" y2="58" stroke="#1c2340" stroke-width="2"/>
+          <line x1="45" y1="30" x2="45" y2="86" stroke="#1c2340" stroke-width="2"/>
+          <line x1="45" y1="30" x2="75" y2="30" stroke="#1c2340" stroke-width="2"/>
+          <line x1="45" y1="86" x2="75" y2="86" stroke="#1c2340" stroke-width="2"/>
+          <rect x="75" y="18" width="55" height="24" rx="4" fill="#dcfce7" stroke="#0f9d58" stroke-width="2"/>
+          <text x="95" y="34" fill="#0f9d58">R₁</text>
+          <rect x="75" y="74" width="55" height="24" rx="4" fill="#dcfce7" stroke="#0f9d58" stroke-width="2"/>
+          <text x="95" y="90" fill="#0f9d58">R₂</text>
+          <line x1="130" y1="30" x2="160" y2="30" stroke="#1c2340" stroke-width="2"/>
+          <line x1="130" y1="86" x2="160" y2="86" stroke="#1c2340" stroke-width="2"/>
+          <line x1="160" y1="30" x2="160" y2="86" stroke="#1c2340" stroke-width="2"/>
+          <line x1="160" y1="58" x2="195" y2="58" stroke="#1c2340" stroke-width="2"/>
+          <text x="65" y="62" class="sub-lbl">വോൾട്ടേജ് (V) തുല്യം</text>
+        </svg>
+        <figcaption><b>സമാന്തര രീതി:</b> <b>1/R = 1/R₁ + 1/R₂</b> (സഫല പ്രതിരോധം കുറയുന്നു; ഗാർഹിക സർക്യൂട്ട്, വോൾട്ട് മീറ്റർ)</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <h3>💡 വൈദ്യുത ഉപകരണങ്ങളും ലോഹസങ്കരങ്ങളും (PSC സ്ഥിരം ചോദ്യങ്ങൾ)</h3>
   <div class="tbl-scroll">
   <table class="compact">
-    <tr><th>തരം</th><th>ഉപയോഗം / പ്രത്യേകത</th></tr>
-    <tr><td>Zener</td><td>റെഗുലേറ്റർ</td></tr>
-    <tr><td>LED</td><td>ഫോർവേഡ് ബയസ്</td></tr>
-    <tr><td>ഫോട്ടോ ഡയോഡ്</td><td>റിവേഴ്സ് ബയസ്</td></tr>
-    <tr><td>സോളാർ സെൽ</td><td>ബയസ് ആവശ്യമില്ല</td></tr>
-    <tr><td>ടണൽ ഡയോഡ്</td><td>നെഗറ്റീവ് റെസിസ്റ്റൻസ്</td></tr>
+    <tr><th>ഭാഗം / ഉപകരണം</th><th>ഉപയോഗിക്കുന്ന പദാർത്ഥം</th><th>പ്രത്യേകത / തത്വം</th></tr>
+    <tr><td><b>ഫ്യൂസ് വയർ (Safety Fuse)</b></td><td><b>ടിൻ (Sn) + ലെഡ് (Pb)</b> ലോഹസങ്കരം</td><td><b>ഉയർന്ന പ്രതിരോധവും താഴ്ന്ന ദ്രവണാങ്കവും</b> (ജൂൾ താപനിയമം; ലൈവ് വയറിൽ ശ്രേണിയിൽ ഘടിപ്പിക്കുന്നു)</td></tr>
+    <tr><td><b>ഹീറ്റിംഗ് കോയിൽ</b> (ഹീറ്റർ, ഇസ്തിരിപ്പെട്ടി)</td><td><b>നിക്രോം (Nichrome)</b> (Ni + Cr + Fe + Mn)</td><td>ഉയർന്ന പ്രതിരോധവും ഉയർന്ന ദ്രവണാങ്കവും, ചുട്ടുപഴുത്താലും ഓക്സീകരിക്കപ്പെടുന്നില്ല</td></tr>
+    <tr><td><b>ബൾബിന്റെ ഫിലമെന്റ്</b> (Incandescent Lamp)</td><td><b>ടങ്സ്റ്റൺ (Tungsten - W)</b> (അയിര്: വൂൾഫ്രമൈറ്റ്)</td><td>ഏറ്റവും ഉയർന്ന ദ്രവണാങ്കമുള്ള ലോഹം (<b>3422°C</b>). ബൾബിൽ നിറയ്ക്കുന്ന അലസവാതകം: <b>ആർഗൺ / നൈട്രജൻ</b></td></tr>
+    <tr><td><b>ഏറ്റവും നല്ല വൈദ്യുത ചാലകം</b></td><td><b>1. വെള്ളി (Silver) &gt; 2. ചെമ്പ് &gt; 3. സ്വർണ്ണം &gt; 4. അലുമിനിയം</b></td><td>അതിചാലകത (Superconductivity) കണ്ടെത്തിയത്: കാമർലിംഗ് ഓൺസ് (1911, മെർക്കുറി 4.2 K-ൽ)</td></tr>
   </table>
   </div>
 
-  <h3>🔄 റെക്ടിഫയർ (Rectifier)</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>തരം</th><th>കാര്യക്ഷമത</th><th>റിപ്പിൾ ഫാക്ടർ</th></tr>
-    <tr><td>ഹാഫ് വേവ്</td><td>40.6%</td><td>1.21</td></tr>
-    <tr><td>ഫുൾ വേവ്</td><td>81.2%</td><td>0.482</td></tr>
-    <tr><td>ബ്രിഡ്ജ്</td><td>81.2%</td><td>0.482 (4 ഡയോഡ്)</td></tr>
-  </table>
-  </div>
+  <h3>🏠 ഗാർഹിക വൈദ്യുതീകരണവും ഡിസ്ചാർജ് ലാമ്പുകളുടെ നിറവും</h3>
+  <ul>
+    <li>ഇന്ത്യയിലെ ഗാർഹിക AC വൈദ്യുതിയുടെ വോൾട്ടത: <b>230 V</b>, ആവൃത്തി: <b>50 Hz</b> (അമേരിക്കയിൽ: 110 V, 60 Hz; DC-യുടെ ആവൃത്തി = <b>0 Hz</b>).</li>
+    <li>വീടുകളിൽ ഉപകരണങ്ങൾ ഘടിപ്പിക്കുന്നത്: <b>സമാന്തര രീതിയിൽ (Parallel)</b> (എല്ലാ ഉപകരണങ്ങൾക്കും 230 V ലഭിക്കാൻ).</li>
+    <li><b>വയറുകളുടെ നിറം:</b> <b>ഫേസ് / ലൈവ് (Live):</b> ചുവപ്പ് അല്ലെങ്കിൽ ബ്രൗൺ | <b>ന്യൂട്രൽ:</b> കറുപ്പ് അല്ലെങ്കിൽ നീല | <b>എർത്ത് (Earth):</b> <b>പച്ച (Green)</b> (മൂന്ന് പിൻ പ്ലഗ്ഗിൽ ഏറ്റവും വലുതും നീളം കൂടിയതുമായ പിൻ എർത്ത് പിൻ ആണ്).</li>
+    <li><b>അമ്മീറ്റർ:</b> കറന്റ് അളക്കാൻ, സർക്യൂട്ടിൽ <b>ശ്രേണിയിൽ</b> ഘടിപ്പിക്കുന്നു; <b>ആദർശ അമ്മീറ്ററിന്റെ പ്രതിരോധം = 0</b>.</li>
+    <li><b>വോൾട്ട് മീറ്റർ:</b> പൊട്ടൻഷ്യൽ വ്യത്യാസം അളക്കാൻ, സർക്യൂട്ടിൽ <b>സമാന്തരമായി</b> ഘടിപ്പിക്കുന്നു; <b>ആദർശ വോൾട്ട് മീറ്ററിന്റെ പ്രതിരോധം = അനന്തം (∞)</b>.</li>
+    <li><b>ഡിസ്ചാർജ് ലാമ്പുകളിലെ വാതകവും നിറവും:</b> <b>നിയോൺ:</b> ഓറഞ്ച്-ചുവപ്പ് | <b>സോഡിയം വേപ്പർ ലാമ്പ്:</b> മഞ്ഞ | <b>മെർക്കുറി വേപ്പർ ലാമ്പ്:</b> വെളുപ്പ് | <b>നൈട്രജൻ:</b> ചുവപ്പ് | <b>ക്ലോറിൻ:</b> പച്ച | <b>ഹൈഡ്രജൻ:</b> നീല.</li>
+    <li><b>ഇടിമിന്നൽ രക്ഷാചാലകം (Lightning Conductor):</b> ബെഞ്ചമിൻ ഫ്രാങ്ക്ലിൻ (ഉപയോഗിക്കുന്ന ലോഹം: ചെമ്പ്). കാറിനുള്ളിൽ ഇരിക്കുന്നത് സുരക്ഷിതമായിരിക്കാൻ കാരണം: <b>ഇലക്ട്രോസ്റ്റാറ്റിക് ഷീൽഡിംഗ് (ഫാരഡെ കേജ്)</b>.</li>
+  </ul>
+</div>
+</details>
 
-  <h3>🔺 ട്രാൻസിസ്റ്റർ (Transistor)</h3>
-  <div class="formula">I_E = I_B + I_C</div>
+<!-- ================= 7.11 (NEW: MAGNETISM & EM SPECTRUM) ================= -->
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">7.11</span>
+  <span class="title">കാന്തികത, വൈദ്യുതകാന്തിക പ്രേരണം &amp; EM സ്പെക്ട്രം <span class="new-badge">NEW</span></span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="11"> പഠിച്ചു</label>
+</summary>
+<div class="content">
+
+  <h3>🧲 കാന്തികതയും കാന്തിക പദാർത്ഥങ്ങളും</h3>
   <ul class="icon-list">
-    <li>എമിറ്റർ: ഏറ്റവും ഡോപ്പിംഗ്</li>
-    <li>ബേസ്: ഏറ്റവും നേർത്തത്</li>
-    <li>CE കോൺഫിഗറേഷൻ: <b>180° ഫേസ് ഷിഫ്റ്റ്</b></li>
-    <li>β = α/(1−α); γ = 1+β</li>
+    <li>കാന്തിക ബലരേഖകൾ കാന്തത്തിന് <b>പുറത്ത് ഉത്തരധ്രുവത്തിൽ (N) നിന്ന് ദക്ഷിണധ്രുവത്തിലേക്കും (S)</b>, കാന്തത്തിന് <b>ഉള്ളിൽ ദക്ഷിണധ്രുവത്തിൽ (S) നിന്ന് ഉത്തരധ്രുവത്തിലേക്കും (N)</b> സഞ്ചരിക്കുന്നു. ബലരേഖകൾ ഒരിക്കലും പരസ്പരം ഖണ്ഡിക്കുന്നില്ല.</li>
+    <li><b>ഫെറോ മാഗ്നറ്റിക് പദാർത്ഥങ്ങൾ (ശക്തമായി ആകർഷിക്കപ്പെടുന്നവ):</b> <b>ഇരുമ്പ് (Iron), കൊബാൾട്ട് (Cobalt), നിക്കൽ (Nickel)</b>. സ്ഥിരകാന്തം നിർമ്മിക്കാൻ ഉപയോഗിക്കുന്ന ലോഹസങ്കരം: <b>അൽനിക്കോ (Alnico = Al + Ni + Co + Fe)</b>. വൈദ്യുതകാന്തം (Electromagnet), ട്രാൻസ്ഫോർമർ കോർ എന്നിവ നിർമ്മിക്കാൻ: <b>പച്ചിരുമ്പ് (Soft Iron)</b>.</li>
+    <li><b>പാരാ മാഗ്നറ്റിക് (ദുർബലമായി ആകർഷിക്കപ്പെടുന്നവ):</b> അലുമിനിയം, പ്ലാറ്റിനം, സോഡിയം, ഓക്സിജൻ.</li>
+    <li><b>ഡയാ മാഗ്നറ്റിക് (വികർഷിക്കപ്പെടുന്നവ):</b> ബിസ്മത്ത്, ചെമ്പ്, സ്വർണ്ണം, വെള്ളി, ജലം, ഹൈഡ്രജൻ.</li>
+    <li><b>ക്യൂറി താപനില (Curie Temperature):</b> ഒരു ഫെറോമാഗ്നറ്റിക് പദാർത്ഥത്തിന് അതിന്റെ കാന്തികശക്തി നഷ്ടപ്പെട്ട് പാരാമാഗ്നറ്റിക് ആയി മാറുന്ന താപനില (ഇരുമ്പിന്റെ ക്യൂറി താപനില = <b>770°C / 1043 K</b>).</li>
   </ul>
 
-  <div class="note"><span class="lbl">KEY</span> BJT = ബൈപോളാർ, കറന്റ് നിയന്ത്രിതം | FET = യൂണിപോളാർ, വോൾട്ടേജ് നിയന്ത്രിതം</div>
-  <div class="fig"><b>📊 ഫുൾവേവ് റെക്ടിഫയർ & NPN ട്രാൻസിസ്റ്റർ</b><div class="fg"><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 100" role="img" aria-label="AC ഇൻപുട്ട്"><path class="ax" d="M5 50H165M5 5V95"/><path class="ln" stroke="#6d28d9" d="M5 50Q30 5 55 50Q80 95 105 50Q130 5 155 50"/></svg><figcaption>AC ഇൻപുട്ട്</figcaption></figure><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 100" role="img" aria-label="ഫുൾ വേവ്: എല്ലാ അർദ്ധചക്രവും (η = 81.2%)"><path class="ax" d="M5 95H165M5 5V95"/><path class="ln" stroke="#0f9d58" d="M5 95Q30 35 55 95Q80 35 105 95Q130 35 155 95"/></svg><figcaption>ഫുൾ വേവ്: എല്ലാ അർദ്ധചക്രവും (η = 81.2%)</figcaption></figure><figure><div class="npn"><span style="background:#1d4ed8">E<br>N</span><span style="background:#d97706">B<br>P</span><span style="background:#6d28d9">C<br>N</span></div><figcaption>NPN: E–B–C; I<sub>E</sub> = I<sub>B</sub> + I<sub>C</sub></figcaption></figure></div></div>
-
-  <h3>🔢 ബൂൾ ആൾജിബ്ര</h3>
+  <h3>🔄 വൈദ്യുതകാന്തിക പ്രേരണവും (EMI) ട്രാൻസ്ഫോർമറും</h3>
   <ul>
-    <li>ബൂൾ 1854; ഷാനൻ 1937</li>
-    <li>ഡി മോർഗൻ: <b>(A+B)' = A'·B'</b> &nbsp;|&nbsp; <b>(A·B)' = A'+B'</b></li>
-    <li>യൂണിവേഴ്സൽ ഗേറ്റ്: <b>NAND, NOR</b></li>
-    <li>XOR: വ്യത്യസ്തം → 1</li>
+    <li>വൈദ്യുത പ്രവാഹത്തിന് ചുറ്റും കാന്തികമണ്ഡലമുണ്ടെന്ന് കണ്ടെത്തിയത്: <b>ഹാൻസ് ക്രിസ്റ്റ്യൻ ഈഴ്സ്റ്റഡ് (Oersted, 1820)</b>.</li>
+    <li><b>വൈദ്യുതകാന്തിക പ്രേരണം (Electromagnetic Induction):</b> കാന്തിക ഫ്ലക്സിന് വ്യത്യാസമുണ്ടാകുമ്പോൾ ചാലകത്തിൽ വൈദ്യുതി പ്രേരിതമാകുന്ന പ്രതിഭാസം — കണ്ടെത്തിയത്: <b>മൈക്കിൾ ഫാരഡെ (1831)</b> (ജനറേറ്റർ, ഡൈനാമോ, മൈക്രോഫോൺ എന്നിവയുടെ തത്വം).</li>
+    <li><b>ലെൻസ് നിയമം (Lenz's Law):</b> പ്രേരിത വൈദ്യുതിയുടെ ദിശ അതിനു കാരണമായ മാറ്റത്തെ എതിർക്കുന്ന വിധത്തിലായിരിക്കും (ഊർജ്ജ സംരക്ഷണ നിയമത്തിന് അനുസൃതം).</li>
+    <li><b>ഫ്ലെമിംഗിന്റെ വലതുകൈ നിയമം (Right-Hand Rule):</b> <b>ജനറേറ്ററിലെ (Dynamo)</b> പ്രേരിത വൈദ്യുതിയുടെ ദിശ കണ്ടെത്താൻ.</li>
+    <li><b>ഫ്ലെമിംഗിന്റെ ഇടതുകൈ നിയമം (Left-Hand Rule):</b> <b>ഇലക്ട്രിക് മോട്ടോറിലെ</b> ചാലകത്തിന്റെ ചലനദിശ കണ്ടെത്താൻ.</li>
+    <li><b>ട്രാൻസ്ഫോർമർ (Transformer):</b> <b>അന്യോന്യ പ്രേരണം (Mutual Induction)</b> എന്ന തത്വത്തിൽ പ്രവർത്തിക്കുന്നു; <b>AC വൈദ്യുതിയിൽ മാത്രമേ പ്രവർത്തിക്കൂ</b>; ആവൃത്തിയിലോ പവറിലോ മാറ്റം വരുത്താതെ വോൾട്ടത കൂട്ടാനോ (<b>Step-up: $N_s > N_p$</b>) കുറയ്ക്കാനോ (<b>Step-down: $N_s < N_p$</b>) ഉപയോഗിക്കുന്നു.</li>
   </ul>
 
-  <h3>➕ ആഡർ / സബ്ട്രാക്ടർ</h3>
-  <div class="tbl-scroll">
-  <table class="compact">
-    <tr><th>സർക്യൂട്ട്</th><th>സൂത്രം</th></tr>
-    <tr><td>ഹാഫ് ആഡർ</td><td>S = A⊕B; C = AB (5 NAND)</td></tr>
-    <tr><td>ഫുൾ ആഡർ</td><td>S = A⊕B⊕C_in; C_out = AB+BC_in+AC_in (9 NAND)</td></tr>
-    <tr><td>ഹാഫ് സബ്ട്രാക്ടർ</td><td>D = A⊕B; Borrow = A'B</td></tr>
-  </table>
+  <h3>📡 വൈദ്യുതകാന്തിക സ്പെക്ട്രം (Electromagnetic Spectrum)</h3>
+  <div class="fig">
+    <span class="fig-title">📊 വൈദ്യുതകാന്തിക തരംഗങ്ങൾ (തരംഗദൈർഘ്യം കൂടുന്ന ക്രമത്തിൽ: ഗാമ → റേഡിയോ)</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 110" role="img" aria-label="വൈദ്യുതകാന്തിക സ്പെക്ട്രം">
+      <defs>
+        <linearGradient id="emGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#6d28d9"/>
+          <stop offset="18%" stop-color="#1d4ed8"/>
+          <stop offset="35%" stop-color="#0891b2"/>
+          <stop offset="50%" stop-color="#0f9d58"/>
+          <stop offset="68%" stop-color="#d97706"/>
+          <stop offset="85%" stop-color="#ea580c"/>
+          <stop offset="100%" stop-color="#dc2626"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="28" width="660" height="44" rx="8" fill="url(#emGrad)"/>
+      <g fill="#fff" style="font-size:11.5px;font-weight:700;text-anchor:middle;">
+        <text x="58" y="54">1. ഗാമ (γ)</text>
+        <text x="150" y="54">2. X-റേ</text>
+        <text x="245" y="54">3. അൾട്രാവയലറ്റ്</text>
+        <text x="345" y="54">4. ദൃശ്യപ്രകാശം</text>
+        <text x="445" y="54">5. ഇൻഫ്രാറെഡ്</text>
+        <text x="540" y="54">6. മൈക്രോവേവ്</text>
+        <text x="625" y="54">7. റേഡിയോ</text>
+      </g>
+      <text x="12" y="18" fill="#6d28d9">← ആവൃത്തി (f), ഊർജ്ജം (E), തുളച്ചുകയറൽ ശേഷി ഏറ്റവും കൂടുതൽ</text>
+      <text x="415" y="18" fill="#dc2626">തരംഗദൈർഘ്യം (λ) ഏറ്റവും കൂടുതൽ →</text>
+      <path d="M15 88 Q25 76 35 88 T55 88 T75 88 T95 88 Q130 76 165 88 T235 88 Q310 76 385 88 Q490 76 595 88" fill="none" stroke="#5a6485" stroke-width="1.8"/>
+    </svg>
   </div>
 
-  <h3>📅 ചരിത്രം</h3>
-  <ul class="tl">
-    <li><b>1904</b> — ഫ്ലെമിംഗ് (വാക്വം ഡയോഡ്)</li>
-    <li><b>1906</b> — ഡി ഫോറസ്റ്റ് (ട്രയോഡ്)</li>
-    <li><b>1947</b> — ട്രാൻസിസ്റ്റർ (നോബൽ 1956)</li>
-    <li><b>1958</b> — IC (കിൽബി)</li>
-    <li><b>1965</b> — മൂർ നിയമം</li>
-  </ul>
+  <div class="tbl-scroll">
+  <table class="compact">
+    <tr><th>തരംഗം</th><th>കണ്ടെത്തിയത്</th><th>പ്രധാന ഉപയോഗങ്ങൾ / സവിശേഷതകൾ (PSC ചോദ്യങ്ങൾ)</th></tr>
+    <tr><td><b>1. ഗാമ രശ്മികൾ (γ-rays)</b></td><td>പോൾ വില്ലാർഡ്</td><td>ഏറ്റവും കുറഞ്ഞ തരംഗദൈർഘ്യം, ഏറ്റവും കൂടിയ ആവൃത്തിയും ഊർജ്ജവും; ക്യാൻസർ ചികിത്സ (Cobalt-60), ഭക്ഷ്യവസ്തുക്കൾ അണുവിമുക്തമാക്കാൻ</td></tr>
+    <tr><td><b>2. എക്സ്-റേ (X-rays)</b></td><td>വിൽഹെം റോൺട്ജൻ</td><td>അസ്ഥിഭംഗം കണ്ടെത്താൻ, CT സ്കാൻ, ക്രിസ്റ്റലോഗ്രാഫി</td></tr>
+    <tr><td><b>3. അൾട്രാവയലറ്റ് (UV)</b></td><td>ജൊഹാൻ റിട്ടർ</td><td>ശരീരത്തിൽ <b>വിറ്റാമിൻ D</b> ഉല്പാദിപ്പിക്കുന്നു, കള്ളനോട്ട് തിരിച്ചറിയാൻ, ജലം ശുദ്ധീകരിക്കാൻ (ഓസോൺ പാളി UV-യെ തടയുന്നു)</td></tr>
+    <tr><td><b>4. ദൃശ്യപ്രകാശം (Visible)</b></td><td>ഐസക് ന്യൂട്ടൺ</td><td>കാഴ്ച സാധ്യമാക്കുന്നു, പ്രകാശസംശ്ലേഷണം (400 nm – 700 nm)</td></tr>
+    <tr><td><b>5. ഇൻഫ്രാറെഡ് (IR)</b></td><td>വില്യം ഹെർഷൽ</td><td><b>സൂര്യപ്രകാശത്തിലെ താപത്തിന് കാരണം</b>, <b>ടിവി റിമോട്ട് കൺട്രോൾ</b>, രാത്രികാല ക്യാമറ (Night vision), വിദൂര സംവേദനം</td></tr>
+    <tr><td><b>6. മൈക്രോവേവ്</b></td><td>ഹെൻറിച്ച് ഹെർട്സ്</td><td>മൈക്രോവേവ് അവ്ൻ, മൊബൈൽ ഫോൺ, <b>റഡാർ (RADAR)</b>, ഉപഗ്രഹ വാർത്താവിനിമയം</td></tr>
+    <tr><td><b>7. റേഡിയോ തരംഗങ്ങൾ</b></td><td>മാർക്കോണി / ഹെർട്സ്</td><td>ഏറ്റവും കൂടിയ തരംഗദൈർഘ്യം; റേഡിയോ, ടെലിവിഷൻ പ്രക്ഷേപണം, MRI സ്കാൻ</td></tr>
+  </table>
+  </div>
+</div>
+</details>
 
-  <div class="note"><span class="lbl">KEY</span> ഡിജിറ്റൽ ത്രാസ്: ലോഡ് സെൽ → ADC → ഡിസ്പ്ലേ</div>
+<!-- ================= 7.12 (NEW: NUCLEAR & MODERN PHYSICS) ================= -->
+<details class="card" data-stars="4">
+<summary>
+  <span class="num">7.12</span>
+  <span class="title">ആണവ ഭൗതികശാസ്ത്രവും ആധുനിക ഭൗതികശാസ്ത്രവും <span class="new-badge">NEW</span></span>
+  <span class="stars">⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="12"> പഠിച്ചു</label>
+</summary>
+<div class="content">
+
+  <h3>☢️ റേഡിയോ ആക്ടിവിറ്റിയും α, β, γ രശ്മികളും</h3>
+  <div class="fig">
+    <span class="fig-title">📊 ആൽഫ (α), ബീറ്റ (β), ഗാമ (γ) രശ്മികളുടെ തുളച്ചുകയറൽ ശേഷി (Penetrating Power)</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 115" style="max-width:520px;" role="img" aria-label="ആൽഫ ബീറ്റ ഗാമ രശ്മികൾ">
+      <rect x="12" y="25" width="42" height="65" rx="6" fill="#1e293b"/>
+      <text x="33" y="62" fill="#fff" text-anchor="middle">☢️</text>
+      <!-- Paper -->
+      <rect x="135" y="12" width="12" height="92" fill="#e2e8f0" stroke="#64748b"/>
+      <text x="141" y="10" text-anchor="middle">പേപ്പർ</text>
+      <!-- Aluminium -->
+      <rect x="255" y="12" width="22" height="92" fill="#93c5fd" stroke="#1d4ed8"/>
+      <text x="266" y="10" text-anchor="middle">അലുമിനിയം</text>
+      <!-- Lead -->
+      <rect x="380" y="12" width="45" height="92" fill="#64748b" stroke="#1e293b"/>
+      <text x="402" y="10" text-anchor="middle">കട്ടിയുള്ള ലെഡ്</text>
+      <!-- Rays -->
+      <line x1="54" y1="38" x2="135" y2="38" stroke="#d93025" stroke-width="3"/>
+      <circle cx="135" cy="38" r="4" fill="#d93025"/>
+      <text x="90" y="32" fill="#d93025">α (+ve, ഹീലിയം)</text>
+
+      <line x1="54" y1="58" x2="255" y2="58" stroke="#1d4ed8" stroke-width="2.5"/>
+      <circle cx="255" cy="58" r="4" fill="#1d4ed8"/>
+      <text x="190" y="52" fill="#1d4ed8">β (−ve, ഇലക്ട്രോൺ)</text>
+
+      <line x1="54" y1="78" x2="405" y2="78" stroke="#0f9d58" stroke-width="2" stroke-dasharray="5 2"/>
+      <text x="320" y="72" fill="#0f9d58">γ (ചാർജില്ല, പ്രകാശവേഗം)</text>
+    </svg>
+    <div class="cap"><b>തുളച്ചുകയറൽ ശേഷി (Penetrating Power):</b> <b>γ &gt; β &gt; α</b> &nbsp;|&nbsp; <b>അയോണീകരണ ശേഷി (Ionizing Power):</b> <b>α &gt; β &gt; γ</b></div>
+  </div>
+
+  <h3>⚛️ അണുവിഭജനം (Nuclear Fission) vs അണുസംയോജനം (Nuclear Fusion)</h3>
+  <div class="cmp">
+    <div class="col" style="border-color:#fbcfe8;"><h4 style="background:#be185d;">അണുവിഭജനം (Nuclear Fission)</h4>
+      <ul>
+        <li>ഭാരമേറിയ ഒരു അണുകേന്ദ്രം (U-235, Pu-239) വിഭജിച്ച് ചെറിയ അണുകേന്ദ്രങ്ങളാകുന്ന പ്രക്രിയ</li>
+        <li>കണ്ടെത്തിയത്: <b>ഓട്ടോ ഹാൻ &amp; ഫ്രിറ്റ്സ് സ്ട്രാസ്മാൻ (1938)</b></li>
+        <li><b>ഉദാ:</b> <b>ആറ്റം ബോംബ്</b> (അനിയന്ത്രിത ശൃംഖലാ പ്രവർത്തനം — റോബർട്ട് ഓപ്പൺഹൈമർ), <b>ആണവ റിയാക്ടർ</b> (നിയന്ത്രിത ശൃംഖലാ പ്രവർത്തനം — എൻറിക്കോ ഫെർമി)</li>
+      </ul>
+    </div>
+    <div class="col" style="border-color:#fde68a;"><h4 style="background:#d97706;">അണുസംയോജനം (Nuclear Fusion)</h4>
+      <ul>
+        <li>ഭാരം കുറഞ്ഞ അണുകേന്ദ്രങ്ങൾ (ഹൈഡ്രജൻ ഐസോടോപ്പുകൾ) കൂടിച്ചേർന്ന് വലിയ അണുകേന്ദ്രമായി (ഹീലിയം) മാറുന്ന പ്രക്രിയ</li>
+        <li>സൂര്യന്റെയും നക്ഷത്രങ്ങളുടെയും ഊർജ്ജസ്രോതസ്സ് എന്ന് കണ്ടെത്തിയത്: <b>ഹാൻസ് ബെഥെ</b></li>
+        <li><b>ഉദാ:</b> <b>സൂര്യൻ, നക്ഷത്രങ്ങൾ, ഹൈഡ്രജൻ ബോംബ്</b> (എഡ്വേർഡ് ടെല്ലർ)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>🏭 ആണവ റിയാക്ടറും ഇന്ത്യയിലെ ആണവനിലയങ്ങളും</h3>
+  <ul>
+    <li><b>ആണവ ഇന്ധനങ്ങൾ:</b> യുറേനിയം-235 ($^{235}\text{U}$), പ്ലൂട്ടോണിയം-239 ($^{239}\text{Pu}$), തോറിയം-232 ($^{232}\text{Th}$ — കേരളത്തിലെ മോണോസൈറ്റ് മണലിൽ നിന്ന് ലഭിക്കുന്നു, കാമിനി റിയാക്ടറിൽ $^{233}\text{U}$ ആയി ഉപയോഗിക്കുന്നു).</li>
+    <li><b>മോഡറേറ്റർ (ന്യൂട്രോണുകളുടെ വേഗത കുറയ്ക്കാൻ):</b> <b>ഘനജലം (Heavy Water - D₂O)</b>, <b>ഗ്രാഫൈറ്റ്</b>, ബെറിലിയം ഓക്സൈഡ്.</li>
+    <li><b>നിയന്ത്രണ ദണ്ഡുകൾ (Control Rods — ന്യൂട്രോണുകളെ ആഗിരണം ചെയ്യാൻ):</b> <b>കാഡ്മിയം (Cadmium), ബോറോൺ (Boron)</b>.</li>
+    <li><b>ശീതീകാരി (Coolant):</b> ദ്രാവക സോഡിയം, ഘനജലം, സാധാരണ ജലം.</li>
+    <li><b>ഇന്ത്യയിലെ ആണവനിലയങ്ങൾ:</b>
+      <br>• ഇന്ത്യയിലെ ആദ്യ ആണവ റിയാക്ടർ: <b>അപ്സര (1956, ട്രോംബെ)</b>.
+      <br>• ഇന്ത്യയിലെ ആദ്യ ആണവ വൈദ്യുത നിലയം: <b>താരാപ്പൂർ (മഹാരാഷ്ട്ര, 1969)</b>.
+      <br>• ഇന്ത്യയിലെ ഏറ്റവും വലിയ ആണവനിലയം: <b>കൂടംകുളം (തമിഴ്‌നാട്, റഷ്യയുടെ സഹായം)</b>.
+      <br>• മറ്റ് നിലയങ്ങൾ: കൽപ്പാക്കം (തമിഴ്‌നാട് — ഇന്ദിരാഗാന്ധി സെന്റർ ഫോർ അറ്റോമിക് റിസർച്ച്, കാമിനി), കൈഗ (കർണാടക), കക്രപ്പാറ (ഗുജറാത്ത്), നറോറ (ഉത്തർപ്രദേശ്), റാവത്ത്ഭട്ട (രാജസ്ഥാൻ).</li>
+    <li><b>ഫോട്ടോ ഇലക്ട്രിക് പ്രഭാവം (Photoelectric Effect):</b> കണ്ടെത്തിയത് ഹെൻറിച്ച് ഹെർട്സ്; വിശദീകരിച്ചത് <b>ആൽബർട്ട് ഐൻസ്റ്റീൻ (1921-ൽ നൊബേൽ സമ്മാനം</b> ലഭിച്ചത് ഇതിനാണ്, ആപേക്ഷികതാ സിദ്ധാന്തത്തിനല്ല!). ഫോട്ടോ ഇലക്ട്രിക് സെല്ലുകളിൽ ഉപയോഗിക്കുന്ന ലോഹം: <b>സീസിയം (Caesium)</b>.</li>
+  </ul>
 </div>
 </details>
 
 <!-- ================= PRACTICE ================= -->
-<details class="card">
-<summary><span class="num">✎</span><span class="title">പരിശീലന കണക്കുകൾ (7.2)</span><span class="stars">⭐⭐⭐⭐⭐</span><label class="review-check"><input class="reviewed" type="checkbox" data-section="10"> പഠിച്ചു</label></summary>
+<details class="card" data-stars="5">
+<summary>
+  <span class="num">✎</span>
+  <span class="title">പരിശീലന കണക്കുകൾ (PSC Physics Numericals — 12 ചോദ്യങ്ങൾ)</span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+  <label class="review-check"><input class="reviewed" type="checkbox" data-section="13"> പഠിച്ചു</label>
+</summary>
 <div class="content">
-  <p>സ്വയം ചെയ്ത ശേഷം ഉത്തരം കാണാൻ ചോദ്യത്തിൽ ടാപ്പ് ചെയ്യുക.</p>
-  <details class="qa"><summary>1. 10 kg മാസുള്ള വസ്തു 5 m/s-ൽ സഞ്ചരിച്ചാൽ ആക്കം?</summary><div class="ans">p = mv = 10 × 5 = 50 kg·m/s</div></details>
-  <details class="qa"><summary>2. 10,000 kg ലോറിയുടെ പ്രവേഗം 4 s-ൽ 15 m/s-ൽ നിന്ന് 12 m/s ആയാൽ ബലം?</summary><div class="ans">F = m(v−u)/t = 10000(12−15)/4 = −7500 N (മന്ദീകരണ ബലം)</div></details>
-  <details class="qa"><summary>3. 5 kg വസ്തുവിൽ 20 N ബലം പ്രയോഗിച്ചാൽ ത്വരണം?</summary><div class="ans">a = F/m = 20/5 = 4 m/s²</div></details>
-  <details class="qa"><summary>4. 72 km/h എത്ര m/s?</summary><div class="ans">72 × 5/18 = 20 m/s</div></details>
-  <details class="qa"><summary>5. 0.02 kg ബുള്ളറ്റ് 300 m/s-ൽ 4 kg തോക്കിൽ നിന്ന് പായുമ്പോൾ റീകോയിൽ പ്രവേഗം?</summary><div class="ans">V = −mv/M = −(0.02×300)/4 = −1.5 m/s (പിന്നിലേക്ക്)</div></details>
-  <details class="qa"><summary>6. നിശ്ചലാവസ്ഥയിൽ നിന്ന് 2 m/s² ത്വരണത്തിൽ 5 s-ന് ശേഷം പ്രവേഗം?</summary><div class="ans">v = u + at = 0 + 2×5 = 10 m/s</div></details>
+  <p>ചോദ്യം വായിച്ച് സ്വയം ഉത്തരം കണ്ടെത്തിയ ശേഷം <b>"👁️ ഉത്തരം"</b> എന്നതിൽ ടാപ്പ് ചെയ്യുക.</p>
+  <details class="qa"><summary>1. 10 kg മാസുള്ള വസ്തു 5 m/s പ്രവേഗത്തിൽ സഞ്ചരിച്ചാൽ അതിന്റെ ആക്കം (Momentum) എത്ര?</summary><div class="ans">p = mv = 10 × 5 = 50 kg·m/s</div></details>
+  <details class="qa"><summary>2. 72 km/h വേഗതയിൽ സഞ്ചരിക്കുന്ന കാറിന്റെ വേഗത m/s-ൽ എത്രയാണ്?</summary><div class="ans">72 × (5/18) = 4 × 5 = 20 m/s</div></details>
+  <details class="qa"><summary>3. 10,000 kg മാസുള്ള ലോറിയുടെ പ്രവേഗം 4 s കൊണ്ട് 15 m/s-ൽ നിന്ന് 12 m/s ആയി കുറഞ്ഞാൽ പ്രയോഗിച്ച ബലം?</summary><div class="ans">F = m(v − u)/t = 10000 × (12 − 15)/4 = −7500 N (മന്ദീകരണ ബലം)</div></details>
+  <details class="qa"><summary>4. 5 kg മാസുള്ള വസ്തുവിൽ 20 N ബലം പ്രയോഗിച്ചാൽ ഉണ്ടാകുന്ന ത്വരണം എത്ര?</summary><div class="ans">a = F/m = 20 / 5 = 4 m/s²</div></details>
+  <details class="qa"><summary>5. നിശ്ചലാവസ്ഥയിൽ നിന്ന് 2 m/s² സമത്വരണത്തിൽ സഞ്ചരിക്കുന്ന വസ്തു 5 സെക്കൻഡിന് ശേഷം കൈവരിക്കുന്ന പ്രവേഗം?</summary><div class="ans">v = u + at = 0 + (2 × 5) = 10 m/s</div></details>
+  <details class="qa"><summary>6. രണ്ട് സമതല ദർപ്പണങ്ങൾ 60° കോണിൽ ചരിച്ചുവെച്ചാൽ അവയ്ക്കിടയിൽ എത്ര പ്രതിബിംബങ്ങൾ രൂപപ്പെടും?</summary><div class="ans">n = (360/θ) − 1 = (360/60) − 1 = 6 − 1 = 5 പ്രതിബിംബങ്ങൾ</div></details>
+  <details class="qa"><summary>7. ഒരു കോൺവെക്സ് ലെൻസിന്റെ ഫോക്കസ് ദൂരം +50 cm ആയാൽ അതിന്റെ പവർ എത്ര ഡയോപ്റ്റർ ആണ്?</summary><div class="ans">f = 50 cm = 0.5 m → പവർ P = 1/f = 1 / 0.5 = +2 D (ഡയോപ്റ്റർ)</div></details>
+  <details class="qa"><summary>8. 4 kg മാസുള്ള വസ്തു 3 m/s പ്രവേഗത്തിൽ സഞ്ചരിക്കുമ്പോൾ അതിന്റെ ഗതിക ഊർജ്ജം (KE) എത്ര?</summary><div class="ans">KE = ½mv² = ½ × 4 × 3² = 2 × 9 = 18 J</div></details>
+  <details class="qa"><summary>9. ഭൂമിയിൽ 60 kg മാസുള്ള ഒരാളുടെ ചന്ദ്രനിലെ മാസും ഭാരവും എത്രയായിരിക്കും?</summary><div class="ans">മാസ് എവിടെയും മാറില്ല = 60 kg | ഭൂമിയിലെ ഭാരം = 60 × 9.8 = 588 N → ചന്ദ്രനിലെ ഭാരം = 588 / 6 = 98 N</div></details>
+  <details class="qa"><summary>10. 6 Ω വീതമുള്ള 3 പ്രതിരോധകങ്ങൾ സമാന്തരമായി (Parallel) ഘടിപ്പിച്ചാൽ സഫല പ്രതിരോധം എത്ര?</summary><div class="ans">1/R = 1/6 + 1/6 + 1/6 = 3/6 = 1/2 → R = 2 Ω (ഒരേ മൂല്യമുള്ള n പ്രതിരോധകങ്ങൾ സമാന്തരമായാൽ R_eff = R/n = 6/3 = 2 Ω)</div></details>
+  <details class="qa"><summary>11. 230 V സപ്ലൈയിൽ പ്രവർത്തിക്കുന്ന ഒരു ഉപകരണത്തിലൂടെ 2 A കറന്റ് പ്രവഹിച്ചാൽ അതിന്റെ പവർ എത്ര?</summary><div class="ans">P = V × I = 230 × 2 = 460 W</div></details>
+  <details class="qa"><summary>12. 100 W പവറുള്ള 5 ബൾബുകൾ പ്രതിദിനം 4 മണിക്കൂർ വീതം 30 ദിവസം പ്ര പ്രവർത്തിച്ചാൽ എത്ര യൂണിറ്റ് (kWh) വൈദ്യുതി ചെലവാകും?</summary><div class="ans">യൂണിറ്റ് = (വാട്ട് × എണ്ണം × മണിക്കൂർ × ദിവസം) / 1000 = (100 × 5 × 4 × 30) / 1000 = 60,000 / 1000 = 60 യൂണിറ്റ് (kWh)</div></details>
 </div>
 </details>
 
 <!-- ================= FINAL ================= -->
-<details class="card" open>
-<summary><span class="num">✓</span><span class="title">അവസാന ഒറ്റനോട്ടം — PSC-യിൽ സാധ്യത കൂടിയവ</span><span class="stars">⭐⭐⭐⭐⭐</span></summary>
+<details class="card" data-stars="5" open>
+<summary>
+  <span class="num">✓</span>
+  <span class="title">അവസാന ഒറ്റനോട്ടം — PSC കെണികളും (Traps) പരീക്ഷാ ടിപ്പുകളും</span>
+  <span class="stars">⭐⭐⭐⭐⭐</span>
+</summary>
 <div class="content">
 
-  <div class="note"><span class="lbl">🎯 HIGH YIELD</span>
-  <ul>
-    <li><b>യൂണിറ്റുകൾ, സ്ഥിരാങ്കങ്ങൾ</b> — c, g, G, h, e, Nₐ</li>
-    <li><b>ചലന സമവാക്യങ്ങൾ, ന്യൂട്ടൺ നിയമങ്ങൾ</b></li>
-    <li><b>TIR, ലെൻസ് പവർ, കാഴ്ചവൈകല്യം</b></li>
-    <li><b>ശബ്ദവേഗതാക്രമം, 17 m, ഡോപ്ലർ</b></li>
-    <li><b>ആർക്കിമിഡീസ്, പാസ്കൽ, ബെർണോളി, വിസ്കോസിറ്റി</b></li>
-    <li><b>g വ്യതിയാനം, പലായന പ്രവേഗം</b></li>
-    <li><b>4°C, ലീനതാപം</b></li>
-    <li><b>KE/PE, kWh</b></li>
-    <li><b>ഡോപ്പിംഗ്, ഡയോഡ്, ഗേറ്റുകൾ, ആഡർ</b></li>
-  </ul>
-  </div>
+  <h3>🔴 പരീക്ഷാ ഹാളിൽ തെറ്റിപ്പോകാൻ സാധ്യതയുള്ള 10 PSC കെണികൾ (Traps)</h3>
+  <div class="trap"><span class="lbl">TRAP 1</span> <b>അദിശം vs സദിശം:</b> പ്രവൃത്തി, ഊർജ്ജം, പവർ, മർദ്ദം, വൈദ്യുത പ്രവാഹം (Current) — ഇവയെല്ലാം <b>അദിശ അളവുകളാണ്</b>. എന്നാൽ ബലം, ഭാരം, ആക്കം, ആവേഗം, സ്ഥാനാന്തരം — <b>സദിശ അളവുകളാണ്</b>.</div>
+  <div class="trap"><span class="lbl">TRAP 2</span> <b>പ്രകാശവേഗം vs ശബ്ദവേഗം:</b> പ്രകാശത്തിന് വേഗത കൂടുതൽ <b>ശൂന്യതയിലാണ്</b> (ശൂന്യത &gt; വായു &gt; ജലം &gt; ഗ്ലാസ്). എന്നാൽ ശബ്ദത്തിന് വേഗത കൂടുതൽ <b>ഖരത്തിലാണ്</b> (ഖരം &gt; ദ്രാവകം &gt; വാതകം; ശൂന്യതയിൽ സഞ്ചരിക്കില്ല).</div>
+  <div class="trap"><span class="lbl">TRAP 3</span> <b>അപവർത്തനത്തിൽ മാറാത്തത്:</b> പ്രകാശം ഒരു മാധ്യമത്തിൽ നിന്ന് മറ്റൊന്നിലേക്ക് കടക്കുമ്പോൾ വേഗതയും തരംഗദൈർഘ്യവും മാറും, എന്നാൽ <b>ആവൃത്തി (Frequency) ഒരിക്കലും മാറില്ല</b>.</div>
+  <div class="trap"><span class="lbl">TRAP 4</span> <b>4°C-ലെ ജലം:</b> 0°C-ൽ നിന്ന് 4°C-ലേക്ക് ചൂടാക്കുമ്പോൾ ജലത്തിന്റെ <b>വ്യാപ്തം കുറയുന്നു, സാന്ദ്രത കൂടുന്നു</b>. 4°C-ൽ വ്യാപ്തം ഏറ്റവും കുറവും സാന്ദ്രത ഏറ്റവും കൂടുതലുമാണ്.</div>
+  <div class="trap"><span class="lbl">TRAP 5</span> <b>മാസ് vs ഭാരം:</b> വസ്തുവിന്റെ മാസ് (kg) ചന്ദ്രനിലും ഭൂകേന്ദ്രത്തിലും <b>മാറില്ല</b>; ഭാരം (N) മാത്രമാണ് g-യ്ക്കനുസരിച്ച് മാറുന്നത് (ഭൂകേന്ദ്രത്തിൽ ഭാരം = 0).</div>
+  <div class="trap"><span class="lbl">TRAP 6</span> <b>kWh vs kW:</b> <b>kWh (കിലോവാട്ട്-അവർ)</b> എന്നത് <b>വൈദ്യുതോർജ്ജത്തിന്റെ</b> വാണിജ്യ യൂണിറ്റാണ് (1 യൂണിറ്റ് = 3.6×10⁶ J); <b>kW</b> എന്നത് <b>പവറിന്റെ</b> യൂണിറ്റാണ്.</div>
+  <div class="trap"><span class="lbl">TRAP 7</span> <b>ലോഹം vs അർദ്ധചാലകം vs ദ്രാവക വിസ്കോസിറ്റി:</b> ചൂടാക്കുമ്പോൾ ലോഹങ്ങളുടെ പ്രതിരോധം <b>കൂടുന്നു</b>; എന്നാൽ അർദ്ധചാലകങ്ങളുടെ (Si, Ge) പ്രതിരോധം <b>കുറയുന്നു</b>.</div>
+  <div class="trap"><span class="lbl">TRAP 8</span> <b>ഐൻസ്റ്റീന്റെ നൊബേൽ:</b> ആൽബർട്ട് ഐൻസ്റ്റീന് 1921-ൽ നൊബേൽ ലഭിച്ചത് <b>ഫോട്ടോ ഇലക്ട്രിക് പ്രഭാവം</b> വിശദീകരിച്ചതിനാണ് (ആപേക്ഷികതാ സിദ്ധാന്തത്തിനല്ല).</div>
+  <div class="trap"><span class="lbl">TRAP 9</span> <b>ഹൈഡ്രോമീറ്റർ vs ഹൈഗ്രോമീറ്റർ:</b> <b>ഹൈഡ്രോ (Hydro)</b> = ദ്രാവക സാന്ദ്രത | <b>ഹൈഗ്രോ (Hygro)</b> = അന്തരീക്ഷ ആർദ്രത (ഈർപ്പം).</div>
+  <div class="trap"><span class="lbl">TRAP 10</span> <b>താപനിലയും മർദ്ദവും ശബ്ദവേഗതയിൽ:</b> വായുവിൽ താപനിലയും ആർദ്രതയും കൂടിയാൽ ശബ്ദവേഗത കൂടും; എന്നാൽ <b>മർദ്ദം മാറിയാൽ വായുവിലെ ശബ്ദവേഗത മാറില്ല</b>.</div>
 
-  <h3>🔴 PSC കെണികൾ</h3>
-  <div class="trap"><span class="lbl">TRAP 1</span> <b>അദിശം vs സദിശം:</b> പ്രവൃത്തി, ഊർജ്ജം, പവർ, മർദ്ദം — എല്ലാം അദിശം. ബലം, ഭാരം, ആക്കം — സദിശം.</div>
-  <div class="trap"><span class="lbl">TRAP 2</span> <b>പ്രകാശത്തിന്റെ ആവൃത്തി:</b> അപവർത്തനത്തിൽ മാറില്ല (തരംഗദൈർഘ്യം മാറും).</div>
-  <div class="trap"><span class="lbl">TRAP 3</span> <b>മർദ്ദം:</b> ദ്രവമർദ്ദം ആഴത്തിന് നേരനുപാത (P = hdg), പാത്രത്തിന്റെ ആകൃതിയെ ആശ്രയിക്കില്ല.</div>
-  <div class="trap"><span class="lbl">TRAP 4</span> <b>മാസ് vs ഭാരം:</b> മാസ് സ്ഥിരം (kg); ഭാരം g-യനുസരിച്ച് മാറും (N).</div>
-  <div class="trap"><span class="lbl">TRAP 5</span> <b>kWh vs kW:</b> kWh = ഊർജ്ജം; kW = പവർ.</div>
-  <div class="trap"><span class="lbl">TRAP 6</span> <b>അർദ്ധചാലകം:</b> താപനില ↑ → പ്രതിരോധം ↓ (ലോഹത്തിന് വിപരീതം).</div>
-
-  <h3>🧠 5 മിനിറ്റ് സ്വയംപരിശോധന</h3>
-  <ol>
-    <li>7 അടിസ്ഥാന യൂണിറ്റുകളും 2 സപ്ലിമെന്ററി യൂണിറ്റുകളും എഴുതുക.</li>
-    <li>ചലന സമവാക്യങ്ങൾ 3 എണ്ണം ഓർക്കുക.</li>
-    <li>കാഴ്ചവൈകല്യങ്ങൾ 4 എണ്ണം + ലെൻസ് ടൈപ്പ് പറയുക.</li>
-    <li>ശബ്ദവേഗത ക്രമം, പ്രതിധ്വനി ദൂരം (17 m).</li>
-    <li>ഡയോഡ് ഉപയോഗങ്ങൾ, ബൂൾ ഗേറ്റുകൾ, ഡി മോർഗൻ നിയമം.</li>
-  </ol>
-
-  <div class="trick"><span class="lbl">FINAL TIP</span> PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് <b>10–15 ചോദ്യങ്ങൾ</b> പ്രതീക്ഷിക്കാം (ഊഹം — പരീക്ഷ അനുസരിച്ച് മാറും). അളവുകൾ, ചലനം, പ്രകാശം, ഊർജ്ജം — ഏറ്റവും പ്രധാനം!</div>
+  <div class="trick"><span class="lbl">FINAL REVISION TIP</span> കേരള PSC പരീക്ഷകളിൽ ഭൗതികശാസ്ത്രത്തിൽ നിന്ന് <b>യൂണിറ്റുകൾ, ഉപകരണങ്ങൾ, പ്രകാശ പ്രതിഭാസങ്ങൾ, കാഴ്ചവൈകല്യങ്ങൾ, ലഘുയന്ത്രങ്ങൾ, വൈദ്യുതി, ആണവ ഭൗതികം</b> എന്നീ ഭാഗങ്ങളിൽ നിന്നാണ് 80% ചോദ്യങ്ങളും വരുന്നത്. മുകളിലെ പട്ടികകളും ചിത്രങ്ങളും പരീക്ഷയ്ക്ക് തലേദിവസം ഒറ്റനോട്ടത്തിൽ ആവർത്തിക്കുക!</div>
 </div>
 </details>
 
 <footer>
-  ⚛️ കേരള PSC ഭൗതികശാസ്ത്രം — വിഷ്വൽ റിവിഷൻ നോട്ട്സ്<br>
-  അളവുകൾ · ചലനം · പ്രകാശം · ശബ്ദം · ബലം · ഗുരുത്വം · താപം · ഊർജ്ജം · ഇലക്ട്രോണിക്സ്<br>
-  <span style="color:#1d4ed8;font-weight:700;">ആവർത്തനങ്ങൾ ഒഴിവാക്കി, PSC പ്രാധാന്യം അനുസരിച്ച് ക്രമീകരിച്ചു.</span>
+  ⚛️ <b>കേരള PSC ഭൗതികശാസ്ത്രം — സമ്പൂർണ്ണ വിഷ്വൽ റിവിഷൻ നോട്ട്സ്</b><br>
+  അളവുകൾ · ചലനം · പ്രകാശം · ശബ്ദം · ബലം &amp; ഉത്തോലകങ്ങൾ · ഗുരുത്വം · താപം · ഊർജ്ജം · ഇലക്ട്രോണിക്സ് · വൈദ്യുതി · കാന്തികത · ആണവ ഭൗതികം<br>
+  <span style="color:var(--accent);font-weight:700;">PSC സിലബസ് പ്രകാരം സമ്പൂർണ്ണമായി പരിഷ്കരിച്ച പതിപ്പ്.</span>
 </footer>
 
 </div>
@@ -984,70 +1647,123 @@
 <button id="toTop" type="button" aria-label="മുകളിലേക്ക്">↑</button>
 <script>
 (function(){
-const $=q=>document.querySelector(q);
-const sections=[...document.querySelectorAll('details.card')];
-const search=$('#noteSearch'),status=$('#searchStatus');
-const checks=[...document.querySelectorAll('.reviewed')];
-const K='physics-reviewed-';
-const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-$('#totalCount').textContent=checks.length;
+  const $ = q => document.querySelector(q);
+  const sections = [...document.querySelectorAll('details.card')];
+  const search = $('#noteSearch'), status = $('#searchStatus');
+  const checks = [...document.querySelectorAll('.reviewed')];
+  const filterStarBtn = $('#filterStar');
+  const K = 'psc-physics-v2-reviewed-';
+  let starOnly = false;
 
-const chips=document.createElement('nav');chips.className='chips';chips.setAttribute('aria-label','അധ്യായങ്ങൾ');
-$('.revision-tools').appendChild(chips);
-sections.forEach((s,i)=>{
-  s.id='s'+i;
-  const n=s.querySelector('.num'),a=document.createElement('a');
-  a.href='#s'+i;a.textContent=n?n.textContent:String(i+1);
-  a.addEventListener('click',e=>{e.preventDefault();s.open=true;s.scrollIntoView({behavior:'smooth',block:'start'})});
-  chips.appendChild(a);s._chip=a;
-});
+  const store = {
+    get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+  };
+  $('#totalCount').textContent = checks.length;
 
-function update(){
-  const done=checks.filter(c=>c.checked).length;
-  $('#reviewCount').textContent=done;
-  $('#reviewProgress').style.width=(checks.length?done/checks.length*100:0)+'%';
-  checks.forEach(c=>{const s=c.closest('details.card');if(s&&s._chip)s._chip.classList.toggle('done',c.checked)});
-}
-checks.forEach(c=>{
-  c.checked=store.get(K+c.dataset.section)==='1';
-  c.addEventListener('change',()=>{store.set(K+c.dataset.section,c.checked?'1':'0');update()});
-});
-// ticking "പഠിച്ചു" must not collapse/expand the card
-document.querySelectorAll('summary').forEach(sm=>sm.addEventListener('click',e=>{
-  const l=e.target.closest('.review-check');if(!l)return;
-  e.preventDefault();
-  const cb=l.querySelector('input'),next=!cb.checked;
-  setTimeout(()=>{cb.checked=next;cb.dispatchEvent(new Event('change'))},0);
-}));
+  const chips = document.createElement('nav');
+  chips.className = 'chips';
+  chips.setAttribute('aria-label', 'അധ്യായങ്ങൾ');
+  $('.revision-tools').appendChild(chips);
 
-const norm=t=>t.toLocaleLowerCase('ml');
-const idx=sections.map(s=>norm(s.textContent)); // textContent: also searches collapsed cards
-function filter(){
-  const q=norm(search.value.trim());let shown=0;
-  sections.forEach((s,i)=>{
-    const m=!q||idx[i].includes(q);
-    s.classList.toggle('hidden-by-search',!m);
-    if(s._chip)s._chip.style.display=m?'':'none';
-    if(m)shown++;if(q&&m)s.open=true;
+  sections.forEach((s, i) => {
+    s.id = 's' + i;
+    const n = s.querySelector('.num'), t = s.querySelector('.title');
+    const a = document.createElement('a');
+    a.href = '#s' + i;
+    a.textContent = n ? n.textContent : String(i + 1);
+    if(t) a.title = t.textContent.replace('NEW', '').trim();
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      s.open = true;
+      s.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    chips.appendChild(a);
+    s._chip = a;
   });
-  status.textContent=q?('തിരയലിൽ കണ്ടെത്തിയത്: '+shown+' വിഭാഗങ്ങൾ'):(sections.length+' വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം');
-}
-search.addEventListener('input',filter);filter();
 
-$('#openAll').addEventListener('click',()=>sections.forEach(s=>{if(!s.classList.contains('hidden-by-search'))s.open=true}));
-$('#closeAll').addEventListener('click',()=>sections.forEach(s=>s.open=false));
-const rb=document.createElement('button');
-rb.className='tool-btn';rb.type='button';rb.textContent='↺ പുനഃസജ്ജമാക്കുക';
-rb.addEventListener('click',()=>{checks.forEach(c=>{c.checked=false;store.set(K+c.dataset.section,'0')});update()});
-$('.search-row').appendChild(rb);
-window.addEventListener('beforeprint',()=>sections.forEach(s=>s.open=true));
+  function update(){
+    const done = checks.filter(c => c.checked).length;
+    $('#reviewCount').textContent = done;
+    $('#reviewProgress').style.width = (checks.length ? (done / checks.length * 100) : 0) + '%';
+    checks.forEach(c => {
+      const s = c.closest('details.card');
+      if(s && s._chip) s._chip.classList.toggle('done', c.checked);
+    });
+  }
 
-const tt=$('#toTop');
-window.addEventListener('scroll',()=>tt.classList.toggle('show',window.scrollY>600),{passive:true});
-tt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-update();
+  checks.forEach(c => {
+    c.checked = store.get(K + c.dataset.section) === '1';
+    c.addEventListener('change', () => {
+      store.set(K + c.dataset.section, c.checked ? '1' : '0');
+      update();
+    });
+  });
+
+  document.querySelectorAll('summary').forEach(sm => sm.addEventListener('click', e => {
+    const l = e.target.closest('.review-check');
+    if(!l) return;
+    e.preventDefault();
+    const cb = l.querySelector('input'), next = !cb.checked;
+    setTimeout(() => {
+      cb.checked = next;
+      cb.dispatchEvent(new Event('change'));
+    }, 0);
+  }));
+
+  const norm = t => t.toLocaleLowerCase('ml');
+  const idx = sections.map(s => norm(s.textContent));
+
+  function filter(){
+    const q = norm(search.value.trim());
+    let shown = 0;
+    sections.forEach((s, i) => {
+      const matchText = !q || idx[i].includes(q);
+      const matchStar = !starOnly || s.dataset.stars === '5';
+      const m = matchText && matchStar;
+      s.classList.toggle('hidden-by-search', !m);
+      if(s._chip) s._chip.style.display = m ? '' : 'none';
+      if(m) shown++;
+      if(q && m) s.open = true;
+    });
+    status.textContent = (q || starOnly)
+      ? ('കണ്ടെത്തിയത്: ' + shown + ' വിഭാഗങ്ങൾ')
+      : (sections.length + ' വിഭാഗങ്ങൾ · തിരയൽ ആരംഭിക്കാം');
+  }
+
+  search.addEventListener('input', filter);
+  filterStarBtn.addEventListener('click', () => {
+    starOnly = !starOnly;
+    filterStarBtn.classList.toggle('active', starOnly);
+    filter();
+  });
+  filter();
+
+  $('#openAll').addEventListener('click', () => sections.forEach(s => {
+    if(!s.classList.contains('hidden-by-search')) s.open = true;
+  }));
+  $('#closeAll').addEventListener('click', () => sections.forEach(s => s.open = false));
+
+  const rb = document.createElement('button');
+  rb.className = 'tool-btn';
+  rb.type = 'button';
+  rb.textContent = '↺ പുനഃസജ്ജമാക്കുക';
+  rb.addEventListener('click', () => {
+    checks.forEach(c => {
+      c.checked = false;
+      store.set(K + c.dataset.section, '0');
+    });
+    update();
+  });
+  $('.search-row').appendChild(rb);
+
+  window.addEventListener('beforeprint', () => sections.forEach(s => s.open = true));
+
+  const tt = $('#toTop');
+  window.addEventListener('scroll', () => tt.classList.toggle('show', window.scrollY > 600), {passive:true});
+  tt.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+  update();
 })();
 </script>
-
 </body>
 </html>
