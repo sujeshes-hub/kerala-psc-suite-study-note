@@ -1906,9 +1906,8 @@
     "17": { id: "special-topics",        code: "17", icon: "📐", title: "Legal Metrology",              titleMl: "ലീഗൽ മെട്രോളജി",          desc: "Basics, Acts, Rules — 883 only" }
   };
 
-  // Sections whose subsection shape is mixed (leaf + nested). The adapter
-  // keeps leaf subsections as a single topic and expands composite ones.
-  const CHAPTER_SECTIONS = new Set(["1", "2", "4", "7", "9", "10", "13", "15", "16", "17"]);
+  // THE FIX: Removed "4", "7", "9", "10" from this list.
+  const CHAPTER_SECTIONS = new Set(["1", "2", "13", "15", "16", "17"]);
 
   function toTopic(node, inheritedTag) {
     const tag = node.tag || inheritedTag;
@@ -1949,8 +1948,6 @@
           const chTag = ch.tag || sectionTag;
           const hasChildren = ch.children && ch.children.length > 0;
 
-          // Composite subsection (e.g. 4.7, 7.3, 9.2) → expand children as topics.
-          // Leaf subsection (e.g. 4.1, 10.5, 10.8) → keep itself as the single topic.
           const topics = hasChildren
             ? getFlattenedTopics(ch.children, chTag)
             : [{
