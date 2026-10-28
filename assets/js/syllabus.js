@@ -252,7 +252,11 @@
     "6.9": "കുറവ് രോഗങ്ങൾ",
     "6.10": "രോഗകാരികൾ (പാത്തോജനുകൾ)",
     "6.11": "പ്രതിരോധ നടപടികൾ / പ്രതിരോധ കുത്തിവയ്പ്പ്",
+    "6.11.1": "പ്രതിരോധ നടപടികൾ",
+    "6.11.2": "പ്രതിരോധ കുത്തിവയ്പ്പ്",
     "6.12": "ചികിത്സാ നടപടികൾ / ചികിത്സ",
+    "6.12.1": "ചികിത്സാ നടപടികൾ",
+    "6.12.2": "ചികിത്സ",
     "7": "ഭൗതികശാസ്ത്രം",
     "7.1": "അടിസ്ഥാന ഭൗതികശാസ്ത്രം",
     "7.1.1": "അളവുകളും ഏകകങ്ങളും",
@@ -268,7 +272,14 @@
     "7.3.2": "ദർപ്പണം",
     "7.3.3": "r = 2f പ്രശ്നങ്ങൾ",
     "7.3.4": "പ്രകാശ പ്രതിഭാസങ്ങൾ, മഴവില്ല്, വസ്തുക്കളുടെ നിറങ്ങൾ",
+    "7.3.4.1": "പ്രകാശ പ്രതിഭാസങ്ങൾ",
+    "7.3.4.2": "മഴവില്ല്",
+    "7.3.4.3": "വസ്തുക്കളുടെ നിറങ്ങൾ",
     "7.3.5": "വിദ്യുത്കാന്തിക സ്പെക്ട്രം: IR, UV, X-റേകൾ",
+    "7.3.5.1": "വിദ്യുത്കാന്തിക സ്പെക്ട്രം",
+    "7.3.5.2": "ഇൻഫ്രാറെഡ് (IR)",
+    "7.3.5.3": "അൾട്രാവയലറ്റ് (UV)",
+    "7.3.5.4": "എക്സ്-റേകൾ",
     "7.3.6": "ഫോട്ടോ ഇലക്ട്രിക് പ്രഭാവം",
     "7.4": "ശബ്ദം",
     "7.4.1": "തരംഗങ്ങൾ",
@@ -279,8 +290,16 @@
     "7.5.1": "ബലങ്ങളുടെ തരങ്ങൾ",
     "7.5.2": "ഘർഷണം (ഗുണങ്ങളും ദോഷങ്ങളും)",
     "7.5.3": "ദ്രാവകങ്ങൾ: മർദ്ദം, പ്ലവനം, ആർക്കിമിഡീസ് തത്വം, പാസ്കൽ നിയമം",
+    "7.5.3.1": "ദ്രാവക മർദ്ദം",
+    "7.5.3.2": "പ്ലവനം",
+    "7.5.3.3": "ആർക്കിമിഡീസ് തത്വം",
+    "7.5.3.4": "പാസ്കൽ നിയമം",
     "7.5.4": "സാന്ദ്രത, ആപേക്ഷിക സാന്ദ്രത",
     "7.5.5": "അഡ്ഹെസീവ് & കോഹെസീവ് ബലം, കേശികത്വം, ശ്യാനബലം, ഉപരിതല പിരിമുറുക്കം",
+    "7.5.5.1": "അഡ്ഹെസീവ് & കോഹെസീവ് ബലം",
+    "7.5.5.2": "കേശികത്വം",
+    "7.5.5.3": "ശ്യാനബലം",
+    "7.5.5.4": "ഉപരിതല പിരിമുറുക്കം",
     "7.6": "ഗുരുത്വാകർഷണം",
     "7.6.1": "അഭികേന്ദ്ര, അപകേന്ദ്ര ബലം",
     "7.6.2": "പലായന പ്രവേഗം",
@@ -326,8 +345,25 @@
     "9.1.1": "പ്രധാന കേരള ഓഡിയോ-വിഷ്വൽ കലാരൂപങ്ങൾ: ഉത്ഭവം, വികസനം, വ്യാപനം, സ്ഥലങ്ങൾ, സ്ഥാപനങ്ങൾ, കലാകാരന്മാർ, എഴുത്തുകാർ",
     "9.2": "കായികം",
     "9.2.1": "പ്രധാന കായികതാരങ്ങൾ (കേരളം, ഇന്ത്യ, ലോകം), കായിക ഉപകരണങ്ങൾ, നേട്ടങ്ങൾ",
+    "9.2.1.1": "കേരള കായികതാരങ്ങൾ",
+    "9.2.1.2": "ഇന്ത്യൻ കായികതാരങ്ങൾ",
+    "9.2.1.3": "ലോക കായികതാരങ്ങൾ",
+    "9.2.1.4": "കായിക ഉപകരണങ്ങൾ",
+    "9.2.1.5": "നേട്ടങ്ങൾ",
     "9.2.2": "അവാർഡുകൾ, ട്രോഫികൾ, കായിക താരങ്ങളുടെ എണ്ണം, കായിക പദങ്ങൾ",
+    "9.2.2.1": "കായിക അവാർഡുകൾ",
+    "9.2.2.2": "ട്രോഫികൾ",
+    "9.2.2.3": "കായിക താരങ്ങളുടെ എണ്ണം",
+    "9.2.2.4": "കായിക പദങ്ങൾ",
     "9.2.3": "അന്താരാഷ്ട്ര കായിക മേളകൾ: ഒളിമ്പിക്സ്, വിന്റർ ഒളിമ്പിക്സ്, പാരാലിമ്പിക്സ്, ഏഷ്യൻ ഗെയിംസ്, അഫ്രോ-ഏഷ്യൻ ഗെയിംസ്, കോമൺവെൽത്ത് ഗെയിംസ്, SAF ഗെയിംസ്, നാഷണൽ ഗെയിംസ്",
+    "9.2.3.1": "ഒളിമ്പിക്സ്",
+    "9.2.3.2": "വിന്റർ ഒളിമ്പിക്സ്",
+    "9.2.3.3": "പാരാലിമ്പിക്സ്",
+    "9.2.3.4": "ഏഷ്യൻ ഗെയിംസ്",
+    "9.2.3.5": "അഫ്രോ-ഏഷ്യൻ ഗെയിംസ്",
+    "9.2.3.6": "കോമൺവെൽത്ത് ഗെയിംസ്",
+    "9.2.3.7": "SAF ഗെയിംസ്",
+    "9.2.3.8": "നാഷണൽ ഗെയിംസ്",
     "9.3": "സാഹിത്യം",
     "9.3.1": "മലയാള സാഹിത്യം, സാഹിത്യ പ്രസ്ഥാനങ്ങളും നേതാക്കളും",
     "9.3.2": "ആദ്യ കൃതികൾ, പ്രധാന കൃതികൾ, എഴുത്തുകാർ, തൂലികാനാമങ്ങൾ, കഥാപാത്രങ്ങൾ, പ്രശസ്ത ഉദ്ധരണികൾ",
@@ -336,7 +372,13 @@
     "9.3.5": "മലയാള സിനിമ: ഉത്ഭവം, വികസനം, നാഴികക്കല്ലുകൾ, പ്രവർത്തകർ, ദേശീയ അവാർഡുകൾ",
     "9.4": "സംസ്കാരം",
     "9.4.1": "കേരള കലാരൂപങ്ങൾ, പ്രധാന ഉത്സവങ്ങൾ, സാംസ്കാരിക കേന്ദ്രങ്ങൾ",
+    "9.4.1.1": "കേരള കലാരൂപങ്ങൾ",
+    "9.4.1.2": "പ്രധാന ഉത്സവങ്ങൾ",
+    "9.4.1.3": "സാംസ്കാരിക കേന്ദ്രങ്ങൾ",
     "9.4.2": "ആഘോഷങ്ങൾ, ബന്ധപ്പെട്ട സ്ഥലങ്ങൾ, ആരാധനാലയങ്ങൾ",
+    "9.4.2.1": "ആഘോഷങ്ങൾ",
+    "9.4.2.2": "ബന്ധപ്പെട്ട സ്ഥലങ്ങൾ",
+    "9.4.2.3": "ആരാധനാലയങ്ങൾ",
     "9.4.3": "സാംസ്കാരിക നേതാക്കളും അവരുടെ സംഭാവനകളും",
     "10": "കമ്പ്യൂട്ടർ",
     "10.1": "ഹാർഡ്‌വെയർ",
@@ -346,10 +388,23 @@
     "10.1.4": "മെമ്മറി ഉപകരണങ്ങൾ",
     "10.2": "സോഫ്റ്റ്‌വെയറും ഓ.എസും",
     "10.2.1": "സിസ്റ്റം സോഫ്റ്റ്വെയർ, അപ്ലിക്കേഷൻ സോഫ്റ്റ്വെയർ, OS ധർമ്മങ്ങളും ഉദാഹരണങ്ങളും",
+    "10.2.1.1": "സിസ്റ്റം സോഫ്റ്റ്വെയർ",
+    "10.2.1.2": "അപ്ലിക്കേഷൻ സോഫ്റ്റ്വെയർ",
+    "10.2.1.3": "OS ധർമ്മങ്ങളും ഉദാഹരണങ്ങളും",
     "10.2.2": "വേഡ് പ്രോസസ്സറുകൾ, സ്പ്രെഡ്ഷീറ്റുകൾ, ഡാറ്റാബേസ് പാക്കേജുകൾ, പ്രസന്റേഷൻ സോഫ്റ്റ്വെയർ, ഇമേജ് എഡിറ്ററുകൾ",
+    "10.2.2.1": "വേഡ് പ്രോസസ്സറുകൾ",
+    "10.2.2.2": "സ്പ്രെഡ്ഷീറ്റുകൾ",
+    "10.2.2.3": "ഡാറ്റാബേസ് പാക്കേജുകൾ",
+    "10.2.2.4": "പ്രസന്റേഷൻ സോഫ്റ്റ്വെയർ",
+    "10.2.2.5": "ഇമേജ് എഡിറ്ററുകൾ",
     "10.3": "നെറ്റ്‌വർക്കുകൾ",
     "10.3.1": "നെറ്റ്വർക്ക് മീഡിയ",
     "10.3.2": "സ്വിച്ച്, ഹബ്, റൗട്ടർ, ബ്രിഡ്ജ്, ഗേറ്റ്‌വേ",
+    "10.3.2.1": "സ്വിച്ച്",
+    "10.3.2.2": "ഹബ്",
+    "10.3.2.3": "റൗട്ടർ",
+    "10.3.2.4": "ബ്രിഡ്ജ്",
+    "10.3.2.5": "ഗേറ്റ്‌വേ",
     "10.4": "ഇന്റർനെറ്റ്",
     "10.4.1": "സേർച്ച് എഞ്ചിനുകൾ",
     "10.4.2": "സോഷ്യൽ മീഡിയ",
@@ -362,6 +417,11 @@
     "10.7": "പ്രോഗ്രാമിംഗ്",
     "10.7.1": "പ്രോഗ്രാമിംഗ് അടിസ്ഥാനങ്ങൾ",
     "10.7.2": "ഇൻപുട്ട്, ഔട്ട്പുട്ട്, സ്റ്റോർ, കൺട്രോൾ, ട്രാൻസ്ഫർ നിർദ്ദേശങ്ങൾ",
+    "10.7.2.1": "ഇൻപുട്ട് നിർദ്ദേശങ്ങൾ",
+    "10.7.2.2": "ഔട്ട്പുട്ട് നിർദ്ദേശങ്ങൾ",
+    "10.7.2.3": "സ്റ്റോർ നിർദ്ദേശങ്ങൾ",
+    "10.7.2.4": "കൺട്രോൾ നിർദ്ദേശങ്ങൾ",
+    "10.7.2.5": "ട്രാൻസ്ഫർ നിർദ്ദേശങ്ങൾ",
     "10.8": "ഇ-ഗവേണൻസ് (കമ്പ്യൂട്ടർ കാഴ്ചപ്പാട്)",
     "11": "ലഘു ഗണിതം",
     "11.1": "സംഖ്യകൾ",
@@ -1333,8 +1393,14 @@
       t("6.8", "Environmental Hazards", "BOTH"),
       t("6.9",  "Deficiency Diseases", "BOTH"),
       t("6.10", "Pathogens", "BOTH"),
-      t("6.11", "Preventive Measures / Vaccination", "BOTH"),
-      t("6.12", "Treatment Measures / Treatment", "BOTH")
+      t("6.11", "Preventive Measures / Vaccination", "BOTH", [
+        t("6.11.1", "Preventive Measures", "BOTH"),
+        t("6.11.2", "Vaccination", "BOTH")
+      ]),
+      t("6.12", "Treatment Measures / Treatment", "BOTH", [
+        t("6.12.1", "Treatment Measures", "BOTH"),
+        t("6.12.2", "Treatment", "BOTH")
+      ])
     ]),
 
     t("7", "PHYSICS", "BOTH", [
@@ -1353,8 +1419,17 @@
         t("7.3.1", "Lens", "BOTH"),
         t("7.3.2", "Mirror", "BOTH"),
         t("7.3.3", "r = 2f Problems", "BOTH"),
-        t("7.3.4", "Light Phenomena, Rainbow, Colours of Objects", "BOTH"),
-        t("7.3.5", "Electromagnetic Spectrum: IR, UV, X-Rays", "BOTH"),
+        t("7.3.4", "Light Phenomena, Rainbow, Colours of Objects", "BOTH", [
+          t("7.3.4.1", "Light Phenomena", "BOTH"),
+          t("7.3.4.2", "Rainbow", "BOTH"),
+          t("7.3.4.3", "Colours of Objects", "BOTH")
+        ]),
+        t("7.3.5", "Electromagnetic Spectrum: IR, UV, X-Rays", "BOTH", [
+          t("7.3.5.1", "Electromagnetic Spectrum", "BOTH"),
+          t("7.3.5.2", "Infrared (IR)", "BOTH"),
+          t("7.3.5.3", "Ultraviolet (UV)", "BOTH"),
+          t("7.3.5.4", "X-Rays", "BOTH")
+        ]),
         t("7.3.6", "Photoelectric Effect", "BOTH")
       ]),
       t("7.4", "Sound", "BOTH", [
@@ -1366,9 +1441,19 @@
       t("7.5", "Force", "BOTH", [
         t("7.5.1", "Types of Forces", "BOTH"),
         t("7.5.2", "Friction (Advantages and Disadvantages)", "BOTH"),
-        t("7.5.3", "Fluids: Pressure, Buoyancy, Archimedes' Principle, Pascal's Law", "BOTH"),
+        t("7.5.3", "Fluids: Pressure, Buoyancy, Archimedes' Principle, Pascal's Law", "BOTH", [
+          t("7.5.3.1", "Pressure in Fluids", "BOTH"),
+          t("7.5.3.2", "Buoyancy", "BOTH"),
+          t("7.5.3.3", "Archimedes' Principle", "BOTH"),
+          t("7.5.3.4", "Pascal's Law", "BOTH")
+        ]),
         t("7.5.4", "Density, Relative Density", "BOTH"),
-        t("7.5.5", "Adhesive & Cohesive Forces, Capillarity, Viscosity, Surface Tension", "BOTH")
+        t("7.5.5", "Adhesive & Cohesive Forces, Capillarity, Viscosity, Surface Tension", "BOTH", [
+          t("7.5.5.1", "Adhesive & Cohesive Forces", "BOTH"),
+          t("7.5.5.2", "Capillarity", "BOTH"),
+          t("7.5.5.3", "Viscosity", "BOTH"),
+          t("7.5.5.4", "Surface Tension", "BOTH")
+        ])
       ]),
       t("7.6", "Gravitation", "BOTH", [
         t("7.6.1", "Centripetal and Centrifugal Force", "BOTH"),
@@ -1423,9 +1508,29 @@
         t("9.1.1", "Major Kerala Audio-Visual Art Forms: Origin, Development, Spread, Places, Institutions, Artists, Writers", "BOTH")
       ]),
       t("9.2", "Sports", "BOTH", [
-        t("9.2.1", "Major Sportspersons (Kerala, India, World), Sports Equipment, Achievements", "BOTH"),
-        t("9.2.2", "Awards, Trophies, Number of Players, Sports Terms", "BOTH"),
-        t("9.2.3", "International Sports Events: Olympics, Winter Olympics, Paralympics, Asian Games, Afro-Asian Games, Commonwealth Games, SAF Games, National Games", "BOTH")
+        t("9.2.1", "Major Sportspersons (Kerala, India, World), Sports Equipment, Achievements", "BOTH", [
+          t("9.2.1.1", "Kerala Sportspersons", "BOTH"),
+          t("9.2.1.2", "Indian Sportspersons", "BOTH"),
+          t("9.2.1.3", "World Sportspersons", "BOTH"),
+          t("9.2.1.4", "Sports Equipment", "BOTH"),
+          t("9.2.1.5", "Achievements", "BOTH")
+        ]),
+        t("9.2.2", "Awards, Trophies, Number of Players, Sports Terms", "BOTH", [
+          t("9.2.2.1", "Sports Awards", "BOTH"),
+          t("9.2.2.2", "Trophies", "BOTH"),
+          t("9.2.2.3", "Number of Players", "BOTH"),
+          t("9.2.2.4", "Sports Terms", "BOTH")
+        ]),
+        t("9.2.3", "International Sports Events: Olympics, Winter Olympics, Paralympics, Asian Games, Afro-Asian Games, Commonwealth Games, SAF Games, National Games", "BOTH", [
+          t("9.2.3.1", "Olympics", "BOTH"),
+          t("9.2.3.2", "Winter Olympics", "BOTH"),
+          t("9.2.3.3", "Paralympics", "BOTH"),
+          t("9.2.3.4", "Asian Games", "BOTH"),
+          t("9.2.3.5", "Afro-Asian Games", "BOTH"),
+          t("9.2.3.6", "Commonwealth Games", "BOTH"),
+          t("9.2.3.7", "SAF Games", "BOTH"),
+          t("9.2.3.8", "National Games", "BOTH")
+        ])
       ]),
       t("9.3", "Literature", "BOTH", [
         t("9.3.1", "Malayalam Literature, Literary Movements and Leaders", "BOTH"),
@@ -1435,8 +1540,16 @@
         t("9.3.5", "Malayalam Cinema: Origin, Development, Milestones, People, National Awards", "BOTH")
       ]),
       t("9.4", "Culture", "BOTH", [
-        t("9.4.1", "Kerala Art Forms, Major Festivals, Cultural Centres", "BOTH"),
-        t("9.4.2", "Celebrations, Associated Places, Places of Worship", "BOTH"),
+        t("9.4.1", "Kerala Art Forms, Major Festivals, Cultural Centres", "BOTH", [
+          t("9.4.1.1", "Kerala Art Forms", "BOTH"),
+          t("9.4.1.2", "Major Festivals", "BOTH"),
+          t("9.4.1.3", "Cultural Centres", "BOTH")
+        ]),
+        t("9.4.2", "Celebrations, Associated Places, Places of Worship", "BOTH", [
+          t("9.4.2.1", "Celebrations", "BOTH"),
+          t("9.4.2.2", "Associated Places", "BOTH"),
+          t("9.4.2.3", "Places of Worship", "BOTH")
+        ]),
         t("9.4.3", "Cultural Leaders and Their Contributions", "BOTH")
       ])
     ]),
@@ -1449,12 +1562,28 @@
         t("10.1.4", "Memory Devices", "BOTH")
       ]),
       t("10.2", "Software, OS, Applications", "BOTH", [
-        t("10.2.1", "System Software, Application Software, OS Functions and Examples", "BOTH"),
-        t("10.2.2", "Word Processors, Spreadsheets, Database Packages, Presentation Software, Image Editors", "BOTH")
+        t("10.2.1", "System Software, Application Software, OS Functions and Examples", "BOTH", [
+          t("10.2.1.1", "System Software", "BOTH"),
+          t("10.2.1.2", "Application Software", "BOTH"),
+          t("10.2.1.3", "OS Functions and Examples", "BOTH")
+        ]),
+        t("10.2.2", "Word Processors, Spreadsheets, Database Packages, Presentation Software, Image Editors", "BOTH", [
+          t("10.2.2.1", "Word Processors", "BOTH"),
+          t("10.2.2.2", "Spreadsheets", "BOTH"),
+          t("10.2.2.3", "Database Packages", "BOTH"),
+          t("10.2.2.4", "Presentation Software", "BOTH"),
+          t("10.2.2.5", "Image Editors", "BOTH")
+        ])
       ]),
       t("10.3", "Networks, LAN / MAN / WAN", "BOTH", [
         t("10.3.1", "Network Media", "BOTH"),
-        t("10.3.2", "Switch, Hub, Router, Bridge, Gateway", "BOTH")
+        t("10.3.2", "Switch, Hub, Router, Bridge, Gateway", "BOTH", [
+          t("10.3.2.1", "Switch", "BOTH"),
+          t("10.3.2.2", "Hub", "BOTH"),
+          t("10.3.2.3", "Router", "BOTH"),
+          t("10.3.2.4", "Bridge", "BOTH"),
+          t("10.3.2.5", "Gateway", "BOTH")
+        ])
       ]),
       t("10.4", "Internet, WWW, E-mail, Browsers", "BOTH", [
         t("10.4.1", "Search Engines", "BOTH"),
@@ -1469,7 +1598,13 @@
       ]),
       t("10.7", "Programming", "BOTH", [
         t("10.7.1", "Programming Basics", "BOTH"),
-        t("10.7.2", "Input, Output, Store, Control, Transfer Instructions", "BOTH")
+        t("10.7.2", "Input, Output, Store, Control, Transfer Instructions", "BOTH", [
+          t("10.7.2.1", "Input Instructions", "BOTH"),
+          t("10.7.2.2", "Output Instructions", "BOTH"),
+          t("10.7.2.3", "Store Instructions", "BOTH"),
+          t("10.7.2.4", "Control Instructions", "BOTH"),
+          t("10.7.2.5", "Transfer Instructions", "BOTH")
+        ])
       ]),
       t("10.8", "E-Governance (Computer Perspective)", "BOTH")
     ]),
@@ -1762,7 +1897,6 @@
     "17": { id: "special-topics",        code: "17", icon: "📐", title: "Legal Metrology",              titleMl: "ലീഗൽ മെട്രോളജി",          desc: "Basics, Acts, Rules — 883 only" }
   };
 
-  // REVERTED: Kept only the subjects that actually have multiple separate chapter files
   const CHAPTER_SECTIONS = new Set(["1", "2", "13", "15", "16", "17"]);
 
   function toTopic(node, inheritedTag) {
@@ -1779,7 +1913,6 @@
     };
   }
 
-  // ADDED: Helper function to recursively flatten sub-topics (like 7.1.1) into the list
   function getFlattenedTopics(nodes, inheritedTag) {
     let out = [];
     for (const node of nodes) {
