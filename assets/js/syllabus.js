@@ -1906,7 +1906,9 @@
     "17": { id: "special-topics",        code: "17", icon: "📐", title: "Legal Metrology",              titleMl: "ലീഗൽ മെട്രോളജി",          desc: "Basics, Acts, Rules — 883 only" }
   };
 
-  const CHAPTER_SECTIONS = new Set(["1", "2", "13", "15", "16", "17"]);
+  // Sections whose subsection shape is mixed (leaf + nested). The adapter
+  // keeps leaf subsections as a single topic and expands composite ones.
+  const CHAPTER_SECTIONS = new Set(["1", "2", "4", "7", "9", "10", "13", "15", "16", "17"]);
 
   function toTopic(node, inheritedTag) {
     const tag = node.tag || inheritedTag;
@@ -1945,6 +1947,22 @@
       if (chaptered) {
         chapters = (section.children || []).map(function (ch) {
           const chTag = ch.tag || sectionTag;
+          const hasChildren = ch.children && ch.children.length > 0;
+
+          // Composite subsection (e.g. 4.7, 7.3, 9.2) → expand children as topics.
+          // Leaf subsection (e.g. 4.1, 10.5, 10.8) → keep itself as the single topic.
+          const topics = hasChildren
+            ? getFlattenedTopics(ch.children, chTag)
+            : [{
+                id: ch.id,
+                title: ch.title,
+                titleMl: TITLE_ML[ch.id] || "",
+                tag: chTag,
+                file: (FILES[ch.id] && FILES[ch.id].file) || null,
+                key:  (FILES[ch.id] && FILES[ch.id].key)  || null,
+                qs:   (FILES[ch.id] && FILES[ch.id].qs)   || 0
+              }];
+
           return {
             id: ch.id,
             title: ch.title,
@@ -1953,7 +1971,7 @@
             file: CHAPTER_FILES[ch.id] || null,
             key: null,
             qs: 0,
-            topics: getFlattenedTopics(ch.children || [], chTag)
+            topics: topics
           };
         });
       } else {
