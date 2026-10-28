@@ -632,7 +632,7 @@
     "2.3.1":  { file: "topics/geography/2.3.1-physiography.html",           key: "geography-2.3.1-physiography",           qs: 15 },
     "2.3.2":  { file: "topics/geography/2.3.2-districts.html",              key: "geography-2.3.2-districts",              qs: 20 },
     "2.3.3":  { file: "topics/geography/2.3.3-kerala-rivers.html",          key: "geography-2.3.3-kerala-rivers",          qs: 0 },
-    "2.3.4":  { file: "topics/geography/2.3.3-climate.html",                key: "geography-2.3.3-climate",                qs: 15 },
+    "2.3.4":  { file: "topics/geography/2.3.4-climate.html",                key: "geography-2.3.4-climate",                qs: 15 },
     "2.3.5":  { file: "topics/geography/2.3.5-kerala-natural-vegetation.html", key: "geography-2.3.5-kerala-natural-vegetation", qs: 0 },
     "2.3.6":  { file: "topics/geography/2.3.6-kerala-wildlife.html",        key: "geography-2.3.6-kerala-wildlife",        qs: 0 },
     "2.3.7":  { file: "topics/geography/2.3.7-kerala-agriculture.html",     key: "geography-2.3.7-kerala-agriculture",     qs: 0 },
@@ -1053,28 +1053,10 @@
     "4":    "chapters/constitution/4-indian-constitution.html",
     "5":    "chapters/kerala-administration/5-kerala-administration.html",
     "6":    "chapters/biology/6-biology-public-health.html",
-    "7.1":  "chapters/physics/7-physics.html",
-    "7.2":  "chapters/physics/7-physics.html",
-    "7.3":  "chapters/physics/7-physics.html",
-    "7.4":  "chapters/physics/7-physics.html",
-    "7.5":  "chapters/physics/7-physics.html",
-    "7.6":  "chapters/physics/7-physics.html",
-    "7.7":  "chapters/physics/7-physics.html",
-    "7.8":  "chapters/physics/7-physics.html",
-    "7.9":  "chapters/physics/7-physics.html",
+    "7":    "chapters/physics/7-physics.html",
     "8":    "chapters/chemistry/8-chemistry.html",
-    "9.1":  "chapters/art-sports-literature/9-art-sports-literature.html",
-    "9.2":  "chapters/art-sports-literature/9-art-sports-literature.html",
-    "9.3":  "chapters/art-sports-literature/9-art-sports-literature.html",
-    "9.4":  "chapters/art-sports-literature/9-art-sports-literature.html",
-    "10.1": "chapters/computer/10-computer-it.html",
-    "10.2": "chapters/computer/10-computer-it.html",
-    "10.3": "chapters/computer/10-computer-it.html",
-    "10.4": "chapters/computer/10-computer-it.html",
-    "10.5": "chapters/computer/10-computer-it.html",
-    "10.6": "chapters/computer/10-computer-it.html",
-    "10.7": "chapters/computer/10-computer-it.html",
-    "10.8": "chapters/computer/10-computer-it.html",
+    "9":    "chapters/art-sports-literature/9-art-sports-literature.html",
+    "10":   "chapters/computer/10-computer-it.html",
     "11":   "chapters/arithmetic/11-simple-arithmetic.html",
     "12":   "chapters/mental-ability/12-mental-ability.html",
     "13.1": "chapters/english/13.1-grammar.html",
@@ -1243,10 +1225,11 @@
       t("3.9",  "Green Revolution", "BOTH"),
       t("3.10", "Direct Taxes", "573"),
       t("3.11", "Indirect Taxes", "573"),
-      t("3.12", "GST in India", "573"),
-      t("3.12.1", "GST: Rationale (Necessity)", "573"),
-      t("3.12.2", "GST: Structure", "573"),
-      t("3.12.3", "GST: Benefits", "573")
+      t("3.12", "GST in India", "573", [
+        t("3.12.1", "GST: Rationale (Necessity)", "573"),
+        t("3.12.2", "GST: Structure", "573"),
+        t("3.12.3", "GST: Benefits", "573")
+      ])
     ]),
 
     t("4", "INDIAN CONSTITUTION", "BOTH", [
@@ -1256,14 +1239,16 @@
       t("4.4",  "Fundamental Rights", "BOTH"),
       t("4.5",  "Directive Principles", "BOTH"),
       t("4.6",  "Fundamental Duties", "BOTH"),
-      t("4.7",  "Central Government", "BOTH"),
-      t("4.7.1", "Central Executive", "BOTH"),
-      t("4.7.2", "Parliament", "BOTH"),
-      t("4.7.3", "Central Judiciary", "BOTH"),
-      t("4.8",  "State Government", "BOTH"),
-      t("4.8.1", "State Executive", "BOTH"),
-      t("4.8.2", "State Legislature", "BOTH"),
-      t("4.8.3", "State Judiciary", "BOTH"),
+      t("4.7",  "Central Government", "BOTH", [
+        t("4.7.1", "Central Executive", "BOTH"),
+        t("4.7.2", "Parliament", "BOTH"),
+        t("4.7.3", "Central Judiciary", "BOTH")
+      ]),
+      t("4.8",  "State Government", "BOTH", [
+        t("4.8.1", "State Executive", "BOTH"),
+        t("4.8.2", "State Legislature", "BOTH"),
+        t("4.8.3", "State Judiciary", "BOTH")
+      ]),
       t("4.9",  "Constitutional Institutions", "BOTH"),
       t("4.10", "Functions of Constitutional Institutions", "BOTH"),
       t("4.11", "Panchayati Raj", "BOTH"),
@@ -1271,9 +1256,10 @@
       t("4.13", "State List", "BOTH"),
       t("4.14", "Concurrent List", "BOTH"),
       t("4.15", "Special-Priority Formats", "BOTH"),
-      t("4.16", "Amendments", "BOTH"),
-      t("4.16.1", "42nd, 44th, 52nd, 73rd, 74th, 86th, 91st Amendments", "BOTH"),
-      t("4.16.2", "97th, 101st, 102nd, 103rd, 104th Amendments", "BOTH"),
+      t("4.16", "Amendments", "BOTH", [
+        t("4.16.1", "42nd, 44th, 52nd, 73rd, 74th, 86th, 91st Amendments", "BOTH"),
+        t("4.16.2", "97th, 101st, 102nd, 103rd, 104th Amendments", "BOTH")
+      ]),
       t("4.17", "Institution → Article → Function", "BOTH"),
       t("4.18", "Comptroller and Auditor General — CAG", "573"),
       t("4.19", "Attorney General", "573"),
@@ -1295,12 +1281,13 @@
       t("4.35", "Regional Languages", "573"),
       t("4.36", "Language of Supreme Court and High Courts", "573"),
       t("4.37", "Special Directives Relating to Languages", "573"),
-      t("4.38", "Writs", "BOTH"),
-      t("4.38.1", "Habeas Corpus", "BOTH"),
-      t("4.38.2", "Mandamus", "BOTH"),
-      t("4.38.3", "Prohibition", "BOTH"),
-      t("4.38.4", "Certiorari", "BOTH"),
-      t("4.38.5", "Quo Warranto", "BOTH")
+      t("4.38", "Writs", "BOTH", [
+        t("4.38.1", "Habeas Corpus", "BOTH"),
+        t("4.38.2", "Mandamus", "BOTH"),
+        t("4.38.3", "Prohibition", "BOTH"),
+        t("4.38.4", "Certiorari", "BOTH"),
+        t("4.38.5", "Quo Warranto", "BOTH")
+      ])
     ]),
 
     t("5", "KERALA — ADMINISTRATION & GOVERNANCE", "BOTH", [
@@ -1775,7 +1762,8 @@
     "17": { id: "special-topics",        code: "17", icon: "📐", title: "Legal Metrology",              titleMl: "ലീഗൽ മെട്രോളജി",          desc: "Basics, Acts, Rules — 883 only" }
   };
 
-  const CHAPTER_SECTIONS = new Set(["1", "2", "7", "9", "10", "13", "15", "16", "17"]);
+  // REVERTED: Kept only the subjects that actually have multiple separate chapter files
+  const CHAPTER_SECTIONS = new Set(["1", "2", "13", "15", "16", "17"]);
 
   function toTopic(node, inheritedTag) {
     const tag = node.tag || inheritedTag;
@@ -1789,6 +1777,18 @@
       key: files.key || null,
       qs: files.qs || 0
     };
+  }
+
+  // ADDED: Helper function to recursively flatten sub-topics (like 7.1.1) into the list
+  function getFlattenedTopics(nodes, inheritedTag) {
+    let out = [];
+    for (const node of nodes) {
+      out.push(toTopic(node, node.tag || inheritedTag));
+      if (node.children) {
+        out = out.concat(getFlattenedTopics(node.children, node.tag || inheritedTag));
+      }
+    }
+    return out;
   }
 
   function buildLegacySubjects() {
@@ -1811,7 +1811,7 @@
             file: CHAPTER_FILES[ch.id] || null,
             key: null,
             qs: 0,
-            topics: (ch.children || []).map(function (tp) { return toTopic(tp, chTag); })
+            topics: getFlattenedTopics(ch.children || [], chTag)
           };
         });
       } else {
@@ -1823,7 +1823,7 @@
           file: CHAPTER_FILES[section.id] || null,
           key: null,
           qs: 0,
-          topics: (section.children || []).map(function (tp) { return toTopic(tp, sectionTag); })
+          topics: getFlattenedTopics(section.children || [], sectionTag)
         }];
       }
 
