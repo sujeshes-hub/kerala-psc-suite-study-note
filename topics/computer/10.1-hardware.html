@@ -1,106 +1,2039 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10.1 Hardware - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – കമ്പ്യൂട്ടർ ഹാർഡ്‌വെയർ ഭാഗം 1 | അധ്യായം 10.1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00695c;
+      --primary-light: #00897b;
+      --secondary: #1565c0;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #e0f2f1;
+      --border: #b2dfdb;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #00695c;
+      --table-alt: #e0f2f1;
+      --star: #f9a825;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #4db6ac; --primary-light: #80cbc4;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #00897b; --table-alt: #181825;
+    }
+
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #7b4b1e; --primary-light: #9c6b3a;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #7b4b1e; --table-alt: #f2ead4;
+    }
+
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn {
+      background: #181825;
+      color: var(--text);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .layout {
+      display: grid; grid-template-columns: 270px 1fr;
+      gap: 20px; max-width: 1400px; margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky; top: 16px;
+      height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 105, 92, 0.1);
+      padding: 16px; align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px; font-weight: 700; color: var(--primary);
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12.5px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg); color: var(--primary);
+      border-left-color: var(--primary); font-weight: 600;
+    }
+
+    .progress-wrap {
+      margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: 12px; color: var(--text-light);
+      margin-bottom: 6px; display: flex;
+      justify-content: space-between; font-weight: 600;
+    }
+    .progress-track {
+      width: 100%; height: 8px; background: var(--light-bg);
+      border-radius: 4px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .main-container {
+      background: var(--bg); border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 105, 92, 0.12);
+      padding: 24px; min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #00695c 0%, #00897b 100%);
+      color: #fff; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px;
+    }
+    .chapter-header .label {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px;
+    }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    .utility-bar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: space-between; align-items: center;
+      background: var(--light-bg); padding: 10px 16px;
+      border-radius: 10px; margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+    .search-input {
+      flex: 1; min-width: 200px; padding: 8px 12px;
+      border: 1px solid var(--border); border-radius: 6px;
+      background: var(--bg); color: var(--text);
+      font-family: inherit; font-size: 14px;
+    }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn {
+      padding: 7px 12px; font-size: 13px; font-family: inherit;
+      font-weight: 600; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--bg);
+      color: var(--primary); cursor: pointer; transition: all 0.2s;
+    }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+
+    body.recall-mode strong {
+      filter: blur(5px); background: rgba(0, 137, 123, 0.15);
+      border-radius: 4px; padding: 0 4px;
+      cursor: pointer; transition: filter 0.2s ease; user-select: none;
+    }
+    body.recall-mode strong:hover,
+    body.recall-mode strong.revealed { filter: blur(0); }
+
+    .section {
+      margin-bottom: 20px; border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary);
+      padding: 14px 18px; font-size: 18.5px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s;
+      border-radius: 0; margin: 0; gap: 10px;
+    }
+    .section h2:hover { background: #b2dfdb; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check {
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--secondary); flex-shrink: 0;
+    }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0;
+      border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #00695c; color: #fff; border-left-color: #00897b; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick {
+      display: block; margin-top: 6px; padding: 6px 10px;
+      background: var(--memory-bg); border-left: 4px solid var(--memory-border);
+      border-radius: 6px; font-size: 14.5px; line-height: 1.6;
+    }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results {
+      display: none; text-align: center; padding: 16px; margin-bottom: 16px;
+      color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px;
+    }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0;
+      font-size: 13.5px; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    thead th {
+      background: var(--table-head); color: #fff;
+      padding: 10px 12px; text-align: left; font-weight: 600;
+    }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+
+    .quiz-dashboard {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      align-items: center; justify-content: space-between;
+      background: var(--light-bg); padding: 14px 18px;
+      border-radius: 10px; margin-bottom: 16px;
+      border: 2px solid var(--primary);
+      position: sticky; top: 10px; z-index: 50;
+    }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+
+    .question-item {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; margin: 14px 0;
+    }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn {
+      display: block; padding: 8px 12px; background: var(--bg);
+      color: var(--text); border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s;
+      font-size: 14px; font-family: inherit; text-align: left; width: 100%;
+    }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; background: var(--bg); color: var(--text);
+      transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px;
+      background: var(--memory-bg); border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky; top: 0; height: auto; max-height: 60px;
+        overflow-x: auto; overflow-y: hidden; padding: 8px 12px;
+        border-radius: 0 0 12px 12px; z-index: 100;
+      }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px; background: var(--light-bg);
+        border-radius: 20px; border-left: none; font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        background: #00695c !important; color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #e0f2f1 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">10.1 Hardware</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. തിരുത്തലുകളുടെ പട്ടിക</a></li>
+      <li><a href="#sec4">4. ഹാർഡ്‌വെയർ അടിസ്ഥാനം</a></li>
+      <li><a href="#sec5">5. വോൺ ന്യൂമാൻ ആർക്കിടെക്ചർ</a></li>
+      <li><a href="#sec6">6. CPU – സി.പി.യു</a></li>
+      <li><a href="#sec7">7. മദർബോർഡും ഘടകങ്ങളും</a></li>
+      <li><a href="#sec8">8. ബസ്സുകൾ</a></li>
+      <li><a href="#sec9">9. SMPS, UPS, CMOS</a></li>
+      <li><a href="#sec10">10. പോർട്ടുകൾ</a></li>
+      <li><a href="#sec11">11. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec12">12. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</a></li>
+      <li><a href="#sec13">13. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec14">14. PSC വിശകലനം</a></li>
+      <li><a href="#sec15">15. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec16">16. Mnemonics</a></li>
+      <li><a href="#sec17">17. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec18">18. കാലക്രമം</a></li>
+      <li><a href="#sec19">19. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec20">20. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec21">21. Quick Revision</a></li>
+      <li><a href="#sec22">22. Top Maximum Facts</a></li>
+      <li><a href="#sec23">23. ഉപസംഹാരം</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 10.1 | ഭാഗം 1 / 4</div>
+      <h1>കമ്പ്യൂട്ടർ ഹാർഡ്‌വെയർ – അടിസ്ഥാനം, CPU, മദർബോർഡ്, പോർട്ടുകൾ</h1>
+      <div class="subtitle">Computer Hardware Basics | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 കുറിപ്പുകളിൽ തിരയുക (ഉദാ: CPU, ALU, USB, HDMI, മദർബോർഡ്)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0 -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനമാക്കി)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — CPU-യുടെ 3 ഭാഗങ്ങൾ (ALU, CU, Registers), ഇന്റൽ 4004, ഒന്നാം സൂപ്പർ കമ്പ്യൂട്ടർ (CDC 6600), USB/HDMI/VGA/PS/2 പോർട്ടുകൾ</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — മദർബോർഡ് ഘടകങ്ങൾ, ബസ്സുകൾ (Data/Address/Control), SMPS vs UPS, CMOS ബാറ്ററി</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — വോൺ ന്യൂമാൻ ആർക്കിടെക്ചർ, ഐ.സി നിർമ്മാണ ചരിത്രം (കിൽബി vs നോയ്സ്), യോട്ടാബൈറ്റ് പ്രിഫിക്സ് അപ്ഡേറ്റ്</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — GPU, ചിപ്സെറ്റ്, പ്രിന്റർ പോർട്ട്, DVI, USB-C</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ചാൾസ് ബാബേജ്, അഡ ലവ്‌ലേസ്, ENIAC, മൗസിന്റെ പേറ്റന്റ് ചരിത്രം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>CPU = തലച്ചോറ്</strong> (ALU + CU + Registers)</li>
+            <li><strong>മദർബോർഡ് = അമ്മ</strong> (എല്ലാം ബന്ധിപ്പിക്കുന്നു)</li>
+            <li><strong>ഇന്റൽ 4004 = ആദ്യ മൈക്രോപ്രൊസസ്സർ (1971)</strong></li>
+            <li><strong>ശക്തി = ഇന്ത്യൻ പ്രൊസസ്സർ</strong> (IIT മദ്രാസ്); വേഗ = C-DAC</li>
+            <li><strong>USB = എല്ലാം ബന്ധിപ്പിക്കും</strong> (അജയ് ഭട്ട്)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1 -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> കമ്പ്യൂട്ടറിലെ കണ്ണുകൊണ്ട് കാണാനും കൈകൊണ്ട് തൊടാനും കഴിയുന്ന (Tangible) എല്ലാ ഭൗതിക ഭാഗങ്ങളും ചേർന്നതാണ് <strong>ഹാർഡ്‌വെയർ (Hardware)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>PSC പ്രാധാന്യം:</strong> കമ്പ്യൂട്ടർ സയൻസ് (4 മാർക്ക്) ഭാഗത്തെ ഏറ്റവും കൂടുതൽ ചോദ്യങ്ങൾ വരുന്ന അടിസ്ഥാന അധ്യായം. LDC (883), പ്ലസ് ടു, ഡിഗ്രി (573) എന്നിവയ്ക്കെല്ലാം (B) ബാധകം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഏഴ് ഉപവിഷയങ്ങൾ (10.1.1–10.1.7):</strong> ഹാർഡ്‌വെയർ അടിസ്ഥാനം, ഇൻപുട്ട്, ഔട്ട്പുട്ട്, പ്രൈമറി മെമ്മറി, സെക്കൻഡറി മെമ്മറി, മെമ്മറി യൂണിറ്റുകൾ.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ തുടക്കക്കാർക്കുള്ള ഒറ്റവരി നിർവ്വചനങ്ങൾ</span>
+          <ul>
+            <li><strong>ഹാർഡ്‌വെയർ</strong> = തൊടാൻ പറ്റുന്നത് (കീബോർഡ്, മോണിറ്റർ)</li>
+            <li><strong>സോഫ്റ്റ്‌വെയർ</strong> = തൊടാൻ പറ്റാത്ത പ്രോഗ്രാം (Windows, MS Word)</li>
+            <li><strong>ഫേംവെയർ</strong> = ഹാർഡ്‌വെയർ ചിപ്പിനുള്ളിൽ സ്ഥിരമായി എഴുതിവെച്ച പ്രോഗ്രാം (BIOS)</li>
+            <li>🧠 <strong>"ഹാർഡ് = തൊടാം, സോഫ്റ്റ് = തൊടാൻ പറ്റില്ല"</strong></li>
+          </ul>
+        </div>
+
+        <div class="important">
+          <span class="box-label">⭐ KPSC പ്രധാന ചോദ്യമേഖലകൾ</span>
+          <ul>
+            <li>ഇൻപുട്ട്-ഔട്ട്പുട്ട് ഉപകരണങ്ങളെ വേർതിരിക്കൽ</li>
+            <li>പ്രിന്ററുകളുടെ തരങ്ങളും വേഗത യൂണിറ്റുകളും (DPI, PPM, CPS)</li>
+            <li>റാം vs റോം വ്യത്യാസം</li>
+            <li>ഏറ്റവും വേഗതയേറിയ മെമ്മറികൾ (Registers, Cache)</li>
+            <li>ഫ്ലോപ്പി, സി.ഡി, ഡി.വി.ഡി എന്നിവയുടെ ശേഷി</li>
+            <li>ബിറ്റ്-നിബിൾ-ബൈറ്റ് യൂണിറ്റുകൾ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ (Behind the Story)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കഥ 1 – മാംഗോ ഷേക്ക്:</strong> അമ്മ അടുക്കളയിൽ മാംഗോ ഷേക്ക് ഉണ്ടാക്കുന്നത് ഓർക്കുക:
+            <ul>
+              <li>മാങ്ങയും പാലും പഞ്ചസാരയും മിക്സി ജാറിലിടുന്നു → <strong>ഇൻപുട്ട് (Input)</strong></li>
+              <li>മിക്സി കറങ്ങി അരയ്ക്കുന്നു → <strong>പ്രോസസ്സിംഗ് (CPU)</strong></li>
+              <li>ഗ്ലാസ്സിൽ ഒഴിച്ച് കുടിക്കാൻ തരുന്നു → <strong>ഔട്ട്പുട്ട് (Output)</strong></li>
+              <li>അപ്പോൾത്തന്നെ കുടിക്കുന്നെങ്കിൽ കിച്ചൻ കൗണ്ടറിൽ വെക്കുന്നു → <strong>പ്രൈമറി മെമ്മറി (RAM)</strong></li>
+              <li>നാളത്തേക്ക് വെക്കാൻ ഫ്രിഡ്ജിൽ → <strong>സെക്കൻഡറി മെമ്മറി (Hard Disk)</strong></li>
+            </ul>
+            <span class="trick">🧠 <strong>"ഈ കഥ ഓർത്താൽ IPO + Storage എന്ന ചക്രം മറക്കില്ല"</strong></span>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കഥ 2 – മൗസിന്റെ ഉത്ഭവം:</strong> 1960-കളുടെ തുടക്കത്തിൽ കമ്പ്യൂട്ടർ പ്രവർത്തിപ്പിക്കാൻ കീബോർഡിൽ വലിയ കോഡുകൾ ടൈപ്പ് ചെയ്യണമായിരുന്നു. സ്ക്രീനിലെ പോയിന്റിലേക്ക് വേഗത്തിൽ എത്താൻ അമേരിക്കൻ എഞ്ചിനീയർ <strong>ഡഗ്ലസ് എംഗൽബാർട്ട് (Douglas Engelbart)</strong> <strong>1963–64</strong>-ൽ ഒരു ചെറിയ മരപ്പെട്ടിക്കുള്ളിൽ (Wooden shell) രണ്ട് ലോഹ ചക്രങ്ങൾ ഘടിപ്പിച്ച് ഉപകരണം നിർമ്മിച്ചു. പിന്നിൽനിന്ന് കമ്പ്യൂട്ടറിലേക്ക് നീണ്ട വയർ ചുണ്ടെലിയുടെ വാൽ പോലെ തോന്നിയതിനാൽ <strong>'മൗസ്'</strong> എന്ന പേര് വീണു.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ PSC വസ്തുത (മൗസ്)</span>
+          <p>മൗസിന് പേറ്റന്റ് ലഭിച്ചത് <strong>1970-ൽ</strong> ആണ്. ഇത് ആദ്യമായി പരസ്യമായി കാണിച്ചത് 1968-ലെ <strong>"Mother of All Demos"</strong>-ൽ ആയിരുന്നു.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. തിരുത്തലുകളുടെ പട്ടിക ✏️</span>
+      </h2>
+      <div class="section-body">
+        <div class="correction">
+          <span class="box-label">✏️ നോട്ടിലെ 6 തിരുത്തലുകൾ</span>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>#</th><th>നോട്ടിൽ ഉണ്ടായിരുന്നത്</th><th>ശരിയായ വിവരം</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>ലൈറ്റ് പെൻ ക്രിക്കറ്റ് ടി.വി വിശകലനത്തിന് ഉപയോഗിക്കുന്നു</td><td>ടി.വിയിൽ സ്ക്രീനിൽ വരയ്ക്കുന്ന ഉപകരണം <strong>ടെലസ്ട്രേറ്റർ (Telestrator)</strong> ആണ്. ലൈറ്റ് പെൻ CAD / സ്ക്രീനിൽ വരയ്ക്കാൻ.</td></tr>
+                <tr><td>2</td><td>ലോകത്തിലെ ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ CRAY-1 (1976)</td><td>ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ <strong>CDC 6600 (1964, സെയ്മൂർ ക്രേ)</strong>. CRAY-1 (1976) ആദ്യത്തെ വിജയകരമായ വാണിജ്യ സൂപ്പർ കമ്പ്യൂട്ടർ.</td></tr>
+                <tr><td>3</td><td>ഐ.സി: ജാക്ക് കിൽബിയും റോബർട്ട് നോയ്സും ചേർന്ന് 1958</td><td><strong>കിൽബി 1958</strong> (ടെക്സസ് ഇൻസ്ട്രുമെന്റ്സ്) ആദ്യ IC. <strong>നോയ്സ് 1959-ൽ</strong> സിലിക്കൺ IC സ്വതന്ത്രമായി വികസിപ്പിച്ചു.</td></tr>
+                <tr><td>4</td><td>ഇന്റൽ 4004 – ടെഡ് ഹോഫ്, ഫെഡറിക്കോ ഫാഗിൻ</td><td>ഡിസൈൻ ടീം: ടെഡ് ഹോഫ്, <strong>ഫെഡറിക്കോ ഫാഗിൻ</strong>, സ്റ്റാൻലി മസോർ, മസതോഷി ഷിമ.</td></tr>
+                <tr><td>5</td><td>യോട്ടാബൈറ്റ് ഏറ്റവും വലിയ ഔദ്യോഗിക യൂണിറ്റ്</td><td>2022-ൽ SI പുതിയ പ്രിഫിക്സുകൾ ചേർത്തു: <strong>Ronna (R)</strong>, <strong>Quetta (Q)</strong>. ഇപ്പോൾ Ronnabyte, Quettabyte ഉണ്ട്.</td></tr>
+                <tr><td>6</td><td>HDD "റെയ്നോൾഡ് ജോൺസൺ"</td><td>ശരി. കൂടെ ➕ RAMAC 305-ന്റെ ശേഷി ഏകദേശം <strong>5 MB</strong>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box (ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ)</span>
+          <p>ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ <strong>CDC 6600 (1964)</strong> ആണ്; CRAY-1 (1976) അല്ല! CRAY-1 ആദ്യത്തെ <strong>വിജയകരമായ വാണിജ്യ സൂപ്പർ കമ്പ്യൂട്ടർ</strong> മാത്രമാണ്.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box (IC ചരിത്രം)</span>
+          <p>ആദ്യ IC = <strong>ജാക്ക് കിൽബി (1958)</strong>; റോബർട്ട് നോയ്സ് = <strong>1959-ൽ സിലിക്കൺ IC</strong> (സ്വതന്ത്രമായി). രണ്ടുപേരും ചേർന്നല്ല!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. ഹാർഡ്‌വെയർ അടിസ്ഥാനം (10.1.1)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഹാർഡ്‌വെയർ:</strong> കമ്പ്യൂട്ടറിന്റെ ഭൗതിക ഭാഗങ്ങൾ (Physical components). അതിന് പ്രവർത്തിക്കാൻ നിർദ്ദേശം നൽകുന്ന പ്രോഗ്രാമുകളാണ് <strong>സോഫ്റ്റ്‌വെയർ</strong>. (ഉപമ: ശരീരം = ഹാർഡ്‌വെയർ, ജീവൻ/മനസ്സ് = സോഫ്റ്റ്‌വെയർ)</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഹാർഡ്‌വെയർ നാല് വിഭാഗം:</strong> ഇൻപുട്ട് യൂണിറ്റ്, CPU, മെമ്മറി യൂണിറ്റ്, ഔട്ട്പുട്ട് യൂണിറ്റ്. <span class="trick">🧠 <strong>I-C-M-O</strong> ("ഐ സി മോ")</span></li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ I-C-M-O വിശദീകരണം</span>
+          <ul>
+            <li><strong>I = Input Unit:</strong> കീബോർഡ്, മൗസ്, സ്കാനർ (ഡാറ്റ അകത്തേക്ക്)</li>
+            <li><strong>C = CPU:</strong> പ്രോസസ്സിംഗ് (തലച്ചോറ്)</li>
+            <li><strong>M = Memory Unit:</strong> RAM, ROM, ഹാർഡ് ഡിസ്ക് (സൂക്ഷിക്കൽ)</li>
+            <li><strong>O = Output Unit:</strong> മോണിറ്റർ, പ്രിന്റർ (ഫലം പുറത്തേക്ക്)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. വോൺ ന്യൂമാൻ ആർക്കിടെക്ചർ</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1945-ൽ ജോൺ വോൺ ന്യൂമാൻ</strong> മുന്നോട്ടുവെച്ച <strong>'സ്റ്റോർഡ് പ്രോഗ്രാം കൺസെപ്റ്റ്'</strong> (ഡാറ്റയും നിർദ്ദേശങ്ങളും ഒരേ മെമ്മറിയിൽ സൂക്ഷിക്കുന്ന രീതി) അനുസരിച്ചാണ് ഇന്നത്തെ കമ്പ്യൂട്ടറുകൾ നിർമ്മിച്ചിരിക്കുന്നത്.</li>
+          <li><strong>ഉൾപ്പെടുന്നവ:</strong> ഇൻപുട്ട് യൂണിറ്റ്, CPU, മെമ്മറി യൂണിറ്റ്, ഔട്ട്പുട്ട് യൂണിറ്റ്.</li>
+        </ul>
+
+        <div class="important">
+          <span class="box-label">⭐ ഇൻസ്ട്രക്ഷൻ സൈക്കിൾ (CPU ഒരു നിർദ്ദേശം ചെയ്യുന്ന വിധം)</span>
+          <p><strong>Fetch (എടുക്കൽ) → Decode (മനസ്സിലാക്കൽ) → Execute (നടപ്പാക്കൽ)</strong></p>
+          <span class="trick">🧠 <strong>"F-D-E: ഫെച്ച് ചെയ്യൂ, ഡീകോഡ് ചെയ്യൂ, എക്സിക്യൂട്ട് ചെയ്യൂ"</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. CPU – സി.പി.യു (Central Processing Unit)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>CPU = "കമ്പ്യൂട്ടറിന്റെ തലച്ചോറ്"</strong> (Brain of the Computer). ഒറ്റ സിലിക്കൺ ചിപ്പിൽ (IC) നിർമ്മിച്ച CPU-വിനെ <strong>മൈക്രോപ്രൊസസ്സർ (Microprocessor)</strong> എന്ന് വിളിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ലോകത്തിലെ ആദ്യ മൈക്രോപ്രൊസസ്സർ: ഇന്റൽ 4004 (1971)</strong>. ഡിസൈൻ ടീം: ടെഡ് ഹോഫ്, ഫെഡറിക്കോ ഫാഗിൻ, സ്റ്റാൻലി മസോർ, മസതോഷി ഷിമ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഇന്ത്യ:</strong> തദ്ദേശീയമായി വികസിപ്പിച്ച ആദ്യ മൈക്രോപ്രൊസസ്സർ <strong>'ശക്തി' (Shakti – IIT മദ്രാസ്)</strong>. സി-ഡാക് (C-DAC) വികസിപ്പിച്ച പ്രൊസസ്സർ <strong>'വേഗ' (Vega)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> IIT മദ്രാസ് ഉള്ളത് <strong>ചെന്നൈ</strong>യിൽ; C-DAC ആസ്ഥാനം <strong>പൂനെ</strong>. ഇന്ത്യയുടെ <strong>DHRUV64</strong> (C-DAC) എന്ന 64-ബിറ്റ് ഡ്യുവൽ കോർ പ്രൊസസ്സറും ഈ ശ്രേണിയിൽ വരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>CPU വേഗത (Clock Speed):</strong> <strong>ഹെർട്സ് (Hz)</strong> → ആധുനികം <strong>ജിഗാഹെർട്സ് (GHz)</strong>; മറ്റൊരു അളവ് <strong>MIPS (Million Instructions Per Second)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ക്ലോക്ക് സ്പീഡ്</strong> = CPU ഒരു സെക്കൻഡിൽ എത്ര "ടിക്" (പൾസ്) ഉണ്ടാക്കുന്നു എന്നത്. 3 GHz = സെക്കൻഡിൽ 300 കോടി ടിക്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കോറുകൾ (Dual core, Quad core):</strong> ഒരു ചിപ്പിനുള്ളിലെ പ്രോസസ്സിംഗ് യൂണിറ്റുകൾ. കോറുകൾ കൂടുന്തോറും ഒരേസമയം കൂടുതൽ ജോലി ചെയ്യാം.</li>
+        </ul>
+
+        <h3>6.1 CPU-വിന്റെ 3 പ്രധാന ഭാഗങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഭാഗം</th><th>ധർമ്മം</th><th>ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ALU (Arithmetic Logic Unit)</strong></td><td>ഗണിത ക്രിയകളും (+ − × ÷) യുക്തിപരമായ താരതമ്യങ്ങളും (AND, OR, NOT, &lt;, &gt;, =) ചെയ്യുന്നു</td><td>🧠 കണക്ക്</td></tr>
+              <tr><td><strong>CU (Control Unit)</strong></td><td><strong>"കമ്പ്യൂട്ടറിന്റെ നാഡീവ്യൂഹം"</strong>. സ്വയം ഡാറ്റ പ്രോസസ്സ് ചെയ്യില്ല; എല്ലാ ഭാഗങ്ങളെയും ഏകോപിപ്പിക്കുകയും നിയന്ത്രിക്കുകയും ചെയ്യുന്നു</td><td>🧠 ഭരണം</td></tr>
+              <tr><td><strong>രജിസ്റ്ററുകൾ (Registers)</strong></td><td>CPU-വിനുള്ളിലെ <strong>ഏറ്റവും വേഗതയേറിയ ചെറു താത്കാലിക മെമ്മറി യൂണിറ്റുകൾ</strong></td><td>🧠 കയ്യിലെ കുറിപ്പ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>6.2 രജിസ്റ്ററുകളുടെ തരങ്ങൾ</h3>
+        <ul>
+          <li><strong>PC (Program Counter):</strong> അടുത്ത നിർദ്ദേശത്തിന്റെ അഡ്രസ്സ് സൂക്ഷിക്കുന്നു</li>
+          <li><strong>Accumulator:</strong> ALU ഫലങ്ങൾ സൂക്ഷിക്കുന്നു</li>
+          <li><strong>IR (Instruction Register):</strong> ഇപ്പോൾ നടപ്പാക്കുന്ന നിർദ്ദേശം</li>
+          <li><strong>MAR (Memory Address Register):</strong> മെമ്മറി അഡ്രസ്സ്</li>
+          <li><strong>MDR (Memory Data Register):</strong> മെമ്മറിയിൽനിന്ന് വരുന്ന/പോകുന്ന ഡാറ്റ</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 ട്രിക്ക് – CPU-യുടെ 3 ഭാഗങ്ങൾ</span>
+          <p><strong>"അച്ഛൻ (ALU) കണക്കെഴുതും, കൺട്രോൾ (CU) നടത്തിപ്പുകാരൻ, രജിസ്റ്റർ രഹസ്യ പെട്ടി"</strong></p>
+          <p>ലളിതമായി: <strong>ALU = കണക്ക്, CU = ഭരണം, Register = കയ്യിലെ കുറിപ്പ്</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ CPU-വും മെമ്മറിയും തമ്മിലുള്ള ബന്ധം</span>
+          <p>CPU-വിന് നേരിട്ട് സംസാരിക്കാവുന്നത് <strong>പ്രൈമറി മെമ്മറിയോട് മാത്രം</strong>. ഹാർഡ് ഡിസ്കിലെ ഡാറ്റ ആദ്യം റാമിൽ എത്തണം.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ GPU (Graphics Processing Unit)</span>
+          <p>ചിത്രങ്ങളും വീഡിയോയും ഗെയിമും പ്രോസസ്സ് ചെയ്യുന്ന പ്രത്യേക പ്രൊസസ്സർ (ഗ്രാഫിക്സ് കാർഡ്).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. മദർബോർഡും അനുബന്ധ ഘടകങ്ങളും</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മദർബോർഡ് (Motherboard / Mainboard / System Board / PCB):</strong> CPU, RAM, ഹാർഡ് ഡിസ്ക്, പോർട്ടുകൾ തുടങ്ങിയ എല്ലാ പ്രധാന ഘടകങ്ങളെയും പരസ്പരം ബന്ധിപ്പിക്കുന്ന പ്രധാന സർക്യൂട്ട് ബോർഡ് (<strong>PCB – Printed Circuit Board</strong>).</li>
+        </ul>
+        <span class="trick">🧠 <strong>"മദർ = അമ്മ; വീട്ടിലെ എല്ലാവരെയും ഒരുമിപ്പിക്കുന്നു"</strong></span>
+
+        <h3>7.1 മദർബോർഡിലെ ഭാഗങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഭാഗം</th><th>ധർമ്മം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>CPU സോക്കറ്റ്</strong></td><td>പ്രോസസ്സർ ഘടിപ്പിക്കുന്ന സ്ഥലം</td></tr>
+              <tr><td><strong>RAM സ്ലോട്ട് (DIMM)</strong></td><td>റാം ഘടിപ്പിക്കാൻ</td></tr>
+              <tr><td><strong>ചിപ്സെറ്റ് (Chipset)</strong></td><td>മദർബോർഡിലെ ഘടകങ്ങൾക്കിടയിൽ ഡാറ്റാ ഗതാഗതം നിയന്ത്രിക്കുന്നു</td></tr>
+              <tr><td><strong>എക്സ്പാൻഷൻ സ്ലോട്ടുകൾ (PCI / PCIe)</strong></td><td>ഗ്രാഫിക്സ്, സൗണ്ട് കാർഡ് തുടങ്ങിയവ ഘടിപ്പിക്കാൻ</td></tr>
+              <tr><td><strong>BIOS ചിപ്പ്</strong></td><td>കമ്പ്യൂട്ടർ ഓൺ ചെയ്യുമ്പോൾ ആദ്യം പ്രവർത്തിക്കുന്ന പ്രോഗ്രാം</td></tr>
+              <tr><td><strong>CMOS ബാറ്ററി</strong></td><td>സമയം/തീയതി സൂക്ഷിക്കാൻ</td></tr>
+              <tr><td><strong>SATA കണക്ടറുകൾ</strong></td><td>ഹാർഡ് ഡിസ്ക്/SSD ബന്ധിപ്പിക്കാൻ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8 -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. ബസ്സുകൾ (Buses)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ബസ്സുകൾ:</strong> മദർബോർഡിൽ ഘടകങ്ങൾക്കിടയിൽ ഡാറ്റയും സിഗ്നലുകളും കൈമാറുന്ന ചെറു വൈദ്യുത പാതകൾ. മൂന്ന് തരം: <strong>Data Bus, Address Bus, Control Bus</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ബസ് വിഡ്ത്ത് (Bus Width):</strong> ഒരേസമയം ബസ്സിലൂടെ പോകുന്ന ബിറ്റുകളുടെ എണ്ണം.</li>
+        </ul>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ബസ് തരം</th><th>ധർമ്മം</th><th>ദിശ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Data Bus</strong></td><td>ഡാറ്റ കൊണ്ടുപോകുന്നു</td><td>ഇരുവശത്തേക്കും (Bidirectional)</td></tr>
+              <tr><td><strong>Address Bus</strong></td><td>ഡാറ്റ എവിടെ എന്ന വിലാസം</td><td>ഒരു ദിശയിൽ (CPU → മെമ്മറി)</td></tr>
+              <tr><td><strong>Control Bus</strong></td><td>നിയന്ത്രണ സിഗ്നലുകൾ</td><td>ഇരുവശത്തേക്കും</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>"ഡാറ്റ = ലോറി, അഡ്രസ്സ് = വിലാസം, കൺട്രോൾ = ട്രാഫിക് പോലീസ്"</strong></span>
+      </div>
+    </section>
+
+    <!-- SECTION 9 -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. SMPS, UPS, CMOS ബാറ്ററി</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>SMPS (Switched-Mode Power Supply):</strong> വിവിധ ഭാഗങ്ങൾക്ക് വേണ്ട വൈദ്യുതി നൽകുന്നു; <strong>AC-യെ DC ആക്കി</strong> മാറ്റുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>UPS (Uninterruptible Power Supply):</strong> വൈദ്യുതി പോയാലും കമ്പ്യൂട്ടർ ഓഫാകാതെ ബാറ്ററി ബാക്കപ്പ് നൽകുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>CMOS ബാറ്ററി (Complementary Metal-Oxide Semiconductor):</strong> കമ്പ്യൂട്ടർ ഓഫാക്കിയാലും <strong>തീയതിയും സമയവും</strong> BIOS സെറ്റിംഗ്സും നഷ്ടപ്പെടാതെ സൂക്ഷിക്കാൻ മദർബോർഡിലുള്ള ചെറിയ വട്ടത്തിലുള്ള ലിഥിയം ബാറ്ററി. (സാധാരണ <strong>CR2032</strong>)</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 ട്രിക്ക്</span>
+          <p><strong>SMPS = "മാറ്റി തരും" (AC→DC); UPS = "ഉടൻ പവർ സപ്പോർട്ട്" (ബാറ്ററി); CMOS = "ക്ലോക്ക് മെമ്മറി ഓൺ സ്റ്റാൻഡ്ബൈ", ഘടികാരത്തിന്റെ ബാറ്ററി.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10 -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. പ്രധാന പോർട്ടുകൾ (Ports)</span>
+      </h2>
+      <div class="section-body">
+        <p>ബാഹ്യ ഉപകരണങ്ങളെ കമ്പ്യൂട്ടറുമായി ബന്ധിപ്പിക്കുന്ന കണക്ഷൻ സ്ഥാനങ്ങൾ:</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പോർട്ട്</th><th>ഉപയോഗം / സവിശേഷത</th><th>ഓർമ്മ സൂചന</th></tr></thead>
+            <tbody>
+              <tr><td><strong>USB (Universal Serial Bus)</strong></td><td>മൗസ്, കീബോർഡ്, പെൻഡ്രൈവ്, പ്രിന്റർ തുടങ്ങി മിക്ക ഉപകരണങ്ങളും. സഹ-ഉപജ്ഞാതാവ്: ഇന്ത്യൻ വംശജൻ <strong>അജയ് ഭട്ട് (Ajay Bhatt)</strong>. ആദ്യ സ്പെസിഫിക്കേഷൻ 1996.</td><td>🧠 "യൂ-എസ്-ബി = എല്ലാം ബന്ധിപ്പിക്കും"</td></tr>
+              <tr><td><strong>HDMI (High-Definition Multimedia Interface)</strong></td><td>HD <strong>വീഡിയോയും ഓഡിയോയും ഒരേ കേബിളിൽ</strong> (മോണിറ്റർ, ടി.വി, പ്രൊജക്ടർ)</td><td>🧠 HDMI = <strong>H</strong>ear + <strong>D</strong>isplay, ശബ്ദവും ദൃശ്യവും</td></tr>
+              <tr><td><strong>VGA (Video Graphics Array)</strong></td><td>മോണിറ്ററിനെ CPU-വുമായി ബന്ധിപ്പിക്കുന്ന <strong>നീല നിറത്തിലെ 15-പിൻ</strong> കണക്ടർ; <strong>വീഡിയോ മാത്രം</strong></td><td>🧠 VGA = <strong>V</strong>ideo <strong>G</strong>ave <strong>A</strong>lone (ഓഡിയോ ഇല്ല)</td></tr>
+              <tr><td><strong>PS/2</strong></td><td>പഴയ കമ്പ്യൂട്ടറിൽ <strong>മൗസ് (പച്ച)</strong>, <strong>കീബോർഡ് (വയലറ്റ്/പർപ്പിൾ)</strong>; 6-പിൻ വട്ട പോർട്ട്</td><td>🧠 "പച്ച മൗസ്, വയലറ്റ് കീബോർഡ്" ("പച്ച = പുല്ല് തിന്നുന്ന മൗസ്")</td></tr>
+              <tr><td><strong>പാരലൽ പോർട്ട് (LPT)</strong></td><td>പഴയ പ്രിന്ററുകൾ; <strong>25-പിൻ</strong></td><td>🧠 <strong>പാ</strong>രലൽ = <strong>പ്രി</strong>ന്റർ</td></tr>
+              <tr><td><strong>ഇതർനെറ്റ് / LAN (RJ-45)</strong></td><td>നെറ്റ്‌വർക്ക് / ഇന്റർനെറ്റ് കേബിൾ</td><td>RJ-<strong>45</strong> = നെറ്റ്‌വർക്ക്</td></tr>
+              <tr><td><strong>RJ-11</strong></td><td>പഴയ ടെലിഫോൺ / മോഡം</td><td>RJ-<strong>11</strong> = ഫോൺ</td></tr>
+              <tr><td>➕ <strong>സീരിയൽ പോർട്ട് (COM)</strong></td><td>പഴയ മോഡം, മൗസ്; <strong>9-പിൻ</strong></td><td>—</td></tr>
+              <tr><td>➕ <strong>DVI</strong></td><td>ഡിജിറ്റൽ വീഡിയോ (VGA-യുടെ പിൻഗാമി)</td><td>—</td></tr>
+              <tr><td>➕ <strong>USB Type-C</strong></td><td>ചെറിയ, ഇരുവശവും കുത്താവുന്ന പുതിയ കണക്ടർ</td><td>—</td></tr>
+              <tr><td>➕ <strong>ഓഡിയോ ജാക്കുകൾ</strong></td><td><strong>പച്ച = സ്പീക്കർ/ഹെഡ്ഫോൺ (Output)</strong>, <strong>പിങ്ക് = മൈക്രോഫോൺ (Input)</strong>, <strong>നീല = Line-in</strong></td><td>🧠 "പച്ച കേൾക്കാൻ, പിങ്ക് പറയാൻ"</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 പോർട്ടുകളുടെ ഓർമ്മ – ഒറ്റവരി</span>
+          <p><strong>"USB എല്ലാം, HDMI ശബ്ദവും ദൃശ്യവും, VGA ദൃശ്യം മാത്രം, PS/2 പച്ച-വയലറ്റ്, പാരലൽ പ്രിന്റർ, RJ-45 നെറ്റ്, RJ-11 ഫോൺ"</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11 -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. അധിക വസ്തുതകൾ (Additional PSC Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div class="added-fact">
+          <span class="box-label">➕ ഹാർഡ്‌വെയർ അടിസ്ഥാനം – അധിക വസ്തുതകൾ</span>
+          <ul>
+            <li>കമ്പ്യൂട്ടറിന്റെ പിതാവ്: <strong>ചാൾസ് ബാബേജ്</strong> (ഡിഫറൻസ് എഞ്ചിൻ, അനലിറ്റിക്കൽ എഞ്ചിൻ). ആധുനിക കമ്പ്യൂട്ടർ ശാസ്ത്രത്തിന്റെ പിതാവ്: <strong>അലൻ ട്യൂറിംഗ്</strong>.</li>
+            <li>ലോക കമ്പ്യൂട്ടർ സാക്ഷരതാ ദിനം: <strong>ഡിസംബർ 2</strong>.</li>
+            <li><strong>ആദ്യത്തെ ജനറൽ-പർപ്പസ് ഇലക്ട്രോണിക് കമ്പ്യൂട്ടർ: ENIAC (1946)</strong>; ജോൺ എക്കർട്ട്, ജോൺ മോക്ലി എന്നിവർ.</li>
+            <li><strong>ലോകത്തിലെ ആദ്യ പ്രോഗ്രാമർ: അഡ ലവ്‌ലേസ് (Ada Lovelace)</strong>, ബാബേജിന്റെ അനലിറ്റിക്കൽ എഞ്ചിനു വേണ്ടി.</li>
+            <li><strong>വലിപ്പമനുസരിച്ച് കമ്പ്യൂട്ടറുകൾ:</strong> സൂപ്പർ കമ്പ്യൂട്ടർ &gt; മെയിൻഫ്രെയിം &gt; മിനി &gt; മൈക്രോ (PC, ലാപ്‌ടോപ്പ്).</li>
+            <li><strong>പ്രവർത്തന തത്വമനുസരിച്ച്:</strong> അനലോഗ് (തുടർച്ചയായ അളവുകൾ, ഉദാ: സ്പീഡോമീറ്റർ), ഡിജിറ്റൽ (0, 1), ഹൈബ്രിഡ് (രണ്ടും, ഉദാ: ആശുപത്രിയിലെ ECG/ICU മോണിറ്റർ).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12 -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>12.1 CPU-യുടെ 3 ഭാഗങ്ങൾ – ഡയഗ്രം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CPU parts diagram">
+            <rect x="20" y="20" width="560" height="210" rx="12" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
+            <text x="300" y="45" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#00695c">CPU – സി.പി.യു (Central Processing Unit)</text>
+
+            <rect x="60" y="70" width="140" height="90" rx="8" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="130" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">ALU</text>
+            <text x="130" y="120" text-anchor="middle" font-size="10" fill="#14202b">Arithmetic Logic Unit</text>
+            <text x="130" y="140" text-anchor="middle" font-size="10" fill="#4a5f72">കണക്ക് &amp; യുക്തി</text>
+
+            <rect x="230" y="70" width="140" height="90" rx="8" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="300" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">CU</text>
+            <text x="300" y="120" text-anchor="middle" font-size="10" fill="#14202b">Control Unit</text>
+            <text x="300" y="140" text-anchor="middle" font-size="10" fill="#4a5f72">നിയന്ത്രണം &amp; ഏകോപനം</text>
+
+            <rect x="400" y="70" width="140" height="90" rx="8" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="470" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">Registers</text>
+            <text x="470" y="120" text-anchor="middle" font-size="10" fill="#14202b">രജിസ്റ്ററുകൾ</text>
+            <text x="470" y="140" text-anchor="middle" font-size="10" fill="#4a5f72">ഏറ്റവും വേഗതയേറിയത്</text>
+
+            <line x1="200" y1="115" x2="230" y2="115" stroke="#00695c" stroke-width="2"/>
+            <line x1="370" y1="115" x2="400" y2="115" stroke="#00695c" stroke-width="2"/>
+
+            <text x="300" y="200" text-anchor="middle" font-size="11" fill="#00695c" font-style="italic">"അച്ഛൻ കണക്കെഴുതും, കൺട്രോൾ നടത്തിപ്പുകാരൻ, രജിസ്റ്റർ രഹസ്യ പെട്ടി"</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 12.1 – CPU-യുടെ 3 പ്രധാന ഭാഗങ്ങൾ.</div>
+        </div>
+
+        <h3>12.2 ബസ് ഘടന – ഡയഗ്രം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bus structure diagram">
+            <rect x="20" y="20" width="560" height="180" rx="12" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+            <text x="300" y="45" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#0d47a1">ബസ് ഘടന – CPU ↔ മെമ്മറി ↔ I/O</text>
+
+            <rect x="60" y="70" width="120" height="60" rx="8" fill="#bbdefb" stroke="#1565c0"/>
+            <text x="120" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#0d47a1">CPU</text>
+            <text x="120" y="115" text-anchor="middle" font-size="9" fill="#14202b">സി.പി.യു</text>
+
+            <rect x="240" y="70" width="120" height="60" rx="8" fill="#bbdefb" stroke="#1565c0"/>
+            <text x="300" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#0d47a1">Memory</text>
+            <text x="300" y="115" text-anchor="middle" font-size="9" fill="#14202b">മെമ്മറി</text>
+
+            <rect x="420" y="70" width="120" height="60" rx="8" fill="#bbdefb" stroke="#1565c0"/>
+            <text x="480" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#0d47a1">I/O</text>
+            <text x="480" y="115" text-anchor="middle" font-size="9" fill="#14202b">ഇൻപുട്ട്/ഔട്ട്പുട്ട്</text>
+
+            <line x1="180" y1="85" x2="240" y2="85" stroke="#0d47a1" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="360" y1="85" x2="420" y2="85" stroke="#0d47a1" stroke-width="2"/>
+
+            <text x="300" y="155" text-anchor="middle" font-size="11" fill="#0d47a1" font-weight="700">Data Bus / Address Bus / Control Bus</text>
+            <text x="300" y="175" text-anchor="middle" font-size="10" fill="#4a5f72">ഡാറ്റ = ലോറി, അഡ്രസ്സ് = വിലാസം, കൺട്രോൾ = ട്രാഫിക് പോലീസ്</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 12.2 – ബസ് ഘടന.</div>
+        </div>
+
+        <h3>12.3 ഇൻസ്ട്രക്ഷൻ സൈക്കിൾ – F-D-E</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Instruction cycle">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 Z" fill="#00695c"/>
+              </marker>
+            </defs>
+            <rect x="20" y="20" width="560" height="110" rx="12" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
+            <text x="300" y="45" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#00695c">ഇൻസ്ട്രക്ഷൻ സൈക്കിൾ</text>
+
+            <rect x="60" y="60" width="120" height="50" rx="8" fill="#b2dfdb" stroke="#00897b"/>
+            <text x="120" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Fetch</text>
+            <text x="120" y="100" text-anchor="middle" font-size="9" fill="#14202b">എടുക്കൽ</text>
+
+            <line x1="180" y1="85" x2="220" y2="85" stroke="#00695c" stroke-width="2" marker-end="url(#arrow)"/>
+
+            <rect x="220" y="60" width="140" height="50" rx="8" fill="#b2dfdb" stroke="#00897b"/>
+            <text x="290" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Decode</text>
+            <text x="290" y="100" text-anchor="middle" font-size="9" fill="#14202b">മനസ്സിലാക്കൽ</text>
+
+            <line x1="360" y1="85" x2="400" y2="85" stroke="#00695c" stroke-width="2" marker-end="url(#arrow)"/>
+
+            <rect x="400" y="60" width="140" height="50" rx="8" fill="#b2dfdb" stroke="#00897b"/>
+            <text x="470" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Execute</text>
+            <text x="470" y="100" text-anchor="middle" font-size="9" fill="#14202b">നടപ്പാക്കൽ</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 12.3 – ഇൻസ്ട്രക്ഷൻ സൈക്കിൾ.</div>
+        </div>
+
+        <h3>12.4 പോർട്ടുകളുടെ നിറ വ്യത്യാസം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Port colors">
+            <rect x="20" y="20" width="460" height="140" rx="12" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="250" y="45" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">പോർട്ടുകളുടെ നിറം – ഓർമ്മ വഴി</text>
+
+            <circle cx="100" cy="100" r="25" fill="#4caf50" stroke="#2e7d32" stroke-width="2"/>
+            <text x="100" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#2e7d32">പച്ച</text>
+            <text x="100" y="160" text-anchor="middle" font-size="9" fill="#14202b">മൗസ് / സ്പീക്കർ</text>
+
+            <circle cx="200" cy="100" r="25" fill="#9c27b0" stroke="#6a1b9a" stroke-width="2"/>
+            <text x="200" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#6a1b9a">വയലറ്റ്</text>
+            <text x="200" y="160" text-anchor="middle" font-size="9" fill="#14202b">കീബോർഡ്</text>
+
+            <circle cx="300" cy="100" r="25" fill="#e91e63" stroke="#ad1457" stroke-width="2"/>
+            <text x="300" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#ad1457">പിങ്ക്</text>
+            <text x="300" y="160" text-anchor="middle" font-size="9" fill="#14202b">മൈക്രോഫോൺ</text>
+
+            <circle cx="400" cy="100" r="25" fill="#2196f3" stroke="#0d47a1" stroke-width="2"/>
+            <text x="400" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#0d47a1">നീല</text>
+            <text x="400" y="160" text-anchor="middle" font-size="9" fill="#14202b">VGA / Line-in</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 12.4 – പോർട്ടുകളുടെ നിറം.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 13 -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. പ്രധാന വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>CPU = തലച്ചോറ്;</strong> 3 ഭാഗങ്ങൾ: ALU, CU, Registers.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആദ്യ മൈക്രോപ്രൊസസ്സർ: ഇന്റൽ 4004 (1971)</strong>; ടെഡ് ഹോഫ്, ഫെഡറിക്കോ ഫാഗിൻ, സ്റ്റാൻലി മസോർ, മസതോഷി ഷിമ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഇന്ത്യൻ പ്രൊസസ്സറുകൾ:</strong> ശക്തി (IIT മദ്രാസ്), വേഗ (C-DAC), DHRUV64.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മദർബോർഡ് = അമ്മ;</strong> എല്ലാ ഘടകങ്ങളെയും ബന്ധിപ്പിക്കുന്നു (PCB).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ബസ്സുകൾ:</strong> Data, Address, Control.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>SMPS = AC→DC;</strong> UPS = ബാറ്ററി ബാക്കപ്പ്; CMOS = ക്ലോക്ക് ബാറ്ററി (CR2032).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പോർട്ടുകൾ:</strong> USB (അജയ് ഭട്ട്), HDMI (ശബ്ദം+ദൃശ്യം), VGA (ദൃശ്യം മാത്രം), PS/2 (പച്ച മൗസ്, വയലറ്റ് കീബോർഡ്), പാരലൽ (25-പിൻ), RJ-45 (നെറ്റ്), RJ-11 (ഫോൺ).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ:</strong> CDC 6600 (1964, സെയ്മൂർ ക്രേ). <strong>CRAY-1 (1976)</strong> = ആദ്യ വിജയകരമായ വാണിജ്യ സൂപ്പർ കമ്പ്യൂട്ടർ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>IC ചരിത്രം:</strong> കിൽബി 1958 (ആദ്യ IC); നോയ്സ് 1959 (സിലിക്കൺ IC).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>SI പ്രിഫിക്സ്:</strong> Ronna (R), Quetta (Q) – 2022-ൽ ചേർത്തു.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 14 -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. Kerala PSC Exam Analysis</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപവിഷയം</th><th>പ്രാധാന്യം</th><th>വിശകലനം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>CPU – ALU, CU, Registers</strong></td><td>★★★</td><td>ഏറ്റവും കൂടുതൽ ചോദിക്കുന്നത്; "കമ്പ്യൂട്ടറിന്റെ തലച്ചോറ്", "നാഡീവ്യൂഹം"</td></tr>
+              <tr><td><strong>മൈക്രോപ്രൊസസ്സർ (ഇന്റൽ 4004)</strong></td><td>★★★</td><td>ആദ്യ മൈക്രോപ്രൊസസ്സർ, ഡിസൈൻ ടീം</td></tr>
+              <tr><td><strong>പോർട്ടുകൾ (USB, HDMI, VGA, PS/2)</strong></td><td>★★★</td><td>നിറം, പിൻ എണ്ണം, ഉപയോഗം</td></tr>
+              <tr><td><strong>മദർബോർഡ്, ബസ്സുകൾ</strong></td><td>★★</td><td>Data/Address/Control വേർതിരിക്കൽ</td></tr>
+              <tr><td><strong>SMPS, UPS, CMOS</strong></td><td>★★</td><td>AC→DC, ബാറ്ററി ബാക്കപ്പ്, ക്ലോക്ക് ബാറ്ററി</td></tr>
+              <tr><td><strong>ചരിത്രം (ബാബേജ്, അഡ ലവ്‌ലേസ്, ENIAC)</strong></td><td>★★</td><td>പിതാവ്, ആദ്യ പ്രോഗ്രാമർ, ആദ്യ ഇലക്ട്രോണിക് കമ്പ്യൂട്ടർ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 മുൻ ചോദ്യ ട്രെൻഡ്</span>
+          <ol>
+            <li><strong>ഭാഗം → ധർമ്മം:</strong> "CPU-യുടെ ഏത് ഭാഗമാണ് കണക്ക് ചെയ്യുന്നത്?" (ALU)</li>
+            <li><strong>ആദ്യങ്ങൾ:</strong> ആദ്യ മൈക്രോപ്രൊസസ്സർ, ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ</li>
+            <li><strong>പോർട്ട് → ഉപകരണം:</strong> "പച്ച നിറത്തിലുള്ള PS/2 പോർട്ട് എന്തിന്?" (മൗസ്)</li>
+            <li><strong>AC→DC:</strong> "ഏത് ഉപകരണമാണ് AC-യെ DC ആക്കുന്നത്?" (SMPS)</li>
+            <li><strong>ചരിത്രം:</strong> "കമ്പ്യൂട്ടറിന്റെ പിതാവ്?" (ചാൾസ് ബാബേജ്)</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15 -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വസ്തുത 1</th><th>വസ്തുത 2</th><th>വ്യത്യാസം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ALU</strong></td><td><strong>CU</strong></td><td>ALU = കണക്ക്; CU = ഭരണം (സ്വയം ഡാറ്റ പ്രോസസ്സ് ചെയ്യില്ല)</td></tr>
+              <tr><td><strong>HDMI</strong></td><td><strong>VGA</strong></td><td>HDMI = ശബ്ദം + ദൃശ്യം; VGA = ദൃശ്യം മാത്രം (നീല, 15-പിൻ)</td></tr>
+              <tr><td><strong>RJ-45</strong></td><td><strong>RJ-11</strong></td><td>RJ-45 = നെറ്റ്‌വർക്ക്; RJ-11 = ഫോൺ</td></tr>
+              <tr><td><strong>ഇന്റൽ 4004</strong></td><td><strong>ഇന്റൽ 8086</strong></td><td>4004 = ആദ്യ മൈക്രോപ്രൊസസ്സർ (1971); 8086 = IBM PC-യിലെ ആദ്യ പ്രോസസ്സർ</td></tr>
+              <tr><td><strong>SMPS</strong></td><td><strong>UPS</strong></td><td>SMPS = AC→DC കൺവെർട്ടർ; UPS = വൈദ്യുതി പോയാൽ ബാറ്ററി ബാക്കപ്പ്</td></tr>
+              <tr><td><strong>CDC 6600 (1964)</strong></td><td><strong>CRAY-1 (1976)</strong></td><td>ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ vs ആദ്യ വാണിജ്യ സൂപ്പർ കമ്പ്യൂട്ടർ</td></tr>
+              <tr><td><strong>ജാക്ക് കിൽബി (1958)</strong></td><td><strong>റോബർട്ട് നോയ്സ് (1959)</strong></td><td>ആദ്യ IC vs സിലിക്കൺ IC (സ്വതന്ത്രം)</td></tr>
+              <tr><td><strong>PS/2 – പച്ച</strong></td><td><strong>PS/2 – വയലറ്റ്</strong></td><td>പച്ച = മൗസ്; വയലറ്റ് = കീബോർഡ്</td></tr>
+              <tr><td><strong>Data Bus</strong></td><td><strong>Address Bus</strong></td><td>Data = ഇരുവശത്തേക്കും; Address = ഒരു ദിശയിൽ (CPU→മെമ്മറി)</td></tr>
+              <tr><td><strong>Ronna (R)</strong></td><td><strong>Quetta (Q)</strong></td><td>രണ്ടും 2022-ൽ ചേർത്ത SI പ്രിഫിക്സുകൾ (യോട്ടാബൈറ്റിനും മേലെ)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box (CPU-യുടെ ഭാഗങ്ങൾ)</span>
+          <ul>
+            <li><strong>"കമ്പ്യൂട്ടറിന്റെ തലച്ചോറ്" = CPU</strong> (മുഴുവൻ CPU-യും, ഒരു ഭാഗവുമല്ല)</li>
+            <li><strong>"കമ്പ്യൂട്ടറിന്റെ നാഡീവ്യൂഹം" = CU</strong> (Control Unit)</li>
+            <li><strong>"ഏറ്റവും വേഗതയേറിയ മെമ്മറി" = Registers</strong> (Cache അല്ല!)</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box (USB)</span>
+          <p>USB-യുടെ സഹ-ഉപജ്ഞാതാവ് <strong>അജയ് ഭട്ട്</strong> (ഇന്ത്യൻ വംശജൻ, അമേരിക്കയിൽ ജോലി ചെയ്യുന്നു) – <strong>ഇന്ത്യൻ ശാസ്ത്രജ്ഞൻ അല്ല, പക്ഷേ ഇന്ത്യൻ വംശജൻ!</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16 -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. മെമ്മറി ട്രിക്കുകൾ (Mnemonics)</span>
+      </h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – ഹാർഡ്‌വെയർ 4 വിഭാഗം</span>
+          <p><strong>I-C-M-O</strong> ("ഐ സി മോ") → Input, CPU, Memory, Output.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – CPU 3 ഭാഗങ്ങൾ</span>
+          <p><strong>"അച്ഛൻ (ALU) കണക്കെഴുതും, കൺട്രോൾ (CU) നടത്തിപ്പുകാരൻ, രജിസ്റ്റർ രഹസ്യ പെട്ടി"</strong></p>
+          <p>ലളിതം: <strong>ALU = കണക്ക്, CU = ഭരണം, Register = കയ്യിലെ കുറിപ്പ്</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – ഇൻസ്ട്രക്ഷൻ സൈക്കിൾ</span>
+          <p><strong>"F-D-E: ഫെച്ച് ചെയ്യൂ, ഡീകോഡ് ചെയ്യൂ, എക്സിക്യൂട്ട് ചെയ്യൂ"</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – ബസ്സുകൾ</span>
+          <p><strong>"ഡാറ്റ = ലോറി, അഡ്രസ്സ് = വിലാസം, കൺട്രോൾ = ട്രാഫിക് പോലീസ്"</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – SMPS, UPS, CMOS</span>
+          <p><strong>SMPS = "മാറ്റി തരും" (AC→DC); UPS = "ഉടൻ പവർ സപ്പോർട്ട്" (ബാറ്ററി); CMOS = "ക്ലോക്ക് മെമ്മറി ഓൺ സ്റ്റാൻഡ്ബൈ" (ഘടികാരത്തിന്റെ ബാറ്ററി)</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – PS/2 നിറങ്ങൾ</span>
+          <p><strong>"പച്ച മൗസ്, വയലറ്റ് കീബോർഡ്"</strong> ("പച്ച = പുല്ല് തിന്നുന്ന മൗസ്")</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – HDMI vs VGA</span>
+          <p><strong>HDMI = "Hear + Display" (ശബ്ദവും ദൃശ്യവും); VGA = "Video Gave Alone" (ഓഡിയോ ഇല്ല)</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 8 – RJ-45 vs RJ-11</span>
+          <p><strong>RJ-45 = നെറ്റ്‌വർക്ക്; RJ-11 = ഫോൺ</strong> ("45 = 4G/5G വേഗം; 11 = പഴയ ഫോൺ")</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 9 – ഓഡിയോ ജാക്ക്</span>
+          <p><strong>"പച്ച കേൾക്കാൻ, പിങ്ക് പറയാൻ"</strong> → പച്ച = സ്പീക്കർ (Output); പിങ്ക് = മൈക്രോഫോൺ (Input).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 10 – മദർബോർഡ്</span>
+          <p><strong>"മദർ = അമ്മ; വീട്ടിലെ എല്ലാവരെയും ഒരുമിപ്പിക്കുന്നു"</strong> → എല്ലാ ഘടകങ്ങളെയും ബന്ധിപ്പിക്കുന്നു.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17 -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>17.1 ഹാർഡ്‌വെയർ vs സോഫ്റ്റ്‌വെയർ vs ഫേംവെയർ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മാനദണ്ഡം</th><th>ഹാർഡ്‌വെയർ</th><th>സോഫ്റ്റ്‌വെയർ</th><th>ഫേംവെയർ</th></tr></thead>
+            <tbody>
+              <tr><td>തൊടാൻ പറ്റുമോ?</td><td>അതെ</td><td>അല്ല</td><td>അല്ല (ചിപ്പിൽ)</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>കീബോർഡ്, മോണിറ്റർ, CPU</td><td>Windows, MS Word</td><td>BIOS</td></tr>
+              <tr><td>സ്ഥാനം</td><td>ഭൗതിക ഭാഗങ്ങൾ</td><td>മെമ്മറിയിൽ</td><td>ചിപ്പിൽ സ്ഥിരം</td></tr>
+              <tr><td>മാറ്റാൻ എളുപ്പമോ?</td><td>പ്രയാസം</td><td>എളുപ്പം</td><td>വളരെ പ്രയാസം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>17.2 പോർട്ടുകളുടെ താരതമ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പോർട്ട്</th><th>പിൻ എണ്ണം</th><th>നിറം</th><th>ഉപയോഗം</th></tr></thead>
+            <tbody>
+              <tr><td>USB</td><td>4 (Type-A)</td><td>—</td><td>എല്ലാ ഉപകരണങ്ങളും</td></tr>
+              <tr><td>HDMI</td><td>19</td><td>—</td><td>വീഡിയോ + ഓഡിയോ</td></tr>
+              <tr><td>VGA</td><td>15</td><td>നീല</td><td>വീഡിയോ മാത്രം</td></tr>
+              <tr><td>PS/2</td><td>6</td><td>പച്ച (മൗസ്), വയലറ്റ് (കീബോർഡ്)</td><td>മൗസ്/കീബോർഡ്</td></tr>
+              <tr><td>പാരലൽ (LPT)</td><td>25</td><td>—</td><td>പ്രിന്റർ</td></tr>
+              <tr><td>സീരിയൽ (COM)</td><td>9</td><td>—</td><td>മോഡം, മൗസ്</td></tr>
+              <tr><td>RJ-45</td><td>8</td><td>—</td><td>നെറ്റ്‌വർക്ക്</td></tr>
+              <tr><td>RJ-11</td><td>6</td><td>—</td><td>ഫോൺ</td></tr>
+              <tr><td>ഓഡിയോ ജാക്ക്</td><td>3.5mm</td><td>പച്ച (Output), പിങ്ക് (Input), നീല (Line-in)</td><td>ഓഡിയോ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>17.3 CPU ഭാഗങ്ങളുടെ താരതമ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഭാഗം</th><th>ധർമ്മം</th><th>ഉപമ</th></tr></thead>
+            <tbody>
+              <tr><td>ALU</td><td>കണക്ക് &amp; യുക്തി</td><td>കണക്കെഴുത്തുകാരൻ</td></tr>
+              <tr><td>CU</td><td>നിയന്ത്രണം &amp; ഏകോപനം</td><td>നാഡീവ്യൂഹം / മാനേജർ</td></tr>
+              <tr><td>Registers</td><td>താത്കാലിക സംഭരണം</td><td>കയ്യിലെ കുറിപ്പ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>17.4 ഇന്ത്യൻ പ്രൊസസ്സറുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പ്രൊസസ്സർ</th><th>വികസിപ്പിച്ചത്</th><th>സ്ഥലം</th></tr></thead>
+            <tbody>
+              <tr><td>ശക്തി</td><td>IIT മദ്രാസ്</td><td>ചെന്നൈ</td></tr>
+              <tr><td>വേഗ</td><td>C-DAC</td><td>പൂനെ</td></tr>
+              <tr><td>DHRUV64</td><td>C-DAC</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 18 -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. കാലക്രമം (Timeline)</span>
+      </h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Computer hardware timeline">
+            <line x1="40" y1="110" x2="730" y2="110" stroke="#00695c" stroke-width="4" stroke-linecap="round"/>
+            <g font-family="Noto Sans Malayalam, sans-serif" font-size="9" fill="#14202b">
+              <circle cx="70" cy="110" r="8" fill="#b83b2c"/><text x="70" y="95" text-anchor="middle" font-weight="700">1945</text><text x="70" y="135" text-anchor="middle">വോൺ ന്യൂമാൻ</text>
+              <circle cx="160" cy="110" r="8" fill="#b83b2c"/><text x="160" y="95" text-anchor="middle" font-weight="700">1946</text><text x="160" y="135" text-anchor="middle">ENIAC</text>
+              <circle cx="250" cy="110" r="8" fill="#ef6c00"/><text x="250" y="95" text-anchor="middle" font-weight="700">1958</text><text x="250" y="135" text-anchor="middle">കിൽബി IC</text>
+              <circle cx="340" cy="110" r="8" fill="#43a047"/><text x="340" y="95" text-anchor="middle" font-weight="700">1963–64</text><text x="340" y="135" text-anchor="middle">മൗസ്</text>
+              <circle cx="430" cy="110" r="8" fill="#43a047"/><text x="430" y="95" text-anchor="middle" font-weight="700">1964</text><text x="430" y="135" text-anchor="middle">CDC 6600</text>
+              <circle cx="520" cy="110" r="8" fill="#1976d2"/><text x="520" y="95" text-anchor="middle" font-weight="700">1971</text><text x="520" y="135" text-anchor="middle">ഇന്റൽ 4004</text>
+              <circle cx="610" cy="110" r="10" fill="#00695c"/><text x="610" y="93" text-anchor="middle" font-weight="700" fill="#00695c">1976</text><text x="610" y="138" text-anchor="middle" font-weight="700" fill="#00695c">CRAY-1</text>
+              <circle cx="700" cy="110" r="8" fill="#8e24aa"/><text x="700" y="95" text-anchor="middle" font-weight="700">1996</text><text x="700" y="135" text-anchor="middle">USB</text>
+            </g>
+          </svg>
+          <div class="viz-caption">ചിത്രം 18.1 – കമ്പ്യൂട്ടർ ഹാർഡ്‌വെയർ കാലക്രമം.</div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വർഷം</th><th>സംഭവം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1945</strong></td><td>വോൺ ന്യൂമാൻ ആർക്കിടെക്ചർ</td></tr>
+              <tr><td><strong>1946</strong></td><td>ENIAC – ആദ്യ ജനറൽ-പർപ്പസ് ഇലക്ട്രോണിക് കമ്പ്യൂട്ടർ</td></tr>
+              <tr><td><strong>1958</strong></td><td>ജാക്ക് കിൽബി ആദ്യ IC നിർമ്മിച്ചു</td></tr>
+              <tr><td><strong>1959</strong></td><td>റോബർട്ട് നോയ്സ് സിലിക്കൺ IC വികസിപ്പിച്ചു</td></tr>
+              <tr><td><strong>1963–64</strong></td><td>ഡഗ്ലസ് എംഗൽബാർട്ട് മൗസ് കണ്ടുപിടിച്ചു</td></tr>
+              <tr><td><strong>1964</strong></td><td>CDC 6600 – ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ (സെയ്മൂർ ക്രേ)</td></tr>
+              <tr><td><strong>1970</strong></td><td>മൗസിന് പേറ്റന്റ് ലഭിച്ചു</td></tr>
+              <tr><td><strong>1971</strong></td><td>ഇന്റൽ 4004 – ആദ്യ മൈക്രോപ്രൊസസ്സർ</td></tr>
+              <tr><td><strong>1976</strong></td><td>CRAY-1 – ആദ്യ വിജയകരമായ വാണിജ്യ സൂപ്പർ കമ്പ്യൂട്ടർ</td></tr>
+              <tr><td><strong>1996</strong></td><td>USB ആദ്യ സ്പെസിഫിക്കേഷൻ</td></tr>
+              <tr><td><strong>2022</strong></td><td>SI പുതിയ പ്രിഫിക്സുകൾ: Ronna (R), Quetta (Q)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19 -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. "കമ്പ്യൂട്ടറിന്റെ തലച്ചോറ്" എന്നറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. RAM</button>
+            <button type="button" class="opt-btn" data-opt="B">B. CPU</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Hard Disk</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Monitor</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) CPU</div>
+            <div class="explanation">CPU = Central Processing Unit; ALU, CU, Registers എന്നിവ ഉൾപ്പെടുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ലോകത്തിലെ ആദ്യ മൈക്രോപ്രൊസസ്സർ ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഇന്റൽ 8086</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഇന്റൽ 4004</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ശക്തി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. വേഗ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഇന്റൽ 4004</div>
+            <div class="explanation">1971-ൽ; ഡിസൈൻ ടീം: ടെഡ് ഹോഫ്, ഫെഡറിക്കോ ഫാഗിൻ, സ്റ്റാൻലി മസോർ, മസതോഷി ഷിമ.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ഗണിത ക്രിയകളും യുക്തിപരമായ താരതമ്യങ്ങളും ചെയ്യുന്ന CPU-യുടെ ഭാഗം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. CU</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ALU</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Register</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Cache</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ALU</div>
+            <div class="explanation">Arithmetic Logic Unit – ഗണിതവും യുക്തിയും; CU = നിയന്ത്രണം; Registers = താത്കാലിക മെമ്മറി.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. "കമ്പ്യൂട്ടറിന്റെ നാഡീവ്യൂഹം" എന്നറിയപ്പെടുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ALU</button>
+            <button type="button" class="opt-btn" data-opt="B">B. CU</button>
+            <button type="button" class="opt-btn" data-opt="C">C. PC</button>
+            <button type="button" class="opt-btn" data-opt="D">D. GPU</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) CU</div>
+            <div class="explanation">Control Unit – സ്വയം ഡാറ്റ പ്രോസസ്സ് ചെയ്യില്ല; എല്ലാ ഭാഗങ്ങളെയും ഏകോപിപ്പിക്കുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. CRAY-1 (1976)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. CDC 6600 (1964)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ENIAC (1946)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. IBM PC (1981)</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) CDC 6600 (1964)</div>
+            <div class="explanation">സെയ്മൂർ ക്രേ രൂപകല്പന ചെയ്തത്. CRAY-1 (1976) = ആദ്യ വിജയകരമായ വാണിജ്യ സൂപ്പർ കമ്പ്യൂട്ടർ.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ആദ്യ IC നിർമ്മിച്ചത് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. റോബർട്ട് നോയ്സ് (1959)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ജാക്ക് കിൽബി (1958)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ടെഡ് ഹോഫ് (1971)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. സെയ്മൂർ ക്രേ (1964)</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ജാക്ക് കിൽബി (1958)</div>
+            <div class="explanation">ടെക്സസ് ഇൻസ്ട്രുമെന്റ്സിൽ; റോബർട്ട് നോയ്സ് 1959-ൽ സിലിക്കൺ IC സ്വതന്ത്രമായി വികസിപ്പിച്ചു.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. AC-യെ DC ആക്കി മാറ്റുന്ന ഉപകരണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. UPS</button>
+            <button type="button" class="opt-btn" data-opt="B">B. SMPS</button>
+            <button type="button" class="opt-btn" data-opt="C">C. CMOS</button>
+            <button type="button" class="opt-btn" data-opt="D">D. BIOS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) SMPS</div>
+            <div class="explanation">Switched-Mode Power Supply – AC→DC; UPS = ബാറ്ററി ബാക്കപ്പ്; CMOS = ക്ലോക്ക് ബാറ്ററി.</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. പച്ച നിറത്തിലുള്ള PS/2 പോർട്ട് എന്തിനാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. കീബോർഡ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. മൗസ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പ്രിന്റർ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. മോണിറ്റർ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) മൗസ്</div>
+            <div class="explanation">പച്ച = മൗസ്; വയലറ്റ് = കീബോർഡ്. 6-പിൻ വട്ട പോർട്ട്.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. വീഡിയോയും ഓഡിയോയും ഒരേ കേബിളിൽ കൈമാറുന്ന പോർട്ട്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. VGA</button>
+            <button type="button" class="opt-btn" data-opt="B">B. HDMI</button>
+            <button type="button" class="opt-btn" data-opt="C">C. DVI</button>
+            <button type="button" class="opt-btn" data-opt="D">D. PS/2</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) HDMI</div>
+            <div class="explanation">High-Definition Multimedia Interface – ശബ്ദവും ദൃശ്യവും; VGA/DVI വീഡിയോ മാത്രം.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. USB-യുടെ സഹ-ഉപജ്ഞാതാവ് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ചാൾസ് ബാബേജ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. അജയ് ഭട്ട്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. അലൻ ട്യൂറിംഗ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഡഗ്ലസ് എംഗൽബാർട്ട്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) അജയ് ഭട്ട്</div>
+            <div class="explanation">ഇന്ത്യൻ വംശജൻ; USB ആദ്യ സ്പെസിഫിക്കേഷൻ 1996.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. മദർബോർഡിൽ ഡാറ്റയും സിഗ്നലുകളും കൈമാറുന്ന പാത?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Bus</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Port</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Slot</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Socket</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) Bus</div>
+            <div class="explanation">മൂന്ന് തരം: Data Bus, Address Bus, Control Bus.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. CPU-യിലെ ഏറ്റവും വേഗതയേറിയ മെമ്മറി യൂണിറ്റ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Cache</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Registers</button>
+            <button type="button" class="opt-btn" data-opt="C">C. RAM</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Hard Disk</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Registers</div>
+            <div class="explanation">CPU-വിനുള്ളിലെ താത്കാലിക മെമ്മറി; Cache രണ്ടാം സ്ഥാനം.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. RJ-45 പോർട്ട് എന്തിനാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ടെലിഫോൺ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. നെറ്റ്‌വർക്ക്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. പ്രിന്റർ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. മോണിറ്റർ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) നെറ്റ്‌വർക്ക്</div>
+            <div class="explanation">RJ-45 = LAN/ഇതർനെറ്റ്; RJ-11 = ഫോൺ.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഇന്ത്യ തദ്ദേശീയമായി വികസിപ്പിച്ച ആദ്യ മൈക്രോപ്രൊസസ്സർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. വേഗ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ശക്തി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. DHRUV64</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഇന്റൽ 4004</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ശക്തി</div>
+            <div class="explanation">IIT മദ്രാസ് (ചെന്നൈ); വേഗ = C-DAC; DHRUV64 = C-DAC 64-ബിറ്റ്.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. CMOS ബാറ്ററിയുടെ ധർമ്മം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. കമ്പ്യൂട്ടറിന് വൈദ്യുതി നൽകുക</button>
+            <button type="button" class="opt-btn" data-opt="B">B. തീയതിയും സമയവും സൂക്ഷിക്കുക</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഇന്റർനെറ്റ് ബന്ധിപ്പിക്കുക</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഗ്രാഫിക്സ് കൈകാര്യം ചെയ്യുക</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) തീയതിയും സമയവും സൂക്ഷിക്കുക</div>
+            <div class="explanation">കമ്പ്യൂട്ടർ ഓഫാക്കിയാലും സമയം/BIOS സെറ്റിംഗ്സ് സൂക്ഷിക്കുന്നു (CR2032).</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. VGA പോർട്ടിന്റെ പിൻ എണ്ണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 9</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 15</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 25</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 6</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 15</div>
+            <div class="explanation">നീല നിറം; വീഡിയോ മാത്രം; സീരിയൽ = 9, പാരലൽ = 25, PS/2 = 6.</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. "ഡാറ്റ = ലോറി" എന്ന ഉപമ ഏത് ബസ്സിനെ സൂചിപ്പിക്കുന്നു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Address Bus</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Data Bus</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Control Bus</button>
+            <button type="button" class="opt-btn" data-opt="D">D. System Bus</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Data Bus</div>
+            <div class="explanation">ഡാറ്റ കൊണ്ടുപോകുന്നു; Address = വിലാസം; Control = ട്രാഫിക് പോലീസ്.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ENIAC കമ്പ്യൂട്ടർ വർഷം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1945</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1946</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1958</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1964</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1946</div>
+            <div class="explanation">ആദ്യ ജനറൽ-പർപ്പസ് ഇലക്ട്രോണിക് കമ്പ്യൂട്ടർ; ജോൺ എക്കർട്ട്, ജോൺ മോക്ലി.</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. 2022-ൽ SI ചേർത്ത പുതിയ പ്രിഫിക്സുകൾ ഏവ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Ronna, Quetta</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Yotta, Zetta</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Peta, Exa</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Tera, Giga</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) Ronna, Quetta</button>
+            <div class="explanation">Ronna (R), Quetta (Q) – 2022-ൽ ചേർത്തു; ഇപ്പോൾ Ronnabyte, Quettabyte ഉണ്ട്.</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. മൗസ് കണ്ടുപിടിച്ചത് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ചാൾസ് ബാബേജ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഡഗ്ലസ് എംഗൽബാർട്ട്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. അലൻ ട്യൂറിംഗ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ജാക്ക് കിൽബി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഡഗ്ലസ് എംഗൽബാർട്ട്</div>
+            <div class="explanation">1963–64-ൽ; പേറ്റന്റ് 1970-ൽ; ആദ്യ പരസ്യ പ്രദർശനം 1968 "Mother of All Demos".</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 20 -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. ഉത്തര സൂചിക (Answer Key)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 680px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(B)</td><td>11</td><td>(A)</td><td>16</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>7</td><td>(B)</td><td>12</td><td>(B)</td><td>17</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td><td>18</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>9</td><td>(B)</td><td>14</td><td>(B)</td><td>19</td><td>(A)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(B)</td><td>15</td><td>(B)</td><td>20</td><td>(B)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 21 -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec21" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">21. Quick Revision</span>
+      </h2>
+      <div class="section-body">
+        <div class="last-minute">
+          <span class="box-label">⏱️ 5-Minute / Last-Minute Revision</span>
+          <ul style="color:#fff">
+            <li><strong>ഹാർഡ്‌വെയർ = തൊടാം;</strong> സോഫ്റ്റ്‌വെയർ = തൊടാൻ പറ്റില്ല; ഫേംവെയർ = ചിപ്പിൽ (BIOS).</li>
+            <li><strong>I-C-M-O:</strong> Input, CPU, Memory, Output.</li>
+            <li><strong>CPU = തലച്ചോറ്;</strong> 3 ഭാഗങ്ങൾ: ALU (കണക്ക്), CU (നിയന്ത്രണം), Registers (താത്കാലികം).</li>
+            <li><strong>ഇന്റൽ 4004 (1971)</strong> = ആദ്യ മൈക്രോപ്രൊസസ്സർ; ടെഡ് ഹോഫ്, ഫെഡറിക്കോ ഫാഗിൻ, സ്റ്റാൻലി മസോർ, മസതോഷി ഷിമ.</li>
+            <li><strong>ശക്തി (IIT മദ്രാസ്), വേഗ (C-DAC)</strong> = ഇന്ത്യൻ പ്രൊസസ്സറുകൾ.</li>
+            <li><strong>മദർബോർഡ് = അമ്മ;</strong> CPU socket, RAM slot, Chipset, PCIe, BIOS, SATA.</li>
+            <li><strong>ബസ്സുകൾ:</strong> Data, Address, Control.</li>
+            <li><strong>SMPS = AC→DC;</strong> UPS = ബാറ്ററി; CMOS = ക്ലോക്ക് ബാറ്ററി (CR2032).</li>
+            <li><strong>പോർട്ടുകൾ:</strong> USB (അജയ് ഭട്ട്), HDMI (ശബ്ദം+ദൃശ്യം), VGA (ദൃശ്യം മാത്രം, നീല, 15-പിൻ), PS/2 (പച്ച മൗസ്, വയലറ്റ് കീബോർഡ്), പാരലൽ (25-പിൻ), RJ-45 (നെറ്റ്), RJ-11 (ഫോൺ).</li>
+            <li><strong>ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ:</strong> CDC 6600 (1964); CRAY-1 (1976) = വാണിജ്യം.</li>
+            <li><strong>ചരിത്രം:</strong> ചാൾസ് ബാബേജ് (പിതാവ്), അഡ ലവ്‌ലേസ് (ആദ്യ പ്രോഗ്രാമർ), ENIAC (1946), മൗസ് (1963–64).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 22 -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec22" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">22. Top Maximum Facts</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ Top Maximum Facts</span>
+          <ol>
+            <li>CPU = തലച്ചോറ്; ALU + CU + Registers.</li>
+            <li>ആദ്യ മൈക്രോപ്രൊസസ്സർ = ഇന്റൽ 4004 (1971).</li>
+            <li>ഇന്ത്യൻ പ്രൊസസ്സർ = ശക്തി (IIT മദ്രാസ്), വേഗ (C-DAC).</li>
+            <li>മദർബോർഡ് = അമ്മ; PCB = Printed Circuit Board.</li>
+            <li>ബസ്സുകൾ = Data, Address, Control.</li>
+            <li>SMPS = AC→DC; UPS = ബാറ്ററി; CMOS = ക്ലോക്ക് ബാറ്ററി.</li>
+            <li>USB = അജയ് ഭട്ട്; HDMI = ശബ്ദം+ദൃശ്യം; VGA = ദൃശ്യം മാത്രം.</li>
+            <li>PS/2 = പച്ച മൗസ്, വയലറ്റ് കീബോർഡ്.</li>
+            <li>RJ-45 = നെറ്റ്; RJ-11 = ഫോൺ.</li>
+            <li>ആദ്യ സൂപ്പർ കമ്പ്യൂട്ടർ = CDC 6600 (1964).</li>
+            <li>ആദ്യ IC = ജാക്ക് കിൽബി (1958); സിലിക്കൺ IC = നോയ്സ് (1959).</li>
+            <li>കമ്പ്യൂട്ടറിന്റെ പിതാവ് = ചാൾസ് ബാബേജ്; ആദ്യ പ്രോഗ്രാമർ = അഡ ലവ്‌ലേസ്.</li>
+            <li>ENIAC = 1946 (ആദ്യ ഇലക്ട്രോണിക് കമ്പ്യൂട്ടർ).</li>
+            <li>മൗസ് = ഡഗ്ലസ് എംഗൽബാർട്ട് (1963–64, പേറ്റന്റ് 1970).</li>
+            <li>SI പ്രിഫിക്സ് (2022) = Ronna, Quetta.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 23 -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec23" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">23. ഉപസംഹാരം</span>
+      </h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>കമ്പ്യൂട്ടർ ഹാർഡ്‌വെയറിൽ I-C-M-O (Input, CPU, Memory, Output) എന്നീ നാല് വിഭാഗങ്ങൾ ഉൾപ്പെടുന്നു.</li>
+          <li>CPU യഥാർത്ഥത്തിൽ "കമ്പ്യൂട്ടറിന്റെ തലച്ചോറ്"; ALU, CU, Registers എന്നിവയാണ് പ്രധാന ഭാഗങ്ങൾ.</li>
+          <li>മദർബോർഡ് എല്ലാ ഘടകങ്ങളെയും ബന്ധിപ്പിക്കുന്നു; ബസ്സുകൾ വഴിയാണ് ഡാറ്റ കൈമാറ്റം.</li>
+          <li>SMPS, UPS, CMOS എന്നിവ വൈദ്യുതിയും സമയവും സംരക്ഷിക്കുന്നു.</li>
+          <li>USB, HDMI, VGA, PS/2, RJ-45 തുടങ്ങിയ പോർട്ടുകളുടെ ഉപയോഗവും നിറവും പ്രധാനം.</li>
+          <li>ചാൾസ് ബാബേജ് മുതൽ ഇന്റൽ 4004 വരെയും ശക്തി വരെയുള്ള ചരിത്രം ഓർക്കുക.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>"CPU-യുടെ ഏത് ഭാഗം?", "ഏത് പോർട്ട്?", "ആദ്യ മൈക്രോപ്രൊസസ്സർ ഏത്?" – ഇവയാണ് PSC-യുടെ പ്രിയപ്പെട്ട ചോദ്യങ്ങൾ. ALU/CU/Registers തമ്മിൽ മാറിപ്പോകരുത്. ഭാഗം 2 (ഇൻപുട്ട്-ഔട്ട്പുട്ട് ഉപകരണങ്ങൾ) വേണമെങ്കിൽ പറയുക.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>10.1 Hardware</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'computer-10.1-hardware';
-window.PART_TITLE = '10.1 Hardware';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaThemeHardware1');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaThemeHardware1', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDoneHardware1_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDoneHardware1_' + secId, '1');
+        else localStorage.removeItem('keralaSecDoneHardware1_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaHardware1Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
