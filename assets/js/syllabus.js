@@ -261,44 +261,9 @@
     "8.19": "ആൽക്കലോയിഡുകൾ",
     "9": "കല, കായികം, സാഹിത്യം, സംസ്കാരം",
     "9.1": "കലയും സംസ്കാരവും",
-    "9.1.1": "പ്രധാന കേരള ഓഡിയോ-വിഷ്വൽ കലാരൂപങ്ങൾ",
-    "9.1.2": "കേരള കലാരൂപങ്ങളുടെ ഉത്ഭവവും വികസനവും",
-    "9.1.3": "വ്യാപനവും പ്രധാന സ്ഥലങ്ങളും",
-    "9.1.4": "കലാരൂപ സ്ഥാപനങ്ങൾ",
-    "9.1.5": "കലാകാരന്മാർ",
-    "9.1.6": "എഴുത്തുകാർ",
     "9.2": "കായികം",
-    "9.2.1": "കേരള കായികതാരങ്ങൾ",
-    "9.2.2": "ഇന്ത്യൻ കായികതാരങ്ങൾ",
-    "9.2.3": "ലോക കായികതാരങ്ങൾ",
-    "9.2.4": "കായിക ഉപകരണങ്ങൾ",
-    "9.2.5": "നേട്ടങ്ങൾ",
-    "9.2.6": "കായിക അവാർഡുകൾ",
-    "9.2.7": "ട്രോഫികൾ",
-    "9.2.8": "കായിക താരങ്ങളുടെ എണ്ണം",
-    "9.2.9": "കായിക പദങ്ങൾ",
-    "9.2.10": "ഒളിമ്പിക്സ്",
-    "9.2.11": "വിന്റർ ഒളിമ്പിക്സ്",
-    "9.2.12": "പാരാലിമ്പിക്സ്",
-    "9.2.13": "ഏഷ്യൻ ഗെയിംസ്",
-    "9.2.14": "അഫ്രോ-ഏഷ്യൻ ഗെയിംസ്",
-    "9.2.15": "കോമൺവെൽത്ത് ഗെയിംസ്",
-    "9.2.16": "SAF ഗെയിംസ്",
-    "9.2.17": "നാഷണൽ ഗെയിംസ്",
     "9.3": "സാഹിത്യം",
-    "9.3.1": "മലയാള സാഹിത്യം, സാഹിത്യ പ്രസ്ഥാനങ്ങളും നേതാക്കളും",
-    "9.3.2": "ആദ്യ കൃതികൾ, പ്രധാന കൃതികൾ, എഴുത്തുകാർ, തൂലികാനാമങ്ങൾ, കഥാപാത്രങ്ങൾ, പ്രശസ്ത ഉദ്ധരണികൾ",
-    "9.3.3": "കേരളത്തിലെ പത്രപ്രവർത്തനം: തുടക്കം, പ്രവർത്തകർ, ജേണലുകൾ",
-    "9.3.4": "സാഹിത്യ അവാർഡുകൾ; ജ്ഞാനപീഠ ജേതാക്കൾ",
-    "9.3.5": "മലയാള സിനിമ: ഉത്ഭവം, വികസനം, നാഴികക്കല്ലുകൾ, പ്രവർത്തകർ, ദേശീയ അവാർഡുകൾ",
     "9.4": "സംസ്കാരം",
-    "9.4.1": "കേരള കലാരൂപങ്ങൾ",
-    "9.4.2": "പ്രധാന ഉത്സവങ്ങൾ",
-    "9.4.3": "സാംസ്കാരിക കേന്ദ്രങ്ങൾ",
-    "9.4.4": "ആഘോഷങ്ങൾ",
-    "9.4.5": "ബന്ധപ്പെട്ട സ്ഥലങ്ങൾ",
-    "9.4.6": "ആരാധനാലയങ്ങൾ",
-    "9.4.7": "സാംസ്കാരിക നേതാക്കളും അവരുടെ സംഭാവനകളും",
     "10": "കമ്പ്യൂട്ടർ",
     "10.1": "ഹാർഡ്‌വെയർ",
     "10.2": "സോഫ്റ്റ്‌വെയറും ഓ.എസും",
@@ -572,8 +537,7 @@
     "2.3.1":  { file: "topics/geography/2.3.1-physiography.html",           key: "geography-2.3.1-physiography",           qs: 15 },
     "2.3.2":  { file: "topics/geography/2.3.2-districts.html",              key: "geography-2.3.2-districts",              qs: 20 },
     "2.3.3":  { file: "topics/geography/2.3.3-kerala-rivers.html",          key: "geography-2.3.3-kerala-rivers",          qs: 0 },
-    // FIXED FILENAME BUG HERE:
-    "2.3.4":  { file: "topics/geography/2.3.4-climate.html",                key: "geography-2.3.4-climate",                qs: 15 },
+    "2.3.4":  { file: "topics/geography/2.3.3-climate.html",                key: "geography-2.3.3-climate",                qs: 15 },
     "2.3.5":  { file: "topics/geography/2.3.5-kerala-natural-vegetation.html", key: "geography-2.3.5-kerala-natural-vegetation", qs: 0 },
     "2.3.6":  { file: "topics/geography/2.3.6-kerala-wildlife.html",        key: "geography-2.3.6-kerala-wildlife",        qs: 0 },
     "2.3.7":  { file: "topics/geography/2.3.7-kerala-agriculture.html",     key: "geography-2.3.7-kerala-agriculture",     qs: 0 },
@@ -707,12 +671,6 @@
     "8.19": { file: "topics/chemistry/8.19-alkaloids.html",            key: "chemistry-8.19-alkaloids",            qs: 0 },
 
     "9.1": { file: "topics/art-sports-literature/9.1-art-culture.html",  key: "art-sports-literature-9.1-art-culture",  qs: 0 },
-    "9.1.1": { file: "topics/art-sports-literature/9.1.1-kerala-art-forms.html", key: "art-sports-literature-9.1.1-kerala-art-forms", qs: 0 },
-    "9.1.2": { file: "topics/art-sports-literature/9.1.2-origin-development.html", key: "art-sports-literature-9.1.2-origin-development", qs: 0 },
-    "9.1.3": { file: "topics/art-sports-literature/9.1.3-spread-places.html", key: "art-sports-literature-9.1.3-spread-places", qs: 0 },
-    "9.1.4": { file: "topics/art-sports-literature/9.1.4-institutions.html", key: "art-sports-literature-9.1.4-institutions", qs: 0 },
-    "9.1.5": { file: "topics/art-sports-literature/9.1.5-artists.html", key: "art-sports-literature-9.1.5-artists", qs: 0 },
-    "9.1.6": { file: "topics/art-sports-literature/9.1.6-writers.html", key: "art-sports-literature-9.1.6-writers", qs: 0 },
     "9.2": { file: "topics/art-sports-literature/9.2-sports.html",       key: "art-sports-literature-9.2-sports",       qs: 0 },
     "9.3": { file: "topics/art-sports-literature/9.3-literature.html",   key: "art-sports-literature-9.3-literature",   qs: 0 },
     "9.4": { file: "topics/art-sports-literature/9.4-culture.html",      key: "art-sports-literature-9.4-culture",      qs: 0 },
@@ -1175,7 +1133,7 @@
       t("7.6", "Gravitation", "BOTH"),
       t("7.7", "Heat", "BOTH"),
       t("7.8", "Work, Energy & Power", "BOTH"),
-      t("7.9", "Electronics", "BOTH")
+      t("7.9", "Electronics", "883")
     ]),
 
     t("8", "CHEMISTRY", "BOTH", [
@@ -1201,49 +1159,10 @@
     ]),
 
     t("9", "ART, SPORTS, LITERATURE & CULTURE", "BOTH", [
-      t("9.1", "Art & Culture", "BOTH", [
-        t("9.1.1", "Major Kerala Audio-Visual Art Forms", "BOTH"),
-        t("9.1.2", "Origin & Development of Kerala Art Forms", "BOTH"),
-        t("9.1.3", "Spread & Major Places", "BOTH"),
-        t("9.1.4", "Art Form Institutions", "BOTH"),
-        t("9.1.5", "Artists", "BOTH"),
-        t("9.1.6", "Writers", "BOTH")
-      ]),
-      t("9.2", "Sports", "BOTH", [
-        t("9.2.1", "Kerala Sportspersons", "BOTH"),
-        t("9.2.2", "Indian Sportspersons", "BOTH"),
-        t("9.2.3", "World Sportspersons", "BOTH"),
-        t("9.2.4", "Sports Equipment", "BOTH"),
-        t("9.2.5", "Achievements", "BOTH"),
-        t("9.2.6", "Sports Awards", "BOTH"),
-        t("9.2.7", "Trophies", "BOTH"),
-        t("9.2.8", "Number of Players", "BOTH"),
-        t("9.2.9", "Sports Terms", "BOTH"),
-        t("9.2.10", "Olympics", "BOTH"),
-        t("9.2.11", "Winter Olympics", "BOTH"),
-        t("9.2.12", "Paralympics", "BOTH"),
-        t("9.2.13", "Asian Games", "BOTH"),
-        t("9.2.14", "Afro-Asian Games", "BOTH"),
-        t("9.2.15", "Commonwealth Games", "BOTH"),
-        t("9.2.16", "SAF Games", "BOTH"),
-        t("9.2.17", "National Games", "BOTH")
-      ]),
-      t("9.3", "Literature", "BOTH", [
-        t("9.3.1", "Malayalam Literature, Literary Movements and Leaders", "BOTH"),
-        t("9.3.2", "First Works, Major Works, Writers, Pen Names, Characters, Famous Quotes", "BOTH"),
-        t("9.3.3", "Journalism in Kerala: Beginning, Activists, Journals", "BOTH"),
-        t("9.3.4", "Literary Awards; Jnanpith Winners", "BOTH"),
-        t("9.3.5", "Malayalam Cinema: Origin, Development, Milestones, People, National Awards", "BOTH")
-      ]),
-      t("9.4", "Culture", "BOTH", [
-        t("9.4.1", "Kerala Art Forms", "BOTH"),
-        t("9.4.2", "Major Festivals", "BOTH"),
-        t("9.4.3", "Cultural Centres", "BOTH"),
-        t("9.4.4", "Celebrations", "BOTH"),
-        t("9.4.5", "Associated Places", "BOTH"),
-        t("9.4.6", "Places of Worship", "BOTH"),
-        t("9.4.7", "Cultural Leaders and Their Contributions", "BOTH")
-      ])
+      t("9.1", "Art & Culture", "BOTH"),
+      t("9.2", "Sports", "BOTH"),
+      t("9.3", "Literature", "BOTH"),
+      t("9.4", "Culture", "BOTH")
     ]),
 
     t("10", "COMPUTER", "BOTH", [
@@ -1252,7 +1171,7 @@
       t("10.3", "Networks, LAN / MAN / WAN", "BOTH"),
       t("10.4", "Internet, WWW, E-mail, Browsers", "BOTH"),
       t("10.5", "HTML & Other", "BOTH"),
-      t("10.6", "Cyber Crimes and Cyber Laws", "BOTH")
+      t("10.6", "Cyber Crimes and Cyber Laws", "883")
     ]),
 
     t("11", "SIMPLE ARITHMETIC", "BOTH", [
@@ -1559,17 +1478,6 @@
     };
   }
 
-  function getFlattenedTopics(nodes, inheritedTag) {
-    let out = [];
-    for (const node of nodes) {
-      out.push(toTopic(node, node.tag || inheritedTag));
-      if (node.children) {
-        out = out.concat(getFlattenedTopics(node.children, node.tag || inheritedTag));
-      }
-    }
-    return out;
-  }
-
   function buildLegacySubjects() {
     return SYLLABUS.map(function (section) {
       const meta = SUBJECT_META[section.id];
@@ -1582,20 +1490,6 @@
       if (chaptered) {
         chapters = (section.children || []).map(function (ch) {
           const chTag = ch.tag || sectionTag;
-          const hasChildren = ch.children && ch.children.length > 0;
-
-          const topics = hasChildren
-            ? getFlattenedTopics(ch.children, chTag)
-            : [{
-                id: ch.id,
-                title: ch.title,
-                titleMl: TITLE_ML[ch.id] || "",
-                tag: chTag,
-                file: (FILES[ch.id] && FILES[ch.id].file) || null,
-                key:  (FILES[ch.id] && FILES[ch.id].key)  || null,
-                qs:   (FILES[ch.id] && FILES[ch.id].qs)   || 0
-              }];
-
           return {
             id: ch.id,
             title: ch.title,
@@ -1604,7 +1498,7 @@
             file: CHAPTER_FILES[ch.id] || null,
             key: null,
             qs: 0,
-            topics: topics
+            topics: (ch.children || []).map(function (tp) { return toTopic(tp, chTag); })
           };
         });
       } else {
@@ -1616,7 +1510,7 @@
           file: CHAPTER_FILES[section.id] || null,
           key: null,
           qs: 0,
-          topics: getFlattenedTopics(section.children || [], sectionTag)
+          topics: (section.children || []).map(function (tp) { return toTopic(tp, sectionTag); })
         }];
       }
 
