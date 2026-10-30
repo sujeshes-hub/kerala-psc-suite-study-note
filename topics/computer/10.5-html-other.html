@@ -1,106 +1,2642 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10.5 HTML and Other - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – വെബ് ഡിസൈനിംഗ്, പ്രോഗ്രാമിംഗ്, ഇ-ഗവേണൻസ്, സൈബർ സുരക്ഷ | അധ്യായം 10.5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a237e; --primary-light: #283593; --secondary: #00695c;
+      --accent: #b83b2c; --bg: #ffffff; --light-bg: #e8eaf6;
+      --border: #c5cae9; --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #1a237e; --table-alt: #e8eaf6; --star: #f9a825;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8; --primary: #7986cb;
+      --primary-light: #9fa8da; --important-bg: #2c2518;
+      --memory-bg: #192b22; --trap-bg: #2d1920;
+      --correction-bg: #2c2018; --added-bg: #182432;
+      --revision-bg: #22182b; --table-head: #283593; --table-alt: #181825;
+    }
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c; --primary: #4a3b8c;
+      --primary-light: #6a5acd; --important-bg: #f7efd8;
+      --memory-bg: #e9f0dd; --trap-bg: #f4e0e0;
+      --correction-bg: #f8e8d4; --added-bg: #e0e8f0;
+      --revision-bg: #ece0ee; --table-head: #4a3b8c; --table-alt: #f2ead4;
+    }
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn { background: #181825; color: var(--text); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam','Manjari','Rachana','Nirmala UI',Arial,sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .layout { display: grid; grid-template-columns: 280px 1fr; gap: 20px; max-width: 1450px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.1); padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12px; color: var(--text-light);
+      text-decoration: none; border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .progress-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 600; }
+    .progress-track { width: 100%; height: 8px; background: var(--light-bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+    .main-container { background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(26,35,126,0.12); padding: 24px; min-width: 0; }
+    .chapter-header { background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 24px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .utility-bar {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center;
+      background: var(--light-bg); padding: 10px 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border);
+    }
+    .search-input {
+      flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px;
+    }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn {
+      padding: 7px 12px; font-size: 13px; font-family: inherit; font-weight: 600;
+      border: 1px solid var(--border); border-radius: 6px; background: var(--bg);
+      color: var(--primary); cursor: pointer; transition: all 0.2s;
+    }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+    body.recall-mode strong {
+      filter: blur(5px); background: rgba(26,35,126,0.15); border-radius: 4px;
+      padding: 0 4px; cursor: pointer; transition: filter 0.2s ease; user-select: none;
+    }
+    body.recall-mode strong:hover, body.recall-mode strong.revealed { filter: blur(0); }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 {
+      background: var(--light-bg); color: var(--primary);
+      padding: 14px 18px; font-size: 18px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: background 0.2s; margin: 0; gap: 10px;
+    }
+    .section h2:hover { background: #c5cae9; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--secondary); flex-shrink: 0; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px; border-radius: 8px; margin: 12px 0;
+      border-left: 5px solid; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #1a237e; color: #fff; border-left-color: #3949ab; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick {
+      display: block; margin-top: 6px; padding: 6px 10px;
+      background: var(--memory-bg); border-left: 4px solid var(--memory-border);
+      border-radius: 6px; font-size: 14.5px; line-height: 1.6;
+    }
+    p.trick { margin: 8px 0; }
+    .no-results { display: none; text-align: center; padding: 16px; margin-bottom: 16px; color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+    .quiz-dashboard {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+      background: var(--light-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px;
+      border: 2px solid var(--primary); position: sticky; top: 10px; z-index: 50;
+    }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+    .question-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn {
+      display: block; padding: 8px 12px; background: var(--bg); color: var(--text);
+      border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer;
+      transition: all 0.2s; font-size: 14px; font-family: inherit; text-align: left; width: 100%;
+    }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button {
+      padding: 6px 12px; font-size: 12px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer;
+      background: var(--bg); color: var(--text); transition: all 0.2s;
+    }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block {
+      display: none; margin-top: 10px; padding: 10px 14px;
+      background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border);
+    }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    h4 { font-size: 15.5px; color: var(--secondary); margin: 10px 0 6px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    code { background: var(--light-bg); padding: 1px 5px; border-radius: 4px; font-family: monospace; font-size: 13.5px; }
+    pre { direction: ltr; text-align: left; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden; padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 20px; }
+      .section h2 { font-size: 16.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #1a237e !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #e8eaf6 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">10.5 HTML and Other</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. തിരുത്തലുകൾ</a></li>
+      <li><a href="#sec4">4. സിലബസ് ചെക്ക്ലിസ്റ്റ്</a></li>
+      <li><a href="#sec5">5. വെബ് ഡിസൈനിംഗ് &amp; HTML</a></li>
+      <li><a href="#sec6">6. പ്രോഗ്രാമിംഗ് അടിസ്ഥാനം</a></li>
+      <li><a href="#sec7">7. ഇ-ഗവേണൻസ്</a></li>
+      <li><a href="#sec8">8. സൈബർ സുരക്ഷ</a></li>
+      <li><a href="#sec9">9. ഐ.ടി ആക്ട് 2000</a></li>
+      <li><a href="#sec10">10. ഡയഗ്രങ്ങൾ &amp; ചാർട്ടുകൾ</a></li>
+      <li><a href="#sec11">11. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec12">12. PSC വിശകലനം</a></li>
+      <li><a href="#sec13">13. മുൻ ചോദ്യ ട്രെൻഡ്</a></li>
+      <li><a href="#sec14">14. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec15">15. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec16">16. കാലക്രമം</a></li>
+      <li><a href="#sec17">17. Mnemonics</a></li>
+      <li><a href="#sec18">18. PSC Traps</a></li>
+      <li><a href="#sec19">19. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec20">20. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec21">21. MCQ Practice</a></li>
+      <li><a href="#sec22">22. ഒറ്റനോട്ട പട്ടിക</a></li>
+      <li><a href="#sec23">23. Exam Tips</a></li>
+      <li><a href="#sec24">24. Top Maximum Facts</a></li>
+      <li><a href="#sec25">25. Quick Revision</a></li>
+      <li><a href="#sec26">26. ഉപസംഹാരം</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 10.5 | HTML and Other</div>
+      <h1>വെബ് ഡിസൈനിംഗ്, പ്രോഗ്രാമിംഗ്, ഇ-ഗവേണൻസ്, സൈബർ സുരക്ഷ &amp; ഐ.ടി നിയമങ്ങൾ</h1>
+      <div class="subtitle">Web Designing (HTML), Programming Basics, E-Governance, Cyber Security &amp; IT Act 2000 – Complete Verified Notes</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 കുറിപ്പുകളിൽ തിരയുക (ഉദാ: HTML, CSS, ഐ.ടി ആക്ട്, 66F, അക്ഷയ, ഫിഷിംഗ്)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനമാക്കി)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഐ.ടി ആക്ട് തീയതികൾ (ജൂൺ 9 / ഒക്ടോബർ 17), വകുപ്പുകൾ (43, 65, 66, 66F, 67B, 69A), സൈബർ കുറ്റകൃത്യങ്ങൾ (ഫിഷിംഗ്, റാൻസംവെയർ), അക്ഷയ, FRIENDS</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — HTML ടാഗുകൾ (<code>&lt;select&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>), ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ, CIA Triad, കേരള ഇ-ഗവേണൻസ് പദ്ധതികൾ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — CSS 3 തരം, Compiler vs Interpreter, G2C/G2B/G2G/G2E, ഡിജിറ്റൽ സിഗ്നേച്ചർ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — XML, JavaScript, Pseudocode, 3 തരം എറർ, ഹാക്കർ തരങ്ങൾ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — VSNL 1995, Morris Worm 1988, Brain Virus 1986</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>HTML = ഘടന, CSS = ഭംഗി, JavaScript = ചലനം</strong></li>
+            <li><strong>ഐ.ടി ആക്ട് ഒപ്പ് = ജൂൺ 9, പ്രാബല്യം = ഒക്ടോബർ 17</strong></li>
+            <li><strong>66F = ജീവപര്യന്തം, 69A = ബ്ലോക്കിംഗ്, 67B = കുട്ടികൾ</strong></li>
+            <li><strong>അക്ഷയ = 2002 നവംബർ 18, മലപ്പുറം</strong></li>
+            <li><strong>FRIENDS = 2000 ജൂൺ, തിരുവനന്തപുരം</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTRODUCTION -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഈ അധ്യായത്തിൽ നാല് കാര്യങ്ങളാണ് പഠിക്കുന്നത്:
+            <ol>
+              <li><strong>വെബ്സൈറ്റുകൾ എങ്ങനെ നിർമ്മിക്കുന്നു?</strong> → Web Designing &amp; HTML</li>
+              <li><strong>കമ്പ്യൂട്ടറിന് എങ്ങനെ നിർദ്ദേശം നൽകുന്നു?</strong> → Programming Basics</li>
+              <li><strong>സർക്കാർ സേവനങ്ങൾ എങ്ങനെ ഓൺലൈനായി കിട്ടുന്നു?</strong> → E-Governance</li>
+              <li><strong>ഡിജിറ്റൽ ലോകത്തെ തട്ടിപ്പുകളിൽ നിന്ന് ആര് സംരക്ഷിക്കുന്നു?</strong> → Cyber Security &amp; IT Act 2000</li>
+            </ol>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>PSC വീക്ഷണം:</strong> കമ്പ്യൂട്ടർ വിഭാഗത്തിൽ ചോദ്യങ്ങൾ കുറവായിരിക്കും (ഏകദേശം 3–4 മാർക്ക്). പക്ഷേ ചോദ്യങ്ങൾ <strong>വളരെ പ്രവചനക്ഷമമാണ്</strong>: ഐ.ടി ആക്ട് തീയതികളും വകുപ്പുകളും, അക്ഷയ, സൈബർ കുറ്റകൃത്യങ്ങളുടെ പേരുകൾ, HTML ടാഗുകൾ എന്നിവ. അതുകൊണ്ട് ഇത് "എളുപ്പത്തിൽ മാർക്ക് നേടാവുന്ന" അധ്യായമാണ്.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">⭐ പ്രധാന ചോദ്യമേഖലകൾ</span>
+          <ul>
+            <li>ഐ.ടി ആക്ട് 2000 – തീയതികളും വകുപ്പുകളും</li>
+            <li>സൈബർ കുറ്റകൃത്യങ്ങളുടെ പേരുകൾ (ഫിഷിംഗ്, റാൻസംവെയർ, സലാമി)</li>
+            <li>അക്ഷയ, FRIENDS, SPARK, K-SMART</li>
+            <li>HTML ടാഗുകൾ (<code>&lt;select&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;img&gt;</code>)</li>
+            <li>ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ</li>
+            <li>CIA Triad</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BEHIND THE STORY -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ (Behind the Story)</span>
+      </h2>
+      <div class="section-body">
+        <div class="added-fact">
+          <span class="box-label">➕ വീടുപണി ഉദാഹരണം</span>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>വീട് പണിയിൽ</th><th>കമ്പ്യൂട്ടർ ലോകത്ത്</th></tr></thead>
+              <tbody>
+                <tr><td>ഇഷ്ടിക, സിമന്റ്: ഭിത്തിയും മുറികളും വാതിലും</td><td><strong>HTML:</strong> പേജിന്റെ ഘടന (Structure)</td></tr>
+                <tr><td>പെയിന്റും കർട്ടനും: ഭംഗി</td><td><strong>CSS:</strong> ഭംഗി, നിറം, ലേഔട്ട് (Style)</td></tr>
+                <tr><td>സ്വിച്ച് ഇട്ടാൽ ലൈറ്റ് കത്തുന്ന വയറിംഗ്</td><td><strong>JavaScript:</strong> പ്രവർത്തനം (Behaviour)</td></tr>
+                <tr><td>മുറിയിലെ സാധനങ്ങൾ രേഖപ്പെടുത്തിയ ലിസ്റ്റ്</td><td><strong>XML:</strong> വിവരം സൂക്ഷിക്കാനും കൈമാറാനും</td></tr>
+                <tr><td>ചുറ്റുമതിൽ + ഗേറ്റിലെ കാവൽക്കാരൻ</td><td><strong>Firewall &amp; സൈബർ സുരക്ഷ</strong></td></tr>
+                <tr><td>കള്ളൻ കയറിയാൽ പോലീസും നിയമവും</td><td><strong>ഐ.ടി ആക്ട് 2000</strong></td></tr>
+                <tr><td>ഒരൊറ്റ കൗണ്ടറിൽ എല്ലാ ബില്ലും അടയ്ക്കൽ</td><td><strong>FRIENDS / അക്ഷയ / K-SMART (ഇ-ഗവേണൻസ്)</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <span class="trick">🧠 <strong>"ഘടന-ഭംഗി-ചലനം" = HTML – CSS – JavaScript (വീടിന്റെ ഭിത്തി – പെയിന്റ് – വയറിംഗ്)</strong></span>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഐ.ടി ആക്ടിന്റെ പിന്നിലെ കഥ</span>
+          <p>1990-കളിൽ ഇന്റർനെറ്റ് ഇന്ത്യയിൽ എത്തി (<strong>VSNL വഴി 1995 ഓഗസ്റ്റ് 15</strong>). അപ്പോൾ ഒരു പ്രശ്നം: കടലാസിലെ ഒപ്പിനും രേഖയ്ക്കും മാത്രമേ കോടതിയിൽ വിലയുണ്ടായിരുന്നുള്ളൂ. ഇ-മെയിലിനോ ഓൺലൈൻ കരാറിനോ നിയമസാധുത ഇല്ല. അങ്ങനെ <strong>ഐക്യരാഷ്ട്രസഭയുടെ UNCITRAL മാതൃകാ നിയമം (1996)</strong> അടിസ്ഥാനമാക്കി ഇന്ത്യ ഒരു നിയമം കൊണ്ടുവന്നു:</p>
+          <ul>
+            <li>പാർലമെന്റ് പാസാക്കി: <strong>2000 മെയ്</strong> (രാജ്യസഭ 17 മെയ്)</li>
+            <li>രാഷ്ട്രപതി <strong>കെ.ആർ. നാരായണൻ (മലയാളി)</strong> ഒപ്പുവെച്ചു: <strong>2000 ജൂൺ 9</strong></li>
+            <li>പ്രാബല്യത്തിൽ വന്നു: <strong>2000 ഒക്ടോബർ 17</strong></li>
+          </ul>
+          <span class="trick">🧠 <strong>"ഒപ്പ് ജൂൺ (9), പ്രാബല്യം ഒക്ടോബർ (17)": ഒപ്പിട്ടത് നാരായണൻ, നടപ്പായത് ഒക്ടോബറിൽ.</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: CORRECTIONS -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. തിരുത്തലുകളുടെ പട്ടിക ✏️</span>
+      </h2>
+      <div class="section-body">
+        <div class="correction">
+          <span class="box-label">✏️ 12 തിരുത്തലുകൾ</span>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>#</th><th>പഴയ കുറിപ്പിൽ ഉണ്ടായിരുന്നത്</th><th>ശരിയായ വിവരം</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>CSS 1996-ൽ ഹക്കോൺ വിയം ലീ വികസിപ്പിച്ചു</td><td>1994-ൽ <strong>നിർദ്ദേശിച്ചു</strong>; <strong>CSS1 ഔദ്യോഗിക ശുപാർശ 1996 ഡിസംബർ</strong></td></tr>
+                <tr><td>2</td><td>Section 66: "Wilful intention"</td><td>നിയമത്തിലെ പ്രയോഗം <strong>"Dishonestly or Fraudulently" (സത്യസന്ധമല്ലാതെ / ചതിക്കാൻ)</strong> ആണ്</td></tr>
+                <tr><td>3</td><td>59 ചൈനീസ് ആപ്പ് നിരോധനത്തിൽ 66F-നും പങ്ക്</td><td>നിരോധനം <strong>Section 69A</strong> (+ 2009-ലെ Blocking Rules) പ്രകാരം മാത്രം. 66F ഉത്തരമായി എടുക്കരുത്</td></tr>
+                <tr><td>4</td><td>Thulasi = PSC ഓൺലൈൻ പരീക്ഷാ പോർട്ടൽ</td><td><strong>Thulasi = PSC-യുടെ ഉദ്യോഗാർത്ഥി പ്രൊഫൈൽ (One Time Registration) പോർട്ടൽ</strong></td></tr>
+                <tr><td>5</td><td>അക്ഷയ ഉദ്ഘാടനം "തിരൂരങ്ങാടി"</td><td><strong>മലപ്പുറം</strong> എന്നു മാത്രം ഉറപ്പ്; ഉപസ്ഥലം ഒഴിവാക്കി</td></tr>
+                <tr><td>6</td><td>KSITM = 1999, SPARK = 2007, FRIENDS "അക്ഷയയിൽ ലയിപ്പിച്ചു"</td><td>ഈ വർഷങ്ങൾ/ലയനം ഉറപ്പിക്കാൻ കഴിഞ്ഞില്ല. പരീക്ഷയിൽ ഇവ ചോദ്യമല്ല, അതിനാൽ ഒഴിവാക്കി</td></tr>
+                <tr><td>7</td><td>"ഹാക്കിംഗ് ഐ.ടി ആക്ടിൽ" മാത്രം</td><td>ഒറിജിനൽ 2000 ആക്ടിൽ <strong>Sec 66 = Hacking (3 വർഷം / ₹2 ലക്ഷം)</strong>; 2008-ൽ ഇത് "Computer related offences" ആയി മാറി, ശിക്ഷ ₹5 ലക്ഷം</td></tr>
+                <tr><td>8</td><td>"വകുപ്പുകൾ 94"</td><td><strong>ഒറിജിനൽ: 94 വകുപ്പ് / 13 അധ്യായം / 4 പട്ടിക</strong>. ഇപ്പോൾ <strong>90 വകുപ്പ് / 2 പട്ടിക</strong></td></tr>
+                <tr><td>9</td><td>പ്രോഗ്രാമിംഗ് നിർദ്ദേശങ്ങൾ 5 തരം</td><td>സിലബസിൽ <strong>"Input, Output, Store, Control transfer"</strong>. ചില പുസ്തകങ്ങളിൽ Control + Transfer ഒന്നായി = <strong>4 തരം</strong>. രണ്ടു രീതിയും പഠിക്കുക</td></tr>
+                <tr><td>10</td><td>PYQ-ന് മുന്നിൽ പരീക്ഷയുടെ പേരും പേപ്പർ കോഡും</td><td>അവ പരിശോധിച്ച് ഉറപ്പിക്കാൻ കഴിയാത്തതിനാൽ നീക്കി. <strong>വിഷയ-ചോദ്യ മാതൃക മാത്രം നിലനിർത്തി</strong></td></tr>
+                <tr><td>11</td><td>VIRUS = "Vital Information Resources Under Siege"</td><td>ഇതൊരു <strong>ജനപ്രിയ വിപുലീകരണം (backronym)</strong> മാത്രം. 'വൈറസ്' പദം പ്രചരിപ്പിച്ചത് ഫ്രെഡ് കോഹൻ (1983)</td></tr>
+                <tr><td>12</td><td><code>&lt;marquee&gt;</code>, <code>&lt;strike&gt;</code>, <code>&lt;u&gt;</code></td><td>ഇവ പഴയ/<strong>Deprecated</strong> ടാഗുകളാണ്, പക്ഷേ PSC ചോദിക്കുന്നു, അതിനാൽ നിലനിർത്തി; കുറിപ്പ് ചേർത്തു</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: SYLLABUS CHECKLIST -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. സിലബസ് ചെക്ക്ലിസ്റ്റ്</span>
+      </h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>10.5.7 Web Designing &amp; HTML: Basics (B):</strong> HTML, CSS, XML, JavaScript, HTML ഘടന, <strong>കണ്ടെയ്നർ &amp; എംപ്റ്റി ടാഗുകൾ</strong>, <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;select&gt;</code></li>
+          <li><strong>10.3 Programming Basics &amp; Instructions (B):</strong> അൽഗോരിതം, ഫ്ലോചാർട്ട്, Input / Output / Store / Control / Transfer നിർദ്ദേശങ്ങൾ</li>
+          <li><strong>10.6.1 E-Governance (883) &amp; 10.6.2 / 5.19 E-Governance in Kerala (573)</strong></li>
+          <li><strong>10.7.1–10.7.4 Cyber Wrongs &amp; Cyber Crimes: Awareness &amp; Types</strong></li>
+          <li><strong>10.7.5 Cyber Laws, 10.7.6 IT Act 2000, 10.7.7 Other Laws</strong></li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ പുതുതായി ചേർത്ത പ്രധാന ഭാഗങ്ങൾ</span>
+          <ul>
+            <li><strong>HTML:</strong> കണ്ടെയ്നർ vs എംപ്റ്റി ടാഗ്, പൂർണ്ണ HTML പേജ് ഘടന, HTML5 പുതിയ ടാഗുകൾ, CSS-ന്റെ 3 തരം, <code>&lt;form&gt;</code> ആട്രിബ്യൂട്ടുകൾ, അടിസ്ഥാന വെബ് പദങ്ങൾ (URL, HTTP, Browser, Domain)</li>
+            <li><strong>പ്രോഗ്രാമിംഗ്:</strong> ഭാഷാ തലങ്ങൾ, Compiler/Interpreter/Assembler, അൽഗോരിതം ഗുണങ്ങൾ, 3 നിർമ്മിതികൾ, 3 തരം എറർ</li>
+            <li><strong>ഇ-ഗവേണൻസ്:</strong> 4 ഘട്ടങ്ങൾ, നേട്ടങ്ങളും വെല്ലുവിളികളും, Digital India-യുടെ 9 തൂണുകൾ, ഐ.ടി ആക്ടിലെ ഇ-ഗവേണൻസ് വകുപ്പുകൾ (Sec 4, 6, 10A)</li>
+            <li><strong>സൈബർ:</strong> Cyber Wrong vs Cyber Crime വ്യത്യാസം, ഹാക്കർ തരങ്ങൾ, കൂടുതൽ മാൽവെയറുകളും ആക്രമണങ്ങളും, ക്രിപ്റ്റോഗ്രഫിയും ഡിജിറ്റൽ സിഗ്നേച്ചറും, സുരക്ഷാ മാർഗ്ഗങ്ങൾ</li>
+            <li><strong>ഐ.ടി ആക്ട്:</strong> Sec 43A, 46, 67C, 70A, 72A, 75, 77B, 78, 79, 84B, 84C; ഇന്ത്യയ്ക്ക് പുറത്തെ കുറ്റകൃത്യങ്ങൾ; BNS/BSA തത്തുല്യ വകുപ്പുകൾ; POCSO; കോപ്പിറൈറ്റ് വിശദാംശങ്ങൾ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 5: WEB DESIGNING & HTML -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. വെബ് ഡിസൈനിംഗും എച്ച്.ടി.എം.എല്ലും (10.5.7)</span>
+      </h2>
+      <div class="section-body">
+        <h3>5.0 അടിസ്ഥാന വെബ് പദങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പദം</th><th>അർത്ഥം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>WWW (World Wide Web)</strong></td><td>ഇന്റർനെറ്റിലെ പരസ്പരം ലിങ്ക് ചെയ്ത വെബ് പേജുകളുടെ ശേഖരം. <strong>ടിം ബർണേഴ്സ് ലീ (CERN)</strong> 1989-ൽ നിർദ്ദേശിച്ചു; ആദ്യ വെബ്സൈറ്റ് 1991</td></tr>
+              <tr><td><strong>ഇന്റർനെറ്റ് ≠ വെബ്</strong></td><td>ഇന്റർനെറ്റ് = നെറ്റ്‌വർക്കുകളുടെ ശൃംഖല (റോഡ്). വെബ് = അതിലൂടെ ലഭിക്കുന്ന ഒരു സേവനം (വാഹനം)</td></tr>
+              <tr><td><strong>വെബ് ബ്രൗസർ</strong></td><td>വെബ് പേജ് കാണിക്കുന്ന സോഫ്റ്റ്‌വെയർ (Chrome, Firefox, Edge, Safari)</td></tr>
+              <tr><td><strong>വെബ് സെർവർ</strong></td><td>വെബ്സൈറ്റ് ഫയലുകൾ സൂക്ഷിച്ച് ബ്രൗസറിന് നൽകുന്ന കമ്പ്യൂട്ടർ</td></tr>
+              <tr><td><strong>URL</strong></td><td>വെബ് പേജിന്റെ വിലാസം (Uniform Resource Locator)</td></tr>
+              <tr><td><strong>HTTP / HTTPS</strong></td><td>വെബ് പേജ് കൈമാറുന്ന പ്രോട്ടോക്കോൾ. <strong>HTTPS = സുരക്ഷിതം (SSL/TLS എൻക്രിപ്ഷൻ)</strong></td></tr>
+              <tr><td><strong>ഡൊമെയ്ൻ നാമം</strong></td><td><code>example.com</code> പോലുള്ള പേര്. DNS ഇതിനെ IP വിലാസമാക്കി മാറ്റുന്നു</td></tr>
+              <tr><td><strong>സ്റ്റാറ്റിക് പേജ്</strong></td><td>ഉള്ളടക്കം മാറാത്ത പേജ് (HTML/CSS മാത്രം)</td></tr>
+              <tr><td><strong>ഡൈനാമിക് പേജ്</strong></td><td>ഉപയോക്താവിനും ഡാറ്റാബേസിനും അനുസരിച്ച് മാറുന്ന പേജ് (PHP, ASP, JSP)</td></tr>
+              <tr><td><strong>ഹോം പേജ്</strong></td><td>വെബ്സൈറ്റിന്റെ ആദ്യ പേജ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>ഇന്റർനെറ്റ് = റോഡ്, വെബ് = അതിലെ വാഹനം. വെബ് പേജ് "നൽകുന്നത്" സെർവർ, "കാണിക്കുന്നത്" ബ്രൗസർ.</strong></span>
+
+        <h3>5.1 വെബ് ഡിസൈനിംഗിലെ അടിസ്ഥാന സാങ്കേതികവിദ്യകൾ</h3>
+        <ul>
+          <li><strong>HTML (HyperText Markup Language):</strong> വെബ് പേജിന്റെ അടിസ്ഥാന ഘടന (Skeleton) നിർമ്മിക്കാൻ <strong>ടിം ബർണേഴ്സ് ലീ</strong> വികസിപ്പിച്ച മാർക്കപ്പ് ഭാഷ (ആദ്യ വിവരണം 1991). ഇത് <strong>പ്രോഗ്രാമിംഗ് ഭാഷയല്ല, മാർക്കപ്പ് ഭാഷയാണ്</strong>. ഏറ്റവും പുതിയ പതിപ്പ് <strong>HTML5</strong>. ഫയൽ എക്സ്റ്റൻഷൻ <strong><code>.html</code> / <code>.htm</code></strong>. HTML <strong>Case-insensitive</strong> ആണ്.</li>
+          <li><strong>CSS (Cascading Style Sheets):</strong> നിറം, ഫോണ്ട്, ലേഔട്ട്, അനിമേഷൻ നൽകുന്ന സ്റ്റൈൽ ഷീറ്റ് ഭാഷ. <strong>ഹക്കോൺ വിയം ലീ (Håkon Wium Lie)</strong> 1994-ൽ നിർദ്ദേശിച്ചു; <strong>CSS1 ഔദ്യോഗികമായി 1996</strong>. ഫയൽ എക്സ്റ്റൻഷൻ <strong><code>.css</code></strong>.</li>
+          <li><strong>XML (eXtensible Markup Language):</strong> വിവരം <strong>സൂക്ഷിക്കാനും കൈമാറാനും</strong> (Store &amp; Transport) ഉപയോഗിക്കുന്നു, <strong>പ്രദർശിപ്പിക്കാനല്ല</strong>. സ്വന്തം ടാഗുകൾ ഉണ്ടാക്കാം (<strong>Extensible</strong>). XML <strong>Case-sensitive</strong> ആണ്, എല്ലാ ടാഗും അടയ്ക്കണം.</li>
+          <li><strong>സ്ക്രിപ്റ്റിംഗ് ഭാഷകൾ:</strong>
+            <ul>
+              <li><strong>ക്ലയന്റ്-സൈഡ്</strong> (ബ്രൗസറിൽ പ്രവർത്തിക്കുന്നു): <strong>JavaScript</strong> (1995, <strong>ബ്രെൻഡൻ ഐക്ക്</strong>, Netscape), VBScript.</li>
+              <li><strong>സെർവർ-സൈഡ്</strong> (സെർവറിൽ പ്രവർത്തിക്കുന്നു): <strong>PHP, Python, ASP.NET, JSP, Ruby, Node.js</strong>.</li>
+            </ul>
+          </li>
+        </ul>
+        <span class="trick">🧠 <strong>"Client = Customer's browser, Server = Shop's computer." JavaScript ഉപഭോക്താവിന്റെ ബ്രൗസറിൽ, PHP കടയിലെ (സെർവറിലെ) കമ്പ്യൂട്ടറിൽ.</strong></span>
+
+        <h4>CSS ചേർക്കാനുള്ള 3 വഴികൾ</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>എങ്ങനെ</th><th>ഉപയോഗം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Inline CSS</strong></td><td>ടാഗിനുള്ളിൽ <code>style=""</code> ആട്രിബ്യൂട്ട്</td><td>ഒരു എലമെന്റിന് മാത്രം</td></tr>
+              <tr><td><strong>Internal CSS</strong></td><td><code>&lt;head&gt;</code>-ൽ <code>&lt;style&gt;...&lt;/style&gt;</code></td><td>ഒരു പേജിന്</td></tr>
+              <tr><td><strong>External CSS</strong></td><td>പ്രത്യേക <code>.css</code> ഫയൽ, <code>&lt;link rel="stylesheet" href="style.css"&gt;</code></td><td><strong>മുഴുവൻ വെബ്സൈറ്റിനും (ഏറ്റവും മികച്ചത്)</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>"I-I-E" = ഇൻലൈൻ (ഒന്നിന്), ഇന്റേണൽ (ഒരു പേജിന്), എക്സ്റ്റേണൽ (എല്ലാത്തിനും)</strong></span>
+
+        <h3>5.2 HTML പേജിന്റെ അടിസ്ഥാന ഘടന</h3>
+        <pre style="background:var(--light-bg); padding:12px; border-radius:8px; overflow-x:auto; font-size:13px;"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;എന്റെ ആദ്യ പേജ്&lt;/title&gt;
+    &lt;meta charset="UTF-8"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;ഹലോ&lt;/h1&gt;
+    &lt;p&gt;ഇതൊരു പാരഗ്രാഫ് ആണ്.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <ul>
+          <li><strong><code>&lt;title&gt;</code>:</strong> ബ്രൗസർ ടാബിൽ കാണുന്ന പേര് (<code>&lt;head&gt;</code>-ൽ മാത്രം).</li>
+          <li><strong><code>&lt;meta&gt;</code>:</strong> വെബ് പേജിനെക്കുറിച്ചുള്ള വിവരം (character set, keywords, description). <strong>Empty tag</strong>.</li>
+          <li><strong>Comment:</strong> <code>&lt;!-- ഇതൊരു കമന്റ് --&gt;</code> (ബ്രൗസറിൽ കാണില്ല).</li>
+        </ul>
+        <span class="trick">🧠 <strong>Head = തല (തലക്കെട്ട്/മെറ്റാ വിവരം, കാണില്ല), Body = ശരീരം (കാണുന്നത് എല്ലാം)</strong></span>
+
+        <h3>5.3 കണ്ടെയ്നർ ടാഗും എംപ്റ്റി ടാഗും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>അർത്ഥം</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>കണ്ടെയ്നർ ടാഗ് (Container / Paired tag)</strong></td><td><strong>തുടക്ക ടാഗും ഒടുക്ക ടാഗും</strong> ഉണ്ട്. ഉള്ളടക്കം ഇടയിൽ</td><td><code>&lt;p&gt;...&lt;/p&gt;</code>, <code>&lt;b&gt;...&lt;/b&gt;</code>, <code>&lt;h1&gt;...&lt;/h1&gt;</code>, <code>&lt;table&gt;...&lt;/table&gt;</code>, <code>&lt;a&gt;...&lt;/a&gt;</code></td></tr>
+              <tr><td><strong>എംപ്റ്റി ടാഗ് (Empty / Unpaired tag)</strong></td><td><strong>ഒടുക്ക ടാഗ് ഇല്ല</strong>; ഉള്ളടക്കം ഇല്ല</td><td><code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>"BHI-IML" → ബ്ര (br), ഹ (hr), ഇ (img), ഇൻ (input), മെ (meta), ലി (link); അല്ലെങ്കിൽ "വര, വരി, ചിത്രം, ഇൻപുട്ട്" = ഒറ്റയ്ക്ക് നിൽക്കും.</strong></span>
+
+        <h3>5.4 പ്രധാന HTML ടാഗുകളും ആട്രിബ്യൂട്ടുകളും</h3>
+        <div class="important">
+          <span class="box-label">⭐ ഡോക്യുമെന്റ് ഘടനാ ടാഗുകൾ</span>
+          <ul>
+            <li><code>&lt;!DOCTYPE html&gt;</code>: HTML5 ആണെന്ന് ബ്രൗസറിനെ അറിയിക്കുന്നു (ഇതൊരു ടാഗല്ല, <strong>declaration</strong> ആണ്).</li>
+            <li><code>&lt;html&gt;...&lt;/html&gt;</code>: റൂട്ട് എലമെന്റ്. <code>&lt;head&gt;</code>: തലക്കെട്ടും മെറ്റാ വിവരവും. <code>&lt;body&gt;</code>: കാണുന്ന ഉള്ളടക്കം.</li>
+            <li><strong><code>&lt;body&gt;</code> ആട്രിബ്യൂട്ടുകൾ:</strong> <code>bgcolor</code> (പശ്ചാത്തല നിറം), <code>background</code> (പശ്ചാത്തല ചിത്രം), <code>text</code> (അക്ഷര നിറം), <code>link</code> (സന്ദർശിക്കാത്ത ലിങ്ക് – <strong>നീല</strong>), <code>vlink</code> (സന്ദർശിച്ച ലിങ്ക് – <strong>വയലറ്റ്/പർപ്പിൾ</strong>), <code>alink</code> (ക്ലിക്ക് ചെയ്യുമ്പോൾ – <strong>ചുവപ്പ്</strong>).</li>
+          </ul>
+          <span class="trick">🧠 <strong>"നീല → വയലറ്റ് → ചുവപ്പ്" = ലിങ്ക് കാണുമ്പോൾ നീല, പോയി വന്നാൽ വയലറ്റ്, ക്ലിക്കുമ്പോൾ ചുവപ്പ്. (L-V-A: link, vlink, alink)</strong></span>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ടെക്സ്റ്റ് ഫോർമാറ്റിംഗ് ടാഗുകൾ</span>
+          <ul>
+            <li><strong><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>:</strong> ഹെഡിംഗുകൾ. <strong><code>&lt;h1&gt;</code> ഏറ്റവും വലുത്, <code>&lt;h6&gt;</code> ഏറ്റവും ചെറുത്</strong>.</li>
+            <li><strong><code>&lt;p&gt;</code>:</strong> പാരഗ്രാഫ് | <strong><code>&lt;br&gt;</code>:</strong> പുതിയ വരി (Empty) | <strong><code>&lt;hr&gt;</code>:</strong> വിലങ്ങനെ വര (Empty).</li>
+            <li><strong><code>&lt;b&gt;</code> / <code>&lt;strong&gt;</code>:</strong> Bold | <strong><code>&lt;i&gt;</code> / <code>&lt;em&gt;</code>:</strong> Italic | <strong><code>&lt;u&gt;</code>:</strong> Underline | <strong><code>&lt;strike&gt;</code> / <code>&lt;del&gt;</code>:</strong> Strikethrough.</li>
+            <li><strong><code>&lt;sup&gt;</code>:</strong> ഉയർത്തി എഴുതൽ (a²) | <strong><code>&lt;sub&gt;</code>:</strong> താഴ്ത്തി എഴുതൽ (H₂O).</li>
+            <li><strong><code>&lt;pre&gt;</code>:</strong> എഴുതിയ അതേ രൂപത്തിൽ കാണിക്കുന്നു | <strong><code>&lt;center&gt;</code>:</strong> മധ്യത്തിൽ | <strong><code>&lt;font&gt;</code>:</strong> ഫോണ്ട് (പഴയത്).</li>
+            <li><strong><code>&lt;marquee&gt;</code>:</strong> എഴുത്ത്/ചിത്രം തനിയെ നീങ്ങാൻ (Scrolling text).</li>
+          </ul>
+          <p>⚠️ <code>&lt;marquee&gt;</code>, <code>&lt;strike&gt;</code>, <code>&lt;center&gt;</code>, <code>&lt;font&gt;</code> എന്നിവ <strong>HTML5-ൽ ഒഴിവാക്കിയ (Deprecated) ടാഗുകളാണ്</strong>. പക്ഷേ PSC ചോദ്യങ്ങളിൽ ഇപ്പോഴും വരാം.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ലിങ്കുകളും ചിത്രങ്ങളും</span>
+          <ul>
+            <li><strong><code>&lt;a&gt;</code> (Anchor):</strong> <code>&lt;a href="url"&gt;Text&lt;/a&gt;</code>. പുതിയ ടാബിൽ തുറക്കാൻ <code>target="_blank"</code>. ഇ-മെയിൽ ലിങ്ക്: <code>href="mailto:abc@xyz.com"</code>.</li>
+            <li><strong><code>&lt;img&gt;</code> (Empty):</strong> <code>&lt;img src="pic.jpg" alt="വിവരണം" width="100" height="100"&gt;</code>. <strong><code>src</code> = ചിത്രത്തിന്റെ സ്ഥാനം (Source)</strong>, <strong><code>alt</code> = ചിത്രം ലോഡ് ആയില്ലെങ്കിൽ കാണിക്കുന്ന ബദൽ ടെക്സ്റ്റ് (Alternate text)</strong>.</li>
+          </ul>
+          <span class="trick">🧠 <strong><code>a href</code> = "ഹ്രസ്വമായി ഹൈപ്പർ റഫറൻസ്" (Hypertext REFerence); <code>img src</code> = "സോഴ്സ്".</strong></span>
+        </div>
+
+        <h4>3 തരം ലിസ്റ്റുകൾ</h4>
+        <ol>
+          <li><strong><code>&lt;ol&gt;</code> (Ordered List):</strong> 1, 2, 3 / A, B, C / i, ii, iii. <code>type</code> ആട്രിബ്യൂട്ട്: <code>1, A, a, I, i</code>.</li>
+          <li><strong><code>&lt;ul&gt;</code> (Unordered List):</strong> ബുള്ളറ്റ് (Disc, Circle, Square).</li>
+          <li><strong><code>&lt;dl&gt;</code> (Description List):</strong> <code>&lt;dt&gt;</code> (പദം), <code>&lt;dd&gt;</code> (വിവരണം).</li>
+        </ol>
+        <p>രണ്ട് ലിസ്റ്റിലും ഇനങ്ങൾക്ക് <strong><code>&lt;li&gt;</code></strong> ഉപയോഗിക്കുന്നു.</p>
+        <span class="trick">🧠 <strong>OL = Ordered = അക്കം, UL = Unordered = ഉണ്ട (ബുള്ളറ്റ്)</strong></span>
+
+        <h4>ടേബിൾ ടാഗുകൾ</h4>
+        <ul>
+          <li><code>&lt;table&gt;</code> (പട്ടിക), <code>&lt;caption&gt;</code> (തലക്കെട്ട്), <strong><code>&lt;tr&gt;</code> (വരി)</strong>, <strong><code>&lt;th&gt;</code> (തലക്കെട്ട് കളം: Bold + Center)</strong>, <strong><code>&lt;td&gt;</code> (ഡാറ്റ കളം)</strong>.</li>
+          <li>ആട്രിബ്യൂട്ടുകൾ: <code>border</code> (അതിര്), <strong><code>rowspan</code></strong> (വരികൾ ഒന്നിപ്പിക്കാൻ), <strong><code>colspan</code></strong> (കോളങ്ങൾ ഒന്നിപ്പിക്കാൻ), <strong><code>cellpadding</code></strong> (കളത്തിനുള്ളിലെ വിടവ്), <strong><code>cellspacing</code></strong> (കളങ്ങൾ തമ്മിലുള്ള വിടവ്).</li>
+        </ul>
+        <span class="trick">🧠 <strong>TR = Row (വരി), TH = Header (തല), TD = Data (ഡാറ്റ); Row = വിലങ്ങനെ, Col = കുത്തനെ</strong></span>
+
+        <h4>ഫോം ടാഗുകൾ</h4>
+        <ul>
+          <li><strong><code>&lt;form&gt;</code>:</strong> വിവരം ശേഖരിക്കാനുള്ള ഫോം. ആട്രിബ്യൂട്ടുകൾ: <strong><code>action</code></strong> (വിവരം അയക്കേണ്ട സ്ഥലം), <strong><code>method</code></strong> (<code>GET</code> / <code>POST</code>).</li>
+          <li><strong><code>&lt;input&gt;</code> (Empty):</strong> <code>type="text"</code> (ടെക്സ്റ്റ് ബോക്സ്), <code>"password"</code>, <strong><code>"radio"</code> (ഒരെണ്ണം മാത്രം)</strong>, <strong><code>"checkbox"</code> (ഒന്നിലധികം)</strong>, <code>"submit"</code>, <code>"reset"</code>, <code>"button"</code>.</li>
+          <li><strong><code>&lt;select&gt;</code> + <code>&lt;option&gt;</code>:</strong> <strong>ഡ്രോപ്പ്-ഡൗൺ ലിസ്റ്റ്</strong> (HTML-ൽ <code>&lt;dropdown&gt;</code> എന്ന ടാഗ് ഇല്ല).</li>
+          <li><strong><code>&lt;textarea&gt;</code>:</strong> ഒന്നിലധികം വരിയുള്ള ടെക്സ്റ്റ് ബോക്സ് (<code>rows</code>, <code>cols</code>).</li>
+          <li><strong><code>&lt;label&gt;</code>:</strong> ഇൻപുട്ടിന്റെ ലേബൽ.</li>
+        </ul>
+        <span class="trick">🧠 <strong>Radio = പഴയ റേഡിയോയിലെ ബട്ടൺ (ഒന്ന് അമർത്തിയാൽ മറ്റത് പൊങ്ങും → ഒരെണ്ണം മാത്രം); Checkbox = ഷോപ്പിംഗ് ലിസ്റ്റിൽ ടിക്ക് (പലതും ടിക്ക് ചെയ്യാം)</strong></span>
+
+        <div class="added-fact">
+          <span class="box-label">➕ മറ്റു ടാഗുകളും HTML5 പുതിയ സെമാന്റിക് ടാഗുകളും</span>
+          <ul>
+            <li><code>&lt;div&gt;</code> (ബ്ലോക്ക് വിഭാഗം), <code>&lt;span&gt;</code> (വരിക്കുള്ളിലെ ഭാഗം), <code>&lt;iframe&gt;</code> (പേജിനുള്ളിൽ മറ്റൊരു പേജ്), <code>&lt;audio&gt;</code>, <code>&lt;video&gt;</code>, <code>&lt;canvas&gt;</code> (HTML5), <code>&lt;link&gt;</code> (CSS ബന്ധിപ്പിക്കാൻ), <code>&lt;script&gt;</code> (JavaScript).</li>
+            <li><strong>HTML5-ലെ പുതിയ സെമാന്റിക് ടാഗുകൾ:</strong> <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;main&gt;</code>. HTML5 W3C ശുപാർശ: <strong>2014 ഒക്ടോബർ</strong>. (HTML 4.01: 1999.)</li>
+            <li><strong>ആട്രിബ്യൂട്ട് (Attribute):</strong> ടാഗിന് കൂടുതൽ വിവരം നൽകുന്ന ഭാഗം. <code>name="value"</code> രൂപത്തിൽ, <strong>തുടക്ക ടാഗിൽ</strong> മാത്രം. ഉദാ: <code>href</code>, <code>src</code>, <code>alt</code>, <code>width</code>, <code>height</code>, <code>id</code>, <code>class</code>, <code>style</code>, <code>title</code>.</li>
+          </ul>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ HTML നിറങ്ങളും എന്റിറ്റികളും</span>
+          <ul>
+            <li>നിറങ്ങൾക്ക് <strong><code>#RRGGBB</code> ഹെക്സാഡെസിമൽ കോഡ്:</strong> <code>#000000</code> = കറുപ്പ്, <code>#FFFFFF</code> = വെള്ള, <code>#FF0000</code> = ചുവപ്പ്, <code>#00FF00</code> = പച്ച, <code>#0000FF</code> = നീല.</li>
+            <li><strong>ക്യാരക്ടർ എന്റിറ്റികൾ:</strong> <code>&amp;nbsp;</code> (ബ്രേക്ക് ആകാത്ത സ്പേസ്), <code>&amp;lt;</code> (&lt;), <code>&amp;gt;</code> (&gt;), <code>&amp;amp;</code> (&amp;), <code>&amp;copy;</code> (©).</li>
+          </ul>
+          <span class="trick">🧠 <strong>R-G-B = ചുവപ്പ്-പച്ച-നീല; എല്ലാം പൂജ്യം = ഇരുട്ട് (കറുപ്പ്), എല്ലാം F = വെളിച്ചം (വെള്ള).</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PROGRAMMING BASICS -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. പ്രോഗ്രാമിംഗ് അടിസ്ഥാനവും നിർദ്ദേശങ്ങളും (10.3.1–10.3.6)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ സിലബസ് വാചകം</span>
+          <p><em>"Basics of programming – Types of instructions (Input, Output, Store, Control transfer) (Languages need not be considered)"</em>. അതായത് <strong>ഏതെങ്കിലും ഭാഷയുടെ കോഡ് പഠിക്കേണ്ട, ആശയം മാത്രം.</strong></p>
+        </div>
+
+        <h3>6.1 അടിസ്ഥാന ആശയങ്ങൾ</h3>
+        <ul>
+          <li><strong>പ്രോഗ്രാം:</strong> ഒരു ജോലി ചെയ്യാൻ കമ്പ്യൂട്ടറിന് നൽകുന്ന ക്രമീകൃത <strong>നിർദ്ദേശങ്ങളുടെ (Instructions) കൂട്ടം</strong>. എഴുതുന്ന പ്രക്രിയ = <strong>പ്രോഗ്രാമിംഗ്/കോഡിംഗ്</strong>; എഴുതുന്നയാൾ = <strong>പ്രോഗ്രാമർ</strong>.</li>
+          <li><strong>അൽഗോരിതം (Algorithm):</strong> പ്രശ്നം പരിഹരിക്കാനുള്ള <strong>പടിപടിയായ (Step-by-step) യുക്തിപരമായ നിർദ്ദേശങ്ങൾ</strong>. പേര് <strong>അൽ-ഖ്വാരിസ്മി</strong> (പേർഷ്യൻ ഗണിതജ്ഞൻ) എന്ന പേരിൽ നിന്ന്. ഉദാ: ചായ ഉണ്ടാക്കാനുള്ള ഘട്ടങ്ങൾ.
+            <ul>
+              <li><strong>നല്ല അൽഗോരിതത്തിന്റെ ഗുണങ്ങൾ:</strong> <strong>Finiteness</strong> (അവസാനിക്കണം), <strong>Definiteness</strong> (വ്യക്തത), <strong>Input</strong> (0 അല്ലെങ്കിൽ കൂടുതൽ), <strong>Output</strong> (കുറഞ്ഞത് 1), <strong>Effectiveness</strong> (പ്രായോഗികം).</li>
+            </ul>
+          </li>
+          <li><strong>ഫ്ലോചാർട്ട് (Flowchart):</strong> അൽഗോരിതത്തിന്റെ <strong>ചിത്രരൂപം</strong>, ചിഹ്നങ്ങളും അമ്പടയാളങ്ങളും ഉപയോഗിച്ച്.</li>
+        </ul>
+
+        <h4>ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ (PSC സ്ഥിരം ചോദ്യം!)</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചിഹ്നം</th><th>ആകൃതി</th><th>അർത്ഥം</th><th>🧠 ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>ഓവൽ (Oval/Terminal)</strong></td><td><strong>Start / Stop</strong></td><td>ഓവൽ = തുടക്കവും ഒടുക്കവും</td></tr>
+              <tr><td>2</td><td><strong>സാമാന്തരികം (Parallelogram)</strong></td><td><strong>Input / Output</strong></td><td>ചരിഞ്ഞ് നിൽക്കുന്നു = ഡാറ്റ അകത്തേക്കും പുറത്തേക്കും ഒഴുകുന്നു</td></tr>
+              <tr><td>3</td><td><strong>ചതുരം (Rectangle)</strong></td><td><strong>Process</strong> (കണക്കുകൂട്ടൽ / Store)</td><td>ചതുരം = ജോലി (Process)</td></tr>
+              <tr><td>4</td><td><strong>ഡയമണ്ട് (Rhombus)</strong></td><td><strong>Decision</strong> (Yes/No)</td><td>ഡയമണ്ട് = "ഡിസിഷൻ" (D–D)</td></tr>
+              <tr><td>5</td><td><strong>അമ്പടയാളം (Arrow)</strong></td><td>ഒഴുക്കിന്റെ ദിശ</td><td>—</td></tr>
+              <tr><td>6</td><td><strong>വൃത്തം (Circle)</strong></td><td><strong>Connector</strong></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul>
+          <li><strong>സ്യൂഡോകോഡ് (Pseudocode):</strong> പ്രോഗ്രാമിംഗ് ഭാഷയുടെ കർശന നിയമമില്ലാതെ സാധാരണ ഇംഗ്ലീഷിൽ എഴുതുന്ന അൽഗോരിതം ("വ്യാജ കോഡ്").</li>
+          <li><strong>ബഗ്ഗ് &amp; ഡീബഗ്ഗിംഗ്:</strong> പ്രോഗ്രാമിലെ തെറ്റ് = <strong>Bug</strong>; തിരുത്തുന്ന പ്രക്രിയ = <strong>Debugging</strong>. 1947-ൽ ഹാർവാർഡ് <strong>Mark II</strong> കമ്പ്യൂട്ടറിൽ ഒരു നിശാശലഭം (Moth) കുടുങ്ങി; <strong>ഗ്രേസ് ഹോപ്പറുടെ</strong> ടീം ആ സംഭവം പ്രശസ്തമാക്കി.</li>
+        </ul>
+
+        <h4>3 തരം എറർ</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>എറർ</th><th>എപ്പോൾ?</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Syntax Error</strong></td><td>ഭാഷയുടെ വ്യാകരണം തെറ്റുമ്പോൾ. കംപൈലർ <strong>കണ്ടെത്തും</strong>, പ്രോഗ്രാം ഓടില്ല</td><td>സെമികോളൻ വിട്ടുപോകൽ</td></tr>
+              <tr><td><strong>Logical Error</strong></td><td>പ്രോഗ്രാം ഓടും, പക്ഷേ <strong>ഉത്തരം തെറ്റ്</strong>. കണ്ടെത്താൻ ഏറ്റവും പ്രയാസം</td><td>കൂട്ടേണ്ടിടത്ത് കുറയ്ക്കൽ</td></tr>
+              <tr><td><strong>Runtime Error</strong></td><td>ഓടുന്നതിനിടെ പരാജയപ്പെടും</td><td>പൂജ്യം കൊണ്ട് ഹരിക്കൽ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul>
+          <li><strong>പ്രോഗ്രാമിംഗിന്റെ 3 അടിസ്ഥാന നിർമ്മിതികൾ (Control structures):</strong> <strong>Sequence</strong> (ക്രമം), <strong>Selection</strong> (തിരഞ്ഞെടുക്കൽ: IF), <strong>Iteration</strong> (ആവർത്തനം: LOOP).</li>
+        </ul>
+
+        <h4>ഭാഷാ തലങ്ങൾ &amp; ട്രാൻസ്ലേറ്ററുകൾ</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>വിവരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>മെഷീൻ ഭാഷ (Low-level)</strong></td><td>0, 1 മാത്രം. കമ്പ്യൂട്ടറിന് നേരിട്ട് മനസ്സിലാകും</td></tr>
+              <tr><td><strong>അസംബ്ലി ഭാഷ</strong></td><td>ചുരുക്കെഴുത്തുകൾ (ADD, MOV). <strong>Assembler</strong> മെഷീൻ ഭാഷയാക്കും</td></tr>
+              <tr><td><strong>ഹൈ-ലെവൽ ഭാഷ</strong></td><td>മനുഷ്യർക്ക് വായിക്കാവുന്നത് (C, Java, Python). <strong>Compiler / Interpreter</strong> വേണം</td></tr>
+              <tr><td><strong>Compiler</strong></td><td><strong>മുഴുവൻ പ്രോഗ്രാമും ഒരുമിച്ച്</strong> മെഷീൻ കോഡാക്കും; എററുകൾ ലിസ്റ്റായി കാണിക്കും</td></tr>
+              <tr><td><strong>Interpreter</strong></td><td><strong>വരി വരിയായി</strong> വിവർത്തനം ചെയ്ത് ഓടിക്കും; എറർ കണ്ടാൽ അവിടെ നിൽക്കും</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>Compiler = Translator-ന്റെ "പുസ്തകം മുഴുവൻ ഒറ്റയടിക്ക്", Interpreter = "ഒരു വരി, ഒരു വിവർത്തനം (ലൈവ് പരിഭാഷ)"</strong></span>
+
+        <h3>6.2 പ്രോഗ്രാമിംഗ് നിർദ്ദേശങ്ങൾ (10.3.2–10.3.6)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സിലബസ് കോഡ്</th><th>നിർദ്ദേശ വിഭാഗം</th><th>ധർമ്മവും ഉദാഹരണവും</th><th>🧠 ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>10.3.2</strong></td><td><strong>Input (ഇൻപുട്ട്)</strong></td><td>കീബോർഡ്, മൗസ് തുടങ്ങിയവയിൽ നിന്ന് <strong>ഡാറ്റ അകത്തേക്ക് വാങ്ങുന്നു</strong>. <code>INPUT</code>, <code>READ</code>, <code>ACCEPT</code>, <code>SCAN</code></td><td>ഇൻ = അകത്ത്: READ</td></tr>
+              <tr><td><strong>10.3.3</strong></td><td><strong>Output (ഔട്ട്പുട്ട്)</strong></td><td>ഫലം മോണിറ്റർ/പ്രിന്ററിൽ <strong>പുറത്തേക്ക് കാണിക്കുന്നു</strong>. <code>PRINT</code>, <code>WRITE</code>, <code>DISPLAY</code>, <code>SHOW</code></td><td>ഔട്ട് = പുറത്ത്: PRINT</td></tr>
+              <tr><td><strong>10.3.4</strong></td><td><strong>Store (സ്റ്റോർ/അസൈൻമെന്റ്)</strong></td><td>മൂല്യമോ കണക്കുകൂട്ടൽ ഫലമോ <strong>മെമ്മറിയിലെ വേരിയബിളിൽ സൂക്ഷിക്കുന്നു</strong>. <code>LET A = 10</code>, <code>SUM = A + B</code>, <code>MOV</code></td><td>സ്റ്റോർ = അലമാരയിൽ വെക്കൽ: <code>=</code></td></tr>
+              <tr><td><strong>10.3.5</strong></td><td><strong>Control (നിയന്ത്രണം)</strong></td><td><strong>തീരുമാനമെടുക്കൽ</strong> (<code>IF…THEN…ELSE</code>) + <strong>ആവർത്തനം</strong> (<code>FOR</code>, <code>WHILE</code>, <code>REPEAT</code>)</td><td>കൺട്രോൾ = ട്രാഫിക് പോലീസ്: IF / LOOP</td></tr>
+              <tr><td><strong>10.3.6</strong></td><td><strong>Transfer (ട്രാൻസ്ഫർ/ജമ്പ്)</strong></td><td>ക്രമത്തിൽ ഓടുന്നതിന് പകരം <strong>മറ്റൊരു വരിയിലേക്കോ ഉപപ്രോഗ്രാമിലേക്കോ ചാടുന്നു</strong>. <code>GOTO</code>, <code>JUMP</code>, <code>CALL</code>, <code>RETURN</code>, <code>BREAK</code></td><td>ട്രാൻസ്ഫർ = ചാട്ടം: GOTO</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="important">
+          <span class="box-label">⭐ പ്രധാന കുറിപ്പ്</span>
+          <p>സിലബസ് വാചകത്തിൽ <strong>"Control transfer"</strong> ഒറ്റ പദമാണ്. അതുകൊണ്ട് ചില ചോദ്യ ഉറവിടങ്ങളിൽ <strong>4 തരം: Input, Output, Store, Control Transfer</strong> എന്നും വരാം. നിങ്ങൾ 5 ആയി പഠിച്ചാൽ രണ്ട് രീതിയും ഉത്തരം കിട്ടും. ഓപ്ഷനിൽ "Control Transfer" കണ്ടാൽ അത് <strong>Control + Transfer</strong> രണ്ടും ഉൾക്കൊള്ളുന്നതായി കരുതുക.</p>
+        </div>
+        <span class="trick">🧠 <strong>"IOS-CT" → ഇൻപുട്ട്, ഔട്ട്പുട്ട്, സ്റ്റോർ, കൺട്രോൾ, ട്രാൻസ്ഫർ. കഥ: "വാങ്ങി (Input) → വെച്ചു (Store) → തീരുമാനിച്ചു (Control) → ചാടി (Transfer) → കാണിച്ചു (Output)".</strong></span>
+      </div>
+    </section>
+    <!-- SECTION 7: E-GOVERNANCE -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. ഇ-ഗവേണൻസ്: ദേശീയ-കേരള പദ്ധതികൾ (10.6.1, 10.6.2 &amp; 5.19)</span>
+      </h2>
+      <div class="section-body">
+        <p><strong>ഇ-ഗവേണൻസ് (Electronic Governance):</strong> സർക്കാർ സേവനങ്ങളും വിവരങ്ങളും <strong>ICT (Information &amp; Communication Technology)</strong> ഉപയോഗിച്ച് പൗരന്മാരിലേക്കും സ്ഥാപനങ്ങളിലേക്കും <strong>വേഗത്തിലും സുതാര്യമായും</strong> എത്തിക്കുന്ന ഭരണം. ലക്ഷ്യങ്ങൾ: <strong>അഴിമതി കുറയ്ക്കുക, കാലതാമസം ഒഴിവാക്കുക, ഇടനിലക്കാരെ ഒഴിവാക്കുക, 24x7 സേവനം.</strong></p>
+
+        <div class="important">
+          <span class="box-label">⭐ SMART Governance</span>
+          <p><strong>S</strong>imple, <strong>M</strong>oral, <strong>A</strong>ccountable, <strong>R</strong>esponsive, <strong>T</strong>ransparent.</p>
+        </div>
+
+        <h3>7.1 നേട്ടങ്ങളും വെല്ലുവിളികളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>നേട്ടങ്ങൾ</th><th>വെല്ലുവിളികൾ</th></tr></thead>
+            <tbody>
+              <tr><td>സുതാര്യത, അഴിമതി കുറവ്, സമയലാഭം, ചെലവ് കുറവ്, 24x7 ലഭ്യത</td><td><strong>ഡിജിറ്റൽ വിഭജനം (Digital Divide)</strong>, ഡിജിറ്റൽ നിരക്ഷരത, ഇന്റർനെറ്റ് ലഭ്യതക്കുറവ്, സൈബർ സുരക്ഷ, സ്വകാര്യത, ഭാഷാ തടസ്സം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>7.2 ഇ-ഗവേണൻസിന്റെ 4 ഘട്ടങ്ങൾ</h3>
+        <p><strong>Information</strong> (വിവരം നൽകൽ) → <strong>Interaction</strong> (ഇടപെടൽ) → <strong>Transaction</strong> (ഇടപാട്/പണമടയ്ക്കൽ) → <strong>Transformation</strong> (പൂർണ്ണ മാറ്റം).</p>
+        <span class="trick">🧠 <strong>"I-I-T-T": വിവരം, ഇടപെടൽ, ഇടപാട്, രൂപാന്തരം.</strong></span>
+
+        <h3>7.3 ഇ-ഗവേണൻസിലെ 4 മാതൃകകൾ</h3>
+        <ol>
+          <li><strong>G2C (Government to Citizen):</strong> പൗരന് സേവനം (സർട്ടിഫിക്കറ്റ്, നികുതി, ബിൽ, പെൻഷൻ). ഉദാ: <strong>അക്ഷയ, ഫ്രണ്ട്സ്, ഇ-ഡിസ്ട്രിക്റ്റ്, K-SMART, DigiLocker, UMANG</strong>.</li>
+          <li><strong>G2B (Government to Business):</strong> വ്യവസായ ലൈസൻസ്, ഇ-ടെൻഡർ, GST പോർട്ടൽ, <strong>MCA21</strong>, GeM.</li>
+          <li><strong>G2G (Government to Government):</strong> വകുപ്പുകൾ തമ്മിൽ. ഉദാ: <strong>ഇ-ഓഫീസ്, K-SWAN, CCTNS</strong>.</li>
+          <li><strong>G2E (Government to Employee):</strong> ജീവനക്കാർക്ക്. ഉദാ: <strong>SPARK (കേരളം)</strong>, ജീവൻ പ്രമാൺ, ഐ-ഗോട്ട് കർമ്മയോഗി.</li>
+        </ol>
+        <span class="trick">🧠 <strong>"C-B-G-E" = പൗരൻ, ബിസിനസ്, ഗവൺമെന്റ്, ജീവനക്കാരൻ; SPARK = "ശമ്പളത്തിന്റെ തീപ്പൊരി" → ജീവനക്കാർക്ക് (G2E).</strong></span>
+
+        <h3>7.4 ഇന്ത്യയിലെ പ്രധാന പദ്ധതികൾ</h3>
+        <ul>
+          <li><strong>NeGP (National e-Governance Plan):</strong> <strong>2006 മെയ് 18</strong>. മുദ്രാവാക്യം: <em>"Public Services Closer Home"</em>. <strong>e-Kranti = NeGP 2.0</strong>.</li>
+          <li><strong>ഡിജിറ്റൽ ഇന്ത്യ (Digital India):</strong> <strong>2015 ജൂലൈ 1</strong>-ന് പ്രധാനമന്ത്രി നരേന്ദ്ര മോദി ഉദ്ഘാടനം ചെയ്തു. മുദ്രാവാക്യം: <em>"Power to Empower"</em>. <strong>3 ദർശന മേഖലകൾ:</strong> ഡിജിറ്റൽ അടിസ്ഥാന സൗകര്യം, ഭരണവും സേവനങ്ങളും ആവശ്യാനുസരണം, പൗരന്മാരുടെ ഡിജിറ്റൽ ശാക്തീകരണം.
+            <ul>
+              <li><strong>9 തൂണുകൾ:</strong> Broadband Highways, Universal Access to Mobile Connectivity, Public Internet Access Programme, <strong>e-Governance</strong>, <strong>e-Kranti</strong>, Information for All, Electronics Manufacturing, IT for Jobs, Early Harvest Programmes.</li>
+            </ul>
+          </li>
+          <li><strong>UMANG:</strong> കേന്ദ്ര-സംസ്ഥാന സേവനങ്ങൾ ഒരു മൊബൈൽ ആപ്പിൽ (2017).</li>
+          <li><strong>DigiLocker:</strong> ആധാർ, ലൈസൻസ്, RC, സർട്ടിഫിക്കറ്റ് തുടങ്ങിയവ ഡിജിറ്റലായി ക്ലൗഡിൽ (2015).</li>
+          <li><strong>മറ്റുള്ളവ:</strong> <strong>PRAGATI</strong> (Pro-Active Governance And Timely Implementation), <strong>ജീവൻ പ്രമാൺ</strong> (പെൻഷൻകാർക്ക് ബയോമെട്രിക് ഡിജിറ്റൽ ലൈഫ് സർട്ടിഫിക്കറ്റ്, 2014), <strong>MyGov</strong>, <strong>GeM</strong> (Government e-Marketplace, 2016), <strong>e-NAM</strong>, <strong>BHIM-UPI</strong>, <strong>ആധാർ (UIDAI)</strong>, <strong>e-Courts</strong>.</li>
+          <li><strong>സംസ്ഥാന മാതൃകകൾ:</strong> <strong>ഭൂമി (Bhoomi – കർണാടക, ഭൂരേഖ)</strong>, <strong>ഗ്യാൻദൂത് (Gyandoot – മധ്യപ്രദേശ്, ധാർ ജില്ല)</strong>, <strong>ഇ-സേവ (e-Seva – ആന്ധ്രാപ്രദേശ്)</strong>, <strong>ലോക്വാണി (ഉത്തർപ്രദേശ്)</strong>.</li>
+          <li><strong>ഐ.ടി ആക്ടിലെ ഇ-ഗവേണൻസ് വകുപ്പുകൾ:</strong> <strong>Sec 4</strong> (ഇലക്ട്രോണിക് രേഖയ്ക്ക് നിയമസാധുത), <strong>Sec 5</strong> (ഇലക്ട്രോണിക് ഒപ്പിന് സാധുത), <strong>Sec 6</strong> (സർക്കാർ ഓഫീസുകളിൽ ഇലക്ട്രോണിക് രേഖകൾ ഉപയോഗിക്കൽ = <strong>ഇ-ഗവേണൻസിന്റെ നിയമാടിത്തറ</strong>), <strong>Sec 10A</strong> (ഇലക്ട്രോണിക് മാർഗ്ഗത്തിലൂടെയുള്ള കരാർ, 2008).</li>
+        </ul>
+
+        <h3>7.5 കേരളത്തിലെ ഇ-ഗവേണൻസ്</h3>
+        <p>നോഡൽ ഏജൻസി: <strong>കേരള സ്റ്റേറ്റ് ഐ.ടി മിഷൻ (KSITM)</strong>, ആസ്ഥാനം തിരുവനന്തപുരം. തദ്ദേശ സ്ഥാപനങ്ങൾക്കുള്ള സോഫ്റ്റ്‌വെയർ വികസിപ്പിക്കുന്നത് <strong>ഇൻഫർമേഷൻ കേരള മിഷൻ (IKM)</strong>.</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പദ്ധതി</th><th>വർഷം / സ്ഥലം</th><th>ലക്ഷ്യവും സവിശേഷതകളും</th><th>🧠 ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ഫ്രണ്ട്സ് (FRIENDS)</strong></td><td><strong>2000 ജൂൺ, തിരുവനന്തപുരം</strong></td><td><strong>F</strong>ast, <strong>R</strong>eliable, <strong>I</strong>nstant, <strong>E</strong>fficient <strong>N</strong>etwork for <strong>D</strong>isbursement of <strong>S</strong>ervices. വൈദ്യുതി, വെള്ളം, നികുതി തുടങ്ങിയ ബില്ലുകൾ <strong>ഒരൊറ്റ കൗണ്ടറിൽ (ഏകജാലകം / Single Window)</strong>.</td><td>FRIENDS = കൂട്ടുകാർ ഒരുമിച്ച് ഒരു കൗണ്ടറിൽ</td></tr>
+              <tr><td><strong>അക്ഷയ (Akshaya)</strong></td><td><strong>2002 നവംബർ 18, മലപ്പുറം</strong></td><td>ഒരു കുടുംബത്തിൽ ഒരാൾക്കെങ്കിലും <strong>ഇ-സാക്ഷരത</strong>; സർക്കാർ സേവനങ്ങൾ ജനങ്ങളിലേക്ക്. ഉദ്ഘാടനം: <strong>രാഷ്ട്രപതി ഡോ. എ.പി.ജെ. അബ്ദുൾ കലാം</strong>. <strong>ഇന്ത്യയിലെ ആദ്യ സമ്പൂർണ്ണ ഇ-സാക്ഷര ജില്ല = മലപ്പുറം</strong>.</td><td>അക്ഷയ = "ക്ഷയിക്കാത്തത്" → ഇ-സാക്ഷരത → മലപ്പുറം</td></tr>
+              <tr><td><strong>സ്പാർക്ക് (SPARK)</strong></td><td>കേരള സർക്കാർ</td><td><strong>S</strong>ervice and <strong>P</strong>ayroll <strong>A</strong>dministrative <strong>R</strong>epository for <strong>K</strong>erala. സർക്കാർ ജീവനക്കാരുടെ <strong>ശമ്പളവും സർവീസ് വിവരങ്ങളും</strong> (G2E).</td><td>SPARK = ശമ്പളത്തിന്റെ സ്പാർക്ക്</td></tr>
+              <tr><td><strong>ഇ-ഡിസ്ട്രിക്റ്റ് (e-District)</strong></td><td>പൈലറ്റ്: കണ്ണൂർ, പാലക്കാട്</td><td>വില്ലേജ്/താലൂക്ക് സർട്ടിഫിക്കറ്റുകൾ (വരുമാനം, ജാതി, നേറ്റിവിറ്റി) ഓൺലൈനായി. <strong>e-Sevanam പോർട്ടൽ</strong> വഴി.</td><td>ഇ-ഡിസ്ട്രിക്റ്റ് = സർട്ടിഫിക്കറ്റ്</td></tr>
+              <tr><td><strong>കെ-സ്വാൻ (K-SWAN)</strong></td><td>KSITM</td><td><strong>Kerala State Wide Area Network</strong>. സെക്രട്ടേറിയറ്റ് – ജില്ല – ബ്ലോക്ക് ഓഫീസുകളെ ബന്ധിപ്പിക്കുന്ന സർക്കാർ നെറ്റ്‌വർക്ക് (G2G).</td><td>SWAN = Wide Area Network</td></tr>
+              <tr><td><strong>കെ-ഫോൺ (K-FON)</strong></td><td><strong>2023 ജൂൺ 5</strong></td><td><strong>Kerala Fibre Optic Network</strong>. <strong>20 ലക്ഷം BPL കുടുംബങ്ങൾക്ക് സൗജന്യ ഇന്റർനെറ്റ്</strong>. (2017-ൽ ഇന്റർനെറ്റ് അടിസ്ഥാന അവകാശം എന്ന് പ്രഖ്യാപിച്ച ആദ്യ സംസ്ഥാനം കേരളം)</td><td>FON = Fibre Optic Network</td></tr>
+              <tr><td><strong>കെ-സ്മാർട്ട് (K-SMART)</strong></td><td><strong>2024 ജനുവരി 1</strong></td><td><strong>K</strong>erala <strong>S</strong>olutions for <strong>M</strong>anaging <strong>A</strong>dministrative <strong>R</strong>eformation and <strong>T</strong>ransformation. തദ്ദേശ സ്ഥാപന സേവനങ്ങൾ (ജനനം–മരണം–വിവാഹ രജിസ്ട്രേഷൻ, കെട്ടിട പെർമിറ്റ്, നികുതി) ഒറ്റ പ്ലാറ്റ്‌ഫോമിൽ. വികസിപ്പിച്ചത് <strong>IKM</strong>.</td><td>K-SMART = LSGD (തദ്ദേശം)</td></tr>
+              <tr><td><strong>മറ്റ് പോർട്ടലുകൾ</strong></td><td>വിവിധ</td><td><strong>സേവന (Sevana):</strong> സിവിൽ രജിസ്ട്രേഷൻ · <strong>പേൾ (PEARL):</strong> ആധാര (രജിസ്ട്രേഷൻ) വകുപ്പ് · <strong>ഇ-രേഖ (e-Rekha):</strong> ഭൂരേഖ · <strong>സുതാര്യകേരളം:</strong> പരാതി പരിഹാരം · <strong>സമഗ്ര (Samagra):</strong> വിദ്യാഭ്യാസ പോർട്ടൽ (KITE) · <strong>തുളസി (Thulasi):</strong> <strong>PSC ഉദ്യോഗാർത്ഥി പ്രൊഫൈൽ (One Time Registration) പോർട്ടൽ</strong></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>"കൂട്ടുകാർ (FRIENDS) ഒരു കൗണ്ടറിൽ; അക്ഷയം (Akshaya) അറിവ് മലപ്പുറത്ത്; സ്പാർക്ക് (SPARK) ശമ്പളത്തിൽ; കെ-സ്മാർട്ട് (K-SMART) തദ്ദേശത്തിൽ; കെ-ഫോൺ (K-FON) ഫൈബറിൽ."</strong></span>
+      </div>
+    </section>
+
+    <!-- SECTION 8: CYBER SECURITY -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. സൈബർ സുരക്ഷ, സൈബർ കുറ്റകൃത്യങ്ങൾ (10.7.1–10.7.4)</span>
+      </h2>
+      <div class="section-body">
+        <h3>8.0 Cyber Wrong vs Cyber Crime</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th></th><th>Cyber Wrong (സൈബർ തെറ്റ്)</th><th>Cyber Crime (സൈബർ കുറ്റകൃത്യം)</th></tr></thead>
+            <tbody>
+              <tr><td>സ്വഭാവം</td><td><strong>സിവിൽ</strong> (Civil) സ്വഭാവം</td><td><strong>ക്രിമിനൽ</strong> (Criminal) സ്വഭാവം</td></tr>
+              <tr><td>പരിഹാരം</td><td><strong>നഷ്ടപരിഹാരം (Compensation)</strong></td><td><strong>ശിക്ഷ: തടവ് / പിഴ</strong></td></tr>
+              <tr><td>ഐ.ടി ആക്ടിൽ</td><td><strong>Sec 43, 43A</strong></td><td><strong>Sec 65, 66 തുടങ്ങി 66F, 67, 67A, 67B ...</strong></td></tr>
+              <tr><td>ആര് തീരുമാനിക്കും</td><td><strong>അഡ്ജുഡിക്കേറ്റിംഗ് ഓഫീസർ (Sec 46)</strong>; ₹5 കോടി വരെയുള്ള ക്ലെയിം</td><td><strong>കോടതി</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>"Wrong = Wallet (പണം/നഷ്ടപരിഹാരം), Crime = Cell (ജയിൽ)."</strong></span>
+
+        <h3>8.1 സൈബർ സുരക്ഷാ അടിസ്ഥാനം</h3>
+        <ul>
+          <li><strong>CIA Triad:</strong> <strong>C</strong>onfidentiality (രഹസ്യസ്വഭാവം: അധികാരമുള്ളവർക്ക് മാത്രം), <strong>I</strong>ntegrity (സമഗ്രത: അനധികൃത മാറ്റം പാടില്ല), <strong>A</strong>vailability (ലഭ്യത: വേണ്ടപ്പോൾ കിട്ടണം). <strong>Robustness ഇതിൽ പെടില്ല.</strong>
+            <ul>
+              <li><strong>അധികം:</strong> <strong>Authentication</strong> (ആരാണെന്ന് ഉറപ്പിക്കൽ), <strong>Authorization</strong> (എന്ത് ചെയ്യാൻ അനുമതി), <strong>Non-repudiation</strong> (നിഷേധിക്കാൻ പറ്റാത്ത തെളിവ്; ഡിജിറ്റൽ ഒപ്പ് ഇതിനാണ്).</li>
+            </ul>
+          </li>
+          <li><strong>പ്രധാന ദിനങ്ങൾ:</strong> ലോക കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം <strong>നവംബർ 30</strong> (1988-ലെ Morris Worm-ന് ശേഷം ACM ആരംഭിച്ചു). <strong>ഡിസംബർ 2 = കമ്പ്യൂട്ടർ സാക്ഷരതാ ദിനം.</strong> ദേശീയ സൈബർ സുരക്ഷാ ബോധവത്കരണ മാസം: <strong>ഒക്ടോബർ</strong>. Safer Internet Day: <strong>ഫെബ്രുവരിയിലെ രണ്ടാം ചൊവ്വ</strong>.</li>
+          <li><strong>ഫയർവാൾ (Firewall):</strong> സ്വകാര്യ കമ്പ്യൂട്ടറിനും/നെറ്റ്‌വർക്കിനും ഇന്റർനെറ്റിനും ഇടയിലെ <strong>സുരക്ഷാ മതിൽ</strong>; ഇൻകമിംഗ്/ഔട്ട്ഗോയിംഗ് ട്രാഫിക് പരിശോധിച്ച് അപകടകരമായത് തടയുന്നു. <strong>ഹാർഡ്‌വെയർ, സോഫ്റ്റ്‌വെയർ അല്ലെങ്കിൽ രണ്ടും.</strong> (ഫയർവാൾ <strong>വൈറസ് നീക്കം ചെയ്യില്ല</strong>; അത് ആന്റിവൈറസിന്റെ ജോലി.)</li>
+          <li><strong>സുരക്ഷാ മാർഗ്ഗങ്ങൾ:</strong> ആന്റിവൈറസ് + അപ്‌ഡേറ്റ്, ശക്തമായ പാസ്‌വേഡ്, <strong>2FA / MFA</strong>, <strong>എൻക്രിപ്ഷൻ</strong>, <strong>VPN</strong>, ബാക്കപ്പ്, <strong>HTTPS</strong> ഉള്ള സൈറ്റുകൾ മാത്രം, അജ്ഞാത ലിങ്ക് ക്ലിക്ക് ചെയ്യാതിരിക്കൽ, <strong>OTP ആരുമായും പങ്കിടാതിരിക്കൽ</strong>.</li>
+          <li><strong>ക്രിപ്റ്റോഗ്രഫി:</strong> വിവരം രഹസ്യ കോഡാക്കുന്നത് = <strong>Encryption</strong> (Plaintext → <strong>Ciphertext</strong>); തിരിച്ചാക്കുന്നത് = <strong>Decryption</strong>. <strong>Symmetric</strong> (ഒരേ കീ), <strong>Asymmetric</strong> (Public + Private key ജോടി).</li>
+          <li><strong>ഡിജിറ്റൽ സിഗ്നേച്ചർ:</strong> Asymmetric ക്രിപ്റ്റോഗ്രഫിയും ഹാഷും ഉപയോഗിച്ച്; <strong>അയക്കുന്നയാൾ Private key കൊണ്ട് ഒപ്പിടും, സ്വീകരിക്കുന്നയാൾ Public key കൊണ്ട് പരിശോധിക്കും</strong>. സർട്ടിഫിക്കറ്റ് നൽകുന്നത് <strong>Certifying Authority (CA)</strong>; അവരെ നിയന്ത്രിക്കുന്നത് <strong>CCA</strong>. ക്ലാസുകൾ: <strong>Class 1, 2, 3</strong>.</li>
+        </ul>
+        <span class="trick">🧠 <strong>"പ്രൈവറ്റ് കീ കൊണ്ട് ഒപ്പിടും, പബ്ലിക് കീ കൊണ്ട് പരിശോധിക്കും" (ഒപ്പ് = സ്വകാര്യം, പരിശോധന = പൊതു).</strong></span>
+
+        <h3>8.2 ഹാക്കർ തരങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>വിവരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>White Hat (Ethical Hacker)</strong></td><td>അനുമതിയോടെ സുരക്ഷാ പഴുതുകൾ കണ്ടെത്തുന്നു</td></tr>
+              <tr><td><strong>Black Hat (Cracker)</strong></td><td>കുറ്റകൃത്യത്തിനായി ഹാക്ക് ചെയ്യുന്നു</td></tr>
+              <tr><td><strong>Grey Hat</strong></td><td>അനുമതിയില്ലാതെ കയറും, പക്ഷേ ദുരുദ്ദേശ്യമില്ല, പിന്നീട് അറിയിക്കും</td></tr>
+              <tr><td><strong>Script Kiddie</strong></td><td>മറ്റുള്ളവരുടെ ടൂളുകൾ ഉപയോഗിക്കുന്ന തുടക്കക്കാരൻ</td></tr>
+              <tr><td><strong>Hacktivist</strong></td><td>രാഷ്ട്രീയ/സാമൂഹിക ലക്ഷ്യത്തോടെ ഹാക്ക് ചെയ്യുന്നു</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>സിനിമയിലെ പോലെ വെള്ള തൊപ്പി = നല്ലവൻ, കറുത്ത തൊപ്പി = ചീത്ത, ചാരം = ഇടയ്ക്ക്.</strong></span>
+
+        <h3>8.3 മാൽവെയറുകൾ (Malware = Malicious Software)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മാൽവെയർ</th><th>സ്വഭാവം</th><th>🧠 ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>വൈറസ്</strong></td><td>മറ്റൊരു ഫയലിൽ/പ്രോഗ്രാമിൽ ഒട്ടിപ്പിടിച്ച് (<strong>host വേണം</strong>), ഫയൽ തുറക്കുമ്പോൾ പടരും. 'കമ്പ്യൂട്ടർ വൈറസ്' പദം: <strong>ഫ്രെഡ് കോഹൻ (1983)</strong>. ഉദാ: <strong>Brain (1986, പാകിസ്ഥാനി സഹോദരന്മാർ – ആദ്യ PC ബൂട്ട് സെക്ടർ വൈറസ്)</strong>, <strong>Michelangelo</strong>, <strong>Elk Cloner (1982, Apple II)</strong></td><td>വൈറസ് = ജലദോഷം പോലെ, ഒരാളിൽ നിന്ന് (host) മറ്റൊരാളിലേക്ക്</td></tr>
+              <tr><td><strong>വേം (Worm)</strong></td><td><strong>host വേണ്ട</strong>; നെറ്റ്‌വർക്കിലൂടെ <strong>സ്വയം ഇരട്ടിച്ച്</strong> പടർന്ന് ബാൻഡ്‌വിഡ്ത്ത് തിന്നും. ഉദാ: <strong>Morris Worm (1988)</strong>, <strong>ILOVEYOU (2000)</strong>, <strong>Stuxnet</strong></td><td>വേം = പുഴു, തനിയെ ഇഴഞ്ഞു പടരും</td></tr>
+              <tr><td><strong>ട്രോജൻ ഹോഴ്സ്</strong></td><td>ഉപകാരിയായ സോഫ്റ്റ്‌വെയർ പോലെ നടിച്ച് ഉള്ളിൽ കയറി രഹസ്യമായി ഡാറ്റ ചോർത്തും; <strong>സ്വയം ഇരട്ടിക്കില്ല</strong></td><td>ട്രോജൻ = മരക്കുതിര (ഗ്രീക്ക് കഥ)</td></tr>
+              <tr><td><strong>റാൻസംവെയർ</strong></td><td>ഫയലുകൾ <strong>എൻക്രിപ്റ്റ് ചെയ്ത് പൂട്ടി</strong>, <strong>മോചനദ്രവ്യം (Ransom)</strong> ചോദിക്കുന്നു (പലപ്പോഴും ബിറ്റ്കോയിൻ). ഉദാ: <strong>WannaCry (2017), Petya, Locky, Ryuk</strong></td><td>Ransom = ബന്ദിയാക്കി പണം</td></tr>
+              <tr><td><strong>സ്പൈവെയർ</strong></td><td>ഉപയോക്താവ് അറിയാതെ വിവരം ചോർത്തുന്ന ചാര പ്രോഗ്രാം</td><td>Spy = ചാരൻ</td></tr>
+              <tr><td><strong>കീലോഗർ (Keylogger)</strong></td><td><strong>കീ അമർത്തലുകൾ രഹസ്യമായി രേഖപ്പെടുത്തി</strong> പാസ്‌വേഡ് ചോർത്തുന്നു (സോഫ്റ്റ്‌വെയറോ ഹാർഡ്‌വെയറോ)</td><td>Key + Log = കീയുടെ ഡയറി</td></tr>
+              <tr><td><strong>ആഡ്‌വെയർ (Adware)</strong></td><td>ശല്യപ്പെടുത്തുന്ന പരസ്യങ്ങൾ കാണിക്കുന്നു</td><td>Ad = പരസ്യം</td></tr>
+              <tr><td><strong>ലോജിക് ബോംബ് / ടൈം ബോംബ്</strong></td><td>നിശ്ചിത <strong>സാഹചര്യം/തീയതി</strong> എത്തുമ്പോൾ മാത്രം പൊട്ടുന്നു</td><td>ബോംബ് = സമയമാകുമ്പോൾ പൊട്ടും</td></tr>
+              <tr><td><strong>ട്രാപ്പ്ഡോർ / ബാക്ക്ഡോർ</strong></td><td>സുരക്ഷാ പരിശോധന മറികടക്കുന്ന <strong>രഹസ്യ പ്രവേശന മാർഗ്ഗം</strong></td><td>പിൻവാതിൽ</td></tr>
+              <tr><td><strong>റൂട്ട്‌കിറ്റ് (Rootkit)</strong></td><td>തന്നെത്തന്നെ മറച്ച് അഡ്മിൻ നിയന്ത്രണം നേടുന്നു</td><td>Root = അഡ്മിൻ</td></tr>
+              <tr><td><strong>ബോട്ട്നെറ്റ് (Botnet)</strong></td><td>ഹാക്കർ നിയന്ത്രിക്കുന്ന <strong>"സോംബി" കമ്പ്യൂട്ടറുകളുടെ ശൃംഖല</strong>; DDoS-ന് ഉപയോഗിക്കും (ഉദാ: <strong>Mirai</strong>)</td><td>Bot = റോബോട്ട് പട്ടാളം</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ആദ്യ വൈറസ് ഓർമ്മ</span>
+          <p><strong>Creeper (1971, ബോബ് തോമസ്)</strong> = ആദ്യ സ്വയം-പകർപ്പ് പ്രോഗ്രാം (ARPANET); <strong>Brain (1986)</strong> = ആദ്യ <strong>PC</strong> വൈറസ്.</p>
+        </div>
+
+        <h3>8.4 സൈബർ കുറ്റകൃത്യങ്ങൾ</h3>
+        <p>സൈബർ കുറ്റകൃത്യം = കമ്പ്യൂട്ടർ/മൊബൈൽ/ഇന്റർനെറ്റ് <strong>ഉപകരണമായോ (Tool) ലക്ഷ്യമായോ (Target)</strong> ഉപയോഗിച്ച് ചെയ്യുന്ന നിയമവിരുദ്ധ പ്രവൃത്തി.</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കുറ്റം</th><th>നിർവ്വചനം</th><th>🧠 ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ഹാക്കിംഗ്</strong></td><td>അനുമതിയില്ലാതെ സിസ്റ്റത്തിൽ കയറി നിയന്ത്രണം/ഡാറ്റ കൈക്കലാക്കൽ</td><td>ഹാക്ക് = വെട്ടി കയറൽ</td></tr>
+              <tr><td><strong>ഫിഷിംഗ് (Phishing)</strong></td><td>വ്യാജ ഇ-മെയിൽ/ലിങ്ക് അയച്ച് <strong>യൂസർനെയിം, പാസ്‌വേഡ്, OTP, കാർഡ് വിവരം</strong> തട്ടൽ. <strong>Vishing</strong> = ഫോൺ കോൾ വഴി; <strong>Smishing</strong> = SMS വഴി; <strong>Spear phishing</strong> = പ്രത്യേക വ്യക്തിയെ ലക്ഷ്യമിട്ട്; <strong>Whaling</strong> = വലിയ ഉദ്യോഗസ്ഥരെ</td><td>Phishing = Fishing (ചൂണ്ട); Vishing = <strong>V</strong>oice; Smishing = <strong>SMS</strong></td></tr>
+              <tr><td><strong>ഫാമിംഗ് (Pharming)</strong></td><td>ശരിയായ വിലാസം ടൈപ്പ് ചെയ്താലും <strong>DNS-ൽ കൃത്രിമം</strong> കാണിച്ച് വ്യാജ സൈറ്റിലെത്തിക്കൽ</td><td>Pharming = Farm (ഫാമിലേക്ക് തെളിക്കൽ)</td></tr>
+              <tr><td><strong>ഇ-മെയിൽ സ്പൂഫിംഗ്</strong></td><td>ഉറവിടം മറച്ച് മറ്റൊരാളുടെ പേരിൽ വ്യാജ മെയിൽ</td><td>Spoof = വേഷം കെട്ടൽ</td></tr>
+              <tr><td><strong>DoS / DDoS</strong></td><td>ലക്ഷക്കണക്കിന് വ്യാജ അഭ്യർത്ഥനകളിലൂടെ സെർവർ ഓവർലോഡ് ചെയ്ത് <strong>സേവനം ഇല്ലാതാക്കൽ</strong>. <strong>DDoS = പല കമ്പ്യൂട്ടറുകളിൽ നിന്ന് (Botnet)</strong></td><td>ആൾക്കൂട്ടം ഒരു വാതിലിൽ ഇടിച്ചുകയറി ആർക്കും കയറാൻ പറ്റാതാക്കുന്നു</td></tr>
+              <tr><td><strong>സലാമി അറ്റാക്ക്</strong></td><td><strong>വളരെ ചെറിയ തുകകൾ (ഉദാ: പൈസ)</strong> ആയിരക്കണക്കിന് അക്കൗണ്ടുകളിൽ നിന്ന് തട്ടി വലിയ തുകയാക്കൽ</td><td>സലാമി സോസേജ് നേർത്ത കഷ്ണങ്ങളായി മുറിക്കുന്നത്</td></tr>
+              <tr><td><strong>ഡാറ്റാ ഡിഡ്‌ലിംഗ്</strong></td><td>കമ്പ്യൂട്ടറിൽ കയറ്റുന്നതിന് മുമ്പോ സമയത്തോ <strong>അസംസ്കൃത ഡാറ്റ (Raw data) തിരുത്തൽ</strong>, പിന്നീട് ശരിയാക്കും</td><td>Diddle = ഇട്ടു കളിക്കൽ (ഡാറ്റയിൽ കള്ളക്കളി)</td></tr>
+              <tr><td><strong>വെബ് ജാക്കിംഗ്</strong></td><td>മറ്റൊരാളുടെ <strong>വെബ്സൈറ്റിന്റെ നിയന്ത്രണം ബലമായി കൈക്കലാക്കൽ</strong></td><td>Hijack (വിമാന റാഞ്ചൽ) + Web</td></tr>
+              <tr><td><strong>സൈബർ സ്ക്വാട്ടിംഗ്</strong></td><td>പ്രശസ്ത പേരിലുള്ള <strong>ഡൊമെയ്ൻ നാമം മുൻകൂട്ടി രജിസ്റ്റർ ചെയ്ത് വിൽക്കാൻ ശ്രമിക്കൽ</strong> / ഒരേ ഡൊമെയ്‌നിനായി രണ്ടുപേരുടെ തർക്കം</td><td>Squat = അനധികൃതമായി സ്ഥലം കയ്യേറൽ</td></tr>
+              <tr><td><strong>സൈബർ സ്റ്റോക്കിംഗ്</strong></td><td>ഇന്റർനെറ്റ് വഴി തുടർച്ചയായി പിന്തുടർന്ന് ശല്യം ചെയ്യൽ. <strong>Cyber Bullying</strong> = ഓൺലൈൻ അപമാനം. <strong>Cyber Grooming</strong> = കുട്ടികളെ ചങ്ങാത്തം നടിച്ച് ചൂഷണം ചെയ്യൽ</td><td>Stalk = പിന്തുടരൽ</td></tr>
+              <tr><td><strong>കമ്പ്യൂട്ടർ വോയർ</strong></td><td>രഹസ്യ വിവരങ്ങൾ <strong>ഡിലീറ്റ്/മാറ്റം ചെയ്യാതെ ഒളിഞ്ഞു വായിക്കൽ</strong></td><td>Voyeur = ഒളിഞ്ഞുനോട്ടക്കാരൻ</td></tr>
+              <tr><td><strong>SQL Injection / XSS</strong></td><td>വെബ്സൈറ്റിലെ ഇൻപുട്ട് ബോക്സിലൂടെ ദോഷകരമായ കോഡ് കടത്തി <strong>ഡാറ്റാബേസ്</strong> ചോർത്തൽ</td><td>—</td></tr>
+              <tr><td><strong>സ്പാമിംഗ് (Spamming)</strong></td><td>ആവശ്യപ്പെടാത്ത പരസ്യ മെയിലുകൾ കൂട്ടത്തോടെ അയയ്ക്കൽ</td><td>Spam = ടിന്നിലെ ജങ്ക്</td></tr>
+              <tr><td><strong>ഐഡന്റിറ്റി തെഫ്റ്റ്</strong></td><td>മറ്റൊരാളുടെ തിരിച്ചറിയൽ വിവരം/പാസ്‌വേഡ് ദുരുപയോഗം (<strong>Sec 66C</strong>)</td><td>—</td></tr>
+              <tr><td><strong>Sniffing / MITM</strong></td><td>നെറ്റ്‌വർക്ക് ഡാറ്റ ചോർത്തൽ / ഇടയിൽ കയറിയിരുന്ന് സന്ദേശം വായിക്കൽ</td><td>Man-In-The-Middle = നടുവിലെ കള്ളൻ</td></tr>
+              <tr><td><strong>Brute Force</strong></td><td>സാധ്യമായ എല്ലാ പാസ്‌വേഡും മാറി മാറി പരീക്ഷിക്കൽ</td><td>ബലം പ്രയോഗിച്ച് താക്കോൽ പരീക്ഷണം</td></tr>
+              <tr><td><strong>Skimming / Carding</strong></td><td>ATM/കാർഡ് റീഡറിൽ ഉപകരണം വെച്ച് കാർഡ് വിവരം പകർത്തൽ</td><td>—</td></tr>
+              <tr><td><strong>Cyber Terrorism</strong></td><td>രാജ്യസുരക്ഷയ്ക്ക് ഭീഷണിയാകുന്ന സൈബർ ആക്രമണം (<strong>Sec 66F</strong>)</td><td>—</td></tr>
+              <tr><td><strong>Software Piracy</strong></td><td>സോഫ്റ്റ്‌വെയർ അനധികൃതമായി പകർത്തൽ/ഉപയോഗം (<strong>Copyright ലംഘനം</strong>)</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 9: IT ACT 2000 -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. സൈബർ നിയമങ്ങൾ: ഐ.ടി ആക്ട് 2000 &amp; മറ്റു നിയമങ്ങൾ (10.7.5, 10.7.6, 10.7.7)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>9.1 ഐ.ടി ആക്ട് 2000: അടിസ്ഥാന വിവരങ്ങൾ</h3>
+        <ul>
+          <li><strong>പദവി:</strong> ഇന്ത്യയിലെ സൈബർ നിയമങ്ങളുടെ <strong>മാതൃനിയമം (Mother Legislation)</strong>. <strong>Act No. 21 of 2000</strong>. ഉത്തരവാദിത്വം: <strong>MeitY (Ministry of Electronics &amp; Information Technology)</strong>.</li>
+          <li><strong>മാതൃക:</strong> <strong>UNCITRAL Model Law on Electronic Commerce, 1996</strong>.</li>
+          <li><strong>നിയമനിർമ്മാണ അധികാരം:</strong> കേന്ദ്രത്തിന് (പാർലമെന്റ്); <strong>അനുച്ഛേദം 248</strong> (അവശിഷ്ട അധികാരം) / Union List Entry 97.</li>
+          <li><strong>3 തീയതികൾ:</strong> പാർലമെന്റ് പാസാക്കിയത് <strong>2000 മെയ് (17)</strong> · രാഷ്ട്രപതി ഒപ്പുവെച്ചത് <strong>2000 ജൂൺ 9 (കെ.ആർ. നാരായണൻ)</strong> · പ്രാബല്യത്തിൽ <strong>2000 ഒക്ടോബർ 17</strong>.</li>
+          <li><strong>ഘടന:</strong> <strong>ഒറിജിനൽ: 13 അധ്യായം, 94 വകുപ്പ്, 4 പട്ടിക</strong> (പട്ടിക I–IV ഇന്ത്യൻ ശിക്ഷാ നിയമം, ഇന്ത്യൻ തെളിവ് നിയമം, ബാങ്കേഴ്സ് ബുക്ക്സ് എവിഡൻസ് ആക്ട്, RBI ആക്ട് എന്നിവ ഭേദഗതി ചെയ്തു). <strong>2008-ന് ശേഷം: 90 വകുപ്പ്, 2 പട്ടിക.</strong></li>
+          <li><strong>വ്യാപ്തി (Sec 1(2) &amp; Sec 75):</strong> ഇന്ത്യ മുഴുവൻ ബാധകം; <strong>ഇന്ത്യയ്ക്ക് പുറത്ത് ചെയ്ത കുറ്റവും</strong>, അതിൽ ഇന്ത്യയിലെ കമ്പ്യൂട്ടർ/നെറ്റ്‌വർക്ക് ഉൾപ്പെട്ടാൽ, <strong>വിദേശ പൗരനും</strong> ബാധകം.</li>
+          <li><strong>2008 ഭേദഗതി (IT Amendment Act 2008):</strong> 2008 ഡിസംബറിൽ പാർലമെന്റ് പാസാക്കി; രാഷ്ട്രപതി <strong>പ്രതിഭാ പാട്ടീൽ</strong> 2009 ഫെബ്രുവരി 5-ന് ഒപ്പുവെച്ചു; <strong>2009 ഒക്ടോബർ 27-ന് പ്രാബല്യത്തിൽ</strong>. ചേർത്തവ: <strong>ഇലക്ട്രോണിക് സിഗ്നേച്ചർ (Sec 3A)</strong>, <strong>43A, 66A–66F, 67A, 67B, 67C, 69A, 69B, 70A, 70B, 72A, 10A, 84B, 84C</strong>.</li>
+        </ul>
+
+        <h4>സ്ഥാപനങ്ങൾ</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സ്ഥാപനം</th><th>ധർമ്മം</th><th>വകുപ്പ്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>CCA (Controller of Certifying Authorities)</strong></td><td><strong>ഡിജിറ്റൽ സിഗ്നേച്ചർ സർട്ടിഫിക്കറ്റ് നൽകുന്ന CA-കളെ നിയന്ത്രിക്കുന്നു</strong></td><td><strong>Sec 17</strong></td></tr>
+              <tr><td><strong>Adjudicating Officer</strong></td><td><strong>Sec 43 പ്രകാരമുള്ള നഷ്ടപരിഹാരം (₹5 കോടി വരെ)</strong> തീർപ്പാക്കുന്നു (സംസ്ഥാന ഐ.ടി സെക്രട്ടറി)</td><td><strong>Sec 46</strong></td></tr>
+              <tr><td><strong>Cyber Appellate Tribunal (CAT)</strong></td><td>അപ്പീൽ കേൾക്കൽ. <strong>2017-ൽ TDSAT-ൽ ലയിപ്പിച്ചു</strong></td><td>Sec 48</td></tr>
+              <tr><td><strong>CERT-In (Indian Computer Emergency Response Team)</strong></td><td>സൈബർ സുരക്ഷാ സംഭവങ്ങളുടെ ദേശീയ നോഡൽ ഏജൻസി (<strong>2004</strong> മുതൽ; നിയമപരമായ പദവി 2008 മുതൽ). <strong>സംഭവം 6 മണിക്കൂറിനുള്ളിൽ റിപ്പോർട്ട് ചെയ്യണം (2022 നിർദ്ദേശം)</strong></td><td><strong>Sec 70B</strong></td></tr>
+              <tr><td><strong>NCIIPC</strong></td><td><strong>ക്രിട്ടിക്കൽ ഇൻഫർമേഷൻ ഇൻഫ്രാസ്ട്രക്ചർ</strong> സംരക്ഷണം (2014)</td><td><strong>Sec 70A</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="trick">🧠 <strong>"CCA = Certificate-ന്റെ Controller, CERT = Emergency ടീം (ആംബുലൻസ്), CAT = അപ്പീലിന്റെ കോടതി"</strong></span>
+
+        <h3>9.2 ഐ.ടി ആക്ടിലെ പ്രധാന വകുപ്പുകൾ (Master Table)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വകുപ്പ്</th><th>വിഷയം</th><th>ശിക്ഷ / സവിശേഷത</th><th>🧠 ഓർമ്മ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>2(1)(w)</strong></td><td><strong>Intermediary</strong> (ISP, ടെലികോം, സോഷ്യൽ മീഡിയ, സെർച്ച് എൻജിൻ...)</td><td>മറ്റൊരാൾക്ക് വേണ്ടി ഇലക്ട്രോണിക് രേഖ സ്വീകരിക്കുന്ന/സൂക്ഷിക്കുന്ന/കൈമാറുന്ന സ്ഥാപനം</td><td>ഇടനിലക്കാരൻ</td></tr>
+              <tr><td><strong>3, 3A</strong></td><td>ഡിജിറ്റൽ സിഗ്നേച്ചർ / ഇലക്ട്രോണിക് സിഗ്നേച്ചർ</td><td>പ്രാമാണീകരണം</td><td>—</td></tr>
+              <tr><td><strong>4, 5, 6, 10A</strong></td><td>ഇ-രേഖ / ഇ-ഒപ്പ് / ഇ-ഗവേണൻസ് / ഇ-കരാർ നിയമസാധുത</td><td><strong>Sec 4: ഇലക്ട്രോണിക് രേഖയ്ക്ക് നിയമസാധുത</strong></td><td>—</td></tr>
+              <tr><td><strong>43</strong></td><td>അനുമതിയില്ലാതെ കമ്പ്യൂട്ടറിൽ കയറി ഡാറ്റ എടുക്കൽ, വൈറസ് കയറ്റൽ, നാശം വരുത്തൽ</td><td><strong>സിവിൽ ബാധ്യത: നഷ്ടപരിഹാരം</strong> (2008-ന് ശേഷം പരിധിയില്ല; അഡ്ജുഡിക്കേറ്റിംഗ് ഓഫീസർ ₹5 കോടി വരെ)</td><td><strong>43 = "നാല്‌പത്തിമൂന്ന് = നഷ്ടപരിഹാരം"</strong></td></tr>
+              <tr><td><strong>43A</strong></td><td><strong>കോർപ്പറേറ്റ് സ്ഥാപനം വ്യക്തിഗത ഡാറ്റ സംരക്ഷിക്കുന്നതിൽ വീഴ്ച</strong></td><td>നഷ്ടപരിഹാരം</td><td><strong>A = "ആളുടെ ഡാറ്റ"</strong></td></tr>
+              <tr><td><strong>65</strong></td><td><strong>കമ്പ്യൂട്ടർ സോഴ്സ് ഡോക്യുമെന്റ് / സോഴ്സ് കോഡ് ഒളിപ്പിക്കൽ, നശിപ്പിക്കൽ, മാറ്റൽ</strong></td><td><strong>3 വർഷം തടവ് / ₹2 ലക്ഷം പിഴ / രണ്ടും</strong></td><td><strong>65 = സോഴ്സ് കോഡ്</strong></td></tr>
+              <tr><td><strong>66</strong></td><td><strong>കമ്പ്യൂട്ടർ സംബന്ധമായ കുറ്റങ്ങൾ / ഹാക്കിംഗ്</strong> (Sec 43-ലെ പ്രവൃത്തി <strong>സത്യസന്ധമല്ലാതെ (Dishonestly) / ചതിക്കാൻ (Fraudulently)</strong> ചെയ്താൽ)</td><td><strong>3 വർഷം തടവ് / ₹5 ലക്ഷം പിഴ / രണ്ടും</strong>. (2000-ലെ ഒറിജിനൽ: ₹2 ലക്ഷം)</td><td><strong>66 = 43-ന്റെ ക്രിമിനൽ രൂപം</strong></td></tr>
+              <tr><td><strong>66A</strong></td><td>അപകീർത്തികരം / ഭീഷണിപ്പെടുത്തുന്ന സന്ദേശങ്ങൾ അയയ്ക്കൽ</td><td><strong>റദ്ദാക്കി: 2015 മാർച്ച് 24, ശ്രേയ സിംഗാൾ v. യൂണിയൻ ഓഫ് ഇന്ത്യ</strong> (അനുച്ഛേദം 19(1)(a), 19(2)-ന് വിരുദ്ധം)</td><td><strong>A = Abusive</strong></td></tr>
+              <tr><td><strong>66B</strong></td><td><strong>മോഷ്ടിച്ച കമ്പ്യൂട്ടർ / ആശയവിനിമയ ഉപകരണം</strong> സത്യസന്ധമല്ലാതെ സ്വീകരിക്കൽ</td><td>3 വർഷം / ₹1 ലക്ഷം</td><td><strong>B = Bought stolen</strong></td></tr>
+              <tr><td><strong>66C</strong></td><td><strong>ഐഡന്റിറ്റി മോഷണം</strong> (ഇ-ഒപ്പ്, പാസ്‌വേഡ്, തിരിച്ചറിയൽ വിവരം)</td><td>3 വർഷം + ₹1 ലക്ഷം വരെ പിഴ</td><td><strong>C = Credentials</strong></td></tr>
+              <tr><td><strong>66D</strong></td><td><strong>കമ്പ്യൂട്ടർ ഉപയോഗിച്ച് ആൾമാറാട്ടം നടത്തി ചതിക്കൽ</strong></td><td>3 വർഷം + ₹1 ലക്ഷം വരെ പിഴ</td><td><strong>D = Deceive (ഡിസെപ്ഷൻ)</strong></td></tr>
+              <tr><td><strong>66E</strong></td><td><strong>സ്വകാര്യതാ ലംഘനം</strong> (അനുമതിയില്ലാതെ സ്വകാര്യ ഭാഗങ്ങളുടെ ചിത്രം പകർത്തൽ/പ്രചരിപ്പിക്കൽ)</td><td><strong>3 വർഷം / ₹2 ലക്ഷം / രണ്ടും</strong></td><td><strong>E = Exposing privacy</strong></td></tr>
+              <tr><td><strong>66F</strong></td><td><strong>സൈബർ തീവ്രവാദം</strong></td><td><strong>ജീവപര്യന്തം തടവ്</strong> (ആക്ടിലെ ഏറ്റവും കടുത്ത ശിക്ഷ)</td><td><strong>F = Fatal (ജീവപര്യന്തം)</strong></td></tr>
+              <tr><td><strong>67</strong></td><td><strong>അശ്ലീല (Obscene)</strong> ഇലക്ട്രോണിക് ഉള്ളടക്കം</td><td>ആദ്യ തവണ <strong>3 വർഷം + ₹5 ലക്ഷം</strong>; ആവർത്തിച്ചാൽ <strong>5 വർഷം + ₹10 ലക്ഷം</strong></td><td>—</td></tr>
+              <tr><td><strong>67A</strong></td><td><strong>ലൈംഗിക ചുവയുള്ള പ്രവൃത്തികൾ (Sexually explicit act)</strong></td><td>ആദ്യ തവണ <strong>5 വർഷം + ₹10 ലക്ഷം</strong>; ആവർത്തിച്ചാൽ <strong>7 വർഷം + ₹10 ലക്ഷം</strong></td><td><strong>A = Adult act</strong></td></tr>
+              <tr><td><strong>67B</strong></td><td><strong>കുട്ടികൾ ഉൾപ്പെടുന്ന ലൈംഗിക ദൃശ്യങ്ങൾ (CSAM / Child Pornography)</strong> നിർമ്മിക്കൽ, ബ്രൗസ് ചെയ്യൽ, ഡൗൺലോഡ്, പ്രചാരണം (18 വയസ്സിൽ താഴെ)</td><td>ശിക്ഷ 67A പോലെ (<strong>5 + 7 വർഷം, ₹10 ലക്ഷം</strong>)</td><td><strong>B = Babies/Children</strong></td></tr>
+              <tr><td><strong>67C</strong></td><td>ഇന്റർമീഡിയറികൾ <strong>വിവരം സൂക്ഷിക്കാത്തത്</strong></td><td>3 വർഷം വരെ</td><td><strong>C = Conserve (സൂക്ഷിക്കൽ)</strong></td></tr>
+              <tr><td><strong>69</strong></td><td>രാജ്യസുരക്ഷയ്ക്കായി <strong>ഇന്റർസെപ്ഷൻ / മോണിറ്ററിംഗ് / ഡീക്രിപ്ഷൻ</strong> അധികാരം</td><td>സഹകരിക്കാത്തവർക്ക് <strong>7 വർഷം വരെ</strong> തടവ്</td><td><strong>69 = Monitor</strong></td></tr>
+              <tr><td><strong>69A</strong></td><td><strong>വെബ്സൈറ്റ് / ആപ്പ് / വിവരം ബ്ലോക്ക് ചെയ്യാനുള്ള കേന്ദ്ര അധികാരം</strong> (<strong>2020-ൽ TikTok ഉൾപ്പെടെ 59 ചൈനീസ് ആപ്പുകൾ നിരോധിച്ചത് ഇതുപ്രകാരം</strong>)</td><td>ചട്ടം പാലിക്കാത്ത ഇന്റർമീഡിയറിക്ക് 7 വർഷം വരെ</td><td><strong>69A = App block (A for App)</strong></td></tr>
+              <tr><td><strong>69B</strong></td><td><strong>ട്രാഫിക് ഡാറ്റ</strong> നിരീക്ഷിക്കാനും ശേഖരിക്കാനും (സൈബർ സുരക്ഷയ്ക്ക്)</td><td>—</td><td><strong>B = Big traffic data</strong></td></tr>
+              <tr><td><strong>70</strong></td><td><strong>സംരക്ഷിത സിസ്റ്റം (Protected System)</strong></td><td>നുഴഞ്ഞുകയറിയാൽ <strong>10 വർഷം വരെ</strong></td><td><strong>70 = Protected</strong></td></tr>
+              <tr><td><strong>70A / 70B</strong></td><td><strong>NCIIPC / CERT-In</strong></td><td>—</td><td>—</td></tr>
+              <tr><td><strong>71</strong></td><td>CCA/CA-യോട് തെറ്റായ വിവരം നൽകൽ (misrepresentation)</td><td>2 വർഷം / ₹1 ലക്ഷം</td><td>—</td></tr>
+              <tr><td><strong>72</strong></td><td><strong>രഹസ്യസ്വഭാവ / സ്വകാര്യതാ ലംഘനം</strong> (അധികാരമുള്ള വ്യക്തി വിവരം ചോർത്തൽ)</td><td>2 വർഷം / ₹1 ലക്ഷം</td><td>—</td></tr>
+              <tr><td><strong>72A</strong></td><td>നിയമാനുസൃത കരാർ ലംഘിച്ച് <strong>വ്യക്തിഗത വിവരം വെളിപ്പെടുത്തൽ</strong></td><td>3 വർഷം / ₹5 ലക്ഷം</td><td>—</td></tr>
+              <tr><td><strong>73, 74</strong></td><td><strong>വ്യാജ ഇ-സിഗ്നേച്ചർ സർട്ടിഫിക്കറ്റ് പ്രസിദ്ധീകരിക്കൽ (73)</strong> / <strong>വഞ്ചനാപരമായ ഉദ്ദേശ്യത്തോടെ പ്രസിദ്ധീകരണം (74)</strong></td><td>2 വർഷം / ₹1 ലക്ഷം</td><td>—</td></tr>
+              <tr><td><strong>75</strong></td><td><strong>ഇന്ത്യയ്ക്ക് പുറത്തുള്ള കുറ്റത്തിനും ബാധകം</strong></td><td>—</td><td>—</td></tr>
+              <tr><td><strong>77B</strong></td><td><strong>3 വർഷമോ അതിൽ കൂടുതലോ തടവുള്ള കുറ്റങ്ങൾ Cognizable; ശിക്ഷ കൃത്യം 3 വർഷമുള്ളവ Bailable</strong></td><td>—</td><td>—</td></tr>
+              <tr><td><strong>78</strong></td><td>അന്വേഷണം: <strong>ഇൻസ്പെക്ടർ റാങ്കിൽ കുറയാത്ത ഉദ്യോഗസ്ഥൻ</strong> (2008-ന് മുമ്പ് DSP)</td><td>—</td><td><strong>78 = Inspector</strong></td></tr>
+              <tr><td><strong>79</strong></td><td><strong>ഇന്റർമീഡിയറികൾക്ക് സുരക്ഷിത സങ്കേതം (Safe Harbour)</strong>: മൂന്നാം കക്ഷിയുടെ ഉള്ളടക്കത്തിന് ഉത്തരവാദിത്വമില്ല (ചട്ടം പാലിച്ചാൽ)</td><td>—</td><td>—</td></tr>
+              <tr><td><strong>84B, 84C</strong></td><td>കുറ്റകൃത്യത്തിന് പ്രേരണ (abetment) / ശ്രമം (attempt)</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 ഓർമ്മ ട്രിക്ക്</span>
+          <p><strong>66-ലെ ഉപവകുപ്പ് ഓർമ്മ ("ABCDEF" = അക്ഷരമാല തന്നെ ക്രമം):</strong> <strong>A</strong>busive → <strong>B</strong>ought stolen → <strong>C</strong>redentials → <strong>D</strong>eceive → <strong>E</strong>xpose privacy → <strong>F</strong>atal terror.</p>
+          <p><strong>ഒറ്റ ശ്വാസത്തിൽ:</strong> <strong>43 = നഷ്ടപരിഹാരം; 65 = സോഴ്സ് കോഡ്; 66 = ഹാക്കിംഗ്; 66F = ജീവപര്യന്തം; 67B = കുട്ടികൾ; 69A = ബ്ലോക്ക്</strong>.</p>
+        </div>
+
+        <h3>9.3 മറ്റു നിയമങ്ങൾ (10.7.7)</h3>
+        <ul>
+          <li><strong>ഐ.ടി ആക്ട് ഒറിജിനലിൽ ഭേദഗതി ചെയ്ത 4 നിയമങ്ങൾ:</strong> IPC 1860, <strong>Indian Evidence Act 1872</strong>, Bankers' Books Evidence Act 1891, RBI Act 1934.</li>
+        </ul>
+
+        <h4>IPC വകുപ്പുകൾ &amp; BNS തത്തുല്യം</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കുറ്റം</th><th>IPC</th><th>BNS (2023)</th></tr></thead>
+            <tbody>
+              <tr><td>ഭീഷണിപ്പെടുത്തി തട്ടിയെടുക്കൽ (Extortion), വെബ് ജാക്കിംഗ്</td><td><strong>383</strong></td><td>308</td></tr>
+              <tr><td>വഞ്ചന (Cheating): വ്യാജ വെബ്സൈറ്റ്, ഓൺലൈൻ തട്ടിപ്പ്</td><td><strong>420</strong></td><td>318</td></tr>
+              <tr><td>ആൾമാറാട്ട വഞ്ചന (Cheating by personation)</td><td><strong>419</strong></td><td>319</td></tr>
+              <tr><td>വ്യാജരേഖ (Forgery) / ഇ-മെയിൽ സ്പൂഫിംഗ്</td><td><strong>465</strong> (ശിക്ഷ)</td><td>336</td></tr>
+              <tr><td>അപകീർത്തി (Defamation)</td><td><strong>499, 500</strong></td><td>356</td></tr>
+              <tr><td>ക്രിമിനൽ ഭീഷണി</td><td><strong>506</strong></td><td>351</td></tr>
+              <tr><td>പിന്തുടരൽ (Stalking – സൈബർ ഉൾപ്പെടെ)</td><td><strong>354D</strong></td><td>78</td></tr>
+              <tr><td>സ്ത്രീയുടെ അന്തസ്സിന് നേരെയുള്ള പരാമർശം</td><td><strong>509</strong></td><td>79</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul>
+          <li><strong>2024 ജൂലൈ 1 മുതൽ:</strong> IPC → <strong>ഭാരതീയ ന്യായ സംഹിത (BNS)</strong>; CrPC → <strong>ഭാരതീയ നാഗരിക് സുരക്ഷാ സംഹിത (BNSS)</strong>; Evidence Act → <strong>ഭാരതീയ സാക്ഷ്യ അധിനിയം (BSA)</strong>. ഇലക്ട്രോണിക് തെളിവിന്റെ <strong>Section 65B സർട്ടിഫിക്കറ്റ് = BSA Section 63</strong>.</li>
+          <li><strong>POCSO Act 2012:</strong> കുട്ടികൾക്കെതിരായ ലൈംഗിക കുറ്റങ്ങൾ (ഓൺലൈൻ ചൈൽഡ് പോണോഗ്രഫിയും). 67B-യുമായി ചേർത്ത് പഠിക്കുക.</li>
+        </ul>
+
+        <h4>ബൗദ്ധിക സ്വത്തവകാശം (IPR)</h4>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>അവകാശം</th><th>നിയമം</th><th>സംരക്ഷിക്കുന്നത്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>പേറ്റന്റ്</strong></td><td><strong>Patents Act 1970</strong></td><td>കണ്ടുപിടിത്തം</td></tr>
+              <tr><td><strong>പകർപ്പവകാശം (Copyright)</strong></td><td><strong>Copyright Act 1957</strong></td><td>സാഹിത്യം, സംഗീതം, കല, <strong>സോഫ്റ്റ്‌വെയർ</strong> (literary work ആയി)</td></tr>
+              <tr><td><strong>ട്രേഡ്‌മാർക്ക്</strong></td><td><strong>Trade Marks Act 1999</strong></td><td>ബ്രാൻഡ് പേര്/ലോഗോ</td></tr>
+              <tr><td><strong>ഡിസൈൻ</strong></td><td>Designs Act 2000</td><td>ഉൽപ്പന്ന രൂപകല്പന</td></tr>
+              <tr><td><strong>GI</strong></td><td>GI Act 1999</td><td>ഭൗമസൂചിക (ഉദാ: ആറന്മുള കണ്ണാടി)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul>
+          <li><strong>ഡിജിറ്റൽ പേഴ്സണൽ ഡാറ്റാ പ്രൊട്ടക്ഷൻ ആക്ട് (DPDP Act) 2023:</strong> പാർലമെന്റ് <strong>2023 ഓഗസ്റ്റ്</strong> പാസാക്കി. <strong>പിഴ ₹250 കോടി വരെ</strong>; <strong>Data Protection Board of India</strong>; 'Data Principal' (വ്യക്തി), 'Data Fiduciary' (ഡാറ്റ കൈകാര്യം ചെയ്യുന്നയാൾ) എന്നീ പദങ്ങൾ. ചട്ടങ്ങൾ 2025 നവംബറിൽ വിജ്ഞാപനം ചെയ്തതായി എന്റെ അറിവ്; ഘട്ടം ഘട്ടമായുള്ള നടപ്പാക്കൽ ആയതിനാൽ പുതിയ അറിയിപ്പ് പരിശോധിക്കുക.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 10: DIAGRAMS & CHARTS -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. ചിത്രം / മാപ്പ് / ഡയഗ്രം + Visual Insight</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>10.1 CIA Triad – ഡയഗ്രം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CIA Triad diagram">
+            <rect x="10" y="10" width="480" height="280" rx="12" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+            <text x="250" y="35" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#1a237e">CIA Triad – സൈബർ സുരക്ഷയുടെ 3 തൂണുകൾ</text>
+
+            <polygon points="250,70 420,240 80,240" fill="#c5cae9" stroke="#1a237e" stroke-width="2"/>
+            <text x="250" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#1a237e">Confidentiality</text>
+            <text x="250" y="125" text-anchor="middle" font-size="11" fill="#14202b">രഹസ്യസ്വഭാവം</text>
+            <text x="250" y="142" text-anchor="middle" font-size="10" fill="#4a5f72">അധികാരമുള്ളവർക്ക് മാത്രം</text>
+
+            <text x="170" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#1a237e">Integrity</text>
+            <text x="170" y="240" text-anchor="middle" font-size="11" fill="#14202b">സമഗ്രത</text>
+            <text x="170" y="257" text-anchor="middle" font-size="10" fill="#4a5f72">അനധികൃത മാറ്റം പാടില്ല</text>
+
+            <text x="340" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#1a237e">Availability</text>
+            <text x="340" y="240" text-anchor="middle" font-size="11" fill="#14202b">ലഭ്യത</text>
+            <text x="340" y="257" text-anchor="middle" font-size="10" fill="#4a5f72">വേണ്ടപ്പോൾ കിട്ടണം</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.1 – CIA Triad. Robustness ഇതിൽ ഉൾപ്പെടുന്നില്ല.</div>
+        </div>
+
+        <h3>10.2 ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ – ഡയഗ്രം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flowchart symbols diagram">
+            <rect x="10" y="10" width="600" height="260" rx="12" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
+            <text x="310" y="35" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#00695c">ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ (PSC സ്ഥിരം ചോദ്യം!)</text>
+
+            <!-- Oval -->
+            <ellipse cx="100" cy="90" rx="70" ry="30" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="100" y="88" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Start / Stop</text>
+            <text x="100" y="105" text-anchor="middle" font-size="9" fill="#14202b">ഓവൽ</text>
+            <text x="100" y="145" text-anchor="middle" font-size="10" font-style="italic" fill="#4a5f72">തുടക്കവും ഒടുക്കവും</text>
+
+            <!-- Parallelogram -->
+            <polygon points="210,70 340,70 320,110 190,110" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="265" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Input / Output</text>
+            <text x="265" y="105" text-anchor="middle" font-size="9" fill="#14202b">സാമാന്തരികം</text>
+            <text x="265" y="145" text-anchor="middle" font-size="10" font-style="italic" fill="#4a5f72">ഡാറ്റ ഒഴുക്ക്</text>
+
+            <!-- Rectangle -->
+            <rect x="370" y="70" width="120" height="45" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="430" y="88" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Process</text>
+            <text x="430" y="105" text-anchor="middle" font-size="9" fill="#14202b">ചതുരം</text>
+            <text x="430" y="145" text-anchor="middle" font-size="10" font-style="italic" fill="#4a5f72">കണക്കുകൂട്ടൽ</text>
+
+            <!-- Diamond -->
+            <polygon points="100,175 140,200 100,225 60,200" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="100" y="203" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">Decision</text>
+            <text x="100" y="250" text-anchor="middle" font-size="9" fill="#14202b">ഡയമണ്ട്</text>
+            <text x="100" y="265" text-anchor="middle" font-size="10" font-style="italic" fill="#4a5f72">Yes / No</text>
+
+            <!-- Arrow -->
+            <line x1="210" y1="200" x2="340" y2="200" stroke="#00897b" stroke-width="2"/>
+            <polygon points="340,200 330,195 330,205" fill="#00897b"/>
+            <text x="275" y="195" text-anchor="middle" font-size="10" font-weight="700" fill="#00695c">Arrow</text>
+            <text x="275" y="225" text-anchor="middle" font-size="9" fill="#14202b">ഒഴുക്കിന്റെ ദിശ</text>
+
+            <!-- Circle -->
+            <circle cx="430" cy="200" r="22" fill="#b2dfdb" stroke="#00897b" stroke-width="2"/>
+            <text x="430" y="205" text-anchor="middle" font-size="10" font-weight="700" fill="#00695c">Connector</text>
+            <text x="430" y="250" text-anchor="middle" font-size="9" fill="#14202b">വൃത്തം</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.2 – ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ.</div>
+        </div>
+
+        <h3>10.3 ഐ.ടി ആക്ട് 2000 – വകുപ്പ് മാപ്പ്</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IT Act section map">
+            <rect x="10" y="10" width="700" height="300" rx="12" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="360" y="35" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#6d4c00">ഐ.ടി ആക്ട് 2000 – വകുപ്പ് മാപ്പ്</text>
+
+            <rect x="250" y="55" width="220" height="45" rx="6" fill="#ffe082" stroke="#f9a825" stroke-width="2"/>
+            <text x="360" y="75" text-anchor="middle" font-size="11" font-weight="700" fill="#6d4c00">43: സിവിൽ – നഷ്ടപരിഹാരം</text>
+            <text x="360" y="90" text-anchor="middle" font-size="9" fill="#4a5f72">Cyber Wrong (Wallet)</text>
+
+            <line x1="360" y1="100" x2="360" y2="120" stroke="#f9a825" stroke-width="2"/>
+
+            <rect x="250" y="120" width="220" height="45" rx="6" fill="#ffcc80" stroke="#ef6c00" stroke-width="2"/>
+            <text x="360" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#6d4c00">65: സോഴ്സ് കോഡ് (3 വർഷം / ₹2 ലക്ഷം)</text>
+            <text x="360" y="155" text-anchor="middle" font-size="9" fill="#4a5f72">CRIMINAL START ⬇</text>
+
+            <line x1="360" y1="165" x2="360" y2="185" stroke="#f9a825" stroke-width="2"/>
+
+            <rect x="200" y="185" width="320" height="45" rx="6" fill="#ffab91" stroke="#c62828" stroke-width="2"/>
+            <text x="360" y="205" text-anchor="middle" font-size="12" font-weight="700" fill="#6d0000">66: ഹാക്കിംഗ് (3 വർഷം / ₹5 ലക്ഷം)</text>
+            <text x="360" y="220" text-anchor="middle" font-size="9" fill="#4a5f72">Sec 43-ന്റെ ക്രിമിനൽ രൂപം</text>
+
+            <line x1="360" y1="230" x2="360" y2="245" stroke="#f9a825" stroke-width="2"/>
+
+            <!-- 66A-F branch -->
+            <rect x="20" y="245" width="90" height="50" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="65" y="263" text-anchor="middle" font-size="10" font-weight="700" fill="#6d0000">66A</text>
+            <text x="65" y="278" text-anchor="middle" font-size="8" fill="#4a5f72">റദ്ദാക്കി 2015</text>
+            <text x="65" y="290" text-anchor="middle" font-size="7" fill="#4a5f72">Abusive</text>
+
+            <rect x="120" y="245" width="90" height="50" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="165" y="263" text-anchor="middle" font-size="10" font-weight="700" fill="#6d0000">66B</text>
+            <text x="165" y="278" text-anchor="middle" font-size="8" fill="#4a5f72">3 വർഷം/₹1L</text>
+            <text x="165" y="290" text-anchor="middle" font-size="7" fill="#4a5f72">Bought stolen</text>
+
+            <rect x="220" y="245" width="90" height="50" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="265" y="263" text-anchor="middle" font-size="10" font-weight="700" fill="#6d0000">66C</text>
+            <text x="265" y="278" text-anchor="middle" font-size="8" fill="#4a5f72">3 വർഷം/₹1L</text>
+            <text x="265" y="290" text-anchor="middle" font-size="7" fill="#4a5f72">Credentials</text>
+
+            <rect x="320" y="245" width="90" height="50" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="365" y="263" text-anchor="middle" font-size="10" font-weight="700" fill="#6d0000">66D</text>
+            <text x="365" y="278" text-anchor="middle" font-size="8" fill="#4a5f72">3 വർഷം/₹1L</text>
+            <text x="365" y="290" text-anchor="middle" font-size="7" fill="#4a5f72">Deceive</text>
+
+            <rect x="420" y="245" width="90" height="50" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="465" y="263" text-anchor="middle" font-size="10" font-weight="700" fill="#6d0000">66E</text>
+            <text x="465" y="278" text-anchor="middle" font-size="8" fill="#4a5f72">3 വർഷം/₹2L</text>
+            <text x="465" y="290" text-anchor="middle" font-size="7" fill="#4a5f72">Expose privacy</text>
+
+            <rect x="520" y="245" width="90" height="50" rx="5" fill="#7b1fa2" stroke="#4a148c" stroke-width="2"/>
+            <text x="565" y="263" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">66F</text>
+            <text x="565" y="278" text-anchor="middle" font-size="8" fill="#ffffff">ജീവപര്യന്തം</text>
+            <text x="565" y="290" text-anchor="middle" font-size="7" fill="#ffffff">Fatal terror</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.3 – ഐ.ടി ആക്ട് വകുപ്പുകൾ: 43 → 65 → 66 → 66A–F.</div>
+        </div>
+
+        <h3>10.4 വെബ് പേജ് = വീട് (HTML + CSS + JS)</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Web page as house">
+            <rect x="10" y="10" width="600" height="200" rx="12" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="310" y="35" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#0d47a1">വെബ് പേജ് = വീട് (HTML + CSS + JavaScript)</text>
+
+            <!-- HTML - walls -->
+            <rect x="60" y="70" width="150" height="110" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+            <text x="135" y="100" text-anchor="middle" font-size="14" font-weight="700" fill="#0d47a1">HTML</text>
+            <text x="135" y="120" text-anchor="middle" font-size="10" fill="#14202b">ഭിത്തി / ഘടന</text>
+            <text x="135" y="138" text-anchor="middle" font-size="9" fill="#4a5f72">Structure</text>
+
+            <!-- CSS - paint -->
+            <rect x="235" y="70" width="150" height="110" fill="#fff59d" stroke="#f9a825" stroke-width="2"/>
+            <text x="310" y="100" text-anchor="middle" font-size="14" font-weight="700" fill="#6d4c00">CSS</text>
+            <text x="310" y="120" text-anchor="middle" font-size="10" fill="#14202b">പെയിന്റ് / ഭംഗി</text>
+            <text x="310" y="138" text-anchor="middle" font-size="9" fill="#4a5f72">Style</text>
+
+            <!-- JS - wiring -->
+            <rect x="410" y="70" width="150" height="110" fill="#c8e6c9" stroke="#43a047" stroke-width="2"/>
+            <text x="485" y="100" text-anchor="middle" font-size="14" font-weight="700" fill="#1b5e20">JavaScript</text>
+            <text x="485" y="120" text-anchor="middle" font-size="10" fill="#14202b">വയറിംഗ് / പ്രവർത്തനം</text>
+            <text x="485" y="138" text-anchor="middle" font-size="9" fill="#4a5f72">Behaviour</text>
+
+            <text x="310" y="200" text-anchor="middle" font-size="11" font-style="italic" fill="#0d47a1">"ഘടന – ഭംഗി – ചലനം" = HTML – CSS – JavaScript</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.4 – വെബ് പേജിന്റെ മൂന്ന് സ്തരങ്ങൾ.</div>
+        </div>
+
+        <h3>10.5 മാൽവെയർ മാപ്പ്</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Malware map">
+            <rect x="10" y="10" width="680" height="240" rx="12" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="350" y="35" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#6d0000">മാൽവെയർ വർഗ്ഗീകരണം</text>
+
+            <rect x="290" y="55" width="120" height="40" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+            <text x="350" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="#6d0000">Malware</text>
+            <text x="350" y="90" text-anchor="middle" font-size="9" fill="#4a5f72">Malicious Software</text>
+
+            <line x1="350" y1="95" x2="350" y2="115" stroke="#c62828" stroke-width="2"/>
+            <line x1="80" y1="115" x2="620" y2="115" stroke="#c62828" stroke-width="2"/>
+
+            <!-- Virus -->
+            <line x1="80" y1="115" x2="80" y2="135" stroke="#c62828" stroke-width="2"/>
+            <rect x="30" y="135" width="100" height="70" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="80" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#6d0000">Virus</text>
+            <text x="80" y="172" text-anchor="middle" font-size="8" fill="#14202b">host വേണം</text>
+            <text x="80" y="186" text-anchor="middle" font-size="8" fill="#4a5f72">Brain 1986</text>
+            <text x="80" y="200" text-anchor="middle" font-size="8" fill="#4a5f72">Fred Cohen 1983</text>
+
+            <!-- Worm -->
+            <line x1="180" y1="115" x2="180" y2="135" stroke="#c62828" stroke-width="2"/>
+            <rect x="130" y="135" width="100" height="70" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="180" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#6d0000">Worm</text>
+            <text x="180" y="172" text-anchor="middle" font-size="8" fill="#14202b">സ്വയം പടരും</text>
+            <text x="180" y="186" text-anchor="middle" font-size="8" fill="#4a5f72">Morris 1988</text>
+            <text x="180" y="200" text-anchor="middle" font-size="8" fill="#4a5f72">ILOVEYOU 2000</text>
+
+            <!-- Trojan -->
+            <line x1="280" y1="115" x2="280" y2="135" stroke="#c62828" stroke-width="2"/>
+            <rect x="230" y="135" width="100" height="70" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="280" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#6d0000">Trojan</text>
+            <text x="280" y="172" text-anchor="middle" font-size="8" fill="#14202b">നടിക്കും</text>
+            <text x="280" y="186" text-anchor="middle" font-size="8" fill="#4a5f72">മരക്കുതിര</text>
+            <text x="280" y="200" text-anchor="middle" font-size="8" fill="#4a5f72">പടരില്ല</text>
+
+            <!-- Ransomware -->
+            <line x1="380" y1="115" x2="380" y2="135" stroke="#c62828" stroke-width="2"/>
+            <rect x="330" y="135" width="100" height="70" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="380" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#6d0000">Ransomware</text>
+            <text x="380" y="172" text-anchor="middle" font-size="8" fill="#14202b">എൻക്രിപ്റ്റ് + പണം</text>
+            <text x="380" y="186" text-anchor="middle" font-size="8" fill="#4a5f72">WannaCry 2017</text>
+            <text x="380" y="200" text-anchor="middle" font-size="8" fill="#4a5f72">Petya, Ryuk</text>
+
+            <!-- Spyware -->
+            <line x1="480" y1="115" x2="480" y2="135" stroke="#c62828" stroke-width="2"/>
+            <rect x="430" y="135" width="100" height="70" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="480" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#6d0000">Spyware / Keylogger</text>
+            <text x="480" y="172" text-anchor="middle" font-size="8" fill="#14202b">ചാരപ്പണി</text>
+            <text x="480" y="186" text-anchor="middle" font-size="8" fill="#4a5f72">കീ രേഖപ്പെടുത്തൽ</text>
+            <text x="480" y="200" text-anchor="middle" font-size="8" fill="#4a5f72">പാസ്‌വേഡ് ചോർത്തൽ</text>
+
+            <!-- Botnet -->
+            <line x1="580" y1="115" x2="580" y2="135" stroke="#c62828" stroke-width="2"/>
+            <rect x="530" y="135" width="100" height="70" rx="5" fill="#ffcdd2" stroke="#c62828"/>
+            <text x="580" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#6d0000">Botnet</text>
+            <text x="580" y="172" text-anchor="middle" font-size="8" fill="#14202b">സോംബി കമ്പ്യൂട്ടർ</text>
+            <text x="580" y="186" text-anchor="middle" font-size="8" fill="#4a5f72">Mirai</text>
+            <text x="580" y="200" text-anchor="middle" font-size="8" fill="#4a5f72">DDoS-ന്</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.5 – മാൽവെയറുകളുടെ വർഗ്ഗീകരണം.</div>
+        </div>
+
+        <div class="revision">
+          <span class="box-label">💡 Visual Insight</span>
+          <p><strong>66A-F അക്ഷരമാല ക്രമത്തിൽ തന്നെ ഓർക്കാം:</strong> <strong>A</strong>busive, <strong>B</strong>ought, <strong>C</strong>redentials, <strong>D</strong>eceive, <strong>E</strong>xpose, <strong>F</strong>atal. 66A മാത്രമാണ് റദ്ദാക്കിയത്; ബാക്കി 66B–66F ഇപ്പോഴും നിലവിലുണ്ട്.</p>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 11: IMPORTANT FACTS -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. പ്രധാന വസ്തുതകൾ (Important Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ ഒറ്റനോട്ടം</span>
+          <ul>
+            <li>ഡ്രോപ്പ്-ഡൗൺ ലിസ്റ്റ് ടാഗ്: <strong><code>&lt;select&gt;</code></strong> (ഉള്ളിൽ <code>&lt;option&gt;</code>).</li>
+            <li>പ്രോഗ്രാമിംഗ് നിർദ്ദേശങ്ങൾ: <strong>Input, Output, Store, Control, Transfer</strong> (ചില ഉറവിടങ്ങളിൽ Control transfer ഒന്നായി).</li>
+            <li><strong>അക്ഷയ:</strong> <strong>2002 നവംബർ 18</strong>, <strong>മലപ്പുറം</strong>, ഉദ്ഘാടനം <strong>എ.പി.ജെ. അബ്ദുൾ കലാം</strong>; ലക്ഷ്യം <strong>ഇ-സാക്ഷരത</strong>.</li>
+            <li><strong>FRIENDS:</strong> <strong>2000 ജൂൺ, തിരുവനന്തപുരം</strong>; <strong>SPARK:</strong> ജീവനക്കാരുടെ ശമ്പളം; <strong>K-SMART:</strong> <strong>2024 ജനുവരി 1</strong>, തദ്ദേശ സേവനങ്ങൾ.</li>
+            <li><strong>CIA Triad;</strong> കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം <strong>നവംബർ 30</strong>.</li>
+            <li><strong>സലാമി</strong> = ചെറിയ തുകകൾ; <strong>ഡാറ്റാ ഡിഡ്‌ലിംഗ്</strong> = ഇൻപുട്ട് ഡാറ്റ തിരുത്തൽ.</li>
+            <li><strong>ഐ.ടി ആക്ട് 2000:</strong> ഒപ്പ് <strong>ജൂൺ 9 (കെ.ആർ. നാരായണൻ)</strong>, പ്രാബല്യം <strong>ഒക്ടോബർ 17</strong>, ഭേദഗതി <strong>2008 (പ്രാബല്യം 2009 ഒക്ടോബർ 27)</strong>.</li>
+            <li><strong>Sec 66</strong> ഹാക്കിംഗ് (3 വർഷം / ₹5 ലക്ഷം); <strong>66E</strong> സ്വകാര്യത; <strong>66F</strong> ജീവപര്യന്തം; <strong>67B</strong> ചൈൽഡ് പോണോഗ്രഫി; <strong>69A</strong> ബ്ലോക്കിംഗ്.</li>
+            <li><strong>CCA</strong> (Sec 17) = ഡിജിറ്റൽ സിഗ്നേച്ചർ നിയന്ത്രണം; <strong>CERT-In</strong> (2004) = സൈബർ എമർജൻസി ടീം.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: PSC ANALYSIS -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. Kerala PSC Exam Analysis (പ്രാധാന്യ വിശകലനം)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപവിഷയം</th><th>പ്രാധാന്യം</th><th>വിശകലനം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ഐ.ടി ആക്ട് 2000 &amp; സൈബർ നിയമങ്ങൾ (10.7.5–7)</strong></td><td>★★★</td><td>ഏറ്റവും കൂടുതൽ ചോദ്യം വരുന്ന ഭാഗം. തീയതികൾ (ജൂൺ 9 / ഒക്ടോബർ 17), 43, 65, 66, 66A, 66E, 66F, 67B, 69A</td></tr>
+              <tr><td><strong>സൈബർ കുറ്റകൃത്യങ്ങളും മാൽവെയറും (10.7.1–4)</strong></td><td>★★★</td><td>ഫിഷിംഗ്, റാൻസംവെയർ, സലാമി, ഡാറ്റാ ഡിഡ്‌ലിംഗ്, സൈബർ സ്ക്വാട്ടിംഗ്, DoS, CIA Triad, നവംബർ 30</td></tr>
+              <tr><td><strong>ഇ-ഗവേണൻസ് (10.6, 5.19)</strong></td><td>★★★</td><td>കമ്പ്യൂട്ടറിലും കേരള ഗവേണൻസിലും ഇരട്ടി പ്രയോജനം: അക്ഷയ, FRIENDS, SPARK, K-SWAN, K-FON, K-SMART</td></tr>
+              <tr><td><strong>HTML &amp; പ്രോഗ്രാമിംഗ് (10.5.7, 10.3)</strong></td><td>★★</td><td><code>&lt;select&gt;</code>, <code>&lt;ol&gt;/&lt;ul&gt;</code>, ടേബിൾ ടാഗുകൾ, ഫ്ലോചാർട്ട് ചിഹ്നങ്ങൾ, നിർദ്ദേശ തരങ്ങൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 മുൻ ചോദ്യ ട്രെൻഡ് സാരാംശം</span>
+          <ol>
+            <li><strong>തീയതികൾ:</strong> "ഐ.ടി ആക്ട് പ്രാബല്യത്തിൽ വന്നത്?" → ഒക്ടോബർ 17</li>
+            <li><strong>വകുപ്പുകൾ:</strong> "ഹാക്കിംഗ് ശിക്ഷ?" → Sec 66</li>
+            <li><strong>കുറ്റകൃത്യം:</strong> "ഫയൽ എൻക്രിപ്റ്റ് ചെയ്ത് പണം?" → Ransomware</li>
+            <li><strong>ഇ-ഗവേണൻസ്:</strong> "അക്ഷയ ആദ്യ ജില്ല?" → മലപ്പുറം</li>
+            <li><strong>HTML:</strong> "ഡ്രോപ്പ്-ഡൗൺ ടാഗ്?" → <code>&lt;select&gt;</code></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: PREVIOUS QUESTION TREND -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. മുൻ ചോദ്യ ട്രെൻഡ് (Previous Question Trend)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കുക</span>
+          <p>ചുവടെയുള്ളത് <strong>ചോദ്യ മാതൃകകൾ</strong> ആണ്. ഏത് പരീക്ഷയിൽ വന്നു എന്നത് ഞാൻ പരിശോധിച്ച് ഉറപ്പിക്കാത്തതിനാൽ പരീക്ഷയുടെ പേര് ഒഴിവാക്കി. അത് PSC ചോദ്യപേപ്പർ നോക്കി ചേർക്കുക.</p>
+        </div>
+        <ol>
+          <li><strong>ഐ.ടി ആക്ട് തീയതി:</strong> <em>ഐ.ടി ആക്ട് 2000 പ്രാബല്യത്തിൽ വന്നത്?</em> → <strong>2000 ഒക്ടോബർ 17</strong>. <em>ഐ.ടി ആക്ടിൽ ഒപ്പുവെച്ച രാഷ്ട്രപതി?</em> → <strong>കെ.ആർ. നാരായണൻ</strong>.</li>
+          <li><strong>വകുപ്പുകൾ:</strong> <em>ഹാക്കിംഗ് ശിക്ഷിക്കുന്ന വകുപ്പ്?</em> → <strong>66</strong>; <em>സ്വകാര്യതാ ലംഘനം?</em> → <strong>66E</strong>; <em>ചൈൽഡ് പോണോഗ്രഫി?</em> → <strong>67B</strong>; <em>സോഴ്സ് കോഡ് കൃത്രിമം?</em> → <strong>65</strong>; <em>സൈബർ തീവ്രവാദം?</em> → <strong>66F</strong>.</li>
+          <li><strong>കുറ്റകൃത്യം തിരിച്ചറിയൽ:</strong> ഫയൽ എൻക്രിപ്റ്റ് ചെയ്ത് പണം ചോദിക്കുന്നത് → <strong>Ransomware</strong>; ഒരേ ഡൊമെയ്‌നിന് തർക്കം → <strong>Cyber Squatting</strong>; ലോക കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം → <strong>നവംബർ 30</strong>.</li>
+          <li><strong>ഇ-ഗവേണൻസ്:</strong> അക്ഷയ ആദ്യം തുടങ്ങിയ ജില്ല → <strong>മലപ്പുറം</strong>; അക്ഷയ എന്തിനോട് ബന്ധപ്പെട്ടത് → <strong>ഇ-സാക്ഷരത</strong>.</li>
+          <li><strong>HTML:</strong> ഡ്രോപ്പ്-ഡൗൺ ലിസ്റ്റ് ടാഗ് → <strong><code>&lt;select&gt;</code></strong>.</li>
+          <li><strong>പ്രോഗ്രാമിംഗ്:</strong> തീരുമാനമെടുക്കൽ ചിഹ്നം → <strong>ഡയമണ്ട്</strong>; <code>GOTO</code> ഏത് തരം നിർദ്ദേശം → <strong>Transfer</strong>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 14: CONFUSING FACTS -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ (Confusing Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>വ്യത്യാസം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ഒപ്പ്: 2000 ജൂൺ 9</strong></td><td><strong>പ്രാബല്യം: 2000 ഒക്ടോബർ 17</strong></td><td>"ഒപ്പുവെച്ചത്" → ജൂൺ 9; "പ്രാബല്യം/Came into force" → ഒക്ടോബർ 17</td></tr>
+              <tr><td><strong>Sec 65</strong></td><td><strong>Sec 66</strong></td><td>65 = സോഴ്സ് കോഡ് കൃത്രിമം (₹2 ലക്ഷം); 66 = ഹാക്കിംഗ് (₹5 ലക്ഷം)</td></tr>
+              <tr><td><strong>Sec 43</strong></td><td><strong>Sec 66</strong></td><td>43 = <strong>സിവിൽ</strong> (നഷ്ടപരിഹാരം); 66 = <strong>ക്രിമിനൽ</strong> (ശിക്ഷ)</td></tr>
+              <tr><td><strong>66C</strong></td><td><strong>66D</strong></td><td>66C = ഐഡന്റിറ്റി/പാസ്‌വേഡ് മോഷണം; 66D = ആൾമാറാട്ടം നടത്തി ചതിക്കൽ</td></tr>
+              <tr><td><strong>67</strong></td><td><strong>67A</strong></td><td><strong>67B</strong></td></tr>
+              <tr><td><strong>69</strong></td><td><strong>69A</strong></td><td>69 = നിരീക്ഷണം (Interception); 69A = ബ്ലോക്കിംഗ്</td></tr>
+              <tr><td><strong>Virus</strong></td><td><strong>Worm</strong></td><td>വൈറസിന് host ഫയൽ വേണം; വേമിന് വേണ്ട, സ്വയം പടരും</td></tr>
+              <tr><td><strong>Virus</strong></td><td><strong>Trojan</strong></td><td>വൈറസ് സ്വയം പടരും; ട്രോജൻ പടരില്ല, ഉപയോക്താവ് സ്വയം ഇൻസ്റ്റാൾ ചെയ്യും</td></tr>
+              <tr><td><strong>Phishing</strong></td><td><strong>Pharming</strong></td><td>ഫിഷിംഗ്: വ്യാജ ലിങ്ക് അയച്ച് ചതിക്കും; ഫാമിംഗ്: ശരിയായ വിലാസം അടിച്ചാലും DNS തിരിച്ചുവിട്ട് വ്യാജ സൈറ്റിൽ എത്തിക്കും</td></tr>
+              <tr><td><strong>Phishing</strong></td><td><strong>Spoofing</strong></td><td>ഫിഷിംഗ്: വിവരം തട്ടാൻ; സ്പൂഫിംഗ്: ഉറവിടം മറച്ച് വേഷം കെട്ടൽ</td></tr>
+              <tr><td><strong>Salami</strong></td><td><strong>Data Diddling</strong></td><td>സലാമി: ചെറിയ തുകകൾ കൂട്ടി വലുതാക്കൽ; ഡിഡ്‌ലിംഗ്: ഇൻപുട്ട് ഡാറ്റ തിരുത്തൽ</td></tr>
+              <tr><td><strong>Cyber Wrong</strong></td><td><strong>Cyber Crime</strong></td><td>വ്രോങ് = സിവിൽ (43); ക്രൈം = ക്രിമിനൽ (66...)</td></tr>
+              <tr><td><strong><code>&lt;ol&gt;</code></strong></td><td><strong><code>&lt;ul&gt;</code></strong></td><td>ol = അക്കം; ul = ബുള്ളറ്റ്</td></tr>
+              <tr><td><strong><code>&lt;th&gt;</code></strong></td><td><strong><code>&lt;td&gt;</code></strong></td><td>th = തലക്കെട്ട് (Bold, Center); td = സാധാരണ ഡാറ്റ</td></tr>
+              <tr><td><strong>Compiler</strong></td><td><strong>Interpreter</strong></td><td>കംപൈലർ മുഴുവൻ; ഇന്റർപ്രെറ്റർ വരി വരിയായി</td></tr>
+              <tr><td><strong>Input (Parallelogram)</strong></td><td><strong>Process (Rectangle)</strong></td><td>സാമാന്തരികം = I/O; ചതുരം = Process</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box</span>
+          <ol>
+            <li><strong>"ഐ.ടി ആക്ടിൽ ജീവപര്യന്തം?" → 66F മാത്രം.</strong> 66, 66E, 66C, 66D എല്ലാം പരമാവധി 3 വർഷം.</li>
+            <li><strong>"66A ഇപ്പോൾ നിലവിലുണ്ടോ?" → ഇല്ല, 2015-ൽ ശ്രേയ സിംഗാൾ കേസിൽ റദ്ദാക്കി.</strong> (Chronological ചോദ്യത്തിൽ "ഏത് വകുപ്പായിരുന്നു" എന്ന് ചോദിച്ചാൽ 66A.)</li>
+            <li><strong>"59 ആപ്പ് നിരോധനം" → 69A.</strong></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: COMPARISON TABLES -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. താരതമ്യ പട്ടികകൾ (Comparison Tables)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>15.1 മാൽവെയർ താരതമ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മാൽവെയർ</th><th>സ്വയം ഇരട്ടിക്കുമോ?</th><th>Host വേണോ?</th><th>പ്രധാന സവിശേഷത</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Virus</strong></td><td>അതെ (host തുറക്കുമ്പോൾ)</td><td><strong>വേണം</strong></td><td>ഫയലുകളിൽ ഒട്ടിപ്പിടിക്കും (Brain, Michelangelo)</td></tr>
+              <tr><td><strong>Worm</strong></td><td><strong>അതെ (സ്വന്തമായി)</strong></td><td>വേണ്ട</td><td>നെറ്റ്‌വർക്കിലൂടെ പടരും (Morris, ILOVEYOU)</td></tr>
+              <tr><td><strong>Trojan</strong></td><td>ഇല്ല</td><td>—</td><td>ഉപകാരി ചമയും</td></tr>
+              <tr><td><strong>Ransomware</strong></td><td>ചിലത് (WannaCry)</td><td>—</td><td>എൻക്രിപ്റ്റ് + മോചനദ്രവ്യം</td></tr>
+              <tr><td><strong>Spyware / Keylogger</strong></td><td>ഇല്ല</td><td>—</td><td>ചാരപ്പണി</td></tr>
+              <tr><td><strong>Adware</strong></td><td>ഇല്ല</td><td>—</td><td>പരസ്യം</td></tr>
+              <tr><td><strong>Logic Bomb</strong></td><td>ഇല്ല</td><td>—</td><td>സാഹചര്യം/തീയതിക്ക് പൊട്ടും</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>15.2 ഇ-ഗവേണൻസ് മാതൃകകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മാതൃക</th><th>പൂർണ്ണരൂപം</th><th>ആർക്ക്?</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>G2C</strong></td><td>Government to Citizen</td><td>പൗരൻ</td><td>അക്ഷയ, FRIENDS, ഇ-ഡിസ്ട്രിക്റ്റ്, K-SMART, DigiLocker, UMANG</td></tr>
+              <tr><td><strong>G2B</strong></td><td>Government to Business</td><td>വ്യാപാരം</td><td>ഇ-ടെൻഡർ, GST, MCA21, GeM</td></tr>
+              <tr><td><strong>G2G</strong></td><td>Government to Government</td><td>വകുപ്പുകൾ</td><td>K-SWAN, ഇ-ഓഫീസ്, CCTNS</td></tr>
+              <tr><td><strong>G2E</strong></td><td>Government to Employee</td><td>ജീവനക്കാർ</td><td>SPARK, ജീവൻ പ്രമാൺ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>15.3 Cyber Wrong vs Cyber Crime</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th></th><th>Cyber Wrong</th><th>Cyber Crime</th></tr></thead>
+            <tbody>
+              <tr><td>സ്വഭാവം</td><td>സിവിൽ</td><td>ക്രിമിനൽ</td></tr>
+              <tr><td>ഫലം</td><td>നഷ്ടപരിഹാരം</td><td>തടവ്/പിഴ</td></tr>
+              <tr><td>വകുപ്പ്</td><td>43, 43A</td><td>65, 66, 66A–F, 67 ...</td></tr>
+              <tr><td>തീർപ്പാക്കൽ</td><td>അഡ്ജുഡിക്കേറ്റിംഗ് ഓഫീസർ</td><td>കോടതി</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>15.4 ഐ.ടി ആക്ട് ശിക്ഷകൾ (ഒറ്റനോട്ടം)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ശിക്ഷ</th><th>വകുപ്പുകൾ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ജീവപര്യന്തം</strong></td><td><strong>66F</strong></td></tr>
+              <tr><td><strong>10 വർഷം</strong></td><td>70 (സംരക്ഷിത സിസ്റ്റം)</td></tr>
+              <tr><td><strong>7 വർഷം</strong></td><td>69 (നിസ്സഹകരണം), 69A, 67A/67B (ആവർത്തനം)</td></tr>
+              <tr><td><strong>5 വർഷം</strong></td><td>67A/67B (ആദ്യ തവണ), 67 (ആവർത്തനം)</td></tr>
+              <tr><td><strong>3 വർഷം</strong></td><td>65, 66, 66B, 66C, 66D, 66E, 67 (ആദ്യ തവണ), 67C, 72A</td></tr>
+              <tr><td><strong>2 വർഷം</strong></td><td>71, 72, 73, 74</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>15.5 HTML ടാഗുകൾ – ഒറ്റനോട്ടം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ടാഗ്</th><th>തരം</th><th>ഉപയോഗം</th></tr></thead>
+            <tbody>
+              <tr><td><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code></td><td>കണ്ടെയ്നർ</td><td>ഹെഡിംഗ്; h1 വലുത്, h6 ചെറുത്</td></tr>
+              <tr><td><code>&lt;p&gt;</code></td><td>കണ്ടെയ്നർ</td><td>പാരഗ്രാഫ്</td></tr>
+              <tr><td><code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code></td><td><strong>എംപ്റ്റി</strong></td><td>വരി/വിലങ്ങനെ വര</td></tr>
+              <tr><td><code>&lt;a href&gt;</code></td><td>കണ്ടെയ്നർ</td><td>ഹൈപ്പർലിങ്ക്</td></tr>
+              <tr><td><code>&lt;img src alt&gt;</code></td><td><strong>എംപ്റ്റി</strong></td><td>ചിത്രം</td></tr>
+              <tr><td><code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;dl&gt;</code></td><td>കണ്ടെയ്നർ</td><td>അക്കം, ബുള്ളറ്റ്, വിവരണ ലിസ്റ്റ്</td></tr>
+              <tr><td><code>&lt;table&gt;&lt;tr&gt;&lt;th&gt;&lt;td&gt;</code></td><td>കണ്ടെയ്നർ</td><td>പട്ടിക</td></tr>
+              <tr><td><code>&lt;form&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;option&gt;</code>, <code>&lt;textarea&gt;</code></td><td>കണ്ടെയ്നർ</td><td>ഫോം/ഡ്രോപ്പ്-ഡൗൺ</td></tr>
+              <tr><td><code>&lt;input type&gt;</code></td><td><strong>എംപ്റ്റി</strong></td><td>ടെക്സ്റ്റ്/radio/checkbox/submit</td></tr>
+              <tr><td><code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code></td><td><strong>എംപ്റ്റി</strong></td><td>മെറ്റാവിവരം, CSS ബന്ധിപ്പിക്കൽ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: TIMELINE -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. കാലക്രമം (Timeline) + Revision Points</span>
+      </h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <svg viewBox="0 0 780 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IT Act timeline">
+            <line x1="40" y1="110" x2="750" y2="110" stroke="#1a237e" stroke-width="4" stroke-linecap="round"/>
+            <g font-family="Noto Sans Malayalam, sans-serif" font-size="9" fill="#14202b">
+              <circle cx="70" cy="110" r="8" fill="#b83b2c"/><text x="70" y="95" text-anchor="middle" font-weight="700">1995</text><text x="70" y="135" text-anchor="middle">VSNL</text>
+              <circle cx="160" cy="110" r="8" fill="#ef6c00"/><text x="160" y="95" text-anchor="middle" font-weight="700">2000</text><text x="160" y="135" text-anchor="middle">IT Act</text>
+              <circle cx="250" cy="110" r="8" fill="#43a047"/><text x="250" y="95" text-anchor="middle" font-weight="700">2002</text><text x="250" y="135" text-anchor="middle">അക്ഷയ</text>
+              <circle cx="340" cy="110" r="8" fill="#1976d2"/><text x="340" y="95" text-anchor="middle" font-weight="700">2004</text><text x="340" y="135" text-anchor="middle">CERT-In</text>
+              <circle cx="430" cy="110" r="8" fill="#8e24aa"/><text x="430" y="95" text-anchor="middle" font-weight="700">2008</text><text x="430" y="135" text-anchor="middle">Amendment</text>
+              <circle cx="520" cy="110" r="8" fill="#00695c"/><text x="520" y="95" text-anchor="middle" font-weight="700">2015</text><text x="520" y="135" text-anchor="middle">66A റദ്ദ്</text>
+              <circle cx="610" cy="110" r="8" fill="#c62828"/><text x="610" y="95" text-anchor="middle" font-weight="700">2020</text><text x="610" y="135" text-anchor="middle">59 ആപ്പ്</text>
+              <circle cx="700" cy="110" r="8" fill="#4a148c"/><text x="700" y="95" text-anchor="middle" font-weight="700">2024</text><text x="700" y="135" text-anchor="middle">K-SMART</text>
+            </g>
+          </svg>
+          <div class="viz-caption">ചിത്രം 16.1 – സൈബർ നിയമ കാലക്രമം.</div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വർഷം / തീയതി</th><th>സംഭവം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1957 / 1970</strong></td><td><strong>Copyright Act 1957</strong>, <strong>Patents Act 1970</strong></td></tr>
+              <tr><td><strong>1971</strong></td><td>Creeper (ആദ്യ സ്വയം-പകർപ്പ് പ്രോഗ്രാം, ബോബ് തോമസ്)</td></tr>
+              <tr><td><strong>1983</strong></td><td>ഫ്രെഡ് കോഹൻ 'കമ്പ്യൂട്ടർ വൈറസ്' പദം പ്രചരിപ്പിച്ചു</td></tr>
+              <tr><td><strong>1986</strong></td><td><strong>Brain</strong> (ആദ്യ PC വൈറസ്)</td></tr>
+              <tr><td><strong>1988 (നവംബർ 2)</strong></td><td><strong>Morris Worm</strong>; പിന്നീട് <strong>നവംബർ 30 = കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം</strong></td></tr>
+              <tr><td><strong>1989 / 1991</strong></td><td>ടിം ബർണേഴ്സ് ലീ WWW നിർദ്ദേശിച്ചു (1989); ആദ്യ വെബ്സൈറ്റ് (1991)</td></tr>
+              <tr><td><strong>1995 ഓഗസ്റ്റ് 15</strong></td><td>ഇന്ത്യയിൽ VSNL വഴി പൊതു ഇന്റർനെറ്റ്</td></tr>
+              <tr><td><strong>1996</strong></td><td>UNCITRAL മാതൃകാ നിയമം; <strong>CSS1</strong></td></tr>
+              <tr><td><strong>1999</strong></td><td><strong>Trade Marks Act</strong></td></tr>
+              <tr><td><strong>2000 ജൂൺ</strong></td><td><strong>FRIENDS</strong> (തിരുവനന്തപുരം)</td></tr>
+              <tr><td><strong>2000 ജൂൺ 9</strong></td><td>ഐ.ടി ആക്ടിൽ <strong>കെ.ആർ. നാരായണൻ</strong> ഒപ്പുവെച്ചു</td></tr>
+              <tr><td><strong>2000 ഒക്ടോബർ 17</strong></td><td><strong>ഐ.ടി ആക്ട് 2000 പ്രാബല്യത്തിൽ</strong></td></tr>
+              <tr><td><strong>2001</strong></td><td>ബെംഗളൂരുവിൽ ഇന്ത്യയിലെ ആദ്യ സൈബർ പോലീസ് സ്റ്റേഷൻ</td></tr>
+              <tr><td><strong>2002 നവംബർ 18</strong></td><td><strong>അക്ഷയ</strong> (മലപ്പുറം)</td></tr>
+              <tr><td><strong>2004</strong></td><td><strong>CERT-In</strong></td></tr>
+              <tr><td><strong>2006 മെയ് 18</strong></td><td><strong>NeGP</strong></td></tr>
+              <tr><td><strong>2008 → 2009 ഒക്ടോബർ 27</strong></td><td><strong>IT Amendment Act</strong>; 66A–F, 67A/B, 69A ചേർത്തു</td></tr>
+              <tr><td><strong>2009</strong></td><td>കേരളത്തിലെ ആദ്യ സൈബർ പോലീസ് സ്റ്റേഷൻ (തിരുവനന്തപുരം)</td></tr>
+              <tr><td><strong>2013</strong></td><td>National Cyber Security Policy</td></tr>
+              <tr><td><strong>2014</strong></td><td>NCIIPC</td></tr>
+              <tr><td><strong>2015 മാർച്ച് 24 / ജൂലൈ 1</strong></td><td><strong>66A റദ്ദാക്കി</strong> / <strong>ഡിജിറ്റൽ ഇന്ത്യ</strong></td></tr>
+              <tr><td><strong>2016</strong></td><td>ആധാർ ആക്ട്; കേരള പോലീസ് <strong>സൈബർഡോം</strong></td></tr>
+              <tr><td><strong>2017</strong></td><td>കേരളം ഇന്റർനെറ്റ് അടിസ്ഥാന അവകാശമായി പ്രഖ്യാപിച്ചു; CAT TDSAT-ൽ ലയിച്ചു</td></tr>
+              <tr><td><strong>2020</strong></td><td>59 ചൈനീസ് ആപ്പുകൾ <strong>69A</strong> പ്രകാരം നിരോധിച്ചു</td></tr>
+              <tr><td><strong>2023 ജൂൺ 5 / ഓഗസ്റ്റ്</strong></td><td><strong>K-FON</strong> / <strong>DPDP Act</strong></td></tr>
+              <tr><td><strong>2024 ജനുവരി 1 / ജൂലൈ 1</strong></td><td><strong>K-SMART</strong> / <strong>BNS, BNSS, BSA</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="revision">
+          <span class="box-label">📌 Revision Points</span>
+          <p>ഒപ്പ് ജൂൺ 9, പ്രാബല്യം ഒക്ടോബർ 17 · 66A (2015) റദ്ദ് · 66F ജീവപര്യന്തം · 67B കുട്ടികൾ · അക്ഷയ 2002 മലപ്പുറം · FRIENDS 2000 TVM · K-SMART 2024 · നവംബർ 30.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17: MNEMONICS -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. മെമ്മറി ട്രിക്കുകൾ (Mnemonics)</span>
+      </h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – Section 66A–F</span>
+          <p><strong>A</strong>busive · <strong>B</strong>ought stolen · <strong>C</strong>redentials · <strong>D</strong>eceive · <strong>E</strong>xpose · <strong>F</strong>atal. (ABCDEF = അക്ഷരമാല!)</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – Section 67</span>
+          <p><strong>67</strong> സാധാരണ · <strong>67A</strong> <strong>A</strong>dult act · <strong>67B</strong> <strong>B</strong>abies/Children · <strong>67C</strong> <strong>C</strong>onserve (ഇന്റർമീഡിയറി വിവരം സൂക്ഷിക്കൽ).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – Section 69</span>
+          <p><strong>69 = Monitor</strong>; <strong>69A = App block</strong>; <strong>69B = Big traffic data</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – ശിക്ഷയുടെ ഗോവണി</span>
+          <p><strong>3 → 5 → 7 → 10 → ജീവപര്യന്തം</strong> = <strong>66/65 → 67A/B → 69/69A → 70 → 66F</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – CIA Triad</span>
+          <p><strong>C</strong>onfidential (രഹസ്യം), <strong>I</strong>ntegrity (മാറ്റം പാടില്ല), <strong>A</strong>vailability (വേണ്ടപ്പോൾ കിട്ടണം). <strong>"CIA ഏജന്റിന്റെ രഹസ്യം, സത്യം, ലഭ്യത".</strong></p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – ഹാക്കർ തൊപ്പി</span>
+          <p><strong>വെള്ള = നല്ലവൻ, കറുപ്പ് = ചീത്ത, ചാരം = ഇടയ്ക്ക്</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – ഇ-ഗവേണൻസ് 4 ഘട്ടം</span>
+          <p><strong>I-I-T-T</strong> (Information, Interaction, Transaction, Transformation).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 8 – കേരള ഇ-ഗവേണൻസ്</span>
+          <p><strong>FRIENDS = ഒരു കൗണ്ടർ; AKSHAYA = ഇ-സാക്ഷരത/മലപ്പുറം; SPARK = ശമ്പളം; K-SMART = തദ്ദേശം; K-FON = ഫൈബർ; K-SWAN = സർക്കാർ നെറ്റ്‌വർക്ക്</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 9 – ഫ്ലോചാർട്ട്</span>
+          <p><strong>ഓവൽ-ഒടുക്കം, സാമാന്തരികം-I/O, ചതുരം-Process, ഡയമണ്ട്-Decision</strong>; (മുട്ട പോലെ ഓവൽ = തുടക്കവും ഒടുക്കവും).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 10 – HTML ലിങ്ക് നിറം</span>
+          <p><strong>നീല → വയലറ്റ് → ചുവപ്പ്</strong> (L-V-A).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 11 – ഒറ്റ ശ്വാസം</span>
+          <p><strong>43 നഷ്ടപരിഹാരം · 65 സോഴ്സ് കോഡ് · 66 ഹാക്കിംഗ് · 66F ജീവപര്യന്തം · 67B കുട്ടികൾ · 69A ബ്ലോക്ക്</strong>.</p>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 18: PSC TRAPS -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. Common PSC Traps (പരീക്ഷയിലെ ചതിക്കുഴികൾ)</span>
+      </h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ 12 PSC Traps</span>
+          <ul>
+            <li><strong>Trap 1:</strong> 66C / 66D / 66E ചേരുംപടി: <strong>66C = ഐഡന്റിറ്റി, 66D = ആൾമാറാട്ട ചതി, 66E = സ്വകാര്യത</strong>.</li>
+            <li><strong>Trap 2:</strong> <strong>59 ചൈനീസ് ആപ്പ് നിരോധനം = 69A.</strong> ഓപ്ഷനിൽ 69A ഉണ്ടെങ്കിൽ അത് തന്നെ.</li>
+            <li><strong>Trap 3:</strong> <strong>CIA Triad-ൽ Robustness ഇല്ല.</strong></li>
+            <li><strong>Trap 4:</strong> <strong><code>&lt;dropdown&gt;</code> / <code>&lt;list&gt;</code> എന്ന HTML ടാഗില്ല; <code>&lt;select&gt;</code> മാത്രം.</strong></li>
+            <li><strong>Trap 5:</strong> <strong>FRIENDS = TVM 2000; Akshaya = Malappuram 2002.</strong></li>
+            <li><strong>Trap 6:</strong> <strong>Section 66-ന്റെ ശിക്ഷ ₹5 ലക്ഷം; Section 65-ന്റെ ₹2 ലക്ഷം</strong>: രണ്ടും 3 വർഷം തടവ്.</li>
+            <li><strong>Trap 7:</strong> <strong>Thulasi = PSC പ്രൊഫൈൽ പോർട്ടൽ</strong>; "PSC ഓൺലൈൻ പരീക്ഷ" എന്ന് തെറ്റിദ്ധരിക്കരുത്.</li>
+            <li><strong>Trap 8:</strong> <strong>ഡിസംബർ 2 = കമ്പ്യൂട്ടർ സാക്ഷരതാ ദിനം, നവംബർ 30 = കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം.</strong></li>
+            <li><strong>Trap 9:</strong> <strong>ഫയർവാൾ വൈറസിനെ നീക്കം ചെയ്യില്ല; ആന്റിവൈറസ് ആണ് ചെയ്യുന്നത്.</strong></li>
+            <li><strong>Trap 10:</strong> <strong>സ്പൂഫിംഗ് ≠ ഫിഷിംഗ്; ഫാമിംഗ് ≠ ഫിഷിംഗ്.</strong></li>
+            <li><strong>Trap 11:</strong> XML <strong>Case-sensitive</strong>, HTML <strong>Case-insensitive</strong>.</li>
+            <li><strong>Trap 12:</strong> <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code> <strong>എംപ്റ്റി ടാഗുകൾ</strong>: അവയ്ക്ക് <code>&lt;/br&gt;</code> പോലുള്ള ഒടുക്ക ടാഗ് ഇല്ല.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: ADDITIONAL KERALA PSC FACTS -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. Additional Kerala PSC Facts (അധിക വസ്തുതകൾ)</span>
+      </h2>
+      <div class="section-body">
+        <div class="added-fact">
+          <span class="box-label">➕ കേരളം & സൈബർ സുരക്ഷ</span>
+          <ul>
+            <li><strong>ഇന്ത്യയിലെ ആദ്യ സൈബർ പോലീസ് സ്റ്റേഷൻ:</strong> ബെംഗളൂരു (2001). <strong>കേരളത്തിലെ ആദ്യത്തേത്:</strong> തിരുവനന്തപുരം (2009).</li>
+            <li><strong>സൈബർഡോം (Cyberdome):</strong> കേരള പോലീസിന്റെ സാങ്കേതിക ഗവേഷണ കേന്ദ്രം, <strong>തിരുവനന്തപുരം ടെക്നോപാർക്ക്</strong>, പൊതു-സ്വകാര്യ പങ്കാളിത്തം (2016).</li>
+            <li><strong>ഓപ്പറേഷൻ പി-ഹണ്ട് (P-Hunt):</strong> കുട്ടികൾക്കെതിരായ ഓൺലൈൻ ലൈംഗിക ദൃശ്യങ്ങൾ (CSAM) കണ്ടെത്താനുള്ള കേരള പോലീസ് ഓപ്പറേഷൻ.</li>
+            <li><strong>ദേശീയ സൈബർ ക്രൈം ഹെൽപ്പ്‌ലൈൻ: 1930</strong>; പോർട്ടൽ: <strong>cybercrime.gov.in</strong>; ഏകോപനം: <strong>I4C (Indian Cyber Crime Coordination Centre, MHA)</strong>.</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ കേരളം & ഐ.ടി</span>
+          <ul>
+            <li><strong>ടെക്നോപാർക്ക് (തിരുവനന്തപുരം, 1990):</strong> ഇന്ത്യയിലെ ആദ്യ ഐ.ടി പാർക്ക്. <strong>ഇൻഫോപാർക്ക്:</strong> കൊച്ചി.</li>
+            <li><strong>കേരളം 2017-ൽ ഇന്റർനെറ്റ് ഒരു അടിസ്ഥാന അവകാശമായി പ്രഖ്യാപിച്ച ആദ്യ സംസ്ഥാനം</strong> (K-FON ഇതിന്റെ ഭാഗം).</li>
+            <li><strong>IKM (ഇൻഫർമേഷൻ കേരള മിഷൻ):</strong> തദ്ദേശ സ്ഥാപനങ്ങൾക്കുള്ള സോഫ്റ്റ്‌വെയർ (സേവന, സാംഖ്യ, സുലേഖ, സഞ്ചയ ... തുടങ്ങിയവ; K-SMART വികസിപ്പിച്ചത്).</li>
+          </ul>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 ഡിജിറ്റൽ സുരക്ഷാ ശീലങ്ങൾ</span>
+          <p>OTP, PIN, CVV ആരുമായും പങ്കിടരുത്; ബാങ്കുകൾ ഒരിക്കലും ഫോണിൽ OTP ചോദിക്കില്ല; തട്ടിപ്പ് നടന്നാൽ <strong>ഉടൻ 1930</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 20: EXPECTED KERALA PSC QUESTIONS -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. Expected Kerala PSC Questions (മാതൃകാ ചോദ്യങ്ങൾ)</span>
+      </h2>
+      <div class="section-body">
+        <h3>20.1 ഒറ്റ ഉത്തരം</h3>
+        <div class="question-item">
+          <div class="q-text">ചോദ്യം: ഡ്രോപ്പ്-ഡൗൺ ലിസ്റ്റ് നിർമ്മിക്കാൻ ഉപയോഗിക്കുന്ന HTML ടാഗ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. <code>&lt;list&gt;</code></button>
+            <button type="button" class="opt-btn" data-opt="B">B. <code>&lt;select&gt;</code></button>
+            <button type="button" class="opt-btn" data-opt="C">C. <code>&lt;dropdown&gt;</code></button>
+            <button type="button" class="opt-btn" data-opt="D">D. <code>&lt;input&gt;</code></button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) <code>&lt;select&gt;</code></div>
+            <div class="explanation">ഉള്ളിലെ ഓരോ ഇനവും <code>&lt;option&gt;</code> ടാഗിൽ. <code>&lt;dropdown&gt;</code> / <code>&lt;list&gt;</code> എന്ന ടാഗുകൾ HTML-ൽ ഇല്ല.</div>
+          </div>
+        </div>
+
+        <h3>20.2 കാലക്രമം</h3>
+        <div class="question-item">
+          <div class="q-text">ചോദ്യം: കാലക്രമത്തിൽ ക്രമീകരിക്കുക: 1. അക്ഷയ ഉദ്ഘാടനം 2. 66A റദ്ദാക്കൽ 3. ഐ.ടി ആക്ട് പ്രാബല്യം 4. NeGP</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 3–1–4–2</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1–3–4–2</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 3–4–1–2</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 3–1–2–4</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 3–1–4–2</div>
+            <div class="explanation">2000 → 2002 → 2006 → 2015.</div>
+          </div>
+        </div>
+
+        <h3>20.3 പ്രസ്താവന തരം</h3>
+        <div class="question-item">
+          <div class="q-text">ചോദ്യം: (i) റാൻസംവെയർ ഫയലുകൾ എൻക്രിപ്റ്റ് ചെയ്ത് പണം ആവശ്യപ്പെടുന്നു. (ii) സലാമി അറ്റാക്ക് ചെറിയ തുകകൾ തട്ടി വലുതാക്കുന്നു. (iii) ഡിസംബർ 2 ലോക കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനമാണ്.</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. i, ii, iii ശരി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. i, ii മാത്രം ശരി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ii, iii മാത്രം ശരി</button>
+            <button type="button" class="opt-btn" data-opt="D">D. i മാത്രം ശരി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) i, ii മാത്രം ശരി</div>
+            <div class="explanation">(iii) തെറ്റ്: ഡിസംബർ 2 = കമ്പ്യൂട്ടർ സാക്ഷരതാ ദിനം; സുരക്ഷാ ദിനം നവംബർ 30.</div>
+          </div>
+        </div>
+
+        <h3>20.4 ചേരുംപടി</h3>
+        <div class="question-item">
+          <div class="q-text">ചോദ്യം: a. Sec 65 · b. Sec 66E · c. Sec 66F · d. Sec 67B ↔ 1. സ്വകാര്യത ലംഘനം · 2. കുട്ടികളുടെ അശ്ലീല ദൃശ്യം · 3. സോഴ്സ് കോഡ് കൃത്രിമം · 4. സൈബർ തീവ്രവാദം</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. a-3, b-1, c-4, d-2</button>
+            <button type="button" class="opt-btn" data-opt="B">B. a-1, b-3, c-2, d-4</button>
+            <button type="button" class="opt-btn" data-opt="C">C. a-2, b-4, c-1, d-3</button>
+            <button type="button" class="opt-btn" data-opt="D">D. a-4, b-2, c-3, d-1</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) a-3, b-1, c-4, d-2</div>
+            <div class="explanation">65 = സോഴ്സ് കോഡ്; 66E = സ്വകാര്യത; 66F = സൈബർ തീവ്രവാദം; 67B = കുട്ടികൾ.</div>
+          </div>
+        </div>
+
+        <h3>20.5 Assertion–Reason</h3>
+        <div class="question-item">
+          <div class="q-text">ചോദ്യം: (A): Sec 66 പ്രകാരം ഹാക്കിംഗിന് 3 വർഷം വരെ തടവോ ₹5 ലക്ഷം വരെ പിഴയോ ലഭിക്കാം. (R): Sec 43-ലെ പ്രവൃത്തികൾ സത്യസന്ധമല്ലാതെയോ (Dishonestly) ചതിക്കാനോ (Fraudulently) ചെയ്താൽ മാത്രമേ Sec 66 പ്രകാരം കുറ്റമാകൂ.</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. A ശരി, R ശരി, R വിശദീകരണം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. A ശരി, R ശരി, R വിശദീകരണമല്ല</button>
+            <button type="button" class="opt-btn" data-opt="C">C. A ശരി, R തെറ്റ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. A തെറ്റ്, R ശരി</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) A ശരി, R ശരി, R വിശദീകരണം</div>
+            <div class="explanation">വിശദീകരണം: "Wilful" എന്ന പദം അല്ല, <strong>Dishonestly/Fraudulently</strong> ആണ് നിയമത്തിൽ.</div>
+          </div>
+        </div>
+
+        <h3>20.6 പ്രോഗ്രാമിംഗ്</h3>
+        <div class="question-item">
+          <div class="q-text">ചോദ്യം: <code>GOTO 50</code> ഏത് തരം നിർദ്ദേശം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Input</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Store</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Control</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Transfer</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) Transfer</div>
+            <div class="explanation">വരിയിലേക്ക് ചാടുന്നത്. ഓപ്ഷനിൽ "Control Transfer" ഉണ്ടെങ്കിൽ അത് ഉത്തരം.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 21: MCQ PRACTICE (INTERACTIVE) -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec21" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">21. MCQ Practice (KPSC-Style – Interactive)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഐ.ടി ആക്ട് 2000 പ്രാബല്യത്തിൽ വന്ന തീയതി?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 2000 മെയ് 17</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 2000 ജൂൺ 9</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2000 ഓഗസ്റ്റ് 15</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 2000 ഒക്ടോബർ 17</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 2000 ഒക്ടോബർ 17</div>
+            <div class="explanation">(A) പാർലമെന്റ് പാസാക്കി; (B) രാഷ്ട്രപതി ഒപ്പുവെച്ചു; (C) 1995 ഓഗസ്റ്റ് 15 ഇന്ത്യയിൽ ഇന്റർനെറ്റ് വന്ന ദിനം; (D) പ്രാബല്യം.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഫ്ലോചാർട്ടിൽ തീരുമാനമെടുക്കൽ ചിഹ്നം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഓവൽ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സാമാന്തരികം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ചതുരം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഡയമണ്ട്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ഡയമണ്ട്</div>
+            <div class="explanation">ഓവൽ Start/Stop; സാമാന്തരികം I/O; ചതുരം Process.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. വ്യാജ ഇ-മെയിൽ/ലിങ്ക് വഴി പാസ്‌വേഡും കാർഡ് വിവരവും തട്ടുന്ന കുറ്റം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Spamming</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Phishing</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Data Diddling</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Cyber Stalking</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Phishing</div>
+            <div class="explanation">സ്പാമിംഗ് = ആവശ്യമില്ലാത്ത മെയിൽ; ഡിഡ്‌ലിംഗ് = ഇൻപുട്ട് ഡാറ്റ തിരുത്തൽ; സ്റ്റോക്കിംഗ് = പിന്തുടർന്ന് ശല്യം.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കേരള സർക്കാർ ജീവനക്കാരുടെ ശമ്പള-സർവീസ് വിവര സോഫ്റ്റ്‌വെയർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. FRIENDS</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Akshaya</button>
+            <button type="button" class="opt-btn" data-opt="C">C. SPARK</button>
+            <button type="button" class="opt-btn" data-opt="D">D. PEARL</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) SPARK</div>
+            <div class="explanation">FRIENDS = ബിൽ പേയ്മെന്റ്; Akshaya = ഇ-സാക്ഷരത; PEARL = രജിസ്ട്രേഷൻ വകുപ്പ്.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ഡിജിറ്റൽ സിഗ്നേച്ചർ സർട്ടിഫിക്കറ്റ് നൽകുന്ന ഏജൻസികളെ നിയന്ത്രിക്കുന്ന സ്ഥാപനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Cyber Appellate Tribunal</button>
+            <button type="button" class="opt-btn" data-opt="B">B. CCA</button>
+            <button type="button" class="opt-btn" data-opt="C">C. CERT-In</button>
+            <button type="button" class="opt-btn" data-opt="D">D. NASSCOM</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) CCA</div>
+            <div class="explanation">Sec 17. CAT = അപ്പീൽ; CERT-In = സൈബർ എമർജൻസി; NASSCOM = ഐ.ടി കമ്പനികളുടെ സംഘടന.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഐ.ടി ആക്ടിൽ ജീവപര്യന്തം തടവ് വരെ ശിക്ഷയുള്ള വകുപ്പ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 66</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 66E</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 66F</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 67B</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 66F</div>
+            <div class="explanation">സൈബർ തീവ്രവാദം – ആക്ടിലെ ഏറ്റവും കടുത്ത ശിക്ഷ.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. 2020-ൽ 59 ചൈനീസ് ആപ്പുകൾ നിരോധിക്കാൻ ഉപയോഗിച്ച വകുപ്പ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 66A</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 69</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 69A</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 70</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 69A</div>
+            <div class="explanation">69 = നിരീക്ഷണം; 66A റദ്ദാക്കപ്പെട്ടു; 70 = സംരക്ഷിത സിസ്റ്റം.</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. അക്ഷയ പദ്ധതിയുടെ പ്രധാന ലക്ഷ്യം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ബിൽ പേയ്മെന്റ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഇ-സാക്ഷരത</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ശമ്പളം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഫൈബർ ഇന്റർനെറ്റ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഇ-സാക്ഷരത</div>
+            <div class="explanation">2002 നവംബർ 18, മലപ്പുറം; ഉദ്ഘാടനം എ.പി.ജെ. അബ്ദുൾ കലാം.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. CSS ചേർക്കാനുള്ള ഏറ്റവും മികച്ച (മുഴുവൻ സൈറ്റിനും) മാർഗ്ഗം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Inline</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Internal</button>
+            <button type="button" class="opt-btn" data-opt="C">C. External</button>
+            <button type="button" class="opt-btn" data-opt="D">D. <code>&lt;font&gt;</code></button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) External</div>
+            <div class="explanation">External <code>.css</code> ഫയൽ – ഒരു ഫയൽ മാറ്റിയാൽ എല്ലാ പേജിലും പ്രതിഫലിക്കും.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. Compiler-നെ Interpreter-ൽ നിന്ന് വേർതിരിക്കുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. കംപൈലർ വരി വരിയായി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ഇന്റർപ്രെറ്റർ മുഴുവൻ ഒരുമിച്ച്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. കംപൈലർ മുഴുവൻ പ്രോഗ്രാമും ഒരുമിച്ച്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. രണ്ടും ഒരുപോലെ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കംപൈലർ മുഴുവൻ പ്രോഗ്രാമും ഒരുമിച്ച്</div>
+            <div class="explanation">Interpreter വരി വരിയായി വിവർത്തനം ചെയ്ത് ഓടിക്കും.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. HTML-ലെ എംപ്റ്റി ടാഗ് ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. <code>&lt;p&gt;</code></button>
+            <button type="button" class="opt-btn" data-opt="B">B. <code>&lt;br&gt;</code></button>
+            <button type="button" class="opt-btn" data-opt="C">C. <code>&lt;div&gt;</code></button>
+            <button type="button" class="opt-btn" data-opt="D">D. <code>&lt;h1&gt;</code></button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) <code>&lt;br&gt;</code></div>
+            <div class="explanation">എംപ്റ്റി ടാഗുകൾ: br, hr, img, input, meta, link. ഒടുക്ക ടാഗ് ഇല്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം എന്ന്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഡിസംബർ 2</button>
+            <button type="button" class="opt-btn" data-opt="B">B. നവംബർ 30</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഒക്ടോബർ 17</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ജൂൺ 9</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) നവംബർ 30</div>
+            <div class="explanation">1988-ലെ Morris Worm-ന് ശേഷം ACM ആരംഭിച്ചു. ഡിസംബർ 2 = കമ്പ്യൂട്ടർ സാക്ഷരതാ ദിനം.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. CIA Triad-ൽ ഉൾപ്പെടാത്തത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Confidentiality</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Integrity</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Robustness</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Availability</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Robustness</div>
+            <div class="explanation">CIA = Confidentiality, Integrity, Availability. Robustness ഇതിൽ ഇല്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഇന്ത്യയിലെ ആദ്യ സമ്പൂർണ്ണ ഇ-സാക്ഷര ജില്ല?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. തിരുവനന്തപുരം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. മലപ്പുറം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. കണ്ണൂർ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. കോഴിക്കോട്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) മലപ്പുറം</div>
+            <div class="explanation">അക്ഷയ പദ്ധതിയുടെ ഫലമായി 2002 നവംബർ 18.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. Sec 67B എന്തിനെക്കുറിച്ചാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഹാക്കിംഗ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. കുട്ടികളുടെ അശ്ലീല ദൃശ്യം (CSAM)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സൈബർ തീവ്രവാദം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഐഡന്റിറ്റി മോഷണം</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കുട്ടികളുടെ അശ്ലീല ദൃശ്യം (CSAM)</div>
+            <div class="explanation">ആദ്യ 5 വർഷം, ആവർത്തിച്ചാൽ 7 വർഷം, ₹10 ലക്ഷം പിഴ.</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ഇ-ഗവേണൻസിൽ G2E എന്നാൽ എന്ത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Government to Enterprise</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Government to Employee</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Government to E-commerce</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Government to Education</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Government to Employee</div>
+            <div class="explanation">ജീവനക്കാർക്ക് – ഉദാ: SPARK (ശമ്പളം).</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. Sec 66A ഏത് വർഷമാണ് റദ്ദാക്കിയത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 2013</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 2015</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 2017</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 2020</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 2015</div>
+            <div class="explanation">ശ്രേയ സിംഗാൾ v. യൂണിയൻ ഓഫ് ഇന്ത്യ കേസിൽ 2015 മാർച്ച് 24.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. സൈബർ കുറ്റകൃത്യങ്ങളുടെ ദേശീയ ഹെൽപ്പ്‌ലൈൻ നമ്പർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 100</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 112</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1930</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1800</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1930</div>
+            <div class="explanation">പോർട്ടൽ: cybercrime.gov.in; ഏകോപനം I4C (MHA).</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. HTML ലിങ്കുകളുടെ നിറങ്ങൾ – സന്ദർശിച്ച ലിങ്ക് ഏത് നിറം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. നീല (link)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. വയലറ്റ് (vlink)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ചുവപ്പ് (alink)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. പച്ച</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) വയലറ്റ് (vlink)</div>
+            <div class="explanation">L-V-A: link = നീല, vlink = വയലറ്റ്, alink = ചുവപ്പ് (ക്ലിക്ക് ചെയ്യുമ്പോൾ).</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഇന്ത്യയിലെ ആദ്യ ഐ.ടി പാർക്ക്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഇൻഫോപാർക്ക്, കൊച്ചി</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ടെക്നോപാർക്ക്, തിരുവനന്തപുരം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഹിതെക് സിറ്റി, ഹൈദരാബാദ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഇലക്ട്രോണിക്സ് സിറ്റി, ബെംഗളൂരു</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ടെക്നോപാർക്ക്, തിരുവനന്തപുരം</div>
+            <div class="explanation">1990-ൽ ആരംഭിച്ചു. ഇൻഫോപാർക്ക് = കൊച്ചി.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 22: QUICK REFERENCE -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec22" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">22. ഐ.ടി ആക്ട് വകുപ്പുകളും HTML ടാഗുകളും – ഒറ്റനോട്ട പട്ടിക</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ക്രമം</th><th>വിഷയം</th><th>ഏറ്റവും പ്രധാന വസ്തുത</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><code>&lt;select&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code></td><td>ഡ്രോപ്പ്-ഡൗൺ · ലിങ്ക് (<code>href</code>) · ചിത്രം (<code>src</code>, <code>alt</code>; <strong>Empty</strong>)</td></tr>
+              <tr><td>2</td><td><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code></td><td>h1 വലുത്, h6 ചെറുത് · br/hr = Empty</td></tr>
+              <tr><td>3</td><td><code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;dl&gt;</code>, <code>&lt;li&gt;</code></td><td>അക്കം · ബുള്ളറ്റ് · നിഘണ്ടു (<code>dt</code>, <code>dd</code>)</td></tr>
+              <tr><td>4</td><td><code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></td><td>വരി · തലക്കെട്ട് · ഡാറ്റ · <code>rowspan</code>/<code>colspan</code></td></tr>
+              <tr><td>5</td><td>5 നിർദ്ദേശങ്ങൾ</td><td>Input (READ) · Output (PRINT) · Store (=) · Control (IF/FOR) · Transfer (GOTO)</td></tr>
+              <tr><td>6</td><td>ഫ്ലോചാർട്ട്</td><td>ഓവൽ, സാമാന്തരികം, ചതുരം, ഡയമണ്ട്</td></tr>
+              <tr><td>7</td><td>FRIENDS / അക്ഷയ</td><td>2000 ജൂൺ TVM / 2002 നവംബർ 18 മലപ്പുറം</td></tr>
+              <tr><td>8</td><td>SPARK / K-SMART / K-FON</td><td>ശമ്പളം / തദ്ദേശം (2024) / ഫൈബർ (2023)</td></tr>
+              <tr><td>9</td><td>CIA Triad / ദിനം</td><td>Confidentiality, Integrity, Availability / നവംബർ 30</td></tr>
+              <tr><td>10</td><td>മാൽവെയർ</td><td>Worm സ്വയം പടരും · Trojan നടിക്കും · Ransomware പണം</td></tr>
+              <tr><td>11</td><td>കുറ്റകൃത്യം</td><td>Salami ചെറുതുക · Phishing വ്യാജലിങ്ക് · Squatting ഡൊമെയ്ൻ</td></tr>
+              <tr><td>12</td><td>ഐ.ടി ആക്ട് തീയതി</td><td>ഒപ്പ് 2000 ജൂൺ 9 (നാരായണൻ) · പ്രാബല്യം 2000 ഒക്ടോബർ 17</td></tr>
+              <tr><td>13</td><td>43 / 65 / 66</td><td>നഷ്ടപരിഹാരം / സോഴ്സ് കോഡ് (₹2 ലക്ഷം) / ഹാക്കിംഗ് (₹5 ലക്ഷം)</td></tr>
+              <tr><td>14</td><td>66A–66D</td><td>66A റദ്ദ് · 66B മോഷണമുതൽ · 66C ഐഡന്റിറ്റി · 66D ആൾമാറാട്ടം</td></tr>
+              <tr><td>15</td><td>66E / 66F</td><td>സ്വകാര്യത / <strong>ജീവപര്യന്തം</strong></td></tr>
+              <tr><td>16</td><td>67 / 67A / 67B</td><td>അശ്ലീലം / ലൈംഗികം / <strong>കുട്ടികൾ</strong></td></tr>
+              <tr><td>17</td><td>69 / 69A</td><td>നിരീക്ഷണം / ബ്ലോക്കിംഗ് (ചൈനീസ് ആപ്പുകൾ)</td></tr>
+              <tr><td>18</td><td>CCA / CERT-In</td><td>Sec 17 ഡിജിറ്റൽ സിഗ്നേച്ചർ / Sec 70B (2004)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 23: EXAM TIPS -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec23" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">23. Exam Tips (പരീക്ഷാ നിർദ്ദേശങ്ങൾ)</span>
+      </h2>
+      <div class="section-body">
+        <div class="revision">
+          <span class="box-label">📝 ശ്രദ്ധിക്കേണ്ട 6 കാര്യങ്ങൾ</span>
+          <ol>
+            <li><strong>"ഒപ്പുവെച്ചത്" vs "പ്രാബല്യത്തിൽ വന്നത്":</strong> ജൂൺ 9 vs ഒക്ടോബർ 17. ചോദ്യത്തിലെ വാക്ക് ആദ്യം വായിക്കുക.</li>
+            <li><strong>66B–66F:</strong> <strong>A-B-C-D-E-F അക്ഷര ക്രമം</strong> മനസ്സിൽ ഓടിക്കുക (Abusive, Bought, Credentials, Deceive, Expose, Fatal).</li>
+            <li><strong>നിർദ്ദേശം തിരിച്ചറിയൽ:</strong> വാങ്ങുന്നത് <strong>Input</strong>, കാണിക്കുന്നത് <strong>Output</strong>, സൂക്ഷിക്കുന്നത് <strong>Store</strong>, <code>IF/LOOP</code> <strong>Control</strong>, <code>GOTO/CALL</code> <strong>Transfer</strong>.</li>
+            <li><strong>ഉന്മൂലന രീതി (Elimination):</strong> HTML ചോദ്യത്തിൽ <code>&lt;dropdown&gt;</code>, <code>&lt;list&gt;</code> പോലുള്ള കണ്ടുപിടിച്ച പേരുകൾ ഉടൻ വെട്ടുക.</li>
+            <li><strong>"ഇല്ലാത്തത്/തെറ്റായത്" ചോദ്യങ്ങൾ:</strong> CIA Triad-ൽ Robustness, അക്ഷയ ജില്ല (മലപ്പുറം, TVM അല്ല) എന്നിവ.</li>
+            <li><strong>സംഖ്യാ ചോദ്യങ്ങൾ:</strong> 3 → 5 → 7 → 10 → ജീവപര്യന്തം ഗോവണി ഓർക്കുക.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 24: TOP MAXIMUM FACTS -->
+    <section class="section" id="sec24">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec24" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">24. Top Maximum Facts (ഏറ്റവും പ്രധാനപ്പെട്ട വസ്തുതകൾ)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ Top 16 Maximum Facts</span>
+          <ol>
+            <li><strong>HTML = ഘടന; CSS = ഭംഗി; JavaScript = ക്ലയന്റ്-സൈഡ് പ്രവർത്തനം; XML = ഡാറ്റ കൈമാറ്റം.</strong></li>
+            <li><strong><code>&lt;select&gt;</code> = ഡ്രോപ്പ്-ഡൗൺ; <code>&lt;ol&gt;</code> അക്കം; <code>&lt;ul&gt;</code> ബുള്ളറ്റ്; <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code> = Empty tags.</strong></li>
+            <li><strong>അൽഗോരിതം = പടിപടിയായ നിർദ്ദേശം; ഫ്ലോചാർട്ട് = ചിത്രരൂപം; ഓവൽ=Start/Stop, സാമാന്തരികം=I/O, ചതുരം=Process, ഡയമണ്ട്=Decision.</strong></li>
+            <li><strong>5 നിർദ്ദേശങ്ങൾ: Input, Output, Store, Control, Transfer.</strong></li>
+            <li><strong>അക്ഷയ: 2002 നവംബർ 18, മലപ്പുറം, ഇ-സാക്ഷരത, ഉദ്ഘാടനം കലാം.</strong></li>
+            <li><strong>FRIENDS: 2000 ജൂൺ TVM; SPARK: ശമ്പളം; K-SMART: 2024 ജനുവരി 1; K-FON: 2023 ജൂൺ 5.</strong></li>
+            <li><strong>NeGP: 2006 മെയ് 18; ഡിജിറ്റൽ ഇന്ത്യ: 2015 ജൂലൈ 1.</strong></li>
+            <li><strong>CIA Triad; കമ്പ്യൂട്ടർ സുരക്ഷാ ദിനം നവംബർ 30.</strong></li>
+            <li><strong>ഫയർവാൾ = നെറ്റ്‌വർക്ക് സുരക്ഷാ മതിൽ.</strong></li>
+            <li><strong>Ransomware = എൻക്രിപ്റ്റ് + മോചനദ്രവ്യം; Worm = സ്വയം ഇരട്ടിക്കും; Trojan = ഉപകാരി ചമയും.</strong></li>
+            <li><strong>Salami = ചെറിയ തുകകൾ; Data Diddling = ഇൻപുട്ട് തിരുത്തൽ; Cyber Squatting = ഡൊമെയ്ൻ.</strong></li>
+            <li><strong>ഐ.ടി ആക്ട്: ഒപ്പ് 2000 ജൂൺ 9, പ്രാബല്യം 2000 ഒക്ടോബർ 17; ഭേദഗതി 2008 (പ്രാബല്യം 2009 ഒക്ടോബർ 27).</strong></li>
+            <li><strong>Sec 65 (സോഴ്സ് കോഡ്, ₹2 ലക്ഷം); Sec 66 (ഹാക്കിംഗ്, ₹5 ലക്ഷം).</strong></li>
+            <li><strong>66A (2015-ൽ ശ്രേയ സിംഗാൾ കേസിൽ റദ്ദ്); 66C ഐഡന്റിറ്റി; 66E സ്വകാര്യത; 66F ജീവപര്യന്തം.</strong></li>
+            <li><strong>67B ചൈൽഡ് പോണോഗ്രഫി; 69A ബ്ലോക്കിംഗ്; CCA = Sec 17; CERT-In = Sec 70B.</strong></li>
+            <li><strong>Sec 43 = Cyber Wrong (സിവിൽ, നഷ്ടപരിഹാരം); 66+ = Cyber Crime (ക്രിമിനൽ).</strong></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 25: QUICK REVISION -->
+    <section class="section" id="sec25">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec25" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">25. 5-Minute / Last-Minute Revision (ബുള്ളറ്റ് ഫ്ലാഷ് ലിസ്റ്റ്)</span>
+      </h2>
+      <div class="section-body">
+        <div class="last-minute">
+          <span class="box-label">⏱️ 5-Minute Last-Minute Revision</span>
+          <ul style="color:#fff">
+            <li><strong>Web:</strong> HTML (ഘടന) · CSS (ഭംഗി; 3 തരം: Inline/Internal/External) · JavaScript (client) · XML (data) · PHP (server).</li>
+            <li><strong>HTML ടാഗുകൾ:</strong> <code>&lt;select&gt;</code> ഡ്രോപ്പ്-ഡൗൺ · <code>&lt;ol&gt;</code> <code>&lt;ul&gt;</code> <code>&lt;dl&gt;</code> · <code>&lt;table&gt; &lt;tr&gt; &lt;th&gt; &lt;td&gt;</code> · <code>&lt;a href&gt;</code> · <code>&lt;img src alt&gt;</code> · Empty: br hr img input meta link · ലിങ്ക് നിറം: നീല-വയലറ്റ്-ചുവപ്പ് · <code>#FF0000</code> ചുവപ്പ്.</li>
+            <li><strong>പ്രോഗ്രാമിംഗ്:</strong> Algorithm → Flowchart → Program · ഓവൽ/സാമാന്തരികം/ചതുരം/ഡയമണ്ട് · <strong>Input · Output · Store · Control · Transfer</strong> · Compiler (മുഴുവൻ) / Interpreter (വരി) · Syntax / Logical / Runtime error.</li>
+            <li><strong>ഇ-ഗവേണൻസ്:</strong> G2C/G2B/G2G/G2E · NeGP 2006 · Digital India 2015 · FRIENDS 2000 TVM · <strong>Akshaya 2002 Nov 18 മലപ്പുറം</strong> · SPARK ശമ്പളം · K-SWAN · K-FON 2023 · <strong>K-SMART 2024</strong> · Sec 4/6/10A നിയമാടിത്തറ.</li>
+            <li><strong>സൈബർ സുരക്ഷ:</strong> CIA · നവംബർ 30 · Firewall · 2FA · Encryption · Digital Signature (Private ഒപ്പ്, Public പരിശോധന) · <strong>1930</strong>.</li>
+            <li><strong>മാൽവെയർ:</strong> Virus (host) · Worm (self) · Trojan (disguise) · Ransomware · Spyware/Keylogger · Logic bomb · Botnet.</li>
+            <li><strong>കുറ്റകൃത്യം:</strong> Hacking · Phishing/Vishing/Smishing · Pharming · Spoofing · DoS/DDoS · Salami · Data Diddling · Web Jacking · Cyber Squatting · Stalking/Grooming · Voyeur.</li>
+            <li><strong>ഐ.ടി ആക്ട്:</strong> 2000 · ഒപ്പ് <strong>ജൂൺ 9 (നാരായണൻ)</strong> · പ്രാബല്യം <strong>ഒക്ടോബർ 17</strong> · UNCITRAL 1996 · ഭേദഗതി 2008/2009.</li>
+            <li><strong>വകുപ്പുകൾ:</strong> <strong>43 (നഷ്ടപരിഹാരം) · 65 (സോഴ്സ് കോഡ്) · 66 (ഹാക്കിംഗ്) · 66A (റദ്ദ് 2015) · 66B (മോഷണമുതൽ) · 66C (ഐഡന്റിറ്റി) · 66D (ആൾമാറാട്ടം) · 66E (സ്വകാര്യത) · 66F (ജീവപര്യന്തം) · 67 · 67A · 67B (കുട്ടികൾ) · 69 (നിരീക്ഷണം) · 69A (ബ്ലോക്ക്) · 70 (സംരക്ഷിത സിസ്റ്റം) · 72 (രഹസ്യം)</strong>.</li>
+            <li><strong>മറ്റ് നിയമങ്ങൾ:</strong> IPC 420 (വഞ്ചന), 499/500 (അപകീർത്തി), 506 (ഭീഷണി), 383 (extortion) · BNS/BNSS/BSA (2024 ജൂലൈ 1) · Copyright 1957 · Patents 1970 · Trade Marks 1999 · POCSO 2012 · <strong>DPDP 2023 (₹250 കോടി)</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 26: CONCLUSION -->
+    <section class="section" id="sec26">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec26" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">26. ഉപസംഹാരം (Conclusion)</span>
+      </h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li><strong>വെബ് ഡിസൈനിംഗ്:</strong> HTML ഘടന, CSS ഭംഗി, JavaScript പ്രവർത്തനം, XML ഡാറ്റ. HTML ടാഗുകൾ PSC-യിൽ സ്ഥിരം ചോദ്യം.</li>
+          <li><strong>പ്രോഗ്രാമിംഗ്:</strong> അൽഗോരിതം-ഫ്ലോചാർട്ട്-പ്രോഗ്രാം; 5 നിർദ്ദേശ തരങ്ങൾ (Input/Output/Store/Control/Transfer); Compiler vs Interpreter.</li>
+          <li><strong>ഇ-ഗവേണൻസ്:</strong> G2C/G2B/G2G/G2E; NeGP (2006), Digital India (2015); കേരളത്തിൽ FRIENDS, അക്ഷയ, SPARK, K-SWAN, K-FON, K-SMART.</li>
+          <li><strong>സൈബർ സുരക്ഷ:</strong> CIA Triad, Firewall, Encryption, Digital Signature; മാൽവെയറുകൾ, കുറ്റകൃത്യങ്ങൾ (Phishing, Ransomware, Salami, Squatting).</li>
+          <li><strong>ഐ.ടി ആക്ട് 2000:</strong> ഒപ്പ് ജൂൺ 9, പ്രാബല്യം ഒക്ടോബർ 17; Sec 43 (സിവിൽ), 66 (ക്രിമിനൽ), 66F (ജീവപര്യന്തം), 67B (കുട്ടികൾ), 69A (ബ്ലോക്കിംഗ്).</li>
+          <li><strong>മറ്റു നിയമങ്ങൾ:</strong> IPC/BNS തത്തുല്യം, Copyright/Patents/Trade Marks, POCSO, DPDP 2023.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>"ഐ.ടി ആക്ട് തീയതികൾ (ജൂൺ 9 / ഒക്ടോബർ 17)", "66F-ന്റെ ശിക്ഷ", "69A ബ്ലോക്കിംഗ്", "അക്ഷയ 2002 മലപ്പുറം", "<code>&lt;select&gt;</code> ഡ്രോപ്പ്-ഡൗൺ" – ഇവയാണ് PSC-യുടെ പ്രിയപ്പെട്ട ചോദ്യങ്ങൾ. 66A-F അക്ഷരമാല ക്രമത്തിൽ ഓർക്കുക. Section 43 = നഷ്ടപരിഹാരം, Section 66 = ഹാക്കിംഗ് എന്ന വ്യത്യാസം മറക്കരുത്. DPDP ചട്ടങ്ങളുടെയും ഇ-ഡിസ്ട്രിക്റ്റ് പൈലറ്റ് ജില്ലകളുടെയും വിവരങ്ങൾ പരീക്ഷയ്ക്ക് മുമ്പ് ഔദ്യോഗിക ഉറവിടത്തിൽ ഒരിക്കൽ ഒത്തുനോക്കുക.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>10.5 HTML and Other</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'computer-10.5-html-other';
-window.PART_TITLE = '10.5 HTML and Other';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+  /* ============================================================
+     SECTION COLLAPSE / EXPAND
+     ============================================================ */
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  // Add toggle icons
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /* ============================================================
+     THEME TOGGLE (Light / Dark / Sepia)
+     ============================================================ */
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme10_5');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme === 'light' ? '' : nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme10_5', nextTheme); } catch (e) {}
+    });
+  }
+
+  /* ============================================================
+     ACTIVE RECALL (Flashcard Mode)
+     ============================================================ */
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  /* ============================================================
+     LIVE SEARCH
+     ============================================================ */
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      var anyVisible = false;
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          anyVisible = true;
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+          anyVisible = true;
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && !anyVisible) ? 'block' : 'none';
+    });
+  }
+
+  /* ============================================================
+     PROGRESS TRACKING
+     ============================================================ */
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone10_5_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone10_5_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone10_5_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  /* ============================================================
+     TOC NAVIGATION + IntersectionObserver
+     ============================================================ */
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  /* ============================================================
+     MCQ SYSTEM (Interactive Quiz)
+     ============================================================ */
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'kerala10_5Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+
+});
+</script>
+
 </body>
 </html>
