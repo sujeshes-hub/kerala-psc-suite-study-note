@@ -1,106 +1,2123 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10.2 Software and OS - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – കമ്പ്യൂട്ടർ സോഫ്റ്റ്‌വെയർ | അധ്യായം 10.2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a148c; --primary-light: #6a1b9a;
+      --secondary: #00695c; --accent: #b83b2c;
+      --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
+      --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #4a148c; --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #cba6f7; --primary-light: #b4befe;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #6a1b9a; --table-alt: #181825;
+    }
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #7b4b1e; --primary-light: #9c6b3a;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #7b4b1e; --table-alt: #f2ead4;
+    }
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn { background: #181825; color: var(--text); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .layout { display: grid; grid-template-columns: 270px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12.5px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .progress-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 600; }
+    .progress-track { width: 100%; height: 8px; background: var(--light-bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+    .main-container { background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12); padding: 24px; min-width: 0; }
+    .chapter-header { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .utility-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--light-bg); padding: 10px 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .search-input { flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn { padding: 7px 12px; font-size: 13px; font-family: inherit; font-weight: 600; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--primary); cursor: pointer; transition: all 0.2s; }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+    body.recall-mode strong { filter: blur(5px); background: rgba(106, 27, 154, 0.15); border-radius: 4px; padding: 0 4px; cursor: pointer; transition: filter 0.2s ease; user-select: none; }
+    body.recall-mode strong:hover, body.recall-mode strong.revealed { filter: blur(0); }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 { background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 18.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; border-radius: 0; margin: 0; gap: 10px; }
+    .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--secondary); flex-shrink: 0; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box { padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick { display: block; margin-top: 6px; padding: 6px 10px; background: var(--memory-bg); border-left: 4px solid var(--memory-border); border-radius: 6px; font-size: 14.5px; line-height: 1.6; }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results { display: none; text-align: center; padding: 16px; margin-bottom: 16px; color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+    .quiz-dashboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--light-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; border: 2px solid var(--primary); position: sticky; top: 10px; z-index: 50; }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+    .question-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn { display: block; padding: 8px 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; font-family: inherit; text-align: left; width: 100%; }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button { padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: var(--bg); color: var(--text); transition: all 0.2s; }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block { display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border); }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    code { background: var(--light-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    pre { background: var(--light-bg); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.6; border: 1px solid var(--border); }
+    pre code { background: transparent; padding: 0; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden; padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">10.2 Software and OS</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. സോഫ്റ്റ്‌വെയർ വർഗ്ഗീകരണം</a></li>
+      <li><a href="#sec4">4. ഓപ്പറേറ്റിംഗ് സിസ്റ്റം</a></li>
+      <li><a href="#sec5">5. പ്രധാന OS ഉദാഹരണങ്ങൾ</a></li>
+      <li><a href="#sec6">6. വേഡ് പ്രൊസസ്സർ</a></li>
+      <li><a href="#sec7">7. സ്പ്രെഡ്ഷീറ്റ്</a></li>
+      <li><a href="#sec8">8. ഡാറ്റാബേസ് (DBMS)</a></li>
+      <li><a href="#sec9">9. പ്രസന്റേഷൻ & ഇമേജ് എഡിറ്റർ</a></li>
+      <li><a href="#sec10">10. ഡയഗ്രം</a></li>
+      <li><a href="#sec11">11. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec12">12. PSC Exam Analysis</a></li>
+      <li><a href="#sec13">13. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec14">14. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec15">15. കാലക്രമം</a></li>
+      <li><a href="#sec16">16. Mnemonics & Traps</a></li>
+      <li><a href="#sec17">17. കേരള വസ്തുതകൾ</a></li>
+      <li><a href="#sec18">18. ഷോർട്ട്കട്ട് ടേബിൾ</a></li>
+      <li><a href="#sec19">19. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec20">20. ഉത്തര സൂചിക & Quick Revision</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 10.2 | Computer Science & IT</div>
+      <h1>കമ്പ്യൂട്ടർ സോഫ്റ്റ്‌വെയർ – സമ്പൂർണ്ണ പഠനക്കുറിപ്പ്</h1>
+      <div class="subtitle">Software · System/Application · OS · Word · Excel · DBMS · PowerPoint · Image Editors | Kerala PSC Rank File – Verified Notes</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 തിരയുക (ഉദാ: Kernel, MS Word, Excel, DBMS, Linux)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനത്തിൽ)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — System vs Application Software തിരിച്ചറിയൽ, Compiler/Interpreter/Assembler, Kernel & Shell, Windows ഷോർട്ട്കട്ടുകൾ (Ctrl+B/I/U, Ctrl+L/R/E/J), Excel ഫോർമുല (= ചിഹ്നം), Primary Key, F7, F5, Ctrl+M</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — MS Word ഡിഫോൾട്ട് ഫോണ്ട് (Calibri 11), Mail Merge, Gutter Margin, Footnote/Endnote, Cell Reference ($A$1), Excel Errors, DBMS ശ്രേണി, PowerPoint Transition vs Animation, .psd/.xcf/.docx/.odt എക്സ്റ്റൻഷനുകൾ</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — Linux കമാൻഡുകൾ, DOS Internal vs External, Android പതിപ്പുകൾ (C→P അക്ഷരമാല), SQL DDL/DML/DQL/DCL/TCL, Raster vs Vector, RGB vs CMYK</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — FOSS/Proprietary/Freeware/Shareware, BOSS (C-DAC), Maya OS, BharOS, ICFOSS, KITE/IT@School</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — Ada Lovelace (1843), Tukey (1958), UNIX (1969), Microsoft (1975), Linux (1991), Windows 1.0 (1985)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>System = OS, Compiler, Driver, Utility</strong></li>
+            <li><strong>Application = Word, Excel, Chrome, Photoshop</strong></li>
+            <li><strong>Kernel = OS-ന്റെ ഹൃദയം; Shell = തോട്</strong></li>
+            <li><strong>F7 = Spell Check; Shift+F7 = Thesaurus</strong></li>
+            <li><strong>Excel ഫോർമുല '=' ൽ തുടങ്ങും</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTRODUCTION -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സോഫ്റ്റ്‌വെയർ:</strong> കമ്പ്യൂട്ടറിനെക്കൊണ്ട് ഒരു ജോലി ചെയ്യിക്കാൻ നൽകുന്ന <strong>നിർദ്ദേശങ്ങളുടെ / പ്രോഗ്രാമുകളുടെ കൂട്ടം</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ഹാർഡ്‌വെയർ = ശരീരം</strong> (തൊട്ടുനോക്കാം – Tangible). <strong>സോഫ്റ്റ്‌വെയർ = ആത്മാവ്</strong> (തൊടാൻ പറ്റില്ല, പ്രവർത്തിപ്പിക്കാനേ പറ്റൂ – Intangible).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>PSC പ്രാധാന്യം:</strong> 10th (LDC 883), +2, ഡിഗ്രി (573) എല്ലാ തലത്തിലും വരുന്ന വലിയ അധ്യായം. പ്രധാന മേഖലകൾ: System vs Application, OS ധർമ്മങ്ങൾ/ഉദാഹരണങ്ങൾ, Compiler–Interpreter, ഷോർട്ട്കട്ട് കീകൾ, ഫയൽ എക്സ്റ്റൻഷനുകൾ.</li>
+        </ul>
+        <p class="trick">🧠 <span class="trick-label">ഉദാഹരണം:</span> ടി.വി (ഹാർഡ്‌വെയർ) ഉണ്ട്, പക്ഷേ ചാനലുകൾ (സോഫ്റ്റ്‌വെയർ) ഇല്ലെങ്കിൽ അതൊരു വെറും പെട്ടി!</p>
+        <div class="correction">
+          <span class="box-label">⚠️ ഈ എഡിഷനിലെ പ്രധാന തിരുത്തലുകൾ</span>
+          <ul>
+            <li><strong>Word 2003</strong>-ലെ ഡിഫോൾട്ട് ഫോണ്ട് Times New Roman, <strong>10 pt</strong> (12 അല്ല). Word 2007 മുതൽ Calibri 11 pt.</li>
+            <li><strong>ICFOSS</strong> സ്ഥാപിച്ചത് <strong>2009</strong>-ൽ (തിരുവനന്തപുരം) – 2011 അല്ല.</li>
+            <li><strong>Android</strong> പതിപ്പുകളിൽ Honeycomb, Ice Cream Sandwich, Jelly Bean ചേർത്തു.</li>
+            <li><strong>SQL</strong>-ൽ DCL, TCL വിഭാഗങ്ങൾ ചേർത്തു.</li>
+            <li><strong>Java</strong> = Compiler + Interpreter (JVM bytecode) — പൂർണ്ണമായും Compiler അല്ല.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BEHIND THE STORY -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ (Behind the Story)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1843:</strong> ചാൾസ് ബാബേജിന്റെ Analytical Engine-നു വേണ്ടി <strong>അഡാ ലവ്‌ലേസ്</strong> (ലോർഡ് ബൈറന്റെ മകൾ) ആദ്യ അൽഗോരിതം എഴുതി → <strong>ലോകത്തിലെ ആദ്യ കമ്പ്യൂട്ടർ പ്രോഗ്രാമർ</strong> (ഒരു വനിത!).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1958:</strong> <strong>ജോൺ ഡബ്ല്യു. ടൂക്കി</strong> "Software" എന്ന പദം ആദ്യമായി ഉപയോഗിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1975:</strong> ബിൽ ഗേറ്റ്സും പോൾ അലനും <strong>Microsoft</strong> സ്ഥാപിച്ചു – Proprietary സോഫ്റ്റ്‌വെയർ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>1983:</strong> <strong>റിച്ചാർഡ് സ്റ്റാൾമാൻ</strong> GNU പ്രോജക്റ്റ്; <strong>1985:</strong> Free Software Foundation (FSF).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>1991:</strong> ഫിൻലൻഡിലെ വിദ്യാർത്ഥി <strong>ലിനസ് ടോർവാൾഡ്സ്</strong> → <strong>Linux</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>1998:</strong> Open Source എന്ന പദം (എറിക് റെയ്മണ്ട്, ബ്രൂസ് പെരൻസ് – Open Source Initiative).</li>
+        </ul>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>"1843 അഡാ, 1958 ടൂക്കി, 1991 ലിനസ്"</strong> — കാലക്രമത്തിൽ 3 പ്രധാന നാഴികക്കല്ലുകൾ.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SOFTWARE CLASSIFICATION -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. സോഫ്റ്റ്‌വെയർ വർഗ്ഗീകരണം (System vs Application)</span>
+      </h2>
+      <div class="section-body">
+        <p><strong>സോഫ്റ്റ്‌വെയർ → 1) System Software, 2) Application Software</strong> (മൂന്നാമത്തേത് ചിലപ്പോൾ: Utility, Middleware – സിസ്റ്റം സോഫ്റ്റ്‌വെയറിന്റെ ഭാഗമായി കണക്കാക്കും.)</p>
+
+        <h3>3.1 സിസ്റ്റം സോഫ്റ്റ്‌വെയർ (System Software)</h3>
+        <p>ഹാർഡ്‌വെയറിനെ നിയന്ത്രിക്കാനും ആപ്ലിക്കേഷനുകൾക്ക് പ്രവർത്തിക്കാനുള്ള അടിത്തറ (Platform) ഒരുക്കാനുമുള്ളത്. ഇത് ഇല്ലാതെ കമ്പ്യൂട്ടർ പ്രവർത്തിക്കില്ല. 4 വിഭാഗം + ഫേംവെയർ:</p>
+
+        <p><strong>(i) ഓപ്പറേറ്റിംഗ് സിസ്റ്റം (OS):</strong> Windows, Linux, macOS, Android, iOS.</p>
+
+        <p><strong>(ii) ലാംഗ്വേജ് ട്രാൻസ്ലേറ്ററുകൾ:</strong> മനുഷ്യൻ എഴുതുന്ന ഭാഷയെ മെഷീൻ ഭാഷ (Binary 0,1 – Object Code) ആക്കുന്നു.</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ട്രാൻസ്ലേറ്റർ</th><th>എന്ത് മാറ്റുന്നു</th><th>രീതി</th><th>🧠 ട്രിക്ക്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Assembler</strong></td><td>Assembly Language (ADD, SUB, MOV) → Machine</td><td>–</td><td>Assembler = Assembly</td></tr>
+              <tr><td><strong>Compiler</strong></td><td>High-level (C, C++, Java) → Object Code</td><td><strong>മുഴുവൻ ഒറ്റയടിക്ക്</strong>; എല്ലാ Syntax error-ഉം ഒരുമിച്ച്; വേഗത കൂടുതൽ</td><td>Compiler = <strong>C</strong>omplete</td></tr>
+              <tr><td><strong>Interpreter</strong></td><td>High-level (Python, BASIC, Ruby, JavaScript, PHP)</td><td><strong>ഓരോ വരിയായി</strong>; തെറ്റ് കണ്ടാൽ അവിടെ നിർത്തും; വേഗത കുറവ്</td><td>Interpreter = <strong>I</strong>ndividual line</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li><strong>Java:</strong> ആദ്യം Compiler ഉപയോഗിച്ച് Bytecode ആക്കും, പിന്നെ <strong>JVM (Java Virtual Machine)</strong> ഇന്റർപ്രെറ്റ് ചെയ്യും.</li>
+          <li><strong>Linker:</strong> പല Object file-കളെ ബന്ധിപ്പിച്ച് ഒറ്റ Executable file ആക്കുന്നു. <strong>Loader:</strong> പ്രോഗ്രാമിനെ ഹാർഡ് ഡിസ്കിൽ നിന്ന് RAM-ലേക്ക് കയറ്റുന്നു. <strong>Debugger:</strong> തെറ്റുകൾ കണ്ടുപിടിച്ച് തിരുത്താൻ സഹായിക്കുന്ന ടൂൾ.</li>
+          <li><strong>പ്രോഗ്രാമിംഗ് ഭാഷാ തലമുറകൾ:</strong> 1GL = Machine language, 2GL = Assembly, 3GL = High-level (C, Java), 4GL = SQL, 5GL = AI ഭാഷകൾ (Prolog).</li>
+          <li><strong>Source Code</strong> = പ്രോഗ്രാമർ എഴുതിയത്; <strong>Object Code</strong> = Compiler ഉണ്ടാക്കിയ മെഷീൻ കോഡ്.</li>
+        </ul>
+
+        <p><strong>(iii) ഡിവൈസ് ഡ്രൈവറുകൾ (Device Drivers):</strong> പ്രിന്റർ, സ്കാനർ, ഗ്രാഫിക്സ്/സൗണ്ട് കാർഡ്, വെബ്ക്യാം പോലുള്ളവയ്ക്ക് OS-മായി സംസാരിക്കാൻ സഹായിക്കുന്ന ചെറിയ പ്രോഗ്രാമുകൾ. 🧠 ഡ്രൈവർ = ഉപകരണത്തിന്റെ 'പരിഭാഷകൻ'.</p>
+
+        <p><strong>(iv) യൂട്ടിലിറ്റി സോഫ്റ്റ്‌വെയർ (Utility):</strong> സുരക്ഷ, പരിപാലനം, വേഗത:</p>
+        <ul>
+          <li><strong>Antivirus:</strong> Kaspersky, Quick Heal, Avast, Norton, McAfee, Windows Defender</li>
+          <li><strong>Disk Defragmenter:</strong> ചിതറിയ ഫയൽ ഭാഗങ്ങൾ ഒരുമിപ്പിച്ച് വേഗത കൂട്ടുന്നു</li>
+          <li><strong>File Compression:</strong> WinZip, WinRAR, 7-Zip</li>
+          <li><strong>Backup, Disk Cleanup, Task Manager, Scandisk/Check Disk, Disk Formatter</strong></li>
+        </ul>
+
+        <p><strong>(v) ഫേംവെയർ (Firmware):</strong> ROM, EPROM, Flash chip-കളിൽ നിർമ്മാണ സമയത്തേ സ്ഥിരമായി ചേർത്ത സോഫ്റ്റ്‌വെയർ. ഉദാ: <strong>BIOS / UEFI</strong>, ടി.വി റിമോട്ട്, വാഷിംഗ് മെഷീൻ പ്രോഗ്രാം. 🧠 ഫേംവെയർ = ഹാർഡ്‌വെയറും സോഫ്റ്റ്‌വെയറും ചേർന്ന 'ഇടനില'.</p>
+
+        <h3>3.2 ആപ്ലിക്കേഷൻ സോഫ്റ്റ്‌വെയർ</h3>
+        <p>ഉപയോക്താവിന്റെ (End-user) ആവശ്യങ്ങൾക്കായി സിസ്റ്റം സോഫ്റ്റ്‌വെയറിന് <strong>മുകളിൽ</strong> ഇൻസ്റ്റാൾ ചെയ്യുന്ന 'ആപ്പുകൾ'.</p>
+        <ul>
+          <li><strong>General-Purpose (പൊതു):</strong> Word Processor (MS Word), Spreadsheet (Excel), Presentation (PowerPoint), DBMS (Access), Image Editors (Photoshop, GIMP), Browsers (Chrome, Firefox), Media Player (VLC).</li>
+          <li><strong>Specific-Purpose / Tailored (പ്രത്യേക):</strong> റെയിൽവേ റിസർവേഷൻ, ബാങ്കിംഗ് (Finacle), അക്കൗണ്ടിംഗ് (<strong>Tally</strong>), സ്കൂൾ മാനേജ്‌മെന്റ്, ശമ്പള സോഫ്റ്റ്‌വെയർ <strong>SPARK</strong>.</li>
+          <li><strong>Off-the-shelf (Packaged)</strong> = കടയിൽ വാങ്ങാവുന്ന റെഡിമെയ്ഡ്; <strong>Custom/Tailored</strong> = ഓർഡർ പ്രകാരം നിർമ്മിച്ചത്.</li>
+        </ul>
+
+        <h3>3.3 ലൈസൻസിംഗ് അടിസ്ഥാനമാക്കിയ വിഭാഗങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വിഭാഗം</th><th>സവിശേഷത</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>FOSS</strong> (Free &amp; Open Source)</td><td>Source code കാണാം, ഉപയോഗിക്കാം, മാറ്റാം, വിതരണം ചെയ്യാം. Copyleft / GPL ലൈസൻസ്. ഉപജ്ഞാതാവ് റിച്ചാർഡ് സ്റ്റാൾമാൻ (FSF 1985, GNU)</td><td>Linux (Ubuntu, Debian, BOSS), Android, LibreOffice, GIMP, Inkscape, Firefox, Python, MySQL, VLC</td></tr>
+              <tr><td><strong>Proprietary</strong></td><td>കമ്പനി ഉടമസ്ഥത, പണം നൽകി ലൈസൻസ്, source code രഹസ്യം</td><td>Windows, macOS, iOS, MS Office, Photoshop, CorelDRAW, Oracle</td></tr>
+              <tr><td><strong>Freeware</strong></td><td>സൗജന്യം, പക്ഷേ source code മാറ്റാൻ പറ്റില്ല</td><td>Google Chrome, Skype, Adobe Acrobat Reader</td></tr>
+              <tr><td><strong>Shareware / Trialware</strong></td><td>നിശ്ചിത കാലം (ഉദാ: 30 ദിവസം) സൗജന്യം, പിന്നെ പണം</td><td>WinZip, WinRAR</td></tr>
+              <tr><td><strong>Public Domain</strong></td><td>പകർപ്പവകാശമില്ല, ആർക്കും എന്തും ചെയ്യാം</td><td>–</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>Free = "സ്വാതന്ത്ര്യം" (Freedom), "വില ഇല്ല" എന്നല്ല</strong> (Free as in speech, not free beer). Freeware = കാണാം, തൊടാൻ പാടില്ല; FOSS = കാണാം, തൊടാം.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 4: OPERATING SYSTEM -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. ഓപ്പറേറ്റിംഗ് സിസ്റ്റം (OS)</span>
+      </h2>
+      <div class="section-body">
+        <p><strong>OS</strong> = ഉപയോക്താവിനും ഹാർഡ്‌വെയറിനും ഇടയിലെ <strong>മധ്യവർത്തി (Interface)</strong>; എല്ലാ വിഭവങ്ങളെയും നിയന്ത്രിക്കുന്ന <strong>Resource Manager</strong>.</p>
+
+        <h3>4.1 ഘടനയും ബൂട്ടിംഗും</h3>
+        <ul>
+          <li><strong>Kernel:</strong> OS-ന്റെ <strong>ഹൃദയം/കാതൽ</strong>; ഹാർഡ്‌വെയറുമായി നേരിട്ട് സംവദിക്കുന്നു; ബൂട്ട് ചെയ്യുമ്പോൾ ആദ്യം RAM-ൽ കയറുന്നതും ഓഫ് ചെയ്യുംവരെ അവിടെ ഇരിക്കുന്നതും.</li>
+          <li><strong>Shell:</strong> ഉപയോക്താവിന്റെ കമാൻഡ് കേർണലിന് മനസ്സിലാകുംവിധം മാറ്റുന്ന <strong>Command Interpreter</strong>. 🧠 Kernel = പരിപ്പ് (അകം), Shell = തോട് (പുറം).</li>
+          <li><strong>Booting:</strong> കമ്പ്യൂട്ടർ ഓൺ ചെയ്യുമ്പോൾ ROM-ലെ BIOS ആദ്യം <strong>POST (Power-On Self-Test)</strong> നടത്തി ഹാർഡ്‌വെയർ പരിശോധിക്കും; പിന്നെ ഹാർഡ് ഡിസ്കിൽ നിന്ന് OS-നെ RAM-ലേക്ക് ലോഡ് ചെയ്യും.</li>
+          <li>BIOS = Basic Input Output System. ബൂട്ടിംഗ് തുടങ്ങിക്കൊടുക്കുന്ന ചെറിയ പ്രോഗ്രാം = <strong>Bootstrap Loader</strong>; ഹാർഡ് ഡിസ്കിലെ ബൂട്ട് വിവരം <strong>MBR (Master Boot Record)</strong> ൽ.</li>
+          <li><strong>Cold / Hard Boot:</strong> പൂർണ്ണമായി ഓഫ് ആയതിനെ പവർ ബട്ടൺ അമർത്തി ഓൺ ചെയ്യുക. <strong>Warm / Soft Boot:</strong> ഓണായിരിക്കെ Restart (Ctrl+Alt+Del). 🧠 Cold = തണുത്തുറഞ്ഞ യന്ത്രം ഉണർത്തൽ; Warm = ഇപ്പോഴേ ചൂടുള്ളത്, വീണ്ടും തുടങ്ങൽ.</li>
+        </ul>
+
+        <h3>4.2 OS-ന്റെ 6 ധർമ്മങ്ങൾ</h3>
+        <ol>
+          <li><strong>Process Management (CPU):</strong> Process = പ്രവർത്തിക്കുന്ന പ്രോഗ്രാം. CPU സമയം വീതിക്കൽ (FCFS, Round Robin, Shortest Job Next); Multitasking. <strong>Deadlock</strong> = രണ്ടോ അതിലധികമോ process-കൾ പരസ്പരം വിഭവത്തിനായി കാത്ത് നിശ്ചലമാകൽ.</li>
+          <li><strong>Memory Management:</strong> RAM-ൽ സ്ഥലം അനുവദിക്കൽ/തിരിച്ചെടുക്കൽ; RAM തികയാതെ വരുമ്പോൾ ഹാർഡ് ഡിസ്ക് ഉപയോഗിക്കുന്ന <strong>Virtual Memory (Paging &amp; Swapping)</strong>.</li>
+          <li><strong>File Management:</strong> ഫയൽ/ഫോൾഡർ ക്രമീകരണം. File System: Windows – FAT32, <strong>NTFS</strong>; Linux – ext3, ext4.</li>
+          <li><strong>Device (I/O) Management:</strong> ഡ്രൈവറുകൾ വഴി ഉപകരണ നിയന്ത്രണം. <strong>Spooling</strong> = പ്രിന്റർ പോലുള്ള വേഗത കുറഞ്ഞവയ്ക്കുള്ള ഡാറ്റ ക്യൂ ആയി സൂക്ഷിക്കൽ.</li>
+          <li><strong>User Interface:</strong> CLI/CUI (MS-DOS, UNIX shell) vs GUI (<strong>WIMP</strong> = Windows, Icons, Menus, Pointer). GUI ആദ്യം വികസിപ്പിച്ചത് <strong>Xerox PARC</strong>-ൽ.</li>
+          <li><strong>Security &amp; Access Control:</strong> പാസ്‌വേഡ്, ഫയർവാൾ, യൂസർ പെർമിഷൻ.</li>
+        </ol>
+
+        <h3>4.3 OS തരങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>അർത്ഥം</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td>Single user–Single task</td><td>ഒരാൾ, ഒരു സമയം ഒരു ജോലി</td><td>MS-DOS</td></tr>
+              <tr><td>Single user–Multi task</td><td>ഒരാൾ, ഒന്നിലധികം പ്രോഗ്രാം</td><td>Windows, macOS</td></tr>
+              <tr><td>Multi-user</td><td>ഒന്നിലധികം പേർ ഒരേസമയം</td><td>UNIX, Linux, Windows Server</td></tr>
+              <tr><td><strong>RTOS</strong> (Real-Time)</td><td>കൃത്യസമയ പരിധിക്കുള്ളിൽ ഫലം (മിസൈൽ, വിമാനം, റോബോട്ട്)</td><td>VxWorks, QNX, RTLinux</td></tr>
+              <tr><td><strong>Batch OS</strong></td><td>സമാന ജോലികൾ ബാച്ചാക്കി</td><td>ആദ്യകാല രീതി</td></tr>
+              <tr><td><strong>Time-sharing</strong></td><td>CPU സമയം പലർക്കും വീതിക്കൽ</td><td>UNIX</td></tr>
+              <tr><td><strong>Distributed OS</strong></td><td>പല കമ്പ്യൂട്ടറുകൾ ഒറ്റ സിസ്റ്റം പോലെ</td><td>–</td></tr>
+              <tr><td><strong>Network OS</strong></td><td>നെറ്റ്‌വർക്കിലെ സെർവർ നിയന്ത്രണം</td><td>Novell NetWare, Windows Server</td></tr>
+              <tr><td><strong>Embedded OS</strong></td><td>ഉപകരണത്തിനുള്ളിൽ ഉറപ്പിച്ചത്</td><td>വാഷിംഗ് മെഷീൻ, ATM</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: MAJOR OS -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. പ്രധാന OS ഉദാഹരണങ്ങൾ (PSC സ്ഥിരം)</span>
+      </h2>
+      <div class="section-body">
+        <h3>5.1 MS-DOS (1981)</h3>
+        <p>Microsoft, IBM PC-ക്കായി; Single-user <strong>CLI</strong>. Tim Paterson-ന്റെ QDOS (86-DOS) വാങ്ങി വികസിപ്പിച്ചു.</p>
+        <ul>
+          <li><strong>Internal കമാൻഡുകൾ</strong> (OS-ൽ ഉള്ളത്): <code>DIR</code>, <code>CD</code>, <code>MD</code>, <code>RD</code>, <code>COPY</code>, <code>DEL</code>, <code>REN</code>, <code>CLS</code>, <code>TYPE</code>, <code>DATE</code>, <code>TIME</code>, <code>VER</code>.</li>
+          <li><strong>External കമാൻഡുകൾ</strong> (പ്രത്യേക ഫയൽ): <code>FORMAT</code>, <code>CHKDSK</code>, <code>XCOPY</code>, <code>EDIT</code>, <code>DISKCOPY</code>.</li>
+          <li>Wildcard: <code>*</code> (ഏത് അക്ഷരശ്രേണി), <code>?</code> (ഒരു അക്ഷരം). DOS ഫയൽ എക്സ്റ്റൻഷൻ: .com, .exe, .bat (Batch), .sys.</li>
+        </ul>
+        <p class="trick">🧠 Internal = വീടിനുള്ളിലെ അംഗം (OS-നുള്ളിൽ), External = പുറത്തുനിന്ന് വിളിക്കേണ്ടവൻ.</p>
+
+        <h3>5.2 Microsoft Windows</h3>
+        <p>PC-യിൽ ഏറ്റവും കൂടുതൽ ഉപയോഗിക്കുന്ന Proprietary GUI OS. <strong>Windows 1.0 – 1985 നവംബർ 20.</strong></p>
+        <ul>
+          <li><strong>ക്രമം:</strong> Windows 95 (1995) → 98 → ME → 2000 → XP (2001) → Vista (2007) → 7 (2009) → 8 (2012) → 10 (2015) → <strong>11 (2021)</strong>.</li>
+          <li>ഫയൽ മാനേജർ = <strong>File (Windows) Explorer</strong>; ബ്രൗസർ: <strong>Edge</strong> (പഴയത് Internet Explorer).</li>
+          <li><strong>ഷോർട്ട്കട്ടുകൾ:</strong> Win+D (Desktop), Win+E (File Explorer), Win+L (Lock), Win+R (Run), Alt+Tab (വിൻഡോ മാറ്റൽ), Ctrl+Shift+Esc / Ctrl+Alt+Del (Task Manager), <strong>Shift+Delete</strong> (Recycle Bin-ൽ പോകാതെ സ്ഥിരമായി ഡിലീറ്റ്), F2 (Rename), F5 (Refresh), PrintScreen (സ്ക്രീൻഷോട്ട്).</li>
+          <li>Windows ഫയൽ പേരിൽ ഉപയോഗിക്കാൻ പാടില്ലാത്ത ചിഹ്നങ്ങൾ: <code>\ / : * ? " &lt; &gt; |</code>; പരമാവധി 255 അക്ഷരം.</li>
+        </ul>
+
+        <h3>5.3 UNIX (1969)</h3>
+        <p>AT&amp;T <strong>Bell Labs</strong> – <strong>കെൻ തോംസൺ, ഡെന്നിസ് റിച്ചി</strong>; Multi-user, Multi-tasking; (1973-ൽ <strong>C</strong> ഭാഷയിൽ പുനർലിഖിതം). Linux, macOS, Android-ന്റെ 'മാതാവ്'. യഥാർത്ഥ UNIX <strong>Proprietary</strong>.</p>
+
+        <h3>5.4 Linux (1991)</h3>
+        <p><strong>ലിനസ് ടോർവാൾഡ്സ്</strong>; Open Source; ഭാഗ്യചിഹ്നം <strong>Tux (പെൻഗ്വിൻ)</strong>. Linux യഥാർത്ഥത്തിൽ കേർണൽ മാത്രം; അതിനൊപ്പം GNU ടൂളുകൾ ചേർന്ന പതിപ്പുകൾ = <strong>Distros</strong>.</p>
+        <ul>
+          <li><strong>Distros:</strong> Ubuntu, RedHat, Fedora, Debian, Linux Mint, CentOS, Kali Linux.</li>
+          <li><strong>Ubuntu:</strong> Debian അടിസ്ഥാനം, നിർമ്മാതാവ് <strong>Canonical</strong> (മാർക്ക് ഷട്ടിൽവർത്ത്); 'Ubuntu' = "മറ്റുള്ളവരോടുള്ള മനുഷ്യത്വം" (ആഫ്രിക്കൻ വാക്ക്). Kali = സുരക്ഷാ പരിശോധന (Ethical hacking).</li>
+          <li><strong>Linux അടിസ്ഥാനങ്ങൾ:</strong> Root directory = <code>/</code>; ഫയൽ പേരുകൾ Case-sensitive; Boot loader = GRUB / LILO; ഡെസ്ക്ടോപ് = GNOME, KDE; എഡിറ്ററുകൾ = vi, nano.</li>
+          <li><strong>Linux കമാൻഡുകൾ:</strong> <code>ls</code> (ലിസ്റ്റ്), <code>cd</code> (ഡയറക്ടറി മാറ്റം), <code>pwd</code> (ഇപ്പോഴത്തെ ഡയറക്ടറി), <code>mkdir</code> (ഫോൾഡർ), <code>rm</code> (ഡിലീറ്റ്), <code>cp</code> (കോപ്പി), <code>mv</code> (move/rename), <code>cat</code> (ഫയൽ കാണിക്കൽ), <code>chmod</code> (permission), <code>sudo</code> (admin), <code>man</code> (സഹായം).</li>
+        </ul>
+
+        <h3>5.5 BOSS (Bharat Operating System Solutions)</h3>
+        <p><strong>C-DAC</strong> വികസിപ്പിച്ച ഇന്ത്യയുടെ തദ്ദേശീയ <strong>Debian-അധിഷ്ഠിത</strong> Linux OS. കൂടാതെ <strong>Maya OS</strong> (പ്രതിരോധ മന്ത്രാലയം, Linux-അധിഷ്ഠിത), <strong>BharOS</strong> (IIT Madras – മൊബൈൽ OS).</p>
+
+        <h3>5.6 macOS</h3>
+        <p>Apple (സ്റ്റീവ് ജോബ്സ്, സ്റ്റീവ് വോസ്നിയാക്) – MacBook, iMac. UNIX അടിസ്ഥാനം (Darwin).</p>
+
+        <h3>5.7 മൊബൈൽ OS</h3>
+        <ul>
+          <li><strong>Android:</strong> Linux കേർണൽ; <strong>ആൻഡി റൂബിൻ</strong> വികസിപ്പിച്ചു, <strong>2005-ൽ Google</strong> ഏറ്റെടുത്തു; ആദ്യ ഫോൺ <strong>2008</strong> (HTC Dream, Android 1.0).
+            <br><em>പേരുകളുടെ ക്രമം (A→B→C…):</em> <strong>Cupcake, Donut, Eclair, Froyo, Gingerbread, Honeycomb, Ice Cream Sandwich, Jelly Bean, KitKat, Lollipop, Marshmallow, Nougat, Oreo, Pie</strong> (Android 9). Android 10 മുതൽ അക്കങ്ങൾ മാത്രം. 🧠 ആദ്യ അക്ഷരങ്ങൾ അക്ഷരമാലാക്രമത്തിൽ: C D E F G H I J K L M N O P.</li>
+          <li><strong>iOS:</strong> Apple iPhone – Proprietary (2007).</li>
+          <li>മറ്റുള്ളവ: <strong>Symbian</strong> (പഴയ Nokia), <strong>BlackBerry OS</strong>, <strong>Bada &amp; Tizen</strong> (Samsung), <strong>HarmonyOS</strong> (Huawei), <strong>KaiOS</strong> (JioPhone).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 6: WORD PROCESSOR -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. വേഡ് പ്രൊസസ്സർ</span>
+      </h2>
+      <div class="section-body">
+        <p>കത്ത്, റിപ്പോർട്ട്, ബയോഡാറ്റ തുടങ്ങിയ ടെക്സ്റ്റ് ഡോക്യുമെന്റ് <strong>Create, Edit, Format, Print</strong> ചെയ്യാനുള്ള ആപ്ലിക്കേഷൻ.</p>
+        <ul>
+          <li><strong>ഉദാഹരണങ്ങൾ:</strong> MS Word, LibreOffice Writer, OpenOffice Writer, Google Docs, Apple Pages, WordPerfect, <strong>WordStar</strong> (ആദ്യകാല ജനപ്രിയം), AbiWord, WordPad, Notepad. MS Word-ന്റെ ആദ്യ രൂപം 1983 (ചാൾസ് സിമോണി, റിച്ചാർഡ് ബ്രോഡി).</li>
+        </ul>
+
+        <h3>6.1 ഫയൽ എക്സ്റ്റൻഷൻ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സോഫ്റ്റ്‌വെയർ</th><th>എക്സ്റ്റൻഷൻ</th></tr></thead>
+            <tbody>
+              <tr><td>MS Word (2003 വരെ)</td><td><strong>.doc</strong></td></tr>
+              <tr><td>MS Word (2007+)</td><td><strong>.docx</strong> (XML അടിസ്ഥാനം)</td></tr>
+              <tr><td>LibreOffice/OpenOffice Writer</td><td><strong>.odt</strong></td></tr>
+              <tr><td>WordPad</td><td><strong>.rtf</strong> (Rich Text Format)</td></tr>
+              <tr><td>Notepad</td><td><strong>.txt</strong></td></tr>
+              <tr><td>Word Template</td><td><strong>.dotx</strong> (പഴയത് .dot)</td></tr>
+              <tr><td>Macro-enabled</td><td><strong>.docm</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>ഡിഫോൾട്ട് പേര്: MS Word = <strong>Document1</strong>; Writer = <strong>Untitled 1</strong>.</p>
+
+        <h3>6.2 പ്രധാന സവിശേഷതകൾ</h3>
+        <ul>
+          <li><strong>Font:</strong> Word 2007+ ഡിഫോൾട്ട് <strong>Calibri, 11 pt</strong> (Word 2003 വരെ Times New Roman, <strong>10 pt</strong>). ഡ്രോപ്പ്-ഡൗണിൽ <strong>8–72 pt</strong>; ടൈപ്പ് ചെയ്താൽ <strong>1–1638 pt</strong>. 1 inch = 72 pt.</li>
+          <li><strong>Font Styles:</strong> Bold <strong>Ctrl+B</strong>, Italic <strong>Ctrl+I</strong>, Underline <strong>Ctrl+U</strong>. Superscript (x²) <strong>Ctrl+Shift++</strong>, Subscript (H₂O) <strong>Ctrl+=</strong>.</li>
+          <li><strong>Alignment:</strong> Left <strong>Ctrl+L</strong> (ഡിഫോൾട്ട്), Right <strong>Ctrl+R</strong>, Center <strong>Ctrl+E</strong>, Justify <strong>Ctrl+J</strong>.</li>
+          <li><strong>Page Orientation:</strong> <strong>Portrait</strong> (കുത്തനെ, ഡിഫോൾട്ട്), <strong>Landscape</strong> (വിലങ്ങനെ).</li>
+          <li><strong>Margin &amp; Page:</strong> Word 2007+ ഡിഫോൾട്ട് Margin = 1 inch (2.54 cm) നാല് വശവും; A4 (21×29.7 cm). Line spacing ഡിഫോൾട്ട് 1.15 (2007+). Ctrl+1 (Single), Ctrl+2 (Double), Ctrl+5 (1.5).</li>
+          <li><strong>Gutter Margin:</strong> ബൈൻഡിംഗിനായി ഇടതുവശത്തോ മുകളിലോ അധികം വിടുന്ന സ്ഥലം.</li>
+          <li><strong>Header &amp; Footer:</strong> എല്ലാ പേജിന്റെയും മുകളിൽ = Header; താഴെ = Footer.</li>
+          <li><strong>Footnote / Endnote:</strong> അതേ പേജിന്റെ താഴെ = Footnote (Ctrl+Alt+F); അവസാനം = Endnote (Ctrl+Alt+D).</li>
+          <li><strong>Mail Merge:</strong> ഒരേ കത്ത് പലർക്കും. ഘടകങ്ങൾ: <strong>Main Document</strong> + <strong>Data Source</strong>.</li>
+          <li><strong>Spell Check = F7</strong>; അക്ഷരത്തെറ്റ്: <strong>ചുവപ്പ്</strong>; വ്യാകരണത്തെറ്റ്: <strong>പച്ച/നീല</strong>. <strong>Thesaurus = Shift+F7</strong>.</li>
+          <li><strong>Drop Cap:</strong> പാരഗ്രാഫിന്റെ ആദ്യ അക്ഷരം വലുതാക്കൽ (ഡിഫോൾട്ട് 3 വരി; പരമാവധി 10).</li>
+          <li><strong>Watermark:</strong> എഴുത്തിന് പിന്നിൽ മങ്ങിയ എഴുത്ത്/ചിത്രം.</li>
+          <li><strong>Format Painter:</strong> ഫോർമാറ്റ് പകർത്തൽ (Ctrl+Shift+C / Ctrl+Shift+V).</li>
+          <li><strong>Macros:</strong> ആവർത്തിക്കുന്ന പ്രവൃത്തികൾ റെക്കോർഡ് ചെയ്ത് ഒറ്റ കീയിൽ.</li>
+          <li><strong>Change Case:</strong> Shift+F3. <strong>Hyperlink:</strong> Ctrl+K. <strong>Page Break:</strong> Ctrl+Enter. <strong>Line Break:</strong> Shift+Enter. <strong>Font dialog:</strong> Ctrl+D.</li>
+          <li><strong>Views:</strong> Print Layout (ഡിഫോൾട്ട്), Read Mode, Web Layout, Outline, Draft.</li>
+          <li><strong>Ribbon ടാബുകൾ:</strong> File, Home, Insert, Design, Layout, References, Mailings, Review, View.</li>
+        </ul>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>"ഡിഫോൾട്ട് 11, ലിസ്റ്റിൽ 8 മുതൽ 72, ടൈപ്പ് ചെയ്താൽ 1 മുതൽ 1638"</strong>. <strong>Subscript = ഒറ്റ '=', Superscript = Shift കൂടി</strong>. <strong>Center = Ctrl+E</strong> (Ctrl+C = Copy!).</p>
+      </div>
+    </section>
+
+    <!-- SECTION 7: SPREADSHEET -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. സ്പ്രെഡ്ഷീറ്റ്</span>
+      </h2>
+      <div class="section-body">
+        <p>വരി (Row), കോളം (Column) പട്ടികയിൽ സംഖ്യകൾ രേഖപ്പെടുത്തി ഗണിത/സാമ്പത്തിക/സ്റ്റാറ്റിസ്റ്റിക്കൽ കണക്കുകൂട്ടൽ, ചാർട്ട് വരയ്ക്കൽ.</p>
+        <ul>
+          <li><strong>ആദ്യ സ്പ്രെഡ്ഷീറ്റ്: VisiCalc (1979)</strong> – ഡാൻ ബ്രിക്ലിൻ, ബോബ് ഫ്രാങ്കസ്റ്റൺ. Lotus 1-2-3 (1983), Excel (1985 Mac, 1987 Windows). ഏറ്റവും കൂടുതൽ ഉപയോഗം: <strong>MS Excel</strong>. മറ്റുള്ളവ: LibreOffice Calc, OpenOffice Calc, Google Sheets, Apple Numbers, Lotus 1-2-3.</li>
+          <li><strong>എക്സ്റ്റൻഷൻ:</strong> Excel <strong>.xls</strong> (2003 വരെ), <strong>.xlsx</strong> (2007+), <strong>.xlsm</strong> (Macro), <strong>.csv</strong> (Comma Separated), LibreOffice Calc <strong>.ods</strong>.</li>
+          <li><strong>Workbook</strong> = ഫയൽ (ഡിഫോൾട്ട് <strong>Book1</strong>); <strong>Worksheet</strong> = അതിനുള്ളിലെ താൾ.</li>
+        </ul>
+
+        <h3>7.1 അടിസ്ഥാന ആശയങ്ങൾ</h3>
+        <ul>
+          <li><strong>Row</strong> = തിരശ്ചീനം, <strong>അക്കങ്ങൾ</strong> 1,2,3…; <strong>Column</strong> = ലംബം, <strong>അക്ഷരങ്ങൾ</strong> A,B,C…Z, AA…<strong>XFD</strong>.</li>
+          <li><strong>Excel 2007+:</strong> <strong>10,48,576 വരി, 16,384 കോളം (അവസാനം XFD)</strong>. Excel <strong>2003:</strong> 65,536 വരി, 256 കോളം (അവസാനം <strong>IV</strong>).</li>
+          <li><strong>Cell</strong> = വരിയും കോളവും കൂടിച്ചേരുന്ന കളം. <strong>Cell Address</strong> = ആദ്യം കോളം അക്ഷരം, പിന്നെ വരി നമ്പർ (E10; ആദ്യ സെൽ <strong>A1</strong>).</li>
+          <li><strong>Active Cell:</strong> തിരഞ്ഞെടുത്ത സെൽ. <strong>Name Box</strong> = അഡ്രസ്; <strong>Formula Bar</strong> = ഉള്ളടക്കം/ഫോർമുല. <strong>F2</strong> = സെൽ എഡിറ്റ്; <strong>Alt+Enter</strong> = സെല്ലിനുള്ളിൽ പുതിയ വരി.</li>
+          <li><strong>ഡിഫോൾട്ട് അലൈൻമെന്റ് (Trap!):</strong> <strong>Text → Left</strong>, <strong>Number/Date → Right</strong>, Logical (TRUE/FALSE) → <strong>Center</strong>.</li>
+        </ul>
+
+        <h3>7.2 ഫോർമുലയും ഫംഗ്ഷനുകളും</h3>
+        <p><strong>ഫോർമുല നിയമം:</strong> എല്ലാ ഫോർമുലയും <strong>= (സമം)</strong> ചിഹ്നത്തോടെ തുടങ്ങണം. <strong>Range:</strong> കോളൻ <code>:</code> (A1:A10). <strong>Union:</strong> കോമ <code>,</code>.</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഫംഗ്ഷൻ</th><th>ധർമ്മം</th></tr></thead>
+            <tbody>
+              <tr><td>=SUM(A1:A5)</td><td>തുക</td></tr>
+              <tr><td>=AVERAGE(A1:A5)</td><td>ശരാശരി</td></tr>
+              <tr><td>=MAX() / =MIN()</td><td>വലുത് / ചെറുത്</td></tr>
+              <tr><td>=COUNT()</td><td>സംഖ്യകൾ മാത്രമുള്ള സെല്ലുകളുടെ എണ്ണം</td></tr>
+              <tr><td>=COUNTA()</td><td>ശൂന്യമല്ലാത്ത എല്ലാ സെല്ലും</td></tr>
+              <tr><td>=IF(Condition, True, False)</td><td>നിബന്ധന പരിശോധന</td></tr>
+              <tr><td>=TODAY() / =NOW()</td><td>തീയതി / തീയതി+സമയം</td></tr>
+              <tr><td>=COUNTIF, =SUMIF</td><td>നിബന്ധനയുള്ളവയുടെ എണ്ണം/തുക</td></tr>
+              <tr><td>=ROUND, =ABS, =SQRT, =MOD, =POWER</td><td>ഗണിത ഫംഗ്ഷനുകൾ</td></tr>
+              <tr><td>=LEN, =UPPER, =LOWER, =PROPER, =CONCATENATE</td><td>ടെക്സ്റ്റ് ഫംഗ്ഷനുകൾ</td></tr>
+              <tr><td>=VLOOKUP / =HLOOKUP</td><td>ലംബ/തിരശ്ചീന തിരയൽ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> COUNT = സംഖ്യ മാത്രം; COUNTA = <strong>A</strong>ll (ശൂന്യമല്ലാത്തതെല്ലാം). <strong>=SUM(A1:A4)</strong> → 4 സെൽ; <strong>=SUM(A1,A4)</strong> → 2 സെൽ മാത്രം.</p>
+
+        <h3>7.3 സെൽ റഫറൻസിംഗ്</h3>
+        <ul>
+          <li><strong>Relative (A1):</strong> കോപ്പി ചെയ്യുമ്പോൾ അഡ്രസ് മാറും.</li>
+          <li><strong>Absolute ($A$1):</strong> മാറില്ല.</li>
+          <li><strong>Mixed ($A1 / A$1):</strong> ഒന്ന് മാത്രം സ്ഥിരം.</li>
+          <li><strong>F4 കീ</strong> = Relative → Absolute → Mixed മാറ്റി മാറ്റി തരും. 🧠 $ = പൂട്ട് (lock).</li>
+        </ul>
+
+        <h3>7.4 Excel Errors</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>എറർ</th><th>കാരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>#####</strong></td><td>കോളം വീതി തികയുന്നില്ല</td></tr>
+              <tr><td><strong>#DIV/0!</strong></td><td>പൂജ്യം കൊണ്ട് ഹരിക്കൽ</td></tr>
+              <tr><td><strong>#VALUE!</strong></td><td>തെറ്റായ ഡാറ്റ തരം (സംഖ്യയ്ക്ക് പകരം അക്ഷരം)</td></tr>
+              <tr><td><strong>#NAME?</strong></td><td>ഫംഗ്ഷൻ പേരിൽ അക്ഷരത്തെറ്റ്</td></tr>
+              <tr><td><strong>#REF!</strong></td><td>ഫോർമുലയിലെ സെൽ ഡിലീറ്റ് ചെയ്തു</td></tr>
+              <tr><td><strong>#N/A</strong></td><td>മൂല്യം ലഭ്യമല്ല (Lookup-ൽ കണ്ടില്ല)</td></tr>
+              <tr><td><strong>#NUM!</strong></td><td>അസാധുവായ സംഖ്യ</td></tr>
+              <tr><td><strong>#NULL!</strong></td><td>തെറ്റായ range സൂചന</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>7.5 മറ്റ് ഫീച്ചറുകൾ</h3>
+        <p>AutoSum (<strong>Alt+=</strong>), AutoFill (Fill Handle – സെല്ലിന്റെ വലതുതാഴത്തെ ചെറിയ ചതുരം), Sort &amp; Filter, Conditional Formatting, Merge &amp; Center, Freeze Panes, <strong>PivotTable</strong>, Charts (Column, Bar, Line, Pie, Scatter, Area). ഷോർട്ട്കട്ട്: <strong>Ctrl+;</strong> (ഇന്നത്തെ തീയതി), <strong>Ctrl+Shift+;</strong> (സമയം), <strong>Shift+F11</strong> (പുതിയ Worksheet), <strong>F9</strong> (Recalculate), Ctrl+Home (A1-ലേക്ക്). ഗണിത ക്രമം: <strong>BODMAS</strong>.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 8: DBMS -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. ഡാറ്റാബേസ് പാക്കേജുകൾ (DBMS)</span>
+      </h2>
+      <div class="section-body">
+        <p><strong>DBMS</strong> = ബന്ധമുള്ള വലിയ ഡാറ്റ സൂക്ഷിക്കാനും തിരയാനും (Retrieve) മാറ്റാനും (Manipulate) നിയന്ത്രിക്കാനുമുള്ള സോഫ്റ്റ്‌വെയർ.</p>
+        <ul>
+          <li><strong>ഉദാഹരണങ്ങൾ:</strong> Oracle, MySQL, MS SQL Server, <strong>MS Access</strong> (<strong>.accdb</strong> / പഴയത് <strong>.mdb</strong>), <strong>LibreOffice Base</strong> (<strong>.odb</strong>), PostgreSQL, IBM DB2, FoxPro, dBASE, Sybase, Ingres; NoSQL: MongoDB.</li>
+          <li><strong>ഡാറ്റാബേസ് മോഡലുകൾ (4):</strong> Relational, Hierarchical, Network, Object-Oriented. ഏറ്റവും പ്രചാരം: <strong>RDBMS</strong> – 1970, <strong>ഡോ. ഇ.എഫ്. കോഡ് (E.F. Codd)</strong>; വിവരം പട്ടികകളായി (Tables/Relations).</li>
+          <li><strong>ശ്രേണി (ചെറുത് → വലുത്):</strong> Bit → Byte (Character) → <strong>Field</strong> → <strong>Record</strong> → <strong>File (Table)</strong> → <strong>Database</strong>.</li>
+        </ul>
+
+        <h3>8.1 പദാവലി</h3>
+        <ul>
+          <li><strong>Column = Field = Attribute</strong>; <strong>Row = Record = Tuple</strong>. 🧠 "T-R, A-C" (Tuple-Row, Attribute-Column).</li>
+          <li><strong>Degree</strong> = കോളങ്ങളുടെ എണ്ണം; <strong>Cardinality</strong> = വരികളുടെ (Tuple) എണ്ണം.</li>
+          <li><strong>DBA</strong> = Database Administrator; <strong>Schema</strong> = ഡാറ്റാബേസ് ഘടന; <strong>Data Redundancy</strong> = ഡാറ്റ അനാവശ്യമായി ആവർത്തിക്കൽ; <strong>Normalization</strong> = redundancy ഒഴിവാക്കാനുള്ള രീതി.</li>
+        </ul>
+
+        <h3>8.2 കീകൾ (Keys)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കീ</th><th>അർത്ഥം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Primary Key</strong></td><td>ഓരോ റെക്കോർഡിനെയും <strong>തനതായി</strong> തിരിച്ചറിയും; <strong>ആവർത്തിക്കരുത് (Unique), NULL ആകരുത്</strong>. ഉദാ: ആധാർ, റോൾ നമ്പർ</td></tr>
+              <tr><td><strong>Foreign Key</strong></td><td>ഒരു പട്ടികയുടെ Primary Key മറ്റൊന്നിൽ വരുമ്പോൾ; രണ്ട് പട്ടികകളെ <strong>ബന്ധിപ്പിക്കും</strong> (Referential Integrity); മൂല്യം ആവർത്തിക്കാം</td></tr>
+              <tr><td><strong>Candidate Key</strong></td><td>Primary Key ആകാൻ യോഗ്യമായ എല്ലാ ഫീൽഡും</td></tr>
+              <tr><td><strong>Alternate Key</strong></td><td>Candidate-ൽ Primary ആക്കാത്തവ</td></tr>
+              <tr><td><strong>Composite Key</strong></td><td>ഒന്നിലധികം ഫീൽഡ് ചേർന്ന കീ</td></tr>
+              <tr><td><strong>Super Key</strong></td><td>ഒരു റെക്കോർഡിനെ തിരിച്ചറിയാൻ കഴിയുന്ന ഏതൊരു ഫീൽഡ് സെറ്റും</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> Primary = "പ്രധാന തിരിച്ചറിയൽ കാർഡ്"; Foreign = "വിദേശ (മറ്റൊരു പട്ടികയിലെ) ബന്ധം".</p>
+
+        <h3>8.3 SQL (Structured Query Language)</h3>
+        <p>4GL; IBM-ൽ റെയ്മണ്ട് ബോയ്സ് &amp; ഡൊണാൾഡ് ചേംബർലിൻ.</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വിഭാഗം</th><th>പൂർണ്ണരൂപം</th><th>കമാൻഡുകൾ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>DDL</strong></td><td>Data Definition</td><td>CREATE, ALTER, DROP, TRUNCATE, RENAME</td></tr>
+              <tr><td><strong>DML</strong></td><td>Data Manipulation</td><td>INSERT, UPDATE, DELETE</td></tr>
+              <tr><td><strong>DQL</strong></td><td>Data Query</td><td><strong>SELECT</strong></td></tr>
+              <tr><td><strong>DCL</strong></td><td>Data Control</td><td>GRANT, REVOKE</td></tr>
+              <tr><td><strong>TCL</strong></td><td>Transaction Control</td><td>COMMIT, ROLLBACK, SAVEPOINT</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> DDL = ഘടന (Define), DML = ഉള്ളടക്കം (Manipulate), DCL = അധികാരം (Control).</p>
+
+        <h3>8.4 MS Access ഘടകങ്ങൾ</h3>
+        <p><strong>Tables, Queries, Forms</strong> (ഡാറ്റ എന്റർ ചെയ്യാൻ), <strong>Reports</strong> (പ്രിന്റിന്), Macros, Modules. ഡിഫോൾട്ട് പേര് <strong>Database1</strong>.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 9: PRESENTATION & IMAGE EDITOR -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. പ്രസന്റേഷൻ & ഇമേജ് എഡിറ്റർ</span>
+      </h2>
+      <div class="section-body">
+        <h3>9.1 പ്രസന്റേഷൻ സോഫ്റ്റ്‌വെയർ</h3>
+        <p>ആശയങ്ങൾ സ്ലൈഡുകളായി (എഴുത്ത്, ചിത്രം, ശബ്ദം, വീഡിയോ) അവതരിപ്പിക്കാൻ.</p>
+        <ul>
+          <li><strong>ഉദാഹരണം:</strong> MS PowerPoint, LibreOffice Impress, Apple Keynote, Google Slides, Prezi, Harvard Graphics. PowerPoint വികസിപ്പിച്ചത് റോബർട്ട് ഗാസ്കിൻസ്, ഡെന്നിസ് ഓസ്റ്റിൻ (1987).</li>
+          <li><strong>എക്സ്റ്റൻഷൻ:</strong> <strong>.ppt</strong> (2003 വരെ), <strong>.pptx</strong> (2007+), <strong>.odp</strong> (Impress), <strong>.pps / .ppsx</strong> (നേരിട്ട് സ്ലൈഡ് ഷോ), <strong>.potx</strong> (Template). ഡിഫോൾട്ട് പേര് <strong>Presentation1</strong>.</li>
+          <li>ഓരോ പേജ് = <strong>Slide</strong>. പുതിയ പ്രസന്റേഷനിലെ ആദ്യ ലേഔട്ട് = <strong>Title Slide</strong>. ഡിഫോൾട്ട് ഓറിയന്റേഷൻ = <strong>Landscape</strong>. ഡിഫോൾട്ട് അനുപാതം 16:9 (2013+; പഴയത് 4:3).</li>
+          <li><strong>Slide Transition vs Animation (Trap!):</strong> <em>Transition</em> = ഒരു സ്ലൈഡ് മാറി അടുത്തത് വരുമ്പോഴുള്ള ഇഫക്റ്റ്. <em>Custom Animation</em> = സ്ലൈഡിനുള്ളിലെ എഴുത്തിനും ചിത്രത്തിനുമുള്ള ഇഫക്റ്റ്. Animation തരങ്ങൾ: <strong>Entrance</strong> (പച്ച), <strong>Emphasis</strong> (മഞ്ഞ), <strong>Exit</strong> (ചുവപ്പ്), <strong>Motion Path</strong>.</li>
+          <li><strong>Slide Master:</strong> എല്ലാ സ്ലൈഡിലും ഒരേ ലോഗോ/ഫോണ്ട്/പശ്ചാത്തലം ഒറ്റയടിക്ക്.</li>
+          <li><strong>Views:</strong> <strong>Normal</strong> (ഡിഫോൾട്ട്), <strong>Slide Sorter</strong> (തംബ്നെയിലുകൾ കണ്ട് ക്രമം മാറ്റാൻ), Outline, Notes Page, Reading View, Slide Show. <strong>Handouts</strong> = പ്രേക്ഷകർക്ക് പ്രിന്റ് കോപ്പി; <strong>Speaker Notes</strong> = അവതാരകന് മാത്രം.</li>
+          <li><strong>ഷോർട്ട്കട്ടുകൾ:</strong>
+            <ul>
+              <li><strong>F5</strong> → ഒന്നാം സ്ലൈഡ് മുതൽ ഷോ</li>
+              <li><strong>Shift+F5</strong> → ഇപ്പോഴത്തെ സ്ലൈഡിൽ നിന്ന്</li>
+              <li><strong>Ctrl+M</strong> → പുതിയ <strong>സ്ലൈഡ്</strong> (Ctrl+N = പുതിയ <strong>ഫയൽ</strong>)</li>
+              <li><strong>Esc</strong> → ഷോ അവസാനിപ്പിക്കൽ</li>
+              <li><strong>Ctrl+D</strong> → സ്ലൈഡ് Duplicate; ഷോയിൽ <strong>B</strong> = കറുത്ത സ്ക്രീൻ, <strong>W</strong> = വെള്ള സ്ക്രീൻ, Space/N = അടുത്തത്, P = മുമ്പത്തേത്.</li>
+            </ul>
+          </li>
+        </ul>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> M = <strong>M</strong>ore slide; N = <strong>N</strong>ew file. F5 = Five-star show (ഫുൾ), Shift ചേർത്താൽ "ഇവിടെ നിന്ന്".</p>
+
+        <h3>9.2 ഇമേജ് എഡിറ്റർ (Graphics Software)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th></th><th><strong>Raster / Bitmap</strong></th><th><strong>Vector</strong></th></tr></thead>
+            <tbody>
+              <tr><td>ഘടന</td><td><strong>പിക്സലുകൾ</strong></td><td>ഗണിത സമവാക്യങ്ങൾ (Paths, Lines, Curves)</td></tr>
+              <tr><td>വലുതാക്കിയാൽ</td><td>മങ്ങും (<strong>Pixelation</strong>)</td><td>വ്യക്തത നഷ്ടപ്പെടില്ല</td></tr>
+              <tr><td>ഉപയോഗം</td><td>ഫോട്ടോ</td><td>ലോഗോ, കാർട്ടൂൺ, ഫ്ലക്സ് ബോർഡ്</td></tr>
+              <tr><td>സോഫ്റ്റ്‌വെയർ</td><td><strong>Photoshop (.psd)</strong>, <strong>GIMP (.xcf)</strong>, MS Paint, Picasa, Pixlr, Lightroom, Krita</td><td><strong>CorelDRAW (.cdr)</strong>, <strong>Illustrator (.ai)</strong>, <strong>Inkscape (.svg)</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li><strong>Photoshop:</strong> തോമസ് നോൾ, ജോൺ നോൾ (Adobe 1.0 – 1990); .psd = Photoshop Document.</li>
+          <li><strong>GIMP:</strong> GNU Image Manipulation Program; Spencer Kimball &amp; Peter Mattis; സ്വതന്ത്ര; .xcf = eXperimental Computing Facility.</li>
+          <li>MS Paint ഡിഫോൾട്ട്: .bmp (പഴയത്), .png (പുതിയ Windows).</li>
+        </ul>
+
+        <h3>9.3 ഇമേജ് ഫോർമാറ്റുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഫോർമാറ്റ്</th><th>പൂർണ്ണരൂപം</th><th>പ്രത്യേകത</th></tr></thead>
+            <tbody>
+              <tr><td><strong>JPEG/JPG</strong></td><td>Joint Photographic Experts Group</td><td>ക്യാമറ/ഇന്റർനെറ്റ്, <strong>Lossy</strong> കംപ്രഷൻ</td></tr>
+              <tr><td><strong>PNG</strong></td><td>Portable Network Graphics</td><td><strong>Lossless</strong>, <strong>Transparent background</strong></td></tr>
+              <tr><td><strong>GIF</strong></td><td>Graphics Interchange Format</td><td><strong>256 നിറം</strong>, ചെറിയ <strong>Animation</strong></td></tr>
+              <tr><td><strong>TIFF</strong></td><td>Tagged Image File Format</td><td>ഉയർന്ന ക്വാളിറ്റി, പ്രിന്റിംഗ്/സ്കാനിംഗ്</td></tr>
+              <tr><td><strong>BMP</strong></td><td>Bitmap</td><td>കംപ്രസ് ചെയ്യാത്തത്</td></tr>
+              <tr><td><strong>SVG</strong></td><td>Scalable Vector Graphics</td><td>വെക്ടർ</td></tr>
+              <tr><td><strong>PDF</strong></td><td>Portable Document Format (Adobe)</td><td>ഡോക്യുമെന്റ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> JPEG = <strong>J</strong>ust a <strong>P</strong>hoto (lossy); PNG = <strong>P</strong>erfect <strong>N</strong>o-loss (സുതാര്യം); GIF = <strong>G</strong>ets <strong>I</strong>n <strong>F</strong>ull motion (ചലനം).</p>
+
+        <h3>9.4 ടൂളുകൾ & കളർ മോഡൽ</h3>
+        <ul>
+          <li><strong>Cropping</strong> (അരികുകൾ മുറിക്കൽ), <strong>Layers</strong> (സുതാര്യ പാളികൾ), <strong>Clone Stamp</strong> (പിക്സൽ പകർത്തി പാട് മായ്ക്കൽ), <strong>Magic Wand</strong> (ഒരേ നിറം തിരഞ്ഞെടുക്കൽ), <strong>Lasso</strong> (കൈകൊണ്ട് വരച്ച് തിരഞ്ഞെടുക്കൽ).</li>
+          <li><strong>Resolution:</strong> DPI/PPI (കൂടുതൽ = വ്യക്തത); Pixel = ചിത്രത്തിന്റെ ഏറ്റവും ചെറിയ ഘടകം.</li>
+          <li><strong>കളർ മോഡൽ:</strong> <strong>RGB</strong> (Red, Green, Blue) = സ്ക്രീൻ; <strong>CMYK</strong> (Cyan, Magenta, Yellow, Key/Black) = പ്രിന്റിംഗ്. 🧠 RGB = Screen-ൽ വെളിച്ചം കൂട്ടുന്നു; CMYK = കടലാസിൽ മഷി.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- SECTION 10: DIAGRAM -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. ഡയഗ്രം + Visual Insight</span>
+      </h2>
+      <div class="section-body">
+        <div class="viz-box">
+          <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Software stack diagram">
+            <rect x="10" y="10" width="700" height="320" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#4a148c">സോഫ്റ്റ്‌വെയർ സ്റ്റാക്ക് – ആർക്ക് ആരുടെ മുകളിൽ?</text>
+
+            <rect x="140" y="55" width="440" height="55" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="360" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#4a148c">ഉപയോക്താവ് (END USER)</text>
+            <text x="360" y="97" text-anchor="middle" font-size="11" fill="#14202b">കീബോർഡ്, മൗസ് വഴി നിർദ്ദേശം നൽകുന്നു</text>
+
+            <rect x="140" y="125" width="440" height="60" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="360" y="148" text-anchor="middle" font-size="13" font-weight="700" fill="#1565c0">ആപ്ലിക്കേഷൻ സോഫ്റ്റ്‌വെയർ</text>
+            <text x="360" y="167" text-anchor="middle" font-size="11" fill="#14202b">Word · Excel · PowerPoint · Chrome · Photoshop · Tally</text>
+            <text x="360" y="180" text-anchor="middle" font-size="10" fill="#4a5f72">(ഉപയോക്താവിന്റെ ജോലി)</text>
+
+            <rect x="140" y="200" width="440" height="60" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="360" y="223" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">സിസ്റ്റം സോഫ്റ്റ്‌വെയർ</text>
+            <text x="360" y="242" text-anchor="middle" font-size="11" fill="#14202b">Shell (CLI/GUI) → Kernel → Drivers · Compiler · Utility</text>
+            <text x="360" y="255" text-anchor="middle" font-size="10" fill="#4a5f72">(ഹാർഡ്‌വെയർ നിയന്ത്രണം)</text>
+
+            <rect x="140" y="275" width="440" height="45" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="360" y="298" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">ഹാർഡ്‌വെയർ</text>
+            <text x="360" y="313" text-anchor="middle" font-size="10" fill="#14202b">CPU · RAM · Hard Disk · Monitor · Keyboard</text>
+
+            <path d="M120 300 L120 60" stroke="#4a148c" stroke-width="2" marker-end="url(#arrow)"/>
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#4a148c"/>
+              </marker>
+            </defs>
+            <text x="100" y="180" text-anchor="middle" font-size="10" font-weight="700" fill="#4a148c" transform="rotate(-90 100 180)">OS ഇല്ലാതെ പ്രവർത്തിക്കില്ല</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.1 – ഹാർഡ്‌വെയറുമായി നേരിട്ട് സംവദിക്കുന്നത് Kernel; ആപ്ലിക്കേഷൻ പ്രവർത്തിക്കുന്നത് OS-ന് മുകളിൽ.</div>
+        </div>
+
+        <h3>10.2 സോഫ്റ്റ്‌വെയർ വർഗ്ഗീകരണ ചിത്രം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Software classification">
+            <rect x="10" y="10" width="700" height="300" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="#4a148c">സോഫ്റ്റ്‌വെയർ വർഗ്ഗീകരണം</text>
+
+            <rect x="290" y="55" width="140" height="40" rx="8" fill="#4a148c"/>
+            <text x="360" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">SOFTWARE</text>
+
+            <line x1="360" y1="95" x2="360" y2="115" stroke="#4a148c" stroke-width="2"/>
+            <line x1="180" y1="115" x2="540" y2="115" stroke="#4a148c" stroke-width="2"/>
+            <line x1="180" y1="115" x2="180" y2="130" stroke="#4a148c" stroke-width="2"/>
+            <line x1="540" y1="115" x2="540" y2="130" stroke="#4a148c" stroke-width="2"/>
+
+            <rect x="40" y="130" width="280" height="40" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="180" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">SYSTEM SOFTWARE</text>
+
+            <rect x="400" y="130" width="280" height="40" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="540" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#1565c0">APPLICATION SOFTWARE</text>
+
+            <text x="180" y="195" text-anchor="middle" font-size="11" fill="#14202b">1. Operating System</text>
+            <text x="180" y="212" text-anchor="middle" font-size="11" fill="#14202b">2. Language Translators</text>
+            <text x="180" y="229" text-anchor="middle" font-size="11" fill="#14202b">3. Device Drivers</text>
+            <text x="180" y="246" text-anchor="middle" font-size="11" fill="#14202b">4. Utility Software</text>
+            <text x="180" y="263" text-anchor="middle" font-size="11" fill="#14202b">5. Firmware</text>
+
+            <text x="540" y="195" text-anchor="middle" font-size="11" fill="#14202b">1. General-Purpose</text>
+            <text x="540" y="212" text-anchor="middle" font-size="11" fill="#14202b">(Word, Excel, Chrome)</text>
+            <text x="540" y="229" text-anchor="middle" font-size="11" fill="#14202b">2. Specific-Purpose</text>
+            <text x="540" y="246" text-anchor="middle" font-size="11" fill="#14202b">(Tally, SPARK, Banking)</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.2 – സോഫ്റ്റ്‌വെയർ വർഗ്ഗീകരണം (2 പ്രധാന വിഭാഗം + ഉപവിഭാഗങ്ങൾ).</div>
+        </div>
+
+        <h3>10.3 OS ഘടന (Kernel & Shell)</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kernel Shell architecture">
+            <rect x="10" y="10" width="680" height="220" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="350" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="#4a148c">ഓപ്പറേറ്റിംഗ് സിസ്റ്റം ഘടന</text>
+
+            <rect x="60" y="60" width="580" height="45" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="350" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="#4a148c">ഉപയോക്താവ് (User)</text>
+
+            <rect x="60" y="120" width="580" height="45" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="350" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#1565c0">SHELL (തോട്) – Command Interpreter</text>
+            <text x="350" y="158" text-anchor="middle" font-size="10" fill="#14202b">കമാൻഡ് കേർണലിന് മനസ്സിലാകുംവിധം മാറ്റുന്നു</text>
+
+            <rect x="60" y="180" width="580" height="45" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="350" y="202" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">KERNEL (പരിപ്പ്/ഹൃദയം) – RAM-ൽ താമസം</text>
+            <text x="350" y="218" text-anchor="middle" font-size="10" fill="#14202b">ഹാർഡ്‌വെയറുമായി നേരിട്ട് സംവദിക്കുന്നു</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.3 – Shell = പുറംതോട്, Kernel = അകത്തെ കാതൽ.</div>
+        </div>
+
+        <h3>10.4 DBMS ശ്രേണി (Bit മുതൽ Database വരെ)</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DBMS hierarchy">
+            <rect x="10" y="10" width="700" height="160" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <g font-family="Noto Sans Malayalam, sans-serif" font-size="11" text-anchor="middle">
+              <rect x="20" y="50" width="90" height="70" rx="8" fill="#e1bee7" stroke="#6a1b9a"/>
+              <text x="65" y="80" font-weight="700" fill="#4a148c">Bit</text>
+              <text x="65" y="98" font-size="9" fill="#4a5f72">0 അല്ലെങ്കിൽ 1</text>
+
+              <text x="130" y="90" font-size="18" fill="#4a148c">→</text>
+
+              <rect x="145" y="50" width="90" height="70" rx="8" fill="#e1bee7" stroke="#6a1b9a"/>
+              <text x="190" y="80" font-weight="700" fill="#4a148c">Byte</text>
+              <text x="190" y="98" font-size="9" fill="#4a5f72">8 bits = Character</text>
+
+              <text x="255" y="90" font-size="18" fill="#4a148c">→</text>
+
+              <rect x="270" y="50" width="90" height="70" rx="8" fill="#ce93d8" stroke="#6a1b9a"/>
+              <text x="315" y="80" font-weight="700" fill="#4a148c">Field</text>
+              <text x="315" y="98" font-size="9" fill="#4a5f72">Column / Attribute</text>
+
+              <text x="380" y="90" font-size="18" fill="#4a148c">→</text>
+
+              <rect x="395" y="50" width="90" height="70" rx="8" fill="#ba68c8" stroke="#4a148c"/>
+              <text x="440" y="80" font-weight="700" fill="#fff">Record</text>
+              <text x="440" y="98" font-size="9" fill="#fff">Row / Tuple</text>
+
+              <text x="505" y="90" font-size="18" fill="#4a148c">→</text>
+
+              <rect x="520" y="50" width="90" height="70" rx="8" fill="#8e24aa" stroke="#4a148c"/>
+              <text x="565" y="80" font-weight="700" fill="#fff">File/Table</text>
+              <text x="565" y="98" font-size="9" fill="#fff">Records കൂട്ടം</text>
+
+              <text x="630" y="90" font-size="18" fill="#4a148c">→</text>
+
+              <rect x="645" y="50" width="60" height="70" rx="8" fill="#4a148c"/>
+              <text x="675" y="80" font-weight="700" fill="#fff">Database</text>
+            </g>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.4 – DBMS ശ്രേണി ചെറുത് → വലുത്.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: IMPORTANT FACTS -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. പ്രധാന വസ്തുതകൾ (Important Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ ഒറ്റനോട്ടത്തിൽ</span>
+          <ul>
+            <li>ആദ്യ പ്രോഗ്രാമർ: <strong>അഡാ ലവ്‌ലേസ് (1843)</strong>; "Software" പദം: <strong>ജോൺ ടൂക്കി (1958)</strong>.</li>
+            <li><strong>System:</strong> OS, Compiler, Interpreter, Assembler, Drivers, Utility, Firmware.</li>
+            <li><strong>Application:</strong> Word, Excel, DBMS, Browser, Image Editor, Tally.</li>
+            <li><strong>Compiler</strong> = മുഴുവൻ; <strong>Interpreter</strong> = വരി വരിയായി; <strong>Assembler</strong> = Assembly-ക്ക്.</li>
+            <li><strong>FSF/GNU:</strong> സ്റ്റാൾമാൻ (1983/1985); <strong>Linux:</strong> ടോർവാൾഡ്സ് (1991).</li>
+            <li><strong>Kernel:</strong> OS-ന്റെ ഹൃദയം; ബൂട്ടിംഗ് = OS → RAM.</li>
+            <li><strong>Excel:</strong> ഫോർമുല '=' ചിഹ്നത്തോടെ; Cell = Row ∩ Column.</li>
+            <li><strong>Primary Key</strong> = Unique + Not NULL.</li>
+            <li><strong>F7</strong> = Spell Check; <strong>Shift+F7</strong> = Thesaurus; <strong>F5</strong> = PPT Slide Show.</li>
+            <li><strong>Transparent background</strong> → PNG; <strong>Animation</strong> → GIF; <strong>Vector</strong> → SVG.</li>
+            <li><strong>GIMP</strong> = .xcf (FOSS); <strong>Photoshop</strong> = .psd.</li>
+            <li><strong>BOSS</strong> = C-DAC-ന്റെ തദ്ദേശീയ Linux.</li>
+            <li><strong>Mail Merge</strong> = ഒരേ കത്ത് പലർക്ക്; <strong>Gutter</strong> = ബൈൻഡിംഗ് മാർജിൻ.</li>
+            <li><strong>Word Font:</strong> Calibri 11 (ഡിഫോൾട്ട്); ലിസ്റ്റ് 8–72; ടൈപ്പ് 1–1638.</li>
+            <li><strong>RDBMS:</strong> Row = Record/Tuple, Column = Field/Attribute.</li>
+            <li><strong>SQL:</strong> DDL, DML, DQL, DCL, TCL.</li>
+            <li><strong>Degree</strong> = കോളം; <strong>Cardinality</strong> = വരി.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: PSC EXAM ANALYSIS -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. Kerala PSC Exam Analysis</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപവിഷയം</th><th>പ്രാധാന്യം</th><th>വിശകലനം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>System vs Application, OS (10.2.1–5)</strong></td><td>★★★</td><td>"ഏതാണ് Application Software?", "ഏത് OS അല്ല?" എന്നീ ചോദ്യങ്ങൾ ആവർത്തിച്ച് വരുന്നു.</td></tr>
+              <tr><td><strong>Word &amp; Excel (10.2.6–7)</strong></td><td>★★★</td><td>ഷോർട്ട്കട്ട് (Ctrl+J, F7, F2), Mail Merge, Gutter, $A$1, ഫോർമുല '=' ചിഹ്നം.</td></tr>
+              <tr><td><strong>PowerPoint &amp; Image Editors (10.2.9–10)</strong></td><td>★★</td><td>F5, Ctrl+M, Transition vs Animation, Sorter View, GIMP/Photoshop, JPEG/PNG.</td></tr>
+              <tr><td><strong>DBMS (10.2.8)</strong></td><td>★★</td><td>Primary/Foreign Key, Tuple/Attribute, SQL (ഡിഗ്രി തലം – 573).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ മുൻ ചോദ്യ ട്രെൻഡ് (മാതൃകകൾ)</span>
+          <ul>
+            <li><strong>Application/System തിരിച്ചറിയൽ:</strong> "ആപ്ലിക്കേഷൻ സോഫ്റ്റ്‌വെയർ ഏത്? (A) Word Processor (B) Windows (C) Linux (D) Unix" → <strong>(A) Word Processor</strong>. "OS-ഉം Device Driver-ഉം ഏത് വിഭാഗം?" → <strong>System Software</strong>.</li>
+            <li><strong>ട്രാൻസ്ലേറ്റർ:</strong> വരി വരിയായി → <strong>Interpreter</strong>; Assembly → <strong>Assembler</strong>.</li>
+            <li><strong>ഷോർട്ട്കട്ട്:</strong> F7 (Spell), Ctrl+K (Hyperlink), Ctrl+J (Justify), F5 (Slide show), Ctrl+M (New slide).</li>
+            <li><strong>Excel:</strong> '=' ചിഹ്നം; Cell; സംഖ്യ ഡിഫോൾട്ട് Right align.</li>
+            <li><strong>ഓപ്പൺ സോഴ്സും എക്സ്റ്റൻഷനും:</strong> Linux, Ubuntu, GIMP, LibreOffice; .odt, .ods, .odp, .xcf.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: CONFUSING FACTS -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വസ്തുത 1</th><th>വസ്തുത 2</th><th>വ്യത്യാസം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>System SW</strong> (Windows, Linux, Compiler, Drivers)</td><td><strong>Application SW</strong> (Word, Excel, Chrome, Photoshop)</td><td>ഹാർഡ്‌വെയർ നിയന്ത്രണം vs ഉപയോക്താവിന്റെ ജോലി</td></tr>
+              <tr><td><strong>Compiler</strong></td><td><strong>Interpreter</strong></td><td>ഒറ്റയടിക്ക് vs വരി വരിയായി</td></tr>
+              <tr><td><strong>PPT: Ctrl+M</strong></td><td><strong>Ctrl+N</strong></td><td>പുതിയ സ്ലൈഡ് vs പുതിയ ഫയൽ</td></tr>
+              <tr><td><strong>F5</strong></td><td><strong>Shift+F5</strong></td><td>ആദ്യം മുതൽ vs ഇപ്പോഴത്തെ സ്ലൈഡിൽ നിന്ന്</td></tr>
+              <tr><td><strong>F7</strong></td><td><strong>Shift+F7</strong></td><td>Spell Check vs Thesaurus</td></tr>
+              <tr><td><strong>Excel Text: Left</strong></td><td><strong>Number: Right</strong></td><td>ഡിഫോൾട്ട് അലൈൻമെന്റ്</td></tr>
+              <tr><td><strong>Slide Transition</strong></td><td><strong>Custom Animation</strong></td><td>സ്ലൈഡ് മാറ്റം vs സ്ലൈഡിനുള്ളിലെ വസ്തു</td></tr>
+              <tr><td><strong>Footnote</strong></td><td><strong>Endnote</strong></td><td>പേജിനു താഴെ vs അവസാനം</td></tr>
+              <tr><td><strong>Freeware</strong></td><td><strong>Shareware</strong></td><td>എപ്പോഴും സൗജന്യം vs ട്രയൽ കഴിഞ്ഞാൽ പണം</td></tr>
+              <tr><td><strong>Primary Key</strong></td><td><strong>Foreign Key</strong></td><td>തനത് തിരിച്ചറിയൽ vs പട്ടികകളെ ബന്ധിപ്പിക്കൽ</td></tr>
+              <tr><td><strong>Degree</strong></td><td><strong>Cardinality</strong></td><td>കോളം എണ്ണം vs വരി എണ്ണം</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box</span>
+          <ul>
+            <li><strong>Left = Ctrl+L; Right = Ctrl+R; Justify = Ctrl+J; Center = Ctrl+E</strong> (Ctrl+C = Copy — സൂക്ഷിക്കുക!).</li>
+            <li><strong>Chrome/Firefox = Browser; Google/Bing = Search Engine</strong> (രണ്ടും ഒന്നല്ല).</li>
+            <li><strong>BIOS = Firmware/System Software</strong> (Application അല്ല).</li>
+            <li><strong>Android = Open Source; iOS = Proprietary</strong>.</li>
+            <li><strong>Java = Compile + Interpret</strong> (JVM).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: COMPARISON TABLES -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+        <h3>പട്ടിക 1: MS Office vs LibreOffice</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വിഭാഗം</th><th>MS Office</th><th>എക്സ്റ്റൻഷൻ</th><th>LibreOffice (FOSS)</th><th>എക്സ്റ്റൻഷൻ</th><th>ഡിഫോൾട്ട് പേര് (MS)</th></tr></thead>
+            <tbody>
+              <tr><td>Word Processor</td><td>Word</td><td>.doc / .docx</td><td>Writer</td><td>.odt</td><td>Document1</td></tr>
+              <tr><td>Spreadsheet</td><td>Excel</td><td>.xls / .xlsx</td><td>Calc</td><td>.ods</td><td>Book1</td></tr>
+              <tr><td>Presentation</td><td>PowerPoint</td><td>.ppt / .pptx</td><td>Impress</td><td>.odp</td><td>Presentation1</td></tr>
+              <tr><td>Database</td><td>Access</td><td>.mdb / .accdb</td><td>Base</td><td>.odb</td><td>Database1</td></tr>
+              <tr><td>Raster Editor</td><td>Photoshop</td><td>.psd</td><td>GIMP</td><td>.xcf</td><td>Untitled-1</td></tr>
+              <tr><td>Vector Editor</td><td>CorelDRAW / Illustrator</td><td>.cdr / .ai</td><td>Inkscape</td><td>.svg</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> LibreOffice = <strong>Writer→.odt, Calc→.ods, Impress→.odp, Base→.odb</strong> (OpenDocument + വിഭാഗത്തിന്റെ ആദ്യ അക്ഷരം).</p>
+
+        <h3>പട്ടിക 2: System vs Application</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>System</th><th>Application</th></tr></thead>
+            <tbody>
+              <tr><td>ഉദ്ദേശ്യം</td><td>ഹാർഡ്‌വെയർ/വിഭവ നിയന്ത്രണം</td><td>ഉപയോക്താവിന്റെ പ്രത്യേക ജോലി</td></tr>
+              <tr><td>അനിവാര്യത</td><td>ഇല്ലാതെ കമ്പ്യൂട്ടർ പ്രവർത്തിക്കില്ല</td><td>ഇല്ലെങ്കിലും ഓൺ ആകും</td></tr>
+              <tr><td>പ്രവർത്തനം</td><td>ബൂട്ടിംഗ് മുതൽ പശ്ചാത്തലത്തിൽ</td><td>ഉപയോക്താവ് തുറക്കുമ്പോൾ മാത്രം</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>Windows, Linux, BIOS, Compiler, Drivers</td><td>Word, Excel, Photoshop, Tally, Chrome, VLC</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>പട്ടിക 3: Raster vs Vector</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th></th><th>Raster / Bitmap</th><th>Vector</th></tr></thead>
+            <tbody>
+              <tr><td>ഘടന</td><td>പിക്സലുകൾ</td><td>ഗണിത സമവാക്യങ്ങൾ</td></tr>
+              <tr><td>വലുതാക്കൽ</td><td>Pixelation</td><td>വ്യക്തത കാത്തുസൂക്ഷിക്കും</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>Photoshop, GIMP</td><td>CorelDRAW, Illustrator, Inkscape</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>പട്ടിക 4: SQL വിഭാഗങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വിഭാഗം</th><th>പൂർണ്ണരൂപം</th><th>കമാൻഡുകൾ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>DDL</strong></td><td>Data Definition Language</td><td>CREATE, ALTER, DROP, TRUNCATE, RENAME</td></tr>
+              <tr><td><strong>DML</strong></td><td>Data Manipulation Language</td><td>INSERT, UPDATE, DELETE</td></tr>
+              <tr><td><strong>DQL</strong></td><td>Data Query Language</td><td>SELECT</td></tr>
+              <tr><td><strong>DCL</strong></td><td>Data Control Language</td><td>GRANT, REVOKE</td></tr>
+              <tr><td><strong>TCL</strong></td><td>Transaction Control Language</td><td>COMMIT, ROLLBACK, SAVEPOINT</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: TIMELINE -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. കാലക്രമം (Timeline)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വർഷം</th><th>നാഴികക്കല്ല്</th></tr></thead>
+            <tbody>
+              <tr><td>1843</td><td>അഡാ ലവ്‌ലേസ് – ആദ്യ പ്രോഗ്രാം</td></tr>
+              <tr><td>1952</td><td>ഗ്രേസ് ഹോപ്പർ – ആദ്യ കംപൈലർ (A-0); COBOL, 'Debugging'</td></tr>
+              <tr><td>1958</td><td>ടൂക്കി – 'Software' പദം</td></tr>
+              <tr><td>1969</td><td>UNIX (ബെൽ ലാബ്സ്)</td></tr>
+              <tr><td>1970</td><td>E.F. Codd – RDBMS</td></tr>
+              <tr><td>1975</td><td>Microsoft (ഏപ്രിൽ 4)</td></tr>
+              <tr><td>1979</td><td>VisiCalc (ആദ്യ സ്പ്രെഡ്ഷീറ്റ്)</td></tr>
+              <tr><td>1981</td><td>MS-DOS</td></tr>
+              <tr><td>1983</td><td>GNU പ്രോജക്റ്റ്; MS Word ആദ്യ രൂപം; Lotus 1-2-3</td></tr>
+              <tr><td>1985</td><td>FSF; Windows 1.0 (നവംബർ 20)</td></tr>
+              <tr><td>1990</td><td>Photoshop 1.0; MS Office</td></tr>
+              <tr><td>1991</td><td>Linux (ലിനസ് ടോർവാൾഡ്സ്)</td></tr>
+              <tr><td>1995</td><td>Windows 95</td></tr>
+              <tr><td>1998</td><td>'Open Source' പദം (OSI)</td></tr>
+              <tr><td>2005</td><td>Google Android ഏറ്റെടുത്തു</td></tr>
+              <tr><td>2008</td><td>Android 1.0 (HTC Dream)</td></tr>
+              <tr><td>2015</td><td>Windows 10</td></tr>
+              <tr><td>2021 ഒക്ടോബർ</td><td>Windows 11</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: MNEMONICS & TRAPS -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. Mnemonics & Common PSC Traps</span>
+      </h2>
+      <div class="section-body">
+        <h3>16.1 മെമ്മറി ട്രിക്കുകൾ</h3>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – Translators</span>
+          <p><strong>Assembler / Compiler / Interpreter</strong> = <strong>A</strong>ssembly / <strong>C</strong>omplete / <strong>I</strong>ndividual line.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – LibreOffice</span>
+          <p><strong>Writer→.odt, Calc→.ods, Impress→.odp, Base→.odb</strong> (OpenDocument + വിഭാഗത്തിന്റെ ആദ്യ അക്ഷരം).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – Font Size</span>
+          <p>"<strong>ഡിഫോൾട്ട് 11, ലിസ്റ്റ് 8–72, ടൈപ്പ് 1–1638</strong>".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – RDBMS</span>
+          <p><strong>"T-R, A-C"</strong> → Tuple-Row, Attribute-Column.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – Shortcuts</span>
+          <p><strong>Center = Ctrl+E</strong>; <strong>Ctrl+M = More slide</strong>.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – Image Formats</span>
+          <p><strong>JPEG</strong> = <strong>J</strong>ust a <strong>P</strong>hoto (lossy); <strong>PNG</strong> = <strong>P</strong>erfect <strong>N</strong>o-loss (transparent); <strong>GIF</strong> = <strong>G</strong>ets <strong>I</strong>n <strong>F</strong>ull motion (animation).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – Android Versions</span>
+          <p>ആദ്യ അക്ഷരങ്ങൾ അക്ഷരമാലാക്രമത്തിൽ: <strong>C D E F G H I J K L M N O P</strong> (Cupcake → Pie).</p>
+        </div>
+
+        <h3>16.2 PSC Traps (പരീക്ഷയിലെ ചതിക്കുഴികൾ)</h3>
+        <div class="trap">
+          <span class="box-label">⚠️ 8 പ്രധാന ട്രാപ്പുകൾ</span>
+          <ol>
+            <li><strong>Linux/Ubuntu/BOSS = Open Source; യഥാർത്ഥ UNIX = Proprietary.</strong></li>
+            <li><strong>=SUM(A1:A4)</strong> (4 സെൽ) vs <strong>=SUM(A1,A4)</strong> (2 സെൽ മാത്രം).</li>
+            <li>ഫോട്ടോഷോപ്പ് <strong>.psd</strong>, GIMP <strong>.xcf</strong> (jpg/png അല്ല).</li>
+            <li>Word/Excel ഡിഫോൾട്ട് <strong>Portrait</strong>; PowerPoint <strong>Landscape</strong>.</li>
+            <li><strong>BIOS = System Software/Firmware</strong> (Application അല്ല).</li>
+            <li>Android = Linux കേർണൽ അടിസ്ഥാനം (Open Source); iOS = Proprietary.</li>
+            <li>Chrome/Firefox = ബ്രൗസർ (Application); Google/Bing = സെർച്ച് എഞ്ചിൻ.</li>
+            <li>Java = Compile + Interpret (JVM).</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17: KERALA FACTS -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. അധിക കേരള PSC വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>KITE</strong> (Kerala Infrastructure and Technology for Education; മുമ്പ് <strong>IT@School</strong>): സ്കൂളുകളിൽ FOSS; ആദ്യം 'IT@School GNU/Linux', ഇപ്പോൾ <strong>Ubuntu</strong> അധിഷ്ഠിതം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ICFOSS</strong> (International Centre for Free and Open Source Software): കേരള സർക്കാർ, തിരുവനന്തപുരം (⚠️ <strong>2009</strong>).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>SPARK:</strong> ജീവനക്കാരുടെ ശമ്പള സോഫ്റ്റ്‌വെയർ (Service and Payroll Administrative Repository for Kerala).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>യൂണിക്കോഡ് (Unicode):</strong> എല്ലാ ഭാഷയ്ക്കും ഒരേ എൻകോഡിംഗ് (മലയാളം ബ്ലോക്ക് U+0D00–0D7F).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ASCII</strong> = American Standard Code for Information Interchange, 7-bit (128 ചിഹ്നം; Extended 8-bit = 256).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സ്വതന്ത്ര മലയാളം യൂണിക്കോഡ് ഫോണ്ടുകൾ (SMC – Swathantra Malayalam Computing):</strong> Meera (മീര), Rachana (രചന), Anjali Old Lipi, Chilanka (ചിലങ്ക), Manjari (മഞ്ജരി), Karumbi (കറുമ്പി), Gayathri (ഗായത്രി), Dyuthi, Uroob, Suruma, Keraleeyam.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പഴയ ASCII ഫോണ്ടുകൾ:</strong> ML-TT Karthika, Revathi, Thulasi.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരള ഇ-ഗവേണൻസ്:</strong> Akshaya, FRIENDS, e-District.</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">➕ PSC ചോദിക്കാം</span>
+          <p><strong>മലയാള ഭാഷയുടെ യൂണിക്കോഡ് ബ്ലോക്ക്:</strong> U+0D00 മുതൽ U+0D7F വരെ. <strong>SMC</strong> വികസിപ്പിച്ച ഫോണ്ടുകൾ: മീര, രചന, മഞ്ജരി, ചിലങ്ക, അഞ്ജലി.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: SHORTCUT TABLE -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. ഷോർട്ട്കട്ട് കീ – ക്വിക്ക് ടേബിൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കീ</th><th>പ്രവർത്തനം</th></tr></thead>
+            <tbody>
+              <tr><td>Ctrl+A / C / X / V</td><td>Select All / Copy / Cut / Paste</td></tr>
+              <tr><td>Ctrl+Z / Y</td><td>Undo / Redo</td></tr>
+              <tr><td>Ctrl+N / O / S / P</td><td>New / Open / Save / Print</td></tr>
+              <tr><td>Ctrl+F / H / G</td><td>Find / Replace / Go To</td></tr>
+              <tr><td>Ctrl+B / I / U</td><td>Bold / Italic / Underline</td></tr>
+              <tr><td>Ctrl+L / R / E / J</td><td>Left / Right / Center / Justify</td></tr>
+              <tr><td><strong>Ctrl+K</strong></td><td>Hyperlink</td></tr>
+              <tr><td><strong>Ctrl+M</strong></td><td>PPT: പുതിയ സ്ലൈഡ് (Word: Indent)</td></tr>
+              <tr><td>Ctrl+] / Ctrl+[</td><td>ഫോണ്ട് വലിപ്പം 1pt കൂട്ടൽ/കുറയ്ക്കൽ</td></tr>
+              <tr><td>Ctrl+Enter / Shift+Enter</td><td>Page Break / Line Break</td></tr>
+              <tr><td>F1 / F2 / F5 / F7 / F12</td><td>Help / Rename-Edit cell / Slide show / Spell check / Save As</td></tr>
+              <tr><td>Shift+F7 / Shift+F3</td><td>Thesaurus / Change Case</td></tr>
+              <tr><td>Alt+F4 / Ctrl+W</td><td>പ്രോഗ്രാം ക്ലോസ് / ഡോക്യുമെന്റ് ക്ലോസ്</td></tr>
+              <tr><td>Ctrl+Home / Ctrl+End</td><td>ഡോക്യുമെന്റിന്റെ തുടക്കം / അവസാനം</td></tr>
+              <tr><td>Ctrl+D</td><td>PPT: Duplicate slide; Word: Font dialog</td></tr>
+              <tr><td>F4</td><td>Excel: Reference മാറ്റൽ; Word: അവസാന പ്രവൃത്തി ആവർത്തിക്കൽ</td></tr>
+              <tr><td>Alt+Tab / Win+D / Win+L</td><td>വിൻഡോ മാറ്റൽ / Desktop / Lock</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: MCQ PRACTICE -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഏതാണ് Application Software?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Windows</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Linux</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Word Processor</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Compiler</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Word Processor</div>
+            <div class="explanation">Windows, Linux = OS; Compiler = Translator (System Software). Word Processor മാത്രമാണ് Application Software.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഹൈ-ലെവൽ പ്രോഗ്രാമിനെ ഒറ്റയടിക്ക് മെഷീൻ ഭാഷയാക്കുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Assembler</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Interpreter</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Compiler</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Loader</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Compiler</div>
+            <div class="explanation">Compiler = മുഴുവൻ ഒറ്റയടിക്ക്; Interpreter = വരി വരിയായി; Assembler = Assembly-ക്ക്; Loader = RAM-ലേക്ക് ലോഡ് ചെയ്യും.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. OS-ന്റെ ഹൃദയം എന്ന് വിളിക്കുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Shell</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Kernel</button>
+            <button type="button" class="opt-btn" data-opt="C">C. BIOS</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Compiler</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Kernel</div>
+            <div class="explanation">Kernel = OS-ന്റെ ഹൃദയം/കാതൽ; Shell = Command Interpreter (തോട്); BIOS = Firmware.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. Linux വികസിപ്പിച്ചത് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. റിച്ചാർഡ് സ്റ്റാൾമാൻ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ബിൽ ഗേറ്റ്സ്</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ലിനസ് ടോർവാൾഡ്സ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. സ്റ്റീവ് ജോബ്സ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ലിനസ് ടോർവാൾഡ്സ്</div>
+            <div class="explanation">Linux (1991) – ലിനസ് ടോർവാൾഡ്സ്; സ്റ്റാൾമാൻ = GNU/FSF; ബിൽ ഗേറ്റ്സ് = Microsoft; സ്റ്റീവ് ജോബ്സ് = Apple.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. Word-ൽ Spell Check-നുള്ള ഷോർട്ട്കട്ട് കീ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. F5</button>
+            <button type="button" class="opt-btn" data-opt="B">B. F7</button>
+            <button type="button" class="opt-btn" data-opt="C">C. F9</button>
+            <button type="button" class="opt-btn" data-opt="D">D. F12</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) F7</div>
+            <div class="explanation">F7 = Spell Check; Shift+F7 = Thesaurus; F5 = (PPT-യിൽ) Slide Show; F12 = Save As.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. Word-ൽ ഇരുവശവും ഒരുപോലെ അലൈൻ ചെയ്യാൻ (Justify) ഉപയോഗിക്കുന്ന കീ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Ctrl+L</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Ctrl+R</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Ctrl+E</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Ctrl+J</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) Ctrl+J</div>
+            <div class="explanation">Ctrl+L = Left; Ctrl+R = Right; Ctrl+E = Center; Ctrl+J = Justify.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Excel-ൽ ഏത് ചിഹ്നത്തോടെയാണ് ഫോർമുല തുടങ്ങേണ്ടത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. +</button>
+            <button type="button" class="opt-btn" data-opt="B">B. =</button>
+            <button type="button" class="opt-btn" data-opt="C">C. @</button>
+            <button type="button" class="opt-btn" data-opt="D">D. #</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) =</div>
+            <div class="explanation">Excel-ൽ എല്ലാ ഫോർമുലയും '=' (സമം) ചിഹ്നത്തോടെ തുടങ്ങണം. (+ അല്ലെങ്കിൽ − ഉപയോഗിച്ചും തുടങ്ങാം, പക്ഷേ PSC-യുടെ ഉത്തരം '=').</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. Excel-ൽ പൂജ്യം കൊണ്ട് ഹരിച്ചാൽ വരുന്ന എറർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. #VALUE!</button>
+            <button type="button" class="opt-btn" data-opt="B">B. #REF!</button>
+            <button type="button" class="opt-btn" data-opt="C">C. #DIV/0!</button>
+            <button type="button" class="opt-btn" data-opt="D">D. #NAME?</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) #DIV/0!</div>
+            <div class="explanation">#VALUE! = തെറ്റായ ഡാറ്റ തരം; #REF! = സെൽ ഡിലീറ്റ്; #NAME? = ഫംഗ്ഷൻ പേരിൽ തെറ്റ്.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. സെൽ റഫറൻസ് $A$1 ഏത് തരം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Relative</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Absolute</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Mixed</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Complex</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Absolute</div>
+            <div class="explanation">$A$1 = Absolute (കോപ്പി ചെയ്താലും മാറില്ല). A1 = Relative; $A1 അല്ലെങ്കിൽ A$1 = Mixed. F4 കീ മാറ്റി മാറ്റി തരും.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. റെക്കോർഡിനെ തനതായി തിരിച്ചറിയുന്ന, NULL ആകാത്ത കീ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Foreign Key</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Primary Key</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Alternate Key</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Composite Key</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Primary Key</div>
+            <div class="explanation">Primary Key = Unique + Not NULL. Foreign Key = മറ്റൊരു പട്ടികയുമായി ബന്ധിപ്പിക്കൽ (NULL ആകാം, ആവർത്തിക്കാം).</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. DBMS ശ്രേണിയിൽ ചെറുതിൽ നിന്ന് വലുതിലേക്ക് ക്രമം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Record → Field → File → Database</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Field → Record → File → Database</button>
+            <button type="button" class="opt-btn" data-opt="C">C. File → Field → Record → Database</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Field → File → Record → Database</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Field → Record → File → Database</div>
+            <div class="explanation">Bit → Byte → Field → Record → File (Table) → Database. 🧠 "ബിറ്റ് ബൈറ്റിന്റെ കൂടെ, ഫീൽഡ് റെക്കോർഡിന്റെ കൂടെ, ഫയൽ ഡാറ്റാബേസിന്റെ കൂടെ."</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. PowerPoint-ൽ പുതിയ സ്ലൈഡ് ചേർക്കാൻ ഉപയോഗിക്കുന്ന ഷോർട്ട്കട്ട്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Ctrl+N</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Ctrl+M</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Ctrl+S</button>
+            <button type="button" class="opt-btn" data-opt="D">D. F5</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Ctrl+M</div>
+            <div class="explanation">Ctrl+M = പുതിയ സ്ലൈഡ് (More slide); Ctrl+N = പുതിയ ഫയൽ; Ctrl+S = Save; F5 = Slide Show.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. Transparent background (സുതാര്യ പശ്ചാത്തലം) ഏത് ഇമേജ് ഫോർമാറ്റിൽ ലഭ്യമാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. JPEG</button>
+            <button type="button" class="opt-btn" data-opt="B">B. BMP</button>
+            <button type="button" class="opt-btn" data-opt="C">C. PNG</button>
+            <button type="button" class="opt-btn" data-opt="D">D. TIFF</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) PNG</div>
+            <div class="explanation">PNG = Lossless + Transparent background. JPEG = Lossy (transparency ഇല്ല); GIF = 256 നിറം + Animation; BMP = അൺകംപ്രസ്ഡ്.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. Photoshop-ന്റെ ഡിഫോൾട്ട് ഫയൽ എക്സ്റ്റൻഷൻ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. .xcf</button>
+            <button type="button" class="opt-btn" data-opt="B">B. .psd</button>
+            <button type="button" class="opt-btn" data-opt="C">C. .cdr</button>
+            <button type="button" class="opt-btn" data-opt="D">D. .ai</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) .psd</div>
+            <div class="explanation">.psd = Photoshop Document; .xcf = GIMP; .cdr = CorelDRAW; .ai = Illustrator.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഏതാണ് Open Source OS?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Windows 11</button>
+            <button type="button" class="opt-btn" data-opt="B">B. iOS</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Linux/Ubuntu</button>
+            <button type="button" class="opt-btn" data-opt="D">D. MS-DOS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Linux/Ubuntu</div>
+            <div class="explanation">Linux/Ubuntu = Open Source (FOSS). Windows, iOS, MS-DOS = Proprietary.</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. Word-ൽ ബൈൻഡിംഗിനായി ഇടതുവശത്തോ മുകളിലോ അധികം വിടുന്ന മാർജിനിനെ എന്ത് വിളിക്കും?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Header</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Indent</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Gutter</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Drop Cap</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Gutter</div>
+            <div class="explanation">Gutter = ബൈൻഡിംഗ് മാർജിൻ. Header = പേജിന്റെ മുകളിലെ ഭാഗം; Drop Cap = ആദ്യ അക്ഷരം വലുതാക്കൽ.</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. LibreOffice Calc-ന്റെ ഫയൽ എക്സ്റ്റൻഷൻ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. .odt</button>
+            <button type="button" class="opt-btn" data-opt="B">B. .odp</button>
+            <button type="button" class="opt-btn" data-opt="C">C. .ods</button>
+            <button type="button" class="opt-btn" data-opt="D">D. .odb</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) .ods</div>
+            <div class="explanation">Writer = .odt; Calc = .ods; Impress = .odp; Base = .odb.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. SQL-ൽ പട്ടികയുടെ ഘടന നിർവ്വചിക്കുന്ന (CREATE, ALTER, DROP) കമാൻഡുകൾ ഏത് വിഭാഗത്തിൽ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. DML</button>
+            <button type="button" class="opt-btn" data-opt="B">B. DDL</button>
+            <button type="button" class="opt-btn" data-opt="C">C. DQL</button>
+            <button type="button" class="opt-btn" data-opt="D">D. DCL</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) DDL</div>
+            <div class="explanation">DDL = Data Definition (CREATE, ALTER, DROP, TRUNCATE); DML = INSERT, UPDATE, DELETE; DQL = SELECT; DCL = GRANT, REVOKE; TCL = COMMIT, ROLLBACK.</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. DBMS-ൽ കോളങ്ങളുടെ (Attributes) എണ്ണത്തെ എന്ത് വിളിക്കുന്നു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Cardinality</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Degree</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Tuple</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Schema</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Degree</div>
+            <div class="explanation">Degree = കോളം എണ്ണം; Cardinality = വരി (Tuple) എണ്ണം. 🧠 Degree = Column (D-C), Cardinality = Count of rows.</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. RGB കളർ മോഡൽ എന്തിനാണ് ഉപയോഗിക്കുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. പ്രിന്റിംഗ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. സ്ക്രീൻ ഡിസ്പ്ലേ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. സ്കാനിംഗ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. സ്റ്റോറേജ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സ്ക്രീൻ ഡിസ്പ്ലേ</div>
+            <div class="explanation">RGB (Red, Green, Blue) = സ്ക്രീൻ/മോണിറ്റർ; CMYK (Cyan, Magenta, Yellow, Key/Black) = പ്രിന്റിംഗ്. 🧠 RGB = Screen-ൽ വെളിച്ചം; CMYK = കടലാസിൽ മഷി.</div>
+          </div>
+        </div>
+
+        <!-- Q21 -->
+        <div class="question-item" data-qindex="20">
+          <div class="q-text">21. Android-ന്റെ അടിസ്ഥാന കേർണൽ ഏതാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Windows NT</button>
+            <button type="button" class="opt-btn" data-opt="B">B. UNIX</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Linux</button>
+            <button type="button" class="opt-btn" data-opt="D">D. macOS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Linux</div>
+            <div class="explanation">Android = Linux കേർണൽ അടിസ്ഥാനം (Open Source). iOS/macOS = UNIX അടിസ്ഥാനം (Proprietary); Windows = NT കേർണൽ.</div>
+          </div>
+        </div>
+
+        <!-- Q22 -->
+        <div class="question-item" data-qindex="21">
+          <div class="q-text">22. Excel-ൽ സംഖ്യകൾ ഡിഫോൾട്ടായി ഏത് വശത്തേക്ക് അലൈൻ ചെയ്യും?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Left</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Right</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Center</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Justify</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Right</div>
+            <div class="explanation">Text → Left; Number/Date → Right; Logical (TRUE/FALSE) → Center. ഇത് ഒരു പ്രധാന PSC Trap ആണ്.</div>
+          </div>
+        </div>
+
+        <!-- Q23 -->
+        <div class="question-item" data-qindex="22">
+          <div class="q-text">23. MS Word 2007 മുതലുള്ള ഡിഫോൾട്ട് ഫോണ്ട് ഏതാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Times New Roman 12pt</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Calibri 11pt</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Arial 10pt</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Aptos 11pt</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Calibri 11pt</div>
+            <div class="explanation">Word 2007+ ഡിഫോൾട്ട് = Calibri 11pt. Word 2003 വരെ = Times New Roman 10pt (12 അല്ല!). Microsoft 365-ൽ പുതിയ ഡിഫോൾട്ട് Aptos ആണ്; PSC ഇപ്പോഴും Calibri ആണ് ചോദിക്കുക.</div>
+          </div>
+        </div>
+
+        <!-- Q24 -->
+        <div class="question-item" data-qindex="23">
+          <div class="q-text">24. Mail Merge-ൽ ഉൾപ്പെടുന്ന ഘടകങ്ങൾ ഏവ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Header + Footer</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Main Document + Data Source</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Body + Footer</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Row + Column</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Main Document + Data Source</div>
+            <div class="explanation">Mail Merge = ഒരേ കത്ത് പലരുടെ പേര്/വിലാസത്തിൽ. Main Document (കത്തിന്റെ ഫോർമാറ്റ്) + Data Source (പേരുകളുടെ പട്ടിക) ചേർത്ത് ഓരോ വ്യക്തിക്കും പ്രത്യേക കത്ത് ഉണ്ടാക്കുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q25 -->
+        <div class="question-item" data-qindex="24">
+          <div class="q-text">25. BOSS (Bharat Operating System Solutions) വികസിപ്പിച്ചത് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Infosys</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Wipro</button>
+            <button type="button" class="opt-btn" data-opt="C">C. C-DAC</button>
+            <button type="button" class="opt-btn" data-opt="D">D. TCS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) C-DAC</div>
+            <div class="explanation">BOSS = C-DAC വികസിപ്പിച്ച ഇന്ത്യയുടെ തദ്ദേശീയ Debian-അധിഷ്ഠിത Linux OS. കൂടാതെ Maya OS (പ്രതിരോധ മന്ത്രാലയം), BharOS (IIT Madras).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 20: ANSWER KEY & QUICK REVISION -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. ഉത്തര സൂചിക & Quick Revision</span>
+      </h2>
+      <div class="section-body">
+        <h3>20.1 ഉത്തര സൂചിക (Answer Key)</h3>
+        <div style="overflow-x: auto;">
+          <table style="max-width: 640px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>8</td><td>(C)</td><td>15</td><td>(C)</td><td>22</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>9</td><td>(B)</td><td>16</td><td>(C)</td><td>23</td><td>(B)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>10</td><td>(B)</td><td>17</td><td>(C)</td><td>24</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>11</td><td>(B)</td><td>18</td><td>(B)</td><td>25</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>12</td><td>(B)</td><td>19</td><td>(B)</td><td></td><td></td></tr>
+              <tr><td>6</td><td>(D)</td><td>13</td><td>(C)</td><td>20</td><td>(B)</td><td></td><td></td></tr>
+              <tr><td>7</td><td>(B)</td><td>14</td><td>(B)</td><td>21</td><td>(C)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>20.2 Top Maximum Facts (ഏറ്റവും പ്രധാനപ്പെട്ട വസ്തുതകൾ)</h3>
+        <ol>
+          <li>ഹാർഡ്‌വെയർ നിയന്ത്രിക്കുന്നത് System SW; ഉപയോക്തൃ ജോലി Application SW.</li>
+          <li>Compiler = ഒറ്റയടിക്ക്, Interpreter = വരി വരിയായി, Assembler = Assembly.</li>
+          <li>OS-ന്റെ ഹൃദയം = Kernel; ബൂട്ടിംഗ് = OS → RAM.</li>
+          <li>Linux: ടോർവാൾഡ്സ് 1991 (Tux); FSF: സ്റ്റാൾമാൻ.</li>
+          <li>BOSS = C-DAC-ന്റെ തദ്ദേശീയ Linux.</li>
+          <li>Mail Merge = ഒരേ കത്ത് പലർക്ക്; Gutter = ബൈൻഡിംഗ് മാർജിൻ.</li>
+          <li>Word Font: Calibri 11; ലിസ്റ്റ് 8–72; ടൈപ്പ് 1–1638.</li>
+          <li>Excel: Cell = Row∩Column; ഫോർമുല '='; 2007+ = 10,48,576 × 16,384 (XFD).</li>
+          <li>Absolute reference = $A$1.</li>
+          <li>RDBMS: Row = Record/Tuple, Column = Field/Attribute; Primary Key = Unique + Not NULL.</li>
+          <li>PPT: F5, Shift+F5, Ctrl+M, Slide Sorter View.</li>
+          <li>GIMP = .xcf (Open Source); Photoshop = .psd.</li>
+          <li>Transparent background → PNG; Animation → GIF; Vector → SVG.</li>
+          <li>SQL: DDL (CREATE, ALTER, DROP, TRUNCATE), DML (INSERT, UPDATE, DELETE), DQL (SELECT), DCL (GRANT, REVOKE), TCL (COMMIT, ROLLBACK).</li>
+          <li>Degree = കോളം; Cardinality = വരി.</li>
+        </ol>
+
+        <div class="last-minute">
+          <span class="box-label">📝 5-Minute / Last-Minute Revision</span>
+          <ul>
+            <li><strong>System SW:</strong> OS, Translators, Drivers, Utilities, Firmware</li>
+            <li><strong>Application:</strong> Word, Excel, PPT, Access, Browser, Tally</li>
+            <li><strong>Boot:</strong> Cold (Power) | Warm (Ctrl+Alt+Del) | POST (BIOS, ROM)</li>
+            <li><strong>Extensions:</strong> .docx, .odt | .xlsx, .ods | .pptx, .odp | .accdb, .odb | .psd, .xcf | .cdr, .ai, .svg</li>
+            <li><strong>Word:</strong> Mail Merge, Gutter, Drop Cap, Footnote/Endnote, F7, Shift+F7</li>
+            <li><strong>Excel:</strong> Workbook → Worksheet → Cell | Text Left, Number Right | = | #####, #DIV/0!, #NAME?, #REF!, #VALUE!</li>
+            <li><strong>DBMS:</strong> Codd 1970 | Primary (Unique, Not NULL), Foreign (Link) | SQL</li>
+            <li><strong>PPT:</strong> F5, Shift+F5, Ctrl+M, Esc | Transition (slide മാറ്റം) vs Animation (സ്ലൈഡിനുള്ളിൽ)</li>
+            <li><strong>Graphics:</strong> Raster (pixel) vs Vector (path) | RGB (screen) vs CMYK (print)</li>
+          </ul>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>System vs Application, Compiler vs Interpreter, Word ഷോർട്ട്കട്ടുകൾ, Excel ഫോർമുല '=' — ഇവ PSC-യുടെ സ്ഥിരം ചോദ്യങ്ങളാണ്. Word-ഉം Excel-ഉം സ്പെസിഫിക് സംഖ്യകൾ (10,48,576 × 16,384; 8–72; 1–1638) കൃത്യമായി ഓർക്കുക. Primary Key vs Foreign Key, Degree vs Cardinality — ഇവ ട്രാപ്പ് ചോദ്യങ്ങളിൽ വരും.</p>
+        </div>
+
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light);">
+          ✅ ഈ അധ്യായത്തിൽ 10.2.1 മുതൽ 10.2.10 വരെ (B) പൂർണ്ണമായി കവർ ചെയ്തിരിക്കുന്നു.
+        </p>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>10.2 Software and OS</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'computer-10.2-software-os';
-window.PART_TITLE = '10.2 Software and OS';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme102software');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme102software', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone102software_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone102software_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone102software_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaSoftware102Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
