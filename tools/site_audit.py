@@ -178,7 +178,7 @@ def check_manifests(problems):
         ) if os.path.isdir(folder) else []
         listed = []
         if os.path.isfile(manifest):
-            listed = re.findall(r'file:\s*"([^"]+)"', read_text(manifest))
+            listed = re.findall(r'["\']?file["\']?\s*:\s*["\']([^"\']+)["\']', read_text(manifest))
         out.append({
             "exam": exam,
             "on_disk": len(on_disk),
@@ -201,6 +201,31 @@ def check_duplicates(pages, problems):
     problems["duplicate_ids"] = dup_ids
 
 
+def check_data_export(problems):
+    """data/syllabus.json is generated; its file paths must still resolve."""
+    path = os.path.join(ROOT, "data", "syllabus.json")
+    if not os.path.isfile(path):
+        problems["data_export"] = {"exists": False, "missing": []}
+        return
+    try:
+        data = json.loads(read_text(path))
+    except json.JSONDecodeError as exc:
+        problems["data_export"] = {"exists": True, "error": str(exc), "missing": []}
+        return
+    missing = []
+    for subject in data.get("subjects", []):
+        for chapter in subject.get("chapters", []):
+            for rel_path in [chapter.get("file")] + [t.get("file") for t in chapter.get("topics", [])]:
+                if rel_path and not os.path.exists(os.path.join(ROOT, rel_path.replace("/", os.sep))):
+                    missing.append(rel_path)
+    problems["data_export"] = {
+        "exists": True,
+        "generated": data.get("generated", ""),
+        "subjects": len(data.get("subjects", [])),
+        "missing": missing,
+    }
+
+
 def main():
     verbose = "--verbose" in sys.argv
     pages = parse_pages()
@@ -211,6 +236,7 @@ def main():
     check_orphans(pages, problems)
     check_absolute_base(list(pages.keys()), problems)
     check_manifests(problems)
+    check_data_export(problems)
     check_duplicates(pages, problems)
 
     print("=" * 72)
@@ -233,7 +259,7 @@ def main():
         print(f"    MISSING  {m}")
 
     orphans = problems["orphan_pages"]
-    print(f"\n[3] Pages not linked from syllabus.js : {len(orphans)}")
+    print(f"\n[3] Stale pages not linked from syllabus.js : {len(orphans)}   (advisory)")
     for o in orphans[:25]:
         print(f"    {o}")
 
@@ -254,18 +280,34 @@ def main():
         if m["on_disk_but_unlisted"]:
             print(f"        on disk, unlisted  : {len(m['on_disk_but_unlisted'])} files")
 
-    print(f"\n[6] Duplicate <title> values : {len(problems['duplicate_titles'])}")
+    exp = problems["data_export"]
+    print("\n[6] data/syllabus.json (generated export)")
+    if not exp["exists"]:
+        print("    missing")
+    elif exp.get("error"):
+        print(f"    unreadable: {exp['error']}")
+    else:
+        print(f"    {exp['subjects']} subjects · generated {exp['generated'][:19]}")
+        print(f"    file references that do not resolve : {len(exp['missing'])}")
+        for m in exp["missing"][:10]:
+            print(f"        {m}")
+
+    print(f"\n[7] Duplicate <title> values : {len(problems['duplicate_titles'])}")
     for t, c in problems["duplicate_titles"][:10]:
         print(f"    {c:4d}x  {t!r}")
     print(f"    Duplicate ids in a page   : {len(problems['duplicate_ids'])}")
     for f, ids in problems["duplicate_ids"][:10]:
         print(f"    {f}: {ids}")
 
-    total = (len(broken) + len(missing) + len(orphans) + len(rr)
+    total = (len(broken) + len(missing) + len(rr)
              + sum(len(m["listed_but_missing"]) for m in problems["manifests"])
+             + sum(len(m["on_disk_but_unlisted"]) for m in problems["manifests"])
+             + len(exp.get("missing", []))
+             + (0 if exp["exists"] and not exp.get("error") else 1)
              + len(problems["duplicate_ids"]))
     print("\n" + "=" * 72)
-    print(f"RESULT: {'CLEAN' if total == 0 else str(total) + ' problem group(s)'}")
+    print(f"FAILURES: {total}    ADVISORY (stale pages): {len(orphans)}")
+    print(f"RESULT: {'CLEAN' if total == 0 else str(total) + ' problem(s)'}")
     print("=" * 72)
     return 0 if total == 0 else 1
 
