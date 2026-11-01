@@ -1,106 +1,2266 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10.3 Networks - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – കമ്പ്യൂട്ടർ നെറ്റ്‌വർക്കുകൾ | അധ്യായം 10.4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a148c; --primary-light: #6a1b9a;
+      --secondary: #00695c; --accent: #b83b2c;
+      --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
+      --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #4a148c; --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #cba6f7; --primary-light: #b4befe;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #6a1b9a; --table-alt: #181825;
+    }
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #7b4b1e; --primary-light: #9c6b3a;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #7b4b1e; --table-alt: #f2ead4;
+    }
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn { background: #181825; color: var(--text); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .layout { display: grid; grid-template-columns: 270px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12.5px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .progress-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 600; }
+    .progress-track { width: 100%; height: 8px; background: var(--light-bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+    .main-container { background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12); padding: 24px; min-width: 0; }
+    .chapter-header { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .utility-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--light-bg); padding: 10px 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .search-input { flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn { padding: 7px 12px; font-size: 13px; font-family: inherit; font-weight: 600; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--primary); cursor: pointer; transition: all 0.2s; }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+    body.recall-mode strong { filter: blur(5px); background: rgba(106, 27, 154, 0.15); border-radius: 4px; padding: 0 4px; cursor: pointer; transition: filter 0.2s ease; user-select: none; }
+    body.recall-mode strong:hover, body.recall-mode strong.revealed { filter: blur(0); }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 { background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 18.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; border-radius: 0; margin: 0; gap: 10px; }
+    .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--secondary); flex-shrink: 0; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box { padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick { display: block; margin-top: 6px; padding: 6px 10px; background: var(--memory-bg); border-left: 4px solid var(--memory-border); border-radius: 6px; font-size: 14.5px; line-height: 1.6; }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results { display: none; text-align: center; padding: 16px; margin-bottom: 16px; color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+    .quiz-dashboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--light-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; border: 2px solid var(--primary); position: sticky; top: 10px; z-index: 50; }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+    .question-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn { display: block; padding: 8px 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; font-family: inherit; text-align: left; width: 100%; }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button { padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: var(--bg); color: var(--text); transition: all 0.2s; }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block { display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border); }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    code { background: var(--light-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    .math { font-family: 'Courier New', Consolas, monospace; background: var(--light-bg); padding: 2px 6px; border-radius: 4px; color: var(--primary); font-weight: 600; }
+    .math-block { font-family: 'Courier New', Consolas, monospace; background: var(--light-bg); padding: 12px 16px; border-radius: 8px; margin: 10px 0; color: var(--text); font-size: 14.5px; line-height: 1.8; border-left: 4px solid var(--primary); overflow-x: auto; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden; padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">10.3 Networks</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. അടിസ്ഥാനം & టోపోളജി & OSI</a></li>
+      <li><a href="#sec4">4. LAN, MAN, WAN</a></li>
+      <li><a href="#sec5">5. Network Media</a></li>
+      <li><a href="#sec6">6. Network Devices</a></li>
+      <li><a href="#sec7">7. MAC vs IP & Protocols</a></li>
+      <li><a href="#sec8">8. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</a></li>
+      <li><a href="#sec9">9. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec10">10. PSC വിശകലനം</a></li>
+      <li><a href="#sec11">11. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec12">12. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec13">13. കാലക്രമം</a></li>
+      <li><a href="#sec14">14. Mnemonics & Traps</a></li>
+      <li><a href="#sec15">15. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec16">16. PSC Smart Tricks</a></li>
+      <li><a href="#sec17">17. മാതൃകാ ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec18">18. MCQ പരിശീലനം</a></li>
+      <li><a href="#sec19">19. ഒറ്റനോട്ട പട്ടിക & Tips</a></li>
+      <li><a href="#sec20">20. 5-Minute Revision & Corrections</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 10.4 | Computer Science & IT</div>
+      <h1>കമ്പ്യൂട്ടർ നെറ്റ്‌വർക്കുകൾ (Computer Networks) – സമ്പൂർണ്ണ പഠനക്കുറിപ്പ്</h1>
+      <div class="subtitle">LAN · MAN · WAN · Topologies · OSI · Network Devices · Protocols | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 തിരയുക (ഉദാ: Router, LAN, OSI, 802.11)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനത്തിൽ)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഹബ്ബ് (L1), സ്വിച്ച് (L2), റൂട്ടർ (L3), ഗേറ്റ്‌വേ (Protocol Converter), MAC അഡ്രസ് (48 ബിറ്റ്) vs IP (32/128), LAN-MAN-WAN താരതമ്യം, OFC (പൂർണ്ണ ആന്തരിക പ്രതിഫലനം), OSI 7 ലെയർ ക്രമം</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ടോപ്പോളജികൾ (Star = Hub/Switch, Ring = Token, Mesh = n(n-1)/2), IEEE സ്റ്റാൻഡേർഡുകൾ (802.3, 802.11, 802.15.1, 802.16), Wi-Fi സുരക്ഷ (WPA2/WPA3), SMTP vs POP3</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — Repeater (L1), Bridge (L2, ഒരേ പ്രോട്ടോക്കോൾ), Modem (Digital ⇄ Analog), TCP vs UDP, പോർട്ട് നമ്പറുകൾ</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ARPANET (1969), Ethernet (1973), OSI (1984), Wi-Fi (1997), കേരളത്തിലെ KSWAN/K-FON, കപാനി (Fibre Optics പിതാവ്)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — Cyberspace എന്ന പദം (വില്യം ഗിബ്സൺ), പോൾ ബാരൻ (Packet switching ആശയം)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>Hub = L1 (Broadcast, Dumb)</strong></li>
+            <li><strong>Switch = L2 (Intelligent Hub, MAC)</strong></li>
+            <li><strong>Router = L3 (IP, Best path)</strong></li>
+            <li><strong>Gateway = Protocol Converter</strong></li>
+            <li><strong>ഇന്റർനെറ്റ് = ഏറ്റവും വലിയ WAN</strong></li>
+            <li><strong>MAC = 48 ബിറ്റ്; IPv4 = 32; IPv6 = 128</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTRODUCTION -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> വിവരങ്ങളും (Data) ഉപകരണങ്ങളും (Resources – പ്രിന്റർ, സ്കാനർ, ഇന്റർനെറ്റ്, ഫയലുകൾ) പങ്കുവെക്കാൻ രണ്ടോ അതിലധികമോ കമ്പ്യൂട്ടറുകളെ കേബിൾ വഴിയോ വയർലെസ്സ് ആയോ ബന്ധിപ്പിക്കുന്ന സംവിധാനമാണ് <strong>കമ്പ്യൂട്ടർ നെറ്റ്‌വർക്ക് (Computer Network)</strong>. കമ്പ്യൂട്ടർ ശൃംഖലകളിലൂടെ ആശയവിനിമയം നടക്കുന്ന സാങ്കല്പിക ലോകമാണ് <strong>സൈബർ സ്പേസ് (Cyberspace)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>PSC പ്രാധാന്യം:</strong> LDC, LGS, University Assistant, ഡിഗ്രി തലം തുടങ്ങിയ പരീക്ഷകളിൽ ഐ.ടി വിഭാഗത്തിൽ ആവർത്തിച്ച് വരുന്ന ഭാഗമാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാന മേഖലകൾ:</strong> LAN, MAN, WAN താരതമ്യം; ഒപ്റ്റിക്കൽ ഫൈബറിന്റെ തത്വം; ഹബ്ബ്, സ്വിച്ച്, റൂട്ടർ, ബ്രിഡ്ജ്, ഗേറ്റ്‌വേ, റിപ്പീറ്റർ, മോഡം എന്നിവയുടെ ധർമ്മം; OSI ലെയറുകൾ; ടോപ്പോളജികൾ.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BEHIND THE STORY -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ</span>
+      </h2>
+      <div class="section-body">
+        <p>ഒരു ക്ലാസ്സിലെ അഞ്ച് കൂട്ടുകാർക്ക് ഒരൊറ്റ കളർ ബോക്സും ഒരു കത്രികയും മാത്രമേയുള്ളൂ എന്ന് കരുതുക. അവർ അത് പരസ്പരം കൈമാറി ഉപയോഗിക്കും. അതുപോലെ പത്ത് കമ്പ്യൂട്ടറുകൾക്ക് പത്ത് പ്രിന്റർ വാങ്ങാതെ ഒരു പ്രിന്ററും ഇന്റർനെറ്റും ഫയലുകളും പങ്കിടുന്നതാണ് <strong>Resource Sharing</strong>. അതിനായി കമ്പ്യൂട്ടറുകൾ കൈകോർക്കുന്ന ചങ്ങലയാണ് നെറ്റ്‌വർക്ക്.</p>
+
+        <ul>
+          <li>വീടിനുള്ളിലെ മുറികളെ ബന്ധിപ്പിക്കുന്ന ഇടനാഴി → <strong>LAN</strong></li>
+          <li>ഒരു നഗരത്തിലെ റോഡ് ശൃംഖല → <strong>MAN</strong></li>
+          <li>രാജ്യങ്ങളെയും വൻകരകളെയും ബന്ധിപ്പിക്കുന്ന ദേശീയപാതകളും വിമാനപ്പാതകളും → <strong>WAN</strong></li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ചരിത്രം</span>
+          <ul>
+            <li><strong>1969-ൽ</strong> അമേരിക്കൻ പ്രതിരോധ വകുപ്പിന്റെ ഗവേഷണ ഏജൻസി (ARPA) സ്ഥാപിച്ച <strong>ARPANET</strong> ആദ്യത്തെ പ്രധാന <strong>പാക്കറ്റ്-സ്വിച്ചിംഗ് നെറ്റ്‌വർക്കും</strong> ഇന്റർനെറ്റിന്റെ മുൻഗാമിയുമാണ്.</li>
+            <li><strong>1973-ൽ</strong> റോബർട്ട് മെറ്റ്കാൾഫ് (Xerox PARC) ഓഫീസ് കമ്പ്യൂട്ടറുകളെ കേബിൾ വഴി ബന്ധിപ്പിക്കുന്ന <strong>ഇതർനെറ്റ് (Ethernet)</strong> വികസിപ്പിച്ചു. ഇതോടെ LAN ലോകമെങ്ങും വ്യാപിച്ചു.</li>
+          </ul>
+        </div>
+
+        <div class="correction">
+          <span class="box-label">⚠️ തിരുത്തൽ</span>
+          <p>ആണവാക്രമണത്തെ അതിജീവിക്കാനാണ് ARPANET ഉണ്ടാക്കിയത് എന്ന കഥ <strong>ഭാഗികമായി മാത്രം ശരിയാണ്</strong>. "ഒരു ഭാഗം തകർന്നാലും സന്ദേശം എത്തുന്ന ശൃംഖല" എന്ന ആശയം <strong>പോൾ ബാരൻ (Paul Baran)</strong> ശീതയുദ്ധകാലത്ത് മുന്നോട്ടുവെച്ചതാണ്. ഇത് പാക്കറ്റ് സ്വിച്ചിംഗിന്റെ വികാസത്തിന് പ്രചോദനമായി. എങ്കിലും ARPANET-ന്റെ ഔദ്യോഗിക ലക്ഷ്യം റിസർച്ച് കമ്പ്യൂട്ടറുകൾ പങ്കിടൽ ആയിരുന്നു.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: BASICS, TOPOLOGIES, OSI -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. അടിസ്ഥാനം, ടോപ്പോളജി, OSI മോഡൽ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>3.1 അടിസ്ഥാന പദങ്ങൾ</h3>
+        <ul>
+          <li><strong>നോഡ് (Node) / ഹോസ്റ്റ് (Host):</strong> നെറ്റ്‌വർക്കിൽ ഡാറ്റ അയക്കാനോ സ്വീകരിക്കാനോ കഴിയുന്ന ഏതൊരു ഉപകരണവും <strong>നോഡ്</strong> ആണ്. ഐ.പി അഡ്രസ്സുള്ള കമ്പ്യൂട്ടറുകളെ <strong>ഹോസ്റ്റ്</strong> എന്ന് വിളിക്കുന്നു.</li>
+          <li><strong>സെർവർ (Server) / ക്ലയന്റ് (Client):</strong> സേവനം നൽകുന്ന കമ്പ്യൂട്ടർ സെർവർ, സേവനം സ്വീകരിക്കുന്നവ ക്ലയന്റ്. പ്രത്യേക സെർവർ ഇല്ലാതെ എല്ലാ കമ്പ്യൂട്ടറുകളും തുല്യ പദവിയിൽ പ്രവർത്തിക്കുന്ന രീതിയാണ് <strong>പിയർ-ടു-പിയർ (P2P)</strong>.</li>
+          <li><strong>ബാൻഡ്‌വിഡ്ത്ത് (Bandwidth):</strong> ഒരു ചാനലിലൂടെ ഒരു സെക്കൻഡിൽ കൈമാറാവുന്ന പരമാവധി ഡാറ്റയുടെ അളവ്. ഡിജിറ്റൽ നെറ്റ്‌വർക്കിൽ യൂണിറ്റ് <strong>bps (Kbps, Mbps, Gbps)</strong>. അനലോഗ് സിഗ്നലുകളിൽ ബാൻഡ്‌വിഡ്ത്ത് <strong>ഹെർട്സിലാണ് (Hz)</strong> അളക്കുന്നത്.</li>
+          <li><strong>ത്രൂപുട്ട് (Throughput):</strong> യഥാർത്ഥത്തിൽ കൈമാറ്റം ചെയ്യപ്പെടുന്ന ഡാറ്റ.</li>
+          <li><strong>ലേറ്റൻസി (Latency):</strong> ഡാറ്റ എത്താനെടുക്കുന്ന കാലതാമസം.</li>
+          <li><strong>പ്രോട്ടോക്കോൾ (Protocol):</strong> ഡാറ്റ കൈമാറ്റത്തിന്റെ നിയമങ്ങളുടെ കൂട്ടം (TCP/IP, HTTP, FTP, SMTP).</li>
+        </ul>
+
+        <h3>3.2 ട്രാൻസ്മിഷൻ മോഡുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മോഡ്</th><th>ദിശ</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>സിംപ്ലക്സ് (Simplex)</strong></td><td>ഒരു ദിശയിൽ മാത്രം</td><td>കീബോർഡ്, മോണിറ്റർ, റേഡിയോ, ടി.വി സംപ്രേഷണം</td></tr>
+              <tr><td><strong>ഹാഫ്-ഡ്യൂപ്ലക്സ് (Half-Duplex)</strong></td><td>രണ്ട് ദിശയിലും, പക്ഷേ ഒരേസമയം ഒരു ദിശയിൽ</td><td>വാക്കി-ടോക്കി</td></tr>
+              <tr><td><strong>ഫുൾ-ഡ്യൂപ്ലക്സ് (Full-Duplex)</strong></td><td>ഒരേസമയം രണ്ട് ദിശയിലും</td><td>ടെലിഫോൺ സംഭാഷണം, ആധുനിക ഇതർനെറ്റ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3.3 സ്വിച്ചിംഗ് രീതികൾ</h3>
+        <ul>
+          <li><strong>സർക്യൂട്ട് സ്വിച്ചിംഗ്:</strong> ആശയവിനിമയം തുടങ്ങും മുമ്പ് രണ്ട് അറ്റങ്ങൾക്കിടയിൽ ആ <strong>സംഭാഷണ കാലയളവിൽ മാത്രം</strong> ഒരു പ്രത്യേക പാത സ്ഥാപിക്കുന്നു (പഴയ ലാൻഡ്‌ലൈൻ ടെലിഫോൺ).</li>
+          <li><strong>പാക്കറ്റ് സ്വിച്ചിംഗ്:</strong> സന്ദേശത്തെ ചെറിയ <strong>പാക്കറ്റുകളായി</strong> മുറിച്ച് വ്യത്യസ്ത വഴികളിലൂടെ അയച്ച് ലക്ഷ്യസ്ഥാനത്ത് വീണ്ടും കൂട്ടിച്ചേർക്കുന്നു. <strong>ഇന്റർനെറ്റ് പ്രവർത്തിക്കുന്നത് പാക്കറ്റ് സ്വിച്ചിംഗിലാണ്.</strong> അടിത്തറയിട്ടവർ: <strong>പോൾ ബാരൻ, ഡൊണാൾഡ് ഡേവിസ്</strong> (ഡേവിസ് ആണ് "packet" എന്ന പദം നൽകിയത്).</li>
+        </ul>
+
+        <h3>3.4 നെറ്റ്‌വർക്ക് ടോപ്പോളജികൾ</h3>
+        <p>കമ്പ്യൂട്ടറുകളെയും കേബിളുകളെയും ക്രമീകരിക്കുന്ന ജ്യാമിതീയ രീതിയാണ് <strong>ടോപ്പോളജി</strong>.</p>
+        <ol>
+          <li><strong>ബസ് (Bus):</strong> എല്ലാ കമ്പ്യൂട്ടറുകളും ഒരു <strong>ബാക്ക്ബോൺ കേബിളിൽ</strong>. അറ്റങ്ങളിൽ സിഗ്നൽ പ്രതിഫലനം തടയാൻ <strong>ടെർമിനേറ്ററുകൾ</strong>. ചെലവ് കുറവാണ്, എന്നാൽ പ്രധാന കേബിൾ മുറിഞ്ഞാൽ നെറ്റ്‌വർക്ക് മുഴുവൻ തകരാറിലാകും.</li>
+          <li><strong>സ്റ്റാർ (Star):</strong> എല്ലാ കമ്പ്യൂട്ടറുകളും നടുവിലെ <strong>ഹബ്ബ്/സ്വിച്ചിലേക്ക്</strong> വെവ്വേറെ കേബിളുകൾ വഴി. ഇന്ന് LAN-ൽ <strong>ഏറ്റവും വ്യാപകമായ ടോപ്പോളജി</strong> ഇതാണ്. ഒരു കമ്പ്യൂട്ടറിന്റെ കേബിൾ മുറിഞ്ഞാൽ മറ്റുള്ളവയെ ബാധിക്കില്ല; <strong>കേന്ദ്ര ഹബ്ബ്/സ്വിച്ച് തകരാറിലായാൽ നെറ്റ്‌വർക്ക് മുഴുവൻ നിലയ്ക്കും.</strong></li>
+          <li><strong>റിംഗ് (Ring):</strong> കമ്പ്യൂട്ടറുകൾ വൃത്താകൃതിയിൽ. <strong>ടോക്കൺ പാസിംഗ്</strong> ഉപയോഗിക്കുന്നു. ഒരു നോഡ്/കേബിൾ തകരാറിലായാൽ വലയം മുറിഞ്ഞ് നെറ്റ്‌വർക്ക് തടസ്സപ്പെടാം (Dual-ring ഇതിനൊരു പരിഹാരമാണ്).</li>
+          <li><strong>മെഷ് (Mesh):</strong> ഓരോ കമ്പ്യൂട്ടറും മറ്റെല്ലാറ്റുമായി നേരിട്ട് ബന്ധിപ്പിച്ചിരിക്കുന്നു. <strong>ഏറ്റവും വിശ്വാസ്യതയും Fault tolerance-ഉം</strong> ഉള്ളത്. കേബിൾ ചെലവ് ഏറ്റവും കൂടുതൽ.
+            <ul>
+              <li>ഫുൾ മെഷിൽ n കമ്പ്യൂട്ടറുകൾക്ക് വേണ്ട കേബിളുകൾ = <strong>n(n−1)/2</strong> (ഉദാ: 5 കമ്പ്യൂട്ടർ → 5×4/2 = <strong>10</strong>).</li>
+              <li>ഓരോ കമ്പ്യൂട്ടറിനും വേണ്ട പോർട്ടുകൾ = <strong>n−1</strong>.</li>
+            </ul>
+          </li>
+          <li><strong>ട്രീ (Tree):</strong> ബസ് + സ്റ്റാർ സംയോജനം. റൂട്ട് ഹബ്ബിൽ നിന്ന് ശാഖകളായി സെക്കൻഡറി ഹബ്ബുകൾ.</li>
+          <li><strong>ഹൈബ്രിഡ് (Hybrid):</strong> രണ്ടോ അതിലധികമോ ടോപ്പോളജികളുടെ സംയോജനം.</li>
+        </ol>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ടോപ്പോളജി</th><th>ഗുണം</th><th>ദോഷം</th><th>പ്രധാന സൂചന</th></tr></thead>
+            <tbody>
+              <tr><td>Bus</td><td>ചെലവ് കുറവ്, എളുപ്പം</td><td>Backbone തകർന്നാൽ എല്ലാം നിലയ്ക്കും</td><td>Terminator, Backbone</td></tr>
+              <tr><td>Star</td><td>ഒരു കേബിൾ തകരാർ ബാധിക്കില്ല, മാറ്റം എളുപ്പം</td><td>കേന്ദ്ര ഉപകരണം Single point of failure</td><td>Hub/Switch</td></tr>
+              <tr><td>Ring</td><td>ക്രമമായ ഡാറ്റാ പ്രവാഹം</td><td>ഒരു നോഡ് തകരാർ വലയത്തെ ബാധിക്കും</td><td>Token</td></tr>
+              <tr><td>Mesh</td><td>ഏറ്റവും വിശ്വാസ്യത, സുരക്ഷ</td><td>ചെലവ് ഏറ്റവും കൂടുതൽ</td><td>n(n−1)/2</td></tr>
+              <tr><td>Tree</td><td>വികസിപ്പിക്കാൻ എളുപ്പം</td><td>Root തകരാർ ബാധിക്കും</td><td>Bus + Star</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3.5 OSI മോഡലും TCP/IP മോഡലും</h3>
+        <p><strong>OSI (Open Systems Interconnection) മോഡൽ:</strong> ഡാറ്റ കൈമാറ്റം വിശദീകരിക്കാൻ <strong>ISO</strong> 1984-ൽ പുറത്തിറക്കിയ <strong>7 പാളികളുള്ള</strong> സാങ്കല്പിക (Reference) മാതൃക.</p>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ലെയർ</th><th>പേര്</th><th>PDU</th><th>ഉപകരണങ്ങൾ / പ്രോട്ടോക്കോളുകൾ</th><th>ധർമ്മം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>7</strong></td><td><strong>Application</strong></td><td>Data</td><td>Browser, HTTP, HTTPS, FTP, SMTP, DNS, POP3, Telnet</td><td>ഉപയോക്താവിന് നെറ്റ്‌വർക്ക് സേവനം</td></tr>
+              <tr><td><strong>6</strong></td><td><strong>Presentation</strong></td><td>Data</td><td>SSL/TLS, JPEG, MPEG, ASCII</td><td>Translation, <strong>Encryption</strong>, Compression</td></tr>
+              <tr><td><strong>5</strong></td><td><strong>Session</strong></td><td>Data</td><td>NetBIOS, PPTP</td><td>സെഷൻ തുടങ്ങൽ / നിലനിർത്തൽ / അവസാനിപ്പിക്കൽ</td></tr>
+              <tr><td><strong>4</strong></td><td><strong>Transport</strong></td><td>Segment (TCP) / Datagram (UDP)</td><td>TCP, UDP</td><td>End-to-end ഡെലിവറി, Error &amp; Flow control</td></tr>
+              <tr><td><strong>3</strong></td><td><strong>Network</strong></td><td><strong>Packet</strong></td><td><strong>Router</strong>, IP, ICMP</td><td><strong>IP (Logical) Addressing</strong>, <strong>Routing</strong></td></tr>
+              <tr><td><strong>2</strong></td><td><strong>Data Link</strong></td><td><strong>Frame</strong></td><td><strong>Switch, Bridge</strong>, NIC</td><td><strong>MAC (Physical) Addressing</strong>, Error detection</td></tr>
+              <tr><td><strong>1</strong></td><td><strong>Physical</strong></td><td><strong>Bit</strong></td><td><strong>Hub, Repeater</strong>, കേബിളുകൾ</td><td>ബിറ്റുകളെ വൈദ്യുത/പ്രകാശ/റേഡിയോ സിഗ്നലുകളായി അയക്കൽ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>TCP/IP മോഡൽ:</strong> ഇന്റർനെറ്റിന്റെ പ്രായോഗിക മാതൃക. <strong>4 ലെയറുകൾ</strong>:</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>TCP/IP ലെയർ</th><th>ഏകദേശം തുല്യമായ OSI ലെയർ</th></tr></thead>
+            <tbody>
+              <tr><td>Application</td><td>Application + Presentation + Session (7, 6, 5)</td></tr>
+              <tr><td>Transport</td><td>Transport (4)</td></tr>
+              <tr><td>Internet</td><td>Network (3)</td></tr>
+              <tr><td>Network Access / Link</td><td>Data Link + Physical (2, 1)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>OSI-യിലെ Session, Presentation എന്നിവ TCP/IP-യിൽ പ്രത്യേകമായി ഇല്ല; അവ Application ലെയറിൽ ലയിച്ചിരിക്കുന്നു.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 4: LAN, MAN, WAN -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. LAN, MAN, WAN – നെറ്റ്‌വർക്ക് തരങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <p>വ്യാപ്തിയുടെ (Geographical area) അടിസ്ഥാനത്തിൽ നെറ്റ്‌വർക്കുകളെ LAN, MAN, WAN എന്ന് തരംതിരിക്കുന്നു. L, M, W = Local, Metropolitan, Wide.</p>
+
+        <h3>4.1 LAN – Local Area Network</h3>
+        <ul>
+          <li><strong>പരിധി:</strong> ഒരു മുറി, കെട്ടിടം (ഓഫീസ്, സ്കൂൾ, വീട്, ബാങ്ക്), ചെറിയ ക്യാമ്പസ്. സാധാരണ <strong>ഏതാനും കിലോമീറ്റർ വരെ</strong>.</li>
+          <li><strong>ഉദ്ദേശ്യം:</strong> ഒരു സ്ഥാപനത്തിനുള്ളിൽ വിവരങ്ങളും പ്രിന്റർ, സോഫ്റ്റ്‌വെയർ, ഇന്റർനെറ്റ് എന്നിവയും വേഗത്തിൽ പങ്കിടൽ. LAN സാധാരണ ഒരു സ്ഥാപനത്തിന്റെ സ്വകാര്യ ഉടമസ്ഥതയിലാണ്.</li>
+          <li><strong>സാങ്കേതികവിദ്യ:</strong> വയേർഡ് LAN-ൽ <strong>ഇതർനെറ്റ് (IEEE 802.3)</strong>. പഴയ Token Ring: IEEE 802.5. വയർലെസ്സ് LAN-നെ <strong>WLAN / Wi-Fi (IEEE 802.11)</strong> എന്ന് വിളിക്കുന്നു.</li>
+          <li><strong>വേഗത:</strong> MAN, WAN എന്നിവയെ അപേക്ഷിച്ച് <strong>വേഗത ഏറ്റവും കൂടുതൽ</strong> (100 Mbps മുതൽ 10 Gbps+ വരെ). തിരക്ക്, എറർ നിരക്ക്, ചെലവ് എന്നിവ ഏറ്റവും കുറവ്.</li>
+        </ul>
+
+        <h3>4.2 MAN – Metropolitan Area Network</h3>
+        <ul>
+          <li><strong>പരിധി:</strong> ഒരു <strong>നഗരം/പട്ടണം</strong> (ഏകദേശം 5–50 km; ചില പുസ്തകങ്ങളിൽ 100 km വരെ). വലിപ്പത്തിൽ <strong>LAN-നും WAN-നും ഇടയിൽ</strong>.</li>
+          <li><strong>രീതി:</strong> ഒരു നഗരത്തിലെ പല LAN-കളെ (ബാങ്ക് ശാഖകൾ, സർക്കാർ ഓഫീസുകൾ) ഒപ്റ്റിക്കൽ ഫൈബർ വഴി ബന്ധിപ്പിക്കുന്നു.</li>
+          <li><strong>പ്രശസ്ത ഉദാഹരണം:</strong> <strong>കേബിൾ ടി.വി നെറ്റ്‌വർക്ക്</strong>, സിറ്റി ബ്രോഡ്ബാൻഡ്. സ്റ്റാൻഡേർഡ് <strong>IEEE 802.6 (DQDB)</strong>; വയർലെസ്സ് MAN: <strong>WiMAX (IEEE 802.16)</strong>.</li>
+        </ul>
+
+        <h3>4.3 WAN – Wide Area Network</h3>
+        <ul>
+          <li><strong>പരിധി:</strong> നഗരങ്ങൾ, സംസ്ഥാനങ്ങൾ, രാജ്യങ്ങൾ, ഭൂഖണ്ഡങ്ങൾ. <strong>ഏറ്റവും വലിയ ഭൂമിശാസ്ത്ര പരിധി</strong>.</li>
+          <li><strong>മീഡിയ:</strong> ലീസ്ഡ് ടെലിഫോൺ ലൈനുകൾ, സമുദ്രാന്തര ഒപ്റ്റിക്കൽ ഫൈബർ, മൈക്രോവേവ്, <strong>ഉപഗ്രഹങ്ങൾ</strong>.</li>
+          <li><strong>സാങ്കേതികവിദ്യ:</strong> പാക്കറ്റ് സ്വിച്ചിംഗ്: <strong>Frame Relay, X.25, ATM</strong>.</li>
+          <li><strong>ഉദാഹരണങ്ങൾ:</strong> <strong>ഇന്റർനെറ്റ് (ലോകത്തിലെ ഏറ്റവും വലിയ WAN)</strong>, റെയിൽവേ റിസർവേഷൻ, എയർലൈൻ റിസർവേഷൻ, ബാങ്ക് ATM ശൃംഖല, <strong>NICNET</strong>, <strong>KSWAN</strong> (കേരളം).</li>
+          <li><strong>പ്രത്യേകത:</strong> ദൂരം കൂടുതൽ ആയതിനാൽ തിരക്ക്, കാലതാമസം, എറർ നിരക്ക്, ചെലവ് എന്നിവ കൂടുതലും ഓരോ ഉപയോക്താവിന്റെയും ശരാശരി വേഗത LAN-നേക്കാൾ കുറവുമാണ്.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ മറ്റ് നെറ്റ്‌വർക്ക് തരങ്ങൾ</span>
+          <ul>
+            <li><strong>PAN (Personal Area Network):</strong> വ്യക്തിയുടെ ചുറ്റുമുള്ള ഉപകരണങ്ങൾ (ഫോൺ, ഇയർബഡ്സ്, സ്മാർട്ട് വാച്ച്), ഏകദേശം <strong>10 മീറ്റർ വരെ</strong>. ഉദാ: <strong>Bluetooth (IEEE 802.15.1)</strong>, 2.4 GHz റേഡിയോ ബാൻഡ്; വികസിപ്പിച്ചത് <strong>ജാപ്പ് ഹാർട്ട്സെൻ (Ericsson)</strong>.</li>
+            <li><strong>CAN (Campus Area Network):</strong> സർവ്വകലാശാല/വ്യവസായ ക്യാമ്പസിലെ കെട്ടിടങ്ങളെ ബന്ധിപ്പിക്കുന്നു (LAN-നേക്കാൾ വലുത്, MAN-നേക്കാൾ ചെറുത്).</li>
+            <li><strong>VPN (Virtual Private Network):</strong> ഇന്റർനെറ്റിലൂടെ എൻക്രിപ്റ്റ് ചെയ്ത "ടണൽ" വഴി സ്വകാര്യ നെറ്റ്‌വർക്ക് വ്യാപിപ്പിക്കുന്നു.</li>
+            <li><strong>ഇൻട്രാനെറ്റ് (Intranet):</strong> സ്ഥാപനത്തിലെ ജീവനക്കാർക്ക് മാത്രമുള്ള സ്വകാര്യ നെറ്റ്‌വർക്ക്. <strong>എക്സ്ട്രാനെറ്റ് (Extranet):</strong> അതിലേക്ക് ഉപഭോക്താക്കൾക്കോ പങ്കാളികൾക്കോ നിയന്ത്രിത പ്രവേശനം നൽകുമ്പോൾ.</li>
+            <li><strong>വലിപ്പക്രമം:</strong> <strong>PAN → LAN → CAN → MAN → WAN</strong> (ചെറുതിൽ നിന്ന് വലുതിലേക്ക്).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: NETWORK MEDIA -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. നെറ്റ്‌വർക്ക് മീഡിയ (Network Media)</span>
+      </h2>
+      <div class="section-body">
+        <p>ഡാറ്റ സഞ്ചരിക്കുന്ന പാതയാണ് <strong>ട്രാൻസ്മിഷൻ മീഡിയ</strong>. രണ്ട് തരം: <strong>ഗൈഡഡ് (Wired/Bounded)</strong>, <strong>അൺഗൈഡഡ് (Wireless/Unbounded)</strong>.</p>
+
+        <h3>5.1 ഗൈഡഡ് മീഡിയ</h3>
+        <ol>
+          <li><strong>ട്വിസ്റ്റഡ് പെയർ (Twisted Pair):</strong>
+            <ul>
+              <li>ഇൻസുലേറ്റഡ് ചെമ്പ് കമ്പികൾ ജോഡിയായി പിരിച്ചുവെച്ചത് (LAN കേബിളിൽ 4 ജോഡി = 8 കമ്പി). പിരിക്കുന്നത് <strong>വൈദ്യുതകാന്തിക തടസ്സവും (EMI) ക്രോസ്-ടോക്കും</strong> കുറയ്ക്കാനാണ്.</li>
+              <li><strong>UTP (Unshielded):</strong> ലോഹ കവചം ഇല്ല, വില കുറവ്; CAT5, CAT6. <strong>STP (Shielded):</strong> ലോഹ ഫോയിൽ കവചം ഉണ്ട്.</li>
+              <li>കണക്ടർ: LAN-ൽ <strong>RJ-45 (8 പിൻ)</strong>; ടെലിഫോണിൽ <strong>RJ-11</strong>.</li>
+            </ul>
+          </li>
+          <li><strong>കൊആക്സിയൽ (Coaxial):</strong>
+            <ul>
+              <li>നടുവിൽ ചെമ്പ് കോർ, അതിനു ചുറ്റും ഇൻസുലേറ്റർ, ലോഹ മെഷ് കവചം, പുറത്ത് പ്ലാസ്റ്റിക് കവർ.</li>
+              <li>ഉപയോഗം: <strong>കേബിൾ ടി.വി</strong>, പഴയ ബസ് LAN (BNC കണക്ടർ).</li>
+            </ul>
+          </li>
+          <li><strong>ഒപ്റ്റിക്കൽ ഫൈബർ (OFC):</strong>
+            <ul>
+              <li>ഗ്ലാസ്/പ്ലാസ്റ്റിക് നാരുകളിലൂടെ <strong>പ്രകാശ പൾസുകളായി</strong> (LED/ലേസർ) ഡാറ്റ.</li>
+              <li><strong>തത്വം: പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (Total Internal Reflection – TIR).</strong> പ്രകാശം <strong>അപവർത്തനസൂചിക (Refractive index) കൂടിയ കോറിൽ</strong> നിന്ന് <strong>സൂചിക കുറഞ്ഞ ക്ലാഡിംഗിലേക്ക്</strong>, ക്രിട്ടിക്കൽ കോണിനേക്കാൾ വലിയ കോണിൽ പതിക്കുമ്പോൾ പുറത്തുപോകാതെ പൂർണ്ണമായി തിരികെ പ്രതിഫലിക്കുന്നു.</li>
+              <li><strong>സവിശേഷതകൾ:</strong> ഏറ്റവും ഉയർന്ന ബാൻഡ്‌വിഡ്ത്തും വേഗതയും, സിഗ്നൽ നഷ്ടം കുറവ്, EMI/ഇടിമിന്നൽ ബാധിക്കില്ല. സമുദ്രാന്തര കേബിളുകളിലും FTTH ബ്രോഡ്ബാൻഡിലും ഉപയോഗിക്കുന്നു.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>മീഡിയ</th><th>സിഗ്നൽ</th><th>വേഗത</th><th>ചെലവ്</th><th>ഉപയോഗം</th></tr></thead>
+            <tbody>
+              <tr><td>UTP</td><td>വൈദ്യുതി</td><td>കുറവ്–ഇടത്തരം</td><td>ഏറ്റവും കുറവ്</td><td>LAN, ടെലിഫോൺ</td></tr>
+              <tr><td>Coaxial</td><td>വൈദ്യുതി</td><td>ഇടത്തരം</td><td>ഇടത്തരം</td><td>കേബിൾ ടി.വി</td></tr>
+              <tr><td>Optical Fibre</td><td>പ്രകാശം</td><td><strong>ഏറ്റവും ഉയർന്നത്</strong></td><td>കൂടുതൽ</td><td>ബാക്ക്ബോൺ, FTTH, സമുദ്രാന്തര കേബിൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>5.2 അൺഗൈഡഡ് / വയർലെസ്സ് മീഡിയ</h3>
+        <ul>
+          <li><strong>റേഡിയോ തരംഗങ്ങൾ:</strong> എല്ലാ ദിശയിലേക്കും (Omnidirectional), മതിലുകൾ ഭേദിക്കും. ഉപയോഗം: Wi-Fi, Bluetooth, FM/AM റേഡിയോ, മൊബൈൽ ആശയവിനിമയം.</li>
+          <li><strong>മൈക്രോവേവ്:</strong> <strong>Line-of-Sight</strong>, അയക്കുന്നതും സ്വീകരിക്കുന്നതുമായ ആന്റിനകൾ നേർക്കുനേർ വേണം. ടവർ ഡിഷുകൾ, <strong>ഉപഗ്രഹ ആശയവിനിമയം</strong>.</li>
+          <li><strong>ഇൻഫ്രാറെഡ്:</strong> ചെറുദൂരം, നേർരേഖ, മതിൽ ഭേദിക്കില്ല. ടി.വി/എ.സി <strong>റിമോട്ട്</strong>, വയർലെസ്സ് മൗസ്.</li>
+          <li><strong>Li-Fi (Light Fidelity):</strong> എൽ.ഇ.ഡി പ്രകാശം ഉപയോഗിച്ചുള്ള വയർലെസ്സ് ഡാറ്റ; ഉപജ്ഞാതാവ് <strong>ഹാരൾഡ് ഹാസ്</strong>.</li>
+          <li><strong>Wi-Fi:</strong> ഔദ്യോഗികമായി "Wi-Fi" ഒരു ബ്രാൻഡ് നാമമാണ്. എങ്കിലും PSC പഠനത്തിൽ "Wireless Fidelity" എന്ന പൂർണ്ണരൂപം സ്വീകരിക്കുന്നു.</li>
+        </ul>
+
+        <h3>5.3 Wi-Fi (IEEE 802.11) പതിപ്പുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സ്റ്റാൻഡേർഡ്</th><th>ബാൻഡ്</th><th>പുതിയ പേര്</th></tr></thead>
+            <tbody>
+              <tr><td>802.11b / g</td><td>2.4 GHz</td><td>—</td></tr>
+              <tr><td>802.11a</td><td>5 GHz</td><td>—</td></tr>
+              <tr><td>802.11n</td><td>2.4 &amp; 5 GHz</td><td>Wi-Fi 4</td></tr>
+              <tr><td>802.11ac</td><td>5 GHz</td><td>Wi-Fi 5</td></tr>
+              <tr><td>802.11ax</td><td>2.4 &amp; 5 GHz (Wi-Fi 6E-ൽ 6 GHz കൂടി)</td><td>Wi-Fi 6</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: NETWORK DEVICES -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. നെറ്റ്‌വർക്ക് ഉപകരണങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>6.1 ഹബ്ബ് (Hub)</h3>
+        <ul>
+          <li>LAN-ൽ (സ്റ്റാർ ടോപ്പോളജി) കമ്പ്യൂട്ടറുകളെ ബന്ധിപ്പിക്കുന്ന ലളിത കേന്ദ്ര ഉപകരണം.</li>
+          <li><strong>ഫിസിക്കൽ ലെയറിൽ (Layer 1)</strong> പ്രവർത്തിക്കുന്നു. <strong>ബുദ്ധിയില്ലാത്ത (Dumb)</strong> ഉപകരണം. ഒരു പോർട്ടിൽ വരുന്ന ഡാറ്റ മറ്റെല്ലാ പോർട്ടുകളിലേക്കും അയക്കുന്നു (<strong>Broadcast</strong>). ഇത് തിരക്കും <strong>ഡാറ്റാ കൂട്ടിയിടിയും (Collision)</strong> ഉണ്ടാക്കുന്നു. എല്ലാ പോർട്ടുകളും ഒരൊറ്റ collision domain ആണ്.</li>
+          <li><strong>പാസീവ് ഹബ്ബ്:</strong> വൈദ്യുതി ഇല്ലാതെ കേബിളുകൾ കൂട്ടിയിണക്കുക മാത്രം. <strong>ആക്ടീവ് ഹബ്ബ്:</strong> വൈദ്യുതി ഉപയോഗിച്ച് സിഗ്നൽ ശക്തിപ്പെടുത്തുന്നു, അതിനാൽ <strong>Multi-port Repeater</strong> ആയി പ്രവർത്തിക്കുന്നു.</li>
+        </ul>
+
+        <h3>6.2 സ്വിച്ച് (Switch)</h3>
+        <ul>
+          <li>ഇന്ന് ഹബ്ബിന് പകരം ഉപയോഗിക്കുന്ന <strong>ഇന്റലിജന്റ് ഹബ്ബ്</strong>. <strong>ഡാറ്റാ ലിങ്ക് ലെയറിൽ (Layer 2)</strong> പ്രവർത്തിക്കുന്നു (മൾട്ടി-ലെയർ/Layer-3 സ്വിച്ചുകൾ Layer 3-ലും).</li>
+          <li>ഓരോ കമ്പ്യൂട്ടറിന്റെയും <strong>MAC അഡ്രസ്സ് ടേബിൾ</strong> സൂക്ഷിക്കുന്നു. ഡാറ്റ <strong>ലക്ഷ്യസ്ഥാനത്തെ പോർട്ടിലേക്ക് മാത്രം (Unicast)</strong> അയക്കുന്നു. ഇതിലൂടെ കൂട്ടിയിടിയും തിരക്കും കുറയുന്നു. ഓരോ പോർട്ടും പ്രത്യേക collision domain ആണ്, ഫുൾ-ഡ്യൂപ്ലക്സ് സാധ്യമാണ്.</li>
+          <li><em>(സൂക്ഷ്മവിവരം: ലക്ഷ്യ MAC അറിയാത്തപ്പോഴും Broadcast ഫ്രെയിമുകൾക്കും സ്വിച്ച് എല്ലാ പോർട്ടിലേക്കും അയക്കും – Flooding.)</em></li>
+        </ul>
+
+        <h3>6.3 ബ്രിഡ്ജ് (Bridge)</h3>
+        <ul>
+          <li><strong>ഒരേ പ്രോട്ടോക്കോളിലുള്ള രണ്ട് സമാന LAN-കളെ</strong> ബന്ധിപ്പിക്കുന്നു; വലിയ LAN-നെ ഭാഗങ്ങളായി വിഭജിച്ച് തിരക്ക് കുറയ്ക്കുന്നു.</li>
+          <li><strong>Layer 2</strong>-ൽ MAC അഡ്രസ്സ് അടിസ്ഥാനമാക്കി പ്രവർത്തിക്കുന്നു. <strong>സ്വിച്ച് = Multi-port Bridge.</strong></li>
+        </ul>
+
+        <h3>6.4 റൂട്ടർ (Router)</h3>
+        <ul>
+          <li><strong>വ്യത്യസ്ത നെറ്റ്‌വർക്കുകളെ</strong> (ഉദാ: വീട്ടിലെ LAN ↔ ഇന്റർനെറ്റ്) ബന്ധിപ്പിക്കുകയും പാക്കറ്റുകളെ <strong>ഏറ്റവും മികച്ച പാതയിലൂടെ (Best path)</strong> നയിക്കുകയും ചെയ്യുന്ന ഇന്റലിജന്റ് ഉപകരണം.</li>
+          <li><strong>Network Layer (Layer 3)</strong>: പാക്കറ്റിലെ <strong>IP അഡ്രസ്സ്</strong> നോക്കി <strong>Routing Table</strong> ഉപയോഗിച്ച് ഫോർവേഡ് ചെയ്യുന്നു. വീട്ടിലെ Wi-Fi റൂട്ടർ പലപ്പോഴും <strong>DHCP</strong> വഴി ഉപകരണങ്ങൾക്ക് IP നൽകുകയും ചെയ്യുന്നു.</li>
+        </ul>
+
+        <h3>6.5 ഗേറ്റ്‌വേ (Gateway)</h3>
+        <ul>
+          <li><strong>വ്യത്യസ്ത പ്രോട്ടോക്കോളുകളിൽ/മോഡലുകളിൽ പ്രവർത്തിക്കുന്ന രണ്ട് വ്യത്യസ്ത നെറ്റ്‌വർക്കുകളെ</strong> ബന്ധിപ്പിക്കുന്ന കവാടം. പ്രോട്ടോക്കോളുകളെ വിവർത്തനം ചെയ്യുന്നതിനാൽ <strong>പ്രോട്ടോക്കോൾ കൺവെർട്ടർ</strong> എന്ന് അറിയപ്പെടുന്നു.</li>
+          <li>ട്രാൻസ്പോർട്ട് മുതൽ ആപ്ലിക്കേഷൻ വരെയുള്ള ഉയർന്ന ലെയറുകളിൽ (ആവശ്യാനുസരണം എല്ലാ ലെയറുകളിലും) പ്രവർത്തിക്കാം.</li>
+        </ul>
+
+        <h3>6.6 മറ്റ് ഉപകരണങ്ങൾ</h3>
+        <ul>
+          <li><strong>റിപ്പീറ്റർ (Repeater):</strong> ദൂരം കാരണം ദുർബലമാകുന്ന സിഗ്നലിനെ (<strong>Attenuation</strong>) വീണ്ടും ശക്തിപ്പെടുത്തി (Regenerate) അയക്കുന്ന <strong>Layer 1</strong> ഉപകരണം.</li>
+          <li><strong>മോഡം (Modem – Modulator + Demodulator):</strong> ഡിജിറ്റൽ സിഗ്നലിനെ അനലോഗ് ആക്കുന്നത് <strong>Modulation</strong>, തിരിച്ച് ആക്കുന്നത് <strong>Demodulation</strong>. 1950-കളിൽ അമേരിക്കൻ വ്യോമപ്രതിരോധ ആവശ്യത്തിനായി വികസിച്ചു.</li>
+          <li><strong>NIC (Network Interface Card / LAN Card):</strong> കമ്പ്യൂട്ടറിനെ നെറ്റ്‌വർക്കുമായി ബന്ധിപ്പിക്കുന്ന കാർഡ്. ഓരോ NIC-ക്കും നിർമ്മാതാവ് നൽകുന്ന സവിശേഷ <strong>MAC അഡ്രസ്സ്</strong> ഉണ്ട്.</li>
+          <li><strong>Access Point (AP):</strong> വയേർഡ് നെറ്റ്‌വർക്കിനെ Wi-Fi ഉപകരണങ്ങളുമായി ബന്ധിപ്പിക്കുന്നു.</li>
+          <li><strong>ഫയർവാൾ (Firewall):</strong> നെറ്റ്‌വർക്കിലേക്കുള്ള/പുറത്തേക്കുള്ള ട്രാഫിക്കിനെ സുരക്ഷാ നിയമങ്ങൾ അനുസരിച്ച് അനുവദിക്കുകയോ തടയുകയോ ചെയ്യുന്ന സുരക്ഷാ സംവിധാനം (ഹാർഡ്‌വെയറോ സോഫ്റ്റ്‌വെയറോ ആകാം).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 7: MAC vs IP & PROTOCOLS -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. MAC vs IP & പ്രധാന പ്രോട്ടോക്കോളുകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>7.1 MAC അഡ്രസ്സ് vs IP അഡ്രസ്സ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>MAC അഡ്രസ്സ്</th><th>IP അഡ്രസ്സ്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>പൂർണ്ണരൂപം</strong></td><td>Media Access Control</td><td>Internet Protocol</td></tr>
+              <tr><td><strong>മറ്റൊരു പേര്</strong></td><td>Physical / Hardware / Burned-in Address</td><td>Logical Address</td></tr>
+              <tr><td><strong>ലെയർ / ഉപകരണം</strong></td><td>Data Link (L2) – <strong>Switch, Bridge</strong></td><td>Network (L3) – <strong>Router</strong></td></tr>
+              <tr><td><strong>നീളം</strong></td><td><strong>48 ബിറ്റ് (6 ബൈറ്റ്)</strong></td><td><strong>IPv4: 32 ബിറ്റ് (4 ബൈറ്റ്)</strong>, <strong>IPv6: 128 ബിറ്റ് (16 ബൈറ്റ്)</strong></td></tr>
+              <tr><td><strong>രൂപം</strong></td><td>12 ഹെക്സാഡെസിമൽ അക്കങ്ങൾ (<code>00:1A:2B:3C:4D:5E</code>)</td><td>IPv4: നാല് ദശാംശ സംഖ്യകൾ 0–255 (<code>192.168.1.1</code>); IPv6: ഹെക്സാഡെസിമൽ</td></tr>
+              <tr><td><strong>സ്വഭാവം</strong></td><td>NIC-യിൽ നിർമ്മാണ സമയത്ത് നൽകുന്നത് (സാധാരണ മാറ്റാറില്ല)</td><td>നെറ്റ്‌വർക്ക് മാറുന്നതനുസരിച്ച് മാറും (Static / Dynamic)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>7.2 IPv4 ക്ലാസ്സുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Class</th><th>പരിധി</th><th>സവിശേഷത</th></tr></thead>
+            <tbody>
+              <tr><td><strong>A</strong></td><td>1–126</td><td>വലിയ നെറ്റ്‌വർക്കുകൾ</td></tr>
+              <tr><td><strong>B</strong></td><td>128–191</td><td>ഇടത്തരം നെറ്റ്‌വർക്കുകൾ</td></tr>
+              <tr><td><strong>C</strong></td><td>192–223</td><td>ചെറിയ നെറ്റ്‌വർക്കുകൾ</td></tr>
+              <tr><td><strong>D</strong></td><td>224–239</td><td><strong>Multicast</strong></td></tr>
+              <tr><td><strong>E</strong></td><td>240–255</td><td>Research / Reserved</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>127.0.0.1</strong> എന്നത് <strong>Loopback / Localhost</strong> അഡ്രസ്സാണ് — സ്വന്തം കമ്പ്യൂട്ടറിലെ നെറ്റ്‌വർക്ക് സംവിധാനം പരിശോധിക്കാൻ ഉപയോഗിക്കുന്നു.</p>
+
+        <h3>7.3 പ്രധാന നെറ്റ്‌വർക്ക് പ്രോട്ടോക്കോളുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പ്രോട്ടോക്കോൾ</th><th>പൂർണ്ണരൂപം</th><th>ധർമ്മം</th><th>പോർട്ട്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>HTTP / HTTPS</strong></td><td>HyperText Transfer Protocol (Secure)</td><td>വെബ് പേജുകൾ</td><td>80 / 443</td></tr>
+              <tr><td><strong>FTP</strong></td><td>File Transfer Protocol</td><td>ഫയൽ കൈമാറ്റം</td><td>20, 21</td></tr>
+              <tr><td><strong>SMTP</strong></td><td>Simple Mail Transfer Protocol</td><td>ഇ-മെയിൽ <strong>അയക്കാൻ</strong></td><td>25</td></tr>
+              <tr><td><strong>POP3 / IMAP</strong></td><td>Post Office Protocol v3 / Internet Message Access Protocol</td><td>ഇ-മെയിൽ <strong>സ്വീകരിക്കാൻ</strong></td><td>110 / 143</td></tr>
+              <tr><td><strong>DNS</strong></td><td>Domain Name System</td><td>ഡൊമെയ്ൻ പേര് → IP അഡ്രസ്സ്</td><td>53</td></tr>
+              <tr><td><strong>DHCP</strong></td><td>Dynamic Host Configuration Protocol</td><td>IP അഡ്രസ്സ് സ്വയം നൽകൽ</td><td>—</td></tr>
+              <tr><td><strong>SSH / Telnet</strong></td><td>Secure Shell / Telnet</td><td>റിമോട്ട് ലോഗിൻ (SSH സുരക്ഷിതം)</td><td>22 / 23</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>7.4 TCP vs UDP</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>TCP</th><th>UDP</th></tr></thead>
+            <tbody>
+              <tr><td>Connection</td><td>Connection-oriented</td><td>Connectionless</td></tr>
+              <tr><td>വിശ്വാസ്യത</td><td>ഉറപ്പ് (Reliable)</td><td>ഉറപ്പില്ല</td></tr>
+              <tr><td>ക്രമം</td><td>ഉറപ്പാക്കും</td><td>ഉറപ്പാക്കില്ല</td></tr>
+              <tr><td>വേഗത</td><td>കുറവ്</td><td>കൂടുതൽ</td></tr>
+              <tr><td>ഉപയോഗം</td><td>വെബ്, ഇ-മെയിൽ</td><td>വീഡിയോ സ്ട്രീമിംഗ്, ഓൺലൈൻ ഗെയിം</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: DIAGRAMS -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>8.1 നെറ്റ്‌വർക്ക് വലിപ്പ ശ്രേണി</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network size range">
+            <rect x="10" y="10" width="740" height="180" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="380" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">നെറ്റ്‌വർക്ക് വലിപ്പ ശ്രേണി (ചെറുത് → വലുത്)</text>
+
+            <rect x="30" y="60" width="120" height="55" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="90" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">PAN</text>
+            <text x="90" y="98" text-anchor="middle" font-size="9" fill="#14202b">~10 m</text>
+            <text x="90" y="110" text-anchor="middle" font-size="8" fill="#4a5f72">Bluetooth</text>
+
+            <rect x="175" y="60" width="120" height="55" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="235" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">LAN</text>
+            <text x="235" y="98" text-anchor="middle" font-size="9" fill="#14202b">ഏതാനും km</text>
+            <text x="235" y="110" text-anchor="middle" font-size="8" fill="#4a5f72">ഓഫീസ്/സ്കൂൾ</text>
+
+            <rect x="320" y="60" width="120" height="55" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="380" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">CAN</text>
+            <text x="380" y="98" text-anchor="middle" font-size="9" fill="#14202b">ക്യാമ്പസ്</text>
+            <text x="380" y="110" text-anchor="middle" font-size="8" fill="#4a5f72">സർവ്വകലാശാല</text>
+
+            <rect x="465" y="60" width="120" height="55" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="525" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">MAN</text>
+            <text x="525" y="98" text-anchor="middle" font-size="9" fill="#14202b">5–50 km</text>
+            <text x="525" y="110" text-anchor="middle" font-size="8" fill="#4a5f72">കേബിൾ ടി.വി</text>
+
+            <rect x="610" y="60" width="120" height="55" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="670" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#b83b2c">WAN</text>
+            <text x="670" y="98" text-anchor="middle" font-size="9" fill="#14202b">ലോകം</text>
+            <text x="670" y="110" text-anchor="middle" font-size="8" fill="#4a5f72">ഇന്റർനെറ്റ്</text>
+
+            <text x="380" y="150" text-anchor="middle" font-size="11" fill="#4a5f72" font-style="italic">വേഗത കൂടുതൽ, തിരക്ക് കുറവ് → ← വലിപ്പവും തിരക്കും കൂടുതൽ</text>
+            <text x="380" y="172" text-anchor="middle" font-size="10" fill="#14202b">LAN-ൽ ഏറ്റവും ഉയർന്ന വേഗത | WAN-ൽ ഏറ്റവും കൂടുതൽ ചെലവ്</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 8.1 – PAN മുതൽ WAN വരെയുള്ള വലിപ്പ ക്രമം.</div>
+        </div>
+
+        <h3>8.2 നെറ്റ്‌വർക്ക് ഉപകരണങ്ങൾ എങ്ങനെ ബന്ധിപ്പിക്കുന്നു</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network devices connection">
+            <rect x="10" y="10" width="740" height="260" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="380" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">നെറ്റ്‌വർക്ക് ഉപകരണങ്ങളുടെ ബന്ധം</text>
+
+            <rect x="30" y="60" width="80" height="40" rx="6" fill="#e1bee7" stroke="#6a1b9a"/>
+            <text x="70" y="85" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">PC 1</text>
+
+            <rect x="30" y="120" width="80" height="40" rx="6" fill="#e1bee7" stroke="#6a1b9a"/>
+            <text x="70" y="145" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">PC 2</text>
+
+            <rect x="30" y="180" width="80" height="40" rx="6" fill="#e1bee7" stroke="#6a1b9a"/>
+            <text x="70" y="205" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">PC 3</text>
+
+            <line x1="110" y1="80" x2="180" y2="140" stroke="#4a148c" stroke-width="1.5"/>
+            <line x1="110" y1="140" x2="180" y2="140" stroke="#4a148c" stroke-width="1.5"/>
+            <line x1="110" y1="200" x2="180" y2="140" stroke="#4a148c" stroke-width="1.5"/>
+
+            <rect x="180" y="115" width="110" height="55" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="235" y="137" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">HUB / SWITCH</text>
+            <text x="235" y="155" text-anchor="middle" font-size="9" fill="#4a5f72">L1 / L2</text>
+
+            <line x1="290" y1="142" x2="370" y2="142" stroke="#4a148c" stroke-width="2"/>
+
+            <rect x="370" y="115" width="110" height="55" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="425" y="137" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">ROUTER</text>
+            <text x="425" y="155" text-anchor="middle" font-size="9" fill="#4a5f72">L3 – IP</text>
+
+            <line x1="480" y1="142" x2="560" y2="142" stroke="#4a148c" stroke-width="2"/>
+
+            <rect x="560" y="115" width="100" height="55" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="610" y="137" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">MODEM</text>
+            <text x="610" y="155" text-anchor="middle" font-size="9" fill="#4a5f72">Digital ⇄ Analog</text>
+
+            <line x1="660" y1="142" x2="700" y2="142" stroke="#b83b2c" stroke-width="2"/>
+
+            <text x="720" y="146" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">ISP</text>
+
+            <text x="235" y="200" text-anchor="middle" font-size="10" fill="#14202b">ഒരേ നെറ്റ്‌വർക്ക്</text>
+            <text x="425" y="200" text-anchor="middle" font-size="10" fill="#14202b">നെറ്റ്‌വർക്കുകൾക്കിടയിൽ</text>
+
+            <rect x="200" y="220" width="360" height="40" rx="6" fill="#fce4ec" stroke="#c62828"/>
+            <text x="380" y="238" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">GATEWAY = Protocol Converter</text>
+            <text x="380" y="253" text-anchor="middle" font-size="9" fill="#14202b">വ്യത്യസ്ത പ്രോട്ടോക്കോളുകൾക്കിടയിലെ വിവർത്തകൻ</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 8.2 – ഉപകരണങ്ങൾ ഏത് ലെയറിൽ പ്രവർത്തിക്കുന്നു എന്ന് കാണിക്കുന്ന ഡയഗ്രം.</div>
+        </div>
+
+        <h3>8.3 OSI മോഡൽ – 7 ലെയറുകൾ</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OSI model 7 layers">
+            <rect x="10" y="10" width="700" height="360" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">OSI മോഡൽ – 7 ലെയറുകൾ</text>
+
+            <rect x="60" y="55" width="600" height="38" rx="6" fill="#4a148c"/>
+            <text x="360" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7. Application — HTTP, FTP, SMTP, DNS</text>
+            <text x="360" y="86" text-anchor="middle" font-size="9" fill="#e1bee7">ഉപയോക്താവിന് നെറ്റ്‌വർക്ക് സേവനം (Data)</text>
+
+            <rect x="60" y="98" width="600" height="38" rx="6" fill="#6a1b9a"/>
+            <text x="360" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">6. Presentation — SSL/TLS, JPEG, MPEG</text>
+            <text x="360" y="129" text-anchor="middle" font-size="9" fill="#e1bee7">Translation, Encryption, Compression (Data)</text>
+
+            <rect x="60" y="141" width="600" height="38" rx="6" fill="#7b1fa2"/>
+            <text x="360" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5. Session — NetBIOS, PPTP</text>
+            <text x="360" y="172" text-anchor="middle" font-size="9" fill="#e1bee7">സെഷൻ തുടങ്ങൽ/നിലനിർത്തൽ/അവസാനിപ്പിക്കൽ (Data)</text>
+
+            <rect x="60" y="184" width="600" height="38" rx="6" fill="#8e24aa"/>
+            <text x="360" y="201" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4. Transport — TCP, UDP</text>
+            <text x="360" y="215" text-anchor="middle" font-size="9" fill="#e1bee7">End-to-end delivery (Segment/Datagram)</text>
+
+            <rect x="60" y="227" width="600" height="38" rx="6" fill="#43a047"/>
+            <text x="360" y="244" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3. Network — Router, IP, ICMP</text>
+            <text x="360" y="258" text-anchor="middle" font-size="9" fill="#e8f5e9">Logical Addressing + Routing (Packet)</text>
+
+            <rect x="60" y="270" width="600" height="38" rx="6" fill="#1976d2"/>
+            <text x="360" y="287" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2. Data Link — Switch, Bridge, NIC</text>
+            <text x="360" y="301" text-anchor="middle" font-size="9" fill="#e3f2fd">MAC Addressing + Error detection (Frame)</text>
+
+            <rect x="60" y="313" width="600" height="38" rx="6" fill="#b83b2c"/>
+            <text x="360" y="330" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1. Physical — Hub, Repeater, Cables</text>
+            <text x="360" y="344" text-anchor="middle" font-size="9" fill="#fce4ec">Bit → Signal (വൈദ്യുത/പ്രകാശ/റേഡിയോ)</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 8.3 – OSI മോഡലിലെ 7 ലെയറുകളും ഓരോ ലെയറിലെയും ഉപകരണങ്ങളും പ്രോട്ടോക്കോളുകളും.</div>
+        </div>
+
+        <h3>8.4 ഹബ്ബ് vs സ്വിച്ച് – ഡാറ്റ എങ്ങനെ സഞ്ചരിക്കുന്നു</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hub vs Switch">
+            <rect x="10" y="10" width="345" height="220" rx="10" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="182" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">HUB (Broadcast)</text>
+            <rect x="130" y="55" width="105" height="40" rx="6" fill="#c62828"/>
+            <text x="182" y="80" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">HUB</text>
+            <rect x="60" y="130" width="70" height="35" rx="5" fill="#fff" stroke="#b83b2c"/>
+            <text x="95" y="152" text-anchor="middle" font-size="10" fill="#14202b">PC 1</text>
+            <rect x="150" y="130" width="70" height="35" rx="5" fill="#fff" stroke="#b83b2c"/>
+            <text x="185" y="152" text-anchor="middle" font-size="10" fill="#14202b">PC 2</text>
+            <rect x="240" y="130" width="70" height="35" rx="5" fill="#fff" stroke="#b83b2c"/>
+            <text x="275" y="152" text-anchor="middle" font-size="10" fill="#14202b">PC 3</text>
+            <line x1="95" y1="130" x2="150" y2="95" stroke="#b83b2c" stroke-width="1.5"/>
+            <line x1="185" y1="130" x2="185" y2="95" stroke="#b83b2c" stroke-width="1.5"/>
+            <line x1="275" y1="130" x2="220" y2="95" stroke="#b83b2c" stroke-width="1.5"/>
+            <text x="182" y="190" text-anchor="middle" font-size="10" fill="#14202b">PC 1 → Hub → എല്ലാ PC-കൾക്കും</text>
+            <text x="182" y="208" text-anchor="middle" font-size="9" fill="#b83b2c">Collision ഉണ്ട് | Layer 1</text>
+
+            <rect x="365" y="10" width="345" height="220" rx="10" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="537" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">SWITCH (Unicast)</text>
+            <rect x="485" y="55" width="105" height="40" rx="6" fill="#43a047"/>
+            <text x="537" y="80" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">SWITCH</text>
+            <rect x="415" y="130" width="70" height="35" rx="5" fill="#fff" stroke="#43a047"/>
+            <text x="450" y="152" text-anchor="middle" font-size="10" fill="#14202b">PC 1</text>
+            <rect x="505" y="130" width="70" height="35" rx="5" fill="#fff" stroke="#43a047"/>
+            <text x="540" y="152" text-anchor="middle" font-size="10" fill="#14202b">PC 2</text>
+            <rect x="595" y="130" width="70" height="35" rx="5" fill="#fff" stroke="#43a047"/>
+            <text x="630" y="152" text-anchor="middle" font-size="10" fill="#14202b">PC 3</text>
+            <line x1="450" y1="130" x2="505" y2="95" stroke="#43a047" stroke-width="2"/>
+            <line x1="540" y1="130" x2="540" y2="95" stroke="#43a047" stroke-width="2"/>
+            <line x1="630" y1="130" x2="575" y2="95" stroke="#43a047" stroke-width="2"/>
+            <text x="537" y="190" text-anchor="middle" font-size="10" fill="#14202b">PC 1 → Switch → PC 3 മാത്രം</text>
+            <text x="537" y="208" text-anchor="middle" font-size="9" fill="#00695c">MAC നോക്കി | Layer 2 | Collision ഇല്ല</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 8.4 – ഹബ്ബ് എല്ലാവർക്കും അയക്കുന്നു; സ്വിച്ച് ലക്ഷ്യസ്ഥാനത്തിന് മാത്രം.</div>
+        </div>
+
+        <div class="important">
+          <span class="box-label">💡 Visual Insight</span>
+          <ul>
+            <li><strong>സ്വിച്ച്:</strong> വീടിനുള്ളിലെ മുറികളെ ബന്ധിപ്പിക്കുന്ന ഇടനാഴി (ഒരു നെറ്റ്‌വർക്കിനുള്ളിൽ).</li>
+            <li><strong>റൂട്ടർ:</strong> വീട്ടുമുറ്റത്തുനിന്ന് പുറത്തെ റോഡിലേക്കുള്ള ഗേറ്റ് (നെറ്റ്‌വർക്കുകൾക്കിടയിൽ, IP നോക്കി വഴി കാണിക്കുന്നു).</li>
+            <li><strong>ഗേറ്റ്‌വേ:</strong> രണ്ട് ഭാഷ സംസാരിക്കുന്ന രാജ്യങ്ങളുടെ അതിർത്തിയിലെ വിവർത്തകൻ.</li>
+            <li><strong>ബ്രിഡ്ജ്:</strong> ഒരേ ഭാഷ സംസാരിക്കുന്ന രണ്ട് കരകളെ ബന്ധിപ്പിക്കുന്ന പാലം.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: IMPORTANT FACTS -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. പ്രധാന വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ ഒറ്റനോട്ടത്തിൽ</span>
+          <ul>
+            <li>കമ്പ്യൂട്ടർ ശൃംഖലകളിലെ സാങ്കല്പിക ആശയവിനിമയ ലോകം: <strong>സൈബർ സ്പേസ്</strong>. "Cyberspace" എന്ന പദം ഉപയോഗിച്ചത് <strong>വില്യം ഗിബ്സൺ</strong> (1980-കളിലെ സയൻസ് ഫിക്ഷൻ).</li>
+            <li>ഇന്റർനെറ്റിനെ "<strong>Network of Networks</strong>" എന്ന് വിളിക്കുന്നു.</li>
+            <li>ഇന്ത്യയിൽ പൊതുജനങ്ങൾക്കുള്ള ഇന്റർനെറ്റ് (<strong>GIAS – Gateway Internet Access Service</strong>) <strong>VSNL 1995 ഓഗസ്റ്റ് 15-ന്</strong> ആരംഭിച്ചു. <em>(ചില ഗൈഡുകൾ "മുംബൈ" ഉത്തരമായി നൽകുന്നു. നഗരത്തിന്റെ ഔദ്യോഗിക സ്ഥിരീകരണം ഉറപ്പാക്കിയിട്ടില്ല.)</em></li>
+            <li><strong>ഫൈബർ ഒപ്റ്റിക്സിന്റെ പിതാവ്: നരീന്ദർ സിംഗ് കപാനി</strong> (1950-കളിൽ ഗ്ലാസ് ഫൈബറിൽ പ്രകാശ പ്രസരണം വികസിപ്പിച്ചു; "Fibre Optics" എന്ന പദം 1956-ൽ അദ്ദേഹം ഉപയോഗിച്ചു). പൂർണ്ണ ആന്തരിക പ്രതിഫലനം എന്ന ഭൗതിക തത്വം അദ്ദേഹത്തിന്റെ കണ്ടുപിടിത്തമല്ല; അത് ഉപയോഗപ്പെടുത്തിയ ഫൈബർ സാങ്കേതികവിദ്യയാണ് അദ്ദേഹത്തിന്റേത്.</li>
+            <li>IEEE സ്റ്റാൻഡേർഡുകൾ: <strong>Ethernet 802.3, Wi-Fi 802.11, Bluetooth 802.15.1, WiMAX 802.16, Token Ring 802.5, MAN (DQDB) 802.6</strong>.</li>
+            <li>Wi-Fi സുരക്ഷ: <strong>WEP (പഴയത്, ദുർബലം) → WPA → WPA2 → WPA3</strong> (Wi-Fi Protected Access).</li>
+            <li>ഇതർനെറ്റ് ഫ്രെയിം വലിപ്പം: <strong>കുറഞ്ഞത് 64 ബൈറ്റ്, കൂടിയത് 1518 ബൈറ്റ്</strong>; സ്റ്റാൻഡേർഡ് ഇതർനെറ്റ് <strong>MTU = 1500 ബൈറ്റ്</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: PSC ANALYSIS -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. Kerala PSC Exam Analysis & ചോദ്യ ട്രെൻഡ്</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>10.1 പ്രാധാന്യ വിശകലനം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപവിഷയം</th><th>പ്രാധാന്യം</th><th>വിശകലനം</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>നെറ്റ്‌വർക്ക് ഉപകരണങ്ങൾ (10.4.6–10.4.10)</strong></td>
+                <td>★★★</td>
+                <td>ഏത് ഉപകരണം ഏത് OSI ലെയറിൽ, ഏതാണ് പ്രോട്ടോക്കോൾ കൺവെർട്ടർ, ഏതാണ് ഇന്റലിജന്റ് ഹബ്ബ് എന്നീ ചോദ്യങ്ങൾ ഏറ്റവും സാധാരണം.</td>
+              </tr>
+              <tr>
+                <td><strong>LAN, MAN, WAN താരതമ്യം (10.4.2–10.4.4)</strong></td>
+                <td>★★★</td>
+                <td>വേഗത, വിസ്തൃതി, തിരക്ക് എന്നിവ താരതമ്യം ചെയ്യുന്ന പ്രസ്താവനാ ചോദ്യങ്ങൾ.</td>
+              </tr>
+              <tr>
+                <td><strong>മീഡിയ &amp; ടോപ്പോളജി (10.4.1, 10.4.5)</strong></td>
+                <td>★★</td>
+                <td>OFC-യിലെ TIR, Bluetooth, സ്റ്റാർ ടോപ്പോളജിയിലെ ഹബ്ബ്, റിംഗിലെ ടോക്കൺ.</td>
+              </tr>
+              <tr>
+                <td><strong>OSI &amp; MAC/IP അഡ്രസ്സുകൾ</strong></td>
+                <td>★★</td>
+                <td>7 ലെയറുകളുടെ ക്രമം, 32/48/128 ബിറ്റ് നീളങ്ങൾ (ഡിഗ്രി ലെവൽ).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><em>ℹ️ പ്രാധാന്യ റേറ്റിംഗ് പൊതു പരീക്ഷാ പ്രവണതയെ അടിസ്ഥാനമാക്കിയുള്ള വിലയിരുത്തലാണ്; ഇത് ഓരോ പരീക്ഷയിലെയും കൃത്യമായ ചോദ്യ എണ്ണം ഉറപ്പ് നൽകുന്നില്ല.</em></p>
+
+        <h3>10.2 ചോദ്യ ട്രെൻഡ് (Question Trend)</h3>
+        <p><em>ℹ️ താഴെ നൽകിയത് <strong>ചോദ്യ രീതികളുടെ (pattern)</strong> സംഗ്രഹമാണ്. പ്രത്യേക വർഷമോ പരീക്ഷയോ ഇവിടെ അവകാശപ്പെടുന്നില്ല.</em></p>
+        <ol>
+          <li><strong>ഗേറ്റ്‌വേ / റൂട്ടർ തിരിച്ചറിയൽ:</strong> "വ്യത്യസ്ത പ്രോട്ടോക്കോളുള്ള നെറ്റ്‌വർക്കുകളെ ബന്ധിപ്പിക്കുന്നത്?" → <strong>Gateway</strong>. "Router ഏത് OSI ലെയറിൽ?" → <strong>Network Layer (3)</strong>.</li>
+          <li><strong>ഇന്റലിജന്റ് ഉപകരണങ്ങൾ:</strong> Repeater, Hub, Switch, Router എന്നിവയിൽ ഇന്റലിജന്റ് ഏത്? → <strong>Switch, Router</strong>.</li>
+          <li><strong>LAN/MAN/WAN പ്രസ്താവനകൾ:</strong> ഏറ്റവും കൂടിയ വേഗത → <strong>LAN</strong>; നഗരവ്യാപ്തി → <strong>MAN</strong>; തിരക്കിന്റെ ക്രമം → WAN &gt; MAN &gt; LAN.</li>
+          <li><strong>ഒപ്റ്റിക്കൽ ഫൈബർ:</strong> തത്വം → <strong>പൂർണ്ണ ആന്തരിക പ്രതിഫലനം</strong>.</li>
+          <li><strong>Wi-Fi / Bluetooth:</strong> Wi-Fi സ്റ്റാൻഡേർഡ് → <strong>802.11</strong>; Wi-Fi സുരക്ഷ → <strong>WPA2/WPA3</strong>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 11: CONFUSING FACTS -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വസ്തുത 1</th><th>വസ്തുത 2</th><th>വ്യത്യാസം</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>ഹബ്ബ് (L1)</strong></td>
+                <td><strong>സ്വിച്ച് (L2)</strong></td>
+                <td>ഹബ്ബ് ബുദ്ധിയില്ലാത്തത്, എല്ലാവർക്കും Broadcast. സ്വിച്ച് MAC നോക്കി ആവശ്യമായ പോർട്ടിലേക്ക് മാത്രം.</td>
+              </tr>
+              <tr>
+                <td><strong>ബ്രിഡ്ജ്</strong></td>
+                <td><strong>ഗേറ്റ്‌വേ</strong></td>
+                <td>ബ്രിഡ്ജ്: ഒരേ പ്രോട്ടോക്കോൾ, സമാന LAN-കൾ. ഗേറ്റ്‌വേ: വ്യത്യസ്ത പ്രോട്ടോക്കോൾ, <strong>Protocol Converter</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>സ്വിച്ച് (നെറ്റ്‌വർക്കിനുള്ളിൽ, MAC)</strong></td>
+                <td><strong>റൂട്ടർ (നെറ്റ്‌വർക്കുകൾക്കിടയിൽ, IP)</strong></td>
+                <td>സ്വിച്ച് ഒരേ നെറ്റ്‌വർക്കിലെ ഉപകരണങ്ങളെ ബന്ധിപ്പിക്കുന്നു; റൂട്ടർ വ്യത്യസ്ത നെറ്റ്‌വർക്കുകളെ.</td>
+              </tr>
+              <tr>
+                <td><strong>MAC (48 ബിറ്റ്)</strong></td>
+                <td><strong>IPv4 (32) / IPv6 (128)</strong></td>
+                <td>MAC = ഫിസിക്കൽ; IP = ലോജിക്കൽ.</td>
+              </tr>
+              <tr>
+                <td><strong>റിപ്പീറ്റർ</strong></td>
+                <td><strong>മോഡം</strong></td>
+                <td>റിപ്പീറ്റർ: സിഗ്നൽ ശക്തിപ്പെടുത്തുന്നു. മോഡം: Digital ⇄ Analog.</td>
+              </tr>
+              <tr>
+                <td><strong>SMTP</strong></td>
+                <td><strong>POP3/IMAP</strong></td>
+                <td>SMTP: മെയിൽ അയക്കൽ. POP3/IMAP: സ്വീകരിക്കൽ.</td>
+              </tr>
+              <tr>
+                <td><strong>Internet</strong></td>
+                <td><strong>Web (WWW)</strong></td>
+                <td>ഇന്റർനെറ്റ് = നെറ്റ്‌വർക്കുകളുടെ ശൃംഖല (അടിസ്ഥാനം). വെബ് = ഇന്റർനെറ്റിലെ ഒരു സേവനം (വെബ് പേജുകൾ, HTTP).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap</span>
+          <p>"ഹബ്ബ് ഡാറ്റാ ലിങ്ക് ലെയറിലും സ്വിച്ച് ഫിസിക്കൽ ലെയറിലും" എന്ന പ്രസ്താവന <strong>തെറ്റാണ്</strong>. ശരി: <strong>ഹബ്ബ് L1, സ്വിച്ച് L2, റൂട്ടർ L3.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: COMPARISON TABLES -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>12.1 LAN vs MAN vs WAN</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>LAN</th><th>MAN</th><th>WAN</th></tr></thead>
+            <tbody>
+              <tr><td><strong>പരിധി</strong></td><td>മുറി/കെട്ടിടം/ക്യാമ്പസ് (ഏതാനും km)</td><td>നഗരം (ഏകദേശം 5–50 km)</td><td>രാജ്യം/ഭൂഖണ്ഡം/ലോകം</td></tr>
+              <tr><td><strong>ഉടമസ്ഥത</strong></td><td>സാധാരണ ഒരു സ്ഥാപനം/വ്യക്തി</td><td>സ്വകാര്യമോ പൊതുവോ</td><td>ഒന്നിലധികം സ്ഥാപനങ്ങൾ/ടെലികോം കമ്പനികൾ</td></tr>
+              <tr><td><strong>വേഗത</strong></td><td><strong>ഏറ്റവും ഉയർന്നത്</strong></td><td>ഇടത്തരം</td><td>LAN-നേക്കാൾ കുറവ് (ഉപയോക്താവിന്)</td></tr>
+              <tr><td><strong>തിരക്ക്/എറർ/ചെലവ്</strong></td><td><strong>ഏറ്റവും കുറവ്</strong></td><td>ഇടത്തരം</td><td><strong>ഏറ്റവും കൂടുതൽ</strong></td></tr>
+              <tr><td><strong>മീഡിയ</strong></td><td>UTP (CAT6), Coaxial, Wi-Fi</td><td>Optical Fibre, Coaxial, Microwave</td><td>Leased lines, Optical Fibre, <strong>ഉപഗ്രഹം</strong></td></tr>
+              <tr><td><strong>ഉദാഹരണം</strong></td><td>ഓഫീസ്/സ്കൂൾ, ഹോം Wi-Fi</td><td><strong>കേബിൾ ടി.വി</strong>, നഗരത്തിലെ ബാങ്ക് ശാഖകൾ</td><td><strong>ഇന്റർനെറ്റ്</strong>, റെയിൽവേ, ATM</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>12.2 നെറ്റ്‌വർക്ക് ഉപകരണങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപകരണം</th><th>ലെയർ</th><th>ബുദ്ധി</th><th>അഡ്രസ്സ്</th><th>ധർമ്മം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>റിപ്പീറ്റർ</strong></td><td>L1</td><td>ഇല്ല</td><td>ഇല്ല</td><td>സിഗ്നൽ ശക്തിപ്പെടുത്തൽ</td></tr>
+              <tr><td><strong>ഹബ്ബ്</strong></td><td>L1</td><td>ഇല്ല</td><td>ഇല്ല</td><td>Broadcast</td></tr>
+              <tr><td><strong>ബ്രിഡ്ജ്</strong></td><td>L2</td><td>ഉണ്ട്</td><td>MAC</td><td>ഒരേ പ്രോട്ടോക്കോളുള്ള LAN-കൾ ബന്ധിപ്പിക്കൽ</td></tr>
+              <tr><td><strong>സ്വിച്ച്</strong></td><td>L2</td><td>ഉണ്ട് (Intelligent Hub)</td><td>MAC</td><td>ശരിയായ പോർട്ടിലേക്ക് മാത്രം ഡാറ്റ</td></tr>
+              <tr><td><strong>റൂട്ടർ</strong></td><td><strong>L3</strong></td><td>ഉണ്ട്</td><td><strong>IP</strong></td><td>വ്യത്യസ്ത നെറ്റ്‌വർക്കുകൾ ബന്ധിപ്പിക്കൽ, Best path</td></tr>
+              <tr><td><strong>ഗേറ്റ്‌വേ</strong></td><td>ഉയർന്ന ലെയറുകൾ (L4–L7)</td><td>ഉണ്ട്</td><td>IP &amp; Protocols</td><td><strong>Protocol Converter</strong></td></tr>
+              <tr><td><strong>മോഡം</strong></td><td>L1 / L2</td><td>—</td><td>—</td><td>Digital ⇄ Analog</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>12.3 ടോപ്പോളജി താരതമ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ടോപ്പോളജി</th><th>കേബിൾ എണ്ണം (n nodes)</th><th>Fault Tolerance</th><th>ചെലവ്</th><th>പ്രത്യേകത</th></tr></thead>
+            <tbody>
+              <tr><td>Bus</td><td>1 (Backbone) + n drops</td><td>കുറവ്</td><td>കുറവ്</td><td>Terminator ആവശ്യം</td></tr>
+              <tr><td>Star</td><td>n</td><td>ഇടത്തരം</td><td>ഇടത്തരം</td><td>Hub/Switch കേന്ദ്രം</td></tr>
+              <tr><td>Ring</td><td>n</td><td>കുറവ്</td><td>ഇടത്തരം</td><td>Token passing</td></tr>
+              <tr><td>Mesh</td><td><strong>n(n−1)/2</strong></td><td><strong>ഏറ്റവും കൂടുതൽ</strong></td><td><strong>ഏറ്റവും കൂടുതൽ</strong></td><td>പോർട്ടുകൾ: n−1</td></tr>
+              <tr><td>Tree</td><td>Bus + Star</td><td>ഇടത്തരം</td><td>ഇടത്തരം</td><td>Hierarchical</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: TIMELINE -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. കാലക്രമം (Timeline)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വർഷം</th><th>നാഴികക്കല്ല്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1950-കൾ</strong></td><td>ആദ്യ <strong>മോഡം</strong> (അമേരിക്കൻ വ്യോമപ്രതിരോധ സംവിധാനത്തിനായി)</td></tr>
+              <tr><td><strong>1950-കൾ</strong></td><td><strong>നരീന്ദർ സിംഗ് കപാനി</strong>യുടെ ഫൈബർ ഒപ്റ്റിക്സ് പ്രവർത്തനങ്ങൾ (പദം: 1956)</td></tr>
+              <tr><td><strong>1969</strong></td><td><strong>ARPANET</strong> — ആദ്യ പാക്കറ്റ്-സ്വിച്ചിംഗ് നെറ്റ്‌വർക്ക്</td></tr>
+              <tr><td><strong>1970–71</strong></td><td>ഹവായ് സർവ്വകലാശാലയിൽ <strong>ALOHAnet</strong> (നോർമൻ അബ്രാംസൺ)</td></tr>
+              <tr><td><strong>1973</strong></td><td><strong>ഇതർനെറ്റ്</strong> (റോബർട്ട് മെറ്റ്കാൾഫ്, Xerox PARC)</td></tr>
+              <tr><td><strong>1974</strong></td><td><strong>TCP/IP</strong> രൂപകല്പന (വിന്റ് സെർഫ്, ബോബ് കാൻ)</td></tr>
+              <tr><td><strong>1983 ജനു. 1</strong></td><td>ARPANET <strong>TCP/IP</strong> സ്വീകരിച്ചു</td></tr>
+              <tr><td><strong>1984</strong></td><td>ISO-യുടെ <strong>OSI മോഡൽ</strong></td></tr>
+              <tr><td><strong>1994</strong></td><td><strong>Bluetooth</strong> (ജാപ്പ് ഹാർട്ട്സെൻ, Ericsson)</td></tr>
+              <tr><td><strong>1995 ഓഗ. 15</strong></td><td>ഇന്ത്യയിൽ <strong>VSNL-ന്റെ GIAS</strong> (പൊതു ഇന്റർനെറ്റ്)</td></tr>
+              <tr><td><strong>1997</strong></td><td><strong>Wi-Fi (IEEE 802.11)</strong> ആദ്യ സ്റ്റാൻഡേർഡ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: MNEMONICS & TRAPS -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. മെമ്മറി ട്രിക്കുകൾ & Common PSC Traps</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>14.1 മെമ്മറി ട്രിക്കുകൾ</h3>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – OSI 7 ലെയറുകൾ</span>
+          <p><strong>1 → 7:</strong> "Please Do Not Throw Sausage Pizza Away"<br>
+          <strong>Physical, Data link, Network, Transport, Session, Presentation, Application</strong></p>
+          <p><strong>7 → 1:</strong> "All People Seem To Need Data Processing"</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – ഉപകരണ-ലെയർ കോഡ്</span>
+          <p><strong>"1-ൽ ഹബ്ബും റിപ്പീറ്ററും, 2-ൽ സ്വിച്ചും ബ്രിഡ്ജും, 3-ൽ റൂട്ടറും"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – വലിപ്പക്രമം</span>
+          <p><strong>"പാൻ ലാൻ കാൻ മാൻ വാൻ"</strong> (PAN → LAN → CAN → MAN → WAN)</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – PDU ക്രമം</span>
+          <p><strong>"ബി-ഫ്രെ-പാ-സെ"</strong> (Bit → Frame → Packet → Segment)</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – ബ്രിഡ്ജ് vs ഗേറ്റ്‌വേ</span>
+          <p>ബ്രിഡ്ജ് = ഒരേ നാട്ടുകാർക്കിടയിലെ പാലം; ഗേറ്റ്‌വേ = വ്യത്യസ്ത ഭാഷയുള്ള രാജ്യങ്ങളുടെ അതിർത്തിയിലെ വിവർത്തകൻ.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – അഡ്രസ്സ് നീളം</span>
+          <p><strong>32 (IPv4) → 48 (MAC) → 128 (IPv6)</strong> — ആരോഹണ ക്രമത്തിൽ.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – മെയിൽ പ്രോട്ടോക്കോൾ</span>
+          <p><strong>S</strong>MTP = <strong>S</strong>end; <strong>P</strong>OP = <strong>P</strong>ull (സ്വീകരിക്കൽ).</p>
+        </div>
+
+        <h3>14.2 Common PSC Traps (8 എണ്ണം)</h3>
+        <div class="trap">
+          <span class="box-label">⚠️ 8 പ്രധാന ട്രാപ്പുകൾ</span>
+          <ol>
+            <li><strong>Trap 1:</strong> ഇന്റർനെറ്റ് MAN/LAN അല്ല, ലോകത്തിലെ ഏറ്റവും വലിയ <strong>WAN</strong> ആണ്.</li>
+            <li><strong>Trap 2:</strong> WAN വലുതായതുകൊണ്ട് വേഗത കൂടുതൽ എന്ന് കരുതരുത്. ഏറ്റവും ഉയർന്ന വേഗത <strong>LAN</strong>-ൽ ആണ്.</li>
+            <li><strong>Trap 3:</strong> "LAN വയർ വഴി മാത്രം" എന്ന പ്രസ്താവന <strong>തെറ്റ്</strong>: <strong>WLAN (Wi-Fi)</strong> കൂടിയുണ്ട്. ("മാത്രം/only" എന്ന വാക്ക് ശ്രദ്ധിക്കുക.)</li>
+            <li><strong>Trap 4:</strong> OFC-യിലെ തത്വം അപവർത്തനമോ വിഭംഗനമോ അല്ല, <strong>പൂർണ്ണ ആന്തരിക പ്രതിഫലനം</strong> ആണ്.</li>
+            <li><strong>Trap 5:</strong> കേന്ദ്ര ഹബ്ബ്/സ്വിച്ച് തകർന്നാൽ നിലയ്ക്കുന്നത് <strong>സ്റ്റാർ</strong>; ബാക്ക്ബോൺ കേബിൾ മുറിഞ്ഞാൽ നിലയ്ക്കുന്നത് <strong>ബസ്</strong>.</li>
+            <li><strong>Trap 6:</strong> ഹബ്ബും സ്വിച്ചും ഒരേ പോലെ എന്ന് കരുതരുത്: ഹബ്ബ് L1 Broadcast, സ്വിച്ച് L2 MAC അടിസ്ഥാനമാക്കിയുള്ളത്.</li>
+            <li><strong>Trap 7:</strong> Bluetooth ഒരു "നെറ്റ്‌വർക്ക് തരം" അല്ല; അതൊരു <strong>PAN സാങ്കേതികവിദ്യ</strong> ആണ്.</li>
+            <li><strong>Trap 8:</strong> SMTP അയക്കാൻ, POP3/IMAP സ്വീകരിക്കാൻ. മാറ്റി ചോദിച്ചേക്കാം.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: ADDITIONAL FACTS -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. അധിക വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>15.1 പോർട്ട് നമ്പറുകൾ (ഒറ്റനോട്ടത്തിൽ)</h3>
+        <div class="added-fact">
+          <span class="box-label">➕ പോർട്ട് ടേബിൾ</span>
+          <ul>
+            <li><strong>FTP:</strong> 20, 21</li>
+            <li><strong>SSH:</strong> 22</li>
+            <li><strong>Telnet:</strong> 23</li>
+            <li><strong>SMTP:</strong> 25</li>
+            <li><strong>DNS:</strong> 53</li>
+            <li><strong>HTTP:</strong> 80</li>
+            <li><strong>POP3:</strong> 110</li>
+            <li><strong>IMAP:</strong> 143</li>
+            <li><strong>HTTPS:</strong> 443</li>
+          </ul>
+        </div>
+
+        <h3>15.2 കേരളത്തിലെ നെറ്റ്‌വർക്ക് പദ്ധതികൾ</h3>
+        <ul>
+          <li><strong>KSWAN (Kerala State Wide Area Network):</strong> സെക്രട്ടേറിയറ്റ്, ജില്ലാ, ബ്ലോക്ക് തലങ്ങളിലെ സർക്കാർ ഓഫീസുകളെ ബന്ധിപ്പിക്കുന്ന ഇ-ഗവേണൻസ് WAN (കേരള സ്റ്റേറ്റ് ഐ.ടി മിഷൻ). <em>(ഓഫീസുകളുടെ കൃത്യ എണ്ണം ഔദ്യോഗിക സൈറ്റിൽ പരിശോധിക്കുക.)</em></li>
+          <li><strong>K-FON (Kerala Fibre Optic Network):</strong> ഒപ്റ്റിക്കൽ ഫൈബർ വഴി സർക്കാർ ഓഫീസുകളിലേക്കും വീടുകളിലേക്കും (ആദ്യം BPL കുടുംബങ്ങൾക്ക്) ഇന്റർനെറ്റ് എത്തിക്കുന്ന പദ്ധതി.</li>
+          <li><strong>ഇന്റർനെറ്റ് അടിസ്ഥാന അവകാശം:</strong> ഇന്റർനെറ്റ് ലഭ്യത അടിസ്ഥാന അവകാശമായി പ്രഖ്യാപിച്ച ആദ്യ ഇന്ത്യൻ സംസ്ഥാനം <strong>കേരളം</strong> (2019).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 16: PSC SMART TRICKS -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⚠️ ആദ്യം മനസ്സിലാക്കുക</span>
+          <p>ഈ ടെക്‌നിക്കുകൾ <strong>ശരിയാകാനുള്ള സാധ്യത (probability) കൂട്ടുകയേ ഉള്ളൂ</strong>. അവ അറിവിന് പകരമാവില്ല. "ഏറ്റവും നീളമുള്ള ഓപ്ഷൻ ശരി", "എപ്പോഴും C ഓപ്ഷൻ", "മുൻ പരീക്ഷയിലെ ഉത്തര പാറ്റേൺ ആവർത്തിക്കും" എന്നിവ <strong>മിഥ്യകളാണ്</strong>; ഉപയോഗിക്കരുത്. താഴെയുള്ള ചോദ്യങ്ങൾ ഈ ടെക്‌നിക്കുകൾ കാണിക്കാൻ ഉണ്ടാക്കിയ <strong>പുതിയ പരിശീലന ചോദ്യങ്ങളാണ്</strong> (യഥാർത്ഥ PYQ അല്ല).</p>
+        </div>
+
+        <h3>ടെക്‌നിക് 1: Option Elimination (തെറ്റായവ ഒഴിവാക്കൽ)</h3>
+        <p><strong>ചോദ്യം:</strong> എല്ലാ പോർട്ടുകളിലേക്കും ഡാറ്റ Broadcast ചെയ്യുന്ന ഉപകരണം ഏത്?</p>
+        <p>(A) Router (B) Switch (C) Hub (D) Gateway</p>
+        <ul>
+          <li>Router IP നോക്കി <em>പ്രത്യേക പാത</em> തിരഞ്ഞെടുക്കുന്നു → Broadcast അല്ല. <strong>(A) ഒഴിവാക്കുക.</strong></li>
+          <li>Gateway പ്രോട്ടോക്കോൾ വിവർത്തനം ചെയ്യുന്നു → <strong>(D) ഒഴിവാക്കുക.</strong></li>
+          <li>Switch "Intelligent Hub" ആണ്; ശരിയായ പോർട്ടിലേക്ക് മാത്രം അയക്കുന്നു → <strong>(B) ഒഴിവാക്കുക.</strong></li>
+          <li>ബാക്കി <strong>(C) Hub</strong>.</li>
+        </ul>
+        <p><strong>ഉത്തരം: (C).</strong> "ബുദ്ധിയുള്ളവ" (Router, Switch, Gateway) ഒഴിവാക്കിയപ്പോൾ ബുദ്ധിയില്ലാത്ത Hub ബാക്കിയായി.</p>
+
+        <h3>ടെക്‌നിക് 2: Keyword &amp; Question Wording (negative ചോദ്യങ്ങൾ)</h3>
+        <p><em>"അല്ലാത്തത്, തെറ്റായത്, ഒഴികെ, NOT, EXCEPT"</em> എന്നീ വാക്കുകൾ ചോദ്യത്തെ തലകീഴാക്കുന്നു. ആദ്യം ഇവ വട്ടമിടുക.</p>
+        <p><strong>ചോദ്യം:</strong> താഴെ പറയുന്നവയിൽ <strong>ഗൈഡഡ് മീഡിയ അല്ലാത്തത്</strong> ഏത്?</p>
+        <p>(A) UTP (B) Coaxial Cable (C) Optical Fibre (D) Microwave</p>
+        <p><strong>ഘട്ടങ്ങൾ:</strong> (A), (B), (C) എല്ലാം കേബിളുകൾ (ഒരേ വിഭാഗം). ഒരൊറ്റ ഓപ്ഷൻ മാത്രം വ്യത്യസ്തം (Odd one out) → Microwave വായുവിലൂടെ.</p>
+        <p><strong>ഉത്തരം: (D).</strong> "അല്ലാത്തത്" ശ്രദ്ധിക്കാതെ വായിച്ചാൽ (A) തിരഞ്ഞെടുത്ത് തെറ്റും.</p>
+
+        <h3>ടെക്‌നിക് 3: Common-Sense Logic</h3>
+        <p><strong>ചോദ്യം:</strong> ഒരു നഗരത്തിലെ എല്ലാ ബാങ്ക് ശാഖകളെയും ബന്ധിപ്പിക്കുന്ന നെറ്റ്‌വർക്ക് ഏത്?</p>
+        <p>(A) PAN (B) LAN (C) MAN (D) Bluetooth</p>
+        <ul>
+          <li>"നഗരം" എന്ന വ്യാപ്തി ശ്രദ്ധിക്കുക. PAN (വ്യക്തിക്ക് ചുറ്റും ~10 m) വളരെ ചെറുത് → ഒഴിവാക്കുക.</li>
+          <li>LAN ഒരു കെട്ടിടം/ക്യാമ്പസ് → നഗരത്തിന് ചെറുത്.</li>
+          <li>Bluetooth ഒരു സാങ്കേതികവിദ്യയാണ്, നെറ്റ്‌വർക്ക് "തരം" അല്ല.</li>
+        </ul>
+        <p><strong>ഉത്തരം: (C) MAN.</strong> <em>City → Metropolitan</em> എന്ന വാക്കിന്റെ അർത്ഥം തന്നെ സൂചന.</p>
+
+        <h3>ടെക്‌നിക് 4: Extreme Statement Check</h3>
+        <p><em>only, always, never, all, none</em> എന്നിവ കാണുമ്പോൾ "ഇത് എല്ലാ സാഹചര്യത്തിലും ശരിയാണോ?" എന്ന് ചോദിക്കുക. ഒരൊറ്റ ഒഴിവുണ്ടെങ്കിൽ പ്രസ്താവന തെറ്റ്. <strong>എന്നാൽ ഇത്തരം വാക്കുള്ള പ്രസ്താവന ചിലപ്പോൾ ശരിയുമാകാം</strong> (ഉദാ: "ഇന്റർനെറ്റ് ഏറ്റവും വലിയ WAN ആണ്").</p>
+        <p><strong>ചോദ്യം:</strong> ശരിയായ പ്രസ്താവന ഏത്?</p>
+        <ul style="list-style:none;padding-left:0;">
+          <li>(A) LAN കേബിളിലൂടെ <strong>മാത്രമേ</strong> പ്രവർത്തിക്കൂ.</li>
+          <li>(B) WAN-ൽ <strong>എപ്പോഴും</strong> LAN-നേക്കാൾ വേഗത കൂടുതലാണ്.</li>
+          <li>(C) ലോകത്തിലെ ഏറ്റവും വലിയ WAN ഇന്റർനെറ്റ് ആണ്.</li>
+          <li>(D) ഹബ്ബ് ഡാറ്റ <strong>എപ്പോഴും</strong> ലക്ഷ്യസ്ഥാനത്തേക്ക് മാത്രം അയക്കുന്നു.</li>
+        </ul>
+        <ul>
+          <li>(A) "മാത്രമേ" → Wi-Fi (WLAN) ഒരു ഒഴിവ് → തെറ്റ്.</li>
+          <li>(B) "എപ്പോഴും" → LAN-ന് സാധാരണ വേഗത കൂടുതൽ → തെറ്റ്.</li>
+          <li>(D) "എപ്പോഴും … മാത്രം" → ഹബ്ബ് Broadcast ചെയ്യുന്നു → തെറ്റ്.</li>
+          <li>(C) വസ്തുത ശരി.</li>
+        </ul>
+        <p><strong>ഉത്തരം: (C).</strong></p>
+
+        <h3>ടെക്‌നിക് 5: Match-the-Following (അറിയുന്ന ജോഡികൾ ആദ്യം)</h3>
+        <p><strong>ചോദ്യം:</strong> a. Hub | b. Switch | c. Router | d. Gateway<br>
+        ↔ 1. Protocol conversion | 2. Layer 3, IP | 3. Layer 1 Broadcast | 4. Layer 2, MAC</p>
+        <p>(A) a-3, b-4, c-2, d-1<br>
+        (B) a-4, b-3, c-2, d-1<br>
+        (C) a-3, b-4, c-1, d-2<br>
+        (D) a-2, b-4, c-3, d-1</p>
+        <ul>
+          <li>ഉറപ്പുള്ള ജോഡി: <strong>d-1</strong> (Gateway = Protocol converter). (C)-യിൽ d-2 → ഒഴിവാക്കുക.</li>
+          <li>രണ്ടാമത്തെ ജോഡി: <strong>c-2</strong> (Router = IP). (D)-യിൽ c-3 → ഒഴിവാക്കുക.</li>
+          <li>(A), (B) ബാക്കി. Hub Broadcast = a-3 എന്ന് അറിഞ്ഞാൽ (B)-യിലെ a-4 തെറ്റ്.</li>
+        </ul>
+        <p><strong>ഉത്തരം: (A).</strong> രണ്ട് ജോഡികൾ അറിഞ്ഞാൽ തന്നെ 4 ഓപ്ഷനുകൾ 2 ആയി കുറയും.</p>
+
+        <h3>ടെക്‌നിക് 6: Statement-Based Questions</h3>
+        <p>ഓരോ പ്രസ്താവനയും <strong>വെവ്വേറെ</strong> ശരി/തെറ്റ് എന്ന് കുറിച്ച ശേഷം മാത്രം കോമ്പിനേഷൻ നോക്കുക.</p>
+        <p><strong>ചോദ്യം:</strong> (i) Mesh ടോപ്പോളജിക്ക് ഏറ്റവും വിശ്വാസ്യത. (ii) Ring ടോപ്പോളജിയിൽ ടോക്കൺ ഉപയോഗിക്കുന്നു. (iii) Bus ടോപ്പോളജിയിൽ കേന്ദ്ര ഹബ്ബ് ഉണ്ട്.</p>
+        <p>(A) (i), (ii) മാത്രം (B) (ii), (iii) മാത്രം (C) (i), (iii) മാത്രം (D) (i), (ii), (iii)</p>
+        <p><strong>ഘട്ടങ്ങൾ:</strong> (i) ശരി ✔, (ii) ശരി ✔, (iii) തെറ്റ് ✘ (Bus-ൽ ബാക്ക്ബോൺ കേബിളാണ്, ഹബ്ബ് ഇല്ല). ✘ ഉള്ള (iii) ഉൾപ്പെട്ട (B), (C), (D) ഒഴിവാക്കുക.</p>
+        <p><strong>ഉത്തരം: (A).</strong> ഒരു പ്രസ്താവന മാത്രം തെറ്റാണെന്ന് ഉറപ്പിച്ചാൽ തന്നെ പല ഓപ്ഷനുകളും പോകും.</p>
+
+        <h3>ടെക്‌നിക് 7: Assertion–Reason</h3>
+        <p>രണ്ട് ചോദ്യങ്ങൾ ചോദിക്കുക: <strong>(1) A ശരിയോ? (2) R ശരിയോ? (3) R, A-യെ വിശദീകരിക്കുന്നുണ്ടോ?</strong></p>
+        <p><strong>ചോദ്യം:</strong> <strong>A:</strong> ഒപ്റ്റിക്കൽ ഫൈബറിനെ വൈദ്യുതകാന്തിക തടസ്സം (EMI) ബാധിക്കില്ല. <strong>R:</strong> ഇതിൽ ഡാറ്റ വൈദ്യുതി അല്ല, പ്രകാശമായാണ് സഞ്ചരിക്കുന്നത്.</p>
+        <p>(A) A, R ശരി; R, A-യുടെ ശരിയായ വിശദീകരണം (B) A, R ശരി; R വിശദീകരണമല്ല (C) A ശരി, R തെറ്റ് (D) A തെറ്റ്, R ശരി</p>
+        <p><strong>ഘട്ടങ്ങൾ:</strong> A ശരി; R ശരി; പ്രകാശത്തെ EMI ബാധിക്കാത്തതുകൊണ്ടാണ് A ശരിയാകുന്നത് → R വിശദീകരിക്കുന്നു.</p>
+        <p><strong>ഉത്തരം: (A).</strong> ⚠️ രണ്ടും ശരിയായ വസ്തുതകൾ ആയാലും ബന്ധം ഇല്ലെങ്കിൽ (B) ആണ്. ബന്ധം പരിശോധിക്കാതെ (A) തിരഞ്ഞെടുക്കരുത്.</p>
+
+        <h3>ടെക്‌നിക് 8: Number &amp; Chronology Logic</h3>
+        <p><strong>ചോദ്യം:</strong> MAC അഡ്രസ്സിന്റെ നീളം എത്ര ബിറ്റ്?</p>
+        <p>(A) 32 (B) 48 (C) 64 (D) 128</p>
+        <ul>
+          <li>32 = IPv4, 128 = IPv6 എന്ന് അറിയാമെങ്കിൽ ഇവ MAC അല്ല → (A), (D) ഒഴിവാക്കുക. 48-ഓ 64-ഓ എന്ന സംശയം ബാക്കി.</li>
+        </ul>
+        <p><strong>ഉത്തരം: (B) 48</strong> (6 ബൈറ്റ് = 12 ഹെക്സ് അക്കങ്ങൾ; ഓരോ ബൈറ്റിനും 2 ഹെക്സ് അക്കം).</p>
+
+        <h3>ടെക്‌നിക് 9: Similar-Option Comparison</h3>
+        <p><strong>ചോദ്യം:</strong> ഒരേ പ്രോട്ടോക്കോളുള്ള രണ്ട് LAN-കളെ ബന്ധിപ്പിക്കുന്നത്?</p>
+        <p>(A) Gateway (B) Bridge (C) Router (D) Repeater</p>
+        <ul>
+          <li>സമാന ഓപ്ഷനുകൾ: Bridge, Gateway, Router (മൂന്നും "ബന്ധിപ്പിക്കൽ").</li>
+          <li>വ്യത്യാസം കണ്ടെത്താനുള്ള താക്കോൽ വാക്ക്: <strong>"ഒരേ പ്രോട്ടോക്കോൾ"</strong>. Gateway = <em>വ്യത്യസ്ത</em> പ്രോട്ടോക്കോൾ; Router = <em>വ്യത്യസ്ത നെറ്റ്‌വർക്കുകൾ</em>.</li>
+          <li>Repeater സിഗ്നൽ ശക്തിപ്പെടുത്തുക മാത്രം.</li>
+        </ul>
+        <p><strong>ഉത്തരം: (B) Bridge.</strong></p>
+
+        <h3>ടെക്‌നിക് 10: Question Wording (ഉദാഹരണം)</h3>
+        <p><strong>ചോദ്യം:</strong> ഹബ്ബിന്റെ സവിശേഷത <strong>അല്ലാത്തത്</strong> ഏത്?</p>
+        <p>(A) Physical Layer-ൽ പ്രവർത്തിക്കുന്നു (B) Broadcast ചെയ്യുന്നു (C) MAC അഡ്രസ്സ് നോക്കി ലക്ഷ്യസ്ഥാനത്തേക്ക് മാത്രം അയക്കുന്നു (D) ബുദ്ധിയില്ലാത്ത ഉപകരണം</p>
+        <p><strong>ഉത്തരം: (C)</strong> (ഇത് സ്വിച്ചിന്റെ സവിശേഷത).</p>
+
+        <h3>ടെക്‌നിക് 11: Informed Guessing &amp; Negative Marking</h3>
+        <p><strong>ചോദ്യം:</strong> Wi-Fi-യുടെ IEEE സ്റ്റാൻഡേർഡ് ഏത്?</p>
+        <p>(A) 802.3 (B) 802.11 (C) 802.15 (D) 802.16</p>
+        <p><strong>ഘട്ടങ്ങൾ:</strong> 802.3 = Ethernet എന്നും 802.15 = Bluetooth എന്നും അറിയാമെങ്കിൽ ഇവ ഒഴിവാക്കാം. 802.11 vs 802.16 എന്ന 50:50 ബാക്കി. 802.16 = WiMAX ഓർമ്മയുണ്ടെങ്കിൽ ഉത്തരം ഉറപ്പ്.</p>
+        <p><strong>ഉത്തരം: (B) 802.11.</strong></p>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Guess ചെയ്യണോ വേണ്ടയോ? (ഗണിതം)</span>
+          <p>തെറ്റുത്തരത്തിന് <strong>⅓ മാർക്ക് കുറയ്ക്കുന്ന</strong> പരീക്ഷയാണെന്ന് കരുതുക <em>(നിങ്ങളുടെ പരീക്ഷയുടെ വിജ്ഞാപനത്തിൽ ഇത് ഉറപ്പാക്കുക)</em>:</p>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>ഒഴിവാക്കിയ ഓപ്ഷനുകൾ</th><th>ശരിയാകാനുള്ള സാധ്യത</th><th>പ്രതീക്ഷിത മാർക്ക്</th></tr></thead>
+              <tbody>
+                <tr><td>0 (പൂർണ്ണ ഊഹം)</td><td>1/4</td><td>1/4 − (3/4)(1/3) = <strong>0</strong></td></tr>
+                <tr><td>1</td><td>1/3</td><td>1/3 − (2/3)(1/3) = <strong>+0.11</strong></td></tr>
+                <tr><td>2</td><td>1/2</td><td>1/2 − (1/2)(1/3) = <strong>+0.33</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>നിഗമനം:</strong> തികച്ചും ഊഹമാണെങ്കിൽ നേട്ടമില്ല. <strong>ഒരു ഓപ്ഷനെങ്കിലും ഉറപ്പായി ഒഴിവാക്കാൻ കഴിഞ്ഞാൽ</strong> ഉത്തരം അടയാളപ്പെടുത്തുന്നത് ദീർഘകാലത്ത് ലാഭകരം; പൂർണ്ണമായും വഴിതെറ്റിയാൽ ഒഴിവാക്കുന്നതാണ് സുരക്ഷിതം.</p>
+        </div>
+
+        <h3>ടെക്‌നിക് 12: PSC Pattern Awareness</h3>
+        <ul>
+          <li>ഈ അധ്യായത്തിൽ ഉപകരണ-ലെയർ ചോദ്യങ്ങളും LAN/MAN/WAN പ്രസ്താവനകളും ഏറെ കാണാറുണ്ട് എന്നതിനാൽ <strong>അവ ആദ്യം ഉറപ്പിക്കുക.</strong></li>
+          <li>ഇത് <strong>പഠന മുൻഗണന നിശ്ചയിക്കാൻ</strong> മാത്രമാണ്. "മുൻ പരീക്ഷയിൽ B ആയിരുന്നു, ഇത്തവണ C" പോലുള്ള ഉത്തര പാറ്റേൺ ഊഹങ്ങൾക്ക് ശാസ്ത്രീയ അടിസ്ഥാനമില്ല.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 17: MODEL QUESTIONS -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. മാതൃകാ ചോദ്യങ്ങൾ (5 ചോദ്യ ശൈലികൾ)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>1. ഒറ്റ ഉത്തര ചോദ്യം</h3>
+        <p><strong>ചോദ്യം:</strong> വ്യത്യസ്ത പ്രോട്ടോക്കോളുകളുള്ള രണ്ട് നെറ്റ്‌വർക്കുകളെ ബന്ധിപ്പിക്കുന്ന 'പ്രോട്ടോക്കോൾ കൺവെർട്ടർ' ഏത്?</p>
+        <p>(A) Switch (B) Bridge (C) Gateway (D) Repeater</p>
+        <div class="answer-block show">
+          <div class="answer-label">ഉത്തരം: (C) Gateway</div>
+          <div class="explanation">വ്യത്യസ്ത പ്രോട്ടോക്കോൾ/മോഡലുകളിലെ നെറ്റ്‌വർക്കുകളെ ബന്ധിപ്പിച്ച് പ്രോട്ടോക്കോൾ വിവർത്തനം ചെയ്യുന്നത് ഗേറ്റ്‌വേ.</div>
+        </div>
+
+        <h3>2. ക്രമത്തിൽ എഴുതുക</h3>
+        <p><strong>ചോദ്യം:</strong> വ്യാപ്തിയുടെ അവരോഹണ ക്രമത്തിൽ (വലുതിൽ → ചെറുത്) ക്രമീകരിക്കുക: 1. LAN 2. PAN 3. WAN 4. MAN</p>
+        <p>(A) 2-1-4-3 (B) 3-4-1-2 (C) 3-1-4-2 (D) 4-3-1-2</p>
+        <div class="answer-block show">
+          <div class="answer-label">ഉത്തരം: (B) 3-4-1-2</div>
+          <div class="explanation">WAN → MAN → LAN → PAN (വലുതിൽ ചെറുതിലേക്ക്).</div>
+        </div>
+
+        <h3>3. പ്രസ്താവന രീതി (തെറ്റായത് കണ്ടെത്തുക)</h3>
+        <p><strong>ചോദ്യം:</strong> (i) ഹബ്ബ് ഡാറ്റാ ലിങ്ക് ലെയറിലും സ്വിച്ച് ഫിസിക്കൽ ലെയറിലും പ്രവർത്തിക്കുന്നു. (ii) ഹബ്ബ് Broadcast ട്രാൻസ്മിഷൻ നടത്തുന്നു. (iii) റൂട്ടർ നെറ്റ്‌വർക്ക് ലെയറിൽ പ്രവർത്തിക്കുന്നു.<br>
+        തെറ്റായ പ്രസ്താവന ഏത്?</p>
+        <p>(A) (i) മാത്രം (B) (i), (ii) (C) (i), (ii), (iii) (D) (ii), (iii)</p>
+        <div class="answer-block show">
+          <div class="answer-label">ഉത്തരം: (A) (i) മാത്രം</div>
+          <div class="explanation">ശരി: ഹബ്ബ് L1, സ്വിച്ച് L2. (ii), (iii) ശരിയാണ്.</div>
+        </div>
+
+        <h3>4. ചേരുംപടി ചേർക്കുക</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>I</th><th>II</th></tr></thead>
+            <tbody>
+              <tr><td>a. Bridge</td><td>1. ഡിജിറ്റൽ → അനലോഗ് സിഗ്നൽ</td></tr>
+              <tr><td>b. Repeater</td><td>2. കൂട്ടിയിടി/തിരക്ക് ഒഴിവാക്കുന്ന ഇന്റലിജന്റ് ഹബ്ബ്</td></tr>
+              <tr><td>c. Modem</td><td>3. ഒരേ പ്രോട്ടോക്കോളുള്ള രണ്ട് LAN-കൾ ബന്ധിപ്പിക്കുന്നു</td></tr>
+              <tr><td>d. Switch</td><td>4. ദുർബല സിഗ്നൽ ശക്തിപ്പെടുത്തുന്നു</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>(A) a-3, b-4, c-1, d-2 (B) a-2, b-4, c-1, d-3 (C) a-3, b-1, c-4, d-2 (D) a-4, b-3, c-1, d-2</p>
+        <div class="answer-block show">
+          <div class="answer-label">ഉത്തരം: (A) a-3, b-4, c-1, d-2</div>
+          <div class="explanation">Bridge = സമാന LAN-കൾ; Repeater = സിഗ്നൽ ശക്തിപ്പെടുത്തൽ; Modem = Digital ⇄ Analog; Switch = Intelligent Hub.</div>
+        </div>
+
+        <h3>5. Assertion–Reason</h3>
+        <p><strong>A:</strong> ആധുനിക LAN-കളിൽ ഹബ്ബിന് പകരം സ്വിച്ച് ഉപയോഗിക്കുന്നു. <strong>R:</strong> ഹബ്ബ് എല്ലാവർക്കും Broadcast ചെയ്യുമ്പോൾ സ്വിച്ച് MAC അഡ്രസ്സ് പരിശോധിച്ച് ലക്ഷ്യസ്ഥാനത്തേക്ക് മാത്രം ഡാറ്റ അയച്ച് കൂട്ടിയിടി ഒഴിവാക്കുന്നു.</p>
+        <p>(A) A, R ശരി; R, A-യുടെ ശരിയായ വിശദീകരണം (B) A, R ശരി; R വിശദീകരണമല്ല (C) A ശരി, R തെറ്റ് (D) A തെറ്റ്, R ശരി</p>
+        <div class="answer-block show">
+          <div class="answer-label">ഉത്തരം: (A) A, R ശരി; R, A-യുടെ ശരിയായ വിശദീകരണം</div>
+          <div class="explanation">സ്വിച്ചിന്റെ MAC-അധിഷ്ഠിത ഫോർവേഡിംഗ് ആണ് ഹബ്ബിനെ മാറ്റിസ്ഥാപിച്ചതിന്റെ കാരണം.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: MCQ PRACTICE -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. MCQ പരിശീലനം (Interactive)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. കേന്ദ്ര ഉപകരണം (Hub) തകരാറിലായാൽ നെറ്റ്‌വർക്ക് മുഴുവൻ നിലയ്ക്കുന്ന ടോപ്പോളജി?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Bus</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Ring</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Star</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Mesh</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Star</div>
+            <div class="explanation">(A)-ൽ കേന്ദ്ര ഹബ്ബ് ഇല്ല (Backbone കേബിൾ); (B) വൃത്താകൃതി, ടോക്കൺ; (D) എല്ലാ നോഡുകളും നേരിട്ട് ബന്ധിപ്പിച്ചിരിക്കുന്നതിനാൽ ഒരു ഭാഗം തകർന്നാലും നിലയ്ക്കില്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. പൂർണ്ണ ആന്തരിക പ്രതിഫലനം ഉപയോഗിച്ച് ഡാറ്റ കൈമാറുന്ന മീഡിയ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Coaxial</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Optical Fibre</button>
+            <button type="button" class="opt-btn" data-opt="C">C. UTP</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Microwave</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Optical Fibre</div>
+            <div class="explanation">(A), (C) ചെമ്പ് കേബിളുകളിലൂടെ വൈദ്യുത സിഗ്നൽ; (D) വായുവിലൂടെ നേർരേഖയിൽ സഞ്ചരിക്കുന്ന തരംഗം.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. OSI മോഡലിലെ ലെയറുകളുടെ എണ്ണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 4</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 5</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 6</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 7</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 7</div>
+            <div class="explanation">4 ലെയർ = TCP/IP; 5 = ചില പുസ്തകങ്ങളിലെ TCP/IP.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. റൂട്ടർ പാക്കറ്റുകൾ കൈമാറാൻ ഉപയോഗിക്കുന്ന 32-ബിറ്റ് (IPv4) ലോജിക്കൽ അഡ്രസ്സ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. MAC</button>
+            <button type="button" class="opt-btn" data-opt="B">B. IP Address</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Port Number</button>
+            <button type="button" class="opt-btn" data-opt="D">D. URL</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) IP Address</div>
+            <div class="explanation">MAC = 48-ബിറ്റ് ഫിസിക്കൽ; Port = Transport ലെയറിൽ പ്രോഗ്രാം തിരിച്ചറിയാനുള്ള 16-ബിറ്റ് നമ്പർ; URL = വെബ് വിലാസം.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ശരിയായ പ്രസ്താവനകൾ ഏത്?<br>(i) WAN, LAN-നേക്കാൾ കൂടുതൽ പ്രദേശം ഉൾക്കൊള്ളുന്നു.<br>(ii) LAN, WAN-നേക്കാൾ വേഗതയേറിയത്.<br>(iii) WAN, LAN-നേക്കാൾ ചെലവ് കുറവ്.<br>(iv) LAN = Large Area Network.</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. (i), (ii)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. (i), (iii)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. (ii), (iv)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. (i), (ii), (iii)</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) (i), (ii)</div>
+            <div class="explanation">(iii) തെറ്റ്: WAN ചെലവേറിയത്. (iv) തെറ്റ്: LAN = Local Area Network.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഇ-മെയിൽ <strong>സ്വീകരിക്കാൻ</strong> ഉപയോഗിക്കുന്ന പ്രോട്ടോക്കോൾ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. SMTP</button>
+            <button type="button" class="opt-btn" data-opt="B">B. POP3</button>
+            <button type="button" class="opt-btn" data-opt="C">C. FTP</button>
+            <button type="button" class="opt-btn" data-opt="D">D. DNS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) POP3</div>
+            <div class="explanation">SMTP അയക്കാൻ; FTP ഫയൽ കൈമാറാൻ; DNS ഡൊമെയ്ൻ → IP.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. ഫുൾ-ഡ്യൂപ്ലക്സ് ആശയവിനിമയത്തിന് ഉദാഹരണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. റേഡിയോ പ്രക്ഷേപണം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. വാക്കി-ടോക്കി</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ടെലിഫോൺ സംഭാഷണം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. കീബോർഡ് → കമ്പ്യൂട്ടർ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ടെലിഫോൺ സംഭാഷണം</div>
+            <div class="explanation">(A), (D) സിംപ്ലക്സ്; (B) ഹാഫ്-ഡ്യൂപ്ലക്സ്.</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. Wi-Fi-യുടെ IEEE സ്റ്റാൻഡേർഡ് ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 802.3</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 802.11</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 802.15</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 802.16</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 802.11</div>
+            <div class="explanation">802.3 = Ethernet; 802.15 = Bluetooth; 802.16 = WiMAX.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. MAC അഡ്രസ്സിന്റെ നീളം എത്ര ബിറ്റ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 32</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 48</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 64</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 128</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 48</div>
+            <div class="explanation">6 ബൈറ്റ് = 12 ഹെക്സ് അക്കങ്ങൾ; ഓരോ ബൈറ്റിനും 2 ഹെക്സ് അക്കം.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ഒരേ പ്രോട്ടോക്കോളുള്ള രണ്ട് LAN-കളെ ബന്ധിപ്പിക്കുന്നത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Gateway</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Bridge</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Router</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Repeater</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Bridge</div>
+            <div class="explanation">Gateway = വ്യത്യസ്ത പ്രോട്ടോക്കോൾ; Router = വ്യത്യസ്ത നെറ്റ്‌വർക്കുകൾ; Repeater = സിഗ്നൽ ശക്തിപ്പെടുത്തൽ.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ലോകത്തിലെ ഏറ്റവും വലിയ WAN ഏത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. LAN</button>
+            <button type="button" class="opt-btn" data-opt="B">B. MAN</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഇന്റർനെറ്റ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Wi-Fi</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഇന്റർനെറ്റ്</div>
+            <div class="explanation">ഇന്റർനെറ്റിനെ "Network of Networks" എന്നും ലോകത്തിലെ ഏറ്റവും വലിയ WAN എന്നും വിളിക്കുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. 5 കമ്പ്യൂട്ടറുകൾ ഫുൾ-മെഷ് ടോപ്പോളജിയിൽ ബന്ധിപ്പിക്കാൻ എത്ര കേബിളുകൾ വേണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 5</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 10</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 15</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 20</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 10</div>
+            <div class="explanation">n(n−1)/2 = 5×4/2 = 10 കേബിളുകൾ. ഓരോ കമ്പ്യൂട്ടറിനും വേണ്ട പോർട്ടുകൾ = n−1 = 4.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. Data Link ലെയറിൽ പ്രവർത്തിക്കുന്ന ഉപകരണങ്ങൾ ഏവ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Hub, Repeater</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Switch, Bridge</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Router, Gateway</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Modem, NIC</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Switch, Bridge</div>
+            <div class="explanation">Hub, Repeater = L1; Router = L3; Gateway = ഉയർന്ന ലെയറുകൾ. NIC Data Link ലെയറിൽ പ്രവർത്തിക്കുന്നു, പക്ഷേ ചോദ്യത്തിൽ Switch+Bridge ആണ് ഉത്തരം.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. Bluetooth ഏത് IEEE സ്റ്റാൻഡേർഡിൽ പ്രവർത്തിക്കുന്നു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 802.3</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 802.11</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 802.15.1</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 802.16</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 802.15.1</div>
+            <div class="explanation">Bluetooth = IEEE 802.15.1 (PAN); Wi-Fi = 802.11; WiMAX = 802.16; Ethernet = 802.3.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഒരേ ശൃംഖലയിൽ ഏറ്റവും ഉയർന്ന വേഗത ഏതിനാണ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. LAN</button>
+            <button type="button" class="opt-btn" data-opt="B">B. MAN</button>
+            <button type="button" class="opt-btn" data-opt="C">C. WAN</button>
+            <button type="button" class="opt-btn" data-opt="D">D. ഇവയെല്ലാം തുല്യം</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) LAN</div>
+            <div class="explanation">LAN-ൽ 100 Mbps – 10 Gbps വരെ; WAN-ൽ ഉപയോക്താവിന് ശരാശരി വേഗത കുറവാണ്.</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. വ്യത്യസ്ത പ്രോട്ടോക്കോളുകൾ ഉപയോഗിക്കുന്ന നെറ്റ്‌വർക്കുകളെ ബന്ധിപ്പിക്കുന്ന ഉപകരണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Hub</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Switch</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Gateway</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Repeater</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) Gateway</div>
+            <div class="explanation">Gateway = Protocol Converter; Hub = L1 Broadcast; Switch = L2 MAC; Repeater = Signal Regenerator.</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ADSL മോഡത്തിന്റെ പ്രധാന ധർമ്മം എന്ത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ഡിജിറ്റൽ സിഗ്നലിനെ അനലോഗ് ആക്കുകയും തിരിച്ച് ആക്കുകയും ചെയ്യൽ</button>
+            <button type="button" class="opt-btn" data-opt="B">B. പാക്കറ്റുകൾ Route ചെയ്യൽ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ഡാറ്റ Broadcast ചെയ്യൽ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. MAC അഡ്രസ്സ് കൈകാര്യം ചെയ്യൽ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) Digital ⇄ Analog</div>
+            <div class="explanation">Modem = Modulator + Demodulator; ഡിജിറ്റൽ സിഗ്നലിനെ അനലോഗ് ആക്കി ടെലിഫോൺ ലൈനിൽ അയക്കാൻ സഹായിക്കുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ഇന്റർനെറ്റിൽ ഏത് സ്വിച്ചിംഗ് രീതി ഉപയോഗിക്കുന്നു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Circuit Switching</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Packet Switching</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Message Switching</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Manual Switching</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) Packet Switching</div>
+            <div class="explanation">ഇന്റർനെറ്റ് പാക്കറ്റ് സ്വിച്ചിംഗ് ഉപയോഗിക്കുന്നു; അടിത്തറയിട്ടത് പോൾ ബാരൻ, ഡൊണാൾഡ് ഡേവിസ്.</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. നെറ്റ്‌വർക്ക് ടോപ്പോളജിയിൽ ഏറ്റവും വിശ്വാസ്യതയും Fault tolerance-ഉം ഉള്ളത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. Bus</button>
+            <button type="button" class="opt-btn" data-opt="B">B. Star</button>
+            <button type="button" class="opt-btn" data-opt="C">C. Ring</button>
+            <button type="button" class="opt-btn" data-opt="D">D. Mesh</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) Mesh</div>
+            <div class="explanation">ഓരോ കമ്പ്യൂട്ടറും മറ്റെല്ലാറ്റുമായി നേരിട്ട് ബന്ധിപ്പിച്ചിരിക്കുന്നതിനാൽ ഒരു ലിങ്ക് തകർന്നാലും ബദൽ പാത ലഭ്യമാണ്. കേബിൾ ചെലവ് ഏറ്റവും കൂടുതൽ.</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഇന്ത്യയിൽ പൊതുജനങ്ങൾക്കുള്ള ഇന്റർനെറ്റ് സേവനം ആരംഭിച്ചത് ഏത് വർഷം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1991</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1993</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 1995</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 1997</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1995</div>
+            <div class="explanation">1995 ഓഗസ്റ്റ് 15-ന് VSNL-ന്റെ GIAS (Gateway Internet Access Service) വഴി ഇന്ത്യയിൽ പൊതുജനങ്ങൾക്ക് ഇന്റർനെറ്റ് ലഭ്യമായി.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: QUICK REFERENCE & TIPS -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. ഒറ്റനോട്ട പട്ടിക & Top Facts & Exam Tips</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>19.1 ഒറ്റനോട്ട പട്ടിക</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഇനം</th><th>ഓർമ്മിക്കേണ്ടത്</th></tr></thead>
+            <tbody>
+              <tr><td><strong>PAN</strong></td><td>ഏറ്റവും ചെറുത് (~10 m); Bluetooth (802.15.1)</td></tr>
+              <tr><td><strong>LAN</strong></td><td>കെട്ടിടം/ക്യാമ്പസ്; <strong>ഏറ്റവും വേഗത, തിരക്ക് കുറവ്</strong>; Ethernet 802.3, Wi-Fi 802.11</td></tr>
+              <tr><td><strong>MAN</strong></td><td>നഗരം; LAN-നും WAN-നും ഇടയിൽ; <strong>കേബിൾ ടി.വി</strong></td></tr>
+              <tr><td><strong>WAN</strong></td><td>ലോകം; പാക്കറ്റ് സ്വിച്ചിംഗ്, ഉപഗ്രഹം; <strong>ഇന്റർനെറ്റ്</strong></td></tr>
+              <tr><td><strong>OFC</strong></td><td>പ്രകാശം; <strong>TIR</strong>; ഏറ്റവും ഉയർന്ന ബാൻഡ്‌വിഡ്ത്ത്</td></tr>
+              <tr><td><strong>Star</strong></td><td>കേന്ദ്ര ഹബ്ബ്/സ്വിച്ച് (തകർന്നാൽ എല്ലാം നിലയ്ക്കും)</td></tr>
+              <tr><td><strong>Mesh</strong></td><td>ഏറ്റവും വിശ്വാസ്യത; n(n−1)/2</td></tr>
+              <tr><td><strong>Hub</strong></td><td><strong>L1</strong>; Dumb; Broadcast</td></tr>
+              <tr><td><strong>Switch</strong></td><td><strong>L2</strong>; Intelligent Hub; MAC</td></tr>
+              <tr><td><strong>Bridge</strong></td><td><strong>L2</strong>; ഒരേ പ്രോട്ടോക്കോൾ LAN-കൾ</td></tr>
+              <tr><td><strong>Router</strong></td><td><strong>L3</strong>; IP; Best path; വ്യത്യസ്ത നെറ്റ്‌വർക്കുകൾ</td></tr>
+              <tr><td><strong>Gateway</strong></td><td><strong>Protocol Converter</strong>; വ്യത്യസ്ത പ്രോട്ടോക്കോൾ</td></tr>
+              <tr><td><strong>Repeater / Modem</strong></td><td>സിഗ്നൽ ശക്തിപ്പെടുത്തൽ / Digital ⇄ Analog</td></tr>
+              <tr><td><strong>അഡ്രസ് നീളം</strong></td><td>IPv4 = 32, MAC = 48, IPv6 = 128 ബിറ്റ്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>19.2 Top Facts</h3>
+        <div class="important">
+          <span class="box-label">⭐ 12 പ്രധാന വസ്തുതകൾ</span>
+          <ol>
+            <li>സൈബർ സ്പേസ് — കമ്പ്യൂട്ടർ നെറ്റ്‌വർക്കുകളുടെ സാങ്കല്പിക ലോകം (പദം: വില്യം ഗിബ്സൺ).</li>
+            <li>ബാൻഡ്‌വിഡ്ത്ത് — ഡിജിറ്റൽ നെറ്റ്‌വർക്കിൽ bps; അനലോഗിൽ Hz.</li>
+            <li>PAN → LAN → CAN → MAN → WAN (വലിപ്പക്രമം).</li>
+            <li>ഏറ്റവും വലിയ WAN = ഇന്റർനെറ്റ്.</li>
+            <li>Wi-Fi = 802.11; സുരക്ഷ WPA2/WPA3.</li>
+            <li>OFC = പൂർണ്ണ ആന്തരിക പ്രതിഫലനം (TIR).</li>
+            <li>Star ടോപ്പോളജി = Hub/Switch; Ring = Token; Mesh = n(n−1)/2.</li>
+            <li>OSI = 7 ലെയർ; TCP/IP = 4 ലെയർ.</li>
+            <li>Hub L1; Switch L2; Router L3; Gateway = Protocol Converter.</li>
+            <li>MAC = 48 ബിറ്റ്; IPv4 = 32; IPv6 = 128.</li>
+            <li>1969 ARPANET; 1973 Ethernet; 1984 OSI; 1997 Wi-Fi.</li>
+            <li>SMTP = അയക്കൽ; POP3/IMAP = സ്വീകരിക്കൽ.</li>
+          </ol>
+        </div>
+
+        <h3>19.3 Exam Tips</h3>
+        <ol>
+          <li><strong>"ഒരേ പ്രോട്ടോക്കോൾ" → Bridge; "വ്യത്യസ്ത പ്രോട്ടോക്കോൾ" → Gateway.</strong></li>
+          <li><strong>അഡ്രസ്സ് നീളം:</strong> IPv4 32 · MAC 48 · IPv6 128.</li>
+          <li><strong>വേഗത ↔ തിരക്ക്:</strong> LAN-ൽ വേഗത കൂടുതൽ/തിരക്ക് കുറവ്; WAN-ൽ നേരെ തിരിച്ച്.</li>
+          <li><strong>negative ചോദ്യങ്ങൾ</strong> (അല്ലാത്തത്/തെറ്റായത്) ആദ്യം വട്ടമിടുക.</li>
+          <li><strong>നിങ്ങളുടെ പരീക്ഷയിലെ negative marking</strong> വിജ്ഞാപനത്തിൽ ഉറപ്പാക്കി മാത്രം ഊഹിക്കുക.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 20: 5-MINUTE REVISION & CORRECTIONS -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. 5-Minute Revision & തിരുത്തലുകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>20.1 5-Minute / Last-Minute Revision</h3>
+        <div class="last-minute">
+          <span class="box-label">📝 ബുള്ളറ്റ് ഫ്ലാഷ് ലിസ്റ്റ്</span>
+          <ul>
+            <li><strong>വലിപ്പം:</strong> PAN (10 m) → LAN → CAN → MAN (നഗരം) → WAN (ഇന്റർനെറ്റ്).</li>
+            <li><strong>വേഗത:</strong> LAN &gt; MAN &gt; WAN | <strong>തിരക്ക്:</strong> WAN &gt; MAN &gt; LAN.</li>
+            <li><strong>മീഡിയ:</strong> UTP/STP (RJ-45) · Coaxial (കേബിൾ ടി.വി) · OFC (TIR, ഉയർന്ന വേഗത).</li>
+            <li><strong>ടോപ്പോളജി:</strong> Bus (Backbone) · Star (Hub/Switch) · Ring (Token) · Mesh (n(n−1)/2) · Tree (Bus+Star).</li>
+            <li><strong>OSI (1→7):</strong> Physical → Data Link → Network → Transport → Session → Presentation → Application.</li>
+            <li><strong>Hub</strong> L1, Dumb, Broadcast · <strong>Switch</strong> L2, MAC, Intelligent Hub · <strong>Bridge</strong> L2, ഒരേ പ്രോട്ടോക്കോൾ LAN-കൾ · <strong>Router</strong> L3, IP · <strong>Gateway</strong> Protocol Converter · <strong>Repeater</strong> സിഗ്നൽ ശക്തിപ്പെടുത്തുന്നു · <strong>Modem</strong> Modulator-Demodulator.</li>
+            <li><strong>പോർട്ടുകൾ:</strong> FTP 21 · SSH 22 · Telnet 23 · SMTP 25 · DNS 53 · HTTP 80 · POP3 110 · IMAP 143 · HTTPS 443.</li>
+          </ul>
+        </div>
+
+        <h3>20.2 ഉത്തര സൂചിക (Answer Key)</h3>
+        <div style="overflow-x: auto;">
+          <table style="max-width: 700px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(C)</td><td>6</td><td>(B)</td><td>11</td><td>(C)</td><td>16</td><td>(C)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>7</td><td>(C)</td><td>12</td><td>(B)</td><td>17</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(D)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td><td>18</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(B)</td><td>9</td><td>(B)</td><td>14</td><td>(C)</td><td>19</td><td>(D)</td></tr>
+              <tr><td>5</td><td>(A)</td><td>10</td><td>(B)</td><td>15</td><td>(A)</td><td>20</td><td>(C)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>20.3 തിരുത്തലുകളുടെ പട്ടിക (Review Notes)</h3>
+        <div class="correction">
+          <span class="box-label">✏️ പരിശോധനയിൽ വരുത്തിയ മാറ്റങ്ങൾ</span>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>#</th><th>യഥാർത്ഥ പാഠത്തിൽ</th><th>തിരുത്ത്</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>"പ്രതിഫലനം" (ബംഗാളി അക്ഷരം 'ফ' കലർന്നത്, പല സ്ഥലങ്ങളിൽ)</td><td><strong>പ്രതിഫലനം</strong></td></tr>
+                <tr><td>2</td><td>ARPANET ആണവാക്രമണത്തെ അതിജീവിക്കാൻ ഉണ്ടാക്കി</td><td>ഭാഗികമായി മാത്രം ശരി; പ്രധാന ലക്ഷ്യം റിസർച്ച് വിഭവ പങ്കിടൽ. "അതിജീവിക്കുന്ന ശൃംഖല" ആശയം പോൾ ബാരന്റേത്</td></tr>
+                <tr><td>3</td><td>"ഡൊണാൾഡ് ഡേവിസ്" (Davis)</td><td><strong>ഡൊണാൾഡ് ഡേവിസ് (Donald Davies)</strong>, "packet" എന്ന പദം നൽകിയ ആൾ</td></tr>
+                <tr><td>4</td><td>സർക്യൂട്ട് സ്വിച്ചിംഗിൽ "സ്ഥിരമായ പാത"</td><td>ആശയവിനിമയ കാലയളവിൽ മാത്രമുള്ള <strong>ഡെഡിക്കേറ്റഡ്</strong> പാത</td></tr>
+                <tr><td>5</td><td>കോർ "സാന്ദ്രത കൂടിയത്"</td><td><strong>അപവർത്തനസൂചിക (Refractive index) കൂടിയത്</strong></td></tr>
+                <tr><td>6</td><td>TIR തത്വത്തിന്റെ ഉപജ്ഞാതാവ് കപാനി</td><td>കപാനി ഫൈബർ ഒപ്റ്റിക്സിന്റെ പിതാവ്; TIR എന്ന ഭൗതിക തത്വം അദ്ദേഹത്തിന്റേതല്ല</td></tr>
+                <tr><td>7</td><td>"Cyberspace = Network of Networks"</td><td>"Network of Networks" എന്നത് <strong>ഇന്റർനെറ്റിന്റെ</strong> വിശേഷണം</td></tr>
+                <tr><td>8</td><td>ആദ്യ മോഡം "1950"</td><td><strong>1950-കൾ</strong> (കൃത്യ വർഷം ഉറപ്പില്ലാത്തതിനാൽ ദശകം മാത്രം)</td></tr>
+                <tr><td>9</td><td>ALOHAnet "1970"</td><td><strong>1970–71</strong></td></tr>
+                <tr><td>10</td><td>ഗേറ്റ്‌വേ ലെയർ "All layers" / "L4–L7" (പരസ്പര വൈരുദ്ധ്യം)</td><td>ഏകീകരിച്ചു: ഉയർന്ന ലെയറുകൾ (ആവശ്യാനുസരണം എല്ലാ ലെയറിലും)</td></tr>
+                <tr><td>11</td><td>"ഡിഫോൾട്ട് VLAN-ലെ MTU 1500"</td><td>സ്റ്റാൻഡേർഡ് ഇതർനെറ്റ് <strong>MTU = 1500 ബൈറ്റ്</strong></td></tr>
+                <tr><td>12</td><td>VSNL GIAS "മുംബൈ" ഉറപ്പിച്ച് പറഞ്ഞത്</td><td>തീയതി ശരി; നഗരത്തിന്റെ കാര്യത്തിൽ സ്ഥിരീകരണമില്ലെന്ന് അടയാളപ്പെടുത്തി</td></tr>
+                <tr><td>13</td><td>സ്വിച്ച് "എപ്പോഴും Unicast"</td><td>Broadcast / അറിയാത്ത MAC-ന് flooding ഉണ്ട് എന്ന് ചേർത്തു</td></tr>
+                <tr><td>14</td><td>KSWAN-ന്റെ ഓഫീസ് എണ്ണങ്ങൾ</td><td>ഉറപ്പില്ലാത്ത കണക്കുകൾ ഒഴിവാക്കി, പരിശോധിക്കാൻ നിർദ്ദേശം</td></tr>
+                <tr><td>15</td><td>"പ്രസ്താവനാ ചോദ്യം – PSC PYQ Model" ലേബൽ</td><td>യഥാർത്ഥ PYQ ആണെന്ന് തെളിവില്ലാത്തതിനാൽ "പുതുതായി തയ്യാറാക്കിയ പരിശീലന ചോദ്യം" എന്ന് ലേബൽ ചെയ്തു</td></tr>
+                <tr><td>16</td><td>അവസാനം കടന്നുകൂടിയ "research plan" ചോദ്യ വാചകം</td><td>നീക്കം ചെയ്തു</td></tr>
+                <tr><td>17</td><td><strong>ചേർത്തത്:</strong></td><td>Smart Tricks (വിഭാഗം 16), ടോപ്പോളജി താരതമ്യം, പ്രോട്ടോക്കോൾ പട്ടിക, TCP vs UDP, Wi-Fi പതിപ്പുകൾ, Access Point, Firewall, TCP/IP-OSI താരതമ്യം, 7 അധിക MCQ</td></tr>
+                <tr><td>18</td><td><strong>ഒഴിവാക്കിയ ആവർത്തനം:</strong></td><td>Quick Reference, Top Facts, Revision എന്നിവയിലെ ഒരേ വസ്തുതകൾ ലയിപ്പിച്ചു. ഒരു വസ്തുതയും നഷ്ടമായിട്ടില്ല</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>നെറ്റ്‌വർക്ക് ചോദ്യങ്ങളിൽ ഏറ്റവും പ്രധാനം <strong>ഉപകരണ-ലെയർ മാപ്പിംഗ്</strong> (Hub L1, Switch L2, Router L3) ഉം <strong>LAN-MAN-WAN താരതമ്യം</strong> ഉം ആണ്. "ഒരേ പ്രോട്ടോക്കോൾ → Bridge, വ്യത്യസ്ത പ്രോട്ടോക്കോൾ → Gateway" എന്ന ജോഡി മറന്നാൽ പല ചോദ്യങ്ങളും തെറ്റും. OFC-യിലെ തത്വം എപ്പോഴും <strong>പൂർണ്ണ ആന്തരിക പ്രതിഫലനം</strong> എന്ന് ഉറപ്പിക്കുക.</p>
+        </div>
+
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light);">
+          ✅ അധ്യായം 10.4 (Computer Networks) പൂർണ്ണമായി കവർ ചെയ്തിരിക്കുന്നു. <br>
+          ഈ അധ്യായത്തോടെ 10. കമ്പ്യൂട്ടർ (10.1–10.7) വിഭാഗം പൂർത്തിയായി.
+        </p>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>10.3 Networks</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'computer-10.3-networks';
-window.PART_TITLE = '10.3 Networks';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaThemeNet104');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaThemeNet104', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDoneNet104_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDoneNet104_' + secId, '1');
+        else localStorage.removeItem('keralaSecDoneNet104_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaNet104Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
