@@ -112,8 +112,16 @@ python tools/site_audit.py          # link + data integrity; exit 1 on failure
 python tools/check_inline_js.py     # parse every inline page script with Node
 python tools/build_content.py       # WRITES: mock-test manifests
 node   tools/export_syllabus.js     # WRITES: data/syllabus.json
+python tools/reduce_borders.py      # WRITES: thinner borders on topic pages
 python tools/repair_site.py         # one-off historical repairs (idempotent)
 ```
+
+`reduce_borders.py` enforces the house style for the topic pages: every
+all-round outline is `1px`, every one-sided accent bar is at most `2px`;
+border colours, styles and radii are never touched. It covers the inline
+styles in `topics/**/*.html` and `assets/css/app.css` (used only by the topic
+stub pages — `landing.css` is shared with the subject/chapter/mock pages and is
+deliberately excluded). Add `--dry-run` to see what it would change.
 
 Run the audit before publishing: it checks every internal `href`/`src`, every
 path referenced by `syllabus.js`, that each mock-test manifest matches the
