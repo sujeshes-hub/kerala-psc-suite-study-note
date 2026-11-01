@@ -1,0 +1,1889 @@
+﻿<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – സ്റ്റേറ്റ് ലിസ്റ്റ് | അധ്യായം 106</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .toc-nav {
+      list-style: none;
+    }
+
+    .toc-nav li {
+      margin-bottom: 2px;
+    }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover {
+      background: var(--light-bg);
+      color: var(--primary);
+    }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover {
+      background: #ede7f6;
+    }
+
+    .section h2:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+
+    .toggle-icon {
+      font-size: 14px;
+      transition: transform 0.3s;
+      color: var(--primary);
+    }
+
+    .section.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+
+    .section.collapsed > *:not(h2) {
+      display: none;
+    }
+
+    .section-body {
+      padding: 16px 18px;
+    }
+
+    /* ========== CONTENT BOXES ========== */
+    .important,
+    .memory,
+    .trap,
+    .correction,
+    .added-fact,
+    .revision,
+    .last-minute,
+    .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important {
+      background: var(--important-bg);
+      border-left-color: var(--important-border);
+    }
+
+    .memory {
+      background: var(--memory-bg);
+      border-left-color: var(--memory-border);
+    }
+
+    .trap {
+      background: var(--trap-bg);
+      border-left-color: var(--trap-border);
+    }
+
+    .correction {
+      background: var(--correction-bg);
+      border-left-color: var(--correction-border);
+    }
+
+    .added-fact {
+      background: var(--added-bg);
+      border-left-color: var(--added-border);
+    }
+
+    .revision {
+      background: var(--revision-bg);
+      border-left-color: var(--revision-border);
+    }
+
+    .last-minute {
+      background: #4a148c;
+      color: #fff;
+      border-left-color: #7c43bd;
+    }
+
+    .last-minute strong {
+      color: #ffd54f;
+    }
+
+    .viz-box {
+      background: #fafafa;
+      border-left-color: var(--primary);
+      text-align: center;
+    }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .stars {
+      color: var(--star);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    /* ========== LISTS ========== */
+    ul, ol {
+      padding-left: 22px;
+      margin: 8px 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--table-alt);
+    }
+
+    tbody tr:hover {
+      background: #ede7f6;
+    }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover {
+      border-color: var(--primary-light);
+      background: var(--light-bg);
+    }
+
+    .options span.selected {
+      border-color: var(--primary);
+      background: #ede7f6;
+      font-weight: 600;
+    }
+
+    .options span.correct {
+      border-color: var(--memory-border);
+      background: #c8e6c9;
+    }
+
+    .options span.wrong {
+      border-color: var(--trap-border);
+      background: #ffcdd2;
+    }
+
+    .options span.locked {
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover {
+      background: var(--light-bg);
+    }
+
+    .btn-save {
+      background: var(--secondary) !important;
+      color: #fff !important;
+      border-color: var(--secondary) !important;
+    }
+
+    .btn-show {
+      background: var(--primary) !important;
+      color: #fff !important;
+      border-color: var(--primary) !important;
+    }
+
+    .btn-mark.active {
+      background: var(--star) !important;
+      color: #fff !important;
+      border-color: var(--star) !important;
+    }
+
+    .btn-lock {
+      background: var(--accent) !important;
+      color: #fff !important;
+      border-color: var(--accent) !important;
+    }
+
+    .q-status {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: auto;
+      color: var(--text-light);
+    }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show {
+      display: block;
+    }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 {
+      font-size: 17px;
+      color: var(--primary);
+      margin: 14px 0 8px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    strong {
+      color: var(--primary);
+    }
+
+    .last-minute strong {
+      color: #ffd54f;
+    }
+
+    /* ========== CHECKLIST ========== */
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li::before {
+      content: "✔ ";
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+
+      .toc-title,
+      .toc-controls {
+        display: none;
+      }
+
+      .toc-nav {
+        display: flex;
+        gap: 6px;
+        white-space: nowrap;
+        padding-bottom: 4px;
+      }
+
+      .toc-nav li {
+        margin: 0;
+      }
+
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+
+      .toc-nav a.active {
+        background: var(--primary);
+        color: #fff;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 15.2px;
+      }
+
+      .chapter-header h1 {
+        font-size: 21px;
+      }
+
+      .section h2 {
+        font-size: 17.5px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      thead th,
+      tbody td {
+        padding: 6px 8px;
+      }
+
+      .q-text {
+        font-size: 14.7px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .options span {
+        font-size: 13.5px;
+      }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body {
+        background: #fff;
+        font-size: 10.5pt;
+        padding: 0;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .toc {
+        display: none;
+      }
+
+      .main-container {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+      }
+
+      .chapter-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+
+      .section.collapsed > *:not(h2) {
+        display: block !important;
+      }
+
+      .section {
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+      }
+
+      .section h2 {
+        cursor: default;
+        background: #f3e5f5 !important;
+      }
+
+      .toggle-icon {
+        display: none;
+      }
+
+      .q-controls {
+        display: none;
+      }
+
+      .answer-block {
+        display: block !important;
+      }
+    }
+
+    /* ========== SVG / MAP STYLES ========== */
+    .map-container {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    .map-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. ചരിത്ര പശ്ചാത്തലം</a></li>
+      <li><a href="#sec3">3. സ്റ്റേറ്റ് ലിസ്റ്റ്</a></li>
+      <li><a href="#sec4">4. 42-ാം ഭേദഗതി</a></li>
+      <li><a href="#sec5">5. പ്രധാന വിഷയങ്ങൾ</a></li>
+      <li><a href="#sec6">6. പാർലമെന്റിന്റെ അധികാരം</a></li>
+      <li><a href="#sec7">7. ഡൽഹിയുടെ പ്രത്യേകത</a></li>
+      <li><a href="#sec8">8. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec9">9. PSC വിശകലനം</a></li>
+      <li><a href="#sec10">10. മുൻകാല ചോദ്യ പ്രവണത</a></li>
+      <li><a href="#sec11">11. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec12">12. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec13">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ</a></li>
+      <li><a href="#sec14">14. PSC കെണികൾ</a></li>
+      <li><a href="#sec15">15. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec16">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec17">17. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec18">18. 30-സെക്കൻഡ് റിവിഷൻ</a></li>
+      <li><a href="#sec19">19. ഒരു പേജ് റിവിഷൻ</a></li>
+      <li><a href="#sec20">20. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 106</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – സ്റ്റേറ്റ് ലിസ്റ്റ്</h1>
+      <div class="subtitle">State List | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — 42-ാം ഭേദഗതിയിലൂടെ മാറ്റിയ 5 വിഷയങ്ങൾ (വിദ്യാഭ്യാസം, വനം, വന്യമൃഗ-പക്ഷി സംരക്ഷണം, അളവും തൂക്കവും, നീതിന്യായ ഭരണം), തദ്ദേശ സ്വയംഭരണം (സ്റ്റേറ്റ് ലിസ്റ്റ്), പോലീസും ക്രമസമാധാനവും, ആർട്ടിക്കിൾ 249/250/252/253</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — വിഷയങ്ങളുടെ എണ്ണം (66 → 61), കൃഷി, പൊതുജനാരോഗ്യം, മദ്യം, വാതുവെപ്പും ചൂടാട്ടവും, കാർഷിക വരുമാന നികുതി, ഡൽഹിയുടെ പ്രത്യേകത</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — എൻട്രി നമ്പറുകൾ (പബ്ലിക് ഓർഡർ-1, പോലീസ്-2, ജയിൽ-4), ആർട്ടിക്കിൾ 251 (വൈരുദ്ധ്യം), ആർട്ടിക്കിൾ 356/357</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ലോട്ടറി നിയന്ത്രണം, സംസ്ഥാന നികുതികൾ (ടോൾ, വാഹന നികുതി)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — GOI Act 1935 പശ്ചാത്തലം, ഓസ്ട്രേലിയ/കാനഡ മാതൃക</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>സ്റ്റേറ്റ് ലിസ്റ്റ്:</strong> സംസ്ഥാനങ്ങൾക്ക് മാത്രം (സാധാരണ)</li>
+            <li><strong>എണ്ണം:</strong> തുടക്കത്തിൽ 66 → നിലവിൽ 61</li>
+            <li><strong>42-ാം ഭേദഗതി (1976):</strong> 5 വിഷയങ്ങൾ സ്റ്റേറ്റ് → കൺകറന്റ്</li>
+            <li><strong>തദ്ദേശ സ്വയംഭരണം:</strong> സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 5)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: അധ്യായ ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. അധ്യായ ആമുഖം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഇന്ത്യൻ ഭരണഘടനയുടെ ഏഴാം ഷെഡ്യൂളിൽ സംസ്ഥാന സർക്കാരുകൾക്ക് മാത്രം നിയമനിർമ്മാണ അധികാരം നൽകിയിട്ടുള്ള <strong>'സ്റ്റേറ്റ് ലിസ്റ്റ്' (State List)</strong>, അതിലെ പ്രധാന വിഷയങ്ങൾ (പോലീസ്, പൊതുജനാരോഗ്യം, കൃഷി, തദ്ദേശ സ്വയംഭരണം), 1976-ൽ സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്നും കൺകറന്റ് ലിസ്റ്റിലേക്ക് മാറ്റിയ 5 വിഷയങ്ങൾ, പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിയമം നിർമ്മിക്കാൻ കഴിയുന്ന പ്രത്യേക സാഹചര്യങ്ങൾ എന്നിവയാണ് ഈ അധ്യായത്തിൽ പഠിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>എന്തുകൊണ്ട് പഠിക്കണം?</strong> ഇന്ത്യയുടെ ഫെഡറൽ സംവിധാനത്തിൽ സംസ്ഥാനങ്ങൾക്ക് ലഭിച്ചിട്ടുള്ള അധികാരങ്ങൾ എന്തൊക്കെയെന്ന് മനസ്സിലാക്കാൻ ഇത് സഹായിക്കും. പി.എസ്.സി പരീക്ഷകളിൽ ലിസ്റ്റുകളുമായി ബന്ധപ്പെട്ട ചോദ്യങ്ങളിൽ ഏറ്റവും കൂടുതൽ കൺഫ്യൂഷൻ ഉണ്ടാക്കുന്നത് ഈ ഭാഗമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Kerala PSC-യിലെ പ്രാധാന്യം:</strong> തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങൾ (പഞ്ചായത്ത്) ഏത് ലിസ്റ്റിലാണ്, 42-ാം ഭേദഗതിയിലൂടെ മാറ്റപ്പെട്ട വിഷയങ്ങൾ ഏതൊക്കെ, വിദ്യാഭ്യാസവും വനവും നിലവിൽ ഏത് ലിസ്റ്റിലാണ് തുടങ്ങിയവ പി.എസ്.സി പരീക്ഷകളിലെ 'എവർഗ്രീൻ' ചോദ്യങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഏഴാം ഷെഡ്യൂൾ:</strong> Article 246 പ്രകാരം കേന്ദ്ര-സംസ്ഥാന അധികാര വിഭജനം. മൂന്ന് ലിസ്റ്റുകൾ: യൂണിയൻ (List I), സ്റ്റേറ്റ് (List II), കൺകറന്റ് (List III). ആശയം 1935-ലെ ഗവൺമെന്റ് ഓഫ് ഇന്ത്യ ആക്ടിൽ നിന്ന്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കടമെടുത്തത്:</strong> കൺകറന്റ് ലിസ്റ്റ് - ഓസ്ട്രേലിയ; ശക്തമായ കേന്ദ്രവും അവശിഷ്ട അധികാരങ്ങൾ (Residuary powers) കേന്ദ്രത്തിന് - കാനഡ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>അവശിഷ്ട അധികാരങ്ങൾ</strong> (ഒരു ലിസ്റ്റിലും ഇല്ലാത്തവ): Article 248 പ്രകാരം പാർലമെന്റിന്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മുൻഗണനാ ക്രമം:</strong> യൂണിയൻ ലിസ്റ്റ് > കൺകറന്റ് ലിസ്റ്റ് > സ്റ്റേറ്റ് ലിസ്റ്റ് (Article 246).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>246 = അധികാര വിഭജനം; 248 = അവശിഷ്ടം (കേന്ദ്രത്തിന്)</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ചരിത്ര പശ്ചാത്തലം ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ചരിത്ര പശ്ചാത്തലം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇന്ത്യ ഒരു 'യൂണിയൻ ഓഫ് സ്റ്റേറ്റ്സ്' ആണെങ്കിലും, സംസ്ഥാനങ്ങളുടെ ദൈനംദിന ഭരണകാര്യങ്ങളിൽ കേന്ദ്ര സർക്കാർ അനാവശ്യമായി ഇടപെടാതിരിക്കാനാണ് ഭരണഘടനാ ശില്പികൾ 'സ്റ്റേറ്റ് ലിസ്റ്റ്' എന്നൊരു പ്രത്യേക പട്ടിക തയ്യാറാക്കിയത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ക്രമസമാധാനം, ആരോഗ്യം, കൃഷി എന്നിവ ഓരോ സംസ്ഥാനത്തിനും വ്യത്യസ്തമായിരിക്കും. ഉദാഹരണത്തിന്, കേരളത്തിലെ കാർഷിക രീതിയല്ല രാജസ്ഥാനിലേത്. അതുകൊണ്ട് അത്തരം പ്രാദേശിക പ്രാധാന്യമുള്ള വിഷയങ്ങളിൽ നിയമമുണ്ടാക്കാൻ സംസ്ഥാന നിയമസഭകൾക്ക് തന്നെ പൂർണ്ണ അധികാരം നൽകി.</li>
+          <li><span class="stars">⭐⭐⭐</span> 1935-ലെ ഗവൺമെന്റ് ഓഫ് ഇന്ത്യ ആക്ടിൽ പ്രൊവിൻഷ്യൽ ലിസ്റ്റ് എന്ന പേരിൽ ഇത് നിലവിലുണ്ടായിരുന്നു (54 വിഷയങ്ങൾ). അതിനെ അടിസ്ഥാനമാക്കിയാണ് സ്റ്റേറ്റ് ലിസ്റ്റ് രൂപപ്പെടുത്തിയത്.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: സ്റ്റേറ്റ് ലിസ്റ്റ് ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. സ്റ്റേറ്റ് ലിസ്റ്റ് (State List - List II)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അധികാരം:</strong> സ്റ്റേറ്റ് ലിസ്റ്റിൽ ഉൾപ്പെടുത്തിയിട്ടുള്ള വിഷയങ്ങളിൽ നിയമങ്ങൾ നിർമ്മിക്കാൻ സാധാരണ സാഹചര്യങ്ങളിൽ സംസ്ഥാന സർക്കാരുകൾക്ക് (സംസ്ഥാന നിയമസഭകൾക്ക്) മാത്രമാണ് അധികാരമുള്ളത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയങ്ങളുടെ എണ്ണം:</strong>
+            <ul>
+              <li>ഭരണഘടന നിലവിൽ വന്ന സമയത്ത് (തുടക്കത്തിൽ) സ്റ്റേറ്റ് ലിസ്റ്റിൽ <strong>66 വിഷയങ്ങളാണ്</strong> ഉണ്ടായിരുന്നത്.</li>
+              <li>നിലവിൽ സ്റ്റേറ്റ് ലിസ്റ്റിൽ <strong>61 വിഷയങ്ങളാണുള്ളത്</strong>. (5 വിഷയങ്ങൾ എടുത്തുമാറ്റിയതുകൊണ്ടാണിത്).</li>
+              <li>GST (101-ാം ഭേദഗതി) ചില എൻട്രികൾ ഒഴിവാക്കിയതിനാൽ ചില ഉറവിടങ്ങൾ 59 എന്ന് പറയാറുണ്ട്. പി.എസ്.സി സാധാരണ ഉത്തരം 61.</li>
+            </ul>
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എൻട്രി നമ്പറുകൾ (അറിഞ്ഞിരിക്കാവുന്നവ):</strong> പബ്ലിക് ഓർഡർ - 1; പോലീസ് - 2; ജയിൽ - 4; തദ്ദേശ ഭരണം - 5; പൊതുജനാരോഗ്യം - 6; ലഹരിപാനീയം - 8; കൃഷി - 14; മത്സ്യബന്ധനം - 21; വാതുവെപ്പ്/ചൂതാട്ടം - 34; കാർഷിക ആദായനികുതി - 46.</li>
+        </ul>
+
+        <div class="viz-box">
+          <span class="box-label">📊 മൂന്ന് ലിസ്റ്റുകളുടെ ഘടന</span>
+          <svg viewBox="0 0 600 200" width="100%" height="auto" role="img" aria-label="മൂന്ന് ലിസ്റ്റുകൾ">
+            <rect x="20" y="40" width="170" height="120" rx="10" fill="#4a148c" opacity="0.9"/>
+            <text x="105" y="75" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">യൂണിയൻ ലിസ്റ്റ്</text>
+            <text x="105" y="100" text-anchor="middle" fill="#fff" font-size="11">List I</text>
+            <text x="105" y="125" text-anchor="middle" fill="#ffd54f" font-size="13" font-weight="bold">97 → 100</text>
+            <text x="105" y="148" text-anchor="middle" fill="#fff" font-size="10">കേന്ദ്രത്തിന് മാത്രം</text>
+
+            <rect x="215" y="40" width="170" height="120" rx="10" fill="#00695c" opacity="0.9"/>
+            <text x="300" y="75" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">സ്റ്റേറ്റ് ലിസ്റ്റ്</text>
+            <text x="300" y="100" text-anchor="middle" fill="#fff" font-size="11">List II</text>
+            <text x="300" y="125" text-anchor="middle" fill="#ffd54f" font-size="13" font-weight="bold">66 → 61</text>
+            <text x="300" y="148" text-anchor="middle" fill="#fff" font-size="10">സംസ്ഥാനത്തിന് മാത്രം</text>
+
+            <rect x="410" y="40" width="170" height="120" rx="10" fill="#b83b2c" opacity="0.9"/>
+            <text x="495" y="75" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">കൺകറന്റ് ലിസ്റ്റ്</text>
+            <text x="495" y="100" text-anchor="middle" fill="#fff" font-size="11">List III</text>
+            <text x="495" y="125" text-anchor="middle" fill="#ffd54f" font-size="13" font-weight="bold">47 → 52</text>
+            <text x="495" y="148" text-anchor="middle" fill="#fff" font-size="10">കേന്ദ്രം + സംസ്ഥാനം</text>
+
+            <text x="300" y="25" text-anchor="middle" fill="#4a148c" font-size="14" font-weight="bold">ഏഴാം ഷെഡ്യൂൾ (ആർട്ടിക്കിൾ 246)</text>
+          </svg>
+          <div class="viz-caption">📊 മൂന്ന് ലിസ്റ്റുകളും അവയുടെ വിഷയങ്ങളുടെ എണ്ണവും</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: 42-ാം ഭേദഗതി ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. 42-ാം ഭേദഗതിയിലെ മാറ്റങ്ങൾ (Very Important)</h2>
+      <div class="section-body">
+        <p>ഇന്ദിരാഗാന്ധിയുടെ കാലത്ത് <strong>1976</strong>-ൽ പാസാക്കിയ 42-ാം ഭരണഘടനാ ഭേദഗതി (Mini Constitution) പ്രകാരം സ്റ്റേറ്റ് ലിസ്റ്റിൽ ഉണ്ടായിരുന്ന 5 സുപ്രധാന വിഷയങ്ങളെ കൺകറന്റ് ലിസ്റ്റിലേക്ക് (Concurrent List) മാറ്റി. ആ 5 വിഷയങ്ങൾ താഴെ പറയുന്നവയാണ്:</p>
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിദ്യാഭ്യാസം (Education)</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വനങ്ങൾ (Forests)</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വന്യമൃഗങ്ങളുടെയും പക്ഷികളുടെയും സംരക്ഷണം (Protection of wild animals and birds)</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അളവുകളും തൂക്കങ്ങളും (Weights and measures)</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>നീതിന്യായ ഭരണം (Administration of justice)</strong> - സുപ്രീം കോടതിയും ഹൈക്കോടതിയും ഒഴികെയുള്ള കോടതികളുടെ ഘടനയും രൂപീകരണവും.</li>
+        </ol>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> ഇതേ ഭേദഗതി 'ജനസംഖ്യാ നിയന്ത്രണവും കുടുംബാസൂത്രണവും' (Population control and family planning) കൺകറന്റ് ലിസ്റ്റിൽ (Entry 20A) പുതുതായി ചേർത്തു. ഇത് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്ന് മാറ്റിയതല്ല.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഇതാണ് 61 എന്ന എണ്ണത്തിന് കാരണം (66 - 5 = 61).</li>
+          <li><span class="stars">⭐⭐</span> ഉദാഹരണം (കൺകറന്റ് ലിസ്റ്റ്): ക്രിമിനൽ നിയമം, CrPC, വിവാഹവും വിവാഹമോചനവും, പാപ്പരത്തം, ട്രേഡ് യൂണിയൻ, വൈദ്യുതി, പത്രങ്ങൾ/അച്ചടി, സാമ്പത്തിക-സാമൂഹിക ആസൂത്രണം.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>FEW-WA = Forests, Education, Weights & measures, Wild animals, Administration of justice</strong>".</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 42-ാം ഭേദഗതി: സ്റ്റേറ്റ് → കൺകറന്റ്</span>
+          <svg viewBox="0 0 600 200" width="100%" height="auto" role="img" aria-label="42-ാം ഭേദഗതി">
+            <rect x="20" y="60" width="180" height="80" rx="10" fill="#00695c" opacity="0.85"/>
+            <text x="110" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">സ്റ്റേറ്റ് ലിസ്റ്റ്</text>
+            <text x="110" y="110" text-anchor="middle" fill="#ffd54f" font-size="12">66 വിഷയങ്ങൾ</text>
+            <text x="110" y="128" text-anchor="middle" fill="#fff" font-size="10">1976 വരെ</text>
+
+            <line x1="200" y1="100" x2="260" y2="100" stroke="#4a148c" stroke-width="4"/>
+            <polygon points="260,92 275,100 260,108" fill="#4a148c"/>
+            <text x="237" y="85" text-anchor="middle" font-size="11" fill="#b83b2c" font-weight="bold">5 വിഷയങ്ങൾ</text>
+
+            <rect x="280" y="60" width="180" height="80" rx="10" fill="#b83b2c" opacity="0.85"/>
+            <text x="370" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">കൺകറന്റ് ലിസ്റ്റ്</text>
+            <text x="370" y="110" text-anchor="middle" fill="#ffd54f" font-size="12">47 → 52</text>
+            <text x="370" y="128" text-anchor="middle" fill="#fff" font-size="10">1976 മുതൽ</text>
+
+            <rect x="470" y="60" width="110" height="80" rx="10" fill="#00695c" opacity="0.85"/>
+            <text x="525" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">സ്റ്റേറ്റ്</text>
+            <text x="525" y="110" text-anchor="middle" fill="#ffd54f" font-size="12">66 → 61</text>
+
+            <text x="300" y="30" text-anchor="middle" fill="#4a148c" font-size="14" font-weight="bold">42-ാം ഭേദഗതി (1976)</text>
+            <text x="300" y="175" text-anchor="middle" fill="#4a148c" font-size="11">വിദ്യാഭ്യാസം • വനം • വന്യജീവി • തൂക്കം • നീതിന്യായം</text>
+          </svg>
+          <div class="viz-caption">📊 5 വിഷയങ്ങൾ സ്റ്റേറ്റിൽ നിന്ന് കൺകറന്റിലേക്ക് മാറ്റി</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: പ്രധാന വിഷയങ്ങൾ ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. സ്റ്റേറ്റ് ലിസ്റ്റിലെ പ്രധാന വിഷയങ്ങൾ</h2>
+      <div class="section-body">
+        <p>പി.എസ്.സി പരീക്ഷകളിൽ താഴെ പറയുന്ന വിഷയങ്ങൾ നൽകിയിട്ട് ഇത് ഏത് ലിസ്റ്റിലാണെന്ന് ചോദിക്കാറുണ്ട്. ഇവ ഉറപ്പായും പഠിക്കുക:</p>
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പോലീസും ക്രമസമാധാനവും (Police & Public Order):</strong> സംസ്ഥാന പോലീസും സംസ്ഥാനത്തെ സമാധാനവും പൂർണ്ണമായും സംസ്ഥാന ലിസ്റ്റിലാണ്. (സിവിൽ ശക്തികളെ സഹായിക്കാൻ സായുധ സേനയെ നിയോഗിക്കുന്നത് യൂണിയൻ ലിസ്റ്റ് - പബ്ലിക് ഓർഡർ എൻട്രിയിൽ ഒഴിവ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പൊതുജനാരോഗ്യം, ശുചിത്വം, ആശുപത്രികൾ (Public health, sanitation, hospitals and dispensaries).</strong></li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കൃഷി (Agriculture):</strong> കാർഷിക വിദ്യാഭ്യാസം, കാർഷിക ഗവേഷണം, മൃഗസംരക്ഷണം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങൾ (Local Government):</strong> ഗ്രാമപഞ്ചായത്തുകളും മുൻസിപ്പാലിറ്റികളും. 73, 74 ഭേദഗതികൾ (1992) ഭാഗം IX, IXA, 11, 12 ഷെഡ്യൂളുകൾ ചേർത്തു. വിഷയം ഇപ്പോഴും സ്റ്റേറ്റ് ലിസ്റ്റിൽ. കേരള പഞ്ചായത്ത് രാജ് ആക്ട് 1994, കേരള മുനിസിപ്പാലിറ്റി ആക്ട് 1994. സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (Art 243K, 243ZA).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ജയിലുകൾ (Prisons):</strong> സംസ്ഥാനത്തെ ജയിലുകളുടെ നിയന്ത്രണം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>മദ്യം (Liquor):</strong> ലഹരിപാനീയങ്ങളുടെ ഉൽപ്പാദനം, വിതരണം, വില്പന (ഇതുകൊണ്ടാണ് മദ്യത്തിന് ജി.എസ്.ടി ഇല്ലാത്തതും ഓരോ സംസ്ഥാനത്തും മദ്യത്തിന് വ്യത്യസ്ത വിലയും നിയമങ്ങളും ഉള്ളതും).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വാതുവെപ്പും ചൂതാട്ടവും (Betting and gambling).</strong> (ഉദാഹരണത്തിന് ലോട്ടറി). <strong>വ്യക്തത:</strong> ലോട്ടറിയുടെ കാര്യത്തിൽ 'കേന്ദ്ര/സംസ്ഥാന സർക്കാരുകൾ നടത്തുന്ന ലോട്ടറികൾ' യൂണിയൻ ലിസ്റ്റിലാണ് (Entry 40). ലോട്ടറി നിയന്ത്രണം: Lotteries (Regulation) Act, 1998 (കേന്ദ്ര നിയമം). പി.എസ്.സി "വാതുവെപ്പും ചൂതാട്ടവും" ചോദിച്ചാൽ ഉത്തരം സ്റ്റേറ്റ് ലിസ്റ്റ്. (കേരള സ്റ്റേറ്റ് ലോട്ടറി 1967-ൽ തുടങ്ങി).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>സംസ്ഥാന നികുതികൾ:</strong> കാർഷിക വരുമാന നികുതി (Agricultural income tax), ടോൾ നികുതി (Tolls), ഭൂനികുതി, വിനോദ നികുതി, ക്യാപ്പിറ്റേഷൻ ടാക്സ്. (ക്യാപ്പിറ്റേഷൻ ടാക്സ് = തലക്കരം). മറ്റ് സംസ്ഥാന നികുതികൾ: സ്റ്റാമ്പ് ഡ്യൂട്ടി നിരക്ക് (Entry 63), വാഹന നികുതി (Entry 57), പ്രൊഫഷണൽ ടാക്സ് (Entry 60), വൈദ്യുതി നികുതി (Entry 53), ഭൂമി/കെട്ടിട നികുതി (Entry 49), മദ്യത്തിന്മേലുള്ള സംസ്ഥാന എക്സൈസ് (Entry 51).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ലൈബ്രറികൾ, മ്യൂസിയങ്ങൾ (Libraries & Museums):</strong> സംസ്ഥാന നിയന്ത്രണത്തിലുള്ളവ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>മറ്റ് സ്റ്റേറ്റ് ലിസ്റ്റ് വിഷയങ്ങൾ:</strong> ജലം (Entry 17), ഭൂമി (Entry 18), മത്സ്യബന്ധനം (Entry 21), വ്യവസായം (Entry 24), സംസ്ഥാനത്തിനുള്ളിലെ വ്യാപാരം (Entry 26), ചന്തകളും മേളകളും (Entry 28), പണമിടപാട് (Entry 30), തിയേറ്റർ-സിനിമ-കായികം (Entry 33), സംസ്ഥാന നിയമസഭാ തിരഞ്ഞെടുപ്പ് (Entry 37), സംസ്ഥാന പബ്ലിക് സർവീസ് (Entry 41), തീർത്ഥാടനം (Entry 7).</li>
+        </ol>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick (മറ്റുള്ളവ കൂടി):</strong></span>
+          <p>"<strong>3P + ALL-G</strong>": Police, Public health, Prisons + Agriculture, Local govt, Liquor, Gambling.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: പാർലമെന്റിന്റെ അധികാരം ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിയമം നിർമ്മിക്കാവുന്ന പ്രത്യേക സാഹചര്യങ്ങൾ</h2>
+      <div class="section-body">
+        <p>സാധാരണ ഗതിയിൽ സംസ്ഥാനങ്ങൾക്കാണ് അധികാരമെങ്കിലും, ഭരണഘടനയിലെ ചില പ്രത്യേക ആർട്ടിക്കിളുകൾ പ്രകാരം കേന്ദ്ര പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിലെ വിഷയങ്ങളിൽ നിയമം നിർമ്മിക്കാൻ കഴിയും. അവ താഴെ പറയുന്നവയാണ്:</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>ആർട്ടിക്കിൾ</th><th>സാഹചര്യം</th><th>പ്രത്യേകത</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>249</strong></td><td>ദേശീയ താല്പര്യം മുൻനിർത്തി രാജ്യസഭ 2/3 ഭൂരിപക്ഷത്തോടെ പ്രമേയം പാസാക്കിയാൽ</td><td>ഒരു വർഷം കാലാവധി (ആവർത്തിച്ച് പുതുക്കാം). കാലാവധി കഴിഞ്ഞാൽ 6 മാസത്തിനകം നിയമം ഇല്ലാതാകും.</td></tr>
+              <tr><td><strong>250</strong></td><td>ദേശീയ അടിയന്തരാവസ്ഥ നിലനിൽക്കുമ്പോൾ</td><td>അടിയന്തരാവസ്ഥ അവസാനിച്ച് 6 മാസത്തിനകം ഈ നിയമം ഇല്ലാതാകും.</td></tr>
+              <tr><td><strong>252</strong></td><td>രണ്ടോ അതിലധികമോ സംസ്ഥാനങ്ങൾ നിയമസഭകളിൽ പ്രമേയം പാസാക്കി ആവശ്യപ്പെട്ടാൽ</td><td>മറ്റ് സംസ്ഥാനങ്ങൾക്ക് പിന്നീട് സ്വീകരിക്കാം. ഭേദഗതി/റദ്ദാക്കൽ പാർലമെന്റിന് മാത്രം.</td></tr>
+              <tr><td><strong>253</strong></td><td>അന്താരാഷ്ട്ര കരാറുകൾ (International Agreements) നടപ്പിലാക്കാൻ</td><td>സമയപരിധി/രാജ്യസഭാ പ്രമേയം ആവശ്യമില്ല.</td></tr>
+              <tr><td><strong>356 (357)</strong></td><td>രാഷ്ട്രപതി ഭരണം നിലനിൽക്കുമ്പോൾ</td><td>പ്രഖ്യാപനം Art 356; നിയമനിർമ്മാണ അധികാരം Art 357 പ്രകാരം.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 251:</strong> Art 249/250 പ്രകാരമുള്ള പാർലമെന്റ് നിയമവും സംസ്ഥാന നിയമവും തമ്മിൽ വൈരുദ്ധ്യമുണ്ടായാൽ കേന്ദ്ര നിയമം നിലനിൽക്കും (സംസ്ഥാന നിയമം അസാധുവല്ല, പ്രവർത്തനരഹിതമാകും).</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>R-E-T-I + 356</strong>": 249 = Rajya Sabha, 250 = Emergency, 252 = Two states, 253 = International; 356 = President's rule (നിയമം Art 357).</p>
+          <p><strong>ഉദാഹരണങ്ങൾ (Art 252):</strong> Prize Competitions Act 1955, Water (Prevention and Control of Pollution) Act 1974, Transplantation of Human Organs Act 1994.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: ഡൽഹിയുടെ പ്രത്യേകത ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. ഡൽഹിയുടെ പ്രത്യേകത (Delhi Exception)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഡൽഹി ഒരു കേന്ദ്രഭരണ പ്രദേശമാണെങ്കിലും അവിടെ ജനങ്ങൾ തിരഞ്ഞെടുത്ത ഒരു നിയമസഭയുണ്ട്. എന്നാൽ ഡൽഹി ഗവൺമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിലുള്ള <strong>ക്രമസമാധാനം (Public Order), പോലീസ് (Police), ഭൂമി (Land)</strong> എന്നീ മൂന്ന് കാര്യങ്ങളിൽ നിയമം നിർമ്മിക്കാൻ അധികാരമില്ല. ഇവ കേന്ദ്ര ആഭ്യന്തര മന്ത്രാലയത്തിന്റെ നേരിട്ടുള്ള നിയന്ത്രണത്തിലാണ് (1991-ലെ 69-ാം ഭരണഘടനാ ഭേദഗതി പ്രകാരം).</li>
+          <li><span class="stars">⭐⭐⭐</span> 69-ാം ഭേദഗതി Article 239AA ചേർത്തു; ഡൽഹിക്ക് 'ദേശീയ തലസ്ഥാന പ്രദേശം' (NCT) പദവി.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഡൽഹിയുടെ പ്രത്യേകത പി.എസ്.സി പരീക്ഷകളിൽ ചോദിക്കാറുണ്ട്. ഏത് 3 വിഷയങ്ങളാണ് ഡൽഹിക്ക് ഒഴിവാക്കിയിരിക്കുന്നത് എന്ന് ഓർക്കുക.</li>
+        </ul>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>ഡൽഹിക്ക് 3 എണ്ണം ഇല്ല: Public Order, Police, Land</strong>".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: പ്രധാന വസ്തുതകൾ ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. പ്രധാന വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ലോട്ടറി: കേരള സ്റ്റേറ്റ് ലോട്ടറി 1967-ൽ തുടങ്ങി (ഇന്ത്യയിലെ ആദ്യ സംസ്ഥാന ലോട്ടറി എന്ന് കരുതപ്പെടുന്നു).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേരള പഞ്ചായത്ത് രാജ് ആക്ട് 1994, കേരള മുനിസിപ്പാലിറ്റി ആക്ട് 1994 - തദ്ദേശ സ്വയംഭരണം സ്റ്റേറ്റ് ലിസ്റ്റിൽ ആയതുകൊണ്ടാണ് ഇവ സാധ്യമായത്.</li>
+          <li><span class="stars">⭐⭐⭐</span> മദ്യത്തിന് ജി.എസ്.ടി ഇല്ല - കാരണം മദ്യം സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 8 - Intoxicating liquors).</li>
+          <li><span class="stars">⭐⭐⭐</span> കാർഷിക വരുമാന നികുതി സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 46). മറ്റ് ആദായ നികുതികൾ യൂണിയൻ ലിസ്റ്റിൽ.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഭൂമി, ജലം, മത്സ്യബന്ധനം, വ്യവസായം, സംസ്ഥാനത്തിനുള്ളിലെ വ്യാപാരം - എല്ലാം സ്റ്റേറ്റ് ലിസ്റ്റിൽ.</li>
+          <li><span class="stars">⭐⭐⭐</span> സംസ്ഥാന നിയമസഭാ തിരഞ്ഞെടുപ്പ് (Entry 37) - സ്റ്റേറ്റ് ലിസ്റ്റിൽ. പഞ്ചായത്ത്/മുനിസിപ്പൽ തിരഞ്ഞെടുപ്പ് - Art 243K, 243ZA പ്രകാരം സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ.</li>
+          <li><span class="stars">⭐⭐</span> തീർത്ഥാടനം (Entry 7) - സ്റ്റേറ്റ് ലിസ്റ്റിൽ. എന്നാൽ അന്തർസംസ്ഥാന തീർത്ഥാടനം കൺകറന്റ് ലിസ്റ്റിൽ (Entry 20A).</li>
+          <li><span class="stars">⭐⭐</span> തദ്ദേശ സ്വയംഭരണം സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 5) ആണെങ്കിലും 73/74 ഭേദഗതികൾ ഭരണഘടനയിൽ ഉൾപ്പെടുത്തി.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: PSC വിശകലനം ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. കേരള PSC പരീക്ഷാ വിശകലനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വളരെ സാധ്യത:</strong> 42-ാം ഭേദഗതിയിലൂടെ മാറ്റിയ 5 വിഷയങ്ങൾ, തദ്ദേശ സ്വയംഭരണം ഏത് ലിസ്റ്റിൽ, പോലീസ്/ക്രമസമാധാനം ഏത് ലിസ്റ്റിൽ, വിദ്യാഭ്യാസം/വനം നിലവിൽ ഏത് ലിസ്റ്റിൽ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ആവർത്തിച്ച് ചോദിക്കാവുന്നത്:</strong> കാർഷിക വരുമാന നികുതി (സ്റ്റേറ്റ്), ആർട്ടിക്കിൾ 249 (രാജ്യസഭ 2/3), ആർട്ടിക്കിൾ 252 (സംസ്ഥാനങ്ങളുടെ അഭ്യർത്ഥന), ഡൽഹിയുടെ 3 ഒഴിവുകൾ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്:</strong> വിഷയങ്ങളുടെ എണ്ണം (66 → 61), എൻട്രി നമ്പറുകൾ (പബ്ലിക് ഓർഡർ-1, പോലീസ്-2), ആർട്ടിക്കിൾ 251, 356/357.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പുതിയ സാധ്യത:</strong> ലോട്ടറി (Art 252 ഉദാഹരണം - Prize Competitions Act), മദ്യത്തിന് GST ഇല്ലാത്തതിന്റെ കാരണം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: മുൻകാല ചോദ്യ പ്രവണത ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. മുൻകാല ചോദ്യ പ്രവണത</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> "42-ാം ഭേദഗതിയിലൂടെ സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്ന് കൺകറന്റ് ലിസ്റ്റിലേക്ക് മാറ്റിയ വിഷയം ഏത്?" (വിദ്യാഭ്യാസം/വനം).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങൾ ഏത് ലിസ്റ്റിൽ?" (സ്റ്റേറ്റ് ലിസ്റ്റ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "പോലീസും ക്രമസമാധാനവും ഏത് ലിസ്റ്റിൽ?" (സ്റ്റേറ്റ് ലിസ്റ്റ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> "കാർഷിക വരുമാന നികുതി ഏത് ലിസ്റ്റിൽ?" (സ്റ്റേറ്റ് ലിസ്റ്റ്).</li>
+          <li><span class="stars">⭐⭐⭐</span> "ദേശീയ താല്പര്യം മുൻനിർത്തി രാജ്യസഭ 2/3 ഭൂരിപക്ഷത്തോടെ പ്രമേയം പാസാക്കിയാൽ പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിയമം നിർമ്മിക്കാൻ അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ?" (249).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: ആശയക്കുഴപ്പങ്ങൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. ആശയക്കുഴപ്പമുള്ള വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>ശരിയായ വ്യത്യാസം / വിശദീകരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>കാർഷിക വരുമാന നികുതി (State List)</strong></td><td><strong>മറ്റ് വരുമാന നികുതി (Union List)</strong></td><td>കോർപ്പറേറ്റ് ടാക്സ്, ഇൻകം ടാക്സ് തുടങ്ങിയവയെല്ലാം <strong>യൂണിയൻ ലിസ്റ്റിലാണ്</strong>. എന്നാൽ <strong>കാർഷിക വരുമാനത്തിന്മേലുള്ള നികുതി</strong> ചുമത്താനുള്ള അവകാശം സ്റ്റേറ്റ് ലിസ്റ്റിലാണ്.</td></tr>
+              <tr><td><strong>വിദ്യാഭ്യാസം (State, 1976 വരെ)</strong></td><td><strong>വിദ്യാഭ്യാസം (Concurrent, 1976 മുതൽ)</strong></td><td>42-ാം ഭേദഗതിയിലൂടെ സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്ന് കൺകറന്റ് ലിസ്റ്റിലേക്ക് മാറി. "മുൻപ്" / "ഇപ്പോൾ" എന്ന് ചോദ്യത്തിൽ ശ്രദ്ധിക്കുക.</td></tr>
+              <tr><td><strong>വനം (State, 1976 വരെ)</strong></td><td><strong>വനം (Concurrent, 1976 മുതൽ)</strong></td><td>42-ാം ഭേദഗതിയിലൂടെ മാറി. കേരളത്തിലെ വനസംരക്ഷണ നിയമങ്ങൾ കൺകറന്റ് ലിസ്റ്റ് പ്രകാരം.</td></tr>
+              <tr><td><strong>പോലീസ് (State List)</strong></td><td><strong>പ്രതിരോധം (Union List)</strong></td><td>പോലീസും ക്രമസമാധാനവും സ്റ്റേറ്റ് ലിസ്റ്റിലാണ്. സൈന്യവും പ്രതിരോധവും യൂണിയൻ ലിസ്റ്റിലാണ്.</td></tr>
+              <tr><td><strong>മദ്യം (State List - Entry 8)</strong></td><td><strong>മയക്കുമരുന്ന് (Union List - Entry 19)</strong></td><td>മദ്യം സ്റ്റേറ്റ് ലിസ്റ്റിൽ (അതുകൊണ്ടാണ് GST ഇല്ലാത്തത്). മയക്കുമരുന്ന് യൂണിയൻ ലിസ്റ്റിൽ.</td></tr>
+              <tr><td><strong>വാതുവെപ്പും ചൂതാട്ടവും (State List - Entry 34)</strong></td><td><strong>സർക്കാർ നടത്തുന്ന ലോട്ടറി (Union List - Entry 40)</strong></td><td>വാതുവെപ്പ്/ചൂതാട്ടം സ്റ്റേറ്റ് ലിസ്റ്റിൽ. കേന്ദ്ര/സംസ്ഥാന സർക്കാരുകൾ നടത്തുന്ന ലോട്ടറികൾ യൂണിയൻ ലിസ്റ്റിൽ.</td></tr>
+              <tr><td><strong>തദ്ദേശ സ്വയംഭരണം (State List - Entry 5)</strong></td><td><strong>തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ (Art 243K, 243ZA)</strong></td><td>വിഷയം സ്റ്റേറ്റ് ലിസ്റ്റിൽ ആണെങ്കിലും 73/74 ഭേദഗതികൾ പ്രകാരം സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ.</td></tr>
+              <tr><td><strong>അന്തർസംസ്ഥാന തീർത്ഥാടനം (Concurrent - Entry 20A)</strong></td><td><strong>തീർത്ഥാടനം (State - Entry 7)</strong></td><td>തീർത്ഥാടനം സ്റ്റേറ്റ് ലിസ്റ്റിൽ. അന്തർസംസ്ഥാന തീർത്ഥാടനം കൺകറന്റ് ലിസ്റ്റിൽ.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: താരതമ്യ പട്ടികകൾ ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. താരതമ്യ പട്ടികകൾ</h2>
+      <div class="section-body">
+        <h3>Table 1: മൂന്ന് ലിസ്റ്റുകളുടെയും താരതമ്യം (Quick View)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ലിസ്റ്റിന്റെ പേര്</th><th>അധികാരമുള്ളത് ആർക്ക്?</th><th>തുടക്കത്തിലെ എണ്ണം</th><th>നിലവിലെ എണ്ണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>യൂണിയൻ ലിസ്റ്റ്</strong> (List I)</td><td>കേന്ദ്ര സർക്കാർ (പാർലമെന്റ്)</td><td>97</td><td>100</td></tr>
+              <tr><td><strong>സ്റ്റേറ്റ് ലിസ്റ്റ്</strong> (List II)</td><td>സംസ്ഥാന സർക്കാരുകൾക്ക്</td><td><strong>66</strong></td><td><strong>61</strong></td></tr>
+              <tr><td><strong>കൺകറന്റ് ലിസ്റ്റ്</strong> (List III)</td><td>കേന്ദ്രത്തിനും സംസ്ഥാനത്തിനും</td><td>47</td><td>52</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 2: സ്റ്റേറ്റ് ലിസ്റ്റിലെ സുപ്രധാന വിഷയങ്ങൾ (PSC ക്ക് പഠിക്കേണ്ടവ)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ക്രമ നമ്പർ</th><th>സ്റ്റേറ്റ് ലിസ്റ്റിലെ പ്രധാന വിഷയങ്ങൾ</th><th>ഇംഗ്ലീഷ് പദം</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>ക്രമസമാധാനം</td><td>Public Order (Entry 1)</td></tr>
+              <tr><td>2</td><td>പോലീസ്</td><td>Police (Entry 2)</td></tr>
+              <tr><td>3</td><td>ജയിലുകൾ</td><td>Prisons (Entry 4)</td></tr>
+              <tr><td>4</td><td>തദ്ദേശ സ്വയംഭരണം</td><td>Local Government (Entry 5)</td></tr>
+              <tr><td>5</td><td>പൊതുജനാരോഗ്യം</td><td>Public Health (Entry 6)</td></tr>
+              <tr><td>6</td><td>മദ്യം</td><td>Liquor (Entry 8)</td></tr>
+              <tr><td>7</td><td>കൃഷി</td><td>Agriculture (Entry 14)</td></tr>
+              <tr><td>8</td><td>ഭൂമി, ജലം</td><td>Land, Water (Entry 17, 18)</td></tr>
+              <tr><td>9</td><td>മത്സ്യബന്ധനം</td><td>Fisheries (Entry 21)</td></tr>
+              <tr><td>10</td><td>വാതുവെപ്പും ചൂതാട്ടവും</td><td>Betting & Gambling (Entry 34)</td></tr>
+              <tr><td>11</td><td>കാർഷിക വരുമാന നികുതി</td><td>Agricultural Income Tax (Entry 46)</td></tr>
+              <tr><td>12</td><td>വാഹന നികുതി</td><td>Vehicle Tax (Entry 57)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Table 3: 42-ാം ഭേദഗതി - സ്റ്റേറ്റ് → കൺകറന്റ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ക്രമ നമ്പർ</th><th>വിഷയം</th><th>ഇംഗ്ലീഷ് പദം</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>വിദ്യാഭ്യാസം</td><td>Education</td></tr>
+              <tr><td>2</td><td>വനങ്ങൾ</td><td>Forests</td></tr>
+              <tr><td>3</td><td>വന്യമൃഗ-പക്ഷി സംരക്ഷണം</td><td>Protection of Wild Animals & Birds</td></tr>
+              <tr><td>4</td><td>അളവുകളും തൂക്കങ്ങളും</td><td>Weights and Measures</td></tr>
+              <tr><td>5</td><td>നീതിന്യായ ഭരണം (സുപ്രീം/ഹൈക്കോടതി ഒഴികെ)</td><td>Administration of Justice</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13: നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ ===== -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">13. നിനയ്ക്കാൻ എളുപ്പമുള്ള വഴികൾ (Mnemonics)</h2>
+      <div class="section-body">
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 1 (42-ാം ഭേദഗതി - 5 വിഷയങ്ങൾ):</strong></span>
+          <p>"<strong>FEW-WA</strong> = Forests, Education, Weights & measures, Wild animals, Administration of justice".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 2 (സ്റ്റേറ്റ് ലിസ്റ്റിലെ പ്രധാന വിഷയങ്ങൾ):</strong></span>
+          <p>"<strong>3P + ALL-G</strong>": Police, Public health, Prisons + Agriculture, Local govt, Liquor, Gambling.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 3 (പാർലമെന്റിന്റെ അധികാരം):</strong></span>
+          <p>"<strong>R-E-T-I + 356</strong>": 249 = Rajya Sabha, 250 = Emergency, 252 = Two states, 253 = International; 356 = President's rule (നിയമം Art 357).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 4 (എണ്ണം):</strong></span>
+          <p>"<strong>യൂണിയൻ +3 (97→100), സ്റ്റേറ്റ് −5 (66→61), കൺകറന്റ് +5 (47→52)</strong>."</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 5 (ഡൽഹി):</strong></span>
+          <p>"<strong>ഡൽഹിക്ക് 3 എണ്ണം ഇല്ല: Public Order, Police, Land</strong>".</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 6 (മദ്യം):</strong></span>
+          <p>"<strong>മദ്യം സ്റ്റേറ്റിന്, GST ഇല്ല</strong>" - ലഹരിപാനീയം സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 8).</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 7 (കൃഷി):</strong></span>
+          <p>"<strong>കർഷകന്റെ വരുമാനം കർഷക സംസ്ഥാനത്തിന്</strong>" - കാർഷിക വരുമാന നികുതി = സ്റ്റേറ്റ്.</p>
+        </div>
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick 8 (ആർട്ടിക്കിളുകൾ):</strong></span>
+          <p>"<strong>246 വിഭജനം, 248 ശേഷിപ്പ്, 249 രാജ്യസഭ, 250 എമർജൻസി, 251 വൈരുദ്ധ്യം, 252 സമ്മതം, 253 ഉടമ്പടി, 356/357 രാഷ്ട്രപതി ഭരണം</strong>."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14: PSC കെണികൾ ===== -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">14. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 (വിദ്യാഭ്യാസം)</span>
+          <p><strong>Question:</strong> വിദ്യാഭ്യാസം ഏത് ലിസ്റ്റിൽ?</p>
+          <p><strong>Confusing Options:</strong> സ്റ്റേറ്റ് ലിസ്റ്റ് / കൺകറന്റ് ലിസ്റ്റ് / യൂണിയൻ ലിസ്റ്റ് / അവശിഷ്ടം</p>
+          <p><strong>Fact:</strong> ഇപ്പോൾ <strong>കൺകറന്റ് ലിസ്റ്റിൽ</strong> (1976 വരെ സ്റ്റേറ്റ്). "മുൻപ്" / "ഇപ്പോൾ" എന്ന് ചോദ്യത്തിൽ ശ്രദ്ധിക്കുക.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 (വനം)</span>
+          <p><strong>Question:</strong> വനം ഏത് ലിസ്റ്റിൽ?</p>
+          <p><strong>Confusing Options:</strong> സ്റ്റേറ്റ് ലിസ്റ്റ് / കൺകറന്റ് ലിസ്റ്റ് / യൂണിയൻ ലിസ്റ്റ് / അവശിഷ്ടം</p>
+          <p><strong>Fact:</strong> ഇപ്പോൾ <strong>കൺകറന്റ് ലിസ്റ്റിൽ</strong> (42-ാം ഭേദഗതി, 1976).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 (കാർഷിക വരുമാന നികുതി)</span>
+          <p><strong>Question:</strong> കാർഷിക വരുമാന നികുതി ഏത് ലിസ്റ്റിൽ?</p>
+          <p><strong>Confusing Options:</strong> യൂണിയൻ ലിസ്റ്റ് / സ്റ്റേറ്റ് ലിസ്റ്റ് / കൺകറന്റ് ലിസ്റ്റ് / അവശിഷ്ടം</p>
+          <p><strong>Fact:</strong> <strong>സ്റ്റേറ്റ് ലിസ്റ്റ്</strong>. ബാക്കി ആദായ നികുതി യൂണിയൻ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 (മദ്യം)</span>
+          <p><strong>Question:</strong> ലഹരിപാനീയങ്ങൾ ഏത് ലിസ്റ്റിൽ?</p>
+          <p><strong>Confusing Options:</strong> യൂണിയൻ / സ്റ്റേറ്റ് / കൺകറന്റ് / അവശിഷ്ടം</p>
+          <p><strong>Fact:</strong> <strong>സ്റ്റേറ്റ് ലിസ്റ്റ്</strong> (Entry 8). അതുകൊണ്ടാണ് GST ഇല്ലാത്തതും ഓരോ സംസ്ഥാനത്തും മദ്യത്തിന് വ്യത്യസ്ത വിലയും നിയമങ്ങളും ഉള്ളതും.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 (ലോട്ടറി)</span>
+          <p><strong>Question:</strong> വാതുവെപ്പും ചൂതാട്ടവും ഏത് ലിസ്റ്റിൽ?</p>
+          <p><strong>Confusing Options:</strong> യൂണിയൻ / സ്റ്റേറ്റ് / കൺകറന്റ് / അവശിഷ്ടം</p>
+          <p><strong>Fact:</strong> <strong>സ്റ്റേറ്റ് ലിസ്റ്റ്</strong> (Entry 34). എന്നാൽ കേന്ദ്ര/സംസ്ഥാന സർക്കാരുകൾ നടത്തുന്ന ലോട്ടറികൾ യൂണിയൻ ലിസ്റ്റിൽ (Entry 40).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 (ആർട്ടിക്കിൾ 249 vs 252)</span>
+          <p><strong>Question:</strong> രാജ്യസഭ 2/3 ഭൂരിപക്ഷത്തോടെ പ്രമേയം പാസാക്കിയാൽ?</p>
+          <p><strong>Confusing Options:</strong> 248 / 249 / 250 / 252 / 253</p>
+          <p><strong>Fact:</strong> <strong>249 = രാജ്യസഭാ പ്രമേയം</strong>. 252 = രണ്ടോ അതിലധികമോ സംസ്ഥാനങ്ങളുടെ അഭ്യർത്ഥന. 250 = അടിയന്തരാവസ്ഥ. 253 = അന്താരാഷ്ട്ര കരാർ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 (ഡൽഹി)</span>
+          <p><strong>Question:</strong> ഡൽഹി ഗവൺമെന്റിന് ഏത് 3 കാര്യങ്ങളിൽ അധികാരമില്ല?</p>
+          <p><strong>Confusing Options:</strong> വിദ്യാഭ്യാസം/ആരോഗ്യം/കൃഷി / പോലീസ്/ഭൂമി/ക്രമസമാധാനം / ജലം/വൈദ്യുതി/റോഡ് / വ്യാപാരം/വ്യവസായം/നികുതി</p>
+          <p><strong>Fact:</strong> <strong>Public Order, Police, Land</strong> (69-ാം ഭേദഗതി, Art 239AA).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 (ആർട്ടിക്കിൾ 356/357)</span>
+          <p><strong>Question:</strong> രാഷ്ട്രപതി ഭരണ സമയത്ത് സ്റ്റേറ്റ് ലിസ്റ്റിൽ പാർലമെന്റിന് നിയമം നിർമ്മിക്കാൻ ഏത് ആർട്ടിക്കിൾ?</p>
+          <p><strong>Confusing Options:</strong> 356 / 357 / 249 / 252</p>
+          <p><strong>Fact:</strong> പ്രഖ്യാപനം <strong>Art 356</strong>; നിയമനിർമ്മാണ അധികാരം <strong>Art 357</strong> പ്രകാരം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15: അധിക വസ്തുതകൾ ===== -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">15. അധിക വസ്തുതകൾ</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> ആർട്ടിക്കിൾ 252 പ്രകാരം പാർലമെന്റ് പാസാക്കിയ നിയമങ്ങളുടെ ഉദാഹരണങ്ങൾ: Prize Competitions Act 1955, Water (Prevention and Control of Pollution) Act 1974, Transplantation of Human Organs Act 1994.</li>
+          <li><span class="stars">⭐⭐⭐</span> കേരളത്തിലെ വനസംരക്ഷണ നിയമങ്ങൾ കൺകറന്റ് ലിസ്റ്റ് പ്രകാരം (1976 മുതൽ). കേരള വന നിയമം 1961 - എന്നാൽ 1976-ന് ശേഷം കേന്ദ്ര നിയമങ്ങൾക്ക് മുൻഗണന.</li>
+          <li><span class="stars">⭐⭐⭐</span> സംസ്ഥാന നിയമസഭാ തിരഞ്ഞെടുപ്പ് (Entry 37) - സ്റ്റേറ്റ് ലിസ്റ്റിൽ. ഇത് സംസ്ഥാന തിരഞ്ഞെടുപ്പ് കമ്മീഷൻ നടത്തുന്നു (Art 243K - പഞ്ചായത്ത്/മുനിസിപ്പൽ).</li>
+          <li><span class="stars">⭐⭐</span> സംസ്ഥാന പബ്ലിക് സർവീസ് കമ്മീഷൻ (Entry 41) - സ്റ്റേറ്റ് ലിസ്റ്റിൽ. കേരള PSC ഇതിന്റെ ഭാഗമാണ്.</li>
+          <li><span class="stars">⭐⭐</span> കേരള സ്റ്റേറ്റ് ലോട്ടറി 1967 - ഇന്ത്യയിലെ ആദ്യ സംസ്ഥാന ലോട്ടറി.</li>
+          <li><span class="stars">⭐⭐</span> ക്യാപ്പിറ്റേഷൻ ടാക്സ് = തലക്കരം (ഓരോ വ്യക്തിക്കും നിശ്ചിത തുക).</li>
+          <li><span class="stars">⭐⭐</span> തീർത്ഥാടനം (Entry 7) - സ്റ്റേറ്റ് ലിസ്റ്റിൽ. അന്തർസംസ്ഥാന തീർത്ഥാടനം കൺകറന്റ് ലിസ്റ്റിൽ (Entry 20A).</li>
+          <li><span class="stars">⭐⭐</span> കൃഷി (Entry 14), ഭൂമി (Entry 18), ജലം (Entry 17), മത്സ്യബന്ധനം (Entry 21) - എല്ലാം സ്റ്റേറ്റ് ലിസ്റ്റിൽ.</li>
+          <li><span class="stars">⭐⭐</span> സംസ്ഥാനത്തിനുള്ളിലെ വ്യാപാരം (Entry 26) - സ്റ്റേറ്റ് ലിസ്റ്റിൽ. അന്തർസംസ്ഥാന വ്യാപാരം യൂണിയൻ ലിസ്റ്റിൽ (Entry 42).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">16. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. 42-ാം ഭരണഘടനാ ഭേദഗതിയിലൂടെ (1976) സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്ന് കൺകറന്റ് ലിസ്റ്റിലേക്ക് മാറ്റിയ വിഷയം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പോലീസ്</span>
+            <span data-opt="B">B. വിദ്യാഭ്യാസം</span>
+            <span data-opt="C">C. കൃഷി</span>
+            <span data-opt="D">D. പൊതുജനാരോഗ്യം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) വിദ്യാഭ്യാസം</div>
+            <div class="explanation">42-ാം ഭേദഗതിയിലൂടെ വിദ്യാഭ്യാസം, വനം, വന്യമൃഗ-പക്ഷി സംരക്ഷണം, അളവും തൂക്കവും, നീതിന്യായ ഭരണം എന്നിവ കൺകറന്റ് ലിസ്റ്റിലേക്ക് മാറ്റി.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. നിലവിൽ ഇന്ത്യൻ ഭരണഘടനയിലെ സ്റ്റേറ്റ് ലിസ്റ്റിൽ (State List) എത്ര വിഷയങ്ങളാണ് ഉൾപ്പെടുത്തിയിട്ടുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 66</span>
+            <span data-opt="B">B. 61</span>
+            <span data-opt="C">C. 52</span>
+            <span data-opt="D">D. 100</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 61</div>
+            <div class="explanation">ഭരണഘടന നിലവിൽ വരുമ്പോൾ 66 വിഷയങ്ങളായിരുന്നു. 42-ാം ഭേദഗതിയിൽ 5 എണ്ണം കൺകറന്റിലേക്ക് മാറ്റിയതിനാൽ 61 ആയി. ചില സ്രോതസ്സുകൾ 59 എന്ന് പറയുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. തദ്ദേശ സ്വയംഭരണ സ്ഥാപനങ്ങൾ (ഗ്രാമപഞ്ചായത്ത്, മുനിസിപ്പാലിറ്റി) ഏത് ലിസ്റ്റിൽ ഉൾപ്പെടുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. യൂണിയൻ ലിസ്റ്റ്</span>
+            <span data-opt="B">B. കൺകറന്റ് ലിസ്റ്റ്</span>
+            <span data-opt="C">C. സ്റ്റേറ്റ് ലിസ്റ്റ്</span>
+            <span data-opt="D">D. അവശിഷ്ടാധികാരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സ്റ്റേറ്റ് ലിസ്റ്റ്</div>
+            <div class="explanation">തദ്ദേശ സ്വയംഭരണം സ്റ്റേറ്റ് ലിസ്റ്റിലെ Entry 5 ആണ്. 73, 74 ഭേദഗതികൾ ഭരണഘടനയിൽ ഉൾപ്പെടുത്തിയെങ്കിലും വിഷയം സ്റ്റേറ്റ് ലിസ്റ്റിൽ തന്നെ തുടരുന്നു.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. താഴെ പറയുന്നവയിൽ സ്റ്റേറ്റ് ലിസ്റ്റിൽ ഉൾപ്പെടുന്ന വിഷയം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പ്രതിരോധം</span>
+            <span data-opt="B">B. ബാങ്കിംഗ്</span>
+            <span data-opt="C">C. പോലീസ്</span>
+            <span data-opt="D">D. സെൻസസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) പോലീസ്</div>
+            <div class="explanation">പോലീസും ക്രമസമാധാനവും സ്റ്റേറ്റ് ലിസ്റ്റിലാണ്. പ്രതിരോധം, ബാങ്കിംഗ്, സെൻസസ് എന്നിവ യൂണിയൻ ലിസ്റ്റിൽ.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. കാർഷിക വരുമാന നികുതി (Agricultural Income Tax) ചുമത്താനുള്ള അധികാരം ആർക്കാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. കേന്ദ്ര സർക്കാരിന്</span>
+            <span data-opt="B">B. സംസ്ഥാന സർക്കാരിന്</span>
+            <span data-opt="C">C. രണ്ടിനും തുല്യമായി</span>
+            <span data-opt="D">D. തദ്ദേശ സ്ഥാപനങ്ങൾക്ക്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സംസ്ഥാന സർക്കാരിന്</div>
+            <div class="explanation">കാർഷിക വരുമാന നികുതി സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 46). മറ്റ് ആദായ നികുതികൾ (കോർപ്പറേഷൻ ടാക്സ്, ഇൻകം ടാക്സ്) യൂണിയൻ ലിസ്റ്റിൽ.</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ഇന്ത്യയിൽ ലഹരിപാനീയങ്ങളുടെ (മദ്യം) ഉൽപ്പാദനം, വിതരണം, വില്പന എന്നിവ ഏത് ലിസ്റ്റിലാണ് ഉൾപ്പെടുന്നത്?</div>
+          <div class="options">
+            <span data-opt="A">A. യൂണിയൻ ലിസ്റ്റ്</span>
+            <span data-opt="B">B. സ്റ്റേറ്റ് ലിസ്റ്റ്</span>
+            <span data-opt="C">C. കൺകറന്റ് ലിസ്റ്റ്</span>
+            <span data-opt="D">D. അവശിഷ്ടാധികാരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സ്റ്റേറ്റ് ലിസ്റ്റ്</div>
+            <div class="explanation">മദ്യം സ്റ്റേറ്റ് ലിസ്റ്റിലെ Entry 8 ആണ്. അതുകൊണ്ടാണ് മദ്യത്തിന് ജി.എസ്.ടി ഇല്ലാത്തതും ഓരോ സംസ്ഥാനത്തും വ്യത്യസ്ത വിലയും നിയമങ്ങളും ഉള്ളതും.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. Statement Question: സ്റ്റേറ്റ് ലിസ്റ്റുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. കൃഷിയും പൊതുജനാരോഗ്യവും സ്റ്റേറ്റ് ലിസ്റ്റിലെ പ്രധാന വിഷയങ്ങളാണ്.<br>
+            2. സ്റ്റേറ്റ് ലിസ്റ്റിൽ തുടക്കത്തിൽ 66 വിഷയങ്ങൾ ഉണ്ടായിരുന്നു.<br>
+            3. സ്റ്റേറ്റ് ലിസ്റ്റിലെ വിഷയങ്ങളിൽ പാർലമെന്റിന് ഒരിക്കലും നിയമം നിർമ്മിക്കാൻ കഴിയില്ല.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1, 2 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 3 തെറ്റാണ്. ആർട്ടിക്കിൾ 249, 250, 252, 253, 356/357 എന്നിവ പ്രകാരം പ്രത്യേക സാഹചര്യങ്ങളിൽ പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിയമം നിർമ്മിക്കാം.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. ദേശീയ താല്പര്യം മുൻനിർത്തി രാജ്യസഭ 2/3 ഭൂരിപക്ഷത്തോടെ പ്രമേയം പാസാക്കിയാൽ സ്റ്റേറ്റ് ലിസ്റ്റിലെ വിഷയത്തിൽ പാർലമെന്റിന് നിയമം നിർമ്മിക്കാൻ അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 248</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 249</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 250</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 252</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 249</div>
+            <div class="explanation">ഒരു വർഷത്തേക്ക്. ആർട്ടിക്കിൾ 250 അടിയന്തരാവസ്ഥ, 252 സംസ്ഥാനങ്ങളുടെ സമ്മതം, 248 ശേഷിപ്പ്.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. Match the Following (ആർട്ടിക്കിളുകളും സാഹചര്യങ്ങളും):<br>
+            1. ആർട്ടിക്കിൾ 250 - a. അന്താരാഷ്ട്ര കരാർ<br>
+            2. ആർട്ടിക്കിൾ 252 - b. ദേശീയ അടിയന്തരാവസ്ഥ<br>
+            3. ആർട്ടിക്കിൾ 253 - c. രണ്ടോ അതിലധികമോ സംസ്ഥാനങ്ങളുടെ അഭ്യർത്ഥന</div>
+          <div class="options">
+            <span data-opt="A">A. 1-b, 2-c, 3-a</span>
+            <span data-opt="B">B. 1-a, 2-c, 3-b</span>
+            <span data-opt="C">C. 1-c, 2-b, 3-a</span>
+            <span data-opt="D">D. 1-b, 2-a, 3-c</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-b, 2-c, 3-a</div>
+            <div class="explanation">250 = Emergency, 252 = Two states' consent, 253 = International agreement.</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. ഡൽഹി ഗവൺമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിലെ ഏത് 3 കാര്യങ്ങളിൽ നിയമം നിർമ്മിക്കാൻ അധികാരമില്ല?</div>
+          <div class="options">
+            <span data-opt="A">A. വിദ്യാഭ്യാസം, ആരോഗ്യം, കൃഷി</span>
+            <span data-opt="B">B. പോലീസ്, ഭൂമി, ക്രമസമാധാനം</span>
+            <span data-opt="C">C. ജലം, വൈദ്യുതി, റോഡ്</span>
+            <span data-opt="D">D. വ്യാപാരം, വ്യവസായം, നികുതി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) പോലീസ്, ഭൂമി, ക്രമസമാധാനം</div>
+            <div class="explanation">69-ാം ഭേദഗതി (1991) പ്രകാരം ഡൽഹിക്ക് Public Order, Police, Land എന്നീ 3 കാര്യങ്ങളിൽ അധികാരമില്ല. ഇവ കേന്ദ്ര ആഭ്യന്തര മന്ത്രാലയത്തിന്റെ നേരിട്ടുള്ള നിയന്ത്രണത്തിലാണ്.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. വാതുവെപ്പും ചൂതാട്ടവും (Betting and Gambling) ഏത് ലിസ്റ്റിൽ ഉൾപ്പെടുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. യൂണിയൻ ലിസ്റ്റ്</span>
+            <span data-opt="B">B. സ്റ്റേറ്റ് ലിസ്റ്റ്</span>
+            <span data-opt="C">C. കൺകറന്റ് ലിസ്റ്റ്</span>
+            <span data-opt="D">D. അവശിഷ്ടാധികാരം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) സ്റ്റേറ്റ് ലിസ്റ്റ്</div>
+            <div class="explanation">Entry 34. എന്നാൽ കേന്ദ്ര/സംസ്ഥാന സർക്കാരുകൾ നടത്തുന്ന ലോട്ടറികൾ യൂണിയൻ ലിസ്റ്റിൽ (Entry 40).</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. അന്താരാഷ്ട്ര കരാറുകൾ നടപ്പിലാക്കാൻ പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിയമം നിർമ്മിക്കാൻ അധികാരം നൽകുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 249</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 250</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 252</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 253</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) ആർട്ടിക്കിൾ 253</div>
+            <div class="explanation">അന്താരാഷ്ട്ര ഉടമ്പടികൾ നടപ്പിലാക്കാൻ. ഇതിന് സമയപരിധിയോ രാജ്യസഭാ പ്രമേയമോ ആവശ്യമില്ല.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. രാഷ്ട്രപതി ഭരണം നിലനിൽക്കുന്ന സമയത്ത് ഒരു സംസ്ഥാനത്തിന് വേണ്ടി നിയമം നിർമ്മിക്കാനുള്ള പാർലമെന്റിന്റെ അധികാരം ഏത് ആർട്ടിക്കിൾ പ്രകാരം?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 356</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 357</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 249</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 250</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 357</div>
+            <div class="explanation">പ്രഖ്യാപനം Art 356 പ്രകാരം; നിയമനിർമ്മാണ അധികാരം വിനിയോഗിക്കുന്നത് Art 357 പ്രകാരം.</div>
+          </div>
+        </div>
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. താഴെ പറയുന്നവയിൽ സ്റ്റേറ്റ് ലിസ്റ്റിൽ ഉൾപ്പെടാത്ത വിഷയം ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജയിലുകൾ</span>
+            <span data-opt="B">B. പൊതുജനാരോഗ്യം</span>
+            <span data-opt="C">C. പ്രതിരോധം</span>
+            <span data-opt="D">D. കൃഷി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) പ്രതിരോധം</div>
+            <div class="explanation">പ്രതിരോധം യൂണിയൻ ലിസ്റ്റിലാണ്. ജയിലുകൾ, പൊതുജനാരോഗ്യം, കൃഷി എന്നിവ സ്റ്റേറ്റ് ലിസ്റ്റിൽ.</div>
+          </div>
+        </div>
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. 1976-ലെ 42-ാം ഭേദഗതിയിലൂടെ കൺകറന്റ് ലിസ്റ്റിൽ പുതുതായി ചേർത്ത വിഷയം ഏതാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. ജനസംഖ്യാ നിയന്ത്രണവും കുടുംബാസൂത്രണവും</span>
+            <span data-opt="B">B. പോലീസ്</span>
+            <span data-opt="C">C. ബാങ്കിംഗ്</span>
+            <span data-opt="D">D. സെൻസസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ജനസംഖ്യാ നിയന്ത്രണവും കുടുംബാസൂത്രണവും</div>
+            <div class="explanation">Entry 20A. ഇത് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിന്ന് മാറ്റിയതല്ല, പുതുതായി ചേർത്തതാണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">17. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(B)</td><td>11</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(B)</td><td>7</td><td>(A)</td><td>12</td><td>(D)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>8</td><td>(B)</td><td>13</td><td>(B)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(A)</td><td>14</td><td>(C)</td></tr>
+              <tr><td>5</td><td>(B)</td><td>10</td><td>(B)</td><td>15</td><td>(A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 18: 30-സെക്കൻഡ് റിവിഷൻ ===== -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">18. 30-സെക്കൻഡ് റിവിഷൻ</h2>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>സ്റ്റേറ്റ് ലിസ്റ്റ്: സംസ്ഥാന സർക്കാരുകൾക്ക് മാത്രം (സാധാരണ സാഹചര്യങ്ങളിൽ) നിയമം നിർമ്മിക്കാൻ അധികാരം.</li>
+          <li>വിഷയങ്ങളുടെ എണ്ണം: തുടക്കത്തിൽ 66, നിലവിൽ 61.</li>
+          <li>42-ാം ഭേദഗതി (1976): വിദ്യാഭ്യാസം, വനം, വന്യമൃഗ-പക്ഷി സംരക്ഷണം, അളവും തൂക്കവും, നീതിന്യായ ഭരണം - സ്റ്റേറ്റിൽ നിന്ന് കൺകറന്റിലേക്ക്.</li>
+          <li>പ്രധാന വിഷയങ്ങൾ: പോലീസ്, ക്രമസമാധാനം, പൊതുജനാരോഗ്യം, കൃഷി, തദ്ദേശ സ്വയംഭരണം, ജയിലുകൾ, മദ്യം, വാതുവെപ്പ്.</li>
+          <li>കാർഷിക വരുമാന നികുതി: സ്റ്റേറ്റ് ലിസ്റ്റ് (Entry 46).</li>
+          <li>പാർലമെന്റിന്റെ അധികാരം: 249 (രാജ്യസഭ 2/3), 250 (അടിയന്തരാവസ്ഥ), 252 (സമ്മതം), 253 (ഉടമ്പടി), 356/357 (രാഷ്ട്രപതി ഭരണം).</li>
+          <li>ആർട്ടിക്കിൾ 251: കേന്ദ്ര-സംസ്ഥാന നിയമ വൈരുദ്ധ്യത്തിൽ കേന്ദ്ര നിയമം നിലനിൽക്കും.</li>
+          <li>ഡൽഹി: Public Order, Police, Land - ഈ 3 കാര്യങ്ങളിൽ അധികാരമില്ല (69-ാം ഭേദഗതി).</li>
+          <li>മദ്യം സ്റ്റേറ്റ് ലിസ്റ്റിൽ - അതുകൊണ്ടാണ് GST ഇല്ലാത്തത്.</li>
+          <li>തദ്ദേശ സ്വയംഭരണം സ്റ്റേറ്റ് ലിസ്റ്റിൽ (Entry 5) - കേരള പഞ്ചായത്ത് രാജ് ആക്ട് 1994.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 19: ഒരു പേജ് റിവിഷൻ ===== -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">19. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>State List (List II - Article 246)</h3>
+        <ul>
+          <li><strong>Authority:</strong> State Governments (State Legislatures) - normally exclusive.</li>
+          <li><strong>Count:</strong> Originally 66 subjects, currently 61 subjects.</li>
+          <li><strong>Key Subjects to Memorize:</strong>
+            <ol>
+              <li>Public Order (Entry 1)</li>
+              <li>Police (Entry 2)</li>
+              <li>Prisons (Entry 4)</li>
+              <li>Local Government (Entry 5)</li>
+              <li>Public Health (Entry 6)</li>
+              <li>Liquor (Entry 8)</li>
+              <li>Agriculture (Entry 14)</li>
+              <li>Land, Water (Entry 17, 18)</li>
+              <li>Fisheries (Entry 21)</li>
+              <li>Betting & Gambling (Entry 34)</li>
+              <li>Agricultural Income Tax (Entry 46)</li>
+              <li>Vehicle Tax (Entry 57)</li>
+            </ol>
+          </li>
+        </ul>
+
+        <h3>42nd Amendment (1976) - 5 Subjects State → Concurrent</h3>
+        <ul>
+          <li>Education</li>
+          <li>Forests</li>
+          <li>Protection of Wild Animals & Birds</li>
+          <li>Weights and Measures</li>
+          <li>Administration of Justice (except Supreme Court & High Courts)</li>
+        </ul>
+
+        <h3>Parliament and the State List</h3>
+        <ul>
+          <li><strong>Art 249:</strong> Rajya Sabha resolution (2/3 majority, 1 year)</li>
+          <li><strong>Art 250:</strong> National Emergency</li>
+          <li><strong>Art 252:</strong> Two or more states' consent</li>
+          <li><strong>Art 253:</strong> International agreements</li>
+          <li><strong>Art 356/357:</strong> President's Rule</li>
+        </ul>
+
+        <h3>Delhi Exception (69th Amendment, 1991)</h3>
+        <p>Delhi Government cannot legislate on 3 subjects: <strong>Public Order, Police, Land</strong>.</p>
+
+        <h3>Kerala Connection</h3>
+        <ul>
+          <li>Kerala Panchayat Raj Act 1994, Kerala Municipality Act 1994</li>
+          <li>Kerala State Lottery 1967 (first state lottery in India)</li>
+          <li>Liquor - State List (no GST)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 20: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">20. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>സ്റ്റേറ്റ് ലിസ്റ്റ് സംസ്ഥാനങ്ങളുടെ അധികാരത്തിന്റെ അടിസ്ഥാനമാണ്.</li>
+          <li>42-ാം ഭേദഗതി (1976) 5 വിഷയങ്ങൾ സ്റ്റേറ്റിൽ നിന്ന് കൺകറന്റിലേക്ക് മാറ്റി.</li>
+          <li>ആർട്ടിക്കിൾ 249-253, 356/357 പ്രകാരം പാർലമെന്റിന് സ്റ്റേറ്റ് ലിസ്റ്റിൽ നിയമം നിർമ്മിക്കാം.</li>
+          <li>തദ്ദേശ സ്വയംഭരണം സ്റ്റേറ്റ് ലിസ്റ്റിൽ - കേരളത്തിന് പ്രത്യേക പ്രാധാന്യം.</li>
+          <li>PSC പരീക്ഷകളിൽ 2-3 ചോദ്യങ്ങൾ ഈ അധ്യായത്തിൽ നിന്ന് ഉറപ്പായും പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>സ്റ്റേറ്റ് ലിസ്റ്റ്, കൺകറന്റ് ലിസ്റ്റ് എന്നിവയിലെ വിഷയങ്ങൾ കൃത്യമായി തരംതിരിച്ചറിയുക എന്നതാണ് ഈ അധ്യായത്തിലെ ഏറ്റവും പ്രധാന കാര്യം. അടുത്ത അധ്യായം: കൺകറന്റ് ലിസ്റ്റ്.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  // Insert toggle icons
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  // H2 click + keyboard
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () {
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  // Open first section by default
+  if (sections.length > 0) {
+    openOnly(sections[0]);
+  }
+
+  // Expand All / Collapse All
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  // IntersectionObserver for scroll spy
+  if ('IntersectionObserver' in window) {
+    var observerOptions = {
+      rootMargin: '-15% 0px -75% 0px',
+      threshold: 0
+    };
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(function (sec) {
+      observer.observe(sec);
+    });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaStateList106Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var explanation = item.querySelector('.explanation');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+    var qText = item.querySelector('.q-text');
+
+    // Extract correct letter from answer label
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    // Hide answer block initially
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null,
+      saved: false,
+      marked: false,
+      locked: false
+    };
+
+    // Load from localStorage
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
+
+    // Apply restored state
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) {
+          span.classList.add('correct');
+        }
+        if (opt === state.selected && opt !== correctLetter) {
+          span.classList.add('wrong');
+        }
+      });
+    }
+
+    // Create controls
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    // Insert controls after options
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    // Apply restored marked state
+    if (state.marked) {
+      markBtn.classList.add('active');
+    }
+
+    // Apply restored locked state
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+      } catch (e) {
+        // Ignore localStorage errors
+      }
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) {
+          span.classList.add('correct');
+        }
+        if (opt === state.selected && opt !== correctLetter) {
+          span.classList.add('wrong');
+        }
+      });
+
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) {
+          span.classList.add('locked');
+        } else {
+          span.classList.remove('locked');
+        }
+      });
+
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) {
+          showResult();
+        }
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) {
+          statusSpan.textContent = 'Unlocked';
+        } else {
+          showResult();
+        }
+      }
+      persist();
+    }
+
+    // Option click handlers
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+
+        // Clear status
+        statusSpan.textContent = '';
+
+        persist();
+      });
+    });
+
+    // Save Answer
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    // Show Answer
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    // Mark for Review
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    // Lock
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
+</script>
+
+<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+</body>
+</html>

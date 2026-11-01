@@ -1,0 +1,1267 @@
+﻿<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – അഡ്വക്കേറ്റ് ജനറൽ | അധ്യായം 114</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    /* ========== LISTS ========== */
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. ആമുഖം</a></li>
+      <li><a href="#sec2">2. Articles 165 & 177</a></li>
+      <li><a href="#sec3">3. കാലാവധി, രാജി, പ്രതിഫലം</a></li>
+      <li><a href="#sec4">4. ചുമതലകളും അധികാരങ്ങളും</a></li>
+      <li><a href="#sec5">5. പരിമിതികൾ</a></li>
+      <li><a href="#sec6">6. ചരിത്രവും വസ്തുതകളും</a></li>
+      <li><a href="#sec7">7. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec8">8. Quick Revision</a></li>
+      <li><a href="#sec9">9. One-Page Revision</a></li>
+      <li><a href="#sec10">10. PSC കെണികൾ</a></li>
+      <li><a href="#sec11">11. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 114</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – അഡ്വക്കേറ്റ് ജനറൽ (Advocate General)</h1>
+      <div class="subtitle">Advocate General of the State | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആർട്ടിക്കിൾ 165 (Adv. Gen നിയമനം/യോഗ്യത), ആർട്ടിക്കിൾ 177 (നിയമസഭയിൽ സംസാരം, വോട്ടില്ല), കാലാവധി (Pleasure of Governor), യോഗ്യത ("10-10")</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — +89 നിയമം (76→165, 88→177, 105→194), പരിമിതികൾ ("സ-ക്രി-ക"), കേരളത്തിലെ ആദ്യ AG (കെ.വി. സൂര്യനാരായണ അയ്യർ)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — പ്രായപരിധി ഇല്ല (62 തെറ്റ്), ഇപ്പോഴത്തെ കേരള AG (കെ. ജാജു ബാബു), AG vs Adv.Gen വ്യത്യാസം</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — കെ.കെ. മാത്യു, എം.കെ. ദാമോദരൻ, DGP</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — കേരളത്തിലെ AG-മാരുടെ തുടർച്ച</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>Adv. Gen = സംസ്ഥാനത്തിന്റെ AG</strong> → 76 + 89 = 165</li>
+            <li><strong>Art 165:</strong> നിയമനം/യോഗ്യത; <strong>Art 177:</strong> നിയമസഭയിൽ സംസാരം (വോട്ടില്ല)</li>
+            <li><strong>കാലാവധി:</strong> നിശ്ചിതമല്ല (Pleasure); പ്രായപരിധി ഇല്ല</li>
+            <li><strong>ആദ്യ കേരള AG:</strong> കെ.വി. സൂര്യനാരായണ അയ്യർ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. ആമുഖം (Introduction)</h2>
+      <div class="section-body">
+        <p>ഇന്ത്യൻ ഭരണഘടനയുടെ <strong>ആറാം ഭാഗത്തിൽ (Part VI)</strong>, സംസ്ഥാന എക്സിക്യൂട്ടീവിന്റെ (State Executive) ഭാഗമായാണ് അഡ്വക്കേറ്റ് ജനറലിനെക്കുറിച്ച് പ്രതിപാദിക്കുന്നത്.</p>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാന സർക്കാരിന്റെ നിയമ ഉപദേഷ്ടാവും സംസ്ഥാനത്തെ <strong>പ്രഥമ നിയമ ഉദ്യോഗസ്ഥനുമാണ് (Highest Law Officer of the State)</strong> അഡ്വക്കേറ്റ് ജനറൽ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> സംസ്ഥാന സർക്കാരിന് നിയമപരമായ കാര്യങ്ങളിൽ ഉപദേശം നൽകുകയും കോടതികളിൽ സർക്കാരിനെ പ്രതിനിധീകരിക്കുകയും ചെയ്യുക എന്നതാണ് പ്രധാന ചുമതല.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സ്ഥാനം:</strong> Part VI-ലെ <strong>Chapter II (The Executive)</strong>-ൽ <strong>Art 165</strong>. (കേന്ദ്രത്തിലെ തുല്യ പദവി: Art 76, Part V.)</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സ്വഭാവം:</strong> AG-യെപ്പോലെ Adv. Gen-ഉം ഉപദേശകനും വക്കീലും മാത്രമാണ്; ഭരണപരമായ അധികാരമില്ല.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>"<strong>സംസ്ഥാനത്തിന്റെ AG = 165</strong>" (76 + 89).</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 AG vs Adv.Gen താരതമ്യം</span>
+          <svg viewBox="0 0 700 200" width="100%" height="auto" role="img" aria-label="AG vs Adv.Gen">
+            <rect x="20" y="40" width="310" height="140" rx="10" fill="#4a148c" opacity="0.9"/>
+            <text x="175" y="70" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">അറ്റോർണി ജനറൽ (കേന്ദ്രം)</text>
+            <text x="175" y="95" text-anchor="middle" fill="#ffd54f" font-size="12">Art 76 / 88 / 105</text>
+            <text x="175" y="118" text-anchor="middle" fill="#fff" font-size="11">നിയമനം: രാഷ്ട്രപതി</text>
+            <text x="175" y="140" text-anchor="middle" fill="#fff" font-size="11">യോഗ്യത: SC ജഡ്ജി (5-10-J)</text>
+            <text x="175" y="162" text-anchor="middle" fill="#fff" font-size="11">പാർലമെന്റിൽ സംസാരം</text>
+
+            <rect x="370" y="40" width="310" height="140" rx="10" fill="#00695c" opacity="0.9"/>
+            <text x="525" y="70" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">അഡ്വക്കേറ്റ് ജനറൽ (സംസ്ഥാനം)</text>
+            <text x="525" y="95" text-anchor="middle" fill="#ffd54f" font-size="12">Art 165 / 177 / 194</text>
+            <text x="525" y="118" text-anchor="middle" fill="#fff" font-size="11">നിയമനം: ഗവർണർ</text>
+            <text x="525" y="140" text-anchor="middle" fill="#fff" font-size="11">യോഗ്യത: HC ജഡ്ജി (10-10)</text>
+            <text x="525" y="162" text-anchor="middle" fill="#fff" font-size="11">നിയമസഭയിൽ സംസാരം</text>
+
+            <text x="350" y="25" text-anchor="middle" fill="#4a148c" font-size="14" font-weight="bold">+89 നിയമം</text>
+          </svg>
+          <div class="viz-caption">📊 കേന്ദ്രം (AG) vs സംസ്ഥാനം (Adv.Gen)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: Articles 165 & 177 ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. പ്രധാന ഭരണഘടനാ വ്യവസ്ഥകൾ (Articles 165 & 177)</h2>
+      <div class="section-body">
+        <h3>Article 165 (നിയമനം, യോഗ്യതകൾ)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രൂപീകരണം:</strong> ഓരോ സംസ്ഥാനത്തിനും ഒരു അഡ്വക്കേറ്റ് ജനറൽ ഉണ്ടായിരിക്കണമെന്ന് ആർട്ടിക്കിൾ 165 അനുശാസിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> സംസ്ഥാന മന്ത്രിസഭയുടെ (മുഖ്യമന്ത്രിയുടെ) ഉപദേശപ്രകാരം <strong>ഗവർണ്ണറാണ്</strong> അഡ്വക്കേറ്റ് ജനറലിനെ നിയമിക്കുന്നത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>യോഗ്യതകൾ:</strong> ഒരു <strong>ഹൈക്കോടതി ജഡ്ജിയാകാൻ</strong> വേണ്ട യോഗ്യതകളാണ് ഇദ്ദേഹത്തിന് വേണ്ടത്. അതായത്:
+            <ol>
+              <li>ഇന്ത്യൻ പൗരനായിരിക്കണം.</li>
+              <li>ഇന്ത്യയിൽ <strong>10 വർഷം</strong> ജുഡീഷ്യൽ പദവി (Judicial office) വഹിച്ചിരിക്കണം, <strong>അല്ലെങ്കിൽ</strong></li>
+              <li>ഏതെങ്കിലും ഹൈക്കോടതിയിൽ <strong>10 വർഷം</strong> അഭിഭാഷകനായിരുന്നിരിക്കണം.</li>
+            </ol>
+          </li>
+          <li><span class="stars">⭐⭐⭐</span> ഈ യോഗ്യതകൾ <strong>Art 217(2)</strong> (ഹൈക്കോടതി ജഡ്ജിയുടെ യോഗ്യത) അനുസരിച്ചാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അറ്റോർണി ജനറലിൽ നിന്ന് വ്യത്യാസം:</strong> AG-ക്ക് "പ്രഗത്ഭ നിയമജ്ഞൻ (jurist)" എന്ന വിഭാഗം കൂടി ഉണ്ട്; Adv. Gen-ന് ആ വിഭാഗം <strong>ഇല്ല</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>Art 165 ഉപവകുപ്പുകൾ:</strong> 165(1) നിയമനം/യോഗ്യത; 165(2) ചുമതലകൾ; 165(3) ഗവർണ്ണറുടെ പ്രീതി (pleasure) വരെ പദവി, പ്രതിഫലം ഗവർണ്ണർ നിശ്ചയിക്കുന്നത്.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>HC യോഗ്യത "10-10":</strong> 10 വർഷം ജുഡീഷ്യൽ പദവി / 10 വർഷം അഭിഭാഷകൻ. (SC/AG: "5-10-J".)</p>
+        </div>
+
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p>ഹൈക്കോടതി ജഡ്ജിയാകാനുള്ള യോഗ്യതകൾ വേണ്ടതിനാൽ, ഇദ്ദേഹത്തിന്റെ പരമാവധി പ്രായപരിധി <strong>62 വയസ്സായിരിക്കും</strong> എന്നത് <strong>തെറ്റാണ്</strong>. 62 എന്നത് ഹൈക്കോടതി ജഡ്ജിയുടെ *വിരമിക്കൽ പ്രായമാണ്* (SC ജഡ്ജിക്ക് 65). അഡ്വക്കേറ്റ് ജനറലിന് ഭരണഘടനയിൽ <strong>പ്രായപരിധിയോ വിരമിക്കൽ പ്രായമോ ഇല്ല</strong>; ഹൈക്കോടതി ജഡ്ജിയുടെ *യോഗ്യത* മാത്രമാണ് ബാധകം.</p>
+        </div>
+
+        <h3>Article 177 (നിയമസഭയിലെ പ്രത്യേക അവകാശം - Very Important)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാന നിയമസഭയുടെ (നിയമസഭയോ നിയമനിർമ്മാണ കൗൺസിലോ) സഭാ നടപടികളിൽ പങ്കെടുക്കാനും സംസാരിക്കാനും അഡ്വക്കേറ്റ് ജനറലിന് അധികാരമുണ്ട്.
+            <div class="correction">
+              <span class="box-label">✏️ കൃത്യമായ പ്രയോഗം</span>
+              <p><strong>നിയമസഭ (Legislative Assembly)</strong>, ദ്വിസഭയുള്ള സംസ്ഥാനങ്ങളിൽ <strong>ലെജിസ്ലേറ്റീവ് കൗൺസിൽ (Legislative Council)</strong> കൂടി. (കേരളത്തിൽ ഏകസഭയാണ്.)</p>
+            </div>
+          </li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കൂടാതെ, അദ്ദേഹം അംഗമായിരിക്കുന്ന ഏതെങ്കിലും നിയമസഭാ കമ്മിറ്റിയിലും അദ്ദേഹത്തിന് പങ്കെടുക്കാം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> എന്നാൽ, നിയമസഭ ബില്ലുകൾ പാസാക്കുമ്പോൾ <strong>വോട്ട് ചെയ്യാൻ അദ്ദേഹത്തിന് അവകാശമില്ല</strong> (Right to speak, but no right to vote). കാരണം അദ്ദേഹം ജനങ്ങളാൽ തിരഞ്ഞെടുക്കപ്പെട്ട ഒരു എം.എൽ.എ അല്ല.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>Art 194:</strong> നിയമസഭാംഗത്തിന്റെ <strong>പ്രിവിലേജുകളും ഇമ്മ്യൂണിറ്റികളും</strong> AdvGen-നും ബാധകം.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>+89 റൂൾ:</strong> 88 + 89 = <strong>177</strong>; 105 + 89 = <strong>194</strong>. (AG: 88, 105.)</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 +89 നിയമം: കേന്ദ്രം → സംസ്ഥാനം</span>
+          <svg viewBox="0 0 600 200" width="100%" height="auto" role="img" aria-label="+89 നിയമം">
+            <rect x="20" y="30" width="130" height="45" rx="8" fill="#4a148c" opacity="0.9"/>
+            <text x="85" y="58" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">76 (AG)</text>
+            <line x1="150" y1="52" x2="210" y2="52" stroke="#4a148c" stroke-width="3"/>
+            <text x="180" y="44" text-anchor="middle" font-size="11" fill="#b83b2c" font-weight="bold">+89</text>
+            <polygon points="210,46 222,52 210,58" fill="#4a148c"/>
+            <rect x="222" y="30" width="150" height="45" rx="8" fill="#00695c" opacity="0.9"/>
+            <text x="297" y="58" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">165 (Adv.Gen)</text>
+
+            <rect x="20" y="100" width="130" height="45" rx="8" fill="#4a148c" opacity="0.9"/>
+            <text x="85" y="128" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">88 (Speech)</text>
+            <line x1="150" y1="122" x2="210" y2="122" stroke="#4a148c" stroke-width="3"/>
+            <text x="180" y="114" text-anchor="middle" font-size="11" fill="#b83b2c" font-weight="bold">+89</text>
+            <polygon points="210,116 222,122 210,128" fill="#4a148c"/>
+            <rect x="222" y="100" width="150" height="45" rx="8" fill="#00695c" opacity="0.9"/>
+            <text x="297" y="128" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">177 (Assembly)</text>
+
+            <rect x="20" y="170" width="130" height="45" rx="8" fill="#4a148c" opacity="0.9"/>
+            <text x="85" y="198" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">105 (Privilege)</text>
+            <line x1="150" y1="192" x2="210" y2="192" stroke="#4a148c" stroke-width="3"/>
+            <text x="180" y="184" text-anchor="middle" font-size="11" fill="#b83b2c" font-weight="bold">+89</text>
+            <polygon points="210,186 222,192 210,198" fill="#4a148c"/>
+            <rect x="222" y="170" width="150" height="45" rx="8" fill="#00695c" opacity="0.9"/>
+            <text x="297" y="198" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">194 (State)</text>
+
+            <text x="480" y="110" text-anchor="middle" fill="#4a148c" font-size="13" font-weight="bold">+89 നിയമം</text>
+            <text x="480" y="135" text-anchor="middle" fill="#4a5f72" font-size="11">കേന്ദ്രത്തിനോട് 89 കൂട്ടിയാൽ</text>
+            <text x="480" y="155" text-anchor="middle" fill="#4a5f72" font-size="11">സംസ്ഥാനത്തിന്റെ ആർട്ടിക്കിൾ</text>
+          </svg>
+          <div class="viz-caption">📊 +89 നിയമം: Adv.Gen, നിയമസഭാ അവകാശങ്ങൾ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: കാലാവധി, രാജി, പ്രതിഫലം ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. കാലാവധി, രാജി, പ്രതിഫലം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>കാലാവധി:</strong> ഭരണഘടന അഡ്വക്കേറ്റ് ജനറലിന് ഒരു നിശ്ചിത കാലാവധി (Term) പറഞ്ഞിട്ടില്ല. <strong>ഗവർണ്ണർക്ക് താല്പര്യമുള്ളിടത്തോളം കാലം</strong> (During the pleasure of the Governor) ഇദ്ദേഹത്തിന് പദവിയിൽ തുടരാം. എപ്പോൾ വേണമെങ്കിലും ഗവർണ്ണർക്ക് അദ്ദേഹത്തെ പുറത്താക്കാം. (സാധാരണയായി, അദ്ദേഹത്തെ നിയമിച്ച സംസ്ഥാന സർക്കാർ രാജിവെക്കുമ്പോൾ അദ്ദേഹവും രാജിവെക്കാറാണ് പതിവ്).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രായപരിധിയും ഇല്ല.</strong> നീക്കം ചെയ്യാൻ പ്രത്യേക നടപടിക്രമം ഭരണഘടനയിൽ ഇല്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>രാജി:</strong> പദവിയിൽ നിന്ന് രാജിവെക്കാൻ ആഗ്രഹിക്കുന്നുവെങ്കിൽ രാജിക്കത്ത് <strong>ഗവർണ്ണർക്ക്</strong> നൽകണം.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പ്രതിഫലം:</strong> അഡ്വക്കേറ്റ് ജനറലിന്റെ ശമ്പളം ഭരണഘടനയിൽ നിശ്ചയിച്ചിട്ടില്ല. ഗവർണ്ണർ നിർണ്ണയിക്കുന്ന പ്രതിഫലം (Retainer) അദ്ദേഹത്തിന് ലഭിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>കേരളത്തിലെ ഉദാഹരണം (ഭരണമാറ്റ കീഴ്വഴക്കം):</strong> 2021-ൽ പുതിയ LDF സർക്കാർ കെ. ഗോപാലകൃഷ്ണ കുറുപ്പിനെ AG ആയി നിയമിക്കാൻ തീരുമാനിച്ചു; അതിനു മുമ്പ് സി.പി. സുധാകര പ്രസാദ് AG ആയിരുന്നു. 2026 മേയിലെ ഭരണമാറ്റത്തിനു ശേഷം കെ. ജാജു ബാബു പുതിയ അഡ്വക്കേറ്റ് ജനറലായി; അസഫ് അലി ഡയറക്ടർ ജനറൽ ഓഫ് പ്രോസിക്യൂഷൻ ആയി.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>കാലാവധി:</strong> AdvGen = "<strong>A</strong>t pleasure (ഗവർണ്ണർ)". CAG = "<strong>C</strong>ertain (6/65)".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: ചുമതലകളും അധികാരങ്ങളും ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. പ്രധാന ചുമതലകളും അധികാരങ്ങളും (Functions)</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാന സർക്കാരിന് നിയമപരമായ വിഷയങ്ങളിൽ ഉപദേശം നൽകുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഹൈക്കോടതിയിലും സുപ്രീം കോടതിയിലും മറ്റ് കോടതികളിലും സംസ്ഥാന സർക്കാരിനെ പ്രതിനിധീകരിച്ച് ഹാജരാകുകയും കേസ് വാദിക്കുകയും ചെയ്യുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഗവർണ്ണർ നൽകുന്ന മറ്റ് നിയമപരമായ കടമകൾ നിർവ്വഹിക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഒരു എം.എൽ.എ യ്ക്ക് ലഭിക്കുന്ന അതേ നിയമപരിരക്ഷകളും ആനുകൂല്യങ്ങളും അഡ്വക്കേറ്റ് ജനറലിനും ലഭിക്കാൻ അർഹതയുണ്ട്.</li>
+          <li><span class="stars">⭐⭐⭐</span> ഭരണഘടനയോ മറ്റു നിയമമോ നൽകുന്ന ചുമതലകളും നിർവഹിക്കും (Art 165(2)).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പ്രിവിലേജ് ഉറവിടം:</strong> Art 194.</li>
+        </ol>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"ഉ-ഹാ-ദ"</strong> → <strong>ഉ</strong>പദേശം, <strong>ഹാ</strong>ജരാകൽ, <strong>ദ</strong>ത്ത ചുമതലകൾ (ഗവർണ്ണർ നൽകുന്നത്).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: പരിമിതികൾ ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. അഡ്വക്കേറ്റ് ജനറലിനുള്ള പരിമിതികൾ</h2>
+      <div class="section-body">
+        <p>അറ്റോർണി ജനറലിനെപ്പോലെ തന്നെ അഡ്വക്കേറ്റ് ജനറലും ഒരു മുഴുവൻ സമയ സർക്കാർ ഉദ്യോഗസ്ഥനല്ല. അതിനാൽ അദ്ദേഹം സ്വന്തമായി സ്വകാര്യ പ്രാക്ടീസ് (Private practice) ചെയ്യുന്നതിന് തടസ്സമില്ല. എങ്കിലും താഴെ പറയുന്ന പരിമിതികളുണ്ട്:</p>
+
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐</span> സംസ്ഥാന ഗവൺമെന്റിന് എതിരെ ഉപദേശം നൽകാനോ കേസ് വാദിക്കാനോ പാടില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> സംസ്ഥാന സർക്കാരിന്റെ മുൻകൂർ അനുമതിയില്ലാതെ ക്രിമിനൽ കേസുകളിൽ പ്രതികൾക്ക് വേണ്ടി ഹാജരാകാൻ പാടില്ല.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> സർക്കാരിന്റെ അനുമതിയില്ലാതെ ഏതെങ്കിലും കോർപ്പറേഷന്റെയോ കമ്പനിയുടെയോ ഡയറക്ടർ സ്ഥാനത്ത് ഇരിക്കാൻ പാടില്ല.</li>
+        </ol>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"സ-ക്രി-ക"</strong> → <strong>സ</strong>ർക്കാരിനെതിരെ പാടില്ല, <strong>ക്രി</strong>മിനൽ (അനുമതി വേണം), <strong>ക</strong>മ്പനി/കോർപ്പറേഷൻ ഡയറക്ടർ (അനുമതി വേണം). (AG-യ്ക്കും ഇതേ നിയമം.)</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരം</span>
+          <p><strong>തുടർപദവി വിലക്ക് ഇല്ല:</strong> CAG-യെപ്പോലെ വിരമിച്ച ശേഷമുള്ള പദവി വിലക്കുകൾ AdvGen-ന് ഇല്ല.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: ചരിത്രവും വസ്തുതകളും ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ചരിത്രവും പ്രധാന വസ്തുതകളും</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേരള സംസ്ഥാനത്തെ <strong>ആദ്യത്തെ അഡ്വക്കേറ്റ് ജനറൽ: കെ.വി. സൂര്യനാരായണ അയ്യർ</strong> (K.V. Surianarayana Iyer).</li>
+          <li><span class="stars">⭐⭐</span> കേരളത്തിൽ ഏറ്റവും കൂടുതൽ കാലം അഡ്വക്കേറ്റ് ജനറൽ പദവി വഹിച്ചത്: എം.കെ. ദാമോദരൻ.
+            <div class="correction">
+              <span class="box-label">✏️ ഉറപ്പില്ല</span>
+              <p>ഈ വിവരം വിശ്വസനീയ ഉറവിടത്തിൽ സ്ഥിരീകരിക്കാനായില്ല. എം.കെ. ദാമോദരൻ 1996 മുതൽ 2001 വരെയാണ് AG ആയിരുന്നത് (നായനാർ മന്ത്രിസഭയുടെ കാലം). സി.പി. സുധാകര പ്രസാദ് രണ്ടു വ്യത്യസ്ത LDF സർക്കാരുകളുടെ (വി.എസ്., പിണറായി) കാലത്ത് AG ആയിരുന്നു. "ഏറ്റവും കൂടുതൽ കാലം" ചോദ്യമായി വരുന്നെങ്കിൽ പാഠപുസ്തകത്തിലെ ഉത്തരം തന്നെ പിന്തുടരുക.</p>
+            </div>
+          </li>
+          <li><span class="stars">⭐⭐</span> അഡ്വക്കേറ്റ് ജനറലിനെ അദ്ദേഹത്തിന്റെ ജോലിയിൽ സഹായിക്കുന്നതിനായി സംസ്ഥാന സർക്കാർ അഡീഷണൽ അഡ്വക്കേറ്റ് ജനറൽമാരെ നിയമിക്കാറുണ്ട്.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഉദാഹരണം:</strong> 2026 മേയ് 20-ന് മുഹമ്മദ് ഷാ പി.എ. ഹൈക്കോടതിയിൽ അഡീഷണൽ അഡ്വക്കേറ്റ് ജനറലായി നിയമിതനായി.</li>
+          <li><span class="stars">⭐⭐</span> <strong>കെ.കെ. മാത്യു:</strong> 1960 നവംബർ 1 മുതൽ 1962 ജൂൺ 4 വരെ കേരള AG ആയിരുന്നു; പിന്നീട് സുപ്രീം കോടതി ജഡ്ജിയും (കേശവാനന്ദ ഭാരതി കേസിൽ) 10-ാം ലോ കമ്മീഷൻ ചെയർമാനുമായി.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഇപ്പോഴത്തെ കേരള AG:</strong> കെ. ജാജു ബാബു (2026 മേയ്). മുൻഗാമി കെ. ഗോപാലകൃഷ്ണ കുറുപ്പ് (2021–26).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഒരേപോലെ തോന്നുന്ന പദവികൾ:</strong> <strong>ഡയറക്ടർ ജനറൽ ഓഫ് പ്രോസിക്യൂഷൻ (DGP)</strong> ക്രിമിനൽ പ്രോസിക്യൂഷൻ തലവനാണ്; ഭരണഘടനാ പദവിയല്ല. AdvGen = ഭരണഘടനാ പദവി (Art 165).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>ആദ്യ AdvGen:</strong> "<strong>സൂര്യൻ</strong> (സൂര്യനാരായണ) ആദ്യം ഉദിച്ചത് കേരളത്തിൽ".</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📅 കേരള AG-മാരുടെ സമയരേഖ</span>
+          <svg viewBox="0 0 900 180" width="100%" height="auto" role="img" aria-label="കേരള AG ചരിത്രം">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="120" cy="100" r="10" fill="#c62828"/>
+            <text x="120" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1956</text>
+            <text x="120" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">സൂര്യനാരായണ</text>
+
+            <circle cx="290" cy="100" r="10" fill="#ef6c00"/>
+            <text x="290" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1960</text>
+            <text x="290" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കെ.കെ. മാത്യു</text>
+
+            <circle cx="470" cy="100" r="10" fill="#2e7d32"/>
+            <text x="470" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1996</text>
+            <text x="470" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">എം.കെ. ദാമോദരൻ</text>
+
+            <circle cx="640" cy="100" r="10" fill="#1565c0"/>
+            <text x="640" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2021</text>
+            <text x="640" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കെ. ഗോപാലകൃഷ്ണ കുറുപ്പ്</text>
+
+            <circle cx="810" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="810" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2026</text>
+            <text x="810" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">കെ. ജാജു ബാബു</text>
+          </svg>
+          <div class="viz-caption">📅 കേരള AG-മാരുടെ തുടർച്ച</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. സംസ്ഥാന ഗവൺമെന്റിന്റെ പ്രഥമ നിയമ ഉപദേഷ്ടാവായ (Highest Law Officer of the State) അഡ്വക്കേറ്റ് ജനറലിനെ നിയമിക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മുഖ്യമന്ത്രി</span>
+            <span data-opt="B">B. ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="C">C. സംസ്ഥാന ഗവർണ്ണർ</span>
+            <span data-opt="D">D. രാഷ്ട്രപതി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) സംസ്ഥാന ഗവർണ്ണർ</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 165 പ്രകാരം സംസ്ഥാന മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരമാണ് ഗവർണ്ണർ ഈ നിയമനം നടത്തുന്നത്.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് സംസ്ഥാന നിയമസഭയിൽ അംഗമല്ലാതിരുന്നിട്ടും ആ സഭയുടെ സമ്മേളനങ്ങളിൽ പങ്കെടുക്കാനും സംസാരിക്കാനും അഡ്വക്കേറ്റ് ജനറലിന് അവകാശമുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 165</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 177</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 213</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 214</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 177</div>
+            <div class="explanation">ഇതേ അവകാശം കേന്ദ്രത്തിൽ അറ്റോർണി ജനറലിന് നൽകുന്നത് ആർട്ടിക്കിൾ 88 ആണ്.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. അഡ്വക്കേറ്റ് ജനറലുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവന ഏത്?<br>
+            1. അഡ്വക്കേറ്റ് ജനറലാകാൻ ഹൈക്കോടതി ജഡ്ജിയാകാനുള്ള യോഗ്യതയാണ് വേണ്ടത്.<br>
+            2. നിയമസഭയിൽ ബില്ലുകൾ പാസാക്കുമ്പോൾ അഡ്വക്കേറ്റ് ജനറലിന് വോട്ട് ചെയ്യാൻ അവകാശമുണ്ട്.<br>
+            3. അഡ്വക്കേറ്റ് ജനറലിന്റെ കാലാവധി ഗവർണ്ണർക്ക് താല്പര്യമുള്ളിടത്തോളം കാലമാണ്.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">പ്രസ്താവന 2 തെറ്റാണ്; കാരണം അഡ്വക്കേറ്റ് ജനറലിന് സംസാരിക്കാമെങ്കിലും വോട്ട് ചെയ്യാൻ അവകാശമില്ല.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. കേരള സംസ്ഥാനത്തെ ആദ്യത്തെ അഡ്വക്കേറ്റ് ജനറൽ ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. എം.കെ. ദാമോദരൻ</span>
+            <span data-opt="B">B. കെ.വി. സൂര്യനാരായണ അയ്യർ</span>
+            <span data-opt="C">C. സി.പി. സുധാകര പ്രസാദ്</span>
+            <span data-opt="D">D. കെ.പി. ദണ്ഡപാണി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) കെ.വി. സൂര്യനാരായണ അയ്യർ</div>
+            <div class="explanation">ദാമോദരൻ (1996–2001), സുധാകര പ്രസാദ്, ദണ്ഡപാണി എന്നിവർ പിൽക്കാല AG-മാരാണ്.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. അഡ്വക്കേറ്റ് ജനറലിന്റെ യോഗ്യതയുമായി ബന്ധപ്പെട്ട് ശരിയായത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. സുപ്രീം കോടതി ജഡ്ജിയുടെ യോഗ്യത</span>
+            <span data-opt="B">B. ഹൈക്കോടതി ജഡ്ജിയുടെ യോഗ്യത</span>
+            <span data-opt="C">C. ജില്ലാ ജഡ്ജിയുടെ യോഗ്യത</span>
+            <span data-opt="D">D. നിയമ ബിരുദം മാത്രം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഹൈക്കോടതി ജഡ്ജിയുടെ യോഗ്യത</div>
+            <div class="explanation">Art 165(1). AG-ക്ക് SC ജഡ്ജിയുടെ യോഗ്യത (Art 76).</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. അഡ്വക്കേറ്റ് ജനറൽ രാജിക്കത്ത് നൽകേണ്ടത് ആർക്കാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. മുഖ്യമന്ത്രി</span>
+            <span data-opt="B">B. ഗവർണ്ണർ</span>
+            <span data-opt="C">C. ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</span>
+            <span data-opt="D">D. സ്പീക്കർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഗവർണ്ണർ</div>
+            <div class="explanation">Art 165(3) പ്രകാരം ഗവർണ്ണറുടെ പ്രീതി വരെ പദവി.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. അഡ്വക്കേറ്റ് ജനറലിന് ബാധകമല്ലാത്തത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കാലാവധി ഗവർണ്ണറുടെ പ്രീതി വരെ</span>
+            <span data-opt="B">B. നിയമസഭയിൽ വോട്ട് ചെയ്യാൻ അവകാശം</span>
+            <span data-opt="C">C. നിയമസഭാംഗത്തിന്റെ പ്രിവിലേജുകൾ (Art 194)</span>
+            <span data-opt="D">D. സർക്കാരിനെതിരെ കേസ് വാദിക്കാൻ പാടില്ല</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) നിയമസഭയിൽ വോട്ട് ചെയ്യാൻ അവകാശം</div>
+            <div class="explanation">സംസാരിക്കാം, വോട്ടില്ല (Art 177).</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. Match: 1. Attorney General 2. Advocate General 3. AG പാർലമെന്റിൽ 4. AdvGen നിയമസഭയിൽ — a. 177 b. 165 c. 88 d. 76</div>
+          <div class="options">
+            <span data-opt="A">A. 1-d, 2-b, 3-c, 4-a</span>
+            <span data-opt="B">B. 1-b, 2-d, 3-a, 4-c</span>
+            <span data-opt="C">C. 1-a, 2-c, 3-b, 4-d</span>
+            <span data-opt="D">D. 1-c, 2-a, 3-d, 4-b</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1-d, 2-b, 3-c, 4-a</div>
+            <div class="explanation">+89 റൂൾ: 76→165, 88→177.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. "Advocate General"-നെക്കുറിച്ച് ശരിയല്ലാത്ത പ്രസ്താവന ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ഗവർണ്ണർ നിയമിക്കുന്നു</span>
+            <span data-opt="B">B. 62 വയസ്സിൽ നിർബന്ധമായും വിരമിക്കണം</span>
+            <span data-opt="C">C. സ്വകാര്യ പ്രാക്ടീസ് ചെയ്യാം</span>
+            <span data-opt="D">D. ഭരണഘടനാ പദവിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 62 വയസ്സിൽ നിർബന്ധമായും വിരമിക്കണം</div>
+            <div class="explanation">AdvGen-ന് ഭരണഘടനയിൽ വിരമിക്കൽ പ്രായമില്ല; 62 HC ജഡ്ജിയുടെ വിരമിക്കൽ പ്രായമാണ്.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: Quick Revision ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ:</strong> 165 (Adv. Gen), 177 (നിയമസഭയിൽ സംസാരം), 194 (പ്രിവിലേജ്). 🧠 AG-യുടെ 76 / 88 / 105 + <strong>89</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> ഗവർണ്ണർ (മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരം). <strong>യോഗ്യത:</strong> HC ജഡ്ജിയുടേത് ("10-10").</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കാലാവധി:</strong> നിശ്ചിതമല്ല (Pleasure of Governor). ✏️ <strong>പ്രായപരിധി/വിരമിക്കൽ പ്രായം ഇല്ല</strong> (62 തെറ്റ്). <strong>രാജി:</strong> ഗവർണ്ണർക്ക്. <strong>പ്രതിഫലം:</strong> ഗവർണ്ണർ നിശ്ചയിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ചുമതലകൾ:</strong> ഉപദേശം, കോടതികളിൽ ഹാജരാകൽ, ഗവർണ്ണർ നൽകുന്ന ചുമതലകൾ.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>അവകാശം:</strong> നിയമസഭയിലും കമ്മിറ്റികളിലും സംസാരിക്കാം, <strong>വോട്ടില്ല</strong> (Art 177).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>വിലക്കുകൾ ("സ-ക്രി-ക"):</strong> സർക്കാരിനെതിരെ പാടില്ല; ക്രിമിനൽ, കമ്പനി ഡയറക്ടർ – അനുമതി വേണം. സ്വകാര്യ പ്രാക്ടീസ് ആകാം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>കേരളം:</strong> ആദ്യ AG – കെ.വി. സൂര്യനാരായണ അയ്യർ; ഇപ്പോഴത്തെ AG – കെ. ജാജു ബാബു (2026 മേയ്); ഭരണമാറ്റത്തിൽ രാജി/പുതിയ നിയമനം കീഴ്വഴക്കം.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: One-Page Revision ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. One-Page Revision Sheet</h2>
+      <div class="section-body">
+        <h3>Advocate General – Key Articles</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Article</th><th>Subject</th></tr></thead>
+            <tbody>
+              <tr><td>165</td><td>Adv.Gen നിയമനം, യോഗ്യത, ചുമതലകൾ</td></tr>
+              <tr><td>177</td><td>നിയമസഭയിൽ സംസാരാവകാശം (വോട്ടില്ല)</td></tr>
+              <tr><td>194</td><td>നിയമസഭാ പ്രിവിലേജുകൾ</td></tr>
+              <tr><td>217(2)</td><td>HC ജഡ്ജിയുടെ യോഗ്യത (Adv.Gen-നും ബാധകം)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Key Facts</h3>
+        <ul>
+          <li><strong>നിയമനം:</strong> ഗവർണ്ണർ (മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരം)</li>
+          <li><strong>യോഗ്യത:</strong> HC ജഡ്ജിയുടേത് ("10-10" + പൗരൻ)</li>
+          <li><strong>കാലാവധി:</strong> Pleasure of Governor; പ്രായപരിധി ഇല്ല</li>
+          <li><strong>രാജി:</strong> ഗവർണ്ണർക്ക്</li>
+          <li><strong>പ്രതിഫലം:</strong> ഗവർണ്ണർ നിശ്ചയിക്കും</li>
+          <li><strong>സ്വകാര്യ പ്രാക്ടീസ്:</strong> ചെയ്യാം (പരിമിതികളോടെ)</li>
+        </ul>
+
+        <h3>Functions</h3>
+        <ul>
+          <li>സംസ്ഥാന സർക്കാരിന് നിയമോപദേശം</li>
+          <li>ഹൈക്കോടതിയിലും SC-യിലും ഹാജരാകൽ</li>
+          <li>ഗവർണ്ണർ നൽകുന്ന ചുമതലകൾ</li>
+          <li>എം.എൽ.എ പ്രിവിലേജുകൾ (Art 194)</li>
+        </ul>
+
+        <h3>Limitations ("സ-ക്രി-ക")</h3>
+        <ul>
+          <li>സർക്കാരിനെതിരെ ഉപദേശം/വാദം പാടില്ല</li>
+          <li>ക്രിമിനൽ കേസിൽ (അനുമതിയില്ലാതെ) ഹാജരാകരുത്</li>
+          <li>കമ്പനി/കോർപ്പറേഷൻ ഡയറക്ടർ (അനുമതിയില്ലാതെ) ആകരുത്</li>
+        </ul>
+
+        <h3>Kerala</h3>
+        <ul>
+          <li>ആദ്യ AG: കെ.വി. സൂര്യനാരായണ അയ്യർ</li>
+          <li>കെ.കെ. മാത്യു (1960–62) → SC ജഡ്ജി</li>
+          <li>എം.കെ. ദാമോദരൻ (1996–2001)</li>
+          <li>കെ. ഗോപാലകൃഷ്ണ കുറുപ്പ് (2021–26)</li>
+          <li>കെ. ജാജു ബാബു (2026 മുതൽ)</li>
+        </ul>
+
+        <h3>+89 Rule</h3>
+        <ul>
+          <li>76 (AG) → 165 (Adv.Gen)</li>
+          <li>88 (Parliament) → 177 (Assembly)</li>
+          <li>105 (Privilege) → 194 (State Privilege)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: PSC കെണികൾ ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 (AG vs Adv.Gen)</span>
+          <p><strong>Question:</strong> സംസ്ഥാനത്തിന്റെ പ്രഥമ നിയമ ഉദ്യോഗസ്ഥൻ ആര്?</p>
+          <p><strong>Confusing Options:</strong> അറ്റോർണി ജനറൽ / അഡ്വക്കേറ്റ് ജനറൽ / സോളിസിറ്റർ ജനറൽ / CAG</p>
+          <p><strong>Fact:</strong> <strong>അഡ്വക്കേറ്റ് ജനറൽ (Art 165)</strong>. അറ്റോർണി ജനറൽ കേന്ദ്രം (Art 76).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 (കാലാവധി/പ്രായം)</span>
+          <p><strong>Question:</strong> അഡ്വക്കേറ്റ് ജനറലിന്റെ കാലാവധി/വിരമിക്കൽ പ്രായം?</p>
+          <p><strong>Confusing Options:</strong> 62 വയസ്സ് / 5 വർഷം / 6 വർഷം / നിശ്ചിതമല്ല (Pleasure)</p>
+          <p><strong>Fact:</strong> <strong>നിശ്ചിതമല്ല</strong> (Pleasure of Governor). <strong>പ്രായപരിധി ഇല്ല.</strong> 62 = HC ജഡ്ജിയുടെ വിരമിക്കൽ പ്രായം (യോഗ്യതയ്ക്ക് ബാധകമല്ല).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 (Art 177 - വോട്ട്)</span>
+          <p><strong>Question:</strong> Adv.Gen-ന് നിയമസഭയിൽ വോട്ട് ചെയ്യാൻ അവകാശമുണ്ടോ?</p>
+          <p><strong>Confusing Options:</strong> ഉണ്ട് / ഇല്ല / ചിലപ്പോൾ / സ്പീക്കറുടെ അനുമതിയോടെ</p>
+          <p><strong>Fact:</strong> <strong>ഇല്ല</strong>. സംസാരിക്കാം, വോട്ട് ചെയ്യാൻ കഴിയില്ല.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 (നിയമനം)</span>
+          <p><strong>Question:</strong> അഡ്വക്കേറ്റ് ജനറലിനെ നിയമിക്കുന്നത് ആര്?</p>
+          <p><strong>Confusing Options:</strong> മുഖ്യമന്ത്രി / രാഷ്ട്രപതി / ഗവർണ്ണർ / ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</p>
+          <p><strong>Fact:</strong> <strong>ഗവർണ്ണർ</strong> (മന്ത്രിസഭയുടെ ഉപദേശപ്രകാരം). AG-യെ രാഷ്ട്രപതി.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 (ആദ്യ കേരള AG)</span>
+          <p><strong>Question:</strong> കേരളത്തിന്റെ ആദ്യ AG ആര്?</p>
+          <p><strong>Confusing Options:</strong> എം.കെ. ദാമോദരൻ / കെ.വി. സൂര്യനാരായണ അയ്യർ / കെ.കെ. മാത്യു / സി.പി. സുധാകര പ്രസാദ്</p>
+          <p><strong>Fact:</strong> <strong>കെ.വി. സൂര്യനാരായണ അയ്യർ</strong>. ദാമോദരൻ (1996–2001), മാത്യു (1960–62).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 (യോഗ്യത)</span>
+          <p><strong>Question:</strong> Adv.Gen-ന്റെ യോഗ്യത?</p>
+          <p><strong>Confusing Options:</strong> SC ജഡ്ജി (5-10-J) / HC ജഡ്ജി (10-10) / ജില്ലാ ജഡ്ജി / IAS</p>
+          <p><strong>Fact:</strong> <strong>HC ജഡ്ജിയുടെ യോഗ്യത (10-10)</strong>. AG-ക്ക് SC ജഡ്ജിയുടേത് (5-10-J).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 (+89 നിയമം)</span>
+          <p><strong>Question:</strong> Art 177 ഏതിന്റെ സംസ്ഥാന പതിപ്പ്?</p>
+          <p><strong>Confusing Options:</strong> Art 76 / Art 88 / Art 105 / Art 165</p>
+          <p><strong>Fact:</strong> <strong>Art 88</strong> (88 + 89 = 177). Art 76 → 165 (AG → Adv.Gen); Art 105 → 194 (Privilege).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 (DGP vs Adv.Gen)</span>
+          <p><strong>Question:</strong> കേരള DGP ഭരണഘടനാ പദവിയാണോ?</p>
+          <p><strong>Confusing Options:</strong> അതെ / അല്ല / ഭാഗികം / പ്രത്യേക നിയമം</p>
+          <p><strong>Fact:</strong> <strong>അല്ല</strong>. DGP ക്രിമിനൽ പ്രോസിക്യൂഷൻ തലവൻ; ഭരണഘടനാ പദവിയല്ല. AdvGen = ഭരണഘടനാ പദവി (Art 165).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>അഡ്വക്കേറ്റ് ജനറൽ സംസ്ഥാനത്തിന്റെ പ്രഥമ നിയമ ഉദ്യോഗസ്ഥനാണ് - Highest Law Officer of the State.</li>
+          <li>ആർട്ടിക്കിൾ 165 (നിയമനം/യോഗ്യത); 177 (നിയമസഭയിൽ സംസാരം, വോട്ടില്ല).</li>
+          <li>കാലാവധി: Pleasure of Governor; പ്രായപരിധി ഇല്ല.</li>
+          <li>യോഗ്യത: HC ജഡ്ജിയുടേത് ("10-10").</li>
+          <li>+89 നിയമം: 76→165, 88→177, 105→194.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 1–2 ചോദ്യങ്ങൾ പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>Adv.Gen-ന്റെ ആർട്ടിക്കിളുകളും ചുമതലകളും കൃത്യമായി ഓർക്കുക. AG vs Adv.Gen വ്യത്യാസവും (+89 നിയമം) PSC-യുടെ പ്രിയപ്പെട്ട ചോദ്യങ്ങളാണ്. "പ്രായപരിധി ഇല്ല" എന്നത് ശ്രദ്ധിക്കുക. അടുത്ത അധ്യായം: സോളിസിറ്റർ ജനറൽ വിശദമായി.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaAdvocateGeneral114Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
+</script>
+
+<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+</body>
+</html>

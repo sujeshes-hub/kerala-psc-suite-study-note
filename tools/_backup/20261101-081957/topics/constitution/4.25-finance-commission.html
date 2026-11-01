@@ -1,0 +1,1523 @@
+﻿<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ധനകാര്യ കമ്മീഷൻ | അധ്യായം 119</title>
+  <style>
+    /* ========== CSS DESIGN TOKENS ========== */
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    /* ========== LAYOUT ========== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ========== SIDEBAR TOC ========== */
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CHAPTER HEADER ========== */
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 { font-size: 26px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    /* ========== CONTENT BOXES ========== */
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 5px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    /* ========== LISTS ========== */
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    /* ========== TABLES ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    /* ========== QUESTION ITEM ========== */
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 4px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+
+    /* ========== TYPOGRAPHY ========== */
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #4a148c !important;
+        color: #fff !important;
+      }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- ========== SIDEBAR TOC ========== -->
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. ആമുഖം</a></li>
+      <li><a href="#sec2">2. ഭരണഘടനാ വ്യവസ്ഥകൾ</a></li>
+      <li><a href="#sec3">3. രൂപീകരണം, ഘടന</a></li>
+      <li><a href="#sec4">4. ചുമതലകൾ</a></li>
+      <li><a href="#sec5">5. ചരിത്രവും കമ്മീഷനുകളും</a></li>
+      <li><a href="#sec6">6. 15-ാം & 16-ാം FC</a></li>
+      <li><a href="#sec7">7. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec8">8. ഉത്തര സൂചിക</a></li>
+      <li><a href="#sec9">9. Quick Revision</a></li>
+      <li><a href="#sec10">10. One-Page Revision</a></li>
+      <li><a href="#sec11">11. PSC കെണികൾ</a></li>
+      <li><a href="#sec12">12. ഉപസംഹാരം</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-container">
+
+    <!-- CHAPTER HEADER -->
+    <header class="chapter-header">
+      <div class="label">ഇന്ത്യൻ ഭരണഘടന | അധ്യായം 119</div>
+      <h1>ഇന്ത്യൻ ഭരണഘടന – ധനകാര്യ കമ്മീഷൻ</h1>
+      <div class="subtitle">Finance Commission of India | Kerala PSC Rank File – Complete Verified Notes</div>
+    </header>
+
+    <!-- ===== SECTION 0: STAR GUIDE ===== -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide</h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ആർട്ടിക്കിൾ 280, 281, ആദ്യ കമ്മീഷൻ (K.C. നിയോഗി, 1951), 14/15/16-ാം FC കമ്മീഷനുകൾ, വിഹിതം (42% → 41%)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഘടന (1+4), യോഗ്യതകൾ, ചുമതലകൾ (TGLO), കേരളത്തിന്റെ വിഹിതം (2.382%), 16-ാം FC പുതിയ GDP മാനദണ്ഡം</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — സംസ്ഥാന FC (243-I, 243-Y), വെർട്ടിക്കൽ vs ഹൊറിസോണ്ടൽ devolution, advisory nature</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — എല്ലാ കമ്മീഷനുകളുടെയും ചെയർമാൻമാർ, കാലയളവുകൾ</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — 1951-ലെ നിയമം, 1951 നവംബർ 22-ലെ ഉത്തരവ്</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം</span>
+          <ul>
+            <li><strong>ആർട്ടിക്കിൾ 280:</strong> രൂപീകരണം | <strong>281:</strong> റിപ്പോർട്ട് പാർലമെന്റിൽ</li>
+            <li><strong>ആദ്യ FC:</strong> K.C. Neogy (1951), കാലയളവ് 1952–57</li>
+            <li><strong>15-ാം FC:</strong> N.K. Singh (2021–26), വിഹിതം 41%</li>
+            <li><strong>16-ാം FC:</strong> Arvind Panagariya (2026–31), വിഹിതം 41%, പുതിയ GDP മാനദണ്ഡം</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 1: ആമുഖം ===== -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">1. ആമുഖം (Introduction)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യൻ ഭരണഘടനയുടെ <strong>12-ാം ഭാഗത്തിൽ (Part XII)</strong> ആർട്ടിക്കിൾ 280 പ്രകാരമാണ് കേന്ദ്ര ധനകാര്യ കമ്മീഷൻ രൂപീകരിച്ചിട്ടുള്ളത്. ഇതൊരു <strong>ക്വാസി-ജുഡീഷ്യൽ (Quasi-judicial - അർദ്ധ-നീതിന്യായ)</strong> സ്ഥാപനമാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇന്ത്യയിലെ ഫെഡറൽ സംവിധാനത്തിൽ കേന്ദ്ര സർക്കാരിനും സംസ്ഥാന സർക്കാരുകൾക്കുമിടയിലുള്ള സാമ്പത്തിക ബന്ധങ്ങൾ (Financial Relations) സുതാര്യമാക്കുക എന്നതാണ് കമ്മീഷന്റെ പ്രധാന ലക്ഷ്യം.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ഇതിനെ <strong>'സാമ്പത്തിക ഫെഡറലിസത്തിന്റെ ബാലൻസിംഗ് വീൽ' (Balancing wheel of fiscal federalism in India)</strong> എന്ന് വിളിക്കുന്നു.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li>ഭരണഘടനയുടെ <strong>Part XII</strong> = "Finance, Property, Contracts and Suits" (ആർട്ടിക്കിൾ 264–300A). ധനകാര്യ കമ്മീഷൻ ഇതിലെ Chapter I (Finance) ഭാഗത്താണ്.</li>
+            <li><strong>രണ്ട് തരം അസന്തുലിതാവസ്ഥ:</strong> <em>Vertical imbalance</em> (കേന്ദ്രവും സംസ്ഥാനങ്ങളും തമ്മിൽ: ചെലവ് സംസ്ഥാനങ്ങൾക്ക് കൂടുതൽ, വരുമാനം കേന്ദ്രത്തിന് കൂടുതൽ), <em>Horizontal imbalance</em> (സംസ്ഥാനങ്ങൾ തമ്മിൽ).</li>
+            <li><strong>ക്വാസി-ജുഡീഷ്യൽ എന്ന് പറയാൻ കാരണം:</strong> <em>Finance Commission (Miscellaneous Provisions) Act, 1951</em> പ്രകാരം സാക്ഷികളെ വിളിച്ചുവരുത്താനും രേഖകൾ ആവശ്യപ്പെടാനും സിവിൽ കോടതിയുടെ അധികാരങ്ങൾ കമ്മീഷനുണ്ട്.</li>
+            <li>ധനകാര്യ കമ്മീഷൻ <strong>സ്ഥിരം (permanent) സ്ഥാപനമല്ല</strong>. ഓരോ തവണയും പ്രത്യേകമായി രൂപീകരിക്കുന്നു.</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap</span>
+          <p><em>ആസൂത്രണ കമ്മീഷൻ (Planning Commission)</em> ഭരണഘടനാ സ്ഥാപനമായിരുന്നില്ല (അത് 2015 ജനുവരി 1-ന് NITI Aayog ആയി മാറി). <strong>ധനകാര്യ കമ്മീഷൻ ഭരണഘടനാ സ്ഥാപനമാണ്.</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p>Vertical = <em>മുകളിൽ നിന്ന് താഴേക്ക്</em> (കേന്ദ്രം → എല്ലാ സംസ്ഥാനങ്ങൾ). Horizontal = <em>വശങ്ങളിലേക്ക്</em> (സംസ്ഥാനം ↔ സംസ്ഥാനം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: ഭരണഘടനാ വ്യവസ്ഥകൾ ===== -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">2. ഭരണഘടനാ വ്യവസ്ഥകൾ (Article 280 & 281)</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 280:</strong> ധനകാര്യ കമ്മീഷന്റെ രൂപീകരണം, ഘടന, യോഗ്യതകൾ, അധികാരങ്ങൾ എന്നിവയെക്കുറിച്ച് പ്രതിപാദിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ആർട്ടിക്കിൾ 281:</strong> ധനകാര്യ കമ്മീഷൻ സമർപ്പിക്കുന്ന ശുപാർശകൾ (റിപ്പോർട്ട്) രാഷ്ട്രപതി പാർലമെന്റിന്റെ ഇരുസഭകളിലും സമർപ്പിക്കണമെന്ന് വ്യക്തമാക്കുന്നു.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li>ആർട്ടിക്കിൾ 281 പ്രകാരം ശുപാർശകൾ <strong>"സ്വീകരിച്ച നടപടിയെക്കുറിച്ചുള്ള വിശദീകരണക്കുറിപ്പ് (explanatory memorandum on action taken)"</strong> സഹിതമാണ് ഇരുസഭകളിലും വയ്ക്കുന്നത്.</li>
+            <li>റിപ്പോർട്ട് സമർപ്പിക്കുന്നത് <strong>രാഷ്ട്രപതിക്ക്</strong>; രാഷ്ട്രപതിയുടെ നിർദ്ദേശപ്രകാരം പാർലമെന്റിൽ വയ്ക്കുന്നു (പ്രായോഗികമായി ധനമന്ത്രി ലോക്സഭയിൽ വയ്ക്കുന്നു).</li>
+          </ul>
+        </div>
+
+        <h3>ബന്ധപ്പെട്ട ആർട്ടിക്കിളുകൾ (ഒറ്റ നോട്ടത്തിൽ)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>ആർട്ടിക്കിൾ</th><th>വിഷയം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>268</td><td>കേന്ദ്രം ചുമത്തുകയും സംസ്ഥാനങ്ങൾ പിരിച്ച് വിനിയോഗിക്കുകയും ചെയ്യുന്ന തീരുവകൾ</td></tr>
+              <tr><td>269</td><td>കേന്ദ്രം ചുമത്തി പിരിച്ച് സംസ്ഥാനങ്ങൾക്ക് നൽകുന്ന നികുതികൾ</td></tr>
+              <tr><td>270</td><td>കേന്ദ്രം ചുമത്തി പിരിച്ച് കേന്ദ്രവും സംസ്ഥാനങ്ങളും പങ്കിടുന്ന നികുതികൾ (divisible pool)</td></tr>
+              <tr><td>275</td><td>സംസ്ഥാനങ്ങൾക്കുള്ള ഗ്രാന്റ്-ഇൻ-എയ്ഡ്</td></tr>
+              <tr><td>279</td><td>"Net proceeds" കണക്കാക്കൽ</td></tr>
+              <tr><td><strong>280</strong></td><td><strong>ധനകാര്യ കമ്മീഷൻ</strong></td></tr>
+              <tr><td><strong>281</strong></td><td><strong>കമ്മീഷൻ ശുപാർശകൾ പാർലമെന്റിൽ</strong></td></tr>
+              <tr><td>282</td><td>കേന്ദ്ര/സംസ്ഥാന സർക്കാരുകളുടെ വിവേചനാധികാര ഗ്രാന്റുകൾ</td></tr>
+              <tr><td>243-I</td><td>പഞ്ചായത്തുകൾക്കുള്ള <strong>സംസ്ഥാന</strong> ധനകാര്യ കമ്മീഷൻ (ഗവർണർ രൂപീകരിക്കുന്നു)</td></tr>
+              <tr><td>243-Y</td><td>മുനിസിപ്പാലിറ്റികൾക്കുള്ള <strong>സംസ്ഥാന</strong> ധനകാര്യ കമ്മീഷൻ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><em>280 → 281</em> തുടർച്ചയായ നമ്പറുകളാണ്: ആദ്യം <strong>രൂപീകരണം (280)</strong>, തൊട്ടുപിന്നാലെ <strong>റിപ്പോർട്ട് (281)</strong>. "ഇരുനൂറ്റി എൺപതിൽ കമ്മീഷൻ, എൺപത്തൊന്നിൽ റിപ്പോർട്ട്."</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap</span>
+          <p>ആർട്ടിക്കിൾ 280 = <strong>കേന്ദ്ര</strong> ധനകാര്യ കമ്മീഷൻ (രാഷ്ട്രപതി). 243-I / 243-Y = <strong>സംസ്ഥാന</strong> ധനകാര്യ കമ്മീഷൻ (ഗവർണർ).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: രൂപീകരണം, ഘടന ===== -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">3. രൂപീകരണം, ഘടന, നിയമനം</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>രൂപീകരണം:</strong> ഭരണഘടന നിലവിൽ വന്ന് രണ്ട് വർഷത്തിനുള്ളിലും, പിന്നീട് <strong>ഓരോ 5 വർഷം കൂടുമ്പോഴും</strong> ഒരു ധനകാര്യ കമ്മീഷനെ നിയമിക്കണമെന്ന് ആർട്ടിക്കിൾ 280 അനുശാസിക്കുന്നു. ആവശ്യമെങ്കിൽ 5 വർഷത്തിന് മുൻപും ഇത് രൂപീകരിക്കാം.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നിയമനം:</strong> ധനകാര്യ കമ്മീഷനെ നിയമിക്കുന്നത് ഇന്ത്യയുടെ <strong>രാഷ്ട്രപതിയാണ്</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഘടന (Composition):</strong> കമ്മീഷനിൽ ഒരു <strong>ചെയർമാനും മറ്റ് 4 അംഗങ്ങളും</strong> ഉൾപ്പെടെ ആകെ 5 പേർ ഉണ്ടായിരിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>യോഗ്യതകൾ:</strong> ഈ അംഗങ്ങളുടെ യോഗ്യതകളും അവരെ തിരഞ്ഞെടുക്കേണ്ട രീതിയും തീരുമാനിക്കാനുള്ള അധികാരം ഭരണഘടന പാർലമെന്റിനാണ് നൽകിയിരിക്കുന്നത് (അതനുസരിച്ച് 1951-ൽ പാർലമെന്റ് ഒരു നിയമം പാസാക്കിയിട്ടുണ്ട്).
+            <ul>
+              <li><em>ചെയർമാൻ:</em> പൊതു കാര്യങ്ങളിൽ (Public affairs) മികച്ച അനുഭവസമ്പത്തുള്ള വ്യക്തിയായിരിക്കണം.</li>
+              <li><em>അംഗങ്ങൾ:</em> ഹൈക്കോടതി ജഡ്ജിയാകാൻ യോഗ്യതയുള്ളയാൾ, ഗവൺമെന്റിന്റെ ഫിനാൻസിലും അക്കൗണ്ട്സിലും അറിവുള്ളയാൾ, സാമ്പത്തിക ഭരണത്തിൽ (Financial administration) പരിചയമുള്ളയാൾ, സാമ്പത്തിക ശാസ്ത്രജ്ഞൻ (Economist) എന്നിവരായിരിക്കണം.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li><strong>നിയമം:</strong> <em>Finance Commission (Miscellaneous Provisions) Act, 1951</em> (അംഗങ്ങളുടെ യോഗ്യത, അയോഗ്യത, നിയമനം, കാലാവധി, അധികാരം എന്നിവ ഇതിലാണ്).</li>
+            <li>ആദ്യ കമ്മീഷൻ <strong>1951 നവംബർ 22-ലെ</strong> രാഷ്ട്രപതിയുടെ ഉത്തരവ് പ്രകാരം രൂപീകരിച്ചു. ഭരണഘടന നിലവിൽ വന്ന (1950 ജനുവരി 26) ശേഷമുള്ള 2 വർഷ സമയപരിധിക്കുള്ളിൽ.</li>
+            <li><strong>"ഓരോ 5 വർഷം"</strong> എന്നത് കൃത്യമായി: <em>"ഓരോ അഞ്ചാം വർഷത്തിന്റെ അവസാനത്തിൽ, അല്ലെങ്കിൽ രാഷ്ട്രപതി ആവശ്യമെന്ന് കരുതുന്ന അതിനു മുൻപുള്ള സമയത്ത്."</em></li>
+            <li><strong>അംഗങ്ങളുടെ കാലാവധി:</strong> രാഷ്ട്രപതിയുടെ ഉത്തരവിൽ നിശ്ചയിക്കുന്നത്രയും; പുനർനിയമനത്തിന് അർഹതയുണ്ട്. ഫുൾടൈം/പാർട്ട്ടൈം അംഗങ്ങളെ രാഷ്ട്രപതി നിശ്ചയിക്കുന്നു.</li>
+            <li><strong>അയോഗ്യതകൾ:</strong> മാനസിക അസ്വാസ്ഥ്യം, കടബാധ്യത തീർക്കാത്ത പാപ്പരത്വം (undischarged insolvent), ധാർമ്മിക അധഃപതനം ഉൾപ്പെടുന്ന കുറ്റത്തിന് ശിക്ഷ, കമ്മീഷന്റെ പ്രവർത്തനത്തെ ബാധിക്കുന്ന സാമ്പത്തിക/മറ്റ് താൽപര്യങ്ങൾ.</li>
+            <li><strong>ചെയർമാൻ + 4 അംഗങ്ങൾ:</strong> നാല് അംഗങ്ങൾ നാല് വ്യത്യസ്ത മേഖലകളിൽ നിന്നാണ്.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"അഞ്ചിൽ അഞ്ച്"</strong>: 5 വർഷത്തിലൊരിക്കൽ, 5 പേർ (1 ചെയർമാൻ + 4 അംഗങ്ങൾ).</p>
+          <p><strong>4 അംഗങ്ങളുടെ യോഗ്യത = "ജ-ഫി-അ-ഇ"</strong>: <strong>ജ</strong>ഡ്ജി (ഹൈക്കോടതി) – <strong>ഫി</strong>നാൻസ് & അക്കൗണ്ട്സ് അറിവ് – <strong>അ</strong>ഡ്മിനിസ്ട്രേഷൻ/സാമ്പത്തിക ഭരണ പരിചയം – <strong>ഇ</strong>ക്കണോമിക്സ് വിദഗ്ധൻ.</p>
+          <p><strong>ചെയർമാൻ = Public affairs.</strong> ("പൊതുകാര്യ പ്രസക്തൻ")</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📊 ധനകാര്യ കമ്മീഷന്റെ ഘടന</span>
+          <svg viewBox="0 0 600 200" width="100%" height="auto" role="img" aria-label="FC ഘടന">
+            <rect x="200" y="20" width="200" height="55" rx="10" fill="#4a148c" opacity="0.9"/>
+            <text x="300" y="45" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">ചെയർമാൻ</text>
+            <text x="300" y="63" text-anchor="middle" fill="#ffd54f" font-size="10">Public Affairs</text>
+
+            <line x1="300" y1="75" x2="120" y2="110" stroke="#4a148c" stroke-width="2"/>
+            <line x1="300" y1="75" x2="220" y2="110" stroke="#4a148c" stroke-width="2"/>
+            <line x1="300" y1="75" x2="380" y2="110" stroke="#4a148c" stroke-width="2"/>
+            <line x1="300" y1="75" x2="480" y2="110" stroke="#4a148c" stroke-width="2"/>
+
+            <rect x="30" y="110" width="110" height="60" rx="8" fill="#1565c0" opacity="0.85"/>
+            <text x="85" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">അംഗം 1</text>
+            <text x="85" y="152" text-anchor="middle" fill="#ffd54f" font-size="9">ജഡ്ജി (HC)</text>
+
+            <rect x="155" y="110" width="110" height="60" rx="8" fill="#00695c" opacity="0.85"/>
+            <text x="210" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">അംഗം 2</text>
+            <text x="210" y="152" text-anchor="middle" fill="#ffd54f" font-size="9">ഫിനാൻസ്</text>
+
+            <rect x="280" y="110" width="110" height="60" rx="8" fill="#ef6c00" opacity="0.85"/>
+            <text x="335" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">അംഗം 3</text>
+            <text x="335" y="152" text-anchor="middle" fill="#ffd54f" font-size="9">അഡ്മിൻ</text>
+
+            <rect x="405" y="110" width="110" height="60" rx="8" fill="#b83b2c" opacity="0.85"/>
+            <text x="460" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">അംഗം 4</text>
+            <text x="460" y="152" text-anchor="middle" fill="#ffd54f" font-size="9">ഇക്കണോമിസ്റ്റ്</text>
+
+            <text x="300" y="192" text-anchor="middle" fill="#4a5f72" font-size="10">🧠 "ജ-ഫി-അ-ഇ"</text>
+          </svg>
+          <div class="viz-caption">📊 ചെയർമാൻ + 4 അംഗങ്ങൾ = 5</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: ചുമതലകൾ ===== -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">4. പ്രധാന ചുമതലകൾ (Functions)</h2>
+      <div class="section-body">
+        <p>താഴെ പറയുന്ന കാര്യങ്ങളിൽ രാഷ്ട്രപതിക്ക് <strong>ശുപാർശകൾ നൽകുക</strong> എന്നതാണ് കമ്മീഷന്റെ ചുമതല:</p>
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>നികുതി വിഭജനം (Distribution of net proceeds of taxes):</strong> കേന്ദ്ര സർക്കാരിന് ലഭിക്കുന്ന നികുതി വരുമാനം കേന്ദ്രത്തിനും സംസ്ഥാനങ്ങൾക്കുമിടയിൽ എങ്ങനെ വിഭജിക്കണമെന്നും (Vertical devolution), ആ സംസ്ഥാന വിഹിതം ഓരോ സംസ്ഥാനങ്ങൾക്കും എത്ര വീതം നൽകണമെന്നും (Horizontal distribution) തീരുമാനിക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഗ്രാൻഡ്-ഇൻ-എയ്ഡ് (Grants-in-aid):</strong> കേന്ദ്ര സർക്കാരിന്റെ സഞ്ചിത നിധിയിൽ നിന്നും സംസ്ഥാനങ്ങൾക്ക് നൽകേണ്ട പ്രത്യേക സാമ്പത്തിക സഹായങ്ങൾക്കുള്ള മാനദണ്ഡങ്ങൾ നിശ്ചയിക്കുക (ആർട്ടിക്കിൾ 275 പ്രകാരം).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>തദ്ദേശ സ്ഥാപനങ്ങളെ സഹായിക്കൽ:</strong> സംസ്ഥാന ധനകാര്യ കമ്മീഷന്റെ ശുപാർശ പ്രകാരം, ഗ്രാമപഞ്ചായത്തുകൾക്കും മുൻസിപ്പാലിറ്റികൾക്കും കൂടുതൽ പണം ലഭ്യമാക്കുന്നതിനായി സംസ്ഥാന സഞ്ചിത നിധി (State Consolidated Fund) വർദ്ധിപ്പിക്കുന്നതിനുള്ള നടപടികൾ നിർദ്ദേശിക്കുക.</li>
+          <li><span class="stars">⭐⭐⭐</span> രാജ്യത്തിന്റെ സാമ്പത്തിക ഭദ്രത ഉറപ്പാക്കാൻ രാഷ്ട്രപതി ആവശ്യപ്പെടുന്ന മറ്റ് സാമ്പത്തിക കാര്യങ്ങളിൽ ഉപദേശം നൽകുക.</li>
+        </ol>
+
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ</span>
+          <p>ചുമതല 2-ലെ <strong>"(സബ്സിഡികൾ)"</strong> എന്ന പദം ശരിയല്ല: <em>Grants-in-aid</em> എന്നാൽ സാമ്പത്തിക സഹായം ആവശ്യമുള്ള സംസ്ഥാനങ്ങൾക്ക് കേന്ദ്രത്തിന്റെ Consolidated Fund-ൽ നിന്ന് നൽകുന്ന <strong>ഗ്രാന്റുകളാണ്</strong>, subsidy അല്ല.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li><strong>ഭരണഘടനാ ഭാഷയിൽ ചുമതലകൾ (Art. 280(3)):</strong> (a) നികുതി വിഭജനം, (b) ആർട്ടിക്കിൾ 275 പ്രകാരം ഗ്രാന്റുകളുടെ തത്വങ്ങൾ, (bb) പഞ്ചായത്തുകൾ, (c) മുനിസിപ്പാലിറ്റികൾ (സംസ്ഥാന ധനകാര്യ കമ്മീഷൻ ശുപാർശയുടെ അടിസ്ഥാനത്തിൽ), (d) <em>"sound finance"</em> താൽപര്യത്തിൽ രാഷ്ട്രപതി നൽകുന്ന മറ്റ് കാര്യങ്ങൾ. തദ്ദേശ സ്ഥാപന വ്യവസ്ഥകൾ <strong>73-ാം, 74-ാം ഭേദഗതികൾ (1992)</strong> വഴി ചേർത്തതാണ്.</li>
+            <li><strong>"Net proceeds"</strong> = നികുതി വരുമാനത്തിൽ നിന്ന് പിരിവ് ചെലവ് കുറച്ച തുക (ആർട്ടിക്കിൾ 279).</li>
+            <li><strong>Divisible pool:</strong> സെസ്സുകളും സർചാർജുകളും (cess, surcharge) ഇതിൽ ഉൾപ്പെടില്ല. ഇത് സംസ്ഥാനങ്ങളുടെ പ്രധാന പരാതിയാണ്.</li>
+            <li><strong>ഗ്രാന്റ് തരങ്ങൾ:</strong> ആർട്ടിക്കിൾ <strong>275</strong> (നിയമപരമായ ഗ്രാന്റ്, FC ശുപാർശ പ്രകാരം), ആർട്ടിക്കിൾ <strong>282</strong> (വിവേചനാധികാര ഗ്രാന്റ്), ആർട്ടിക്കിൾ <strong>273</strong> (ചണ കയറ്റുമതി തീരുവയ്ക്ക് പകരമുള്ള ഗ്രാന്റ്). ഒന്നാം കമ്മീഷൻ ഇത് നാല് സംസ്ഥാനങ്ങൾക്ക് നൽകി.</li>
+            <li><strong>ശുപാർശ vs നടപ്പാക്കൽ:</strong> കമ്മീഷൻ ശുപാർശ മാത്രം ചെയ്യുന്നു; സർക്കാർ ശുപാർശകൾ സ്വീകരിച്ച് നടപ്പിലാക്കുന്നു. (16-ാം കമ്മീഷന്റെ ശുപാർശകൾ കേന്ദ്രം സ്വീകരിച്ചതായി 2026 ഫെബ്രുവരി 1-ന് ലോക്സഭയെ അറിയിച്ചു.)</li>
+          </ul>
+        </div>
+
+        <h3>Vertical vs Horizontal Devolution</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th></th><th>Vertical Devolution</th><th>Horizontal Devolution</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ആർക്കിടയിൽ</td><td>കേന്ദ്രം ↔ എല്ലാ സംസ്ഥാനങ്ങളും (ഒന്നിച്ച്)</td><td>ഓരോ സംസ്ഥാനവും തമ്മിൽ</td></tr>
+              <tr><td>ഫലം</td><td>ഇപ്പോൾ <strong>41%</strong></td><td>ഫോർമുല (criteria) അടിസ്ഥാനത്തിൽ</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>16-ാം FC: 41%</td><td>UP-ക്ക് ഏറ്റവും കൂടുതൽ; കേരളത്തിന് 2.382%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Horizontal devolution മാനദണ്ഡങ്ങൾ (weightage, %)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>മാനദണ്ഡം</th><th>14-ാം FC</th><th>15-ാം FC</th><th>16-ാം FC</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Income distance (വരുമാന അന്തരം)</td><td>50</td><td>45</td><td>പ്രധാന മാനദണ്ഡം</td></tr>
+              <tr><td>Population (ജനസംഖ്യ)</td><td>17.5 (1971) + 10 (2011)</td><td>15 (2011)</td><td>2011 സെൻസസ്</td></tr>
+              <tr><td>Area (വിസ്തീർണ്ണം)</td><td>15</td><td>15</td><td>weight കുറച്ചു</td></tr>
+              <tr><td>Forest cover / ecology</td><td>7.5</td><td>10</td><td>ഉണ്ട്</td></tr>
+              <tr><td>Demographic performance</td><td>–</td><td>12.5</td><td>ഉണ്ട്</td></tr>
+              <tr><td>Tax & fiscal effort</td><td>–</td><td>2.5</td><td>–</td></tr>
+              <tr><td><strong>Contribution to GDP</strong></td><td>–</td><td>–</td><td><strong>10 (ആദ്യമായി)</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>ചുമതലകൾ = "TGLO"</strong> → <strong>T</strong>ax distribution, <strong>G</strong>rants, <strong>L</strong>ocal bodies, <strong>O</strong>ther matters. ("<strong>T</strong>ax <strong>G</strong>ives <strong>L</strong>ocal <strong>O</strong>pportunity")</p>
+          <p><strong>വിഹിതം ഓർക്കാൻ:</strong> <em>14 → 42</em>, <em>15 → 41</em>, <em>16 → 41</em> (പതിനാലിൽ നാല്പത്തിരണ്ട്; പതിനഞ്ചിലും പതിനാറിലും നാല്പത്തിയൊന്ന്).</p>
+          <p><strong>Income distance</strong> = "ദരിദ്രന് കൂടുതൽ": വരുമാനം കുറഞ്ഞ സംസ്ഥാനത്തിന് കൂടുതൽ വിഹിതം.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap</span>
+          <p>Grants-in-aid ≠ subsidy; വിഹിതം (share) ≠ ഗ്രാന്റ് (grant). FC ഒരു <strong>ശുപാർശക്കാരൻ</strong> മാത്രം, ഭരണ നിർവ്വഹണ സ്ഥാപനമല്ല.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5: ചരിത്രവും കമ്മീഷനുകളും ===== -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">5. ചരിത്രവും പ്രധാന കമ്മീഷനുകളും</h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ഇന്ത്യയിലെ <strong>ആദ്യത്തെ ധനകാര്യ കമ്മീഷൻ</strong> രൂപീകരിച്ചത് <strong>1951</strong> ലാണ്. ഇതിന്റെ ചെയർമാൻ <strong>കെ.സി. നിയോഗി (K.C. Neogy)</strong> ആയിരുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> രണ്ടാം ധനകാര്യ കമ്മീഷൻ ചെയർമാൻ: കെ. സന്താനം.</li>
+          <li><span class="stars">⭐⭐</span> കേന്ദ്ര ധനകാര്യ കമ്മീഷനിൽ അംഗമായ ആദ്യ മലയാളി: വി.പി. മേനോൻ (V.P. Menon). <strong>(ഉറപ്പാക്കേണ്ടത്)</strong></li>
+        </ul>
+
+        <div class="correction">
+          <span class="box-label">✏️ ഉറപ്പില്ല</span>
+          <p>വി.പി. മേനോൻ ഒന്നാം കമ്മീഷൻ അംഗമായിരുന്നു എന്നതും "ആദ്യ മലയാളി" എന്നതും വിശ്വസനീയ സ്രോതസ്സുകളിൽ ഉറപ്പാക്കാൻ കഴിഞ്ഞിട്ടില്ല. ഒന്നാം കമ്മീഷന്റെ അംഗപ്പട്ടികയിൽ 1952 ഫെബ്രുവരി 18-ന് രാജിവച്ച "Menon" എന്ന അംഗത്തിന്റെ പേര് കാണുന്നു. ഇത് വി.പി. മേനോൻ തന്നെയാണോ എന്ന് ഔദ്യോഗിക സൈറ്റായ fincomindia.nic.in-ൽ പരിശോധിക്കുക.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ</span>
+          <ul>
+            <li>ഒന്നാം കമ്മീഷൻ <strong>1951 നവംബർ 22</strong>-ന് രൂപീകരിച്ചു; <strong>1952–57</strong> കാലയളവ്. രണ്ടാം കമ്മീഷൻ <strong>1956</strong>-ൽ രൂപീകരിച്ചു, കാലയളവ് <strong>1957–62</strong>.</li>
+            <li>ഒന്നാം കമ്മീഷന്റെ ആദായ നികുതി വിഹിതത്തിൽ <strong>തിരുവിതാംകൂർ-കൊച്ചിക്ക് 2.5%</strong> ലഭിച്ചു.</li>
+          </ul>
+        </div>
+
+        <h3>എല്ലാ കമ്മീഷനുകളും ഒറ്റ നോട്ടത്തിൽ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>#</th><th>രൂപീകരിച്ച വർഷം</th><th>ചെയർമാൻ</th><th>കാലയളവ്</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>1951</td><td>K.C. Neogy</td><td>1952–57</td></tr>
+              <tr><td>2</td><td>1956</td><td>K. Santhanam</td><td>1957–62</td></tr>
+              <tr><td>3</td><td>1960</td><td>A.K. Chanda</td><td>1962–66</td></tr>
+              <tr><td>4</td><td>1964</td><td>P.V. Rajamannar</td><td>1966–69</td></tr>
+              <tr><td>5</td><td>1968</td><td>Mahavir Tyagi</td><td>1969–74</td></tr>
+              <tr><td>6</td><td>1972</td><td>K. Brahmananda Reddy</td><td>1974–79</td></tr>
+              <tr><td>7</td><td>1977</td><td>J.M. Shelat</td><td>1979–84</td></tr>
+              <tr><td>8</td><td>1983</td><td>Y.B. Chavan</td><td>1984–89</td></tr>
+              <tr><td>9</td><td>1987</td><td>N.K.P. Salve</td><td>1989–95</td></tr>
+              <tr><td>10</td><td>1992</td><td>K.C. Pant</td><td>1995–2000</td></tr>
+              <tr><td>11</td><td>1998</td><td>A.M. Khusro</td><td>2000–05</td></tr>
+              <tr><td>12</td><td>2002</td><td>C. Rangarajan</td><td>2005–10</td></tr>
+              <tr><td>13</td><td>2007</td><td>Vijay L. Kelkar</td><td>2010–15</td></tr>
+              <tr><td>14</td><td>2013</td><td>Y.V. Reddy</td><td>2015–20</td></tr>
+              <tr><td>15</td><td>2017</td><td>N.K. Singh</td><td>2020-21; 2021–26</td></tr>
+              <tr><td>16</td><td>2023</td><td>Arvind Panagariya</td><td>2026–31</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>കേരളത്തിന്റെ നികുതി വിഹിതം (Kerala's share, %)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr><th>കമ്മീഷൻ</th><th>10-ാം</th><th>11-ാം</th><th>12-ാം</th><th>13-ാം</th><th>14-ാം</th><th>15-ാം</th><th>16-ാം</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>കേരളം</td><td>3.839</td><td>3.057</td><td>2.67</td><td>2.341</td><td>2.5</td><td>1.925</td><td>2.382</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> 15-ാം കമ്മീഷൻ വരെ കേരളത്തിന്റെ വിഹിതം കുറഞ്ഞുവന്നു (14-ാമത്തിൽ ചെറിയ വർധന). 16-ാമത്തിൽ 1.925 → 2.382 ആയി ഉയർന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഏറ്റവും കൂടുതൽ വിഹിതമുള്ള സംസ്ഥാനം: ഉത്തർപ്രദേശ്</strong> (15-ാം FC: 17.939%; 16-ാം FC: 17.619%).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick (ചെയർമാൻമാരുടെ ക്രമം - ആദ്യാക്ഷര രീതി):</strong></span>
+          <p><strong>1–5 → N S C R T:</strong> Neogy, Santhanam, Chanda, Rajamannar, Tyagi → <em>"Never Send Cash, Return Today"</em></p>
+          <p><strong>6–10 → B S C S P:</strong> Brahmananda Reddy, Shelat, Chavan, Salve, Pant → <em>"Big Schools Create Smart People"</em></p>
+          <p><strong>11–16 → K R K R S P:</strong> Khusro, Rangarajan, Kelkar, Reddy (Y.V.), Singh, Panagariya → <em>"Kerala Rice, Kerala Rasam, Sambar, Pappadam"</em></p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap</span>
+          <p><strong>"Reddy" രണ്ടുപേർ:</strong> K. Brahmananda Reddy (<strong>6-ാം</strong>), Y.V. Reddy (<strong>14-ാം</strong>).</p>
+          <p><strong>ആദ്യ കമ്മീഷൻ</strong> (Neogy) vs <strong>രണ്ടാം കമ്മീഷൻ</strong> (Santhanam): മാറിപ്പോകാതെ ശ്രദ്ധിക്കുക.</p>
+          <p>ഒന്നാം കമ്മീഷൻ "രൂപീകരിച്ച വർഷം" 1951, "റിപ്പോർട്ട് ബാധകമായ കാലയളവ്" 1952–57.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6: 15-ാം & 16-ാം FC ===== -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">6. ഏറ്റവും പുതിയ കമ്മീഷനുകൾ (Current Affairs - Very Important)</h2>
+      <div class="section-body">
+        <h3>15-ാം ധനകാര്യ കമ്മീഷൻ (15th Finance Commission)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാലയളവ്: 2021 മുതൽ 2026 വരെ.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ചെയർമാൻ: <strong>എൻ.കെ. സിംഗ് (N.K. Singh)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> സംസ്ഥാനങ്ങൾക്കുള്ള നികുതി വിഹിതം (Vertical Devolution): <strong>41%</strong> ആയി നിശ്ചയിച്ചു (14-ാം കമ്മീഷൻ ഇത് 42% ആയിരുന്നു നൽകിയിരുന്നത്. ജമ്മു കശ്മീർ ഒരു സംസ്ഥാനമല്ലാതായി മാറിയതുകൊണ്ടാണ് 1% കുറച്ചത്).</li>
+        </ul>
+
+        <div class="correction">
+          <span class="box-label">✏️ തിരുത്തൽ/വ്യക്തത</span>
+          <p>15-ാം കമ്മീഷന്റെ കാലയളവ് കൃത്യമായി <strong>2021-22 മുതൽ 2025-26 വരെ (2021 ഏപ്രിൽ 1 – 2026 മാർച്ച് 31)</strong>. 2020-21 വർഷത്തിനായി ഒരു <strong>ഇടക്കാല റിപ്പോർട്ട്</strong> നൽകിയിരുന്നു. ഈ കാലാവധി <strong>2026 മാർച്ച് 31-ന് അവസാനിച്ചു</strong>; ഇപ്പോൾ 16-ാം കമ്മീഷന്റെ കാലയളവാണ്.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ (15-ാം FC)</span>
+          <ul>
+            <li><strong>രൂപീകരണം:</strong> 2017 നവംബർ 27 (ഗസറ്റ് വിജ്ഞാപനം).</li>
+            <li><strong>അംഗങ്ങൾ:</strong> അനൂപ് സിംഗ്, രമേശ് ചന്ദ്, അശോക് ലാഹിരി, ശക്തികാന്ത ദാസ്. ദാസ് RBI ഗവർണർ ആയതിനെത്തുടർന്ന് <strong>അജയ് നാരായൺ ഝാ</strong> പകരം നിയമിതനായി.</li>
+            <li><strong>ഓർക്കേണ്ടത്:</strong> 13-ാം FC: 32% → 14-ാം FC: <strong>42%</strong> (10 ശതമാനം പോയിന്റ് വർധന, ഏറ്റവും വലിയ കുതിപ്പ്) → 15-ാം FC: 41%.</li>
+          </ul>
+        </div>
+
+        <h3>16-ാം ധനകാര്യ കമ്മീഷൻ (16th Finance Commission)</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> രൂപീകരിച്ചത്: 2023 ഡിസംബർ 31-ന്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> കാലയളവ്: <strong>2026 ഏപ്രിൽ 1 മുതൽ 2031 മാർച്ച് 31 വരെ (5 വർഷം)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ചെയർമാൻ: <strong>അരവിന്ദ് പനഗരിയ (Arvind Panagariya)</strong>. (ഇദ്ദേഹം നീതി ആയോഗിന്റെ മുൻ വൈസ് ചെയർമാനായിരുന്നു).</li>
+          <li><span class="stars">⭐⭐⭐</span> സെക്രട്ടറി: ഋത്വിക് രഞ്ജനം പാണ്ഡെ.</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ അധിക വിവരങ്ങൾ (16-ാം FC)</span>
+          <ul>
+            <li><strong>അംഗങ്ങൾ:</strong> അജയ് നാരായൺ ഝാ, ആനി ജോർജ് മാത്യു, ഡോ. മനോജ് പാണ്ഡ, സൗമ്യ കാന്തി ഘോഷ് (പാർട്ട്-ടൈം).</li>
+            <li><strong>റിപ്പോർട്ട് സമർപ്പണം:</strong> രാഷ്ട്രപതിക്ക് <strong>2025 നവംബർ 17</strong>-ന് സമർപ്പിച്ചു. <strong>2026 ഫെബ്രുവരി 1</strong>-ന് കേന്ദ്ര ബജറ്റ് 2026-27-നൊപ്പം ലോക്സഭയിൽ വച്ചു; കേന്ദ്രം ശുപാർശകൾ സ്വീകരിച്ചു.</li>
+            <li><strong>Vertical devolution: 41% നിലനിർത്തി.</strong> 18 സംസ്ഥാനങ്ങൾ (കേരളം ഉൾപ്പെടെ) 50% ആവശ്യപ്പെട്ടിരുന്നു; കമ്മീഷൻ അത് നിരസിച്ചു.</li>
+            <li><strong>പുതിയ മാനദണ്ഡം:</strong> <strong>Contribution to GDP (10% weight)</strong>, ആദ്യമായാണ് FC ഇത് ഉപയോഗിക്കുന്നത്.</li>
+            <li><strong>ഗ്രാന്റുകൾ:</strong> 5 വർഷത്തേക്ക് ആകെ <strong>₹9.47 ലക്ഷം കോടി</strong>. 15-ാം FC ശുപാർശ ചെയ്ത <strong>റവന്യൂ കമ്മി ഗ്രാന്റ്</strong> ഉൾപ്പെടെയുള്ള ചില ഗ്രാന്റുകൾ നിർത്തലാക്കി.</li>
+            <li><strong>തദ്ദേശ സ്ഥാപന ഗ്രാന്റ്:</strong> നഗര തദ്ദേശ സ്ഥാപനങ്ങൾക്കുള്ള വിഹിതം 36% (15-ാം FC) → 45% (16-ാം FC).</li>
+            <li><strong>സംസ്ഥാന വിഹിതം (Horizontal):</strong> <strong>ഉത്തർപ്രദേശ് 17.619%</strong> (ഏറ്റവും കൂടുതൽ), ബിഹാർ 9.948%, മധ്യപ്രദേശ് 7.347%. <strong>കേരളം 2.382%</strong> (15-ാം FC-യിൽ 1.925%).</li>
+            <li><strong>കേരളത്തിന്റെ ആവശ്യം:</strong> 2.7% വിഹിതം ആവശ്യപ്പെട്ടിരുന്നു; 2011 സെൻസസ് അടിസ്ഥാനമാക്കുന്നതിനോടും കേരളം എതിർപ്പ് അറിയിച്ചു.</li>
+            <li><strong>അരവിന്ദ് പനഗരിയ:</strong> നീതി ആയോഗിന്റെ ആദ്യ വൈസ് ചെയർമാൻ (2015–17).</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 <strong>Trick:</strong></span>
+          <p><strong>"പതിനഞ്ചിൽ സിംഗ്, പതിനാറിൽ പനഗരിയ"</strong> (പതിനാറ് – <strong>പ</strong>നഗരിയ: <em>പ – പ</em>).</p>
+          <p><strong>കമ്മീഷൻ 14 → 15 → 16 = Reddy → Singh → Panagariya</strong>, വിഹിതം <strong>42 → 41 → 41</strong>.</p>
+          <p><strong>GDP-യിൽ 10%:</strong> "പത്തിൽ പുതിയവൻ". 16-ാം FC-യിലെ ഒരേയൊരു പുതിയ മാനദണ്ഡം.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap</span>
+          <p>41% എന്നത് <strong>15-ാം FC-യുടെയും 16-ാം FC-യുടെയും</strong> ആണ്. 16-ാം FC "കൂട്ടി/കുറച്ചു" എന്ന് ഉത്തരം തിരഞ്ഞെടുക്കരുത്; <strong>നിലനിർത്തി</strong>.</p>
+          <p>ശക്തികാന്ത ദാസ് 15-ാം FC അംഗമായിരുന്നു, ചെയർമാനല്ല.</p>
+        </div>
+
+        <div class="viz-box">
+          <span class="box-label">📅 FC ചരിത്ര സമയരേഖ (1951–2026)</span>
+          <svg viewBox="0 0 900 200" width="100%" height="auto" role="img" aria-label="FC ചരിത്രം">
+            <line x1="50" y1="100" x2="850" y2="100" stroke="#4a148c" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="100" r="10" fill="#c62828"/>
+            <text x="100" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1951</text>
+            <text x="100" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">Neogy (ആദ്യം)</text>
+
+            <circle cx="230" cy="100" r="10" fill="#ef6c00"/>
+            <text x="230" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">1956</text>
+            <text x="230" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">Santhanam</text>
+
+            <circle cx="380" cy="100" r="10" fill="#2e7d32"/>
+            <text x="380" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2013</text>
+            <text x="380" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">14-ാം (Reddy)</text>
+
+            <circle cx="540" cy="100" r="10" fill="#1565c0"/>
+            <text x="540" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2017</text>
+            <text x="540" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">15-ാം (Singh)</text>
+
+            <circle cx="700" cy="100" r="10" fill="#6a1b9a"/>
+            <text x="700" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2023</text>
+            <text x="700" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">16-ാം (Panagariya)</text>
+
+            <circle cx="830" cy="100" r="10" fill="#00695c"/>
+            <text x="830" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#14202b">2025</text>
+            <text x="830" y="130" text-anchor="middle" font-size="9" fill="#4a5f72">റിപ്പോർട്ട്</text>
+          </svg>
+          <div class="viz-caption">📅 FC: ആദ്യം മുതൽ 16-ാം വരെ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7: പ്രതീക്ഷിത ചോദ്യങ്ങൾ ===== -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">7. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Interactive MCQs)</h2>
+      <div class="section-body">
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഇന്ത്യൻ ഭരണഘടനയുടെ ഏത് ആർട്ടിക്കിൾ പ്രകാരമാണ് കേന്ദ്ര സർക്കാരും സംസ്ഥാന സർക്കാരുകളും തമ്മിലുള്ള സാമ്പത്തിക ബന്ധങ്ങൾ ക്രമീകരിക്കുന്നതിനായി 'ധനകാര്യ കമ്മീഷൻ' രൂപീകരിച്ചിട്ടുള്ളത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 148</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 280</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 315</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 324</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ആർട്ടിക്കിൾ 280</div>
+            <div class="explanation">ഭരണഘടനയുടെ 12-ാം ഭാഗത്തിലാണ് ഇത് പ്രതിപാദിക്കുന്നത്. 148 = CAG; 315 = PSC; 324 = Election Commission.</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. കേന്ദ്ര ധനകാര്യ കമ്മീഷനെ നിയമിക്കുന്നത് ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. പ്രധാനമന്ത്രി</span>
+            <span data-opt="B">B. കേന്ദ്ര ധനകാര്യ മന്ത്രി</span>
+            <span data-opt="C">C. ഇന്ത്യയുടെ രാഷ്ട്രപതി</span>
+            <span data-opt="D">D. റിസർവ് ബാങ്ക് ഗവർണ്ണർ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) ഇന്ത്യയുടെ രാഷ്ട്രപതി</div>
+            <div class="explanation">ഓരോ 5 വർഷം കൂടുമ്പോഴോ, ആവശ്യമെങ്കിൽ അതിനു മുൻപോ രാഷ്ട്രപതിയാണ് കമ്മീഷനെ നിയമിക്കുന്നത്. സംസ്ഥാന ധനകാര്യ കമ്മീഷനെ നിയമിക്കുന്നത് ഗവർണർ.</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. സ്വതന്ത്ര ഇന്ത്യയിലെ ആദ്യത്തെ ധനകാര്യ കമ്മീഷൻ (1951) അധ്യക്ഷൻ ആരായിരുന്നു?</div>
+          <div class="options">
+            <span data-opt="A">A. സുകുമാർ സെൻ</span>
+            <span data-opt="B">B. വി. നരഹരി റാവു</span>
+            <span data-opt="C">C. കെ.സി. നിയോഗി</span>
+            <span data-opt="D">D. കെ. സന്താനം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) കെ.സി. നിയോഗി</div>
+            <div class="explanation">സുകുമാർ സെൻ ആദ്യ തിരഞ്ഞെടുപ്പ് കമ്മീഷണറും, വി. നരഹരി റാവു ആദ്യ സി.എ.ജിയുമാണ്. കെ. സന്താനം രണ്ടാം FC ചെയർമാൻ.</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. 2026 മുതൽ 2031 വരെയുള്ള 5 വർഷ കാലയളവിലേക്ക് 16-ാമത് ധനകാര്യ കമ്മീഷന്റെ അധ്യക്ഷൻ ആരാണ്?</div>
+          <div class="options">
+            <span data-opt="A">A. എൻ.കെ. സിംഗ്</span>
+            <span data-opt="B">B. വൈ.വി. റെഡ്ഡി</span>
+            <span data-opt="C">C. അരവിന്ദ് പനഗരിയ</span>
+            <span data-opt="D">D. ശക്തികാന്ത ദാസ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) അരവിന്ദ് പനഗരിയ</div>
+            <div class="explanation">15-ാമത് കമ്മീഷൻ അധ്യക്ഷനായിരുന്നു എൻ.കെ. സിംഗ്. 14-ാം FC = Y.V. Reddy. ശക്തികാന്ത ദാസ് 15-ാം FC അംഗമായിരുന്നു, ചെയർമാനല്ല.</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. Statement Question: ധനകാര്യ കമ്മീഷനുമായി ബന്ധപ്പെട്ട ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>
+            1. കേന്ദ്ര ധനകാര്യ കമ്മീഷനിൽ ഒരു ചെയർമാനും മറ്റ് നാല് അംഗങ്ങളും ഉണ്ടായിരിക്കും.<br>
+            2. കേന്ദ്ര സർക്കാരിന്റെ വരുമാനത്തിൽ നിന്നും സംസ്ഥാനങ്ങൾക്ക് നൽകേണ്ട പ്രത്യേക ഗ്രാന്റുകൾ (Grants-in-aid) നിശ്ചയിക്കുന്നത് ധനകാര്യ കമ്മീഷന്റെ ചുമതലയാണ്.<br>
+            3. ധനകാര്യ കമ്മീഷൻ നൽകുന്ന ശുപാർശകൾ കേന്ദ്ര സർക്കാരിന് വെറുമൊരു ഉപദേശം മാത്രമാണ് (Advisory in nature), അത് അതേപടി നടപ്പിലാക്കാൻ സർക്കാരിന് നിയമപരമായ ബാധ്യതയില്ല.</div>
+          <div class="options">
+            <span data-opt="A">A. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="B">B. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 2, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 1, 2, 3 എന്നിവ ശരിയാണ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 1, 2, 3 എന്നിവ ശരിയാണ്</div>
+            <div class="explanation">കമ്മീഷൻ ഒരു ക്വാസി-ജുഡീഷ്യൽ ബോഡിയാണെങ്കിലും അതിന്റെ റിപ്പോർട്ട് സർക്കാരിന് ഒരു ഗൈഡ് ലൈൻ മാത്രമാണ്. ശുപാർശകൾ നിയമപരമായി ബാധകമല്ല (non-binding).</div>
+          </div>
+        </div>
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ധനകാര്യ കമ്മീഷൻ ശുപാർശകൾ "സ്വീകരിച്ച നടപടിയെക്കുറിച്ചുള്ള വിശദീകരണക്കുറിപ്പ്" സഹിതം പാർലമെന്റിൽ വയ്ക്കണമെന്ന് വ്യക്തമാക്കുന്ന ആർട്ടിക്കിൾ ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. ആർട്ടിക്കിൾ 281</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 280</span>
+            <span data-opt="C">C. ആർട്ടിക്കിൾ 279</span>
+            <span data-opt="D">D. ആർട്ടിക്കിൾ 282</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) ആർട്ടിക്കിൾ 281</div>
+            <div class="explanation">281 = റിപ്പോർട്ടും action-taken കുറിപ്പും ഇരുസഭകളിൽ. 280 = രൂപീകരണം. 279 = Net proceeds. 282 = വിവേചനാധികാര ഗ്രാന്റുകൾ.</div>
+          </div>
+        </div>
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. 13-ാം ധനകാര്യ കമ്മീഷനിൽ 32% ആയിരുന്ന സംസ്ഥാനങ്ങളുടെ നികുതി വിഹിതം 14-ാം കമ്മീഷൻ എത്ര ശതമാനമായി ഉയർത്തി?</div>
+          <div class="options">
+            <span data-opt="A">A. 40%</span>
+            <span data-opt="B">B. 41%</span>
+            <span data-opt="C">C. 42%</span>
+            <span data-opt="D">D. 45%</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 42%</div>
+            <div class="explanation">10 ശതമാനം പോയിന്റ് വർധന (ഏറ്റവും വലിയ കുതിപ്പ്). 41% = 15-ാം, 16-ാം FC.</div>
+          </div>
+        </div>
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. സംസ്ഥാന ധനകാര്യ കമ്മീഷനെ (പഞ്ചായത്ത്/മുനിസിപ്പാലിറ്റി) നിയമിക്കുന്നത് ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. രാഷ്ട്രപതി</span>
+            <span data-opt="B">B. ഗവർണർ</span>
+            <span data-opt="C">C. മുഖ്യമന്ത്രി</span>
+            <span data-opt="D">D. സംസ്ഥാന ധനമന്ത്രി</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ഗവർണർ</div>
+            <div class="explanation">ആർട്ടിക്കിൾ 243-I (പഞ്ചായത്ത്), 243-Y (മുനിസിപ്പാലിറ്റി) പ്രകാരം ഗവർണർ നിയമിക്കുന്നു. കേന്ദ്ര FC-യെ രാഷ്ട്രപതി.</div>
+          </div>
+        </div>
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. ഇവയിൽ ധനകാര്യ കമ്മീഷന്റെ ചുമതല അല്ലാത്തത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. കേന്ദ്ര-സംസ്ഥാന നികുതി വിഭജനം സംബന്ധിച്ച ശുപാർശ</span>
+            <span data-opt="B">B. ആർട്ടിക്കിൾ 275 പ്രകാരമുള്ള ഗ്രാന്റുകളുടെ തത്വങ്ങൾ</span>
+            <span data-opt="C">C. തദ്ദേശ സ്ഥാപനങ്ങൾക്കായി സംസ്ഥാന സഞ്ചിത നിധി വർധിപ്പിക്കാനുള്ള നടപടികൾ</span>
+            <span data-opt="D">D. കേന്ദ്ര ബജറ്റ് അംഗീകരിക്കൽ</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) കേന്ദ്ര ബജറ്റ് അംഗീകരിക്കൽ</div>
+            <div class="explanation">ബജറ്റ് അംഗീകരിക്കുന്നത് പാർലമെന്റാണ്. (A), (B), (C) FC-യുടെ ചുമതലകൾ (TGLO).</div>
+          </div>
+        </div>
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. 16-ാം ധനകാര്യ കമ്മീഷൻ ശുപാർശ പ്രകാരം 2026–31 കാലയളവിൽ കേരളത്തിന്റെ നികുതി വിഹിതം (inter se share) എത്ര?</div>
+          <div class="options">
+            <span data-opt="A">A. 1.925%</span>
+            <span data-opt="B">B. 2.382%</span>
+            <span data-opt="C">C. 2.5%</span>
+            <span data-opt="D">D. 2.67%</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 2.382%</div>
+            <div class="explanation">1.925% = 15-ാം FC. 2.5% = 14-ാം FC. 2.67% = 12-ാം FC. 15-ാം FC വിഹിതത്തിൽ നിന്ന് 16-ാമത്തിൽ വർധന ഉണ്ടായി.</div>
+          </div>
+        </div>
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഒരു ധനകാര്യ കമ്മീഷൻ ആദ്യമായി "Contribution to GDP" എന്ന മാനദണ്ഡം ഉപയോഗിച്ചത് ഏത്?</div>
+          <div class="options">
+            <span data-opt="A">A. 13-ാം FC</span>
+            <span data-opt="B">B. 14-ാം FC</span>
+            <span data-opt="C">C. 15-ാം FC</span>
+            <span data-opt="D">D. 16-ാം FC</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) 16-ാം FC</div>
+            <div class="explanation">10% weight ഉള്ള ഈ മാനദണ്ഡം 16-ാം കമ്മീഷനിലാണ് ആദ്യമായി ചേർത്തത്.</div>
+          </div>
+        </div>
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. ധനകാര്യ കമ്മീഷനുമായി ബന്ധപ്പെട്ട പ്രസ്താവനകൾ പരിഗണിക്കുക:<br>
+            1. അംഗങ്ങളുടെ യോഗ്യത പാർലമെന്റ് നിയമം വഴി നിശ്ചയിക്കുന്നു.<br>
+            2. ചെയർമാൻ മുൻ ഹൈക്കോടതി ജഡ്ജി ആയിരിക്കണം.<br>
+            3. 1951-ലെ നിയമം പ്രകാരം കമ്മീഷന് സിവിൽ കോടതിയുടെ ചില അധികാരങ്ങളുണ്ട്.<br>
+            ശരിയായവ ഏവ?</div>
+          <div class="options">
+            <span data-opt="A">A. 1 മാത്രം</span>
+            <span data-opt="B">B. 1, 2 എന്നിവ മാത്രം</span>
+            <span data-opt="C">C. 1, 3 എന്നിവ മാത്രം</span>
+            <span data-opt="D">D. 2, 3 എന്നിവ മാത്രം</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 1, 3 എന്നിവ മാത്രം</div>
+            <div class="explanation">(2) തെറ്റ്: ചെയർമാൻ പൊതുകാര്യങ്ങളിൽ പരിചയമുള്ള വ്യക്തിയാണ്; ഹൈക്കോടതി ജഡ്ജി യോഗ്യത അംഗങ്ങളിൽ ഒരാൾക്കുള്ളതാണ്.</div>
+          </div>
+        </div>
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. 14-ാം ധനകാര്യ കമ്മീഷൻ ചെയർമാൻ ആര്?</div>
+          <div class="options">
+            <span data-opt="A">A. വൈ.വി. റെഡ്ഡി</span>
+            <span data-opt="B">B. സി. രംഗരാജൻ</span>
+            <span data-opt="C">C. വിജയ് കേൽക്കർ</span>
+            <span data-opt="D">D. എൻ.കെ. സിംഗ്</span>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) വൈ.വി. റെഡ്ഡി</div>
+            <div class="explanation">രംഗരാജൻ = 12-ാം; കേൽക്കർ = 13-ാം; സിംഗ് = 15-ാം. 14-ാം FC കാലയളവ് 2015–20.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8: ഉത്തര സൂചിക ===== -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">8. ഉത്തര സൂചിക (Answer Key)</h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(A)</td><td>11</td><td>(D)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>7</td><td>(C)</td><td>12</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>8</td><td>(B)</td><td>13</td><td>(A)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(D)</td><td></td><td></td></tr>
+              <tr><td>5</td><td>(D)</td><td>10</td><td>(B)</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9: Quick Revision ===== -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">9. Quick Revision (ഒറ്റനോട്ടത്തിൽ)</h2>
+      <div class="section-body">
+        <ol>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ധനകാര്യ കമ്മീഷൻ = ആർട്ടിക്കിൾ <strong>280</strong> (Part XII); റിപ്പോർട്ട് പാർലമെന്റിൽ = <strong>281</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> നിയമിക്കുന്നത് <strong>രാഷ്ട്രപതി</strong>; <strong>5 വർഷം</strong>; <strong>ചെയർമാൻ + 4 അംഗങ്ങൾ</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> യോഗ്യത നിശ്ചയിക്കുന്നത് <strong>പാർലമെന്റ്</strong> (1951-ലെ നിയമം).</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ശുപാർശകൾ <strong>ബാധകമല്ല (advisory)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> ചുമതലകൾ <strong>TGLO</strong>: Tax, Grants, Local bodies, Other.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ആദ്യ FC: <strong>1951</strong>, <strong>K.C. Neogy</strong>; രണ്ടാം FC: <strong>K. Santhanam</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> വിഹിതം: 13-ാം <strong>32%</strong> → 14-ാം <strong>42%</strong> → 15-ാം <strong>41%</strong> → 16-ാം <strong>41%</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> 15-ാം FC: <strong>N.K. Singh</strong>, 2021–26. 16-ാം FC: <strong>Arvind Panagariya</strong>, 2026–31.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> 16-ാം FC: റിപ്പോർട്ട് 2025 നവംബർ 17; ലോക്സഭയിൽ 2026 ഫെബ്രുവരി 1.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> 16-ാം FC-യിൽ പുതിയ മാനദണ്ഡം <strong>Contribution to GDP (10%)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> കേരളത്തിന്റെ വിഹിതം: 15-ാം FC <strong>1.925%</strong> → 16-ാം FC <strong>2.382%</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> UP-ക്ക് ഏറ്റവും കൂടുതൽ വിഹിതം (16-ാം FC: 17.619%).</li>
+          <li><span class="stars">⭐⭐⭐</span> സംസ്ഥാന FC: ആർട്ടിക്കിൾ <strong>243-I, 243-Y</strong>; <strong>ഗവർണർ</strong> നിയമിക്കുന്നു.</li>
+          <li><span class="stars">⭐⭐</span> ഗ്രാന്റ്-ഇൻ-എയ്ഡ് = ആർട്ടിക്കിൾ <strong>275</strong> (subsidy അല്ല).</li>
+          <li><span class="stars">⭐</span> "Reddy" രണ്ടുപേർ: K. Brahmananda Reddy (6th), Y.V. Reddy (14th).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10: One-Page Revision ===== -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">10. ഒരു പേജ് റിവിഷൻ ഷീറ്റ്</h2>
+      <div class="section-body">
+        <h3>Finance Commission – Key Articles</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Article</th><th>Subject</th></tr></thead>
+            <tbody>
+              <tr><td>280</td><td>FC രൂപീകരണം, ഘടന, യോഗ്യത, അധികാരം</td></tr>
+              <tr><td>281</td><td>ശുപാർശകൾ പാർലമെന്റിൽ (action-taken കുറിപ്പ് സഹിതം)</td></tr>
+              <tr><td>279</td><td>Net proceeds കണക്കാക്കൽ</td></tr>
+              <tr><td>275</td><td>ഗ്രാന്റ്-ഇൻ-എയ്ഡ്</td></tr>
+              <tr><td>282</td><td>വിവേചനാധികാര ഗ്രാന്റുകൾ</td></tr>
+              <tr><td>243-I</td><td>സംസ്ഥാന FC (പഞ്ചായത്ത്) – ഗവർണർ</td></tr>
+              <tr><td>243-Y</td><td>സംസ്ഥാന FC (മുനിസിപ്പാലിറ്റി) – ഗവർണർ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Structure & Appointment</h3>
+        <ul>
+          <li><strong>Composition:</strong> 1 Chairman + 4 Members = 5</li>
+          <li><strong>Appointed by:</strong> President of India</li>
+          <li><strong>Formed:</strong> Every 5 years (or earlier if needed)</li>
+          <li><strong>Qualification:</strong> Decided by Parliament (FC Act 1951)</li>
+          <li><strong>Chairman:</strong> Experience in Public Affairs</li>
+          <li><strong>Members ("ജ-ഫി-അ-ഇ"):</strong> HC Judge / Finance & Accounts / Administration / Economist</li>
+        </ul>
+
+        <h3>Functions (TGLO)</h3>
+        <ul>
+          <li><strong>T</strong>ax distribution (vertical + horizontal)</li>
+          <li><strong>G</strong>rants-in-aid (Art 275)</li>
+          <li><strong>L</strong>ocal bodies (Panchayat/Municipality funds)</li>
+          <li><strong>O</strong>ther matters (sound finance)</li>
+        </ul>
+
+        <h3>Key Facts</h3>
+        <ul>
+          <li>ആദ്യ FC: 1951, <strong>K.C. Neogy</strong> (1952–57)</li>
+          <li>രണ്ടാം FC: <strong>K. Santhanam</strong> (1957–62)</li>
+          <li>13-ാം FC: 32% → 14-ാം FC: <strong>42%</strong> → 15-ാം FC: <strong>41%</strong> → 16-ാം FC: <strong>41%</strong></li>
+          <li>15-ാം FC: <strong>N.K. Singh</strong> (2021–26)</li>
+          <li>16-ാം FC: <strong>Arvind Panagariya</strong> (2026–31)</li>
+          <li>16-ാം FC പുതിയ മാനദണ്ഡം: <strong>Contribution to GDP (10%)</strong></li>
+        </ul>
+
+        <h3>Kerala's Share (%)</h3>
+        <ul>
+          <li>15-ാം FC: <strong>1.925%</strong></li>
+          <li>16-ാം FC: <strong>2.382%</strong></li>
+          <li>ഏറ്റവും കൂടുതൽ: <strong>ഉത്തർപ്രദേശ്</strong> (16-ാം FC: 17.619%)</li>
+        </ul>
+
+        <h3>Vertical vs Horizontal</h3>
+        <ul>
+          <li><strong>Vertical:</strong> കേന്ദ്രം ↔ എല്ലാ സംസ്ഥാനങ്ങളും (41%)</li>
+          <li><strong>Horizontal:</strong> സംസ്ഥാനം ↔ സംസ്ഥാനം (ഫോർമുല അനുസരിച്ച്)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11: PSC കെണികൾ ===== -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">11. സാധാരണ PSC കെണികൾ</h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 (280 vs 281)</span>
+          <p><strong>Question:</strong> ധനകാര്യ കമ്മീഷന്റെ റിപ്പോർട്ട് പാർലമെന്റിൽ വയ്ക്കുന്നത് ഏത് ആർട്ടിക്കിൾ?</p>
+          <p><strong>Confusing Options:</strong> 279 / 280 / 281 / 282</p>
+          <p><strong>Fact:</strong> <strong>281</strong>. 280 = രൂപീകരണം.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 (കേന്ദ്ര vs സംസ്ഥാന FC)</span>
+          <p><strong>Question:</strong> സംസ്ഥാന ധനകാര്യ കമ്മീഷനെ നിയമിക്കുന്നത്?</p>
+          <p><strong>Confusing Options:</strong> രാഷ്ട്രപതി / ഗവർണർ / മുഖ്യമന്ത്രി / ധനമന്ത്രി</p>
+          <p><strong>Fact:</strong> <strong>ഗവർണർ</strong>. കേന്ദ്ര FC-യെ രാഷ്ട്രപതി.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 (ആദ്യ FC ചെയർമാൻ)</span>
+          <p><strong>Question:</strong> ആദ്യ FC ചെയർമാൻ?</p>
+          <p><strong>Confusing Options:</strong> K. Santhanam / K.C. Neogy / Y.V. Reddy / N.K. Singh</p>
+          <p><strong>Fact:</strong> <strong>K.C. Neogy (1951)</strong>. Santhanam = രണ്ടാം FC.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 (വിഹിതം)</span>
+          <p><strong>Question:</strong> 14-ാം FC വിഹിതം എത്ര?</p>
+          <p><strong>Confusing Options:</strong> 32% / 41% / 42% / 45%</p>
+          <p><strong>Fact:</strong> <strong>42%</strong>. 41% = 15/16-ാം FC; 32% = 13-ാം FC.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 (ചെയർമാൻ/അംഗം)</span>
+          <p><strong>Question:</strong> ധനകാര്യ കമ്മീഷൻ ചെയർമാന്റെ യോഗ്യത?</p>
+          <p><strong>Confusing Options:</strong> HC ജഡ്ജി / Economist / Public affairs / Finance expert</p>
+          <p><strong>Fact:</strong> <strong>Public affairs</strong>. HC ജഡ്ജി = അംഗങ്ങളിൽ ഒരാൾ.</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 (ഘടന)</span>
+          <p><strong>Question:</strong> FC-യിൽ എത്ര അംഗങ്ങൾ?</p>
+          <p><strong>Confusing Options:</strong> 3 / 4 / 5 / 7</p>
+          <p><strong>Fact:</strong> <strong>5</strong> (1 ചെയർമാൻ + 4 അംഗങ്ങൾ).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 (16-ാം FC)</span>
+          <p><strong>Question:</strong> 16-ാം FC വിഹിതം?</p>
+          <p><strong>Confusing Options:</strong> 40% / 41% / 42% / 50%</p>
+          <p><strong>Fact:</strong> <strong>41%</strong> (15-ാം FC-യുടെ അതേ നിരക്ക്; കൂട്ടിയതുമില്ല, കുറച്ചതുമില്ല).</p>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 (Reddy)</span>
+          <p><strong>Question:</strong> 14-ാം FC ചെയർമാൻ?</p>
+          <p><strong>Confusing Options:</strong> K. Brahmananda Reddy / Y.V. Reddy / K.C. Pant / N.K. Singh</p>
+          <p><strong>Fact:</strong> <strong>Y.V. Reddy</strong> (14-ാം). K. Brahmananda Reddy = 6-ാം FC.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12: ഉപസംഹാരം ===== -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">12. ഉപസംഹാരം</h2>
+      <div class="section-body">
+        <h3>പ്രധാന Takeaways</h3>
+        <ul>
+          <li>ധനകാര്യ കമ്മീഷൻ ഇന്ത്യയുടെ സാമ്പത്തിക ഫെഡറലിസത്തിന്റെ ബാലൻസിംഗ് വീൽ ആണ്.</li>
+          <li>ആർട്ടിക്കിൾ 280 (രൂപീകരണം); 281 (റിപ്പോർട്ട് പാർലമെന്റിൽ).</li>
+          <li>ഘടന: 1 ചെയർമാൻ + 4 അംഗങ്ങൾ = 5; നിയമനം രാഷ്ട്രപതി.</li>
+          <li>ആദ്യ FC: K.C. Neogy (1951); ഇപ്പോൾ 16-ാം FC: Arvind Panagariya (2026–31).</li>
+          <li>വിഹിതം: 14-ാം FC 42% → 15/16-ാം FC 41%.</li>
+          <li>16-ാം FC പുതിയ മാനദണ്ഡം: Contribution to GDP (10%).</li>
+          <li>കേരളത്തിന്റെ വിഹിതം: 15-ാം FC 1.925% → 16-ാം FC 2.382%.</li>
+          <li>PSC പരീക്ഷകളിൽ ഈ അധ്യായത്തിൽ നിന്ന് 2–3 ചോദ്യങ്ങൾ ഉറപ്പായും പ്രതീക്ഷിക്കാം.</li>
+        </ul>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>ധനകാര്യ കമ്മീഷന്റെ ആർട്ടിക്കിളുകളും ചുമതലകളും കൃത്യമായി ഓർക്കുക. 14/15/16-ാം കമ്മീഷനുകളുടെ ചെയർമാൻമാരും വിഹിതവും PSC-യുടെ പ്രിയപ്പെട്ട ചോദ്യങ്ങളാണ്. അടുത്ത അധ്യായം: GST കൗൺസിൽ.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ===== ACCORDION =====
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function openOnly(sec) {
+    sections.forEach(function (s) {
+      if (s === sec) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      } else {
+        s.classList.add('collapsed');
+        var h2b = s.querySelector('h2');
+        if (h2b) h2b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function toggleSection(sec) {
+    if (sec.classList.contains('collapsed')) {
+      openOnly(sec);
+    } else {
+      sec.classList.add('collapsed');
+      var h2 = sec.querySelector('h2');
+      if (h2) h2.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function () { toggleSection(sec); });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // ===== TOC SMOOTH SCROLL + SCROLL SPY =====
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // ===== MCQ SYSTEM =====
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = 'keralaFinanceCommission119Q_' + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('span'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = { selected: null, saved: false, marked: false, locked: false };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (state.selected === correctLetter) {
+        statusSpan.textContent = '✅ Correct';
+      } else {
+        statusSpan.textContent = '❌ Wrong';
+      }
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+});
+</script>
+
+<script src="/kerala-psc-suite-study-note/assets/js/sync.js"></script>
+</body>
+</html>

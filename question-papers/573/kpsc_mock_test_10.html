@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Kerala PSC Hard Mock Test 10</title>
+
+<!-- CHANGE 1: BLOCKING SYNC LOADER (Loads sync.js immediately) -->
+<script>
+  (function(){
+    var p = location.pathname.replace(/\\/g,"/"),
+        m = p.match(/^(.*?\/)(?:topics|chapters|question-papers|mock-tests|subjects)\//),
+        b = m ? m[1] : p.replace(/[^\/]*$/,"");
+    if (!window.KPSC_Sync) document.write('<script src="' + b + 'assets/js/sync.js"><\/script>');
+  })();
+</script>
+
+<style>
+:root{
+  --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
+  --primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;
+  --green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;
+  --gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:10px;--radius-sm:6px;
+  --font:'Noto Sans Malayalam','Manjari','Nirmala UI','Kartika','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;
+  font-size:16px;transition:background 0.2s,color 0.2s;
+}
+[data-theme="dark"]{
+  --bg:#1e1e2e;--panel:#252537;--text:#cdd6f4;--secondary:#a6adc8;--border:#313244;
+  --primary:#cba6f7;--primary-light:#2a2438;--accent:#f9e2af;--green:#a6e3a1;
+  --green-bg:#1e2e1e;--red:#f38ba8;--red-bg:#2e1e24;--orange:#fab387;--orange-bg:#2e241e;
+  --gray:#6c7086;--gray-bg:#1e1e2e;--shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+[data-theme="sepia"]{
+  --bg:#fdf6e3;--panel:#fefcf4;--text:#433422;--secondary:#65533c;--border:#d3cbb7;
+  --primary:#8b5a2b;--primary-light:#f0e6d2;--accent:#b8860b;--green:#2e7d32;
+  --green-bg:#e8f5e9;--red:#c62828;--red-bg:#ffebee;--orange:#e65100;--orange-bg:#fff3e0;
+  --gray:#8a8070;--gray-bg:#f0e8d8;--shadow:0 2px 12px rgba(0,0,0,0.1);
+}
+.header{
+  position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:10px;box-shadow:var(--shadow);
+}
+.header-title{font-size:1.05rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{
+  display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:700;
+  background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--primary);font-variant-numeric:tabular-nums;letter-spacing:1px;
+}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn{
+  padding:8px 16px;border-radius:var(--radius-sm);border:2px solid var(--orange);
+  background:var(--orange-bg);color:var(--orange);font-family:var(--font);font-size:.9rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.pause-btn:hover{background:var(--orange);color:#fff}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.theme-btn{
+  padding:8px 12px;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--panel);color:var(--text);font-family:var(--font);font-size:.85rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:4px;
+}
+.theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.study-pause-bar{
+  display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);
+  padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{
+  padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;
+  font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem;min-height:34px;
+}
+.save-status{
+  font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;
+  background:var(--green-bg);border:1px solid var(--green);white-space:nowrap;opacity:0;transition:opacity .3s;
+}
+.save-status.visible{opacity:1}
+.resume-banner{
+  display:none;background:linear-gradient(135deg,#1e40af,#3730a3);color:#fff;padding:18px 20px;
+  margin:10px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.15);
+}
+.resume-banner.visible{display:block}
+.resume-banner-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+.resume-banner-info{
+  font-size:.88rem;line-height:1.7;margin-bottom:14px;background:rgba(255,255,255,0.12);
+  padding:10px 14px;border-radius:8px;
+}
+.resume-banner-info strong{color:#fef08a}
+.resume-banner-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.banner-btn{
+  padding:10px 20px;border-radius:8px;border:2px solid #fff;background:transparent;
+  color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px;
+}
+.banner-btn:hover{background:#fff;color:#1e40af}
+.banner-btn.primary{background:#fff;color:#1e40af}
+.banner-btn.danger{border-color:#fca5a5;color:#fca5a5}
+.banner-btn.danger:hover{background:#fca5a5;color:#7f1d1d}
+.main-container{
+  display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;
+  align-items:flex-start;
+}
+.question-panel{
+  flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px 28px;min-width:0;transition:filter .3s;
+}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.sidebar{
+  flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px;transition:filter .3s;
+}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{
+  font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);
+  padding:3px 12px;border-radius:20px;
+}
+.q-subject{
+  font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0;
+}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{
+  display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);
+  border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;
+  font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;
+  line-height:1.5;white-space:pre-line;user-select:none;touch-action:manipulation;min-height:48px;
+}
+.option-btn:hover:not(.locked):not(.correct-highlight):not(.wrong-highlight){
+  border-color:var(--primary);background:var(--primary-light);
+}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600;pointer-events:none}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600;pointer-events:none}
+.explanation-box{
+  background:#f8f9fc;border-left:4px solid var(--primary);padding:16px 18px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;
+  line-height:1.7;white-space:pre-line;color:var(--secondary);display:none;
+}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem;text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}.exp-wrong{font-weight:600;color:var(--red)}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
+  font-family:var(--font);font-size:.88rem;font-weight:600;transition:all .2s;
+  touch-action:manipulation;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}
+.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}
+.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.palette-btn{
+  width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;
+  cursor:pointer;transition:all .2s;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px;
+}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,0.85);
+  z-index:9999;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px);
+}
+.pause-overlay.visible{display:flex}
+.pause-modal{
+  background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+.pause-icon{font-size:4rem;margin-bottom:16px;line-height:1}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
+.pause-modal .resume-main-btn{
+  padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);
+  color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px;
+}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{
+  background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px 16px;text-align:center;border-top:4px solid var(--primary);
+}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:var(--bg)}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){
+  .main-container{flex-direction:column;padding:10px;gap:12px}
+  .question-panel{padding:16px}
+  .sidebar{width:100%;flex-direction:column;gap:12px}
+  .header-title{font-size:.9rem}
+  .timer-box{font-size:1.05rem;padding:4px 10px}
+  .pause-btn{font-size:.8rem;padding:6px 12px;min-height:36px}
+  .theme-btn{font-size:.75rem;padding:6px 8px;min-height:36px}
+  .q-text{font-size:.92rem}
+  .option-btn{padding:11px 14px;font-size:.86rem}
+  .btn{padding:8px 12px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="testHeader" style="display:none;">
+<span class="header-title">Kerala PSC Hard Mock Test 10</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="theme-btn" id="themeBtn" onclick="cycleTheme()">🌙 Dark</button>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+
+<div class="study-pause-bar" id="studyPauseBar">
+<span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+<button onclick="resumeStudy()">▶ Resume Timer</button>
+</div>
+
+<div class="resume-banner" id="resumeBanner" style="display:none;">
+<div class="resume-banner-title">📥 Saved attempt found</div>
+<div class="resume-banner-info" id="resumeInfo">Loading...</div>
+<div class="resume-banner-buttons">
+<button class="banner-btn primary" onclick="resumeAttempt()">▶ Resume</button>
+<button class="banner-btn danger" onclick="startFresh()">🔄 Start Fresh</button>
+</div>
+</div>
+
+<div class="pause-overlay" id="pauseOverlay">
+<div class="pause-modal" id="pauseModal">
+<div class="pause-icon" id="pauseIcon">⏸</div>
+<h2 id="pauseTitle">Exam Paused</h2>
+<p id="pauseMessage">പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
+<button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+</div>
+</div>
+
+<div id="syncLoader" style="text-align:center;margin-top:50px;font-weight:bold;color:var(--primary);font-size:1.2rem;">☁️ Checking cloud for saved progress...</div>
+
+<div class="main-container" id="testView" style="display:none;">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><span id="expContent"></span></div>
+<div class="action-buttons" id="actionButtons"></div>
+</div>
+
+<div class="sidebar" id="sidebar">
+<div class="palette-card">
+<h3>Question Palette</h3>
+<div class="palette-grid" id="paletteGrid"></div>
+</div>
+<div class="stats-card">
+<h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div>
+</div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div>
+</div>
+
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Mock Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section">
+<h3>Subject-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div>
+</div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ ഉത്തരങ്ങളും വിട്ടുകളഞ്ഞവയും</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+
+<script>
+// IMPORTANT: Change this key for every different mock test you create!
+const STORAGE_KEY = 'kpsc_hard_mock_10'; 
+const STORAGE_VERSION = 1;
+const SECONDS_PER_QUESTION = 45;
+const NEGATIVE_MARKING = 0.33;
+
+// --- 100 QUESTIONS: Kerala PSC Hard Mock Test 10 (Cat. No. 383/463/573/2025) ---
+const SUB={H:`ചരിത്രം`,G:`ഭൂമിശാസ്ത്രം`,E:`സാമ്പത്തികശാസ്ത്രം`,C:`ഇന്ത്യൻ ഭരണഘടന`,K:`കേരള ഭരണം`,L:`ജീവശാസ്ത്രം & ആരോഗ്യം`,P:`ഭൗതികശാസ്ത്രം`,Ch:`രസതന്ത്രം`,A:`കല, കായികം, സാഹിത്യം`,Cm:`കമ്പ്യൂട്ടർ`,Ac:`പ്രധാന നിയമങ്ങൾ`,Ca:`ആനുകാലികം`,M:`ഗണിതം`,R:`റീസണിംഗ്`,En:`English`,Ml:`മലയാളം`};
+const STX={'12':`പ്രസ്താവന I, II എന്നിവ മാത്രം ശരിയാണ്`,'13':`പ്രസ്താവന I, III എന്നിവ മാത്രം ശരിയാണ്`,'23':`പ്രസ്താവന II, III എന്നിവ മാത്രം ശരിയാണ്`,'123':`പ്രസ്താവന I, II, III എന്നിവ ശരിയാണ്`};
+const ARX={a:`Aയും Rഉം ശരിയാണ്; R, Aയുടെ ശരിയായ വിശദീകരണമാണ്`,b:`Aയും Rഉം ശരിയാണ്; എന്നാൽ R, Aയുടെ ശരിയായ വിശദീകരണമല്ല`,c:`A ശരിയാണ്; എന്നാൽ R തെറ്റാണ്`,d:`A തെറ്റാണ്; എന്നാൽ R ശരിയാണ്`};
+const ST4=(...k)=>k.map(x=>STX[x]), AR4=(...k)=>k.map(x=>ARX[x]);
+const x1='1-b, 2-a, 3-c, 4-d',x2='1-a, 2-c, 3-b, 4-d',x3='1-a, 2-b, 3-c, 4-d',x4='1-a, 2-b, 3-d, 4-c';
+const M_STD=[x1,x2,x3,x4],M_B=[x1,x2,x4,x3],M_C=[x1,x3,x2,x4],M_D=[x3,x1,x2,x4],M_E=[x2,x3,x1,x4];
+const st=(h,a)=>h+`:\n`+a.map((s,i)=>`പ്രസ്താവന `+['I','II','III'][i]+`: `+s).join('\n')+`\nമുകളിൽ നൽകിയിരിക്കുന്ന പ്രസ്താവനകളിൽ ശരിയായവ ഏതെല്ലാം?`;
+const ar=(a,r)=>`താഴെ നൽകിയിരിക്കുന്ന അസർഷൻ (A), റീസൺ (R) എന്നിവ പരിശോധിച്ച് ശരിയായ ഉത്തരം തിരഞ്ഞെടുക്കുക:\nഅസർഷൻ (A): `+a+`\nറീസൺ (R): `+r;
+const mt=(h,l1,l2)=>h+`:\n\nപട്ടിക I (`+l1[0]+`)\n`+l1.slice(1).map((x,i)=>(i+1)+`. `+x).join('\n')+`\n\nപട്ടിക II (`+l2[0]+`)\n`+l2.slice(1).map((x,i)=>'abcd'[i]+`. `+x).join('\n');
+const ch=(h,l)=>h+`:\n`+l.map((x,i)=>(i+1)+`. `+x).join('\n');
+const CHR=`കാലഗണനാ ക്രമത്തിൽ (ആദ്യം മുതൽ അവസാനം വരെ) ക്രമീകരിക്കുക`;
+const q=(s,t,o,c,e)=>({subject:SUB[s],question:t,options:o.map((x,i)=>'ABCD'[i]+') '+x),correct:c,explanation:e});
+
+const sourceQuestions=[
+/* HISTORY */
+q('H',mt(`കേരളത്തിലെ നവോത്ഥാന നായകന്മാരും അവർ നേതൃത്വം നൽകിയ പ്രസ്ഥാനങ്ങളും/സമരങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`നവോത്ഥാന നായകന്മാർ`,`കുറുമ്പൻ ദൈവത്താൻ`,`വക്കം അബ്ദുൽ ഖാദർ മൗലവി`,`വി.ടി. ഭട്ടതിരിപ്പാട്`,`മന്നത്ത് പത്മനാഭൻ`],[`പ്രസ്ഥാനങ്ങൾ / സമരങ്ങൾ`,`ഹിന്ദു പുലയ സമാജം`,`തിരുവിതാംകൂർ മുസ്ലിം മഹാജനസഭ`,`തൃശ്ശൂരിൽ നിന്ന് ചന്ദ്രഗിരിപ്പുഴ വരെ നടത്തിയ യാചനായാത്ര (1931)`,`വൈക്കം സത്യഗ്രഹത്തോടനുബന്ധിച്ച് നടത്തിയ സവർണ്ണ ജാഥ (1924)`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\n• കുറുമ്പൻ ദൈവത്താൻ — ഹിന്ദു പുലയ സമാജം\n• വക്കം അബ്ദുൽ ഖാദർ മൗലവി — തിരുവിതാംകൂർ മുസ്ലിം മഹാജനസഭ\n• വി.ടി. ഭട്ടതിരിപ്പാട് — 1931ൽ തൃശ്ശൂർ മുതൽ ചന്ദ്രഗിരിപ്പുഴ വരെ യാചനായാത്ര\n• മന്നത്ത് പത്മനാഭൻ — 1924ൽ വൈക്കം സത്യഗ്രഹത്തെ പിന്തുണച്ച് സവർണ്ണ ജാഥ\n\nഓർമ്മിക്കാൻ: കുറുമ്പൻ = പുലയ സമാജം; വി.ടി. = യാചനായാത്ര; മന്നം = സവർണ്ണ ജാഥ.`),
+q('H',st(`തിരുവിതാംകൂറിലെ നിവർത്തന പ്രക്ഷോഭവുമായി (Abstention Movement) ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`1932ൽ ശ്രീ ചിത്തിര തിരുനാൾ മഹാരാജാവ് നടപ്പിലാക്കിയ ഭൂപരിഷ്കരണ-നിയമസഭാ പ്രാതിനിധ്യ പരിഷ്കാരത്തിൽ ജനസംഖ്യാനുപാതിക പ്രാതിനിധ്യം നിഷേധിച്ചതിനെതിരെയാണ് നിവർത്തന പ്രക്ഷോഭം ആരംഭിച്ചത്.`,`നിവർത്തന പ്രക്ഷോഭത്തിന്റെ ഫലമായി 1936ൽ തിരുവിതാംകൂറിൽ പബ്ലിക് സർവീസ് കമ്മീഷണറായി ജി.ഡി. നോക്സ് നിയമിതനായി.`,`'നിവർത്തനം' എന്ന പദം ഈ പ്രക്ഷോഭത്തിന് സംഭാവന ചെയ്തത് വേലുത്തമ്പി ദളവയാണ്.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nനിയമസഭാ പരിഷ്കാരത്തിനെതിരെ (1932) ക്രിസ്ത്യൻ, ഈഴവ, മുസ്ലിം വിഭാഗങ്ങൾ നടത്തിയ സമരമാണിത്; ഫലമായി 1936ൽ ജി.ഡി. നോക്സ് PSC കമ്മീഷണറായി (I, II ശരി). 'നിവർത്തനം' എന്ന പദം നൽകിയത് ഐ.സി. ചാക്കോ ആണ്, വേലുത്തമ്പി ദളവയല്ല (III തെറ്റ്).\n\nഓർമ്മിക്കാൻ: നേതാക്കൾ — സി. കേശവൻ, എൻ.വി. ജോസഫ്, ടി.എം. വർഗീസ്, പി.കെ. കുഞ്ഞ്.`),
+q('H',ch(`ഇന്ത്യൻ സ്വാതന്ത്ര്യസമരവുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന സംഭവങ്ങളെ അവ നടന്ന വർഷത്തിന്റെ അടിസ്ഥാനത്തിൽ `+CHR,[`ഖിലാഫത്ത് പ്രസ്ഥാനം ആരംഭിക്കുന്നു`,`അഹമ്മദാബാദ് മിൽ തൊഴിലാളി സമരം`,`വ്യക്തിഗത സത്യഗ്രഹം (Individual Satyagraha)`,`ക്രിപ്സ് മിഷൻ ഇന്ത്യയിൽ എത്തുന്നു`]),[`1 – 2 – 3 – 4`,`2 – 1 – 3 – 4`,`2 – 3 – 1 – 4`,`1 – 3 – 2 – 4`],1,
+`ശരിയായ ഉത്തരം: B (2 – 1 – 3 – 4)\n\n• അഹമ്മദാബാദ് മിൽ സമരം — 1918\n• ഖിലാഫത്ത് പ്രസ്ഥാനം — 1919\n• വ്യക്തിഗത സത്യഗ്രഹം (ആദ്യ സത്യഗ്രഹി വിനോബ ഭാവെ) — 1940\n• ക്രിപ്സ് മിഷൻ — 1942`),
+q('H',ar(`1905 ഒക്ടോബർ 16ന് കഴ്സൺ പ്രഭു നടപ്പിലാക്കിയ ബംഗാൾ വിഭജന ദിനം ബംഗാളിലുടനീളം ദേശീയ വിലാപദിനമായും രവീന്ദ്രനാഥ ടാഗോറിന്റെ ആഹ്വാനപ്രകാരം രാഖിബന്ധൻ ദിനമായും ആചരിച്ചു.`,`1911ൽ ഡൽഹി ദർബാറിൽ വെച്ച് ഹാർഡിഞ്ച് രണ്ടാമൻ പ്രഭു ബംഗാൾ വിഭജനം റദ്ദാക്കുകയും ബ്രിട്ടീഷ് ഇന്ത്യയുടെ തലസ്ഥാനം കൊൽക്കത്തയിൽ നിന്ന് ഡൽഹിയിലേക്ക് മാറ്റാൻ തീരുമാനിക്കുകയും ചെയ്തു.`),AR4('a','b','c','d'),1,
+`ശരിയായ ഉത്തരം: B\n\nA ശരിയാണ് (1905 ഒക്ടോബർ 16 — വിലാപദിനം/രാഖിബന്ധൻ). R-ഉം ശരിയാണ് (1911). എന്നാൽ R, 6 വർഷത്തിന് ശേഷം നടന്ന സംഭവമാണ്; Aയുടെ വിശദീകരണമല്ല.`),
+q('H',`ലോകചരിത്രത്തിലെ പ്രധാന സംഭവങ്ങളും അവ നടന്ന വർഷങ്ങളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`അമേരിക്കൻ സ്വാതന്ത്ര്യസമരത്തിലെ ഒന്നാം കോണ്ടിനെന്റൽ കോൺഗ്രസ് ഫിലാഡൽഫിയയിൽ ചേർന്നു — 1774`,`ഫ്രഞ്ച് വിപ്ലവത്തിലെ ചരിത്രപ്രസിദ്ധമായ ടെന്നീസ് കോർട്ട് പ്രതിജ്ഞ — 1789`,`റഷ്യൻ വിപ്ലവത്തിലേക്ക് നയിച്ച ബ്ലഡി സൺഡേ (രക്തരൂക്ഷിതമായ ഞായറാഴ്ച) — 1905`,`ഒന്നാം ലോകമഹായുദ്ധാനന്തരം രൂപീകരിച്ച ലീഗ് ഓഫ് നേഷൻസ് നിലവിൽ വന്നത് — 1945`],3,
+`ശരിയായ ഉത്തരം: D\n\nലീഗ് ഓഫ് നേഷൻസ് നിലവിൽ വന്നത് 1920 ജനുവരി 10ന് (വുഡ്രോ വിൽസന്റെ മുൻകൈ). 1945 ഒക്ടോബർ 24ന് രൂപീകൃതമായത് ഐക്യരാഷ്ട്രസഭ (UNO) ആണ്.`),
+/* GEOGRAPHY */
+q('G',st(`ഭൗതിക ഭൂമിശാസ്ത്രവുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`ഉപോഷ്ണ ഉച്ചമർദ്ദ മേഖലകളിൽ നിന്ന് ഭൂമധ്യരേഖാ ന്യൂനമർദ്ദ മേഖലയിലേക്ക് വർഷം മുഴുവനും സ്ഥിരമായി വീശുന്ന ആഗോള വാതങ്ങളാണ് വാണിജ്യവാതങ്ങൾ (Trade Winds).`,`ലോകത്തിലെ ഏറ്റവും ആഴം കൂടിയ സമുദ്ര ഗർത്തമായ മരിയാന ട്രെഞ്ച് (ചലഞ്ചർ ഗർത്തം) സ്ഥിതി ചെയ്യുന്നത് പസഫിക് സമുദ്രത്തിലാണ്.`,`ഭൂമിയുടെ ഉപരിതലത്തിൽ തുല്യ അന്തരീക്ഷ മർദ്ദമുള്ള സ്ഥലങ്ങളെ തമ്മിൽ ബന്ധിപ്പിച്ച് ഭൂപടങ്ങളിൽ വരയ്ക്കുന്ന സാങ്കല്പിക രേഖകളാണ് ഐസോതെർമുകൾ (Isotherms).`]),ST4('13','23','123','12'),3,
+`ശരിയായ ഉത്തരം: D (I, II മാത്രം)\n\nസമമർദ്ദ രേഖകൾ ഐസോബാറുകൾ (Isobars) ആണ്; ഐസോതെർമുകൾ തുല്യ താപനിലയുള്ള സ്ഥലങ്ങളെ ബന്ധിപ്പിക്കുന്നു (III തെറ്റ്).\n\nഓർമ്മിക്കാൻ: Therm = താപം; Bar = മർദ്ദം.`),
+q('G',mt(`ഇന്ത്യയിലെ പ്രധാന ദേശീയോദ്യാനങ്ങളും അവ സ്ഥിതി ചെയ്യുന്ന സംസ്ഥാനങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ദേശീയോദ്യാനങ്ങൾ`,`കാസിരംഗ ദേശീയോദ്യാനം`,`ഗിർ ദേശീയോദ്യാനം`,`ജിം കോർബറ്റ് ദേശീയോദ്യാനം`,`കിയോലാഡിയോ (ഭരത്പൂർ) ദേശീയോദ്യാനം`],[`സംസ്ഥാനങ്ങൾ`,`അസം`,`ഗുജറാത്ത്`,`ഉത്തരാഖണ്ഡ്`,`രാജസ്ഥാൻ`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C\n\nകാസിരംഗ (ഒറ്റക്കൊമ്പൻ കാണ്ടാമൃഗം) — അസം; ഗിർ (ഏഷ്യൻ സിംഹം) — ഗുജറാത്ത്; ജിം കോർബറ്റ് (ഇന്ത്യയിലെ ആദ്യ ദേശീയോദ്യാനം, 1936) — ഉത്തരാഖണ്ഡ്; ഭരത്പൂർ (സൈബീരിയൻ കൊക്കുകൾ) — രാജസ്ഥാൻ.`),
+q('G',ch(`ഉപദ്വീപീയ ഇന്ത്യയിലെ താഴെ പറയുന്ന നദികളെ വടക്കുനിന്ന് തെക്കോട്ട് എന്ന ക്രമത്തിൽ ശരിയായി വിന്യസിച്ചിരിക്കുന്നത് ഏതാണ്?`,[`കൃഷ്ണാ നദി`,`മഹാനദി`,`കാവേരി നദി`,`ഗോദാവരി നദി`]),[`2 – 4 – 1 – 3`,`4 – 2 – 1 – 3`,`2 – 1 – 4 – 3`,`2 – 4 – 3 – 1`],0,
+`ശരിയായ ഉത്തരം: A (2 – 4 – 1 – 3)\n\nവടക്കുനിന്ന് തെക്കോട്ട്: മഹാനദി → ഗോദാവരി → കൃഷ്ണ → കാവേരി.\nഓർമ്മിക്കാൻ: "മ-ഗോ-കൃ-കാ".`),
+q('G',ar(`കേരളത്തിലൂടെ ഒഴുകുന്ന 44 നദികളിൽ 41 നദികളും പടിഞ്ഞാറോട്ട് ഒഴുകി അറബിക്കടലിലോ കായലുകളിലോ പതിക്കുന്നു.`,`കേരളത്തിന്റെ ഭൂപ്രകൃതി കിഴക്കൻ മലനാട്ടിലെ പശ്ചിമഘട്ടത്തിൽ നിന്ന് പടിഞ്ഞാറൻ തീരസമതലത്തിലേക്ക് ചരിഞ്ഞാണ് കിടക്കുന്നത്.`),AR4('a','b','c','d'),0,
+`ശരിയായ ഉത്തരം: A\n\nപശ്ചിമഘട്ടത്തിൽ നിന്ന് പടിഞ്ഞാറോട്ട് ചരിഞ്ഞ ഭൂപ്രകൃതിയായതിനാലാണ് 41 നദികൾ പടിഞ്ഞാറോട്ട് ഒഴുകുന്നത് (3 നദികൾ — കബനി, ഭവാനി, പാമ്പാർ — കിഴക്കോട്ട്). R, Aയുടെ ശരിയായ വിശദീകരണം.`),
+q('G',`കേരളത്തിലെ ധാതു അധിഷ്ഠിത വ്യവസായ ശാലകളും അവ സ്ഥിതി ചെയ്യുന്ന സ്ഥലങ്ങളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`ഇന്ത്യൻ റെയർ എർത്ത്സ് ലിമിറ്റഡ് (IREL) — ചവറ (കൊല്ലം)`,`ട്രാവൻകൂർ ടൈറ്റാനിയം പ്രോഡക്റ്റ്സ് ലിമിറ്റഡ് — കൊച്ചുവേളി (തിരുവനന്തപുരം)`,`മലബാർ സിമന്റ്സ് ലിമിറ്റഡ് — വാളയാർ (പാലക്കാട്)`,`കേരള മിനറൽസ് ആൻഡ് മെറ്റൽസ് ലിമിറ്റഡ് (KMML) — മാനന്തവാടി (വയനാട്)`],3,
+`ശരിയായ ഉത്തരം: D\n\nKMML (കരിമണൽ ഖനനം, ടൈറ്റാനിയം ഡൈഓക്സൈഡ്) സ്ഥിതി ചെയ്യുന്നത് കൊല്ലം ജില്ലയിലെ ചവറയിലാണ്, വയനാട്ടിലല്ല.`),
+/* ECONOMICS */
+q('E',st(`ഇന്ത്യയിലെ ബാങ്കുകളുടെ ദേശസാൽക്കരണവുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`1969 ജൂലൈ 19ന് നാലാം പഞ്ചവത്സര പദ്ധതിക്കാലത്താണ് ₹50 കോടിയിലധികം നിക്ഷേപമുള്ള 14 പ്രമുഖ വാണിജ്യ ബാങ്കുകൾ ദേശസാൽക്കരിച്ചത്.`,`1980 ഏപ്രിൽ 15ന് ആറാം പഞ്ചവത്സര പദ്ധതിക്കാലത്ത് ₹200 കോടിയിലധികം നിക്ഷേപമുള്ള 6 ബാങ്കുകൾ കൂടി ദേശസാൽക്കരിച്ചു.`,`1969ലും 1980ലും ഇന്ത്യയിൽ ബാങ്കുകളുടെ ദേശസാൽക്കരണത്തിന് നേതൃത്വം നൽകിയ പ്രധാനമന്ത്രി ചരൺ സിംഗ് ആയിരുന്നു.`]),ST4('13','12','23','123'),1,
+`ശരിയായ ഉത്തരം: B (I, II മാത്രം)\n\nഇരു ദേശസാൽക്കരണങ്ങളും നടത്തിയ പ്രധാനമന്ത്രി ഇന്ദിരാഗാന്ധി ആണ്, ചരൺ സിംഗ് അല്ല (III തെറ്റ്).`),
+q('E',mt(`ഇന്ത്യൻ നികുതി സംവിധാനത്തിലെ പ്രധാന പദങ്ങളും അവയുടെ സവിശേഷതകളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`നികുതി പദങ്ങൾ`,`പ്രത്യക്ഷ നികുതി (Direct Tax)`,`പരോക്ഷ നികുതി (Indirect Tax)`,`സെസ്സ് (Cess)`,`സർചാർജ് (Surcharge)`],[`സവിശേഷതകൾ`,`നികുതിഭാരം മറ്റൊരാളിലേക്ക് കൈമാറാൻ കഴിയാത്ത നികുതി (ഉദാ: ആദായനികുതി)`,`നികുതിഭാരം ഉപഭോക്താവിലേക്ക് കൈമാറാൻ കഴിയുന്ന നികുതി (ഉദാ: ജി.എസ്.ടി.)`,`വിദ്യാഭ്യാസം, ആരോഗ്യം തുടങ്ങിയ പ്രത്യേക ലക്ഷ്യങ്ങൾക്കായി അടിസ്ഥാന നികുതിക്ക് മേൽ ചുമത്തുന്ന നികുതി`,`നിശ്ചിത പരിധിയിൽ കൂടുതൽ വരുമാനമുള്ളവർക്ക് നികുതിക്ക് മേൽ ചുമത്തുന്ന അധിക നികുതി`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\nപ്രത്യക്ഷ നികുതി — ഭാരം കൈമാറാനാവില്ല; പരോക്ഷ നികുതി — ഉപഭോക്താവിലേക്ക് കൈമാറാം; സെസ്സ് — പ്രത്യേക ആവശ്യത്തിന്; സർചാർജ് — ഉയർന്ന വരുമാനക്കാർക്ക് അധിക നികുതി.`),
+q('E',`ഇന്ത്യയിലെ കാർഷിക മേഖലയെയും ഭക്ഷ്യസുരക്ഷയെയും സംബന്ധിച്ച് താഴെ നൽകിയിരിക്കുന്നവയിൽ തെറ്റായ പ്രസ്താവന ഏതാണ്?`,[`രാജ്യത്തെ ഭക്ഷ്യധാന്യ സംഭരണവും വിതരണവും ഉറപ്പാക്കുന്നതിനായി 1965ൽ ഫുഡ് കോർപ്പറേഷൻ ഓഫ് ഇന്ത്യ (FCI) സ്ഥാപിതമായി`,`അത്യുല്പാദന ശേഷിയുള്ള വിത്തിനങ്ങൾ (HYV Seeds), രാസവളങ്ങൾ, ജലസേചനം എന്നിവ ഹരിതവിപ്ലവത്തിന്റെ പ്രധാന ഘടകങ്ങളായിരുന്നു`,`ഇന്ത്യയിൽ കരിമ്പും ഗോതമ്പും ഏറ്റവും കൂടുതൽ ഉല്പാദിപ്പിക്കുന്ന സംസ്ഥാനം ഉത്തർപ്രദേശാണ്`,`ലോകത്തിൽ സുഗന്ധവ്യഞ്ജനങ്ങളും പയറുവർഗ്ഗങ്ങളും ഏറ്റവും കുറവ് ഉല്പാദിപ്പിക്കുന്ന രാജ്യം ഇന്ത്യയാണ്`],3,
+`ശരിയായ ഉത്തരം: D\n\nലോകത്ത് പാൽ, പയറുവർഗ്ഗങ്ങൾ, ചണം, സുഗന്ധവ്യഞ്ജനങ്ങൾ എന്നിവ ഏറ്റവും കൂടുതൽ ഉല്പാദിപ്പിക്കുന്നത് ഇന്ത്യയാണ് — കുറവല്ല.`),
+q('E',ar(`മുൻകാല ആസൂത്രണ കമ്മീഷനിൽ നിന്ന് വ്യത്യസ്തമായി നീതി ആയോഗിന് (NITI Aayog) സംസ്ഥാനങ്ങൾക്ക് വാർഷിക പദ്ധതി ഫണ്ടുകൾ അനുവദിക്കാനുള്ള സാമ്പത്തിക അധികാരമില്ല.`,`സഹകരണ ഫെഡറലിസം പ്രോത്സാഹിപ്പിച്ചുകൊണ്ട് കേന്ദ്ര-സംസ്ഥാന സർക്കാരുകൾക്ക് വികസന നയങ്ങളിൽ തന്ത്രപരവും സാങ്കേതികവുമായ ഉപദേശങ്ങൾ നൽകുന്ന ഒരു 'തിങ്ക് ടാങ്ക്' (Think Tank) ആയാണ് നീതി ആയോഗ് പ്രവർത്തിക്കുന്നത്.`),AR4('a','b','c','d'),0,
+`ശരിയായ ഉത്തരം: A\n\nനീതി ആയോഗ് ഉപദേശക 'തിങ്ക് ടാങ്ക്' ആയതിനാൽ ഫണ്ട് അനുവദിക്കാനുള്ള അധികാരം ധനകാര്യ മന്ത്രാലയത്തിനാണ്; ആസൂത്രണ കമ്മീഷൻ പ്ലാൻ ഫണ്ട് അനുവദിച്ചിരുന്നു.`),
+q('E',`സാമ്പത്തിക ശാസ്ത്രത്തിൽ 'സ്റ്റാഗ്ഫ്ലേഷൻ' (Stagflation) എന്ന പദം കൊണ്ട് അർത്ഥമാക്കുന്നത് എന്താണ്?`,[`സമ്പദ്‌വ്യവസ്ഥയിൽ ഉയർന്ന പണപ്പെരുപ്പവും (Inflation) ഉയർന്ന തൊഴിലില്ലായ്മയും സാമ്പത്തിക മാന്ദ്യവും ഒരേസമയം അനുഭവപ്പെടുന്ന അവസ്ഥ`,`സാധനങ്ങളുടെയും സേവനങ്ങളുടെയും വില തുടർച്ചയായി കുറഞ്ഞുവരുന്ന അവസ്ഥ`,`രാജ്യത്തിന്റെ വിദേശ നാണയ കരുതൽ ശേഖരം ക്രമാതീതമായി വർദ്ധിക്കുന്ന അവസ്ഥ`,`കാർഷിക മേഖലയിലും വ്യാവസായിക മേഖലയിലും ഉല്പാദനം ഇരട്ടിയാകുന്ന അവസ്ഥ`],0,
+`ശരിയായ ഉത്തരം: A\n\nStagnation + Inflation = Stagflation. വില കുറയുന്ന അവസ്ഥ ഡിഫ്ലേഷൻ ആണ്.`),
+/* CONSTITUTION */
+q('C',st(`മൗലികാവകാശങ്ങളെയും നിർദ്ദേശക തത്ത്വങ്ങളെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`മൗലികാവകാശങ്ങൾ അമേരിക്കൻ ഭരണഘടനയിൽ നിന്നും നിർദ്ദേശക തത്ത്വങ്ങൾ ഐറിഷ് ഭരണഘടനയിൽ നിന്നുമാണ് ഇന്ത്യ കടമെടുത്തത്.`,`1980ലെ മിനർവ മിൽസ് കേസിൽ മൗലികാവകാശങ്ങളും നിർദ്ദേശക തത്ത്വങ്ങളും തമ്മിലുള്ള സന്തുലിതാവസ്ഥ ഭരണഘടനയുടെ അടിസ്ഥാന ഘടനയുടെ ഭാഗമാണെന്ന് സുപ്രീം കോടതി വിധിച്ചു.`,`അനുച്ഛേദം 32 പ്രകാരം ഹൈക്കോടതികൾക്കും അനുച്ഛേദം 226 പ്രകാരം സുപ്രീം കോടതിക്കും റിട്ടുകൾ പുറപ്പെടുവിക്കാൻ അധികാരമുണ്ട്.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nഅനുച്ഛേദം 32 — സുപ്രീം കോടതി; അനുച്ഛേദം 226 — ഹൈക്കോടതി. പ്രസ്താവന III-ൽ ഇത് തിരിച്ചാണ് (തെറ്റ്).`),
+q('C',mt(`ഇന്ത്യൻ ഭരണഘടനാ ഭേദഗതികളും അവയുടെ പ്രധാന വ്യവസ്ഥകളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ഭരണഘടനാ ഭേദഗതികൾ`,`73-ാം ഭേദഗതി (1992)`,`74-ാം ഭേദഗതി (1992)`,`101-ാം ഭേദഗതി (2016)`,`102-ാം ഭേദഗതി (2018)`],[`പ്രധാന വ്യവസ്ഥകൾ`,`പഞ്ചായത്തീരാജ് സ്ഥാപനങ്ങൾക്ക് ഭരണഘടനാ പദവി നൽകി`,`നഗരപാലികാ സ്ഥാപനങ്ങൾക്ക് ഭരണഘടനാ പദവി നൽകി`,`ചരക്ക് സേവന നികുതി (GST) ഇന്ത്യയിൽ നടപ്പിലാക്കി`,`ദേശീയ പിന്നാക്ക വിഭാഗ കമ്മീഷന് (NCBC) ഭരണഘടനാ പദവി നൽകി`]),M_B,3,
+`ശരിയായ ഉത്തരം: D (1-a, 2-b, 3-c, 4-d)\n\n73 — പഞ്ചായത്തീരാജ്; 74 — നഗരപാലിക; 101 — GST; 102 — NCBC.`),
+q('C',`ഇന്ത്യൻ ഭരണഘടനയിലെ പ്രധാന അനുച്ഛേദങ്ങളും അവയുടെ വ്യവസ്ഥകളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`അനുച്ഛേദം 79 — പാർലമെന്റിന്റെ രൂപീകരണം (രാഷ്ട്രപതി, രാജ്യസഭ, ലോക്സഭ)`,`അനുച്ഛേദം 110 — മണി ബില്ലിന്റെ (Money Bill) നിർവ്വചനം`,`അനുച്ഛേദം 112 — വാർഷിക ധനകാര്യ പ്രസ്താവന (കേന്ദ്ര ബജറ്റ്)`,`അനുച്ഛേദം 213 — സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസിന്റെയും ജഡ്ജിമാരുടെയും നിയമനം`],3,
+`ശരിയായ ഉത്തരം: D\n\nഅനുച്ഛേദം 213 — ഗവർണറുടെ ഓർഡിനൻസ് അധികാരം (രാഷ്ട്രപതിയുടേത് 123). സുപ്രീം കോടതി ജഡ്ജിമാരുടെ നിയമനം — അനുച്ഛേദം 124.`),
+q('C',ar(`ഭരണഘടനയുടെ അനുച്ഛേദം 280 പ്രകാരം ഓരോ അഞ്ച് വർഷം കൂടുമ്പോഴും അല്ലെങ്കിൽ ആവശ്യമെന്ന് തോന്നുകയാണെങ്കിൽ അതിന് മുൻപോ രാഷ്ട്രപതി കേന്ദ്ര ധനകാര്യ കമ്മീഷനെ നിയമിക്കുന്നു.`,`കേന്ദ്ര സർക്കാരും സംസ്ഥാന സർക്കാരുകളും തമ്മിലുള്ള നികുതി വരുമാന വിഹിതവും സംസ്ഥാനങ്ങൾക്കുള്ള ധനസഹായ ഗ്രാന്റുകളും ശുപാർശ ചെയ്യുകയാണ് ധനകാര്യ കമ്മീഷന്റെ ഭരണഘടനാപരമായ ചുമതല.`),AR4('b','c','a','d'),2,
+`ശരിയായ ഉത്തരം: C (A, R ശരി; R, Aയുടെ ശരിയായ വിശദീകരണം)\n\nനികുതി വിഹിതവും ഗ്രാന്റും ശുപാർശ ചെയ്യാനാണ് അനുച്ഛേദം 280 പ്രകാരം ധനകാര്യ കമ്മീഷനെ നിയമിക്കുന്നത്.`),
+q('C',ch(`ഇന്ത്യൻ ഭരണഘടനയിലെ ഭാഷകളുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന സംഭവങ്ങളെ അവ നടന്ന വർഷത്തിന്റെ അടിസ്ഥാനത്തിൽ `+CHR,[`21-ാം ഭേദഗതിയിലൂടെ സിന്ധി ഭാഷ എട്ടാം പട്ടികയിൽ ഉൾപ്പെടുത്തി`,`മലയാള ഭാഷയ്ക്ക് കേന്ദ്ര സർക്കാർ ശ്രേഷ്ഠഭാഷാ പദവി നൽകി`,`71-ാം ഭേദഗതിയിലൂടെ കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി ഭാഷകൾ എട്ടാം പട്ടികയിൽ ഉൾപ്പെടുത്തി`,`92-ാം ഭേദഗതിയിലൂടെ ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി ഭാഷകൾ എട്ടാം പട്ടികയിൽ ഉൾപ്പെടുത്തി`]),[`1 – 4 – 3 – 2`,`1 – 3 – 4 – 2`,`3 – 1 – 4 – 2`,`1 – 3 – 2 – 4`],1,
+`ശരിയായ ഉത്തരം: B (1 – 3 – 4 – 2)\n\nസിന്ധി (21-ാം ഭേദഗതി) — 1967; കൊങ്കണി, മണിപ്പൂരി, നേപ്പാളി (71-ാം) — 1992; ബോഡോ, ദോഗ്രി, മൈഥിലി, സന്താലി (92-ാം) — 2003; മലയാളം ശ്രേഷ്ഠഭാഷ — 2013 മെയ് 23.`),
+/* KERALA GOVERNANCE */
+q('K',st(`ഭരണനിയമത്തിലെ സ്വാഭാവിക നീതിയുടെ തത്ത്വങ്ങളുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`ഒരു ഉദ്യോഗസ്ഥൻ സ്വന്തം അടുത്ത ബന്ധുക്കൾ മത്സരിക്കുന്ന തിരഞ്ഞെടുപ്പ് സമിതിയിൽ അംഗമായിരുന്ന് തീരുമാനമെടുക്കുന്നത് 'പേഴ്സണൽ ബയസ്' (Personal Bias) എന്ന പക്ഷപാതത്തിന് ഉദാഹരണമാണ്.`,`'ആവശ്യകതയുടെ തത്ത്വം' (Doctrine of Necessity) പ്രകാരം മറ്റൊരു ബദൽ അധികാരിയില്ലാത്ത അനിവാര്യ ഘട്ടങ്ങളിൽ പക്ഷപാതത്തിനെതിരെയുള്ള നിയമത്തിന് ഒഴിവാക്കൽ അനുവദിക്കാറുണ്ട്.`,`സ്വാഭാവിക നീതിയുടെ തത്ത്വങ്ങൾ ലംഘിക്കപ്പെട്ടാലും ഒരു അഡ്മിനിസ്ട്രേറ്റീവ് ഉത്തരവും റദ്ദാക്കാൻ ഹൈക്കോടതിക്ക് അധികാരമില്ല.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nസ്വാഭാവിക നീതി ലംഘിച്ചാൽ സെർഷ്യോററി റിട്ട് വഴി ഹൈക്കോടതിക്ക് ഉത്തരവ് റദ്ദാക്കാം (III തെറ്റ്).`),
+q('K',mt(`കേരളത്തിലെ പ്രധാന നിയമങ്ങളും അവ നിലവിൽ വന്ന വർഷങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`നിയമങ്ങൾ`,`കേരള വനിതാ കമ്മീഷൻ നിയമം`,`കേരള ലോകായുക്ത നിയമം`,`കേരള സംസ്ഥാന പട്ടികജാതി-പട്ടികവർഗ്ഗ കമ്മീഷൻ നിയമം`,`കേരള സംസ്ഥാന സേവനാവകാശ നിയമം`],[`വർഷങ്ങൾ`,`1991`,`1999`,`2007`,`2012`]),M_C,1,
+`ശരിയായ ഉത്തരം: B (1-a, 2-b, 3-c, 4-d)\n\nവനിതാ കമ്മീഷൻ — 1991; ലോകായുക്ത — 1999; SC/ST കമ്മീഷൻ — 2007; സേവനാവകാശ നിയമം — 2012.\nകുറിപ്പ്: വനിതാ കമ്മീഷൻ നിയമം 1990 എന്നും ചില സ്രോതസ്സുകളിൽ കാണുന്നു; ഓപ്ഷനുകളിൽ 1991 മാത്രമേ ഉള്ളൂ, അതിനാൽ B ആണ് ഏക ചേരുംപടി.`),
+q('K',`കേരള സർക്കാരിന്റെ സാമൂഹ്യ സുരക്ഷാ-ആരോഗ്യ പദ്ധതികളും അവയുടെ ലക്ഷ്യങ്ങളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`അമൃതം ആരോഗ്യം — മുപ്പത് വയസ്സിന് മുകളിലുള്ളവരിൽ ജീവിതശൈലീ രോഗങ്ങൾ കണ്ടെത്താനും നിയന്ത്രിക്കാനുമുള്ള പദ്ധതി`,`താലോലം — മാരക രോഗങ്ങൾ ബാധിച്ച 18 വയസ്സിൽ താഴെയുള്ള കുട്ടികൾക്ക് സൗജന്യ ചികിത്സ നൽകുന്ന പദ്ധതി`,`കാരുണ്യ ആരോഗ്യ സുരക്ഷാ പദ്ധതി (KASP) — നിർദ്ധന കുടുംബങ്ങൾക്ക് പ്രതിവർഷം ₹5 ലക്ഷം രൂപയുടെ സൗജന്യ ചികിത്സാ പരിരക്ഷ`,`സ്നേഹപൂർവ്വം — മുതിർന്ന പൗരന്മാർക്ക് സൗജന്യമായി കൃത്രിമ പല്ലുകൾ വെച്ചുകൊടുക്കുന്ന പദ്ധതി`],3,
+`ശരിയായ ഉത്തരം: D\n\nസ്നേഹപൂർവ്വം — മാതാപിതാക്കൾ മരണപ്പെട്ട നിർദ്ധന കുട്ടികൾക്കുള്ള വിദ്യാഭ്യാസ ധനസഹായം. മുതിർന്ന പൗരന്മാർക്ക് കൃത്രിമ പല്ല് നൽകുന്ന പദ്ധതി 'മന്ദഹാസം'.`),
+q('K',st(`കേരളത്തിലെ ഇ-ഗവേണൻസ് സംവിധാനങ്ങളുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`സർക്കാർ ജീവനക്കാരുടെ ശമ്പളവും സർവീസ് വിവരങ്ങളും കൈകാര്യം ചെയ്യുന്ന സംവിധാനമാണ് സ്പാർക്ക് (SPARK).`,`പൊതുജനങ്ങൾക്ക് വില്ലേജ് ഓഫീസുകൾ വഴി വിവിധ സർട്ടിഫിക്കറ്റുകൾ ഓൺലൈനായി ലഭ്യമാക്കുന്ന പദ്ധതിയാണ് ഇ-ഡിസ്ട്രിക്റ്റ് (e-District).`,`സർക്കാർ ട്രഷറികളിലെ ബില്ലുകളും സാമ്പത്തിക ഇടപാടുകളും കൈകാര്യം ചെയ്യുന്ന 'ബിംസ്' (BIMS) പ്രവർത്തിക്കുന്നത് സംസ്ഥാന വനം വകുപ്പിന് കീഴിലാണ്.`]),ST4('13','23','12','123'),2,
+`ശരിയായ ഉത്തരം: C (I, II മാത്രം)\n\nBIMS (Bill Information & Management System) ട്രഷറി/ധനകാര്യ വകുപ്പിന് കീഴിലാണ്, വനം വകുപ്പിന് കീഴിലല്ല (III തെറ്റ്).`),
+q('K',ar(`1963ലെ കേരള ഭൂപരിഷ്കരണ നിയമം (1970 ജനുവരി 1ന് പ്രാബല്യത്തിൽ വന്ന ഭേദഗതി) വഴി കേരളത്തിലെ കാർഷിക മേഖലയിൽ നൂറ്റാണ്ടുകളായി നിലനിന്നിരുന്ന ജന്മി-കുടിയാൻ വ്യവസ്ഥ അവസാനിപ്പിക്കാൻ സാധിച്ചു.`,`കുടിയാന്മാർക്ക് കൈവശഭൂമിയിൽ സ്ഥിരാവകാശവും ഉടമസ്ഥാവകാശവും നൽകുകയും ഭൂവുടമസ്ഥതയ്ക്ക് പരിധി നിശ്ചയിച്ച് മിച്ചഭൂമി ഭൂരഹിതർക്ക് വിതരണം ചെയ്യുകയും ചെയ്തതിലൂടെയാണ് ഈ മാറ്റം സാധ്യമായത്.`),AR4('a','b','c','d'),0,
+`ശരിയായ ഉത്തരം: A\n\nകുടിയാന്മാർക്ക് ഉടമസ്ഥാവകാശവും ഭൂപരിധിയും മിച്ചഭൂമി വിതരണവുമാണ് ജന്മിത്തം അവസാനിപ്പിച്ചത്.`),
+q('K',mt(`2005ലെ ദുരന്തനിവാരണ നിയമപ്രകാരമുള്ള വിവിധ അതോറിറ്റികളും അവയുടെ എക്സ്-ഒഫീഷ്യോ അധ്യക്ഷന്മാരും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`അതോറിറ്റികൾ / സമിതികൾ`,`ദേശീയ ദുരന്തനിവാരണ അതോറിറ്റി (NDMA)`,`സംസ്ഥാന ദുരന്തനിവാരണ അതോറിറ്റി (SDMA)`,`സംസ്ഥാന എക്സിക്യൂട്ടീവ് കമ്മിറ്റി (SEC)`,`ജില്ലാ ദുരന്തനിവാരണ അതോറിറ്റി (DDMA)`],[`എക്സ്-ഒഫീഷ്യോ അധ്യക്ഷന്മാർ`,`പ്രധാനമന്ത്രി`,`മുഖ്യമന്ത്രി`,`സംസ്ഥാന ചീഫ് സെക്രട്ടറി`,`ജില്ലാ കളക്ടർ`]),M_B,3,
+`ശരിയായ ഉത്തരം: D (1-a, 2-b, 3-c, 4-d)\n\nNDMA — പ്രധാനമന്ത്രി; SDMA — മുഖ്യമന്ത്രി; SEC — ചീഫ് സെക്രട്ടറി; DDMA — ജില്ലാ കളക്ടർ.`),
+q('K',`ദത്തവത്കൃത നിയമനിർമ്മാണത്തിന്മേലുള്ള (Delegated Legislation) നിയമനിർമ്മാണ സഭയുടെ നിയന്ത്രണത്തിന് (Legislative Control) ഉദാഹരണം താഴെ പറയുന്നവയിൽ ഏതാണ്?`,[`അൾട്രാ വൈറസ് സിദ്ധാന്തം വഴി കോടതി ചട്ടങ്ങൾ റദ്ദാക്കൽ`,`എക്സിക്യൂട്ടീവ് നിർമ്മിച്ച ചട്ടങ്ങൾ നിയമസഭയുടെ മേശപ്പുറത്ത് വെക്കലും (Laying on the table) സബ്ഓർഡിനേറ്റ് ലെജിസ്ലേഷൻ കമ്മിറ്റിയുടെ പരിശോധനയും`,`പൊതുജനങ്ങൾ ഹൈക്കോടതിയിൽ റിട്ട് ഹർജി സമർപ്പിക്കൽ`,`ജില്ലാ മജിസ്ട്രേറ്റ് പുറപ്പെടുവിക്കുന്ന നിരോധനാജ്ഞാ ഉത്തരവുകൾ`],1,
+`ശരിയായ ഉത്തരം: B\n\nമേശപ്പുറത്ത് വെക്കലും സബ്ഓർഡിനേറ്റ് ലെജിസ്ലേഷൻ കമ്മിറ്റി പരിശോധനയും ലെജിസ്ലേറ്റീവ് നിയന്ത്രണം. അൾട്രാ വൈറസ് പരിശോധന, റിട്ട് — ജുഡീഷ്യൽ നിയന്ത്രണം.`),
+q('K',st(`മഹാത്മാഗാന്ധി ദേശീയ ഗ്രാമീണ തൊഴിലുറപ്പ് പദ്ധതിയുമായി (MGNREGS) ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`ഈ പദ്ധതി പ്രകാരം ഗ്രാമീണ കുടുംബങ്ങൾക്ക് ഒരു സാമ്പത്തിക വർഷത്തിൽ കുറഞ്ഞത് 100 ദിവസത്തെ അവിദഗ്ദ്ധ കായിക തൊഴിൽ ഉറപ്പുനൽകുന്നു.`,`തൊഴിലുറപ്പ് പദ്ധതിയിലെ വേതനം ഗുണഭോക്താക്കളുടെ ബാങ്ക് അല്ലെങ്കിൽ പോസ്റ്റ് ഓഫീസ് അക്കൗണ്ടുകളിലേക്ക് നേരിട്ട് (DBT) കൈമാറുന്നു.`,`തൊഴിലുറപ്പ് പദ്ധതിയിലെ നിർമ്മാണ പ്രവർത്തനങ്ങൾ സ്വകാര്യ കരാറുകാരെയും (Contractors) വലിയ യന്ത്രങ്ങളെയും ഉപയോഗിച്ച് മാത്രമേ നടത്താൻ പാടുള്ളൂ.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nഈ പദ്ധതിയിൽ കരാറുകാരെയും വലിയ യന്ത്രങ്ങളെയും നിരോധിച്ചിരിക്കുന്നു (III തെറ്റ്).`),
+q('K',`കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിനെ (Kerala State Planning Board) സംബന്ധിച്ച് താഴെ പറയുന്നവയിൽ തെറ്റായ പ്രസ്താവന ഏതാണ്?`,[`1967 സെപ്റ്റംബറിൽ ഇ.എം.എസ്. നമ്പൂതിരിപ്പാട് മുഖ്യമന്ത്രിയായിരുന്നപ്പോഴാണ് കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡ് രൂപീകരിച്ചത്`,`കേരള മുഖ്യമന്ത്രിയാണ് സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ എക്സ്-ഒഫീഷ്യോ ചെയർമാൻ`,`ബജറ്റിന് മുന്നോടിയായി നിയമസഭയിൽ വെക്കുന്ന വാർഷിക സാമ്പത്തിക അവലോകന റിപ്പോർട്ട് (Economic Review) തയ്യാറാക്കുന്നത് സംസ്ഥാന ആസൂത്രണ ബോർഡാണ്`,`കേരള സംസ്ഥാന ആസൂത്രണ ബോർഡിന്റെ ആസ്ഥാനം സ്ഥിതി ചെയ്യുന്നത് എറണാകുളം ജില്ലയിലെ കാക്കനാടാണ്`],3,
+`ശരിയായ ഉത്തരം: D\n\nആസൂത്രണ ബോർഡിന്റെ ആസ്ഥാനം തിരുവനന്തപുരത്തെ പട്ടത്താണ്, കാക്കനാടല്ല.`),
+q('K',`വനിതാ-ശിശുവികസന വകുപ്പ് നടപ്പിലാക്കുന്ന 'കാവൽ' (Kaval) എന്ന പദ്ധതിയുടെ പ്രധാന ലക്ഷ്യം താഴെ പറയുന്നവയിൽ ഏതാണ്?`,[`നിയമവുമായി പൊരുത്തപ്പെടാത്ത കുട്ടികൾക്ക് (Children in conflict with law) മനഃശാസ്ത്രപരവും സാമൂഹികവുമായ പിന്തുണ നൽകി അവരെ സമൂഹത്തിന്റെ മുഖ്യധാരയിലേക്ക് തിരിച്ചുകൊണ്ടുവരൽ`,`മുതിർന്ന പൗരന്മാർക്ക് സൗജന്യ തീർത്ഥാടന യാത്ര ഒരുക്കൽ`,`സർക്കാർ ഓഫീസുകളിൽ സോളാർ പാനലുകൾ സ്ഥാപിക്കൽ`,`വിദേശത്ത് ജോലി തേടുന്ന യുവാക്കൾക്ക് പലിശരഹിത വായ്പ നൽകൽ`],0,
+`ശരിയായ ഉത്തരം: A\n\nനിയമവുമായി പൊരുത്തപ്പെടാത്ത കുട്ടികളുടെ പുനരധിവാസവും കൗൺസിലിംഗുമാണ് 'കാവൽ' ലക്ഷ്യമിടുന്നത്.`),
+/* LIFE SCIENCE */
+q('L',mt(`മനുഷ്യശരീരത്തിലെ അന്തഃസ്രാവി ഗ്രന്ഥികളും അവയുടെ വിശേഷണങ്ങളും/ധർമ്മങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ഗ്രന്ഥികൾ`,`പിറ്റ്യൂട്ടറി ഗ്രന്ഥി`,`തൈമസ് ഗ്രന്ഥി`,`അഡ്രീനൽ ഗ്രന്ഥി`,`പീനിയൽ ഗ്രന്ഥി`],[`വിശേഷണങ്ങൾ / ധർമ്മങ്ങൾ`,`മറ്റ് അന്തഃസ്രാവി ഗ്രന്ഥികളെ നിയന്ത്രിക്കുന്ന മാസ്റ്റർ ഗ്രന്ഥി`,`ടി-ലിംഫോസൈറ്റുകളുടെ പാകപ്പെടലിന് സഹായിക്കുന്ന യുവത്വ ഗ്രന്ഥി`,`അടിയന്തര സാഹചര്യങ്ങളെ നേരിടാൻ സഹായിക്കുന്ന അഡ്രിനാലിൻ ഉല്പാദിപ്പിക്കുന്നു`,`മെലാടോണിൻ ഉല്പാദിപ്പിച്ച് ശരീരത്തിന്റെ ജൈവഘടികാരം നിയന്ത്രിക്കുന്നു`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\nപിറ്റ്യൂട്ടറി — മാസ്റ്റർ ഗ്രന്ഥി; തൈമസ് — യുവത്വ ഗ്രന്ഥി (T-കോശങ്ങൾ); അഡ്രീനൽ — അടിയന്തര ഗ്രന്ഥി; പീനിയൽ — മെലാടോണിൻ, ജൈവഘടികാരം.`),
+q('L',st(`ധാതുക്കളെയും ജീവകങ്ങളെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`രക്തത്തിലെ ഹീമോഗ്ലോബിന്റെ നിർമ്മാണത്തിന് ആവശ്യമായ ഇരുമ്പിന്റെ (Iron) അപര്യാപ്തത മൂലം വിളർച്ച (Anaemia) ഉണ്ടാകുന്നു.`,`തൈറോയ്ഡ് ഗ്രന്ഥിയുടെ സുഗമമായ പ്രവർത്തനത്തിന് ആവശ്യമായ അയോഡിന്റെ കുറവുമൂലം ഗോയിറ്റർ (Goitre) എന്ന രോഗം ഉണ്ടാകുന്നു.`,`പല്ലുകളുടെയും എല്ലുകളുടെയും വളർച്ചയ്ക്ക് ആവശ്യമായ കാൽസ്യം ആഗിരണം ചെയ്യാൻ സഹായിക്കുന്ന ജീവകം സിയാണ്.`]),ST4('13','12','23','123'),1,
+`ശരിയായ ഉത്തരം: B (I, II മാത്രം)\n\nകാൽസ്യം ആഗിരണത്തിന് സഹായിക്കുന്നത് ജീവകം ഡി (Vitamin D) ആണ്; ജീവകം സി ഇരുമ്പിന്റെ ആഗിരണത്തെ സഹായിക്കുന്നു (III തെറ്റ്).`),
+q('L',`സാംക്രമിക രോഗങ്ങളും അവയുടെ രോഗകാരികളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`ആന്ത്രാക്സ് (Anthrax) — ബാസിലസ് ആന്ത്രാസിസ് എന്ന ബാക്ടീരിയ`,`എയ്ഡ്സ് (AIDS) — ഹ്യൂമൻ ഇമ്മ്യൂണോ ഡെഫിഷ്യൻസി വൈറസ് (HIV)`,`വസൂരി (Smallpox) — വാരിയോള വൈറസ് (Variola Virus)`,`ക്ഷയരോഗം (Tuberculosis) — പ്ലാസ്മോഡിയം എന്ന പ്രോട്ടോസോവ`],3,
+`ശരിയായ ഉത്തരം: D\n\nക്ഷയരോഗത്തിന് കാരണം മൈക്കോബാക്ടീരിയം ട്യൂബർക്കുലോസിസ് (ബാക്ടീരിയ). പ്ലാസ്മോഡിയം — മലമ്പനി.`),
+q('L',ar(`ഒ നെഗറ്റീവ് (O-) രക്തഗ്രൂപ്പുള്ള വ്യക്തികളെ 'സാർവ്വത്രിക ദാതാവ്' (Universal Donor) എന്ന് വിളിക്കുന്നു.`,`ഒ നെഗറ്റീവ് രക്തഗ്രൂപ്പിലെ ചുവന്ന രക്താണുക്കളിൽ എ, ബി ആന്റിജനുകളോ ആർ.എച്ച്. (Rh) ആന്റിജനോ ഇല്ലാത്തതിനാൽ സ്വീകർത്താവിന്റെ ശരീരത്തിൽ ആന്റിബോഡി പ്രതിപ്രവർത്തനം ഉണ്ടാകുന്നില്ല.`),AR4('a','b','c','d'),0,
+`ശരിയായ ഉത്തരം: A\n\nA, B, Rh ആന്റിജനുകൾ ഇല്ലാത്തതിനാൽ ആർക്കും നൽകാം — അതുകൊണ്ടാണ് സാർവ്വത്രിക ദാതാവ്. (AB+ — സാർവ്വത്രിക സ്വീകർത്താവ്.)`),
+q('L',st(`സസ്യങ്ങളിലെ സംവഹന കലകളെയും പ്രകാശസംശ്ലേഷണത്തെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`സസ്യങ്ങളിൽ വേരുകൾ വലിച്ചെടുക്കുന്ന ജലവും ലവണങ്ങളും ഇലകളിലേക്ക് എത്തിക്കുന്ന സംവഹന കലയാണ് സൈലം (Xylem).`,`ഇലകളിൽ പ്രകാശസംശ്ലേഷണ ഫലമായി നിർമ്മിക്കപ്പെടുന്ന ആഹാരം സസ്യത്തിന്റെ മറ്റ് ഭാഗങ്ങളിലേക്ക് എത്തിക്കുന്ന കലയാണ് ഫ്ലോയം (Phloem).`,`സസ്യങ്ങൾ പ്രകാശസംശ്ലേഷണ സമയത്ത് കാർബൺ ഡൈഓക്സൈഡ് പുറത്തുവിടുകയും ഓക്സിജൻ സ്വീകരിക്കുകയും ചെയ്യുന്നു.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nപ്രകാശസംശ്ലേഷണത്തിൽ CO₂ സ്വീകരിക്കുകയും O₂ പുറത്തുവിടുകയുമാണ് ചെയ്യുന്നത് (III തിരിച്ചാണ് — തെറ്റ്).\nഓർമ്മിക്കാൻ: ജലം = സൈലം; ഫുഡ് = ഫ്ലോയം.`),
+q('L',mt(`പ്രധാന പരിസ്ഥിതി ദിനങ്ങളും അവ ആചരിക്കുന്ന തീയതികളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`പരിസ്ഥിതി ദിനങ്ങൾ`,`ലോക തണ്ണീർത്തട ദിനം (World Wetlands Day)`,`ലോക ജലദിനം (World Water Day)`,`ലോക ഭൗമദിനം (World Earth Day)`,`ലോക പരിസ്ഥിതി ദിനം (World Environment Day)`],[`തീയതികൾ`,`ഫെബ്രുവരി 2`,`മാർച്ച് 22`,`ഏപ്രിൽ 22`,`ജൂൺ 5`]),M_C,1,
+`ശരിയായ ഉത്തരം: B (1-a, 2-b, 3-c, 4-d)\n\nതണ്ണീർത്തടം — ഫെബ്രുവരി 2; ജലം — മാർച്ച് 22; ഭൗമദിനം — ഏപ്രിൽ 22; പരിസ്ഥിതി — ജൂൺ 5. (ജൈവവൈവിധ്യം — മെയ് 22; ഓസോൺ — സെപ്റ്റംബർ 16)`),
+/* PHYSICS */
+q('P',`ഒരു കോൺവെക്സ് ലെൻസിന്റെ ഫോക്കസ് ദൂരം (f) +50 cm ആണെങ്കിൽ, ആ ലെൻസിന്റെ പവർ (Power of Lens) എത്ര ഡയോപ്റ്റർ (Dioptre) ആയിരിക്കും?`,[`+0.5 D`,`-2 D`,`+2 D`,`+5 D`],2,
+`ശരിയായ ഉത്തരം: C (+2 D)\n\nP = 1/f (മീറ്റർ) = 100/f (cm) = 100/50 = +2 D.`),
+q('P',st(`തരംഗങ്ങളെയും ശബ്ദത്തെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`തരംഗത്തിന്റെ സഞ്ചാരദിശയ്ക്ക് സമാന്തരമായി മാധ്യമത്തിലെ കണികകൾ കമ്പനം ചെയ്യുന്ന അനുദൈർഘ്യ തരംഗങ്ങൾക്ക് (Longitudinal Waves) ഉദാഹരണമാണ് വായുവിലൂടെയുള്ള ശബ്ദതരംഗങ്ങൾ.`,`തരംഗത്തിന്റെ സഞ്ചാരദിശയ്ക്ക് ലംബമായി കണികകൾ കമ്പനം ചെയ്യുന്ന അനുപ്രസ്ഥ തരംഗങ്ങൾക്ക് (Transverse Waves) ഉദാഹരണമാണ് പ്രകാശതരംഗങ്ങൾ.`,`ഒരു സെക്കൻഡിൽ ഉണ്ടാകുന്ന കമ്പനങ്ങളുടെ എണ്ണമായ ആവൃത്തി (Frequency) കൂടുമ്പോൾ ശബ്ദത്തിന്റെ കൂർമ്മത (Pitch) കുറയുന്നു.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nആവൃത്തി കൂടുമ്പോൾ കൂർമ്മത (Pitch) കൂടുകയാണ് ചെയ്യുന്നത് (III തെറ്റ്).`),
+q('P',mt(`ഭൗതിക അളവുകളും അവയുടെ എസ്.ഐ. (SI) യൂണിറ്റുകളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ഭൗതിക അളവുകൾ`,`പ്രവൃത്തിയും ഊർജ്ജവും (Work & Energy)`,`പവർ (Power)`,`മർദ്ദം (Pressure)`,`ബലം (Force)`],[`എസ്.ഐ. യൂണിറ്റുകൾ`,`ജൂൾ (Joule)`,`വാട്ട് (Watt)`,`പാസ്കൽ (Pascal)`,`ന്യൂട്ടൺ (Newton)`]),M_B,3,
+`ശരിയായ ഉത്തരം: D (1-a, 2-b, 3-c, 4-d)\n\nജൂൾ — പ്രവൃത്തി/ഊർജ്ജം; വാട്ട് — പവർ; പാസ്കൽ — മർദ്ദം; ന്യൂട്ടൺ — ബലം.`),
+/* CHEMISTRY */
+q('Ch',st(`ആവർത്തനപ്പട്ടികയെയും മൂലകങ്ങളെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`ദിമിത്രി മെൻഡലിയേവിന്റെ ആവർത്തനപ്പട്ടിക അറ്റോമിക മാസിനെയും ഹെൻറി മോസ്‌ലിയുടെ ആധുനിക ആവർത്തനപ്പട്ടിക അറ്റോമിക സംഖ്യയെയും അടിസ്ഥാനമാക്കിയുള്ളതാണ്.`,`ആധുനിക ആവർത്തനപ്പട്ടികയിൽ കുത്തനെയുള്ള 18 ഗ്രൂപ്പുകളും വിലങ്ങനെയുള്ള 7 പിരീഡുകളും ഉണ്ട്.`,`പ്രപഞ്ചത്തിൽ ഏറ്റവും കൂടുതൽ അളവിൽ കാണപ്പെടുന്ന മൂലകം ഓക്സിജൻ ആണ്.`]),ST4('13','12','23','123'),1,
+`ശരിയായ ഉത്തരം: B (I, II മാത്രം)\n\nപ്രപഞ്ചത്തിൽ ഏറ്റവും കൂടുതലുള്ള മൂലകം ഹൈഡ്രജൻ (രണ്ടാമത് ഹീലിയം). ഭൂവൽക്കത്തിൽ ഏറ്റവും കൂടുതൽ — ഓക്സിജൻ.`),
+q('Ch',mt(`രാസസംയുക്തങ്ങളുടെ പൊതുനാമവും അവയുടെ രാസനാമവും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`പൊതുനാമം`,`കാസ്റ്റിക് സോഡ (Caustic Soda)`,`മിൽക്ക് ഓഫ് മഗ്നീഷ്യ`,`കുമ്മായം (Slaked Lime)`,`കറിയുപ്പ് (Common Salt)`],[`രാസനാമം`,`സോഡിയം ഹൈഡ്രോക്സൈഡ് (NaOH)`,`മഗ്നീഷ്യം ഹൈഡ്രോക്സൈഡ് (Mg(OH)₂)`,`കാൽസ്യം ഹൈഡ്രോക്സൈഡ് (Ca(OH)₂)`,`സോഡിയം ക്ലോറൈഡ് (NaCl)`]),M_D,0,
+`ശരിയായ ഉത്തരം: A (1-a, 2-b, 3-c, 4-d)\n\nകാസ്റ്റിക് സോഡ — NaOH; മിൽക്ക് ഓഫ് മഗ്നീഷ്യ — Mg(OH)₂; കുമ്മായം — Ca(OH)₂; കറിയുപ്പ് — NaCl.`),
+q('Ch',`ലോഹങ്ങളുടെ ഭൗതിക സവിശേഷതകളെ സംബന്ധിച്ച് താഴെ നൽകിയിരിക്കുന്നവയിൽ തെറ്റായ പ്രസ്താവന ഏതാണ്?`,[`വൈദ്യുതിയും താപവും ഏറ്റവും നന്നായി കടത്തിവിടുന്ന ലോഹം വെള്ളിയാണ് (Silver)`,`ഏറ്റവും സാന്ദ്രത കുറഞ്ഞ (ഭാരം കുറഞ്ഞ) ലോഹം ലിഥിയം (Lithium) ആണ്`,`ഇലക്ട്രിക് ബൾബുകളുടെ ഫിലമെന്റ് നിർമ്മിക്കാൻ ഉപയോഗിക്കുന്ന ഉയർന്ന ദ്രവണാങ്കമുള്ള ലോഹം ടങ്സ്റ്റൺ ആണ്`,`അടിച്ചുപരത്താനുള്ള കഴിവും (Malleability) വലിച്ചുനീട്ടാനുള്ള കഴിവും (Ductility) ഏറ്റവും കുറവുള്ള ലോഹം സ്വർണ്ണമാണ്`],3,
+`ശരിയായ ഉത്തരം: D\n\nMalleability, Ductility എന്നിവ ഏറ്റവും കൂടുതലുള്ള ലോഹമാണ് സ്വർണ്ണം — കുറവല്ല.`),
+/* ARTS */
+q('A',ch(`സരസ്വതി സമ്മാനം നേടിയ താഴെ പറയുന്ന നാല് മലയാള സാഹിത്യകാരന്മാരെ അവർക്ക് പുരസ്കാരം ലഭിച്ച വർഷത്തിന്റെ അടിസ്ഥാനത്തിൽ `+CHR,[`സുഗതകുമാരി (മണലെഴുത്ത്)`,`ബാലാമണിയമ്മ (നിവേദ്യം)`,`പ്രഭാവർമ്മ (രൗദ്ര സാത്വികം)`,`കെ. അയ്യപ്പപ്പണിക്കർ (അയ്യപ്പപ്പണിക്കരുടെ കൃതികൾ)`]),[`2 – 1 – 4 – 3`,`4 – 2 – 1 – 3`,`2 – 4 – 1 – 3`,`2 – 4 – 3 – 1`],2,
+`ശരിയായ ഉത്തരം: C (2 – 4 – 1 – 3)\n\nബാലാമണിയമ്മ — 1995; അയ്യപ്പപ്പണിക്കർ — 2005; സുഗതകുമാരി — 2012; പ്രഭാവർമ്മ — 2023.\nഓർമ്മിക്കാൻ: "ബാ – അ – സു – പ്ര".`),
+q('A',mt(`മലയാള സാഹിത്യകാരന്മാരും അവരുടെ പ്രശസ്തമായ വിശേഷണങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`വിശേഷണങ്ങൾ`,`ബേപ്പൂർ സുൽത്താൻ`,`ശക്തിയുടെ കവി`,`കാച്ചിക്കുറുക്കിയ കവിതകളുടെ കവി`,`ഉജ്ജ്വല ശബ്ദാഢ്യൻ`],[`സാഹിത്യകാരന്മാർ`,`വൈക്കം മുഹമ്മദ് ബഷീർ`,`ഇടശ്ശേരി ഗോവിന്ദൻ നായർ`,`വൈലോപ്പിള്ളി ശ്രീധരമേനോൻ`,`ഉള്ളൂർ എസ്. പരമേശ്വരയ്യർ`]),M_E,1,
+`ശരിയായ ഉത്തരം: B (1-a, 2-b, 3-c, 4-d)\n\nബേപ്പൂർ സുൽത്താൻ — ബഷീർ; ശക്തിയുടെ കവി — ഇടശ്ശേരി; കാച്ചിക്കുറുക്കിയ കവിതകളുടെ കവി — വൈലോപ്പിള്ളി; ഉജ്ജ്വല ശബ്ദാഢ്യൻ — ഉള്ളൂർ.`),
+q('A',st(`കേരളത്തിലെ ചിത്രകല, ശില്പകല, അനുഷ്ഠാന കലകൾ എന്നിവയുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`രാജാ രവിവർമ്മ വരച്ച പ്രശസ്തമായ എണ്ണച്ചായാ ചിത്രങ്ങളാണ് 'ശകുന്തള', 'ഹംസവും ദമയന്തിയും' എന്നിവ.`,`മലമ്പുഴയിലെ 'യക്ഷി', ശംഖുമുഖത്തെ 'മത്സ്യകന്യക' എന്നീ പ്രശസ്ത ശില്പങ്ങൾ നിർമ്മിച്ചത് ശില്പി കാനായി കുഞ്ഞിരാമനാണ്.`,`നിഴൽപ്പാവകളി രൂപമായ തോൽപ്പാവക്കൂത്ത് പ്രധാനമായും അവതരിപ്പിക്കുന്നത് തിരുവനന്തപുരം ജില്ലയിലെ ശ്രീപത്മനാഭസ്വാമി ക്ഷേത്രത്തിലാണ്.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nതോൽപ്പാവക്കൂത്ത് പ്രധാനമായും പാലക്കാട് മേഖലയിലെ (ഭാരതപ്പുഴ തീരം) ഭദ്രകാളി ക്ഷേത്രങ്ങളിലാണ് (III തെറ്റ്).`),
+q('A',`പ്രധാന കായിക പദങ്ങളും (Sports Terms) അവ ബന്ധപ്പെട്ടിരിക്കുന്ന കായിക ഇനങ്ങളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`ഡ്യൂസ് (Deuce), സ്മാഷ് (Smash) — ലോൺ ടെന്നീസ്`,`ബിഷപ്പ് (Bishop), കാസ്‌ലിംഗ് (Castling) — ചെസ്സ്`,`എൽ.ബി.ഡബ്ല്യു. (LBW), ഗൂഗ്ലി (Googly) — ക്രിക്കറ്റ്`,`പെനാൽറ്റി സ്ട്രോക്ക്, ബുള്ളി (Bully) — ഭാരോദ്വഹനം`],3,
+`ശരിയായ ഉത്തരം: D\n\nപെനാൽറ്റി സ്ട്രോക്ക്, ബുള്ളി — ഹോക്കി. ഭാരോദ്വഹനത്തിൽ സ്നാച്ച്, ക്ലീൻ ആൻഡ് ജെർക്ക്.`),
+q('A',mt(`ഒളിമ്പിക്സിൽ ഇന്ത്യയ്ക്കായി മെഡൽ നേടിയ പ്രമുഖ കായികതാരങ്ങളും അവരുടെ കായിക ഇനങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`കായികതാരങ്ങൾ`,`നീരജ് ചോപ്ര`,`പി.വി. സിന്ധു`,`മേരി കോം`,`കർണ്ണം മല്ലേശ്വരി`],[`കായിക ഇനങ്ങൾ`,`ജാവലിൻ ത്രോ`,`ബാഡ്മിന്റൺ`,`ബോക്സിംഗ്`,`ഭാരോദ്വഹനം (Weightlifting)`]),M_D,0,
+`ശരിയായ ഉത്തരം: A (1-a, 2-b, 3-c, 4-d)\n\nനീരജ് — ജാവലിൻ; സിന്ധു — ബാഡ്മിന്റൺ; മേരി കോം — ബോക്സിംഗ്; കർണ്ണം മല്ലേശ്വരി — ഭാരോദ്വഹനം.`),
+/* COMPUTER */
+q('Cm',st(`കമ്പ്യൂട്ടറിലെ ഇൻപുട്ട്, ഔട്ട്പുട്ട് ഉപകരണങ്ങളുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`കമ്പ്യൂട്ടറിലേക്ക് വിവരങ്ങളും നിർദ്ദേശങ്ങളും നൽകാൻ ഉപയോഗിക്കുന്ന കീബോർഡ്, മൗസ്, സ്കാനർ, ജോയ്സ്റ്റിക് എന്നിവ ഇൻപുട്ട് ഉപകരണങ്ങളാണ്.`,`കമ്പ്യൂട്ടർ പ്രോസസ്സ് ചെയ്ത വിവരങ്ങൾ ഉപയോക്താവിന് നൽകുന്ന മോണിറ്റർ, പ്രിന്റർ, സ്പീക്കർ, പ്രൊജക്ടർ എന്നിവ ഔട്ട്പുട്ട് ഉപകരണങ്ങളാണ്.`,`ഒരു മോണിറ്ററിലെ ചിത്രത്തിന്റെ വ്യക്തത അളക്കാൻ ഉപയോഗിക്കുന്ന അടിസ്ഥാന ഘടകമായ 'പിക്സൽ' (Pixel) ഒരു സെക്കൻഡറി സ്റ്റോറേജ് ഹാർഡ് ഡിസ്കാണ്.`]),ST4('13','12','23','123'),1,
+`ശരിയായ ഉത്തരം: B (I, II മാത്രം)\n\nപിക്സൽ (Picture Element) ഡിസ്പ്ലേയിലെ ഏറ്റവും ചെറിയ ബിന്ദുവാണ്; ഹാർഡ് ഡിസ്ക് അല്ല (III തെറ്റ്).`),
+q('Cm',mt(`കമ്പ്യൂട്ടർ സാങ്കേതികവിദ്യയിലെ പ്രധാന ചുരുക്കപ്പേരുകളും അവയുടെ പൂർണ്ണരൂപങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ചുരുക്കപ്പേരുകൾ`,`സി.പി.യു. (CPU)`,`യു.എസ്.ബി. (USB)`,`പി.ഡി.എഫ്. (PDF)`,`ജി.യു.ഐ. (GUI)`],[`പൂർണ്ണരൂപങ്ങൾ`,`Central Processing Unit`,`Universal Serial Bus`,`Portable Document Format`,`Graphical User Interface`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\nCPU, USB, PDF, GUI — പൂർണ്ണരൂപങ്ങൾ ക്രമത്തിൽ a, b, c, d.`),
+q('Cm',`ഒരു ഉപയോക്താവ് വെബ്‌സൈറ്റുകൾ സന്ദർശിക്കുമ്പോൾ ഉപയോക്താവിന്റെ ലോഗിൻ വിവരങ്ങളും മുൻഗണനകളും തിരിച്ചറിയുന്നതിനായി വെബ്‌സൈറ്റ് ഉപയോക്താവിന്റെ വെബ് ബ്രൗസറിൽ സൂക്ഷിക്കുന്ന ചെറിയ ടെക്സ്റ്റ് ഫയലുകൾ ഏത് പേരിലാണ് അറിയപ്പെടുന്നത്?`,[`കുക്കീസ് (Cookies)`,`ട്രോജൻ (Trojan)`,`ഫയർവാൾ (Firewall)`,`ബാൻഡ്‌വിഡ്ത്ത് (Bandwidth)`],0,
+`ശരിയായ ഉത്തരം: A (കുക്കീസ്)\n\nബ്രൗസിംഗ് വിവരങ്ങളും ലോഗിൻ സെഷനുകളും ഓർത്തുവെക്കാൻ ബ്രൗസറിൽ സൂക്ഷിക്കുന്ന ചെറിയ ഫയലുകളാണ് കുക്കീസ്.`),
+/* ACTS */
+q('Ac',st(`1985ലെ അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണൽസ് ആക്ട്, 2003ലെ കേന്ദ്ര വിജിലൻസ് കമ്മീഷൻ നിയമം എന്നിവയുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`സർക്കാർ ജീവനക്കാരുടെ നിയമനവും സേവന വ്യവസ്ഥകളുമായി ബന്ധപ്പെട്ട തർക്കങ്ങൾ പരിഹരിക്കാൻ 1985ലെ നിയമപ്രകാരം സെൻട്രൽ അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണലും (CAT) സ്റ്റേറ്റ് അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണലുകളും സ്ഥാപിക്കുന്നു.`,`സായുധ സേനാംഗങ്ങൾക്കും (Armed Forces) സുപ്രീം കോടതി ഉദ്യോഗസ്ഥർക്കും 1985ലെ അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണൽസ് ആക്ട് ബാധകമല്ല.`,`2003ലെ കേന്ദ്ര വിജിലൻസ് കമ്മീഷൻ നിയമപ്രകാരം സെൻട്രൽ വിജിലൻസ് കമ്മീഷണറെ നിയമിക്കുന്നത് ലോക്സഭാ സ്പീക്കർ നേരിട്ടാണ്.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\nCVC-യെ നിയമിക്കുന്നത് പ്രധാനമന്ത്രി, ആഭ്യന്തര മന്ത്രി, ലോക്സഭാ പ്രതിപക്ഷ നേതാവ് എന്നിവരടങ്ങിയ സമിതിയുടെ ശുപാർശപ്രകാരം രാഷ്ട്രപതിയാണ് (III തെറ്റ്).`),
+q('Ac',mt(`പ്രധാന നിയമങ്ങളുമായി ബന്ധപ്പെട്ട ദിനങ്ങളും അവ പ്രാബല്യത്തിൽ വന്ന തീയതികളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ദിനങ്ങൾ / നിയമങ്ങൾ`,`ദേശീയ ഉപഭോക്തൃ അവകാശ ദിനം`,`ലോക ഉപഭോക്തൃ അവകാശ ദിനം`,`വിവരാവകാശ നിയമം നിലവിൽ വന്ന തീയതി`,`ഉപഭോക്തൃ സംരക്ഷണ നിയമം (2019) നിലവിൽ വന്ന തീയതി`],[`തീയതികൾ`,`ഡിസംബർ 24`,`മാർച്ച് 15`,`2005 ഒക്ടോബർ 12`,`2020 ജൂലൈ 20`]),M_B,3,
+`ശരിയായ ഉത്തരം: D (1-a, 2-b, 3-c, 4-d)\n\nദേശീയ ഉപഭോക്തൃ ദിനം — ഡിസംബർ 24; ലോക ഉപഭോക്തൃ അവകാശ ദിനം — മാർച്ച് 15; RTI — 2005 ഒക്ടോബർ 12; CPA 2019 — 2020 ജൂലൈ 20.`),
+q('Ac',`ദുർബല വിഭാഗങ്ങളുടെ സംരക്ഷണത്തിനായുള്ള വിവിധ നിയമങ്ങളെക്കുറിച്ച് താഴെ നൽകിയിരിക്കുന്നവയിൽ തെറ്റായ പ്രസ്താവന ഏതാണ്?`,[`1989ലെ പട്ടികജാതി-പട്ടികവർഗ്ഗ (അതിക്രമങ്ങൾ തടയൽ) നിയമപ്രകാരം പട്ടികജാതി-പട്ടികവർഗ്ഗത്തിൽ പെടാത്ത ഒരാൾ ആ വിഭാഗങ്ങൾക്കെതിരെ നടത്തുന്ന അതിക്രമങ്ങളാണ് ശിക്ഷാർഹമാകുന്നത്`,`2007ലെ മുതിർന്ന പൗരന്മാരുടെ സംരക്ഷണ നിയമപ്രകാരം 60 വയസ്സോ അതിൽ കൂടുതലോ പ്രായമുള്ള ഇന്ത്യൻ പൗരന്മാരെയാണ് 'മുതിർന്ന പൗരൻ' (Senior Citizen) ആയി നിർവ്വചിച്ചിരിക്കുന്നത്`,`2007ലെ നിയമത്തിലെ വകുപ്പ് 24 പ്രകാരം മുതിർന്ന പൗരന്മാരെ ഉപേക്ഷിക്കുന്നവർക്ക് മൂന്ന് മാസം വരെ തടവോ ₹5,000 വരെ പിഴയോ രണ്ടും കൂടിയോ ലഭിക്കാം`,`2016ലെ ഭിന്നശേഷിക്കാരുടെ അവകാശ നിയമപ്രകാരം ഭിന്നശേഷിക്കാർക്ക് സർക്കാർ ജോലികളിൽ യാതൊരു സംവരണവും അനുവദിച്ചിട്ടില്ല`],3,
+`ശരിയായ ഉത്തരം: D\n\nRPwD Act 2016: സർക്കാർ ജോലികളിൽ 4% (വകുപ്പ് 34), ഉന്നത വിദ്യാഭ്യാസത്തിൽ 5% (വകുപ്പ് 32) സംവരണം.`),
+q('Ac',ar(`2012ലെ കേരള സംസ്ഥാന സേവനാവകാശ നിയമപ്രകാരം സർക്കാർ സേവനം എന്നത് ഒരാനുകൂല്യമല്ല, മറിച്ച് നിശ്ചിത സമയപരിധിക്കുള്ളിൽ സേവനം ലഭിക്കുക എന്നത് ഓരോ പൗരന്റെയും അവകാശമാണ്.`,`സർക്കാർ ഉദ്യോഗസ്ഥർക്കിടയിലെ അഴിമതി കുറയ്ക്കാനും ഭരണത്തിൽ സുതാര്യതയും ഉത്തരവാദിത്തവും വർദ്ധിപ്പിക്കാനും സമയബന്ധിതമായി സേവനങ്ങൾ ജനങ്ങളിലെത്തിക്കാനുമാണ് ഈ നിയമം നടപ്പിലാക്കിയത്.`),AR4('b','a','c','d'),1,
+`ശരിയായ ഉത്തരം: B (A, R ശരി; R, Aയുടെ ശരിയായ വിശദീകരണം)\n\nസേവനം പൗരന്റെ അവകാശമെന്ന തത്ത്വത്തിൽ, അഴിമതി കുറയ്ക്കാനും സമയബന്ധിത സേവനത്തിനുമാണ് 2012ലെ നിയമം.`),
+q('Ac',st(`2012ലെ പോക്സോ നിയമം (POCSO Act, 2012), 2015ലെ ബാലനീതി നിയമം എന്നിവയുമായി ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`കുട്ടികൾക്കെതിരെയുള്ള ലൈംഗിക കുറ്റകൃത്യങ്ങൾ വേഗത്തിൽ വിചാരണ ചെയ്യാൻ 2012ലെ പോക്സോ നിയമപ്രകാരം പ്രത്യേക കോടതികൾ (Special Courts) രൂപീകരിച്ചിട്ടുണ്ട്.`,`2019ലെ പോക്സോ ഭേദഗതി നിയമപ്രകാരം കുട്ടികൾക്കെതിരെയുള്ള ഗുരുതരമായ ലൈംഗിക അതിക്രമങ്ങൾക്ക് (Aggravated Penetrative Sexual Assault) വധശിക്ഷ ഉൾപ്പെടെയുള്ള കടുത്ത ശിക്ഷകൾ വ്യവസ്ഥ ചെയ്തിട്ടുണ്ട്.`,`2015ലെ ജുവനൈൽ ജസ്റ്റിസ് ആക്ട് പ്രകാരം 25 വയസ്സുവരെയുള്ള എല്ലാ യുവാക്കളെയും 'കുട്ടി' (Child) എന്ന നിർവ്വചനത്തിലാണ് ഉൾപ്പെടുത്തിയിരിക്കുന്നത്.`]),ST4('13','23','12','123'),2,
+`ശരിയായ ഉത്തരം: C (I, II മാത്രം)\n\nപോക്സോ, ജുവനൈൽ ജസ്റ്റിസ് ആക്ടുകൾ പ്രകാരം 18 വയസ്സിൽ താഴെയുള്ളവരാണ് 'കുട്ടി' (III തെറ്റ്).`),
+/* CURRENT AFFAIRS */
+q('Ca',st(`കെ.കെ. ബിർള ഫൗണ്ടേഷൻ നൽകുന്ന സരസ്വതി സമ്മാനവുമായി (Saraswati Samman) ബന്ധപ്പെട്ട താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`2023ലെ 33-ാമത് സരസ്വതി സമ്മാനം പ്രശസ്ത മലയാള കവി പ്രഭാവർമ്മയുടെ 'രൗദ്ര സാത്വികം' എന്ന കാവ്യനോവലിനാണ് (Novel in verse) ലഭിച്ചത്.`,`2024ലെ 34-ാമത് സരസ്വതി സമ്മാനം പ്രമുഖ സംസ്കൃത പണ്ഡിതനായ ഭദ്രേഷ്ദാസ് സ്വാമിയുടെ 'സ്വാമിനാരായണ സിദ്ധാന്ത സുധ' എന്ന സംസ്കൃത ദർശന ഗ്രന്ഥത്തിനാണ് ലഭിച്ചത്.`,`1991ൽ ഏർപ്പെടുത്തിയ സരസ്വതി സമ്മാനത്തിന്റെ സമ്മാനത്തുക ₹15 ലക്ഷം രൂപയും പ്രശസ്തിപത്രവും ഫലകവുമാണ്.`]),ST4('12','23','13','123'),3,
+`ശരിയായ ഉത്തരം: D (I, II, III എല്ലാം ശരി)\n\nസരസ്വതി സമ്മാനം (1991-ൽ ആരംഭം): തുക ₹15 ലക്ഷം. 2023 (33-ാമത്) — പ്രഭാവർമ്മ; 2024 (34-ാമത്) — ഭദ്രേഷ്ദാസ് സ്വാമി.`),
+q('Ca',mt(`സമീപകാല സാഹിത്യ പുരസ്കാരങ്ങളും അവയുടെ ജേതാക്കളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`പുരസ്കാരങ്ങളും കൃതികളും`,`2025ലെ 35-ാമത് സരസ്വതി സമ്മാനം ('ഹര പാർവതി കഥ' - ബംഗാളി നോവൽ)`,`2025ലെ 49-ാമത് വയലാർ അവാർഡ് ('തപോമയിയുടെ അച്ഛൻ')`,`2025ലെ 33-ാമത് എഴുത്തച്ഛൻ പുരസ്കാരം`,`2023ലെ 33-ാമത് സരസ്വതി സമ്മാനം ('രൗദ്ര സാത്വികം')`],[`ജേതാക്കൾ`,`ഡോ. രാംകുമാർ മുഖോപാധ്യായ`,`ഇ. സന്തോഷ് കുമാർ`,`കെ.ജി. ശങ്കരപ്പിള്ള`,`പ്രഭാവർമ്മ`]),M_D,0,
+`ശരിയായ ഉത്തരം: A (1-a, 2-b, 3-c, 4-d)\n\nസരസ്വതി സമ്മാനം 2025 — രാംകുമാർ മുഖോപാധ്യായ; വയലാർ അവാർഡ് 2025 — ഇ. സന്തോഷ് കുമാർ; എഴുത്തച്ഛൻ പുരസ്കാരം — കെ.ജി. ശങ്കരപ്പിള്ള; സരസ്വതി സമ്മാനം 2023 — പ്രഭാവർമ്മ.`),
+q('Ca',ar(`മലയാള കവിയും ഗാനരചയിതാവുമായ പ്രഭാവർമ്മയ്ക്ക് 2022ൽ പ്രസിദ്ധീകരിച്ച 'രൗദ്ര സാത്വികം' എന്ന കൃതിയിലൂടെ 2023ലെ 33-ാമത് സരസ്വതി സമ്മാനം ലഭിച്ചു.`,`മുൻ സുപ്രീം കോടതി ജഡ്ജി ജസ്റ്റിസ് അർജൻ കുമാർ സിക്രി അധ്യക്ഷനായ സമിതിയാണ് മഹാഭാരതത്തിലെ അശ്വത്ഥാമാവിന്റെ പശ്ചാത്തലത്തിൽ അധികാരവും അഹിംസയും കലയും തമ്മിലുള്ള സംഘർഷം ആവിഷ്കരിക്കുന്ന ഈ കൃതിയെ പുരസ്കാരത്തിനായി തിരഞ്ഞെടുത്തത്.`),AR4('a','b','c','d'),0,
+`ശരിയായ ഉത്തരം: A\n\nജസ്റ്റിസ് എ.കെ. സിക്രി അധ്യക്ഷനായ സമിതിയാണ് 'രൗദ്ര സാത്വികം' തിരഞ്ഞെടുത്തത്.`),
+q('Ca',`കെ.കെ. ബിർള ഫൗണ്ടേഷൻ നൽകുന്ന വിവിധ പുരസ്കാരങ്ങളുമായി ബന്ധപ്പെട്ട് താഴെ നൽകിയിരിക്കുന്നവയിൽ തെറ്റായ പ്രസ്താവന ഏതാണ്?`,[`1991ൽ ആദ്യത്തെ സരസ്വതി സമ്മാനം ലഭിച്ചത് നാല് വാല്യങ്ങളുള്ള ആത്മകഥയിലൂടെ ഹിന്ദി കവി ഡോ. ഹരിവംശറായ് ബച്ചനാണ്`,`ബാലാമണിയമ്മ, കെ. അയ്യപ്പപ്പണിക്കർ, സുഗതകുമാരി, പ്രഭാവർമ്മ എന്നീ നാല് മലയാള സാഹിത്യകാരന്മാർക്ക് ഇതുവരെ സരസ്വതി സമ്മാനം ലഭിച്ചിട്ടുണ്ട്`,`2022ലെ 32-ാമത് സരസ്വതി സമ്മാനം തമിഴ് എഴുത്തുകാരി ശിവശങ്കരിയുടെ 'സൂര്യവംശം' എന്ന ഓർമ്മക്കുറിപ്പിനാണ് ലഭിച്ചത്`,`കെ.കെ. ബിർള ഫൗണ്ടേഷൻ 1991ൽ ഏർപ്പെടുത്തിയ വ്യാസ സമ്മാനവും ബിഹാരി പുരസ്കാരവും കായിക താരങ്ങൾക്ക് മാത്രമായി നൽകുന്ന പുരസ്കാരങ്ങളാണ്`],3,
+`ശരിയായ ഉത്തരം: D\n\nവ്യാസ സമ്മാനം (ഹിന്ദി സാഹിത്യം), ബിഹാരി പുരസ്കാരം (രാജസ്ഥാനി എഴുത്തുകാർ) എന്നിവ സാഹിത്യ പുരസ്കാരങ്ങളാണ്; കായിക പുരസ്കാരങ്ങളല്ല.`),
+q('Ca',mt(`അന്താരാഷ്ട്ര ബുക്കർ പ്രൈസും (International Booker Prize) ബുക്കർ പ്രൈസും നേടിയ കൃതികളും വ്യക്തികളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`കൃതികളും സവിശേഷതയും`,`ഹാർട്ട് ലാമ്പ് (Heart Lamp - ഇന്റർനാഷണൽ ബുക്കർ പ്രൈസ് നേടിയ ആദ്യ കന്നഡ കൃതി, വിവർത്തനം)`,`ഓർബിറ്റൽ (Orbital - 2024ലെ ബുക്കർ പ്രൈസ് നേടിയ കൃതി)`,`കെയ്റോസ് (Kairos - 2024ലെ ഇന്റർനാഷണൽ ബുക്കർ പ്രൈസ് നേടിയ കൃതി)`,`ടോംബ് ഓഫ് സാൻഡ് (Tomb of Sand - ഇന്റർനാഷണൽ ബുക്കർ പ്രൈസ് നേടിയ ഹിന്ദി കൃതി)`],[`എഴുത്തുകാർ / വിവർത്തകർ`,`ദീപ ഭസ്തി (മൂലകൃതി: ബാനു മുഷ്താഖ്)`,`സമാന്ത ഹാർവി (Samantha Harvey)`,`ജെന്നി എർപെൻബെക്ക് & മൈക്കിൾ ഹോഫ്മാൻ`,`ഗീതാഞ്ജലി ശ്രീ (Geetanjali Shree)`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\nHeart Lamp — ബാനു മുഷ്താഖ് (വിവർത്തനം: ദീപ ഭസ്തി); Orbital — സമാന്ത ഹാർവി; Kairos — ജെന്നി എർപെൻബെക്ക് & മൈക്കിൾ ഹോഫ്മാൻ; Tomb of Sand — ഗീതാഞ്ജലി ശ്രീ.`),
+q('Ca',st(`കായിക രംഗത്തെ സമീപകാല പുരസ്കാരങ്ങളെയും ചാമ്പ്യൻഷിപ്പുകളെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`അന്താരാഷ്ട്ര ക്രിക്കറ്റ് കൗൺസിലിന്റെ (ICC) മികച്ച പുരുഷ ക്രിക്കറ്റ് താരത്തിനുള്ള പുരസ്കാരം ഇന്ത്യൻ പേസർ ജസ്പ്രീത് ബുംറയ്ക്കും വനിതാ വിഭാഗം പുരസ്കാരം സ്മൃതി മന്ദാനയ്ക്കും ലഭിച്ചു.`,`2025ലെ ഐ.ബി.എസ്.എഫ്. (IBSF) ലോക ബില്യാർഡ്സ് ചാമ്പ്യൻഷിപ്പ് ഫൈനലിൽ പങ്കജ് അദ്വാനിയെ പരാജയപ്പെടുത്തി സൗരവ് കോത്താരി കിരീടം നേടി.`,`2025ൽ സ്പെയിനിലെ മാഡ്രിഡിൽ നടന്ന ലോറിയസ് വേൾഡ് സ്പോർട്സ് അവാർഡ്സിൽ സ്വീഡിഷ് പോൾവോൾട്ട് താരം മോണ്ടോ ഡുപ്ലാന്റിസ് മികച്ച കായികതാരമായി തിരഞ്ഞെടുക്കപ്പെട്ടു.`]),ST4('12','23','13','123'),3,
+`ശരിയായ ഉത്തരം: D (മൂന്നും ശരി)\n\nICC പുരസ്കാരങ്ങൾ — ബുംറ, സ്മൃതി മന്ദാന; IBSF ലോക ബില്യാർഡ്സ് 2025 — സൗരവ് കോത്താരി; ലോറിയസ് 2025 — മോണ്ടോ ഡുപ്ലാന്റിസ്.`),
+q('Ca',mt(`ഇന്ത്യയുടെ സൈനിക അഭ്യാസങ്ങളും മാനുഷിക സഹായ ദൗത്യങ്ങളും പങ്കാളിത്ത രാജ്യങ്ങളും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`ദൗത്യങ്ങൾ / സൈനിക അഭ്യാസങ്ങൾ`,`ഓപ്പറേഷൻ ബ്രഹ്മ (ഭൂകമ്പ ദുരിതാശ്വാസ സഹായ ദൗത്യം)`,`ഇന്ദ്ര 2025 (INDRA 2025 - ഉഭയകക്ഷി നാവിക അഭ്യാസം)`,`ശക്തി, വരുണ, ഗരുഡ (സംയുക്ത സൈനിക അഭ്യാസങ്ങൾ)`,`ഹാൻഡ്-ഇൻ-ഹാൻഡ് (Hand-in-Hand)`],[`രാജ്യങ്ങൾ`,`മ്യാൻമർ`,`ഇന്ത്യ – റഷ്യ`,`ഇന്ത്യ – ഫ്രാൻസ്`,`ഇന്ത്യ – ചൈന`]),M_C,1,
+`ശരിയായ ഉത്തരം: B (1-a, 2-b, 3-c, 4-d)\n\nഓപ്പറേഷൻ ബ്രഹ്മ — മ്യാൻമർ ഭൂകമ്പ സഹായം; ഇന്ദ്ര — ഇന്ത്യ–റഷ്യ; ശക്തി/വരുണ/ഗരുഡ — ഇന്ത്യ–ഫ്രാൻസ്; ഹാൻഡ്-ഇൻ-ഹാൻഡ് — ഇന്ത്യ–ചൈന.`),
+q('Ca',st(`ദേശീയതലത്തിലെ പ്രധാന നിയമനങ്ങളെയും പുരസ്കാരങ്ങളെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസായിരുന്ന സഞ്ജീവ് ഖന്നയുടെ പിൻഗാമിയായി ജസ്റ്റിസ് ബി.ആർ. ഗവായ് സുപ്രീം കോടതി ചീഫ് ജസ്റ്റിസായി നിയമിതനായി.`,`സ്റ്റേറ്റ് ബാങ്ക് ഓഫ് ഇന്ത്യയുടെ (SBI) ചെയർമാനായി ചല്ലാ ശ്രീനിവാസുലു സെട്ടി (സി.എസ്. സെട്ടി) ചുമതലയേറ്റു.`,`ലതാ മങ്കേഷ്കറുടെ സ്മരണാർത്ഥം ഏർപ്പെടുത്തിയ ലതാ ദീനാനാഥ് മങ്കേഷ്കർ പുരസ്കാരത്തിന് ആദിത്യ ബിർള ഗ്രൂപ്പ് ചെയർമാൻ കുമാർ മംഗലം ബിർള തിരഞ്ഞെടുക്കപ്പെട്ടു.`]),ST4('12','23','13','123'),3,
+`ശരിയായ ഉത്തരം: D (മൂന്നും ശരി)\n\nസഞ്ജീവ് ഖന്നയുടെ പിൻഗാമി ബി.ആർ. ഗവായ്; SBI ചെയർമാൻ സി.എസ്. സെട്ടി; ലതാ ദീനാനാഥ് മങ്കേഷ്കർ പുരസ്കാരം — കുമാർ മംഗലം ബിർള.`),
+q('Ca',`പോഷകാഹാരക്കുറവുള്ളതും മെലിഞ്ഞ ശരീരപ്രകൃതിയുള്ളതുമായ കൗമാരക്കാരിലും യുവാക്കളിലും (പ്രത്യേകിച്ച് താഴ്ന്ന-ഇടത്തരം വരുമാനമുള്ള രാജ്യങ്ങളിൽ) കാണപ്പെടുന്നതും അടുത്തിടെ ഔദ്യോഗികമായി വർഗ്ഗീകരിക്കപ്പെട്ടതുമായ പ്രമേഹ വിഭാഗം ഏതാണ്?`,[`ടൈപ്പ് 5 പ്രമേഹം (Type 5 Diabetes)`,`ടൈപ്പ് 10 പ്രമേഹം`,`മെഗാ ഡയബറ്റിസ്`,`റിവേഴ്സ് ഡയബറ്റിസ്`],0,
+`ശരിയായ ഉത്തരം: A\n\nപോഷകാഹാരക്കുറവുള്ള മെലിഞ്ഞ യുവാക്കളിലെ പ്രമേഹം 'ടൈപ്പ് 5 പ്രമേഹം' ആയി അടുത്തിടെ ഔദ്യോഗികമായി വർഗ്ഗീകരിച്ചു.`),
+q('Ca',`പരമ്പരാഗത നൃത്തരൂപത്തെ ആധുനികവത്കരിക്കുന്നതിലും ഗ്രൂപ്പ് കോറിയോഗ്രാഫിയിലൂടെ അവതരിപ്പിക്കുന്നതിലും മുഖ്യ പങ്കുവഹിച്ച പ്രശസ്ത നർത്തകി കുമുദിനി ലഖിയ (Kumudini Lakhia) ഏത് ക്ലാസിക്കൽ നൃത്തരൂപവുമായി ബന്ധപ്പെട്ട വ്യക്തിത്വമാണ്?`,[`ഭരതനാട്യം`,`കഥക് (Kathak)`,`കുച്ചിപ്പുടി`,`മണിപ്പൂരി`],1,
+`ശരിയായ ഉത്തരം: B (കഥക്)\n\nപത്മവിഭൂഷൺ ജേതാവായ കുമുദിനി ലഖിയ കഥക് നർത്തകിയാണ്.`),
+q('Ca',`വടക്കുകിഴക്കൻ ഇന്ത്യയിലെ ബോറോക് (Borok) ജനവിഭാഗത്തിന്റെ മാതൃഭാഷയായ 'കൊക്ബൊറോക്' (Kokborok) ഏത് ഇന്ത്യൻ സംസ്ഥാനത്തെ പ്രധാന ഭാഷയാണ്?`,[`തമിഴ്നാട്`,`തെലങ്കാന`,`ത്രിപുര (Tripura)`,`ഹിമാചൽ പ്രദേശ്`],2,
+`ശരിയായ ഉത്തരം: C (ത്രിപുര)\n\nകൊക്ബൊറോക് ത്രിപുരയിലെ ഔദ്യോഗിക ഭാഷകളിലൊന്നാണ്.`),
+q('Ca',st(`ദേശീയ ചലച്ചിത്ര പുരസ്കാരങ്ങളെയും വിഴിഞ്ഞം തുറമുഖത്തെയും സംബന്ധിച്ച താഴെ പറയുന്ന പ്രസ്താവനകൾ പരിശോധിക്കുക`,[`70-ാമത് ദേശീയ ചലച്ചിത്ര പുരസ്കാരത്തിൽ മികച്ച ഫീച്ചർ ചിത്രമായി മലയാള ചിത്രമായ 'ആട്ടം' തിരഞ്ഞെടുക്കപ്പെട്ടപ്പോൾ, 71-ാമത് ദേശീയ ചലച്ചിത്ര പുരസ്കാരത്തിൽ '12th ഫെയിൽ' മികച്ച ചിത്രമായി തിരഞ്ഞെടുക്കപ്പെട്ടു.`,`വിഴിഞ്ഞം അന്താരാഷ്ട്ര തുറമുഖം 2024 ജൂലൈ 11ന് ആദ്യ വാണിജ്യ കപ്പലായ സാൻ ഫെർണാണ്ടോയെ സ്വീകരിക്കുകയും 2024 ഡിസംബർ 3ന് പൂർണ്ണതോതിലുള്ള പ്രവർത്തനങ്ങൾ ആരംഭിക്കുകയും ചെയ്തു.`,`71-ാമത് ദേശീയ ചലച്ചിത്ര പുരസ്കാരത്തിൽ മികച്ച നടിക്കുള്ള പുരസ്കാരം 'ആട്ടം' എന്ന ചിത്രത്തിലെ അഭിനയത്തിന് ഉർവ്വശിക്കാണ് ലഭിച്ചത്.`]),ST4('12','13','23','123'),0,
+`ശരിയായ ഉത്തരം: A (I, II മാത്രം)\n\n71-ാമത് ദേശീയ അവാർഡിൽ മികച്ച നടി റാണി മുഖർജി ആണ്; ഉർവ്വശിക്ക് മികച്ച സഹനടിക്കുള്ള ദേശീയ പുരസ്കാരമാണ് ലഭിച്ചത് (III തെറ്റ്).`),
+q('Ca',mt(`2024 ജൂലൈയിൽ പ്രഖ്യാപിച്ച 2023ലെ കേരള സാഹിത്യ അക്കാദമി പുരസ്കാരങ്ങൾ നേടിയ കൃതികളും എഴുത്തുകാരും തമ്മിൽ ചേരുംപടി ചേർക്കുക`,[`കൃതികളും വിഭാഗവും`,`ആംചോ ബസ്തർ (മികച്ച യാത്രാവിവരണം)`,`പെൺകുട്ടിയും കൂട്ടരും (ബാലസാഹിത്യം)`,`വരനാടൻ കഥകൾ (ഹാസ്യസാഹിത്യം)`,`കഥാകദികൈ (മികച്ച വിവർത്തനം)`],[`എഴുത്തുകാർ`,`നന്ദിനി മേനോൻ`,`ഗ്രേസി`,`സുനീഷ് വാരനാട്`,`എ.എം. ശ്രീധരൻ`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\nആംചോ ബസ്തർ — നന്ദിനി മേനോൻ; പെൺകുട്ടിയും കൂട്ടരും — ഗ്രേസി; വരനാടൻ കഥകൾ — സുനീഷ് വാരനാട്; കഥാകദികൈ — എ.എം. ശ്രീധരൻ.`),
+q('Ca',ch(`എഴുത്തച്ഛൻ പുരസ്കാരം നേടിയ താഴെ പറയുന്ന സാഹിത്യകാരന്മാരെ അവർക്ക് പുരസ്കാരം ലഭിച്ച വർഷത്തിന്റെ അടിസ്ഥാനത്തിൽ `+CHR,[`ടി. പത്മനാഭൻ`,`ഒ.വി. വിജയൻ`,`പ്രൊഫ. എം.കെ. സാനു`,`ആറ്റൂർ രവിവർമ്മ`]),[`1 – 2 – 4 – 3`,`2 – 1 – 4 – 3`,`2 – 4 – 1 – 3`,`2 – 1 – 3 – 4`],1,
+`ശരിയായ ഉത്തരം: B (2 – 1 – 4 – 3)\n\nഒ.വി. വിജയൻ — 2001; ടി. പത്മനാഭൻ — 2003; ആറ്റൂർ രവിവർമ്മ — 2012; എം.കെ. സാനു — 2013.`),
+q('Ca',ar(`2024ലെ സമാധാനത്തിനുള്ള നൊബേൽ പുരസ്കാരം ജാപ്പനീസ് സംഘടനയായ 'നിഹോൺ ഹിഡാൻക്യോ'യ്ക്ക് 2024 ഡിസംബർ 10ന് നോർവേയിലെ ഓസ്ലോയിൽ വെച്ച് സമ്മാനിച്ചു.`,`ഹിരോഷിമയിലെയും നാഗസാക്കിയിലെയും അണുബോംബ് ദുരന്തത്തെ അതിജീവിച്ച ഹിബാകുഷകളുടെ ഈ കൂട്ടായ്മ ആണവായുധ വിമുക്ത ലോകത്തിനായി നടത്തിയ പ്രവർത്തനങ്ങൾക്കാണ് പുരസ്കാരം നൽകിയത്.`),AR4('a','b','c','d'),0,
+`ശരിയായ ഉത്തരം: A\n\nആണവായുധ വിമുക്ത ലോകത്തിനായുള്ള പ്രവർത്തനങ്ങൾക്കാണ് നിഹോൺ ഹിഡാൻക്യോയ്ക്ക് 2024ലെ സമാധാന നൊബേൽ ലഭിച്ചത്.`),
+/* ARITHMETIC */
+q('M',`ഒരു പട്ടണത്തിലെ ഇപ്പോഴത്തെ ജനസംഖ്യ 10,000 ആണ്. ജനസംഖ്യ പ്രതിവർഷം 10% വീതം വർദ്ധിക്കുന്നുവെങ്കിൽ 2 വർഷത്തിന് ശേഷം ആ പട്ടണത്തിലെ ജനസംഖ്യ എത്രയായിരിക്കും?`,[`12,000`,`12,100`,`11,500`,`12,500`],1,
+`ശരിയായ ഉത്തരം: B (12,100)\n\n10,000 × (110/100) × (110/100) = 12,100.\nഎളുപ്പവഴി: 10% വീതം 2 വർഷം = 21% വർദ്ധനവ് (10,000 + 2,100).`),
+q('M',`ഒരു സൈക്കിൾ ₹2,000 രൂപയ്ക്ക് വാങ്ങി ₹2,500 രൂപയ്ക്ക് വിറ്റാൽ വ്യാപാരിക്ക് ലഭിക്കുന്ന ലാഭശതമാനം എത്രയാണ്?`,[`20%`,`30%`,`25%`,`15%`],2,
+`ശരിയായ ഉത്തരം: C (25%)\n\nലാഭം = 2500 − 2000 = 500; ലാഭ% = 500/2000 × 100 = 25%.`),
+q('M',`A എന്ന വ്യക്തി ഒരു ജോലി 20 ദിവസം കൊണ്ടും B എന്ന വ്യക്തി അതേ ജോലി 30 ദിവസം കൊണ്ടും ചെയ്തുതീർക്കും. ഇരുവരും ഒരുമിച്ച് ചേർന്ന് ആ ജോലി ചെയ്താൽ എത്ര ദിവസം കൊണ്ട് പൂർത്തിയാക്കാൻ സാധിക്കും?`,[`12 ദിവസം`,`15 ദിവസം`,`10 ദിവസം`,`16 ദിവസം`],0,
+`ശരിയായ ഉത്തരം: A (12 ദിവസം)\n\nഎളുപ്പവഴി: xy/(x+y) = (20×30)/(20+30) = 600/50 = 12.`),
+q('M',`ഒരു മട്ടത്രികോണത്തിന്റെ (Right-angled Triangle) ലംബവശങ്ങളുടെ നീളം 12 cm, 16 cm ആയാൽ അതിന്റെ കർണ്ണത്തിന്റെ (Hypotenuse) നീളവും പരപ്പളവും (Area) യഥാക്രമം എത്രയായിരിക്കും?`,[`20 cm, 192 ച.സെ.മീ.`,`18 cm, 96 ച.സെ.മീ.`,`24 cm, 96 ച.സെ.മീ.`,`20 cm, 96 ച.സെ.മീ.`],3,
+`ശരിയായ ഉത്തരം: D\n\nകർണ്ണം = √(12² + 16²) = √400 = 20 cm; പരപ്പളവ് = ½ × 12 × 16 = 96 ച.സെ.മീ.`),
+q('M',`ആദ്യത്തെ 50 എണ്ണൽ സംഖ്യകളുടെ (1 മുതൽ 50 വരെയുള്ള തുടർച്ചയായ എണ്ണൽ സംഖ്യകളുടെ) ശരാശരി എത്രയാണ്?`,[`25`,`25.5`,`26`,`50.5`],1,
+`ശരിയായ ഉത്തരം: B (25.5)\n\nആദ്യത്തെ n എണ്ണൽ സംഖ്യകളുടെ ശരാശരി = (n+1)/2 = 51/2 = 25.5.`),
+/* REASONING */
+q('R',`താഴെ നൽകിയിരിക്കുന്ന സംഖ്യാശ്രേണിയിലെ വിട്ടുപോയ സംഖ്യ കണ്ടെത്തുക:\n2, 5, 10, 17, 26, 37, ?`,[`48`,`50`,`49`,`52`],1,
+`ശരിയായ ഉത്തരം: B (50)\n\nപാറ്റേൺ: n² + 1 → 1²+1=2, 2²+1=5, 3²+1=10, 4²+1=17, 5²+1=26, 6²+1=37, 7²+1=50.`),
+q('R',`'P' എന്നാൽ '+' എന്നും, 'Q' എന്നാൽ '-' എന്നും, 'R' എന്നാൽ '×' എന്നും, 'S' എന്നാൽ '÷' എന്നും അർത്ഥമാക്കിയാൽ താഴെ കൊടുത്തിരിക്കുന്ന സമവാക്യത്തിന്റെ വില എത്രയാണ്?\n18 R 2 P 12 S 4 Q 9 = ?`,[`30`,`28`,`32`,`24`],0,
+`ശരിയായ ഉത്തരം: A (30)\n\n18 × 2 + 12 ÷ 4 − 9; BODMAS: 12 ÷ 4 = 3, 18 × 2 = 36 → 36 + 3 − 9 = 30.`),
+q('R',`അനു തന്റെ വീട്ടിൽ നിന്ന് കിഴക്കോട്ട് 12 km സഞ്ചരിച്ച ശേഷം ഇടത്തോട്ട് തിരിഞ്ഞ് 5 km നടന്നു. എങ്കിൽ വീട്ടിൽ നിന്ന് ഇപ്പോൾ അനു നിൽക്കുന്ന സ്ഥലത്തേക്കുള്ള ഏറ്റവും കുറഞ്ഞ ദൂരവും ദിശയും ഏതാണ്?`,[`17 km, വടക്കുകിഴക്ക്`,`13 km, തെക്കുകിഴക്ക്`,`13 km, വടക്കുകിഴക്ക്`,`15 km, വടക്കുപടിഞ്ഞാറ്`],2,
+`ശരിയായ ഉത്തരം: C\n\nകിഴക്കോട്ട് പോകുമ്പോൾ ഇടത് = വടക്ക്. ദൂരം = √(12² + 5²) = 13 km; ദിശ വടക്കുകിഴക്ക്. (5-12-13 ത്രയം)`),
+q('R',`ഒരു പ്രത്യേക കോഡ് ഭാഷയിൽ 'TEACHER' എന്ന വാക്ക് 'VGCEJGT' എന്ന് എഴുതിയാൽ, അതേ കോഡ് ഭാഷയിൽ 'STUDENT' എന്ന വാക്ക് എപ്രകാരം എഴുതാം?`,[`UVWFGPV`,`UVWGHPV`,`TUVFGPV`,`UVWFGPW`],0,
+`ശരിയായ ഉത്തരം: A (UVWFGPV)\n\nഓരോ അക്ഷരത്തിനും +2: S→U, T→V, U→W, D→F, E→G, N→P, T→V.`),
+q('R',`താഴെ നൽകിയിരിക്കുന്ന നാല് പദങ്ങളിൽ മൂന്നെണ്ണം ഒരു പ്രത്യേക രീതിയിൽ സമാനതയുള്ളവയാണ്. കൂട്ടത്തിൽ പെടാത്തത് (Odd one out) കണ്ടെത്തുക:`,[`ചെമ്പ് (Copper)`,`ഇരുമ്പ് (Iron)`,`പിച്ചള (Brass)`,`അലുമിനിയം (Aluminium)`],2,
+`ശരിയായ ഉത്തരം: C (പിച്ചള)\n\nചെമ്പ്, ഇരുമ്പ്, അലുമിനിയം — ശുദ്ധ ലോഹങ്ങൾ (മൂലകങ്ങൾ); പിച്ചള (ചെമ്പ് + സിങ്ക്) ലോഹസങ്കരമാണ്.`),
+/* ENGLISH */
+q('En',`Choose the correct auxiliary verb to complete the sentence:\n"Neither the teacher nor the students ________ aware of the sudden change in the examination schedule."`,[`was`,`is`,`has been`,`were`],3,
+`ശരിയായ ഉത്തരം: D (were)\n\nNeither...nor: ക്രിയ രണ്ടാമത്തെ കർത്താവിനോട് (students — ബഹുവചനം) യോജിക്കണം.`),
+q('En',`Fill in the blank with the appropriate preposition:\n"The Managing Director congratulated the project team ________ their outstanding achievement."`,[`for`,`on`,`at`,`with`],1,
+`ശരിയായ ഉത്തരം: B (on)\n\n"congratulate someone on something" — 'on' ആണ് സ്റ്റാൻഡേർഡ് പ്രയോഗം (മലയാളത്തിൽ 'for' എന്ന് തോന്നാം).`),
+q('En',`Identify the correct question tag for the given sentence:\n"Few people attended the late-night meeting yesterday, ________?"`,[`did they`,`didn't they`,`do they`,`don't they`],0,
+`ശരിയായ ഉത്തരം: A (did they)\n\n'Few' നിഷേധാർത്ഥമുള്ളതിനാൽ ടാഗ് പോസിറ്റീവ്; 'attended' ഭൂതകാലമായതിനാൽ 'did they'.`),
+q('En',`Convert the following imperative sentence into Indirect Speech:\nThe doctor said to the patient, "Take the medicines regularly."`,[`The doctor told the patient that he took the medicines regularly.`,`The doctor advised the patient to take the medicines regularly.`,`The doctor asked the patient why to take the medicines regularly.`,`The doctor advised the patient that take the medicines regularly.`],1,
+`ശരിയായ ഉത്തരം: B\n\nImperative → advised / ordered / requested + to + V1.`),
+q('En',`Identify the correct transformation of the given sentence into Superlative Degree without changing its meaning:\n"No other peak in South India is as high as Anamudi."`,[`Anamudi is higher than any other peak in South India.`,`Anamudi is one of the highest peaks in South India.`,`Anamudi is the highest peak in South India.`,`Very few peaks in South India are as high as Anamudi.`],2,
+`ശരിയായ ഉത്തരം: C\n\n"No other ... as ... as" → "the + superlative" (the highest peak).`),
+q('En',`Select the word that is closest in meaning (Synonym) to the word "LETHARGIC":`,[`Energetic`,`Sluggish`,`Vigilant`,`Enthusiastic`],1,
+`ശരിയായ ഉത്തരം: B (Sluggish)\n\nLethargic = മന്ദഗതിയിലുള്ള, അലസമായ.`),
+q('En',`Select the word that is most nearly OPPOSITE in meaning (Antonym) to the word "OPTIMISTIC":`,[`Hopeful`,`Confident`,`Pessimistic`,`Cheerful`],2,
+`ശരിയായ ഉത്തരം: C (Pessimistic)\n\nOptimistic ↔ Pessimistic.`),
+q('En',`Choose the correct one-word substitute for:\n"A person who loves mankind and works for the welfare of others."`,[`Misanthrope`,`Philanthropist`,`Egoist`,`Somnambulist`],1,
+`ശരിയായ ഉത്തരം: B (Philanthropist)\n\nMisanthrope — മനുഷ്യരെ വെറുക്കുന്നവൻ; Somnambulist — ഉറക്കത്തിൽ നടക്കുന്നവൻ.`),
+q('En',`Select the option that best expresses the meaning of the idiom "To smell a rat":`,[`To detect a foul smell in an old building`,`To suspect that something is wrong or deceitful`,`To conduct a scientific experiment on rodents`,`To escape from a dangerous situation narrowly`],1,
+`ശരിയായ ഉത്തരം: B\n\n"To smell a rat" = എന്തോ ചതി/തെറ്റ് ഉണ്ടെന്ന് സംശയിക്കുക.`),
+q('En',`Identify the correctly spelt word from the options given below:`,[`Occassion`,`Occasion`,`Ocassion`,`Occassionn`],1,
+`ശരിയായ ഉത്തരം: B (Occasion)\n\nO-c-c-a-s-i-o-n: രണ്ട് 'c', ഒരു 's'.`),
+/* MALAYALAM */
+q('Ml',`താഴെ നൽകിയിരിക്കുന്നവയിൽ പദശുദ്ധിയുള്ള പദം ഏതാണ്?`,[`അദ്ധ്യാപിക`,`ഐക്യമത്യം`,`പുരസ്കാരം`,`വൈവിദ്ധ്യത`],2,
+`ശരിയായ ഉത്തരം: C (പുരസ്കാരം)\n\nതെറ്റുകൾ: അദ്ധ്യാപിക → അധ്യാപിക; ഐക്യമത്യം → ഐകമത്യം; വൈവിദ്ധ്യത → വൈവിധ്യം.`),
+q('Ml',`താഴെ കൊടുത്തിരിക്കുന്ന വാക്യങ്ങളിൽ വ്യാകരണപരമായി ഏറ്റവും ശരിയായ വാക്യം ഏതാണ്?`,[`പരീക്ഷയിൽ ഉന്നത വിജയം നേടിയ വിദ്യാർത്ഥികളെ അധ്യാപകർ അഭിനന്ദിച്ചു.`,`എല്ലാ വിദ്യാർത്ഥികളും കൃത്യസമയത്ത് പരീക്ഷാ ഹാളിൽ എത്തിച്ചേർന്നു.`,`അദ്ദേഹത്തിന്റെ കാരുണ്യത നിറഞ്ഞ പ്രവൃത്തി ഏവരെയും ആകർഷിച്ചു.`,`ഇന്നലെ നടന്ന യോഗത്തിൽ പുതിയ ഭാരവാഹികളെ തിരഞ്ഞെടുക്കുകയുണ്ടായി.`],0,
+`ശരിയായ ഉത്തരം: A\n\nC-യിൽ 'കാരുണ്യത' തെറ്റ് ('കാരുണ്യം' ശരി). B, D-യിൽ അനാവശ്യ പ്രയോഗങ്ങൾ ('എല്ലാ...ഉം', 'തിരഞ്ഞെടുക്കുകയുണ്ടായി').`),
+q('Ml',`'പശ്ചാത്താപം' എന്ന പദം ശരിയായി പിരിച്ചെഴുതിയ രൂപം താഴെ പറയുന്നവയിൽ ഏതാണ്?`,[`പശ്ചാ + താപം`,`പശ്ചാത് + താപം`,`പശ്ച + താപം`,`പശ്ചാത്ത + ആപം`],1,
+`ശരിയായ ഉത്തരം: B\n\nപശ്ചാത് + താപം = പശ്ചാത്താപം.`),
+q('Ml',`'പൊൻ + കുടം' എന്നത് ചേർത്തെഴുതുമ്പോൾ ലഭിക്കുന്ന ശരിയായ രൂപം ഏതാണ്?`,[`പൊൻകുടം`,`പൊങ്കുടം`,`പൊൽക്കുടം`,`പൊന്നിൻകുടം`],1,
+`ശരിയായ ഉത്തരം: B (പൊങ്കുടം) — ഉത്തരസൂചിക പ്രകാരം\n\nൻ + ക → ങ്ക (ആദേശം). കുറിപ്പ്: ചില പാഠപുസ്തകങ്ങളിൽ 'പൊൻകുടം' എന്നും കാണുന്നു; ഉത്തരസൂചികയിലെ ശരി B ആണ്.`),
+q('Ml',`'കുടിക്കാൻ ആഗ്രഹിക്കുന്നവൻ' എന്നതിന്റെ ഒറ്റപ്പദം താഴെ പറയുന്നവയിൽ ഏതാണ്?`,[`ബുഭുക്ഷു`,`പിപാസു`,`ജിജ്ഞാസു`,`മുമുക്ഷു`],1,
+`ശരിയായ ഉത്തരം: B (പിപാസു)\n\nബുഭുക്ഷു — ഭക്ഷിക്കാൻ; ജിജ്ഞാസു — അറിയാൻ; മുമുക്ഷു — മോക്ഷം ആഗ്രഹിക്കുന്നവൻ.`),
+q('Ml',`"Knowledge is power" എന്ന ഇംഗ്ലീഷ് ആപ്തവാക്യത്തിന്റെ ഏറ്റവും അനുയോജ്യമായ മലയാള പരിഭാഷ ഏതാണ്?`,[`അറിവാണ് ഏറ്റവും വലിയ ശക്തി`,`ശക്തിയുള്ളവർക്ക് മാത്രമേ അറിവ് നേടാനാകൂ`,`അറിവ് നേടാൻ വലിയ ശക്തി ആവശ്യമാണ്`,`അധികാരമുള്ളവർ എപ്പോഴും അറിവുള്ളവരായിരിക്കും`],0,
+`ശരിയായ ഉത്തരം: A\n\n"Knowledge is power" (ഫ്രാൻസിസ് ബേക്കൺ) = അറിവാണ് ശക്തി.`),
+q('Ml',mt(`പട്ടിക Iലെ പദങ്ങളും പട്ടിക IIലെ പര്യായപദങ്ങളും ശരിയായി ചേരുംപടി ചേർക്കുക`,[`പദങ്ങൾ`,`ഗണപതി`,`സരസ്വതി`,`ലക്ഷ്മി`,`ശ്രീപാർവ്വതി`],[`പര്യായപദങ്ങൾ`,`വിഘ്നേശ്വരൻ, ഹേരംബൻ`,`വാണി, ശാരദ`,`ഇന്ദിര, കമല`,`ഗൗരി, ഉമ`]),M_STD,2,
+`ശരിയായ ഉത്തരം: C (1-a, 2-b, 3-c, 4-d)\n\nഗണപതി — വിഘ്നേശ്വരൻ, ഹേരംബൻ; സരസ്വതി — വാണി, ശാരദ; ലക്ഷ്മി — ഇന്ദിര, കമല; പാർവ്വതി — ഗൗരി, ഉമ.`),
+q('Ml',`'അരമന രഹസ്യം അങ്ങാടിപ്പാട്ട്' എന്ന പഴഞ്ചൊല്ലിന്റെ ശരിയായ അർത്ഥം താഴെ പറയുന്നവയിൽ ഏതാണ്?`,[`രാജകൊട്ടാരത്തിൽ പാടുന്ന പ്രശസ്തമായ നാടൻ പാട്ടുകൾ`,`അതീവ രഹസ്യമായി സൂക്ഷിക്കേണ്ട കാര്യം നാട്ടുകാർ മുഴുവൻ അറിയുന്ന അവസ്ഥ`,`അങ്ങാടിയിൽ നടക്കുന്ന കച്ചവട രഹസ്യങ്ങൾ രാജാവിനെ അറിയിക്കുക`,`പാവപ്പെട്ടവരുടെ സങ്കടങ്ങൾ അധികാരികൾ കേൾക്കാതിരിക്കുക`],1,
+`ശരിയായ ഉത്തരം: B\n\nകൊട്ടാരത്തിലെ രഹസ്യം അങ്ങാടിയിലെ പാട്ടാകുക = രഹസ്യം പരസ്യമാകുക.`),
+q('Ml',`താഴെ കൊടുത്തിരിക്കുന്ന പദങ്ങളും അവയുടെ വിപരീത പദങ്ങളും തമ്മിലുള്ള ജോഡികളിൽ തെറ്റായത് ഏതാണ്?`,[`ഐക്യം — അനൈക്യം`,`സൗഭാഗ്യം — നിർഭാഗ്യം`,`കയറ്റം — ഇറക്കം`,`സന്തോഷം — ആഹ്ലാദം`],3,
+`ശരിയായ ഉത്തരം: D\n\nസന്തോഷം, ആഹ്ലാദം — പര്യായങ്ങൾ. സന്തോഷത്തിന്റെ വിപരീതം ദുഃഖം/സന്താപം.`),
+q('Ml',`'അധ്യാപകൻ' എന്ന പുല്ലിംഗ പദത്തിന്റെ സ്ത്രീലിംഗ രൂപം 'അധ്യാപിക' എന്നാണെങ്കിൽ, 'ഗായകൻ' എന്ന പദത്തിന്റെ ശരിയായ സ്ത്രീലിംഗ രൂപം ഏതാണ്?`,[`ഗായക`,`ഗായിക`,`ഗായകി`,`ഗാനിക`],1,
+`ശരിയായ ഉത്തരം: B (ഗായിക)\n\n-അകൻ → -ഇക: ഗായകൻ → ഗായിക; നായകൻ → നായിക; സേവകൻ → സേവിക.`)
+];
+
+/* ============================================================
+   STATE & LOGIC
+   ============================================================ */
+let questions = [];
+let currentIndex = 0;
+let timerInterval = null;
+let timeRemaining = 0;
+let isSubmitted = false;
+let isPaused = false;
+let isAutoPaused = false;
+let isStudyPaused = false;
+let questionStates = [];
+let lastSaveTime = 0;
+let saveTimeout = null;
+let themeIndex = 0;
+const THEMES = ['light', 'dark', 'sepia'];
+const THEME_ICONS = ['🌙 Dark', '📜 Sepia', '☀️ Light'];
+
+function cycleTheme() {
+  themeIndex = (themeIndex + 1) % THEMES.length;
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+  try { localStorage.setItem('kpsc_theme', THEMES[themeIndex]); } catch(e) {}
+}
+(function loadTheme() {
+  try {
+    const saved = localStorage.getItem('kpsc_theme');
+    if (saved && THEMES.includes(saved)) {
+      themeIndex = THEMES.indexOf(saved);
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  } catch(e) {}
+})();
+
+function saveAttempt() {
+  if (isSubmitted) return;
+  try {
+    const data = {
+      version: STORAGE_VERSION,
+      timestamp: Date.now(),
+      currentIndex: currentIndex,
+      timeRemaining: timeRemaining,
+      questionStates: questionStates,
+      totalQuestions: questions.length
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    lastSaveTime = Date.now();
+    showSaveStatus();
+  } catch(e) {}
+}
+function showSaveStatus() {
+  const el = document.getElementById('saveStatus');
+  if (!el) return;
+  el.textContent = '💾 Saved';
+  el.classList.add('visible');
+  clearTimeout(el._hideT);
+  el._hideT = setTimeout(() => el.classList.remove('visible'), 1500);
+}
+function throttledSave() {
+  const now = Date.now();
+  if (now - lastSaveTime > 2000) saveAttempt();
+  else { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAttempt, 2000 - (now - lastSaveTime)); }
+}
+function getSavedAttempt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || data.version !== STORAGE_VERSION) return null;
+    if (!data.questionStates || !Array.isArray(data.questionStates)) return null;
+    if (data.timeRemaining <= 0) return null;
+    return data;
+  } catch(e) { return null; }
+}
+function formatTimeAgo(ts) {
+  const diff = Math.floor((Date.now() - ts) / 1000);
+  if (diff < 60) return diff + ' seconds ago';
+  if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+  return Math.floor(diff / 86400) + ' day(s) ago';
+}
+function formatTimeLeft(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return h + 'h ' + m + 'm ' + s + 's';
+  return m + 'm ' + s + 's';
+}
+function countAnswered(states) {
+  let n = 0;
+  states.forEach(st => { if (st.status === 'saved') n++; });
+  return n;
+}
+
+function checkSavedAndShowBanner() {
+  const saved = getSavedAttempt();
+  if (!saved) { hideBanner(); startNewTest(); return; }
+  const answered = countAnswered(saved.questionStates);
+  document.getElementById('resumeInfo').innerHTML =
+    'Saved at <strong>Q' + (saved.currentIndex + 1) + '/' + saved.totalQuestions + '</strong> · ' +
+    '<strong>' + answered + '</strong> answered · ' +
+    '<strong>' + formatTimeLeft(saved.timeRemaining) + '</strong> left · ' +
+    'saved <strong>' + formatTimeAgo(saved.timestamp) + '</strong>';
+  
+  document.getElementById('resumeBanner').style.display = 'block';
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+}
+function hideBanner() { document.getElementById('resumeBanner').style.display = 'none'; }
+
+function resumeAttempt() {
+  const saved = getSavedAttempt();
+  if (!saved) { startFresh(); return; }
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = saved.timeRemaining;
+  currentIndex = Math.min(saved.currentIndex, questions.length - 1);
+  isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = saved.questionStates.map(st => ({
+    selectedOption: st.selectedOption,
+    status: st.status,
+    markedForReview: st.markedForReview,
+    visited: st.visited
+  }));
+  while (questionStates.length < questions.length) {
+    questionStates.push({ selectedOption: null, status: 'idle', markedForReview: false, visited: false });
+  }
+  questionStates.length = questions.length;
+  hideBanner();
+  launchTest();
+}
+function startFresh() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  hideBanner();
+  startNewTest();
+}
+function startNewTest() {
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = questions.length * SECONDS_PER_QUESTION;
+  currentIndex = 0; isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = questions.map(() => ({
+    selectedOption: null, status: 'idle', markedForReview: false, visited: false
+  }));
+  questionStates[0].visited = true;
+  launchTest();
+}
+function launchTest() {
+  document.getElementById('testView').style.display = 'flex';
+  document.getElementById('testHeader').style.display = 'flex';
+  document.getElementById('resultsView').classList.remove('visible');
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 1000);
+  updateTimerDisplay();
+  renderQuestion();
+  renderPalette();
+  updateStats();
+  saveAttempt();
+}
+
+/* CHANGE 2: WAIT FOR CLOUD BEFORE STARTING */
+function validateQuestions() {
+  const errs = [];
+  if (sourceQuestions.length !== 100) errs.push('Total questions = ' + sourceQuestions.length + ' (expected 100)');
+  sourceQuestions.forEach((q, i) => {
+    if (!q.question || !q.explanation) errs.push('Q' + (i + 1) + ': missing text/explanation');
+    if (!Array.isArray(q.options) || q.options.length !== 4) errs.push('Q' + (i + 1) + ': needs 4 options');
+    if (!(q.correct >= 0 && q.correct <= 3)) errs.push('Q' + (i + 1) + ': invalid correct index');
+  });
+  if (errs.length) console.error('QUESTION DATA ERRORS:\n' + errs.join('\n'));
+  return errs;
+}
+async function initTest() {
+  const dataErrs = validateQuestions();
+  if (dataErrs.length) { document.getElementById('syncLoader').innerHTML = '⚠️ Question data error — see console:<br>' + dataErrs.slice(0,5).join('<br>'); return; }
+  if (window.KPSC_Sync && window.KPSC_Sync.whenReady) {
+    await window.KPSC_Sync.whenReady(4000); // Wait max 4s for cloud
+  }
+  document.getElementById('syncLoader').style.display = 'none';
+  
+  if (getSavedAttempt()) checkSavedAndShowBanner();
+  else startNewTest();
+}
+
+/* CHANGE 3: PREVENT RELOAD IF EXAM IS ACTIVE */
+window.addEventListener('kpsc-sync-applied', function(e) {
+  if (!isSubmitted && !isPaused && !isStudyPaused) {
+    e.preventDefault(); // Stop sync.js from reloading the page
+    console.log("Cloud data merged in background.");
+  }
+});
+
+function tickTimer() {
+  if (isSubmitted || isPaused || isStudyPaused) return;
+  timeRemaining--;
+  updateTimerDisplay();
+  if (timeRemaining <= 0) {
+    timeRemaining = 0;
+    updateTimerDisplay();
+    submitTest(true);
+    return;
+  }
+  if (timeRemaining % 15 === 0) saveAttempt();
+}
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  const h = Math.floor(timeRemaining / 3600);
+  const m = Math.floor((timeRemaining % 3600) / 60);
+  const s = timeRemaining % 60;
+  const pad = n => String(n).padStart(2, '0');
+  el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  const box = document.getElementById('timerBox');
+  if (timeRemaining <= 300 && timeRemaining > 0 && !isPaused && !isStudyPaused) box.classList.add('warning');
+  else box.classList.remove('warning');
+}
+
+function togglePause() {
+  if (isSubmitted) return;
+  if (isStudyPaused) { resumeStudy(); return; }
+  if (!isPaused) pauseTest(false); else resumeTest();
+}
+function pauseTest(auto) {
+  if (isPaused || isSubmitted) return;
+  isPaused = true; isAutoPaused = auto;
+  const modal = document.getElementById('pauseModal');
+  const icon = document.getElementById('pauseIcon');
+  const title = document.getElementById('pauseTitle');
+  const message = document.getElementById('pauseMessage');
+  if (auto) {
+    icon.textContent = '🔒';
+    title.textContent = 'Exam Auto-Paused';
+    message.innerHTML = 'Tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  } else {
+    icon.textContent = '⏸';
+    title.textContent = 'Exam Paused';
+    message.innerHTML = 'പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  }
+  document.getElementById('pauseOverlay').classList.add('visible');
+  document.getElementById('pauseBtn').textContent = '▶ Resume';
+  document.getElementById('pauseBtn').classList.add('resume');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('questionPanel').classList.add('locked');
+  document.getElementById('sidebar').classList.add('locked');
+}
+function resumeTest() {
+  if (!isPaused || isSubmitted) return;
+  isPaused = false; isAutoPaused = false;
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  updateTimerDisplay();
+}
+function startStudyPause() {
+  if (isStudyPaused || isSubmitted || isPaused) return;
+  isStudyPaused = true;
+  document.getElementById('studyPauseBar').classList.add('visible');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+}
+function resumeStudy() {
+  if (!isStudyPaused) return;
+  isStudyPaused = false;
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('timerBox').classList.remove('paused');
+  updateTimerDisplay();
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  st.visited = true;
+
+  document.getElementById('qNumber').textContent = 'Question ' + (currentIndex + 1);
+  document.getElementById('qSubject').textContent = q.subject;
+  document.getElementById('qText').textContent = q.question;
+
+  renderOptions();
+  renderExplanation();
+  renderActionButtons();
+  renderPalette();
+  updateStats();
+  throttledSave();
+}
+
+function renderOptions() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    if (locked) {
+      btn.classList.add('locked');
+      if (i === q.correct) btn.classList.add('correct-highlight');
+      else if (i === st.selectedOption) btn.classList.add('wrong-highlight');
+    } else {
+      if (i === st.selectedOption) btn.classList.add('selected');
+      btn.onclick = () => {
+        st.selectedOption = i;
+        renderOptions();
+        renderActionButtons();
+        throttledSave();
+      };
+    }
+    list.appendChild(btn);
+  });
+}
+
+function renderExplanation() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const box = document.getElementById('explanationBox');
+  const content = document.getElementById('expContent');
+  if (st.status === 'saved' || st.status === 'revealed') {
+    let prefix = '';
+    if (st.status === 'saved' && st.selectedOption !== null) {
+      if (st.selectedOption === q.correct) {
+        prefix = '<span class="exp-correct">✔ ശരി!</span>\n\n';
+      } else {
+        prefix = '<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '\n\n';
+      }
+    } else if (st.status === 'revealed') {
+      prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '</span>\n\n';
+    }
+    content.innerHTML = prefix + escapeHtml(q.explanation);
+    box.classList.add('visible');
+  } else {
+    box.classList.remove('visible');
+    content.textContent = '';
+  }
+}
+
+function renderActionButtons() {
+  const st = questionStates[currentIndex];
+  const container = document.getElementById('actionButtons');
+  container.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  function addBtn(label, cls, fn) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn ' + cls;
+    b.textContent = label;
+    b.onclick = fn;
+    container.appendChild(b);
+  }
+
+  if (!locked) {
+    if (st.selectedOption !== null) {
+      addBtn('💾 Save', 'btn-save', saveAnswer);
+      addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    } else {
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    }
+  } else {
+    addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+    addBtn('→ Next', 'btn-next', nextQuestion);
+  }
+}
+
+function renderPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'palette-btn';
+    btn.textContent = i + 1;
+    if (st.status === 'saved') btn.classList.add('answered');
+    else if (st.markedForReview) btn.classList.add('review');
+    else if (st.visited) btn.classList.add('visited-not-answered');
+    else btn.classList.add('not-visited');
+    if (i === currentIndex) btn.classList.add('active');
+    btn.onclick = () => gotoQuestion(i);
+    grid.appendChild(btn);
+  });
+}
+
+function updateStats() {
+  let answered = 0, review = 0, attempted = 0;
+  questionStates.forEach(st => {
+    if (st.status === 'saved') { answered++; attempted++; }
+    if (st.markedForReview) review++;
+  });
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statNotAnswered').textContent = questions.length - answered;
+  document.getElementById('statReview').textContent = review;
+  document.getElementById('statAttempted').textContent = attempted;
+}
+
+function saveAnswer() {
+  const st = questionStates[currentIndex];
+  if (st.selectedOption === null) return;
+  st.status = 'saved';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+function showAnswer() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+function skipAndShow() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  st.markedForReview = true;
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1 && isStudyPaused && !isSubmitted) {
+      resumeStudy();
+      currentIndex++;
+      renderQuestion();
+    }
+  }, 1800);
+}
+function markForReview() {
+  const st = questionStates[currentIndex];
+  st.markedForReview = !st.markedForReview;
+  renderQuestion();
+  saveAttempt();
+  if (st.markedForReview) setTimeout(() => {
+    if (currentIndex < questions.length - 1) nextQuestion();
+  }, 400);
+}
+function clearResponse() {
+  const st = questionStates[currentIndex];
+  st.selectedOption = null;
+  st.status = 'idle';
+  st.markedForReview = false;
+  renderQuestion();
+  saveAttempt();
+}
+function nextQuestion() {
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    if (!isStudyPaused) {
+      if (confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?')) submitTest(false);
+    }
+  }
+}
+function gotoQuestion(i) {
+  if (isStudyPaused) resumeStudy();
+  currentIndex = i;
+  renderQuestion();
+}
+
+function submitTest(auto) {
+  if (isSubmitted) return;
+  if (!auto && timeRemaining > 0) {
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ?')) return;
+  }
+  isSubmitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  renderResults();
+}
+
+function renderResults() {
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('resultsView').classList.add('visible');
+
+  let total = questions.length;
+  let attempted = 0, correct = 0, wrong = 0, unanswered = 0;
+
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (st.status === 'saved') {
+      attempted++;
+      if (st.selectedOption === q.correct) correct++;
+      else wrong++;
+    } else {
+      unanswered++;
+    }
+  });
+
+  const negativeMarks = wrong * NEGATIVE_MARKING;
+  const score = correct * 1 - negativeMarks;
+
+  const cards = [
+    { label: 'ആകെ ചോദ്യങ്ങൾ', value: total, cls: '' },
+    { label: 'ശ്രമിച്ചവ', value: attempted, cls: '' },
+    { label: 'ശരിയായവ', value: correct, cls: 'correct-card' },
+    { label: 'തെറ്റായവ', value: wrong, cls: 'wrong-card' },
+    { label: 'നെഗറ്റീവ് മാർക്ക്', value: '-' + negativeMarks.toFixed(2), cls: 'negative-card' },
+    { label: 'ആകെ സ്കോർ', value: score.toFixed(2), cls: 'score-card' },
+    { label: 'ഉത്തരം നൽകാത്തവ', value: unanswered, cls: '' }
+  ];
+
+  document.getElementById('summaryCards').innerHTML = cards.map(c =>
+    '<div class="summary-card ' + c.cls + '"><div class="sc-value">' + c.value + '</div><div class="sc-label">' + c.label + '</div></div>'
+  ).join('');
+
+  const subjectMap = {};
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (!subjectMap[q.subject]) subjectMap[q.subject] = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, score: 0 };
+    const s = subjectMap[q.subject];
+    s.total++;
+    if (st.status === 'saved') {
+      s.attempted++;
+      if (st.selectedOption === q.correct) { s.correct++; s.score += 1; }
+      else { s.wrong++; s.score -= NEGATIVE_MARKING; }
+    } else {
+      s.unanswered++;
+    }
+  });
+
+  let tableHTML = '';
+  Object.keys(subjectMap).forEach(sub => {
+    const s = subjectMap[sub];
+    tableHTML += '<tr><td>' + sub + '</td><td>' + s.total + '</td><td>' + s.attempted + '</td><td>' + s.correct + '</td><td>' + s.wrong + '</td><td>' + s.unanswered + '</td><td>' + s.score.toFixed(2) + '</td></tr>';
+  });
+  document.getElementById('subjectTableBody').innerHTML = tableHTML;
+
+  let detailHTML = '';
+  let count = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const isWrong = st.status === 'saved' && st.selectedOption !== q.correct;
+    const isRevealed = st.status === 'revealed';
+    const isReviewedSkipped = st.status !== 'saved' && st.markedForReview;
+    if (!isWrong && !isRevealed && !isReviewedSkipped) return;
+    count++;
+    let typeLabel = isWrong ? '❌ തെറ്റായ ഉത്തരം' : (isRevealed ? '👁 ഉത്തരം കണ്ടത്' : '🔖 Review');
+    detailHTML += '<div class="detail-item">' +
+      '<div class="di-info"><strong>Q' + (i + 1) + '</strong> · ' + q.subject + ' · ' + typeLabel + '</div>' +
+      '<div class="di-question">' + escapeHtml(q.question) + '</div>' +
+      (st.selectedOption !== null ? '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">' + escapeHtml(q.options[st.selectedOption]) + '</span></div>' : '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>') +
+      '<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">' + escapeHtml(q.options[q.correct]) + '</span></div>' +
+      '<div class="di-explanation">' + escapeHtml(q.explanation) + '</div>' +
+      '</div>';
+  });
+  document.getElementById('detailList').innerHTML = count > 0 ? detailHTML : '<p style="color:var(--gray);text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+  window.scrollTo(0, 0);
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function restartTest() {
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('resultsView').classList.remove('visible');
+  startNewTest();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (isSubmitted || isPaused) return;
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  const st = questionStates[currentIndex];
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  if (e.key >= '1' && e.key <= '4' && !locked) {
+    const idx = parseInt(e.key, 10) - 1;
+    if (idx < questions[currentIndex].options.length) {
+      st.selectedOption = idx;
+      renderOptions(); renderActionButtons(); throttledSave();
+      e.preventDefault();
+    }
+  } else if (e.key === 'Enter' && !e.shiftKey && !locked && st.selectedOption !== null) {
+    saveAnswer(); e.preventDefault();
+  } else if (e.key === 'Enter' && e.shiftKey && !locked) {
+    skipAndShow(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'r' && !locked) {
+    markForReview(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'c' && !locked) {
+    clearResponse(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'n') {
+    nextQuestion(); e.preventDefault();
+  } else if (e.key === ' ') {
+    if (!locked) { showAnswer(); e.preventDefault(); }
+  } else if (e.key.toLowerCase() === 'p') {
+    togglePause(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 't') {
+    cycleTheme(); e.preventDefault();
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !isSubmitted && !isPaused && !isStudyPaused) {
+    pauseTest(true);
+  }
+});
+
+window.addEventListener('beforeunload', (e) => {
+  if (!isSubmitted) {
+    saveAttempt();
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTest();
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+});
+</script>
+</body>
+</html>
