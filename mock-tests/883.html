@@ -142,15 +142,60 @@
       '</a>';
     }).join("");
 
-    var s = document.createElement("script");
-    s.src = "../assets/js/sections.js";
-    document.body.appendChild(s);
+    if (!window.__kpscSectionsLoaded) {
+      window.__kpscSectionsLoaded = true;
+      var s = document.createElement("script");
+      s.src = "../assets/js/sections.js";
+      document.body.appendChild(s);
+    }
+  }
+
+
+  /* ------------------------------------------------------------------
+     The manifest is the offline source of truth.  A paper dropped into
+     the folder afterwards is not in it yet, so ask the host for the
+     folder listing and fold in anything the manifest does not know.
+     Not on GitHub Pages (file://, local server) -> the call throws and
+     the manifest list stands unchanged.
+     ------------------------------------------------------------------ */
+  var supplementTried = false;
+  async function supplement(local) {
+    if (supplementTried || !local.length) return;
+    supplementTried = true;
+    try {
+      var files = await fetchFolderList();
+      var known = {};
+      local.forEach(function (p) { known[p.file] = 1; });
+      var extra = files.filter(function (f) { return !known[f.name]; });
+      if (!extra.length) return;
+
+      var metas = await Promise.all(extra.map(function (f) { return readMeta(f.name); }));
+      var merged = local.concat(extra.map(function (f, i) {
+        var m = metas[i] || {};
+        return {
+          file: f.name,
+          title: m.title,
+          titleMl: m.titleMl,
+          desc: m.desc,
+          duration: m.duration,
+          qs: m.qs,
+          key: m.key,
+          tag: m.tag || EXAM_CODE
+        };
+      }));
+      merged.sort(function (a, b) { return a.file.localeCompare(b.file); });
+      render(merged);
+    } catch (e) { /* offline or no folder listing available */ }
   }
 
   async function load(force) {
     grid.innerHTML = '<p class="empty">Loading…</p>';
     var local_MOCK_TESTS_883 = window.MOCK_TESTS_883;
-    if (local_MOCK_TESTS_883 && local_MOCK_TESTS_883.length) { render(local_MOCK_TESTS_883); return; }
+    if (local_MOCK_TESTS_883 && local_MOCK_TESTS_883.length) {
+      render(local_MOCK_TESTS_883);
+      await supplement(local_MOCK_TESTS_883);
+      return;
+    }
 
     if (!force) {
       var cached = readCache();

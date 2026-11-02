@@ -106,6 +106,17 @@ window.MOCK_TESTS_573 = [
     "tag": "573"
   },
   {
+    "id": "kerala-psc-test-11-2-11-26",
+    "key": "kerala-psc-test-11-2-11-26",
+    "title": "Kerala PSC — Test 11 (Hard Mock)",
+    "titleMl": "",
+    "desc": "100 questions",
+    "file": "Kerala PSC — Test 11- 2 11 26.html",
+    "qs": 100,
+    "duration": 75,
+    "tag": "573"
+  },
+  {
     "id": "university-assistant-mock-test-91-26-m",
     "key": "university-assistant-mock-test-91-26-m",
     "title": "Kerala PSC University Assistant Mock Test (91/26 - M)",

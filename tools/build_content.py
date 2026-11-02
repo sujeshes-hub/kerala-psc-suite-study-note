@@ -154,7 +154,7 @@ def describe_folder(folder, tag, with_subject):
         entry = {
             "id": slugify(stem),
             "key": slugify(stem),
-            "title": clean_title(title_match.group(1) if title_match else "", humanise(stem)),
+            "title": clean_title(title_match.group(1) if title_match else "", fallback_title(name)),
             "titleMl": "",
             "desc": (f"{qs} questions" if qs else "Question paper"),
             "file": name,
@@ -173,17 +173,21 @@ def describe_folder(folder, tag, with_subject):
 GENERIC_TITLES = {"", "kerala psc mock test", "kerala psc", "mock test"}
 
 
+def fallback_title(filename):
+    """A readable name from the filename, never just a bare number."""
+    stem = os.path.splitext(filename)[0]
+    pretty = humanise(stem)
+    if len(pretty.strip()) < 4 or pretty.strip().isdigit():
+        return stem
+    return pretty
+
+
 def dedupe_titles(papers, folder):
     """Several papers carry the same generic <title>; fall back to the filename.
 
     Without this the list showed three cards all titled "Kerala PSC Mock Test",
     which is indistinguishable for a student choosing a paper.
     """
-    names = {}
-    for name in sorted(os.listdir(folder)):
-        if name.lower().endswith(".html"):
-            names[name] = humanise(os.path.splitext(name)[0])
-
     seen = {}
     for entry in papers:
         key = entry["title"].strip().lower()
@@ -192,12 +196,13 @@ def dedupe_titles(papers, folder):
     for key, group in seen.items():
         if len(group) > 1 or key in GENERIC_TITLES:
             for entry in group:
-                entry["title"] = names.get(entry["file"], entry["file"])
+                entry["title"] = fallback_title(entry["file"])
 
 
-def write_manifest(folder, var, papers, exam_label):
+def render_manifest(var, papers, exam_label):
+    """The manifest text, without touching the disk (used by tools/serve.py)."""
     body = json.dumps(papers, ensure_ascii=False, indent=2)
-    text = (
+    return (
         "/* =====================================================================\n"
         f"   {exam_label} — generated manifest, do not edit by hand\n"
         "   ---------------------------------------------------------------------\n"
@@ -207,7 +212,11 @@ def write_manifest(folder, var, papers, exam_label):
         "   ===================================================================== */\n"
         f"window.{var} = {body};\n"
     )
-    return save(os.path.join(folder, "list.js"), text)
+
+
+def write_manifest(folder, var, papers, exam_label):
+    return save(os.path.join(folder, "list.js"),
+                render_manifest(var, papers, exam_label))
 
 
 def wire_page(rel, manifest_src, var, grid_id):

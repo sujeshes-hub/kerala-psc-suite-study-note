@@ -14,11 +14,12 @@ files honest.
 
 | How | Notes |
 | --- | --- |
-| Double-click `index.html` | Works fully offline (`file://`). Progress stays in `localStorage`. |
-| Publish to GitHub Pages | Push the folder; the site root is the repository root. |
-| Any static server | `python -m http.server` from the repository root. |
+| `python tools/serve.py` | **Recommended locally** — same site, but the mock-test manifests rebuild themselves when you add a paper. |
+| Double-click `index.html` | Works fully offline (`file://`). Progress stays in `localStorage`; new papers need `build_content.py` (§5). |
+| Publish to GitHub Pages | Push the folder; the site root is the repository root. A workflow keeps the manifests current. |
+| Any static server | `python -m http.server` from the repository root (serves the committed manifests). |
 
-Nothing hard-codes a repository name any more, so any of the three modes work.
+Nothing hard-codes a repository name any more, so every mode works.
 Cloud sync (optional, Firebase) only activates when `assets/js/sync.js` loads
 and the visitor signs in.
 
@@ -80,9 +81,19 @@ tools/      maintenance scripts (§5)
 
 1. Drop the paper into `question-papers/573/`, `question-papers/883/` or
    `question-papers/subjects/`.
-2. Run `python tools/build_content.py` to regenerate that folder's `list.js`
-   manifest. The listing page reads the manifest, so the paper appears in the
-   list even offline.
+2. That's it — the list picks it up by itself:
+
+   * previewing with `python tools/serve.py` → the manifest is rebuilt on the
+     next request, so a refresh shows the new paper;
+   * on GitHub Pages → the commit triggers the workflow that rebuilds the
+     manifest, and the page also folds in files the contents API reports as
+     not yet in it;
+   * opened from `file://` → the committed manifest is used, so run
+     `python tools/build_content.py` (see §5 for why this one case cannot be
+     automatic).
+
+   `python tools/site_audit.py` reports any paper still missing as
+   "on disk, unlisted".
 
 **A subject or chapter** — add the node to `SYLLABUS` in `syllabus.js`, map it
 in `FILES` / `CHAPTER_FILES`, then re-run `node tools/export_syllabus.js`.
@@ -108,6 +119,7 @@ All scripts are read-only unless noted, and every script that rewrites files
 backs them up first under `tools/_backup/<timestamp>/` (with a `restore.ps1`).
 
 ```bash
+python tools/serve.py               # local preview; rebuilds manifests on request
 python tools/site_audit.py          # link + data integrity; exit 1 on failure
 python tools/check_inline_js.py     # parse every inline page script with Node
 python tools/build_content.py       # WRITES: mock-test manifests
@@ -115,6 +127,20 @@ node   tools/export_syllabus.js     # WRITES: data/syllabus.json
 python tools/reduce_borders.py      # WRITES: thinner borders on topic pages
 python tools/repair_site.py         # one-off historical repairs (idempotent)
 ```
+
+### Adding a mock-test paper — no manual step
+
+A browser cannot list a folder from `file://`, which is why the listings read a
+generated manifest. All three routes keep it current by themselves:
+
+| You are viewing via | What keeps the list current |
+| --- | --- |
+| `python tools/serve.py` | The server rebuilds `list.js` in memory whenever a paper in that folder is newer than the manifest — drop the file in, refresh. |
+| GitHub Pages | `.github/workflows/refresh-mock-manifests.yml` rebuilds and commits the manifests when a `question-papers/**/*.html` file is pushed; the pages also fold in anything the contents API reports that the manifest does not know. |
+| `file://` (double-click) | Uses the committed manifest. Papers added after the last build show up once `build_content.py` runs — the only route that needs it. |
+
+`serve.py` flags: `--port`, `--host`, `--root`, `--no-auto` (serve the committed
+manifests as-is).
 
 `reduce_borders.py` enforces the house style for the topic pages: every
 all-round outline is `1px`, every one-sided accent bar is at most `2px`;
@@ -157,12 +183,14 @@ Current status: **0 failures**. The audit also lists 14 advisory "stale pages"
 
 ## 7. Fixed in the last maintenance pass
 
-* 350 pages loaded `assets/js/sync.js` from the root-relative path
-  `/kerala-psc-suite-study-note/…` — a repository name that no longer exists.
-  Cloud sync 404-ed everywhere, including on GitHub Pages; the path is now
-  relative to each page (`../` or `../../`), so sync loads in every deployment
-  mode. Each tag also carries `data-kpsc-sync="1"` so `engine.js` will not
-  double-load it.
+* 350 pages loaded `assets/js/sync.js` from the root-relative, hard-coded path
+  `/kerala-psc-suite-study-note/assets/js/sync.js`. That only resolves when the
+  site is served from the project root of that exact GitHub Pages repository:
+  it fails from `file://`, from a local server, and after any rename (the repo
+  name had already drifted from the one used elsewhere in the code). Each page
+  now uses a path relative to its own depth (`../` or `../../`), so sync loads
+  in every mode. Each tag also carries `data-kpsc-sync="1"` so `engine.js` will
+  not double-load it.
 * `chapters/1.1-kerala-history.html` used `../../` prefixes while sitting one
   level deep, so its CSS, syllabus and links all missed.
 * `CHAPTER_FILES["9"]` pointed at `chapters/art-sports-literature/9-art-sports-literature.html`,
