@@ -111,6 +111,14 @@
     } catch (e) { return {}; }
   }
 
+  /* Newest paper first; the filename keeps ties stable. */
+  function byUpdated(a, b) {
+    var da = a.updated || "";
+    var db = b.updated || "";
+    if (da !== db) return da < db ? 1 : -1;
+    return (a.file || "").localeCompare(b.file || "");
+  }
+
   function titleFromFilename(name) {
     return name
       .replace(/\.html?$/i, "")
@@ -135,6 +143,7 @@
         '<p class="desc">' + (p.titleMl || "") + (p.desc ? "<br>" + p.desc : "") + '</p>' +
         '<div class="meta">' +
           (p.duration ? '<span>⏱ ' + p.duration + ' min</span>' : '') +
+          (p.updated ? '<span>📅 ' + p.updated + '</span>' : '') +
           '<span>' + badgeTxt + '</span>' +
         '</div>' +
         '<div class="bar"><i style="width:0%"></i></div>' +
@@ -183,7 +192,7 @@
           tag: m.tag || EXAM_CODE
         };
       }));
-      merged.sort(function (a, b) { return a.file.localeCompare(b.file); });
+      merged.sort(byUpdated);
       render(merged);
     } catch (e) { /* offline or no folder listing available */ }
   }
@@ -222,7 +231,7 @@
         };
       });
 
-      items.sort(function (a, b) { return a.file.localeCompare(b.file); });
+      items.sort(byUpdated);
 
       saveCache(items);
       render(items);

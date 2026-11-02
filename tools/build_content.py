@@ -15,12 +15,19 @@ Kerala PSC Study Suite — content build.
    lists work offline / from file:// as the site claims, and stops each
    visit from downloading every paper just to read metadata.
 
+Each entry carries an `updated` date and the lists are ordered newest first.
+The date comes from .git/index (the file's own mtime when it was staged),
+falling back to the filesystem mtime.  Pass --keep-dates in CI: a fresh
+checkout stamps every file with the same time, so recomputing there would
+flatten the order.
+
 Every file is backed up first; the script is idempotent.
 """
 import json
 import os
 import re
 import shutil
+import struct
 import sys
 import time
 
@@ -135,10 +142,75 @@ def subject_for(name):
     return "Uncategorised"
 
 
-def describe_folder(folder, tag, with_subject):
+def read_git_index_dates():
+    """path -> epoch seconds, from .git/index.
+
+    Each index entry stores the file's own modification time as recorded when it
+    was staged, so the date survives later rewrites of the file and is available
+    without the `git` binary.  A CI checkout instead produces one uniform
+    timestamp for every file, which is why the workflow passes --keep-dates.
+    """
+    idx = os.path.join(ROOT, ".git", "index")
+    if not os.path.isfile(idx):
+        return {}
+    try:
+        with open(idx, "rb") as fh:
+            data = fh.read()
+    except OSError:
+        return {}
+    if data[:4] != b"DIRC" or len(data) < 12:
+        return {}
+    try:
+        version, count = struct.unpack(">II", data[4:12])
+        if version != 2:
+            return {}
+        dates, pos = {}, 12
+        for _ in range(count):
+            start = pos
+            mtime = struct.unpack(">I", data[pos + 8:pos + 12])[0]
+            namelen = struct.unpack(">H", data[pos + 60:pos + 62])[0] & 0x0FFF
+            name_start = pos + 62
+            path = data[name_start:name_start + namelen].decode("utf-8", "replace")
+            pos = start + ((name_start + namelen - start + 8) & ~7)
+            dates[path.replace("/", os.sep)] = mtime
+        return dates
+    except (struct.error, IndexError):
+        return {}
+
+
+def read_manifest_dates(folder):
+    """name -> updated, from a previously generated list.js."""
+    path = os.path.join(folder, "list.js")
+    if not os.path.isfile(path):
+        return {}
+    try:
+        text = read(path)
+        return {m.group(1): m.group(2)
+                for m in re.finditer(r'"file"\s*:\s*"([^"]+)"[^}]*?"updated"\s*:\s*"([^"]*)"', text, re.S)}
+    except OSError:
+        return {}
+
+
+def resolve_updated(path, index_dates, known):
+    """Publication-ish date for a paper: known manifest value, git index, mtime."""
+    rel = os.path.relpath(path, ROOT)
+    if known:
+        return known
+    stamp = index_dates.get(rel)
+    if not stamp:
+        try:
+            stamp = os.path.getmtime(path)
+        except OSError:
+            return ""
+    return time.strftime("%Y-%m-%d", time.localtime(stamp))
+
+
+def describe_folder(folder, tag, with_subject, index_dates=None, keep_dates=False):
     papers = []
     if not os.path.isdir(folder):
         return papers
+    index_dates = index_dates or {}
+    recorded = read_manifest_dates(folder) if keep_dates else {}
     for name in sorted(os.listdir(folder)):
         if not name.lower().endswith(".html"):
             continue
@@ -156,6 +228,7 @@ def describe_folder(folder, tag, with_subject):
             "key": slugify(stem),
             "title": clean_title(title_match.group(1) if title_match else "", fallback_title(name)),
             "titleMl": "",
+            "updated": resolve_updated(path, index_dates, recorded.get(name, "")),
             "desc": (f"{qs} questions" if qs else "Question paper"),
             "file": name,
             "qs": qs,
@@ -167,6 +240,9 @@ def describe_folder(folder, tag, with_subject):
         papers.append(entry)
 
     dedupe_titles(papers, folder)
+    # Newest first; the filename keeps the order stable inside the same day.
+    papers.sort(key=lambda p: p["file"])
+    papers.sort(key=lambda p: p.get("updated", ""), reverse=True)
     return papers
 
 
@@ -251,12 +327,21 @@ def wire_page(rel, manifest_src, var, grid_id):
 
 
 def main():
+    keep_dates = "--keep-dates" in sys.argv
     print("Kerala PSC Study Suite — content build")
     print("-" * 64)
+    index_dates = read_git_index_dates()
+    if keep_dates:
+        print("  dates     : keeping the dates already in each manifest")
+    elif index_dates:
+        print(f"  dates     : .git/index ({len(index_dates)} entries)")
+    else:
+        print("  dates     : file modification times")
+
     total = 0
     for exam, folder_rel, var, tag, with_subject in TARGETS:
         folder = os.path.join(ROOT, folder_rel)
-        papers = describe_folder(folder, tag, with_subject)
+        papers = describe_folder(folder, tag, with_subject, index_dates, keep_dates)
         if write_manifest(folder, var, papers, f"{exam} papers"):
             print(f"  manifest  {folder_rel}/list.js  -> {len(papers)} paper(s)")
         total += len(papers)

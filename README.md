@@ -107,9 +107,11 @@ in `FILES` / `CHAPTER_FILES`, then re-run `node tools/export_syllabus.js`.
 | `question-papers/*/list.js` | `python tools/build_content.py` |
 | `data/syllabus.json` | `node tools/export_syllabus.js` |
 
-`list.js` carries each paper's title, question count, duration and tag, read
-straight out of the paper. `data/syllabus.json` is a machine-readable copy of
-`syllabus.js` (17 subjects / 33 chapters / 370 topics) for tooling.
+`list.js` carries each paper's title, question count, duration, tag and
+`updated` date, read straight out of the paper, ordered newest first. The
+listing pages render that order and show the date on each card.
+`data/syllabus.json` is a machine-readable copy of `syllabus.js`
+(17 subjects / 33 chapters / 370 topics) for tooling.
 
 ---
 
@@ -122,11 +124,23 @@ backs them up first under `tools/_backup/<timestamp>/` (with a `restore.ps1`).
 python tools/serve.py               # local preview; rebuilds manifests on request
 python tools/site_audit.py          # link + data integrity; exit 1 on failure
 python tools/check_inline_js.py     # parse every inline page script with Node
-python tools/build_content.py       # WRITES: mock-test manifests
+node   tools/render_check.js        # render a listing page headlessly, show the cards
+python tools/build_content.py       # WRITES: mock-test manifests (+ --keep-dates)
 node   tools/export_syllabus.js     # WRITES: data/syllabus.json
 python tools/reduce_borders.py      # WRITES: thinner borders on topic pages
 python tools/repair_site.py         # one-off historical repairs (idempotent)
 ```
+
+Newest papers come first. Each manifest entry carries an `updated` date taken
+from `.git/index` — the file's own mtime when it was staged, which survives
+later edits and is readable without the `git` binary — falling back to the
+filesystem mtime for a paper that has not been staged yet. CI runs the build
+with `--keep-dates`, because a fresh checkout stamps every file with the same
+time and would flatten the order; only papers missing from the manifest then get
+today's date.
+
+`render_check.js` executes a listing page in Node with a small DOM shim and
+prints the cards it produced — handy when a headless browser is not available.
 
 ### Adding a mock-test paper — no manual step
 

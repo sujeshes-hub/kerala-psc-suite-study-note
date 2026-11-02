@@ -7,34 +7,11 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
-    "id": "biology-public-health-mock-test",
-    "key": "biology-public-health-mock-test",
-    "title": "Kerala PSC – Biology & Public Health Mock Test",
-    "titleMl": "",
-    "desc": "27 questions",
-    "file": "Biology & Public Health Mock Test.html",
-    "qs": 27,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Biology"
-  },
-  {
-    "id": "kerala-administration-governance-acts",
-    "key": "kerala-administration-governance-acts",
-    "title": "Kerala PSC – Kerala Administration, Governance & Important Acts",
-    "titleMl": "",
-    "desc": "100 questions",
-    "file": "Kerala Administration, Governance & Acts.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Kerala Admin"
-  },
-  {
     "id": "kerala-psc-constitution-governance",
     "key": "kerala-psc-constitution-governance",
     "title": "Kerala PSC Constitution & Governance – Mock Test (100 Questions)",
     "titleMl": "",
+    "updated": "2026-11-01",
     "desc": "100 questions",
     "file": "Kerala PSC Constitution & Governance.html",
     "qs": 100,
@@ -47,6 +24,7 @@ window.MOCK_TESTS_SUBJECTS = [
     "key": "kerala-psc-economics",
     "title": "Kerala PSC Economics – Mock Test (100 Questions)",
     "titleMl": "",
+    "updated": "2026-11-01",
     "desc": "100 questions",
     "file": "Kerala PSC Economics.html",
     "qs": 100,
@@ -59,6 +37,7 @@ window.MOCK_TESTS_SUBJECTS = [
     "key": "kerala-psc-geography",
     "title": "Kerala PSC Geography – Mock Test (100 Questions)",
     "titleMl": "",
+    "updated": "2026-11-01",
     "desc": "100 questions",
     "file": "Kerala PSC Geography.html",
     "qs": 100,
@@ -71,6 +50,7 @@ window.MOCK_TESTS_SUBJECTS = [
     "key": "kerala-psc-history-kerala-india-world",
     "title": "Kerala PSC History (Kerala, India, World) – Mock Test",
     "titleMl": "",
+    "updated": "2026-11-01",
     "desc": "100 questions",
     "file": "Kerala PSC History (Kerala, India, World).html",
     "qs": 100,
@@ -79,27 +59,55 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "History"
   },
   {
-    "id": "physics-mock-test",
-    "key": "physics-mock-test",
-    "title": "Kerala PSC – Physics Mock Test (100 Q)",
-    "titleMl": "",
-    "desc": "100 questions",
-    "file": "Physics Mock Test.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Physics"
-  },
-  {
     "id": "english1",
     "key": "english1",
     "title": "Kerala PSC General English – Enhanced Mock Test",
     "titleMl": "",
+    "updated": "2026-11-01",
     "desc": "101 questions",
     "file": "english1.html",
     "qs": 101,
     "duration": 76,
     "tag": "BOTH",
     "subject": "English"
+  },
+  {
+    "id": "biology-public-health-mock-test",
+    "key": "biology-public-health-mock-test",
+    "title": "Kerala PSC – Biology & Public Health Mock Test",
+    "titleMl": "",
+    "updated": "2026-10-20",
+    "desc": "27 questions",
+    "file": "Biology & Public Health Mock Test.html",
+    "qs": 27,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Biology"
+  },
+  {
+    "id": "kerala-administration-governance-acts",
+    "key": "kerala-administration-governance-acts",
+    "title": "Kerala PSC – Kerala Administration, Governance & Important Acts",
+    "titleMl": "",
+    "updated": "2026-10-15",
+    "desc": "100 questions",
+    "file": "Kerala Administration, Governance & Acts.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Kerala Admin"
+  },
+  {
+    "id": "physics-mock-test",
+    "key": "physics-mock-test",
+    "title": "Kerala PSC – Physics Mock Test (100 Q)",
+    "titleMl": "",
+    "updated": "2026-10-15",
+    "desc": "100 questions",
+    "file": "Physics Mock Test.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Physics"
   }
 ];

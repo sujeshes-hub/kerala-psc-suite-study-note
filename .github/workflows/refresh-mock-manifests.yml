@@ -30,7 +30,10 @@ jobs:
           python-version: "3.12"
 
       - name: Rebuild manifests
-        run: python tools/build_content.py
+        # --keep-dates: a fresh checkout stamps every file with the same time,
+        # so recomputing there would flatten the newest-first order.  Dates are
+        # preserved; only a paper that is not in the manifest yet gets today's.
+        run: python tools/build_content.py --keep-dates
 
       # Advisory only: a red audit must not stop the manifests from being
       # committed, or a new paper would stay unlisted until someone looked.

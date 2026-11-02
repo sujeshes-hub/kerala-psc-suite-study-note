@@ -76,7 +76,8 @@ class Handler(SimpleHTTPRequestHandler):
             return False
         if not is_stale(folder):
             return False
-        papers = BUILDER.describe_folder(folder, tag, with_subject)
+        papers = BUILDER.describe_folder(folder, tag, with_subject,
+                                         BUILDER.read_git_index_dates())
         body = BUILDER.render_manifest(var, papers, label).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/javascript; charset=utf-8")
