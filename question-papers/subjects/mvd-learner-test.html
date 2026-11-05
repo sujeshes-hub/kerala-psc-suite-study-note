@@ -1,0 +1,3344 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>MVD Learner's License Test — Kerala</title>
+<style>
+:root{
+  --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
+  --primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;
+  --green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;
+  --gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:10px;--radius-sm:6px;
+  --font:'Noto Sans Malayalam','Manjari','Nirmala UI','Kartika','Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;
+  font-size:16px;transition:background .2s,color .2s}
+[data-theme="dark"]{--bg:#1e1e2e;--panel:#252537;--text:#cdd6f4;--secondary:#a6adc8;--border:#313244;
+  --primary:#cba6f7;--primary-light:#2a2438;--accent:#f9e2af;--green:#a6e3a1;
+  --green-bg:#1e2e1e;--red:#f38ba8;--red-bg:#2e1e24;--orange:#fab387;--orange-bg:#2e241e;
+  --gray:#6c7086;--gray-bg:#1e1e2e;--shadow:0 2px 12px rgba(0,0,0,0.4)}
+[data-theme="sepia"]{--bg:#fdf6e3;--panel:#fefcf4;--text:#433422;--secondary:#65533c;--border:#d3cbb7;
+  --primary:#8b5a2b;--primary-light:#f0e6d2;--accent:#b8860b;--green:#2e7d32;
+  --green-bg:#e8f5e9;--red:#c62828;--red-bg:#ffebee;--orange:#e65100;--orange-bg:#fff3e0;
+  --gray:#8a8070;--gray-bg:#f0e8d8;--shadow:0 2px 12px rgba(0,0,0,0.1)}
+.header{position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:10px;box-shadow:var(--shadow)}
+.header-title{font-size:1.05rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:700;
+  background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--primary);font-variant-numeric:tabular-nums;letter-spacing:1px}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn,.theme-btn{padding:8px 14px;border-radius:var(--radius-sm);font-family:var(--font);
+  font-size:.85rem;font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;
+  gap:5px;white-space:nowrap;transition:all .2s}
+.pause-btn{border:2px solid var(--orange);background:var(--orange-bg);color:var(--orange)}
+.pause-btn:hover{background:var(--orange);color:#fff}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.theme-btn{border:2px solid var(--border);background:var(--panel);color:var(--text)}
+.theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.study-pause-bar{display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);
+  padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{padding:6px 14px;border-radius:6px;border:none;background:var(--green);
+  color:#fff;font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem;min-height:34px}
+.save-status{font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;
+  background:var(--green-bg);border:1px solid var(--green);white-space:nowrap;opacity:0;transition:opacity .3s}
+.save-status.visible{opacity:1}
+.main-container{display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;
+  align-items:flex-start}
+.question-panel{flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px 28px;min-width:0;transition:filter .3s}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.sidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px;transition:filter .3s}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);
+  padding:3px 12px;border-radius:20px}
+.q-subject{font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0}
+.sign-display{background:#fff;border:2px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px;text-align:center;margin-bottom:16px;display:flex;justify-content:center;align-items:center;
+  min-height:170px}
+.sign-display svg{max-width:170px;max-height:170px;width:auto;height:170px;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15))}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);
+  border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;
+  font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;
+  line-height:1.5;white-space:pre-line;user-select:none;touch-action:manipulation;min-height:48px}
+.option-btn:hover:not(.locked):not(.correct-highlight):not(.wrong-highlight){
+  border-color:var(--primary);background:var(--primary-light)}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);
+  font-weight:600;pointer-events:none}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);
+  font-weight:600;pointer-events:none}
+.explanation-box{background:#f8f9fc;border-left:4px solid var(--primary);padding:16px 18px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;
+  line-height:1.7;white-space:pre-line;color:var(--secondary);display:none}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem;
+  text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}
+.exp-wrong{font-weight:600;color:var(--red)}
+.verif-badge{display:inline-block;background:var(--green-bg);color:var(--green);border:1px solid var(--green);
+  padding:2px 10px;border-radius:12px;font-size:.72rem;font-weight:700;margin-bottom:10px}
+.supp-section{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:14px 16px;margin-top:12px}
+.supp-section h4{font-size:.85rem;color:var(--primary);text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:8px;font-weight:700}
+.supp-section p{white-space:pre-line;color:var(--text);font-size:.9rem;line-height:1.7}
+.opt-analysis{border-left:3px solid var(--border);padding:8px 12px;margin:8px 0;background:var(--bg);
+  border-radius:0 6px 6px 0}
+.opt-analysis.correct{border-left-color:var(--green)}
+.opt-analysis.wrong{border-left-color:var(--red)}
+.opt-analysis .oa-head{font-weight:700;font-size:.88rem;margin-bottom:4px;color:var(--text)}
+.opt-analysis .oa-line{font-size:.84rem;color:var(--secondary);margin:2px 0;white-space:pre-line}
+.opt-analysis .oa-line strong{color:var(--text)}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
+  font-family:var(--font);font-size:.88rem;font-weight:600;transition:all .2s;
+  touch-action:manipulation;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.btn-save{background:var(--green);color:#fff}
+.btn-show{background:var(--primary);color:#fff}
+.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}
+.btn-clear{background:var(--red);color:#fff}
+.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.keyboard-hint{font-size:.75rem;color:var(--gray);margin-top:8px}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.palette-btn{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.75rem;
+  cursor:pointer;transition:all .2s;font-family:var(--font);display:flex;align-items:center;
+  justify-content:center;min-height:34px}
+.palette-btn.not-visited{background:var(--gray-bg);border-color:var(--border);color:var(--gray)}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-size:.7rem;color:var(--secondary)}
+.legend-item{display:flex;align-items:center;gap:4px}
+.legend-dot{width:12px;height:12px;border-radius:3px;border:2px solid;display:inline-block}
+.legend-dot.not-visited{background:var(--gray-bg);border-color:var(--border)}
+.legend-dot.visited-not-answered{background:var(--red-bg);border-color:var(--red)}
+.legend-dot.answered{background:var(--green-bg);border-color:var(--green)}
+.legend-dot.review{background:var(--orange-bg);border-color:var(--orange)}
+.legend-dot.active-dot{background:var(--panel);border-color:#2c3e8f;outline:2px solid #2c3e8f}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:8px;border-radius:var(--radius-sm);text-align:center;
+  border:1px solid var(--border)}
+.stat-value{font-size:1.2rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.65rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,0.85);
+  z-index:9999;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px)}
+.pause-overlay.visible{display:flex}
+.pause-modal{background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.pause-icon{font-size:4rem;margin-bottom:16px;line-height:1}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
+.pause-modal .resume-main-btn{padding:14px 36px;border-radius:var(--radius-sm);border:none;
+  background:var(--green);color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;
+  cursor:pointer;min-height:50px}
+.pause-modal .pause-note{font-size:.8rem;color:var(--gray);margin-top:16px}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px 16px;text-align:center;border-top:4px solid var(--primary)}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}
+.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}
+.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}
+.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;
+  text-transform:uppercase;font-size:.75rem}
+.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:20px;margin-bottom:24px}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;
+  margin-bottom:12px;background:var(--bg)}
+.detail-item .detail-sign{margin-bottom:10px;text-align:center}
+.detail-item .detail-sign svg{max-width:90px;max-height:90px}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}
+.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);white-space:pre-line;
+  margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+.mvd-notice{background:linear-gradient(135deg,#fff7e6,#ffe9c6);border:2px solid var(--orange);
+  padding:10px 16px;margin:10px;border-radius:8px;font-size:.85rem;color:#7a4100;font-weight:600;text-align:center}
+@media (max-width:900px){
+  .main-container{flex-direction:column;padding:10px;gap:12px}
+  .question-panel{padding:16px}
+  .sidebar{width:100%;flex-direction:column;gap:12px}
+  .header-title{font-size:.9rem}
+  .timer-box{font-size:1.05rem;padding:4px 10px}
+  .pause-btn,.theme-btn{font-size:.75rem;padding:6px 10px;min-height:36px}
+  .q-text{font-size:.92rem}
+  .option-btn{padding:11px 14px;font-size:.86rem}
+  .btn{padding:8px 12px;font-size:.78rem}
+  .sign-display{min-height:140px;padding:12px}
+  .sign-display svg{max-width:140px;max-height:140px;height:140px}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="testHeader" style="display:none;">
+<span class="header-title">🚗 MVD Learner's License Test — Kerala</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="theme-btn" id="themeBtn" onclick="cycleTheme()">🌙 Dark</button>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+
+<div class="study-pause-bar" id="studyPauseBar">
+<span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+<button onclick="resumeStudy()">▶ Resume Timer</button>
+</div>
+
+<div class="pause-overlay" id="pauseOverlay">
+<div class="pause-modal">
+<div class="pause-icon">⏸</div>
+<h2>Exam Paused</h2>
+<p>പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
+<button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+<p class="pause-note">Note: പരീക്ഷ തുടരുന്നതുവരെ ഉത്തരം നൽകാൻ സാധിക്കില്ല.</p>
+</div>
+</div>
+
+<div class="main-container" id="testView" style="display:none;">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div id="signContainer"></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox">
+  <span class="exp-label">വിശദീകരണം</span>
+  <div id="expOriginal"></div>
+  <div id="expSupplementary"></div>
+</div>
+<div class="action-buttons" id="actionButtons"></div>
+<div class="keyboard-hint">Shortcuts: 1-4 Select | Enter Save | Space Show | Shift+Enter Skip | R Review | C Clear | N Next | P Pause | T Theme</div>
+</div>
+
+<div class="sidebar" id="sidebar">
+<div class="palette-card">
+<h3>Question Palette</h3>
+<div class="palette-grid" id="paletteGrid"></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-dot not-visited"></span> Not Visited</span>
+<span class="legend-item"><span class="legend-dot visited-not-answered"></span> Visited</span>
+<span class="legend-item"><span class="legend-dot answered"></span> Answered</span>
+<span class="legend-item"><span class="legend-dot review"></span> Review</span>
+<span class="legend-item"><span class="legend-dot active-dot"></span> Active</span>
+</div>
+</div>
+<div class="stats-card">
+<h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Ans</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div>
+</div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div>
+</div>
+
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section">
+<h3>Section-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Section</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div>
+</div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ / കണ്ട ഉത്തരങ്ങൾ</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+
+<script>
+/* ============================================================
+   SVG ROAD-SIGN LIBRARY
+   All signs drawn as inline SVG — offline, scalable, clear.
+   ============================================================ */
+const SIGN_SVGS = {
+
+  STOP: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="STOP">
+    <polygon points="30,4 70,4 96,30 96,70 70,96 30,96 4,70 4,30" fill="#c00" stroke="#fff" stroke-width="4"/>
+    <text x="50" y="60" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="20" fill="#fff">STOP</text>
+  </svg>`,
+
+  GIVE_WAY: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="GIVE WAY">
+    <polygon points="4,20 96,20 50,94" fill="#fff" stroke="#c00" stroke-width="9" stroke-linejoin="round"/>
+  </svg>`,
+
+  NO_ENTRY: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="No Entry">
+    <circle cx="50" cy="50" r="44" fill="#c00"/>
+    <rect x="18" y="43" width="64" height="14" fill="#fff"/>
+  </svg>`,
+
+  NO_PARKING: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="No Parking">
+    <circle cx="50" cy="50" r="40" fill="#1a73e8" stroke="#c00" stroke-width="8"/>
+    <text x="50" y="64" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="38" fill="#fff">P</text>
+    <line x1="22" y1="22" x2="78" y2="78" stroke="#c00" stroke-width="7"/>
+  </svg>`,
+
+  NO_STOPPING: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="No Stopping">
+    <circle cx="50" cy="50" r="40" fill="#1a73e8" stroke="#c00" stroke-width="8"/>
+    <line x1="22" y1="22" x2="78" y2="78" stroke="#c00" stroke-width="7"/>
+    <line x1="78" y1="22" x2="22" y2="78" stroke="#c00" stroke-width="7"/>
+  </svg>`,
+
+  HORN_PROHIBITED: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Horn Prohibited">
+    <circle cx="50" cy="50" r="40" fill="#fff" stroke="#c00" stroke-width="8"/>
+    <path d="M28,44 L44,44 L60,32 L60,68 L44,56 L28,56 Z" fill="#000"/>
+    <path d="M62,42 Q70,50 62,58" fill="none" stroke="#000" stroke-width="3"/>
+    <line x1="22" y1="22" x2="78" y2="78" stroke="#c00" stroke-width="7"/>
+  </svg>`,
+
+  NO_UTURN: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="No U Turn">
+    <circle cx="50" cy="50" r="40" fill="#fff" stroke="#c00" stroke-width="8"/>
+    <path d="M34,62 L34,42 Q34,26 50,26 Q66,26 66,42 L66,56" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+    <polygon points="66,56 58,48 74,48" fill="#000"/>
+    <line x1="22" y1="22" x2="78" y2="78" stroke="#c00" stroke-width="7"/>
+  </svg>`,
+
+  SPEED_50: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Speed Limit 50">
+    <circle cx="50" cy="50" r="40" fill="#fff" stroke="#c00" stroke-width="10"/>
+    <text x="50" y="64" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="36" fill="#000">50</text>
+  </svg>`,
+
+  NO_OVERTAKING: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="No Overtaking">
+    <circle cx="50" cy="50" r="40" fill="#fff" stroke="#c00" stroke-width="8"/>
+    <rect x="22" y="30" width="22" height="16" fill="#c00" rx="2"/>
+    <rect x="56" y="54" width="22" height="16" fill="#000" rx="2"/>
+    <line x1="22" y1="22" x2="78" y2="78" stroke="#c00" stroke-width="7"/>
+  </svg>`,
+
+  PEDESTRIAN: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Pedestrian Crossing">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="50" cy="40" r="5" fill="#000"/>
+    <line x1="50" y1="45" x2="50" y2="62" stroke="#000" stroke-width="4"/>
+    <line x1="50" y1="50" x2="42" y2="58" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="50" x2="58" y2="58" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="62" x2="44" y2="76" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="62" x2="56" y2="76" stroke="#000" stroke-width="3"/>
+  </svg>`,
+
+  SCHOOL: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="School Ahead">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="40" cy="42" r="4" fill="#000"/>
+    <circle cx="60" cy="42" r="4" fill="#000"/>
+    <line x1="40" y1="46" x2="40" y2="60" stroke="#000" stroke-width="3"/>
+    <line x1="60" y1="46" x2="60" y2="60" stroke="#000" stroke-width="3"/>
+    <line x1="40" y1="60" x2="35" y2="72" stroke="#000" stroke-width="2.5"/>
+    <line x1="40" y1="60" x2="45" y2="72" stroke="#000" stroke-width="2.5"/>
+    <line x1="60" y1="60" x2="55" y2="72" stroke="#000" stroke-width="2.5"/>
+    <line x1="60" y1="60" x2="65" y2="72" stroke="#000" stroke-width="2.5"/>
+    <line x1="40" y1="52" x2="60" y2="52" stroke="#000" stroke-width="2.5"/>
+  </svg>`,
+
+  RAILWAY: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Railway Crossing">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <rect x="28" y="52" width="44" height="20" fill="#000" rx="3"/>
+    <rect x="33" y="56" width="8" height="9" fill="#fff"/>
+    <rect x="59" y="56" width="8" height="9" fill="#fff"/>
+    <circle cx="36" cy="76" r="3" fill="#000"/>
+    <circle cx="64" cy="76" r="3" fill="#000"/>
+  </svg>`,
+
+  MEN_WORK: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Men at Work">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="50" cy="40" r="5" fill="#000"/>
+    <line x1="50" y1="45" x2="44" y2="62" stroke="#000" stroke-width="4"/>
+    <line x1="44" y1="50" x2="34" y2="58" stroke="#000" stroke-width="3"/>
+    <line x1="44" y1="62" x2="40" y2="76" stroke="#000" stroke-width="3"/>
+    <line x1="44" y1="62" x2="52" y2="76" stroke="#000" stroke-width="3"/>
+    <line x1="34" y1="58" x2="62" y2="72" stroke="#000" stroke-width="3"/>
+    <polygon points="60,68 66,66 67,72" fill="#000"/>
+  </svg>`,
+
+  SLIPPERY: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Slippery Road">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <rect x="34" y="50" width="32" height="15" fill="#000" rx="2"/>
+    <circle cx="42" cy="67" r="3" fill="#000"/>
+    <circle cx="58" cy="67" r="3" fill="#000"/>
+    <path d="M24,72 Q34,78 44,72 Q54,66 64,72 Q74,78 80,72" fill="none" stroke="#000" stroke-width="2.5"/>
+  </svg>`,
+
+  NARROW_BRIDGE: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Narrow Bridge">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M28,72 L34,44 L44,44 L50,54 L56,44 L66,44 L72,72" fill="none" stroke="#000" stroke-width="3.5" stroke-linejoin="round"/>
+  </svg>`,
+
+  HUMP: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Hump / Speed Breaker">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M22,78 Q50,40 78,78" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+  </svg>`,
+
+  FALLING_ROCKS: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Falling Rocks">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M20,50 L40,42 L50,54" fill="none" stroke="#000" stroke-width="3"/>
+    <polygon points="34,48 46,44 48,56 36,60" fill="#000"/>
+    <polygon points="56,54 68,50 72,62 60,66" fill="#000"/>
+    <polygon points="42,66 52,64 54,74 44,76" fill="#000"/>
+  </svg>`,
+
+  CATTLE: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Cattle Crossing">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <ellipse cx="52" cy="60" rx="18" ry="10" fill="#000"/>
+    <circle cx="34" cy="55" r="6" fill="#000"/>
+    <path d="M28,50 L24,44 M40,50 L44,44" stroke="#000" stroke-width="2"/>
+    <line x1="46" y1="70" x2="46" y2="80" stroke="#000" stroke-width="3"/>
+    <line x1="56" y1="70" x2="56" y2="80" stroke="#000" stroke-width="3"/>
+  </svg>`,
+
+  SHARP_CURVE: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Sharp Curve">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M34,78 Q34,50 60,50 L60,46" fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round"/>
+    <polygon points="60,44 54,52 66,52" fill="#000"/>
+  </svg>`,
+
+  LEFT_TURN: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Turn Left">
+    <circle cx="50" cy="50" r="42" fill="#1a73e8"/>
+    <path d="M62,66 L62,46 Q62,36 52,36 L38,36" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+    <polygon points="36,36 46,30 46,42" fill="#fff"/>
+  </svg>`,
+
+  CYCLE_TRACK: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Cycle Track">
+    <circle cx="50" cy="50" r="42" fill="#1a73e8"/>
+    <circle cx="38" cy="62" r="10" fill="none" stroke="#fff" stroke-width="3.5"/>
+    <circle cx="62" cy="62" r="10" fill="none" stroke="#fff" stroke-width="3.5"/>
+    <line x1="38" y1="62" x2="50" y2="45" stroke="#fff" stroke-width="3.5"/>
+    <line x1="62" y1="62" x2="50" y2="45" stroke="#fff" stroke-width="3.5"/>
+    <line x1="50" y1="45" x2="58" y2="45" stroke="#fff" stroke-width="3.5"/>
+    <line x1="44" y1="40" x2="52" y2="40" stroke="#fff" stroke-width="3"/>
+  </svg>`,
+
+  HOSPITAL: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Hospital">
+    <rect x="8" y="22" width="84" height="56" fill="#1a73e8" rx="3"/>
+    <text x="50" y="68" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="46" fill="#fff">H</text>
+  </svg>`,
+
+  PETROL: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Petrol Pump">
+    <rect x="8" y="22" width="84" height="56" fill="#1a73e8" rx="3"/>
+    <rect x="30" y="34" width="28" height="38" fill="#fff" rx="3"/>
+    <rect x="34" y="38" width="20" height="10" fill="#1a73e8"/>
+    <circle cx="44" cy="58" r="6" fill="#1a73e8"/>
+    <rect x="62" y="40" width="4" height="30" fill="#fff"/>
+    <circle cx="68" cy="42" r="3" fill="#fff"/>
+  </svg>`,
+
+  PARKING: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Parking">
+    <rect x="8" y="22" width="84" height="56" fill="#1a73e8" rx="3"/>
+    <text x="50" y="68" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="46" fill="#fff">P</text>
+  </svg>`,
+
+  T_JUNCTION: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="T-Junction">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <line x1="24" y1="76" x2="24" y2="48" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+    <line x1="24" y1="48" x2="76" y2="48" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+    <line x1="76" y1="48" x2="76" y2="76" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+  </svg>`,
+
+  ROUNDABOUT: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Roundabout">
+    <polygon points="50,8 94,88 6,88" fill="#fff" stroke="#c00" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="50" cy="58" r="13" fill="none" stroke="#000" stroke-width="3"/>
+    <path d="M36,58 L36,48" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="36,44 32,52 40,52" fill="#000"/>
+    <path d="M64,58 L64,68" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="64,72 60,64 68,64" fill="#000"/>
+  </svg>`,
+
+  /* Road marking diagrams */
+  LINE_CONTINUOUS: `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-label="Continuous line">
+    <rect width="200" height="80" fill="#555"/>
+    <rect x="95" y="0" width="10" height="80" fill="#fff"/>
+  </svg>`,
+
+  LINE_BROKEN: `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-label="Broken line">
+    <rect width="200" height="80" fill="#555"/>
+    <rect x="95" y="0" width="10" height="25" fill="#fff"/>
+    <rect x="95" y="40" width="10" height="25" fill="#fff"/>
+  </svg>`,
+
+  ZEBRA: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-label="Zebra crossing">
+    <rect width="200" height="100" fill="#333"/>
+    <g fill="#fff">
+      <rect x="10" y="15" width="20" height="70"/>
+      <rect x="40" y="15" width="20" height="70"/>
+      <rect x="70" y="15" width="20" height="70"/>
+      <rect x="100" y="15" width="20" height="70"/>
+      <rect x="130" y="15" width="20" height="70"/>
+      <rect x="160" y="15" width="20" height="70"/>
+    </g>
+  </svg>`,
+
+  STOP_LINE: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-label="Stop line">
+    <rect width="200" height="100" fill="#333"/>
+    <rect x="0" y="55" width="200" height="12" fill="#fff"/>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#fff">STOP LINE</text>
+  </svg>`,
+
+  LANE_ARROW: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-label="Lane direction arrows">
+    <rect width="200" height="100" fill="#333"/>
+    <polygon points="60,20 60,70 40,70 70,90 100,70 80,70 80,20" fill="#fff"/>
+    <polygon points="140,20 140,70 120,70 150,90 180,70 160,70 160,20" fill="#fff"/>
+  </svg>`
+};
+
+/* ============================================================
+   QUESTION DATA
+   ============================================================ */
+const sourceQuestions = [/* ============================================================
+   SECTION A: റോഡ് നിയമങ്ങൾ (Q1–Q35)
+   ============================================================ */
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഇന്ത്യയിൽ വാഹനങ്ങൾ റോഡിന്റെ ഏത് വശത്തുകൂടി ഓടിക്കണം?",
+  options:["A) വലത്","B) ഇടത്","C) നടുവിൽ","D) ഏത് വശവും"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (ഇടത്). ഇന്ത്യയിൽ ഇടതുവശ ഗതാഗത സമ്പ്രദായം (Left-hand traffic) ആണ് നിലവിലുള്ളത് — ബ്രിട്ടീഷ് കൊളോണിയൽ പാരമ്പര്യം. ഏകദേശം 75 രാജ്യങ്ങളിൽ ഇടതുവശ ഗതാഗതമുണ്ട്.",
+  verif:"Verified — original key correct",
+  concept:"ഇന്ത്യ Motor Vehicles Act 1988 പ്രകാരം റോഡിൽ ഇടതുവശം ഓടിക്കണം. ഇടതുവശ ഗതാഗതം ഉള്ള രാജ്യങ്ങൾ: ഇന്ത്യ, UK, ജപ്പാൻ, ഓസ്ട്രേലിയ, ന്യൂസിലാൻഡ്, സിംഗപ്പൂർ, മലേഷ്യ. വലതുവശം: USA, ചൈന, ഫ്രാൻസ്, ജർമ്മനി.",
+  steps:"1. ഇന്ത്യ = ബ്രിട്ടീഷ് കൊളോണിയൽ പാരമ്പര്യം.\n2. ബ്രിട്ടൻ ഇടതുവശ ഗതാഗതം → ഇന്ത്യയും.\n3. → B.",
+  optA:[
+    {t:"A) വലത്",v:"Incorrect",r:"USA, ചൈന പോലുള്ള രാജ്യങ്ങൾ.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഇടത്",v:"Correct ✔",r:"ഇന്ത്യ — left-hand traffic.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) നടുവിൽ",v:"Incorrect",r:"അപകടകരം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഏത് വശവും",v:"Incorrect",r:"ഒരു വശം നിർബന്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nഇന്ത്യ = ഇടത് → B.",
+  find:"India = Left-hand traffic → B.",
+  trick:"💡 'India = Left, USA = Right.'",
+  facts:"📚 അനുബന്ധം: MV Act 1988 — Section 2. ഇന്ത്യയിൽ 1947-ന് ശേഷം ഇടതുവശം തുടർന്നു. ഏകദേശം 75 രാജ്യങ്ങൾ left-hand.",
+  rev:"⚡ B (ഇടത്)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"സാധാരണ ഓവർടേക്കിങ് ഏത് വശത്തുകൂടി ചെയ്യണം?",
+  options:["A) ഇടത്","B) വലത്","C) ഏതു വശവും","D) ഷോൾഡർ"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (വലത്). ഇന്ത്യയിൽ മുന്നിലുള്ള വാഹനത്തെ ഓവർടേക്ക് ചെയ്യേണ്ടത് വലതുവശത്തുകൂടിയാണ് (ഇടതുവശ ഗതാഗതം ആയതിനാൽ).",
+  verif:"Verified — original key correct",
+  concept:"ഇടതുവശ ഗതാഗതത്തിൽ ഓവർടേക്കിംഗ് വലതുവശത്തുകൂടി. വലതുവശ ഗതാഗതത്തിൽ ഓവർടേക്കിംഗ് ഇടതുവശത്തുകൂടി.",
+  steps:"ഇന്ത്യ = ഇടതുവശ ഗതാഗതം → ഓവർടേക്കിംഗ് വലത് → B.",
+  optA:[
+    {t:"A) ഇടത്",v:"Incorrect",r:"ഇടതുവശ ഗതാഗതത്തിൽ അപകടകരം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വലത്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഏതു വശവും",v:"Incorrect",r:"ഒരു വശം മാത്രം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഷോൾഡർ",v:"Incorrect",r:"ഷോൾഡർ ഓവർടേക്കിംഗ് നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nഇന്ത്യ — Left traffic → overtake right → B.",
+  find:"Overtake on the right → B.",
+  trick:"💡 'India: Overtake right.'",
+  facts:"📚 അനുബന്ധം: ഇടതുവശ ഗതാഗതത്തിൽ മുന്നിലെ വാഹനം വലത്തേക്ക് തിരിയാൻ സിഗ്നൽ നൽകിയാൽ ഇടതുവശത്തുകൂടി ഓവർടേക്ക് ചെയ്യാം (അപൂർവ്വം).",
+  rev:"⚡ B (വലത്)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഓവർടേക്കിങ് നിരോധിച്ചിരിക്കുന്നത്:",
+  options:["A) വളവിൽ","B) ജംഗ്ഷനിൽ","C) പാലത്തിൽ","D) മുകളിൽ പറഞ്ഞ എല്ലായിടത്തും"],
+  correct:3,
+  explanation:"ശരിയായ ഉത്തരം: D (മുകളിൽ പറഞ്ഞ എല്ലായിടത്തും). വളവ്, ജംഗ്ഷൻ, പാലം, ഇടുങ്ങിയ റോഡ്, റെയിൽവേ ക്രോസിംഗ് — ഇവയെല്ലാം ഓവർടേക്കിംഗ് നിരോധിത മേഖലകളാണ്.",
+  verif:"Verified — original key correct",
+  concept:"ഓവർടേക്കിംഗ് നിരോധന മേഖലകൾ: വളവ്, ജംഗ്ഷൻ, പാലം, ഇടുങ്ങിയ റോഡ്, റെയിൽവേ ക്രോസിംഗ്, സ്കൂൾ സോൺ, ഏകദിശാ റോഡ് (wrong direction).",
+  steps:"വളവ്, ജംഗ്ഷൻ, പാലം — എല്ലാം ഓവർടേക്കിംഗ് നിരോധിതം → D.",
+  optA:[
+    {t:"A) വളവിൽ",v:"Incorrect",r:"ശരി — എന്നാൽ D എല്ലാം ഉൾക്കൊള്ളുന്നു.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ജംഗ്ഷനിൽ",v:"Incorrect",r:"D കൂടുതൽ ശരി.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പാലത്തിൽ",v:"Incorrect",r:"D കൂടുതൽ ശരി.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) എല്ലായിടത്തും",v:"Correct ✔",r:"എല്ലാം ഉൾപ്പെടുന്നു.",e:"ശരിയായ ഉത്തരം."}
+  ],
+  reject:"Option Rejection Method\nA, B, C ശരിയാണ്, എന്നാൽ D എല്ലാം ഉൾക്കൊള്ളുന്നു → D.",
+  find:"All of the above → D.",
+  trick:"💡 'Overtake = Not at curve/junction/bridge.'",
+  facts:"📚 അനുബന്ധം: ഓവർടേക്കിംഗ് നിരോധിത സ്ഥലങ്ങൾ: വളവ് (curve), ജംഗ്ഷൻ, പാലം (bridge), ടണൽ, റെയിൽവേ ക്രോസിംഗ്, സ്കൂൾ സോൺ.",
+  rev:"⚡ D."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"സൈറൺ മുഴക്കി ആംബുലൻസ് പിന്നിൽ നിന്ന് വരുന്നു. നിങ്ങൾ:",
+  options:["A) വേഗം കൂട്ടണം","B) ഇടത്തേക്ക് മാറി വേഗം കുറച്ച് വഴി നൽകണം","C) റോഡിന് നടുവിൽ നിർത്തണം","D) ശ്രദ്ധിക്കേണ്ടതില്ല"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ആംബുലൻസ്, ഫയർ എൻജിൻ പോലുള്ള അടിയന്തര വാഹനങ്ങൾക്ക് വഴി നൽകണം — ഇടത്തേക്ക് മാറി വേഗം കുറയ്ക്കുക.",
+  verif:"Verified — original key correct",
+  concept:"Emergency Vehicles (MV Act): ആംബുലൻസ്, ഫയർ എൻജിൻ, പോലീസ് ജീപ്പ് — ഇവയ്ക്ക് റോഡിൽ മുൻഗണന. വഴി നൽകാത്തത് ശിക്ഷാർഹമാണ്.",
+  steps:"ആംബുലൻസ് → വഴി നൽകുക → ഇടത്ത് മാറി വേഗം കുറയ്ക്കുക → B.",
+  optA:[
+    {t:"A) വേഗം കൂട്ടണം",v:"Incorrect",r:"അപകടകരം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഇടത്ത് മാറി വേഗം കുറയ്ക്കുക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) നടുവിൽ നിർത്തണം",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ശ്രദ്ധിക്കേണ്ടതില്ല",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nEmergency vehicle → give way → B.",
+  find:"Give way to ambulance → B.",
+  trick:"💡 'Ambulance = Give way to the left.'",
+  facts:"📚 അനുബന്ധം: MV Act 1988 — Section 194E: Emergency vehicle-ന് വഴി നൽകാത്തതിന് ₹10,000 പിഴ (2020-ൽ കൂടി).",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"സീബ്ര ക്രോസിങ്ങിൽ കാൽനടക്കാർ കാത്തുനിൽക്കുന്നു. നിങ്ങൾ:",
+  options:["A) ഹോൺ അടിക്കണം","B) വാഹനം നിർത്തി അവരെ കടത്തിവിടണം","C) വേഗം കൂട്ടണം","D) ഓവർടേക്ക് ചെയ്യണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. സീബ്ര ക്രോസിങ്ങിൽ കാൽനടക്കാർക്ക് പൂർണ്ണ മുൻഗണന (Right of way) ഉണ്ട്.",
+  verif:"Verified — original key correct",
+  concept:"Zebra crossing (Pedestrian crossing) — കാൽനടക്കാർക്ക് പ്രത്യേക അവകാശം. MV Act Sec 194A: zebra crossing-ൽ വാഹനം നിർത്താത്തതിന് പിഴ.",
+  steps:"Zebra crossing → pedestrians first → B.",
+  sign:"ZEBRA",
+  optA:[
+    {t:"A) ഹോൺ അടിക്കണം",v:"Incorrect",r:"അമര്യാദ.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിർത്തി കടത്തിവിടണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വേഗം കൂട്ടണം",v:"Incorrect",r:"അപകടകരം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഓവർടേക്ക് ചെയ്യണം",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nZebra = pedestrian priority → B.",
+  find:"Pedestrians first on zebra → B.",
+  trick:"💡 'Zebra = Pedestrian first.'",
+  facts:"📚 അനുബന്ധം: MV Act Sec 194A — zebra crossing-ൽ ₹500-₹5,000 പിഴ. Zebra = white stripes.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ചുവപ്പ് ട്രാഫിക് ലൈറ്റിന്റെ അർത്ഥം:",
+  options:["A) വേഗം കുറയ്ക്കുക","B) നിൽക്കുക","C) ശ്രദ്ധയോടെ പോകുക","D) പോകുക"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (നിൽക്കുക). ചുവപ്പ് = STOP (നിൽക്കുക). ട്രാഫിക് ലൈറ്റിൽ ചുവപ്പ് എപ്പോഴും 'നിർത്തുക' എന്നാണ് അർത്ഥം.",
+  verif:"Verified — original key correct",
+  concept:"Traffic light signals: 🔴 Red = Stop; 🟡 Amber (Yellow) = Prepare to stop; 🟢 Green = Go. അന്താരാഷ്ട്ര സ്റ്റാൻഡേർഡ്.",
+  steps:"Red = Stop → B.",
+  optA:[
+    {t:"A) വേഗം കുറയ്ക്കുക",v:"Incorrect",r:"Amber.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിൽക്കുക",v:"Correct ✔",r:"Red = Stop.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ശ്രദ്ധയോടെ പോകുക",v:"Incorrect",r:"Blinking red.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പോകുക",v:"Incorrect",r:"Green.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRed = Stop → B.",
+  find:"Red → Stop → B.",
+  trick:"💡 'Red=Stop, Amber=Wait, Green=Go.'",
+  facts:"📚 അനുബന്ധം: Traffic signals: Red (stop), Amber/Yellow (caution), Green (go), Blinking Red (stop and proceed when safe), Blinking Amber (slow down and proceed with caution).",
+  rev:"⚡ B (നിൽക്കുക)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"സ്ഥിരമായ ആംബർ (മഞ്ഞ) ലൈറ്റിന്റെ അർത്ഥം:",
+  options:["A) വേഗം കൂട്ടുക","B) സുരക്ഷിതമായി സാധിക്കുമെങ്കിൽ നിൽക്കുക","C) പാർക്ക് ചെയ്യുക","D) വലത്തേക്ക് തിരിയുക"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. സ്ഥിരമായ ആംബർ = 'stop before the line if safe' — നിർത്താൻ തയ്യാറാകുക.",
+  verif:"Verified — original key correct",
+  concept:"Amber light: 3 സെക്കൻഡ് നീണ്ടുനിൽക്കുന്നു. അർത്ഥം: 'Stop if safe to do so'. അതായത്, നിർത്താൻ സാധ്യമെങ്കിൽ നിർത്തണം; അപകടകരമെങ്കിൽ മാത്രം കടക്കാം.",
+  steps:"Amber = Prepare to stop → B.",
+  optA:[
+    {t:"A) വേഗം കൂട്ടുക",v:"Incorrect",r:"അപകടകരം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) സുരക്ഷിതമെങ്കിൽ നിൽക്കുക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) പാർക്ക് ചെയ്യുക",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വലത്തേക്ക് തിരിയുക",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nAmber = Stop if safe → B.",
+  find:"Amber = Prepare to stop → B.",
+  trick:"💡 'Amber = Stop if safe.'",
+  facts:"📚 അനുബന്ധം: Amber duration usually 3 seconds. Exceptions: If too close to stop line when amber appears, proceed cautiously.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ജംഗ്ഷനിൽ മിന്നുന്ന ചുവപ്പ് ലൈറ്റിന്റെ അർത്ഥം:",
+  options:["A) പോകുക","B) നിർത്തിയ ശേഷം സുരക്ഷിതമെങ്കിൽ മുന്നോട്ട് പോകുക","C) ഹോൺ അടിച്ച് പോകുക","D) റിവേഴ്സ് എടുക്കുക"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. മിന്നുന്ന ചുവപ്പ് (Flashing Red) = STOP, പിന്നീട് സുരക്ഷിതമെങ്കിൽ മുന്നോട്ട് പോകാം (Treat as a stop sign).",
+  verif:"Verified — original key correct",
+  concept:"Flashing Red = Stop sign equivalent. എപ്പോഴും പൂർണ്ണ നിർത്തൽ (full stop) വേണം, ശേഷം safe ആണെങ്കിൽ proceed.",
+  steps:"Flashing Red = Stop → proceed when safe → B.",
+  optA:[
+    {t:"A) പോകുക",v:"Incorrect",r:"നിർത്തണം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിർത്തിയ ശേഷം സുരക്ഷിതമെങ്കിൽ പോകുക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഹോൺ അടിച്ച് പോകുക",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) റിവേഴ്സ് എടുക്കുക",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nFlashing Red = Stop sign → B.",
+  find:"Flashing red → stop → proceed → B.",
+  trick:"💡 'Flashing Red = Stop sign.'",
+  facts:"📚 അനുബന്ധം: Flashing Red = stop sign; Flashing Amber = caution/proceed with care. Flashing red usually at malfunctioning signals or at night.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"തിരിയുന്നതിന് മുമ്പ് ഡ്രൈവർ:",
+  options:["A) മുൻകൂട്ടി സിഗ്നൽ നൽകണം","B) സിഗ്നൽ നൽകരുത്","C) ഹോൺ മാത്രം അടിക്കണം","D) പെട്ടെന്ന് ബ്രേക്ക് ചെയ്യണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. തിരിയുന്നതിന് മുമ്പ് ദിശാ സൂചകം (indicator) നൽകണം — മറ്റ് ഡ്രൈവർമാർക്ക് മുൻകൂട്ടി അറിയാൻ.",
+  verif:"Verified — original key correct",
+  concept:"Turn signal (indicator) ഉപയോഗം — MV Act Sec 121. 30 മീറ്റർ മുമ്പ് (urban) / 50 മീറ്റർ മുമ്പ് (highway) സിഗ്നൽ നൽകണം.",
+  steps:"Turn → signal first → A.",
+  optA:[
+    {t:"A) മുൻകൂട്ടി സിഗ്നൽ നൽകണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) സിഗ്നൽ നൽകരുത്",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ഹോൺ മാത്രം അടിക്കണം",v:"Incorrect",r:"ഹോൺ മാത്രം പോരാ.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പെട്ടെന്ന് ബ്രേക്ക് ചെയ്യണം",v:"Incorrect",r:"അപകടകരം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nTurn = Signal → A.",
+  find:"Signal before turn → A.",
+  trick:"💡 'Signal first, then turn.'",
+  facts:"📚 അനുബന്ധം: MV Act Sec 121 — Indicator usage. Hand signals also valid if indicators not working.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഹോൺ ഉപയോഗം നിരോധിച്ചിരിക്കുന്നത്:",
+  options:["A) ഹൈവേയിൽ","B) ആശുപത്രി, സ്കൂൾ പോലുള്ള നിശബ്ദ മേഖലകളിൽ","C) മലമ്പാതകളിൽ","D) ഗ്രാമങ്ങളിൽ"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ആശുപത്രി, സ്കൂൾ, കോടതി പോലുള്ള silent zones-ൽ ഹോൺ ഉപയോഗം നിരോധിച്ചിരിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Silent Zone = 100 മീറ്റർ ചുറ്റളവിൽ ഹോൺ നിരോധിതം. ആശുപത്രി, സ്കൂൾ, കോടതി, ധ്യാന കേന്ദ്രങ്ങൾ.",
+  steps:"Silent zones → Horn prohibited → B.",
+  sign:"HORN_PROHIBITED",
+  optA:[
+    {t:"A) ഹൈവേയിൽ",v:"Incorrect",r:"ഹോൺ അനുവദനീയം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ആശുപത്രി/സ്കൂൾ മേഖലകളിൽ",v:"Correct ✔",r:"Silent zones.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) മലമ്പാതകളിൽ",v:"Incorrect",r:"ഹോൺ അനുവദനീയം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഗ്രാമങ്ങളിൽ",v:"Incorrect",r:"ഹോൺ അനുവദനീയം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nSilent zones = hospital/school → B.",
+  find:"Silent zone → no horn → B.",
+  trick:"💡 'Silent zone = Hospital + School.'",
+  facts:"📚 അനുബന്ധം: Silent zone — 100m. Kerala MVD strictly enforces. Fine: ₹1,000-₹2,000.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"റൗണ്ട് എബൗട്ടിൽ നിങ്ങൾ വഴി നൽകേണ്ടത്:",
+  options:["A) റൗണ്ട് എബൗട്ടിൽ ഇതിനകം ഉള്ള വാഹനങ്ങൾക്ക്","B) പിന്നിലെ വാഹനങ്ങൾക്ക്","C) ആർക്കും വേണ്ട","D) ബസുകൾക്ക് മാത്രം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. റൗണ്ട് എബൗട്ടിൽ ഇതിനകം ഉള്ള വാഹനങ്ങൾക്ക് വഴി നൽകണം.",
+  verif:"Verified — original key correct",
+  concept:"Roundabout (Circular junction): റൗണ്ട് എബൗട്ടിൽ പ്രവേശിക്കുന്ന വാഹനങ്ങൾ ഇതിനകം ഉള്ള വാഹനങ്ങൾക്ക് വഴി നൽകണം. In UK/India, vehicles on the roundabout have right of way.",
+  steps:"Roundabout → give way to vehicles already in → A.",
+  sign:"ROUNDABOUT",
+  optA:[
+    {t:"A) റൗണ്ട് എബൗട്ടിലെ വാഹനങ്ങൾക്ക്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പിന്നിലെ വാഹനങ്ങൾക്ക്",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ആർക്കും വേണ്ട",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ബസുകൾക്ക് മാത്രം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRoundabout → existing traffic has priority → A.",
+  find:"Give way to roundabout traffic → A.",
+  trick:"💡 'Roundabout: Yield to traffic already in.'",
+  facts:"📚 അനുബന്ധം: Roundabouts reduce accidents by 30-50%. India follows UK-style roundabouts.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ചെറിയ റോഡിൽ നിന്ന് പ്രധാന റോഡിലേക്ക് കയറുമ്പോൾ:",
+  options:["A) വേഗത്തിൽ കയറണം","B) പ്രധാന റോഡിലെ വാഹനങ്ങൾക്ക് വഴി നൽകണം","C) ഹോൺ അടിച്ച് കയറണം","D) നടുവിൽ നിർത്തണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ചെറിയ റോഡിൽ നിന്ന് പ്രധാന റോഡിലേക്ക് കയറുമ്പോൾ പ്രധാന റോഡിലെ വാഹനങ്ങൾക്ക് വഴി നൽകണം.",
+  verif:"Verified — original key correct",
+  concept:"Minor road → Major road: Give way rule. 'Give way' sign (inverted triangle) or 'Stop' sign at junction.",
+  steps:"Minor → Major = give way → B.",
+  sign:"GIVE_WAY",
+  optA:[
+    {t:"A) വേഗത്തിൽ കയറണം",v:"Incorrect",r:"അപകടകരം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) പ്രധാന റോഡ് വാഹനങ്ങൾക്ക് വഴി നൽകണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഹോൺ അടിച്ച് കയറണം",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) നടുവിൽ നിർത്തണം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nMinor → Major → B.",
+  find:"Minor road yields to major → B.",
+  trick:"💡 'Minor road = Yield.'",
+  facts:"📚 അനുബന്ധം: 'Give Way' sign = inverted triangle with red border. 'Stop' sign = octagon. Both indicate yielding.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഇടുങ്ങിയ മലമ്പാതയിൽ ആരാണ് വഴി നൽകേണ്ടത്?",
+  options:["A) കയറ്റം കയറുന്ന വാഹനം","B) ഇറക്കം ഇറങ്ങുന്ന വാഹനം","C) വലിയ വാഹനം","D) വേഗമുള്ള വാഹനം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ഇടുങ്ങിയ മലമ്പാതയിൽ ഇറക്കം ഇറങ്ങുന്ന വാഹനം കയറ്റം കയറുന്ന വാഹനത്തിന് വഴി നൽകണം (കയറാൻ പ്രയാസമായതിനാൽ).",
+  verif:"Verified — original key correct",
+  concept:"Hill road rule: Uphill vehicle has right of way. Downhill vehicle should stop and yield. (Exception: if downhill vehicle is heavier/larger and can't easily restart, or reversing is safer, may reverse rules).",
+  steps:"Hill: Downhill yields to uphill → B.",
+  optA:[
+    {t:"A) കയറ്റം കയറുന്ന വാഹനം",v:"Incorrect",r:"അവർക്ക് മുൻഗണന ഉണ്ട്.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഇറക്കം ഇറങ്ങുന്ന വാഹനം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വലിയ വാഹനം",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വേഗമുള്ള വാഹനം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nHill: Downhill yields → B.",
+  find:"Downhill yields to uphill → B.",
+  trick:"💡 'Uphill has right of way.'",
+  facts:"📚 അനുബന്ധം: Kerala high-range routes like Idukki, Wayanad, Munnar — narrow hill roads. Rule applies strictly.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"പാർക്കിങ് അനുവദനീയമല്ലാത്തത്:",
+  options:["A) സീബ്ര ക്രോസിങ്ങിന് സമീപം","B) വളവിൽ","C) ബസ് സ്റ്റോപ്പിൽ","D) ഇവയെല്ലാം"],
+  correct:3,
+  explanation:"ശരിയായ ഉത്തരം: D (ഇവയെല്ലാം). സീബ്ര ക്രോസിംഗ്, വളവ്, ബസ് സ്റ്റോപ്പ്, ജംഗ്ഷൻ, ഫുട്പാത്ത് — ഇവയെല്ലാം parking prohibited zones.",
+  verif:"Verified — original key correct",
+  concept:"No Parking zones: zebra crossing (5m), junction (10m), bus stop (10m), footpath, narrow roads, curves, bridges, tunnel.",
+  steps:"Zebra + Curve + Bus stop — എല്ലാം no parking → D.",
+  sign:"NO_PARKING",
+  optA:[
+    {t:"A) സീബ്ര ക്രോസിംഗ്",v:"Incorrect",r:"ശരി — എന്നാൽ D എല്ലാം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വളവ്",v:"Incorrect",r:"D കൂടുതൽ.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ബസ് സ്റ്റോപ്പ്",v:"Incorrect",r:"D കൂടുതൽ.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഇവയെല്ലാം",v:"Correct ✔",r:"എല്ലാം ഉൾപ്പെടുന്നു.",e:"ശരിയായ ഉത്തരം."}
+  ],
+  reject:"Option Rejection Method\nAll are no-parking zones → D.",
+  find:"All of the above → D.",
+  trick:"💡 'No parking: zebra + curve + bus stop.'",
+  facts:"📚 അനുബന്ധം: Fine for illegal parking — ₹500-₹1,000 in Kerala.",
+  rev:"⚡ D."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"50 സിസി വരെയുള്ള ഗിയർ ഇല്ലാത്ത മോട്ടോർ സൈക്കിൾ ഓടിക്കാനുള്ള കുറഞ്ഞ പ്രായം:",
+  options:["A) 14","B) 16","C) 18","D) 20"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (16). 50cc വരെ gearless two-wheeler-ന് കുറഞ്ഞ പ്രായം 16 വയസ്സ്.",
+  verif:"Verified — original key correct",
+  concept:"MV Act driving age limits: 50cc gearless 2W → 16 years; 50-125cc 2W (with gear) → 18 years; LMV (car) → 18 years; Transport vehicles → 20 years (with 1 year LMV experience).",
+  steps:"50cc gearless = 16 years → B.",
+  optA:[
+    {t:"A) 14",v:"Incorrect",r:"ചെറിയ പ്രായം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) 16",v:"Correct ✔",r:"50cc gearless = 16.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 18",v:"Incorrect",r:"Car / geared 2W.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) 20",v:"Incorrect",r:"Transport vehicles.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\n50cc gearless = 16 → B.",
+  find:"Gearless 50cc → 16 years → B.",
+  trick:"💡 '16 - 50cc gearless; 18 - car/2W; 20 - transport.'",
+  facts:"📚 അനുബന്ധം: MV Act 1988 Sec 4. Note: 16-18 age restricted to gearless ≤50cc. Helmet mandatory.",
+  rev:"⚡ B (16)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ലൈറ്റ് മോട്ടോർ വാഹനം (കാർ) ഓടിക്കാനുള്ള കുറഞ്ഞ പ്രായം:",
+  options:["A) 16","B) 17","C) 18","D) 21"],
+  correct:2,
+  explanation:"ശരിയായ ഉത്തരം: C (18). LMV (Light Motor Vehicle) — car, jeep എന്നിവ ഓടിക്കാൻ കുറഞ്ഞ പ്രായം 18 വയസ്സ്.",
+  verif:"Verified — original key correct",
+  concept:"LMV = Light Motor Vehicle (car, jeep, taxi with ≤ certain weight). Driving age: 18 years. Transport vehicles: 20 years. Transport vehicle minimum age 20 + 1 year LMV experience.",
+  steps:"LMV = 18 years → C.",
+  optA:[
+    {t:"A) 16",v:"Incorrect",r:"ചെറിയ പ്രായം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) 17",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) 18",v:"Correct ✔",r:"LMV = 18.",e:"ശരിയായ ഉത്തരം."},
+    {t:"D) 21",v:"Incorrect",r:"Transport/heavy.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nLMV = 18 → C.",
+  find:"Car (LMV) = 18 years → C.",
+  trick:"💡 'Car = 18.'",
+  facts:"📚 അനുബന്ധം: Transport vehicle age 20; Heavy vehicle age 20 with 1-year LMV experience.",
+  rev:"⚡ C (18)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ലേണേഴ്സ് ലൈസൻസിന്റെ കാലാവധി:",
+  options:["A) 1 മാസം","B) 3 മാസം","C) 6 മാസം","D) 1 വർഷം"],
+  correct:2,
+  explanation:"ശരിയായ ഉത്തരം: C (6 മാസം). ലേണേഴ്സ് ലൈസൻസിന്റെ കാലാവധി 6 മാസമാണ്; ഈ കാലയളവിൽ permanent license-ന് അപേക്ഷിക്കാം.",
+  verif:"Verified — original key correct",
+  concept:"Learner's License — 6 months validity. Within this period, apply for permanent license after passing driving test.",
+  steps:"Learner = 6 months → C.",
+  optA:[
+    {t:"A) 1 month",v:"Incorrect",r:"ചെറിയ കാലം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) 3 months",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) 6 months",v:"Correct ✔",r:"6 മാസം.",e:"ശരിയായ ഉത്തരം."},
+    {t:"D) 1 year",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nLearner = 6 months → C.",
+  find:"Learner's license validity = 6 months → C.",
+  trick:"💡 'Learner = 6 months.'",
+  facts:"📚 അനുബന്ധം: Permanent license validity: 20 years (until 40 years old) or 10 years (after 40). Renewal required.",
+  rev:"⚡ C (6 months)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"പഠിതാവായ ഡ്രൈവർ പ്രദർശിപ്പിക്കേണ്ടത്:",
+  options:["A) ചുവന്ന കൊടി","B) വാഹനത്തിന്റെ മുന്നിലും പിന്നിലും \"L\" ചിഹ്നം","C) ഹോൺ","D) മഞ്ഞ ലൈറ്റ്"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ലേണർ ഡ്രൈവർ വാഹനത്തിന്റെ മുന്നിലും പിന്നിലും ചുവന്ന 'L' ചിഹ്നം പ്രദർശിപ്പിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"'L' board — red L on white background. Visible from front and rear. Mandatory during learning period.",
+  steps:"Learner = L board (front + rear) → B.",
+  optA:[
+    {t:"A) ചുവന്ന കൊടി",v:"Incorrect",r:"തെറ്റ്.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) L ചിഹ്നം (front + rear)",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഹോൺ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) മഞ്ഞ ലൈറ്റ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nLearner = L board → B.",
+  find:"L board front and rear → B.",
+  trick:"💡 'L board = Learning driver.'",
+  facts:"📚 അനുബന്ധം: 'L' board mandatory. Kerala MVD prescribes specific size/color: 15cm x 15cm red L on white.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ലേണർ ഡ്രൈവറോടൊപ്പം ഉണ്ടായിരിക്കേണ്ടത്:",
+  options:["A) ആരെങ്കിലും","B) ആ വാഹനത്തിന് സാധുവായ ലൈസൻസുള്ള വ്യക്തി","C) ഒരു കുട്ടി","D) ആരും വേണ്ട"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ലേണർ ഡ്രൈവറോടൊപ്പം ആ വാഹനത്തിന് സാധുവായ ഡ്രൈവിംഗ് ലൈസൻസ് ഉള്ള വ്യക്തി (instructor) ഉണ്ടായിരിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Learner must be accompanied by a licensed driver who holds valid license for that vehicle type. Instructor typically 21+ years, with at least 1 year license.",
+  steps:"Learner + licensed driver → B.",
+  optA:[
+    {t:"A) ആരെങ്കിലും",v:"Incorrect",r:"License ഉള്ള വ്യക്തി വേണം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) സാധുവായ ലൈസൻസുള്ള വ്യക്തി",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഒരു കുട്ടി",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ആരും വേണ്ട",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nLicensed instructor required → B.",
+  find:"Licensed driver alongside → B.",
+  trick:"💡 'Learner + licensed driver.'",
+  facts:"📚 അനുബന്ധം: Instructor: 21+ years, valid license for that vehicle type for at least 1 year.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"മുന്നിലെ വാഹനവുമായി പാലിക്കേണ്ട അകലം:",
+  options:["A) വളരെ കുറവ്","B) നിങ്ങളുടെ വേഗത്തിന് അനുസൃതമായ സുരക്ഷിത അകലം","C) പൂജ്യം","D) എല്ലാ വേഗത്തിനും ഒരേ അകലം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വേഗത്തിന് അനുസൃതമായ സുരക്ഷിത അകലം (Safe following distance) പാലിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Two-second rule: ഓരോ 10 km/h വേഗത്തിനും 2-second gap. ഉദാ: 60 km/h → 30 m; 80 km/h → 40 m. Rainy: double the gap.",
+  steps:"Following distance → 2-second rule → B.",
+  optA:[
+    {t:"A) വളരെ കുറവ്",v:"Incorrect",r:"അപകടകരം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വേഗത്തിന് അനുസൃതമായ അകലം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) പൂജ്യം",v:"Incorrect",r:"അപകടകരം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഒരേ അകലം",v:"Incorrect",r:"വേഗത്തിന് അനുസരിച്ച്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nSpeed-dependent gap → B.",
+  find:"Two-second rule → B.",
+  trick:"💡 'Two-second rule.'",
+  facts:"📚 അനുബന്ധം: Kerala MV rules recommend 2-second gap; rain → 4 seconds; fog → more.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"വാഹനം ഓടിക്കുമ്പോൾ നിയമപരമായി അനുവദനീയമായ രക്തത്തിലെ ആൽക്കഹോൾ പരിധി:",
+  options:["A) 0 mg","B) 100 ml രക്തത്തിൽ 30 mg","C) 100 ml രക്തത്തിൽ 100 mg","D) 100 ml രക്തത്തിൽ 200 mg"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. 100 ml രക്തത്തിൽ 30 mg ആൽക്കഹോൾ (0.03%) ആണ് അനുവദനീയ പരിധി.",
+  verif:"Verified — original key correct",
+  concept:"MV Act Sec 185: 30 mg/100 ml blood alcohol. Above this → drunk driving penalty (₹10,000 first offense + 6 months imprisonment).",
+  steps:"BAC limit = 30 mg/100 ml → B.",
+  optA:[
+    {t:"A) 0 mg",v:"Incorrect",r:"കേരളത്തിൽ tolerance 30 mg.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) 30 mg/100 ml",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 100 mg/100 ml",v:"Incorrect",r:"ഉയർന്ന പരിധി — drunk.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) 200 mg/100 ml",v:"Incorrect",r:"വളരെ ഉയർന്നത്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\n30 mg/100ml → B.",
+  find:"BAC limit = 30 mg/100ml → B.",
+  trick:"💡 '30 mg per 100 ml.'",
+  facts:"📚 അനുബന്ധം: MV Act 1988 Sec 185. Kerala strict enforcement — breathalyzer tests common.",
+  rev:"⚡ B (30 mg)."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"വാഹനം ഓടിക്കുമ്പോൾ മൊബൈൽ ഫോൺ ഉപയോഗിക്കുന്നത്:",
+  options:["A) ഒഴിഞ്ഞ റോഡിൽ അനുവദനീയം","B) നിരോധിതം","C) ഒരു മിനിറ്റിൽ താഴെയുള്ള കോൾ അനുവദനീയം","D) രാത്രി അനുവദനീയം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വാഹനം ഓടിക്കുമ്പോൾ മൊബൈൽ ഫോൺ ഉപയോഗിക്കുന്നത് പൂർണ്ണമായും നിരോധിതമാണ്.",
+  verif:"Verified — original key correct",
+  concept:"MV Act Sec 184(c): Using mobile phone while driving — punishable with ₹5,000 fine (first offense), ₹10,000 (repeat) + imprisonment.",
+  steps:"Phone while driving = prohibited → B.",
+  optA:[
+    {t:"A) ഒഴിഞ്ഞ റോഡിൽ അനുവദനീയം",v:"Incorrect",r:"നിരോധിതം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിരോധിതം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 1 minute call",v:"Incorrect",r:"എല്ലാം നിരോധിതം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) രാത്രി അനുവദനീയം",v:"Incorrect",r:"എല്ലായ്പ്പോഴും നിരോധിതം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nMobile while driving = prohibited → B.",
+  find:"No mobile phone while driving → B.",
+  trick:"💡 'Phone = prohibited.'",
+  facts:"📚 അനുബന്ധം: Hands-free is not clearly legal in India either. Kerala Police strictly enforce.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"സീറ്റ് ബെൽറ്റ് ധരിക്കേണ്ടത്:",
+  options:["A) ഡ്രൈവർ മാത്രം","B) മുൻസീറ്റ് യാത്രക്കാരൻ മാത്രം","C) സീറ്റ് ബെൽറ്റ് ഉള്ള സീറ്റുകളിലെ എല്ലാവരും","D) നഗരറോഡിൽ ആരും വേണ്ട"],
+  correct:2,
+  explanation:"ശരിയായ ഉത്തരം: C. സീറ്റ് ബെൽറ്റ് ഉള്ള എല്ലാ സീറ്റുകളിലെയും എല്ലാ യാത്രക്കാരും (front + rear) സീറ്റ് ബെൽറ്റ് ധരിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"MV Act Sec 194B: Seat belt mandatory for all occupants in seats equipped with belts. Kerala enforces strictly.",
+  steps:"All seat-belt occupants → C.",
+  optA:[
+    {t:"A) ഡ്രൈവർ മാത്രം",v:"Incorrect",r:"എല്ലാവരും വേണം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) മുൻസീറ്റ് മാത്രം",v:"Incorrect",r:"rear seat belts also.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) എല്ലാ യാത്രക്കാരും",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"D) ആരും വേണ്ട",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nAll occupants → C.",
+  find:"All seat belt occupants → C.",
+  trick:"💡 'All occupants must wear seat belt.'",
+  facts:"📚 അനുബന്ധം: MV Act Sec 194B. Rear seat belt enforcement increased recently. Fine ₹1,000.",
+  rev:"⚡ C."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഹെൽമെറ്റ് ധരിക്കേണ്ടത്:",
+  options:["A) ഓടിക്കുന്നയാൾ മാത്രം","B) പിൻസീറ്റ് യാത്രക്കാരൻ മാത്രം","C) ഓടിക്കുന്നയാളും പിൻസീറ്റ് യാത്രക്കാരനും","D) നഗരത്തിൽ ആരും വേണ്ട"],
+  correct:2,
+  explanation:"ശരിയായ ഉത്തരം: C. ഇരുചക്രവാഹനത്തിൽ ഓടിക്കുന്നയാളും പിൻസീറ്റ് യാത്രക്കാരനും ഹെൽമെറ്റ് ധരിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"MV Act Sec 129: Helmet mandatory for both rider and pillion. ISI-certified helmet required. Exception: Sikhs wearing turban.",
+  steps:"Both rider + pillion helmet → C.",
+  optA:[
+    {t:"A) ഓടിക്കുന്നയാൾ മാത്രം",v:"Incorrect",r:"pillion also.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) പിൻസീറ്റ് മാത്രം",v:"Incorrect",r:"rider also.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) രണ്ടും",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"D) ആരും വേണ്ട",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBoth rider + pillion → C.",
+  find:"Both wear helmets → C.",
+  trick:"💡 'Rider + pillion = helmet.'",
+  facts:"📚 അനുബന്ധം: MV Act Sec 129. ISI certification required. ₹1,000 fine for violation.",
+  rev:"⚡ C."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"രാത്രിയിൽ എതിർദിശയിൽ നിന്ന് വാഹനം വരുമ്പോൾ:",
+  options:["A) ഹൈ ബീം ഉപയോഗിക്കണം","B) ഹെഡ്‌ലൈറ്റ് ഡിം ചെയ്യണം","C) ലൈറ്റ് ഓഫ് ചെയ്യണം","D) തുടർച്ചയായി ഹോൺ അടിക്കണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. എതിർദിശയിൽ നിന്ന് വാഹനം വരുമ്പോൾ ഹെഡ്‌ലൈറ്റ് ഡിം ചെയ്യണം — മറ്റേ ഡ്രൈവറെ അന്ധതയിൽ നിന്ന് സംരക്ഷിക്കാൻ.",
+  verif:"Verified — original key correct",
+  concept:"Night driving: When oncoming vehicle approaches within 150m, switch to low beam (dim) to avoid dazzling the other driver.",
+  steps:"Oncoming vehicle → dim headlight → B.",
+  optA:[
+    {t:"A) ഹൈ ബീം ഉപയോഗിക്കണം",v:"Incorrect",r:"മറ്റേ ഡ്രൈവറെ അന്ധനാക്കും.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഹെഡ്‌ലൈറ്റ് ഡിം ചെയ്യണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ലൈറ്റ് ഓഫ് ചെയ്യണം",v:"Incorrect",r:"അപകടകരം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഹോൺ അടിക്കണം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nDim headlight for oncoming → B.",
+  find:"Dim headlights → B.",
+  trick:"💡 'Dip lights for oncoming.'",
+  facts:"📚 അനുബന്ധം: MV Act Rule. High beam only when no oncoming vehicle within 150m.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഫുട്പാത്തിലൂടെ വാഹനം ഓടിക്കുന്നത്:",
+  options:["A) അനുവദനീയം","B) നിരോധിതം","C) ഇരുചക്രവാഹനങ്ങൾക്ക് അനുവദനീയം","D) രാത്രി അനുവദനീയം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ഫുട്പാത്ത് കാൽനടക്കാർക്ക് മാത്രം — വാഹനങ്ങൾ ഓടിക്കുന്നത് പൂർണ്ണമായും നിരോധിതം.",
+  verif:"Verified — original key correct",
+  concept:"Footpath = pedestrian zone. Driving on footpath is illegal. Under MV Act — punishable.",
+  steps:"Footpath = pedestrians only → B.",
+  optA:[
+    {t:"A) അനുവദനീയം",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിരോധിതം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 2W-ന് അനുവദനീയം",v:"Incorrect",r:"എല്ലാം നിരോധിതം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) രാത്രി അനുവദനീയം",v:"Incorrect",r:"എല്ലായ്പ്പോഴും നിരോധിതം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nFootpath = pedestrians only → B.",
+  find:"No vehicles on footpath → B.",
+  trick:"💡 'Footpath = pedestrians only.'",
+  facts:"📚 അനുബന്ധം: Kerala — footpath encroachment is serious issue. ₹1,000 fine for driving on footpath.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ആളില്ലാ റെയിൽവേ ക്രോസിങ്ങിൽ:",
+  options:["A) വേഗത്തിൽ കടക്കണം","B) നിർത്തി ഇരുവശവും നോക്കി സുരക്ഷിതമെങ്കിൽ മാത്രം കടക്കണം","C) ഹോൺ അടിച്ച് കടക്കണം","D) ട്രെയിനുമായി മത്സരിക്കണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ആളില്ലാ റെയിൽവേ ക്രോസിംഗിൽ നിർത്തി, ഇരുവശവും നോക്കി, ട്രെയിൻ വരുന്നില്ലെന്ന് ഉറപ്പാക്കിയ ശേഷം മാത്രം കടക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Unmanned railway crossing: Full stop, look both directions, listen for train, proceed only when safe. Never race a train.",
+  steps:"Unmanned → stop, look, proceed → B.",
+  sign:"RAILWAY",
+  optA:[
+    {t:"A) വേഗത്തിൽ കടക്കണം",v:"Incorrect",r:"അപകടം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിർത്തി പരിശോധിച്ച് കടക്കുക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഹോൺ അടിച്ച് കടക്കുക",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ട്രെയിനുമായി മത്സരിക്കുക",v:"Incorrect",r:"മാരകം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nStop-look-proceed → B.",
+  find:"Unmanned crossing → stop and check → B.",
+  trick:"💡 'Stop, Look, Listen, Cross.'",
+  facts:"📚 അനുബന്ധം: Unmanned crossings in Kerala: increasing gate automation. Never cross when barriers closing.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"വാഹനം തെന്നിപ്പോയാൽ (skid):",
+  options:["A) ശക്തിയായി ബ്രേക്ക് ചെയ്യണം","B) ആക്സിലറേറ്റർ വിട്ട് സാവധാനം സ്റ്റിയർ ചെയ്യണം","C) ആക്സിലറേറ്റ് ചെയ്യണം","D) സ്റ്റിയറിങ് പെട്ടെന്ന് തിരിക്കണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. സ്കിഡ് ആകുമ്പോൾ ആക്സിലറേറ്റർ വിട്ട്, ബ്രേക്ക് ചെയ്യാതെ, സാവധാനം സ്റ്റിയറിംഗ് ചെയ്യണം.",
+  verif:"Verified — original key correct",
+  concept:"Skidding recovery: Release accelerator, don't brake hard (locks wheels), steer gently in direction of skid. Braking hard worsens the skid.",
+  steps:"Skid → release accel, no hard brake, steer gently → B.",
+  optA:[
+    {t:"A) ശക്തിയായി ബ്രേക്ക് ചെയ്യണം",v:"Incorrect",r:"worse.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ആക്സിലറേറ്റർ വിട്ട് സാവധാനം സ്റ്റിയർ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ആക്സിലറേറ്റ് ചെയ്യണം",v:"Incorrect",r:"worse.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പെട്ടെന്ന് തിരിക്കണം",v:"Incorrect",r:"worse.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nSkid = release + steer gently → B.",
+  find:"Skid recovery → B.",
+  trick:"💡 'Skid: Release + steer gently.'",
+  facts:"📚 അനുബന്ധം: Kerala monsoon — slippery roads common. Avoid hard braking in rain.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"മുന്നിലെ വാഹനം വലത്തേക്ക് തിരിയാൻ സിഗ്നൽ നൽകുന്നു. നിങ്ങൾ:",
+  options:["A) ഓവർടേക്ക് ചെയ്യണം","B) ഓവർടേക്ക് ചെയ്യരുത്","C) ഹോൺ അടിച്ച് ഓവർടേക്ക് ചെയ്യണം","D) വേഗം കൂട്ടണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. മുന്നിലെ വാഹനം വലത്തേക്ക് തിരിയാൻ സിഗ്നൽ നൽകുമ്പോൾ ഓവർടേക്ക് ചെയ്യരുത് — അപകടം.",
+  verif:"Verified — original key correct",
+  concept:"Vehicle turning right occupies right side — don't overtake on the right. Overtaking on left (indicator-side) is also dangerous.",
+  steps:"Vehicle turning right → no overtake → B.",
+  optA:[
+    {t:"A) ഓവർടേക്ക് ചെയ്യണം",v:"Incorrect",r:"അപകടം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഓവർടേക്ക് ചെയ്യരുത്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഹോൺ അടിച്ച് ഓവർടേക്ക്",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വേഗം കൂട്ടണം",v:"Incorrect",r:"അപകടം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nDon't overtake right-turning vehicle → B.",
+  find:"Right turn signal → wait → B.",
+  trick:"💡 'Right turn = wait.'",
+  facts:"📚 അനുബന്ധം: MV Act Sec 121 — Overtaking prohibited when vehicle ahead signals right turn.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"റിവേഴ്സ് എടുക്കുന്നതിന് മുമ്പ്:",
+  options:["A) ഉടൻ റിവേഴ്സ് എടുക്കണം","B) പിന്നിലെ വഴി ഒഴിഞ്ഞതാണെന്ന് ഉറപ്പാക്കണം","C) രണ്ട് തവണ ഹോൺ മാത്രം അടിക്കണം","D) കണ്ണടച്ച് എടുക്കണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. റിവേഴ്സ് എടുക്കുന്നതിന് മുമ്പ് പിന്നിലെ വഴി ഒഴിഞ്ഞതാണെന്ന് ഉറപ്പാക്കണം (mirrors + turning to look).",
+  verif:"Verified — original key correct",
+  concept:"Reversing safety: Check mirrors + turn head to look behind + reverse slowly. Never reverse blindly.",
+  steps:"Check rear before reversing → B.",
+  optA:[
+    {t:"A) ഉടൻ റിവേഴ്സ്",v:"Incorrect",r:"അപകടം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) പിന്നിലെ വഴി പരിശോധിക്കണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) രണ്ട് ഹോൺ",v:"Incorrect",r:"മതി.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) കണ്ണടച്ച്",v:"Incorrect",r:"അപകടം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nCheck rear before reversing → B.",
+  find:"Look behind before reversing → B.",
+  trick:"💡 'Reverse = Look first.'",
+  facts:"📚 അനുബന്ധം: Rear camera and sensors help. Reversing blindly → accidents, particularly with children/elderly.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"വലത് കൈ തിരശ്ചീനമായി നേരെ നീട്ടുന്നത് സൂചിപ്പിക്കുന്നത്:",
+  options:["A) വലത്തോട്ട് തിരിയുന്നു","B) ഇടത്തോട്ട് തിരിയുന്നു","C) നിൽക്കുക","D) ഓവർടേക്ക് ചെയ്യുക"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. വലത് കൈ തിരശ്ചീനമായി നേരെ നീട്ടുന്നത് 'വലത്തോട്ട് തിരിയുന്നു' എന്ന് സൂചിപ്പിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Hand signals: Right arm horizontal → turning right; Right arm up with palm forward → stop; Right arm up and down → slowing down; Right arm rotated anticlockwise → turning left.",
+  steps:"Right arm horizontal = turn right → A.",
+  optA:[
+    {t:"A) വലത്തോട്ട് തിരിയുന്നു",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഇടത്തോട്ട് തിരിയുന്നു",v:"Incorrect",r:"anticlockwise rotation.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിൽക്കുക",v:"Incorrect",r:"palm forward.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഓവർടേക്ക്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRight horizontal = right turn → A.",
+  find:"Right horizontal → right turn → A.",
+  trick:"💡 'Right straight = right turn.'",
+  facts:"📚 അനുബന്ധം: Hand signals required when indicators fail. Also standard for cyclists.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"വലത് കൈ നീട്ടി ഉള്ളംകൈ താഴേക്കാക്കി മുകളിലേക്കും താഴേക്കും ചലിപ്പിക്കുന്നത്:",
+  options:["A) വലത്തോട്ട് തിരിയുന്നു","B) വേഗം കുറയ്ക്കുന്നു/നിർത്തുന്നു","C) വേഗത്തിൽ പോകുക","D) പാർക്ക് ചെയ്യുക"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വലത് കൈ നീട്ടി ഉള്ളംകൈ താഴേക്കാക്കി മുകളിലേക്കും താഴേക്കും ചലിപ്പിക്കുന്നത് 'വേഗം കുറയ്ക്കുന്നു/നിർത്തുന്നു' എന്ന് സൂചിപ്പിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Hand signal: Right arm extended outward, palm downward, move up and down → indicates slowing down / stopping.",
+  steps:"Palm down, move up-down → slowing/stopping → B.",
+  optA:[
+    {t:"A) വലത്തോട്ട് തിരിയുന്നു",v:"Incorrect",r:"horizontal extension.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വേഗം കുറയ്ക്കുന്നു/നിർത്തുന്നു",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വേഗത്തിൽ പോകുക",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്ക് ചെയ്യുക",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nUp-down motion = slow/stop → B.",
+  find:"Palm-down up-down = slowing → B.",
+  trick:"💡 'Up-down = slow down.'",
+  facts:"📚 അനുബന്ധം: Cyclists use this signal frequently. Standard across India.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"വലത് കൈ നീട്ടി എതിർ ഘടികാര ദിശയിൽ (anticlockwise) കറക്കുന്നത്:",
+  options:["A) ഇടത്തോട്ട് തിരിയുന്നു","B) വലത്തോട്ട് തിരിയുന്നു","C) നിൽക്കുക","D) റിവേഴ്സ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. വലത് കൈ നീട്ടി anticlockwise കറക്കുന്നത് 'ഇടത്തോട്ട് തിരിയുന്നു' എന്ന് സൂചിപ്പിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Hand signal: Right arm extended outward and rotated anticlockwise (counter-clockwise) → indicates turning left.",
+  steps:"Anticlockwise rotation = turn left → A.",
+  optA:[
+    {t:"A) ഇടത്തോട്ട് തിരിയുന്നു",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) വലത്തോട്ട് തിരിയുന്നു",v:"Incorrect",r:"horizontal.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിൽക്കുക",v:"Incorrect",r:"palm forward.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) റിവേഴ്സ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nAnticlockwise = turn left → A.",
+  find:"Anticlockwise → left turn → A.",
+  trick:"💡 'Anti-clockwise = left.'",
+  facts:"📚 അനുബന്ധം: Clockwise = right turn (in some conventions); anticlockwise = left turn.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ട്രാഫിക് പോലീസ് ഉദ്യോഗസ്ഥൻ ഉള്ളംകൈ നിങ്ങൾക്ക് നേരെ ഉയർത്തി കാണിച്ചാൽ:",
+  options:["A) പോകണം","B) നിൽക്കണം","C) ഹോൺ അടിക്കണം","D) ഇടത്തോട്ട് തിരിയണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ട്രാഫിക് പോലീസ് ഉള്ളംകൈ നിങ്ങൾക്ക് നേരെ ഉയർത്തി കാണിച്ചാൽ നിർത്തണം (STOP signal).",
+  verif:"Verified — original key correct",
+  concept:"Police hand signals: palm toward you → STOP; arm raised vertically → stop all traffic from that direction; arm pointing → proceed that way.",
+  steps:"Palm toward you → stop → B.",
+  optA:[
+    {t:"A) പോകണം",v:"Incorrect",r:"stop signal.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) നിൽക്കണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഹോൺ അടിക്കണം",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഇടത്തോട്ട് തിരിയണം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nPalm forward = stop → B.",
+  find:"Palm toward you → stop → B.",
+  trick:"💡 'Palm = STOP.'",
+  facts:"📚 അനുബന്ധം: Police signals override traffic lights. Always follow police officer's directions.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് നിയമങ്ങൾ",
+  question:"ഹസാർഡ് (ഫോർ-വേ) ലൈറ്റുകൾ ഉപയോഗിക്കേണ്ടത്:",
+  options:["A) രാത്രി എപ്പോഴും","B) വാഹനം കേടായാലോ അടിയന്തര സാഹചര്യത്തിലോ","C) ഓവർടേക്കിങ്ങിന്","D) തിരിയുന്നതിന്"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വാഹനം കേടായി നിൽക്കുമ്പോഴോ അടിയന്തര സാഹചര്യങ്ങളിലോ മാത്രം hazard lights ഉപയോഗിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Hazard lights (4-way flashers): Only when vehicle is stationary or in emergency. Not for overtaking or normal driving. Used with warning triangle at night.",
+  steps:"Vehicle breakdown → hazard lights → B.",
+  optA:[
+    {t:"A) രാത്രി എപ്പോഴും",v:"Incorrect",r:"normal driving-ൽ വേണ്ട.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) കേടായാൽ/അടിയന്തരത്തിൽ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ഓവർടേക്കിങ്ങിന്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) തിരിയുന്നതിന്",v:"Incorrect",r:"indicator വേണം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nHazard = breakdown/emergency → B.",
+  find:"Hazard = emergency only → B.",
+  trick:"💡 'Hazard = breakdown.'",
+  facts:"📚 അനുബന്ധം: Kerala — hazard lights + warning triangle mandatory for vehicle breakdown. ₹500 fine for improper use.",
+  rev:"⚡ B."
+},
+/* ============================================================
+   SECTION B: റോഡ് അടയാളങ്ങൾ (Q36–Q65)
+   SECTION C: റോഡ് മാർക്കിങ്ങുകൾ (Q66–Q70)
+   ============================================================ */
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"എട്ട് വശമുള്ള (octagon) ചുവന്ന അടയാളത്തിന്റെ അർത്ഥം:",
+  options:["A) വഴി നൽകുക","B) STOP","C) പ്രവേശനമില്ല","D) വേഗപരിധി"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (STOP). എട്ട് വശമുള്ള ചുവന്ന അടയാളം — STOP sign. പൂർണ്ണ നിർത്തൽ നിർബന്ധം.",
+  verif:"Verified — original key correct",
+  concept:"STOP sign — ലോകത്തിലെ ഏക അഷ്ടഭുജ (octagon) ട്രാഫിക് അടയാളം. എല്ലാ രാജ്യങ്ങളിലും ഒരേ രൂപം. ചുവപ്പ് + വെളുത്ത അതിർ + 'STOP' എഴുത്ത്. Full stop ശേഷം മാത്രം proceed.",
+  steps:"Octagon + red + STOP → B.",
+  sign:"STOP",
+  optA:[
+    {t:"A) വഴി നൽകുക",v:"Incorrect",r:"Inverted triangle.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) STOP",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) പ്രവേശനമില്ല",v:"Incorrect",r:"Red circle.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വേഗപരിധി",v:"Incorrect",r:"Circle with number.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nOctagon = STOP → B.",
+  find:"8-sided red sign = STOP → B.",
+  trick:"💡 'STOP = Octagon.'",
+  facts:"📚 അനുബന്ധം: Octagon chosen for STOP — distinguishable even if covered/damaged. Standard across Vienna Convention 1968.",
+  rev:"⚡ B (STOP)."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള തലകീഴായ ത്രികോണത്തിന്റെ അർത്ഥം:",
+  options:["A) നിൽക്കുക","B) വഴി നൽകുക (Give way)","C) സ്കൂൾ മുന്നിൽ","D) പാർക്കിങ് പാടില്ല"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (Give way). തലകീഴായ ത്രികോണം = Give way sign — മറ്റ് വാഹനങ്ങൾക്ക് വഴി നൽകുക.",
+  verif:"Verified — original key correct",
+  concept:"Give Way sign — inverted triangle with red border. 'Yield' എന്നും അറിയപ്പെടുന്നു. Roundabout, minor road → major road, highway junctions-ൽ സാധാരണ.",
+  steps:"Inverted triangle → Give way → B.",
+  sign:"GIVE_WAY",
+  optA:[
+    {t:"A) നിൽക്കുക",v:"Incorrect",r:"Octagon.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വഴി നൽകുക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) സ്കൂൾ മുന്നിൽ",v:"Incorrect",r:"Triangle with children.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്കിങ് പാടില്ല",v:"Incorrect",r:"Circle with P.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nInverted triangle = Give way → B.",
+  find:"Inverted triangle → yield → B.",
+  trick:"💡 'Inverted triangle = Give way.'",
+  facts:"📚 അനുബന്ധം: Give way → slow down, check, yield. Not full stop unless required. Standard in Vienna Convention.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള വൃത്താകൃതിയിലുള്ള അടയാളങ്ങൾ:",
+  options:["A) നിരോധന (Prohibitory) അടയാളങ്ങൾ","B) മുന്നറിയിപ്പ് അടയാളങ്ങൾ","C) വിവര അടയാളങ്ങൾ","D) അലങ്കാര അടയാളങ്ങൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ചുവന്ന അതിരുള്ള വൃത്താകൃതിയിലുള്ള അടയാളങ്ങൾ = നിരോധന (Prohibitory) അടയാളങ്ങൾ — 'ചെയ്യരുത്' എന്ന് സൂചിപ്പിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Sign categories:\n• Red circle = Prohibitory (No entry, No parking, No overtaking, Speed limit)\n• Red triangle = Warning/Cautionary (Pedestrian, School, Curve)\n• Blue circle = Mandatory (Turn left, Cycle track, Speed min)\n• Blue square/rectangle = Informatory (Hospital, Petrol pump, Parking)",
+  steps:"Red circle = Prohibitory → A.",
+  optA:[
+    {t:"A) നിരോധന അടയാളങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) മുന്നറിയിപ്പ്",v:"Incorrect",r:"Triangle.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) വിവര",v:"Incorrect",r:"Square.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) അലങ്കാര",v:"Incorrect",r:"ബന്ധമില്ല.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRed circle = Prohibitory → A.",
+  find:"Red circle → prohibitory → A.",
+  trick:"💡 'Red circle = Prohibitory.'",
+  facts:"📚 അനുബന്ധം: 4 categories by shape/color: Red circle (prohibit), Red triangle (warn), Blue circle (mandatory), Blue rectangle (inform).",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല നിറത്തിലുള്ള വൃത്താകൃതി അടയാളങ്ങൾ:",
+  options:["A) നിർബന്ധ (Mandatory) അടയാളങ്ങൾ","B) മുന്നറിയിപ്പ് അടയാളങ്ങൾ","C) നിരോധന അടയാളങ്ങൾ","D) വിവര അടയാളങ്ങൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല വൃത്താകൃതി അടയാളങ്ങൾ = നിർബന്ധ (Mandatory) അടയാളങ്ങൾ — 'ചെയ്യണം' എന്ന് നിർദ്ദേശിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Blue circle = Mandatory signs: Turn left, Turn right, Cycle track, Keep left, Minimum speed limit, Straight ahead only. 'Must do' — unlike prohibitory 'must not'.",
+  steps:"Blue circle = Mandatory → A.",
+  optA:[
+    {t:"A) നിർബന്ധ അടയാളങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) മുന്നറിയിപ്പ്",v:"Incorrect",r:"Triangle.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിരോധന",v:"Incorrect",r:"Red circle.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വിവര",v:"Incorrect",r:"Square.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBlue circle = Mandatory → A.",
+  find:"Blue circle → mandatory → A.",
+  trick:"💡 'Blue circle = Must do.'",
+  facts:"📚 അനുബന്ധം: Mandatory vs Prohibitory: Blue (do this) vs Red (don't do this). Blue circle with white arrow = direction mandatory.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള ത്രികോണ അടയാളങ്ങൾ:",
+  options:["A) നിർബന്ധ അടയാളങ്ങൾ","B) മുന്നറിയിപ്പ് (Cautionary) അടയാളങ്ങൾ","C) വിവര അടയാളങ്ങൾ","D) നിരോധന അടയാളങ്ങൾ"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ചുവന്ന അതിരുള്ള ത്രികോണ അടയാളങ്ങൾ = മുന്നറിയിപ്പ് (Cautionary) അടയാളങ്ങൾ — മുന്നിലെ അപകടങ്ങളെക്കുറിച്ച് മുന്നറിയിപ്പ് നൽകുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Red triangle (upward) = Warning/Cautionary signs: Pedestrian crossing, School ahead, Railway crossing, Men at work, Slippery road, Narrow bridge, Hump, Falling rocks, Cattle, Sharp curve, T-junction, Roundabout ahead.",
+  steps:"Red triangle (upward) = Warning → B.",
+  optA:[
+    {t:"A) നിർബന്ധം",v:"Incorrect",r:"Blue circle.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) മുന്നറിയിപ്പ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വിവര",v:"Incorrect",r:"Square.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) നിരോധന",v:"Incorrect",r:"Red circle.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRed triangle = Warning → B.",
+  find:"Triangle → warn → B.",
+  trick:"💡 'Triangle = Warning.'",
+  facts:"📚 അനുബന്ധം: Triangles = triangles of danger. All warning signs in India use red-border triangle with black pictogram on white background.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ദിശ, സ്ഥലം, സൗകര്യങ്ങൾ എന്നിവ അറിയിക്കുന്ന ചതുരാകൃതി അടയാളങ്ങൾ:",
+  options:["A) വിവര (Informatory) അടയാളങ്ങൾ","B) നിരോധന അടയാളങ്ങൾ","C) നിർബന്ധ അടയാളങ്ങൾ","D) മുന്നറിയിപ്പ് അടയാളങ്ങൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ചതുരാകൃതിയിലുള്ള അടയാളങ്ങൾ = വിവര (Informatory) അടയാളങ്ങൾ — ദിശ, സ്ഥലം, സൗകര്യങ്ങൾ അറിയിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Informatory signs — blue square/rectangle: Hospital (H), Petrol pump, Parking (P), First aid, Telephone, Rest area, Highway number, Direction arrows. Also green for highways, brown for tourist.",
+  steps:"Rectangle = Informatory → A.",
+  optA:[
+    {t:"A) വിവര അടയാളങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) നിരോധന",v:"Incorrect",r:"Red circle.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിർബന്ധം",v:"Incorrect",r:"Blue circle.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) മുന്നറിയിപ്പ്",v:"Incorrect",r:"Triangle.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRectangle = Informatory → A.",
+  find:"Rectangle → information → A.",
+  trick:"💡 'Rectangle = Information.'",
+  facts:"📚 അനുബന്ധം: Blue rectangle = general info; Green = highways; Brown = tourist; Yellow = temporary.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന വൃത്തത്തിൽ തിരശ്ചീനമായ വെളുത്ത വര:",
+  options:["A) നിൽക്കുക","B) പ്രവേശനമില്ല (No Entry)","C) പാർക്കിങ്","D) വേഗപരിധി"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ചുവന്ന വൃത്തത്തിൽ തിരശ്ചീനമായ വെളുത്ത വര = 'No Entry' — പ്രവേശനം നിരോധിച്ചിരിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"No Entry sign — red circle with horizontal white bar. Opposite direction traffic-ൽ നിന്ന് സംരക്ഷിക്കുന്നു. One-way streets-ന്റെ അവസാനം സാധാരണ.",
+  steps:"Red circle + white bar = No Entry → B.",
+  sign:"NO_ENTRY",
+  optA:[
+    {t:"A) നിൽക്കുക",v:"Incorrect",r:"STOP octagon.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) No Entry",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) പാർക്കിങ്",v:"Incorrect",r:"Blue P.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വേഗപരിധി",v:"Incorrect",r:"Number sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRed circle with bar = No entry → B.",
+  find:"Red circle + white horizontal bar → No Entry → B.",
+  trick:"💡 'No Entry = Red bar.'",
+  facts:"📚 അനുബന്ധം: No Entry ≠ No Parking. No Entry = can't enter (one-way exit); No Parking = P with slash.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല വൃത്തത്തിൽ ചുവന്ന അതിരും ഒരു ചരിഞ്ഞ ചുവന്ന വരയും:",
+  options:["A) പാർക്കിങ് പാടില്ല","B) പ്രവേശനമില്ല","C) നിൽക്കുക","D) ഇടത്തോട്ട് തിരിയണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല വൃത്തത്തിൽ ചുവന്ന അതിരും ചരിഞ്ഞ വരയും = No Parking sign.",
+  verif:"Verified — original key correct",
+  concept:"No Parking sign — blue circle + red border + single diagonal red line. Vehicle stop ചെയ്യാം (loading/unloading), എന്നാൽ park ചെയ്യാൻ പാടില്ല.",
+  steps:"Blue circle + diagonal line = No Parking → A.",
+  sign:"NO_PARKING",
+  optA:[
+    {t:"A) പാർക്കിങ് പാടില്ല",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പ്രവേശനമില്ല",v:"Incorrect",r:"white bar.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിൽക്കുക",v:"Incorrect",r:"STOP.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഇടത്തോട്ട് തിരിയണം",v:"Incorrect",r:"arrow sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nDiagonal line = No parking → A.",
+  find:"Red slash on P = No parking → A.",
+  trick:"💡 'Diagonal = No parking; Cross = No stopping.'",
+  facts:"📚 അനുബന്ധം: No Parking (single line) vs No Stopping (X cross). No Stopping = can't even pause.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല വൃത്തത്തിൽ ചുവന്ന അതിരും ചുവന്ന ക്രോസും (X):",
+  options:["A) നിർത്തുന്നത് പാടില്ല (No Stopping)","B) പാർക്കിങ് അനുവദനീയം","C) ആശുപത്രി","D) യൂ-ടേൺ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല വൃത്തത്തിൽ ചുവന്ന ക്രോസ് (X) = No Stopping sign — നിർത്താൻ പാടില്ല.",
+  verif:"Verified — original key correct",
+  concept:"No Stopping sign — blue circle + red border + red X. Even temporary pause prohibited. Stricter than No Parking.",
+  steps:"Red X = No Stopping → A.",
+  sign:"NO_STOPPING",
+  optA:[
+    {t:"A) No Stopping",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പാർക്കിങ് അനുവദനീയം",v:"Incorrect",r:"വിപരീതം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ആശുപത്രി",v:"Incorrect",r:"H sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) യൂ-ടേൺ",v:"Incorrect",r:"U-turn sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nX cross = No stopping → A.",
+  find:"Cross (X) = No stopping → A.",
+  trick:"💡 'X = No stopping (even briefly).'",
+  facts:"📚 അനുബന്ധം: Kerala — No stopping signs near junctions, bridges. Fine for violation.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ കുറുകെ വെട്ടിയ ഹോൺ ചിഹ്നം:",
+  options:["A) ഹോൺ നിർബന്ധം","B) ഹോൺ നിരോധിതം","C) ആശുപത്രി","D) വർക്ക്ഷോപ്പ്"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ ഹോണിന് കുറുകെ വര = ഹോൺ നിരോധിതം (Horn Prohibited).",
+  verif:"Verified — original key correct",
+  concept:"Horn Prohibited sign — silent zones-ൽ (ആശുപത്രി, സ്കൂൾ, കോടതി). 100m ചുറ്റളവിൽ ഹോൺ ഉപയോഗം നിരോധിതം.",
+  steps:"Horn with slash = Horn prohibited → B.",
+  sign:"HORN_PROHIBITED",
+  optA:[
+    {t:"A) ഹോൺ നിർബന്ധം",v:"Incorrect",r:"വിപരീതം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഹോൺ നിരോധിതം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ആശുപത്രി",v:"Incorrect",r:"H sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വർക്ക്ഷോപ്പ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nHorn + slash = prohibited → B.",
+  find:"Horn crossed out = no horn → B.",
+  trick:"💡 'Horn + slash = Silence zone.'",
+  facts:"📚 അനുബന്ധം: Silent zones — 100m radius. Kerala fine ₹1,000-2,000.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ കുറുകെ വെട്ടിയ യൂ-ആകൃതി അമ്പ്:",
+  options:["A) യൂ-ടേൺ അനുവദനീയം","B) യൂ-ടേൺ പാടില്ല","C) റൗണ്ട് എബൗട്ട്","D) അവസാനിക്കുന്ന വഴി"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ യൂ-ടേണിന് കുറുകെ വര = യൂ-ടേൺ പാടില്ല (No U-Turn).",
+  verif:"Verified — original key correct",
+  concept:"No U-Turn sign — U-shaped arrow crossed out. Junctions, busy roads, highways-ൽ U-turn prohibited to prevent accidents.",
+  steps:"U-turn with slash = no U-turn → B.",
+  sign:"NO_UTURN",
+  optA:[
+    {t:"A) യൂ-ടേൺ അനുവദനീയം",v:"Incorrect",r:"slash = prohibited.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) യൂ-ടേൺ പാടില്ല",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) റൗണ്ട് എബൗട്ട്",v:"Incorrect",r:"circular arrow.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) അവസാനിക്കുന്ന വഴി",v:"Incorrect",r:"dead-end sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nU-turn + slash = no U-turn → B.",
+  find:"U-turn sign with slash → B.",
+  trick:"💡 'U-turn + slash = No U-turn.'",
+  facts:"📚 അനുബന്ധം: Kerala MVD — many junctions have No U-turn signs. Violators fined.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ \"50\":",
+  options:["A) കുറഞ്ഞ വേഗം 50","B) പരമാവധി വേഗപരിധി 50 km/h","C) 50 മീറ്റർ മുന്നിൽ","D) റൂട്ട് നമ്പർ"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ സംഖ്യ = പരമാവധി വേഗപരിധി (Maximum speed limit). ഇവിടെ 50 km/h.",
+  verif:"Verified — original key correct",
+  concept:"Speed Limit sign — red circle with number. 'Maximum' speed. Blue circle with number would be 'minimum' speed. 50 here means max 50 km/h.",
+  steps:"Red circle with 50 = max speed 50 km/h → B.",
+  sign:"SPEED_50",
+  optA:[
+    {t:"A) കുറഞ്ഞ വേഗം 50",v:"Incorrect",r:"blue circle.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) പരമാവധി 50 km/h",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 50 മീറ്റർ മുന്നിൽ",v:"Incorrect",r:"number sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) റൂട്ട് നമ്പർ",v:"Incorrect",r:"highway number.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRed circle + number = maximum speed → B.",
+  find:"Red circle number = max speed → B.",
+  trick:"💡 'Red circle = max; Blue circle = min.'",
+  facts:"📚 അനുബന്ധം: Kerala speed limits: city 30-50 km/h; highways 60-80 km/h; expressways 100-120 km/h.",
+  rev:"⚡ B (50 km/h max)."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ അടുത്തടുത്ത രണ്ട് കാറുകൾ (ഒന്ന് ചുവപ്പ്):",
+  options:["A) ഓവർടേക്കിങ് നിരോധിതം","B) ഓവർടേക്കിങ് അനുവദനീയം","C) പാർക്കിങ്","D) ഇരുവശ ഗതാഗതം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ചുവന്ന അതിരുള്ള വൃത്തത്തിൽ രണ്ട് കാറുകൾ = ഓവർടേക്കിങ് നിരോധിതം (No Overtaking).",
+  verif:"Verified — original key correct",
+  concept:"No Overtaking sign — two cars (red + black) in a circle with red border. Curves, bridges, junctions-ൽ സാധാരണ.",
+  steps:"Two cars in red circle = No overtaking → A.",
+  sign:"NO_OVERTAKING",
+  optA:[
+    {t:"A) ഓവർടേക്കിങ് നിരോധിതം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഓവർടേക്കിങ് അനുവദനീയം",v:"Incorrect",r:"വിപരീതം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പാർക്കിങ്",v:"Incorrect",r:"P sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഇരുവശ ഗതാഗതം",v:"Incorrect",r:"two-way sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nTwo cars in red circle = no overtaking → A.",
+  find:"Two cars → no overtake → A.",
+  trick:"💡 'Two cars + red circle = No overtaking.'",
+  facts:"📚 അനുബന്ധം: Common at: narrow roads, curves, bridges, tunnels. Violating → accidents.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ നടന്നുപോകുന്ന മനുഷ്യൻ:",
+  options:["A) മുന്നിൽ കാൽനട ക്രോസിങ്","B) ആശുപത്രി","C) ഫുട്പാത്ത് അവസാനിക്കുന്നു","D) പാർക്ക്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ നടന്നുപോകുന്ന മനുഷ്യൻ = Pedestrian Crossing warning sign — മുന്നിൽ കാൽനട ക്രോസിംഗ്.",
+  verif:"Verified — original key correct",
+  concept:"Pedestrian crossing warning: red triangle with walking person pictogram. Slow down, watch for pedestrians, be prepared to stop.",
+  steps:"Triangle with walking person = pedestrian crossing → A.",
+  sign:"PEDESTRIAN",
+  optA:[
+    {t:"A) കാൽനട ക്രോസിങ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ആശുപത്രി",v:"Incorrect",r:"H sign.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ഫുട്പാത്ത് അവസാനിക്കുന്നു",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്ക്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nWalking person = pedestrian → A.",
+  find:"Triangle + pedestrian = crossing ahead → A.",
+  trick:"💡 'Pedestrian in triangle = crossing ahead.'",
+  facts:"📚 അനുബന്ധം: School crossing uses two children running. Pedestrian crossing uses one walking figure.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ സ്കൂൾ കുട്ടികൾ:",
+  options:["A) മുന്നിൽ സ്കൂൾ","B) കളിസ്ഥലം","C) പാർക്ക്","D) ബസ് സ്റ്റോപ്പ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ ഓടുന്ന കുട്ടികൾ = School Ahead sign — മുന്നിൽ സ്കൂൾ, വേഗം കുറയ്ക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"School Ahead sign — two children running in red triangle. Slow down, watch for children, no horn usage nearby.",
+  steps:"Triangle with children = school → A.",
+  sign:"SCHOOL",
+  optA:[
+    {t:"A) മുന്നിൽ സ്കൂൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) കളിസ്ഥലം",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പാർക്ക്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ബസ് സ്റ്റോപ്പ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nChildren in triangle = school → A.",
+  find:"Children running → school ahead → A.",
+  trick:"💡 'Children = School.'",
+  facts:"📚 അനുബന്ധം: School zones — 25 km/h limit. Silent zone nearby. Kerala strictly enforces.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ ട്രെയിൻ/റെയിൽ ചിഹ്നം:",
+  options:["A) മുന്നിൽ റെയിൽവേ ക്രോസിങ്","B) സ്റ്റേഷൻ","C) മെട്രോ","D) പാലം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ ട്രെയിൻ/റെയിൽ ചിഹ്നം = മുന്നിൽ റെയിൽവേ ക്രോസിംഗ് — വേഗം കുറയ്ക്കണം, നിർത്താൻ തയ്യാറാകണം.",
+  verif:"Verified — original key correct",
+  concept:"Railway crossing warning: red triangle with train/locomotive pictogram. Before crossing, slow down. If unmanned, full stop and check.",
+  steps:"Train in triangle = railway crossing → A.",
+  sign:"RAILWAY",
+  optA:[
+    {t:"A) റെയിൽവേ ക്രോസിങ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) സ്റ്റേഷൻ",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) മെട്രോ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാലം",v:"Incorrect",r:"bridge sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nTrain = railway crossing → A.",
+  find:"Train pictogram → railway → A.",
+  trick:"💡 'Train in triangle = Railway crossing.'",
+  facts:"📚 അനുബന്ധം: Unmanned vs manned crossings. Crossbuck sign (X-shaped) also used at crossings.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ കുഴിക്കുന്ന മനുഷ്യൻ:",
+  options:["A) റോഡ് പണി നടക്കുന്നു (Men at work)","B) പാർക്ക്","C) ആശുപത്രി","D) തോട്ടം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ കുഴിക്കുന്ന മനുഷ്യൻ = Men at Work sign — മുന്നിൽ റോഡ് പണി നടക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Men at Work sign — red triangle with worker digging. Reduce speed, watch for workers and machinery, follow diversion.",
+  steps:"Digging figure = men at work → A.",
+  sign:"MEN_WORK",
+  optA:[
+    {t:"A) റോഡ് പണി",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പാർക്ക്",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ആശുപത്രി",v:"Incorrect",r:"H sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) തോട്ടം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nWorker figure = men at work → A.",
+  find:"Digging person → road works → A.",
+  trick:"💡 'Worker digging = Men at work.'",
+  facts:"📚 അനുബന്ധം: Temporary signs — yellow or orange. Kerala PWD works — long diversions.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ കാറും വളഞ്ഞ വരകളും:",
+  options:["A) വഴുക്കലുള്ള റോഡ്","B) മുന്നിൽ പുഴ","C) മൂടൽമഞ്ഞ്","D) കാർ വാഷ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ കാറും വളഞ്ഞ വരകളും (skid marks) = Slippery Road sign — വഴുക്കലുള്ള റോഡ്.",
+  verif:"Verified — original key correct",
+  concept:"Slippery Road sign — red triangle with car and skid marks. Rain/ice likely. Slow down, no hard braking, increase following distance.",
+  steps:"Car + skid marks = slippery road → A.",
+  sign:"SLIPPERY",
+  optA:[
+    {t:"A) വഴുക്കലുള്ള റോഡ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പുഴ",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) മൂടൽമഞ്ഞ്",v:"Incorrect",r:"fog sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) കാർ വാഷ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nSkid marks = slippery → A.",
+  find:"Car + wavy lines → slippery → A.",
+  trick:"💡 'Slippery road = Skid marks.'",
+  facts:"📚 അനുബന്ധം: Kerala monsoon — many slippery road signs. Wayanad, Idukki hill roads.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ ഇടുങ്ങിയ പാലത്തിന്റെ ചിത്രം:",
+  options:["A) മുന്നിൽ ഇടുങ്ങിയ പാലം","B) വീതിയുള്ള റോഡ്","C) ടോൾ","D) പാലമില്ല"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ ഇടുങ്ങിയ പാലത്തിന്റെ ചിത്രം = Narrow Bridge sign — മുന്നിൽ ഇടുങ്ങിയ പാലം.",
+  verif:"Verified — original key correct",
+  concept:"Narrow Bridge sign — red triangle with narrowed bridge pictogram. Slow down, allow oncoming traffic if needed.",
+  steps:"Narrow bridge = narrow bridge ahead → A.",
+  sign:"NARROW_BRIDGE",
+  optA:[
+    {t:"A) ഇടുങ്ങിയ പാലം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) വീതിയുള്ള റോഡ്",v:"Incorrect",r:"വിപരീതം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ടോൾ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാലമില്ല",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nNarrow bridge pictogram → A.",
+  find:"Narrow bridge → A.",
+  trick:"💡 'Narrow bridge = Careful crossing.'",
+  facts:"📚 അനുബന്ധം: Old bridges — often narrow. Kerala — many such in high ranges.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ കൂനയുടെ (hump) ചിത്രം:",
+  options:["A) മുന്നിൽ സ്പീഡ് ബ്രേക്കർ/ഹമ്പ്","B) മല","C) പാലം","D) ഒട്ടകം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ കൂനയുടെ ചിത്രം = Hump / Speed Breaker sign — മുന്നിൽ സ്പീഡ് ബ്രേക്കർ.",
+  verif:"Verified — original key correct",
+  concept:"Hump sign — red triangle with semicircular hump pictogram. Slow down to 20-30 km/h. Sudden speed breakers can damage vehicle.",
+  steps:"Hump = speed breaker → A.",
+  sign:"HUMP",
+  optA:[
+    {t:"A) സ്പീഡ് ബ്രേക്കർ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) മല",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പാലം",v:"Incorrect",r:"bridge sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഒട്ടകം",v:"Incorrect",r:"camel is in sign for animal crossing.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nHump pictogram = speed breaker → A.",
+  find:"Hump sign → speed breaker → A.",
+  trick:"💡 'Hump = Speed breaker.'",
+  facts:"📚 അനുബന്ധം: Kerala — many humps near schools, hospitals, junctions.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ വീഴുന്ന പാറക്കല്ലുകൾ:",
+  options:["A) മുന്നിൽ പാറ വീഴാൻ സാധ്യത","B) ക്വാറി","C) ഹിൽ സ്റ്റേഷൻ","D) പാർക്കിങ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ വീഴുന്ന പാറക്കല്ലുകൾ = Falling Rocks sign — മുന്നിൽ പാറ വീഴാൻ സാധ്യത.",
+  verif:"Verified — original key correct",
+  concept:"Falling Rocks sign — red triangle with rocks falling from cliff. Watch for rocks on road, reduce speed.",
+  steps:"Falling rocks = falling rocks ahead → A.",
+  sign:"FALLING_ROCKS",
+  optA:[
+    {t:"A) പാറ വീഴാൻ സാധ്യത",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ക്വാറി",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ഹിൽ സ്റ്റേഷൻ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്കിങ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nFalling rocks → A.",
+  find:"Rocks falling → falling rocks sign → A.",
+  trick:"💡 'Falling rocks = Mountain road.'",
+  facts:"📚 അനുബന്ധം: Kerala hill roads — Munnar, Idukki have such signs. Landslides during monsoon.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ മൃഗത്തിന്റെ ചിത്രം:",
+  options:["A) റോഡിൽ കന്നുകാലികൾ/മൃഗങ്ങൾ ഉണ്ടാകാം","B) മൃഗശാല","C) പാർക്ക്","D) ഫാം ഷോപ്പ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ മൃഗത്തിന്റെ ചിത്രം = Cattle Crossing sign — റോഡിൽ കന്നുകാലികൾ ഉണ്ടാകാം.",
+  verif:"Verified — original key correct",
+  concept:"Cattle/Animal Crossing sign — red triangle with cow/deer pictogram. Slow down, be ready to stop for animals crossing.",
+  steps:"Cattle pictogram = cattle crossing → A.",
+  sign:"CATTLE",
+  optA:[
+    {t:"A) കന്നുകാലികൾ ഉണ്ടാകാം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) മൃഗശാല",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പാർക്ക്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഫാം ഷോപ്പ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nCattle pictogram = cattle crossing → A.",
+  find:"Animal figure → animal crossing → A.",
+  trick:"💡 'Cattle sign = Village road.'",
+  facts:"📚 അനുബന്ധം: Kerala villages — cattle on road common. Slow down at dusk/dawn.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ വളഞ്ഞ അമ്പ്:",
+  options:["A) മുന്നിൽ കൊടുംവളവ്","B) റൗണ്ട് എബൗട്ട്","C) യൂ-ടേൺ","D) അവസാനിക്കുന്ന വഴി"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ വളഞ്ഞ അമ്പ് = Sharp Curve sign — മുന്നിൽ കൊടുംവളവ്.",
+  verif:"Verified — original key correct",
+  concept:"Sharp Curve sign — red triangle with curved arrow. Reduce speed, no overtaking on curve, keep to left.",
+  steps:"Curved arrow = sharp curve → A.",
+  sign:"SHARP_CURVE",
+  optA:[
+    {t:"A) കൊടുംവളവ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) റൗണ്ട് എബൗട്ട്",v:"Incorrect",r:"circular arrow.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) യൂ-ടേൺ",v:"Incorrect",r:"U-shape.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) അവസാനിക്കുന്ന വഴി",v:"Incorrect",r:"dead-end sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nCurved arrow = sharp curve → A.",
+  find:"Curve pictogram → curve ahead → A.",
+  trick:"💡 'Curved arrow = Curve.'",
+  facts:"📚 അനുബന്ധം: Left curve vs right curve — arrow indicates direction. Kerala hill roads — many curves.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല വൃത്തത്തിൽ ഇടത്തോട്ടുള്ള അമ്പ്:",
+  options:["A) ഇടത്തോട്ട് തിരിയണം (നിർബന്ധം)","B) ഇടത്തോട്ട് തിരിയരുത്","C) ഇടത് ലെയ്ൻ അവസാനിക്കുന്നു","D) പാർക്കിങ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല വൃത്തത്തിൽ ഇടത്തോട്ടുള്ള അമ്പ് = Turn Left sign — ഇടത്തോട്ട് തിരിയണം (നിർബന്ധം).",
+  verif:"Verified — original key correct",
+  concept:"Turn Left (Mandatory) — blue circle with white left arrow. Must turn left at junction. No straight/right.",
+  steps:"Blue circle + left arrow = must turn left → A.",
+  sign:"LEFT_TURN",
+  optA:[
+    {t:"A) ഇടത്തോട്ട് തിരിയണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഇടത്തോട്ട് തിരിയരുത്",v:"Incorrect",r:"red circle with slash.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ഇടത് ലെയ്ൻ അവസാനിക്കുന്നു",v:"Incorrect",r:"lane ends sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്കിങ്",v:"Incorrect",r:"P sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBlue circle + arrow = mandatory turn → A.",
+  find:"Left arrow in blue circle → turn left → A.",
+  trick:"💡 'Blue circle = Mandatory.'",
+  facts:"📚 അനുബന്ധം: Mandatory turn signs guide traffic flow. Junctions without these — free turn.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല വൃത്തത്തിൽ സൈക്കിൾ:",
+  options:["A) സൈക്കിൾ ട്രാക്ക് നിർബന്ധം","B) സൈക്കിൾ നിരോധിതം","C) സൈക്കിൾ കട","D) പാർക്കിങ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല വൃത്തത്തിൽ സൈക്കിൾ = Cycle Track sign — സൈക്കിളുകൾക്ക് മാത്രമുള്ള പാത (നിർബന്ധം).",
+  verif:"Verified — original key correct",
+  concept:"Cycle Track (Mandatory) — blue circle with bicycle pictogram. Cyclists must use this track. Others prohibited.",
+  steps:"Blue circle + bicycle = cycle track → A.",
+  sign:"CYCLE_TRACK",
+  optA:[
+    {t:"A) സൈക്കിൾ ട്രാക്ക്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) സൈക്കിൾ നിരോധിതം",v:"Incorrect",r:"red circle.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) സൈക്കിൾ കട",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്കിങ്",v:"Incorrect",r:"P sign.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBlue circle + bicycle = cycle track → A.",
+  find:"Blue + bicycle → cycle track → A.",
+  trick:"💡 'Cycle in blue circle = Cycle track.'",
+  facts:"📚 അനുബന്ധം: Cycle tracks in Kerala — few dedicated ones. Increasing with smart city projects.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല ചതുരത്തിൽ വെളുത്ത \"H\":",
+  options:["A) ആശുപത്രി","B) ഹോട്ടൽ","C) ഹെലിപാഡ്","D) ഹൈവേ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല ചതുരത്തിൽ വെളുത്ത H = Hospital sign.",
+  verif:"Verified — original key correct",
+  concept:"Hospital sign — blue rectangle with white H. Nearby: silent zone, no horn. Drive carefully.",
+  steps:"H in blue square = hospital → A.",
+  sign:"HOSPITAL",
+  optA:[
+    {t:"A) ആശുപത്രി",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഹോട്ടൽ",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ഹെലിപാഡ്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഹൈവേ",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nH = Hospital → A.",
+  find:"H sign = hospital → A.",
+  trick:"💡 'H = Hospital.'",
+  facts:"📚 അനുബന്ധം: Kerala — hospital zones are silent zones. Horn prohibited within 100m.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല ചതുരത്തിൽ ഇന്ധന പമ്പ് ചിഹ്നം:",
+  options:["A) പെട്രോൾ പമ്പ്","B) ഗാരേജ്","C) കാർ വാഷ്","D) ടോൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല ചതുരത്തിൽ ഇന്ധന പമ്പ് ചിഹ്നം = Petrol Pump sign.",
+  verif:"Verified — original key correct",
+  concept:"Petrol pump sign — blue rectangle with fuel pump pictogram. Information about fuel availability ahead.",
+  steps:"Fuel pump icon = petrol pump → A.",
+  sign:"PETROL",
+  optA:[
+    {t:"A) പെട്രോൾ പമ്പ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഗാരേജ്",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) കാർ വാഷ്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ടോൾ",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nFuel pump = petrol pump → A.",
+  find:"Pump pictogram → petrol pump → A.",
+  trick:"💡 'Pump = Petrol.'",
+  facts:"📚 അനുബന്ധം: Highways — pump distance signs. India has 80,000+ petrol pumps.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"നീല ചതുരത്തിൽ വെളുത്ത \"P\":",
+  options:["A) പാർക്കിങ്","B) പോലീസ്","C) കാൽനടക്കാർ","D) നിരോധിതം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നീല ചതുരത്തിൽ വെളുത്ത P = Parking sign (parking allowed).",
+  verif:"Verified — original key correct",
+  concept:"Parking sign — blue rectangle with white P. Parking allowed here. Opposite of No Parking.",
+  steps:"P in blue square = parking → A.",
+  sign:"PARKING",
+  optA:[
+    {t:"A) പാർക്കിങ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പോലീസ്",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) കാൽനടക്കാർ",v:"Incorrect",r:"pedestrian sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) നിരോധിതം",v:"Incorrect",r:"red slash.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nP in blue = parking allowed → A.",
+  find:"P = parking → A.",
+  trick:"💡 'P = Parking (allowed). P+slash = No parking.'",
+  facts:"📚 അനുബന്ധം: Paid parking (yellow P), free parking (blue P). Kerala municipalities have designated parking zones.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ \"T\" ആകൃതി:",
+  options:["A) മുന്നിൽ T-ജംഗ്ഷൻ","B) ടാക്സി സ്റ്റാൻഡ്","C) ടോൾ","D) ടണൽ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ T ആകൃതി = T-Junction sign — മുന്നിൽ T-ജംഗ്ഷൻ (യാത്ര ചെയ്യുന്ന റോഡ് T-ആകൃതിയിൽ അവസാനിക്കുന്നു).",
+  verif:"Verified — original key correct",
+  concept:"T-Junction sign — red triangle with T-shape pictogram. Major road ends at T-junction. Slow down, prepare to turn.",
+  steps:"T-shape = T-junction → A.",
+  sign:"T_JUNCTION",
+  optA:[
+    {t:"A) T-ജംഗ്ഷൻ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ടാക്സി സ്റ്റാൻഡ്",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ടോൾ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ടണൽ",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nT-shape = T-junction → A.",
+  find:"T pictogram → T-junction → A.",
+  trick:"💡 'T-shape = T-junction.'",
+  facts:"📚 അനുബന്ധം: T-junctions and Y-junctions. Y-junction sign uses Y-shape.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് അടയാളങ്ങൾ",
+  question:"ത്രികോണത്തിൽ വൃത്താകൃതിയിലുള്ള അമ്പുകൾ:",
+  options:["A) മുന്നിൽ റൗണ്ട് എബൗട്ട്","B) അവസാനിക്കുന്ന വഴി","C) യൂ-ടേൺ","D) സർക്കസ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ത്രികോണത്തിൽ വൃത്താകൃതിയിലുള്ള അമ്പുകൾ = Roundabout Ahead sign.",
+  verif:"Verified — original key correct",
+  concept:"Roundabout Ahead sign — red triangle with three circular arrows. Slow down, prepare to give way to vehicles already in the roundabout.",
+  steps:"Circular arrows = roundabout → A.",
+  sign:"ROUNDABOUT",
+  optA:[
+    {t:"A) റൗണ്ട് എബൗട്ട്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) അവസാനിക്കുന്ന വഴി",v:"Incorrect",r:"dead-end sign.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) യൂ-ടേൺ",v:"Incorrect",r:"U-turn sign.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) സർക്കസ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nCircular arrows = roundabout → A.",
+  find:"Rotating arrows → roundabout → A.",
+  trick:"💡 'Circular arrows = Roundabout.'",
+  facts:"📚 അനുബന്ധം: Roundabouts reduce severity of junction accidents. Common in Kerala cities.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് മാർക്കിങ്ങുകൾ",
+  question:"റോഡിന്റെ നടുവിലെ തുടർച്ചയായ വെളുത്ത വര:",
+  options:["A) സ്വതന്ത്രമായി മുറിച്ചുകടക്കാം","B) മുറിച്ചുകടക്കുകയോ ഓവർടേക്ക് ചെയ്യുകയോ അരുത്","C) പാർക്കിങ്","D) സ്കൂൾ മേഖല"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. തുടർച്ചയായ വെളുത്ത വര = Continuous line — മുറിച്ചുകടക്കാനോ ഓവർടേക്ക് ചെയ്യാനോ പാടില്ല.",
+  verif:"Verified — original key correct",
+  concept:"Continuous white line — no crossing/overtaking. പ്രത്യേകിച്ച് curves, junctions, hill roads-ൽ. Broken line — crossing allowed when safe.",
+  steps:"Continuous line = no crossing/overtaking → B.",
+  sign:"LINE_CONTINUOUS",
+  optA:[
+    {t:"A) മുറിച്ചുകടക്കാം",v:"Incorrect",r:"നിരോധിതം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) മുറിച്ചുകടക്കരുത്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) പാർക്കിങ്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) സ്കൂൾ മേഖല",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nContinuous = no crossing → B.",
+  find:"Continuous line = don't cross → B.",
+  trick:"💡 'Continuous = No cross; Broken = Cross when safe.'",
+  facts:"📚 അനുബന്ധം: Continuous line = accident-prone zones. Yellow continuous = double line (no crossing).",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് മാർക്കിങ്ങുകൾ",
+  question:"മുറിഞ്ഞ (broken) വെളുത്ത വര:",
+  options:["A) സുരക്ഷിതമെങ്കിൽ മുറിച്ചുകടക്കാം","B) ഒരിക്കലും കടക്കരുത്","C) നിൽക്കുക","D) പ്രവേശനമില്ല"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. മുറിഞ്ഞ വെളുത്ത വര = Broken line — സുരക്ഷിതമെങ്കിൽ മുറിച്ചുകടക്കാം / ഓവർടേക്ക് ചെയ്യാം.",
+  verif:"Verified — original key correct",
+  concept:"Broken white line — crossing/overtaking allowed when safe. Check mirrors, signal, proceed. Normal marking on straight roads.",
+  steps:"Broken line = cross when safe → A.",
+  sign:"LINE_BROKEN",
+  optA:[
+    {t:"A) സുരക്ഷിതമെങ്കിൽ കടക്കാം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഒരിക്കലും കടക്കരുത്",v:"Incorrect",r:"continuous line.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിൽക്കുക",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പ്രവേശനമില്ല",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBroken line = cross when safe → A.",
+  find:"Broken = cross if safe → A.",
+  trick:"💡 'Broken = OK to cross.'",
+  facts:"📚 അനുബന്ധം: Broken line sections — better visibility. Still check mirrors and blind spots.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് മാർക്കിങ്ങുകൾ",
+  question:"സീബ്ര ക്രോസിങ്ങിലെ വരകൾ ആർക്കുവേണ്ടിയാണ്?",
+  options:["A) വാഹനങ്ങൾ","B) കാൽനടക്കാർ","C) പാർക്കിങ്","D) ഓവർടേക്കിങ്"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. സീബ്ര ക്രോസിംഗിലെ വരകൾ കാൽനടക്കാർക്ക് റോഡ് മുറിച്ചുകടക്കാൻ ഉള്ളതാണ്.",
+  verif:"Verified — original key correct",
+  concept:"Zebra crossing — pedestrian right of way. Vehicles must stop and allow pedestrians to cross. White stripes = visibility.",
+  steps:"Zebra = pedestrian crossing → B.",
+  sign:"ZEBRA",
+  optA:[
+    {t:"A) വാഹനങ്ങൾ",v:"Incorrect",r:"കാൽനടക്കാർ.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) കാൽനടക്കാർ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) പാർക്കിങ്",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഓവർടേക്കിങ്",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nZebra = pedestrians → B.",
+  find:"Zebra stripes → pedestrians → B.",
+  trick:"💡 'Zebra = Pedestrian.'",
+  facts:"📚 അനുബന്ധം: Pelican/Puffin crossings — pedestrian-controlled signals in cities.",
+  rev:"⚡ B."
+},
+{
+  subject:"റോഡ് മാർക്കിങ്ങുകൾ",
+  question:"ജംഗ്ഷനിലെ സ്റ്റോപ്പ് ലൈൻ:",
+  options:["A) ലൈനിന് പിന്നിൽ നിർത്തണം","B) ലൈനിന് മേൽ നിർത്തണം","C) വേഗം മുറിച്ചുകടക്കണം","D) പാർക്ക് ചെയ്യണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. സ്റ്റോപ്പ് ലൈനിൽ — വാഹനം ലൈനിന് പിന്നിൽ നിർത്തണം. ലൈനിന് മേൽ അല്ല.",
+  verif:"Verified — original key correct",
+  concept:"Stop line — thick white line across the lane at junctions/signals. Vehicle must stop before this line, not on it. Front bumper behind the line.",
+  steps:"Stop line = stop behind → A.",
+  sign:"STOP_LINE",
+  optA:[
+    {t:"A) ലൈനിന് പിന്നിൽ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ലൈനിന് മേൽ",v:"Incorrect",r:"അപകടം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) മുറിച്ചുകടക്കണം",v:"Incorrect",r:"red light.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്ക് ചെയ്യണം",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nStop behind the line → A.",
+  find:"Stop behind stop line → A.",
+  trick:"💡 'Stop behind stop line.'",
+  facts:"📚 അനുബന്ധം: Stop line violation — fine. Aids pedestrian crossing safety.",
+  rev:"⚡ A."
+},
+{
+  subject:"റോഡ് മാർക്കിങ്ങുകൾ",
+  question:"റോഡിലെ അമ്പടയാള മാർക്കിങ്ങുകൾ കാണിക്കുന്നത്:",
+  options:["A) ലെയ്ൻ ദിശ","B) പാർക്കിങ്","C) സ്കൂൾ","D) ടോൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. റോഡിലെ അമ്പടയാള മാർക്കിങ്ങുകൾ ലെയ്ൻ ദിശ സൂചിപ്പിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Lane arrows — indicate direction of travel in each lane. Straight, turn left, turn right, U-turn. Follow the arrow for your intended direction.",
+  steps:"Arrows = lane direction → A.",
+  sign:"LANE_ARROW",
+  optA:[
+    {t:"A) ലെയ്ൻ ദിശ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പാർക്കിങ്",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) സ്കൂൾ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ടോൾ",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nArrows = lane direction → A.",
+  find:"Road arrows → lane direction → A.",
+  trick:"💡 'Lane arrows = Direction.'",
+  facts:"📚 അനുബന്ധം: Turn arrows in dedicated turn lanes. Wrong lane → dangerous lane change.",
+  rev:"⚡ A."
+},
+/* ============================================================
+   SECTION D: രേഖകളും നിയമവും (Q71–Q85)
+   SECTION E: വാഹന സുരക്ഷയും ഡ്രൈവിങ് കഴിവുകളും (Q86–Q100)
+   ============================================================ */
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"ഡ്രൈവർ കൈവശം വയ്ക്കേണ്ട രേഖകൾ:",
+  options:["A) ഡ്രൈവിങ് ലൈസൻസ്, RC, ഇൻഷുറൻസ്, PUC","B) പാസ്പോർട്ട് മാത്രം","C) റേഷൻ കാർഡ്","D) ഒന്നും വേണ്ട"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ഡ്രൈവിംഗ് ലൈസൻസ്, RC (Registration Certificate), ഇൻഷുറൻസ്, PUC (Pollution Under Control) — ഈ നാല് രേഖകളും വാഹനത്തിൽ കൈവശം വയ്ക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"വാഹനത്തിൽ കൈവശം വയ്ക്കേണ്ട നിർബന്ധിത രേഖകൾ: (1) Driving License, (2) RC, (3) Insurance, (4) PUC certificate. ഇവ പരിശോധനയ്ക്ക് ഹാജരാക്കാൻ സാധ്യമല്ലെങ്കിൽ പിഴ.",
+  steps:"4 രേഖകൾ: DL + RC + Insurance + PUC → A.",
+  optA:[
+    {t:"A) DL + RC + Insurance + PUC",v:"Correct ✔",r:"നാലും നിർബന്ധം.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) പാസ്പോർട്ട് മാത്രം",v:"Incorrect",r:"തെറ്റ്.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) റേഷൻ കാർഡ്",v:"Incorrect",r:"ബന്ധമില്ല.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഒന്നും വേണ്ട",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\n4 documents required → A.",
+  find:"DL + RC + Insurance + PUC → A.",
+  trick:"💡 'DL, RC, Insurance, PUC — 4 documents.'",
+  facts:"📚 അനുബന്ധം: DigiLocker-ൽ ഡിജിറ്റൽ രൂപത്തിൽ സൂക്ഷിക്കാം (2021 മുതൽ അംഗീകരിച്ചത്). mParivahan app.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"രജിസ്ട്രേഷൻ സർട്ടിഫിക്കറ്റ് (RC) നൽകുന്നത്:",
+  options:["A) പോലീസ്","B) RTO","C) മുനിസിപ്പാലിറ്റി","D) ബാങ്ക്"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. രജിസ്ട്രേഷൻ സർട്ടിഫിക്കറ്റ് (RC) നൽകുന്നത് RTO (Regional Transport Office) ആണ്.",
+  verif:"Verified — original key correct",
+  concept:"RC = Registration Certificate. RTO (Regional Transport Office) — കേരളത്തിൽ ഓരോ ജില്ലയിലും RTO ഓഫീസുകൾ. Motor Vehicles Act 1988 Sec 41 — വാഹന രജിസ്ട്രേഷൻ നിർബന്ധം.",
+  steps:"RC = RTO → B.",
+  optA:[
+    {t:"A) പോലീസ്",v:"Incorrect",r:"law & order.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) RTO",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) മുനിസിപ്പാലിറ്റി",v:"Incorrect",r:"local admin.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ബാങ്ക്",v:"Incorrect",r:"financial.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRC = RTO → B.",
+  find:"RC issued by RTO → B.",
+  trick:"💡 'RC = RTO.'",
+  facts:"📚 അനുബന്ധം: Kerala — RTO offices in every district. Parivahan Sewa portal for online services.",
+  rev:"⚡ B."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"വാഹനത്തിന് നിർബന്ധമായ കുറഞ്ഞ ഇൻഷുറൻസ്:",
+  options:["A) ഒന്നും വേണ്ട","B) തേർഡ് പാർട്ടി","C) കോംപ്രിഹെൻസീവ് മാത്രം","D) മെഡിക്കൽ"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വാഹനത്തിന് നിർബന്ധമായ കുറഞ്ഞ ഇൻഷുറൻസ് തേർഡ് പാർട്ടി ഇൻഷുറൻസ് ആണ് (Third Party Insurance).",
+  verif:"Verified — original key correct",
+  concept:"Third Party Insurance — മറ്റൊരു വാഹനത്തിനോ വ്യക്തിക്കോ നഷ്ടം ഉണ്ടായാൽ നഷ്ടപരിഹാരം. MV Act 1988 Sec 146 — നിർബന്ധം. Own vehicle damage-ന് Comprehensive Insurance വേണം.",
+  steps:"Minimum = third party → B.",
+  optA:[
+    {t:"A) ഒന്നും വേണ്ട",v:"Incorrect",r:"നിർബന്ധം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) തേർഡ് പാർട്ടി",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) കോംപ്രിഹെൻസീവ് മാത്രം",v:"Incorrect",r:"optional.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) മെഡിക്കൽ",v:"Incorrect",r:"ബന്ധമില്ല.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nMinimum = third party → B.",
+  find:"Third-party mandatory → B.",
+  trick:"💡 'Third-party = mandatory; Comprehensive = optional.'",
+  facts:"📚 അനുബന്ധം: Third party covers damage to others. Comprehensive covers own + third party.",
+  rev:"⚡ B."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"PUC സർട്ടിഫിക്കറ്റ് ഏത് കാര്യത്തെക്കുറിച്ചാണ്?",
+  options:["A) വാഹനത്തിന്റെ മലിനീകരണ നിയന്ത്രണം","B) ഇന്ധന വില","C) ടയർ","D) സീറ്റ് കവർ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. PUC (Pollution Under Control) സർട്ടിഫിക്കറ്റ് വാഹനത്തിന്റെ മലിനീകരണ നിയന്ത്രണത്തെക്കുറിച്ചാണ് — എമിഷൻ പരിധിക്കുള്ളിൽ ആണോ എന്ന് ഉറപ്പിക്കുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"PUC = Pollution Under Control Certificate. വാഹനം പുറപ്പെടുവിക്കുന്ന എക്സ്ഹോസ്റ്റ് ഗ്യാസ് പരിധിക്കുള്ളിൽ ആണെന്ന് സാക്ഷ്യപ്പെടുത്തുന്നു. 6 മാസം കാലാവധി (new vehicles: 1 year).",
+  steps:"PUC = pollution check → A.",
+  optA:[
+    {t:"A) മലിനീകരണ നിയന്ത്രണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഇന്ധന വില",v:"Incorrect",r:"ബന്ധമില്ല.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ടയർ",v:"Incorrect",r:"ബന്ധമില്ല.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) സീറ്റ് കവർ",v:"Incorrect",r:"ബന്ധമില്ല.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nPUC = pollution → A.",
+  find:"PUC = Pollution → A.",
+  trick:"💡 'PUC = Pollution Under Control.'",
+  facts:"📚 അനുബന്ധം: Euro/BS VI norms. India moved to BS VI in 2020. Fuel stations offer PUC testing.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"ഉപയോഗിച്ച വാഹനം വാങ്ങിയ ശേഷം ഉടമസ്ഥാവകാശം മാറ്റാൻ അപേക്ഷിക്കേണ്ട സമയപരിധി:",
+  options:["A) 7 ദിവസം","B) 30 ദിവസം","C) 6 മാസം","D) 1 വർഷം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ഉപയോഗിച്ച വാഹനം വാങ്ങിയ ശേഷം 30 ദിവസത്തിനുള്ളിൽ ഉടമസ്ഥാവകാശം മാറ്റാൻ അപേക്ഷിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Ownership transfer — 30 days window. Forms 29 & 30 to RTO. If not done — complications in future transfers, insurance claims, and legal issues.",
+  steps:"30 days for transfer → B.",
+  optA:[
+    {t:"A) 7 ദിവസം",v:"Incorrect",r:"ചെറിയ കാലം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) 30 ദിവസം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 6 മാസം",v:"Incorrect",r:"വളരെ കൂടുതൽ.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) 1 വർഷം",v:"Incorrect",r:"വളരെ കൂടുതൽ.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\n30 days → B.",
+  find:"Ownership transfer in 30 days → B.",
+  trick:"💡 'Transfer = 30 days.'",
+  facts:"📚 അനുബന്ധം: Form 29 (both parties), Form 30 (buyer). Kerala RTO online portal for transfer.",
+  rev:"⚡ B."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"ഡ്രൈവിങ് ലൈസൻസ് നൽകുന്നത്:",
+  options:["A) RTO","B) ഫയർ സ്റ്റേഷൻ","C) കോടതി","D) പഞ്ചായത്ത്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ഡ്രൈവിംഗ് ലൈസൻസ് നൽകുന്നത് RTO (Regional Transport Office) ആണ്.",
+  verif:"Verified — original key correct",
+  concept:"Driving License — RTO issues after test. Learner's license → driving test → permanent license. Motor Vehicles Act 1988 Sec 3.",
+  steps:"DL issued by RTO → A.",
+  optA:[
+    {t:"A) RTO",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഫയർ സ്റ്റേഷൻ",v:"Incorrect",r:"fire services.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) കോടതി",v:"Incorrect",r:"judiciary.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പഞ്ചായത്ത്",v:"Incorrect",r:"local admin.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nDL = RTO → A.",
+  find:"DL issued by RTO → A.",
+  trick:"💡 'DL = RTO.'",
+  facts:"📚 അനുബന്ധം: Parivahan Sarathi portal — online DL application, renewal, and test booking.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"മഞ്ഞ നമ്പർ പ്ലേറ്റിൽ കറുത്ത അക്ഷരങ്ങൾ:",
+  options:["A) വാണിജ്യ (ടാക്സി/ട്രാൻസ്പോർട്ട്) വാഹനങ്ങൾ","B) സ്വകാര്യ കാറുകൾ","C) ഇലക്ട്രിക് വാഹനങ്ങൾ","D) സർക്കാർ വാഹനങ്ങൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. മഞ്ഞ നമ്പർ പ്ലേറ്റിൽ കറുത്ത അക്ഷരങ്ങൾ = വാണിജ്യ / ട്രാൻസ്പോർട്ട് വാഹനങ്ങൾ (commercial vehicles).",
+  verif:"Verified — original key correct",
+  concept:"Number plate color codes (India):\n• White plate + black text = Private vehicles\n• Yellow plate + black text = Commercial vehicles (taxi, bus, lorry)\n• Black plate + yellow text = Self-drive rental\n• Green plate = Electric vehicles\n• Red plate = Temporary registration\n• Blue plate = Foreign diplomatic",
+  steps:"Yellow + black = commercial → A.",
+  optA:[
+    {t:"A) വാണിജ്യ വാഹനങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) സ്വകാര്യ വാഹനങ്ങൾ",v:"Incorrect",r:"white plate.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ഇലക്ട്രിക് വാഹനങ്ങൾ",v:"Incorrect",r:"green plate.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) സർക്കാർ വാഹനങ്ങൾ",v:"Incorrect",r:"white with red.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nYellow = commercial → A.",
+  find:"Yellow plate = commercial → A.",
+  trick:"💡 'Yellow = Commercial, White = Private.'",
+  facts:"📚 അനുബന്ധം: Commercial plates — yellow. Motor Vehicles Act + CMVR rules. Kerala enforces strictly.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"വെളുത്ത നമ്പർ പ്ലേറ്റിൽ കറുത്ത അക്ഷരങ്ങൾ:",
+  options:["A) സ്വകാര്യ വാഹനങ്ങൾ","B) ടാക്സികൾ","C) ബസുകൾ","D) ലോറികൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. വെളുത്ത നമ്പർ പ്ലേറ്റിൽ കറുത്ത അക്ഷരങ്ങൾ = സ്വകാര്യ (private) വാഹനങ്ങൾ.",
+  verif:"Verified — original key correct",
+  concept:"White + black = private vehicles. Most cars, bikes owned by individuals. Yellow = commercial (taxi, bus, lorry).",
+  steps:"White + black = private → A.",
+  optA:[
+    {t:"A) സ്വകാര്യ വാഹനങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ടാക്സികൾ",v:"Incorrect",r:"yellow plate.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ബസുകൾ",v:"Incorrect",r:"yellow plate.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ലോറികൾ",v:"Incorrect",r:"yellow plate.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nWhite = private → A.",
+  find:"White + black text = private → A.",
+  trick:"💡 'White = Private.'",
+  facts:"📚 അനുബന്ധം: High-security registration plates (HSRP) — mandatory since 2019 for all vehicles.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"കറുത്ത പ്ലേറ്റിൽ മഞ്ഞ അക്ഷരങ്ങൾ:",
+  options:["A) സെൽഫ് ഡ്രൈവ് വാടക വാഹനങ്ങൾ","B) സ്വകാര്യ കാറുകൾ","C) ആംബുലൻസ്","D) പോലീസ്"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. കറുത്ത പ്ലേറ്റിൽ മഞ്ഞ അക്ഷരങ്ങൾ = സെൽഫ്-ഡ്രൈവ് വാടക വാഹനങ്ങൾ (self-drive rental vehicles).",
+  verif:"Verified — original key correct",
+  concept:"Black plate + yellow text = Self-drive rental (e.g., Zoomcar, Revv). Introduced 2019-2021 to distinguish rental fleets from private.",
+  steps:"Black + yellow = self-drive rental → A.",
+  optA:[
+    {t:"A) സെൽഫ് ഡ്രൈവ് വാടക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) സ്വകാര്യ കാറുകൾ",v:"Incorrect",r:"white plate.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ആംബുലൻസ്",v:"Incorrect",r:"specific livery.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പോലീസ്",v:"Incorrect",r:"specific livery.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBlack + yellow = self-drive → A.",
+  find:"Self-drive rental = black/yellow → A.",
+  trick:"💡 'Black plate + yellow = Self-drive rental.'",
+  facts:"📚 അനുബന്ധം: Introduced to prevent misuse of rental cars for crime. Zoomcar, Revv — self-drive rental services.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"പച്ച നമ്പർ പ്ലേറ്റ് സൂചിപ്പിക്കുന്നത്:",
+  options:["A) ഇലക്ട്രിക് വാഹനങ്ങൾ","B) ഡീസൽ വാഹനങ്ങൾ","C) വിദേശ വാഹനങ്ങൾ","D) സൈനിക വാഹനങ്ങൾ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. പച്ച നമ്പർ പ്ലേറ്റ് = ഇലക്ട്രിക് വാഹനങ്ങൾ (EVs) — battery-powered vehicles.",
+  verif:"Verified — original key correct",
+  concept:"Green plate = Electric vehicles. Introduced 2021 under CMVR rule 50. Encourages EV adoption. Kerala has many EVs (e-rickshaws, EVs).",
+  steps:"Green = electric → A.",
+  optA:[
+    {t:"A) ഇലക്ട്രിക് വാഹനങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഡീസൽ വാഹനങ്ങൾ",v:"Incorrect",r:"no special plate.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) വിദേശ വാഹനങ്ങൾ",v:"Incorrect",r:"no special plate.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) സൈനിക വാഹനങ്ങൾ",v:"Incorrect",r:"specific livery.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nGreen = electric → A.",
+  find:"Green plate = EV → A.",
+  trick:"💡 'Green = Electric (eco-friendly).'",
+  facts:"📚 അനുബന്ധം: Kerala EV policy 2022. Green plates to distinguish EVs for parking/charging benefits.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"ദേശീയ അടിയന്തര നമ്പർ:",
+  options:["A) 100","B) 112","C) 1098","D) 101"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B (112). ദേശീയ അടിയന്തര നമ്പർ 112 — പോലീസ്, ഫയർ, ആംബുലൻസ് എല്ലാം ഉൾക്കൊള്ളുന്ന ഏകീകൃത നമ്പർ.",
+  verif:"Verified — original key correct",
+  concept:"112 — National Emergency Number (2019 മുതൽ). ERSS (Emergency Response Support System). ഏകീകൃത emergency number for police, fire, ambulance, women safety, child safety.",
+  steps:"Emergency = 112 → B.",
+  optA:[
+    {t:"A) 100",v:"Incorrect",r:"police only.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) 112",v:"Correct ✔",r:"എല്ലാ അടിയന്തരങ്ങൾക്കും.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) 1098",v:"Incorrect",r:"child helpline.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) 101",v:"Incorrect",r:"fire (old).",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\n112 = unified emergency → B.",
+  find:"112 → B.",
+  trick:"💡 '112 = All emergencies.'",
+  facts:"📚 അനുബന്ധം: 100 (Police), 101 (Fire), 102/108 (Ambulance), 1098 (Child), 1091 (Women), 1930 (Cyber), 112 (Unified).",
+  rev:"⚡ B (112)."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"ആംബുലൻസിനുള്ള (കേരളം/ഇന്ത്യ) സാധാരണ നമ്പർ:",
+  options:["A) 108","B) 102 മാത്രം","C) 104","D) 109"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A (108). ആംബുലൻസ് എമർജൻസി നമ്പർ 108. 102 ഉം ഉപയോഗത്തിലുണ്ട് (Kerala govt hospitals).",
+  verif:"Verified — original key correct",
+  concept:"108 — Emergency ambulance (Kerala — GVK EMRI). 102 — Govt. hospital ambulance. Both active. 108 covers accident, medical emergencies.",
+  steps:"Ambulance = 108 → A.",
+  optA:[
+    {t:"A) 108",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) 102 മാത്രം",v:"Incorrect",r:"108 also.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) 104",v:"Incorrect",r:"health info.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) 109",v:"Incorrect",r:"women's helpline (old).",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\n108 = ambulance → A.",
+  find:"108 → A.",
+  trick:"💡 '108 = Ambulance.'",
+  facts:"📚 അനുബന്ധം: Kerala GVK EMRI — 108 service launched 2008. Free ambulance for accidents.",
+  rev:"⚡ A (108)."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"വാഹനാപകടം ഉണ്ടായാൽ ഡ്രൈവർ:",
+  options:["A) ഓടി രക്ഷപ്പെടണം","B) നിർത്തി, പരിക്കേറ്റവരെ സഹായിച്ച് പോലീസിനെ അറിയിക്കണം","C) വാഹനം ഒളിപ്പിക്കണം","D) തർക്കിക്കണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വാഹനാപകടം ഉണ്ടായാൽ വാഹനം നിർത്തി, പരിക്കേറ്റവരെ സഹായിച്ച്, പോലീസിനെ അറിയിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"MV Act Sec 132 — duty of driver in accident: stop, render aid, report to police. Hit-and-run is a serious offence (Sec 161 — up to 7 years imprisonment).",
+  steps:"Accident → stop + help + report → B.",
+  optA:[
+    {t:"A) ഓടി രക്ഷപ്പെടണം",v:"Incorrect",r:"hit-and-run crime.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) സഹായിച്ച് റിപ്പോർട്ട് ചെയ്യണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വാഹനം ഒളിപ്പിക്കണം",v:"Incorrect",r:"അപരാധം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) തർക്കിക്കണം",v:"Incorrect",r:"ബന്ധമില്ല.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nAccident = stop + help + report → B.",
+  find:"Stop, help, report → B.",
+  trick:"💡 'Stop. Help. Report.'",
+  facts:"📚 അനുബന്ധം: Sec 161 — hit-and-run: 3+ years imprisonment. Good Samaritan law protects those helping.",
+  rev:"⚡ B."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"അപകടത്തിൽപ്പെട്ടവരെ സഹായിക്കുന്ന \"ഗുഡ് സമരിറ്റൻ\":",
+  options:["A) ഉപദ്രവങ്ങളിൽ നിന്ന് നിയമപരമായി സംരക്ഷിക്കപ്പെടുന്നു","B) അറസ്റ്റ് ചെയ്യപ്പെടും","C) പിഴ അടയ്ക്കണം","D) സംരക്ഷണമില്ല"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. Good Samaritan (അപകടത്തിൽപ്പെട്ടവരെ സഹായിക്കുന്നവർ) — 2016 MV Act amendment പ്രകാരം നിയമപരമായി സംരക്ഷിക്കപ്പെടുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Good Samaritan law — Supreme Court judgment (2016) + MV Act amendment — protects those who help accident victims. No civil/criminal liability, no need to be a witness, no forced hospital admission.",
+  steps:"Good Samaritan protected → A.",
+  optA:[
+    {t:"A) സംരക്ഷിക്കപ്പെടുന്നു",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) അറസ്റ്റ്",v:"Incorrect",r:"വിപരീതം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പിഴ",v:"Incorrect",r:"വിപരീതം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) സംരക്ഷണമില്ല",v:"Incorrect",r:"വിപരീതം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nGood Samaritan = protected → A.",
+  find:"Good Samaritan law → A.",
+  trick:"💡 'Good Samaritan = Protected.'",
+  facts:"📚 അനുബന്ധം: 2016 MV amendment. Kerala Police training on Good Samaritan rights.",
+  rev:"⚡ A."
+},
+{
+  subject:"രേഖകളും നിയമവും",
+  question:"ഫിറ്റ്നസ് സർട്ടിഫിക്കറ്റ് നിർബന്ധമായത്:",
+  options:["A) ട്രാൻസ്പോർട്ട് വാഹനങ്ങൾക്ക്","B) സൈക്കിളിന് മാത്രം","C) പുതിയ ഇരുചക്രവാഹനങ്ങൾക്ക് മാത്രം","D) ട്രാക്ടറിന് മാത്രം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ട്രാൻസ്പോർട്ട് (commercial) വാഹനങ്ങൾക്ക് ഫിറ്റ്നസ് സർട്ടിഫിക്കറ്റ് നിർബന്ധമാണ്.",
+  verif:"Verified — original key correct",
+  concept:"Fitness Certificate — for transport (commercial) vehicles. 2 years validity for new vehicles, 1 year after. Private vehicles don't need fitness certificate (only at 15 years for renewal).",
+  steps:"Fitness = commercial → A.",
+  optA:[
+    {t:"A) ട്രാൻസ്പോർട്ട് വാഹനങ്ങൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) സൈക്കിളിന്",v:"Incorrect",r:"ബന്ധമില്ല.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) പുതിയ 2W",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ട്രാക്ടർ",v:"Incorrect",r:"specific case.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nFitness = commercial → A.",
+  find:"Commercial = fitness required → A.",
+  trick:"💡 'Commercial → Fitness; Private → no.'",
+  facts:"📚 അനുബന്ധം: Kerala RTO checks fitness annually for commercial vehicles. ₹2,000 fee.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"ടയർ പ്രഷർ പരിശോധിക്കേണ്ടത്:",
+  options:["A) ക്രമമായി","B) ഒരിക്കലും വേണ്ട","C) വർഷത്തിലൊരിക്കൽ മാത്രം","D) പഞ്ചറായാൽ മാത്രം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ടയർ പ്രഷർ ക്രമമായി (കുറഞ്ഞത് ആഴ്ചയിൽ ഒരിക്കൽ) പരിശോധിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Correct tire pressure — fuel efficiency, tire life, safety. Check every week, cold tire. Recommended pressure varies by vehicle (usually 28-36 PSI).",
+  steps:"Tire pressure = weekly → A.",
+  optA:[
+    {t:"A) ക്രമമായി",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) വേണ്ട",v:"Incorrect",r:"അപകടം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) വർഷത്തിൽ",v:"Incorrect",r:"കുറഞ്ഞത് ആഴ്ചയിൽ.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പഞ്ചറായാൽ",v:"Incorrect",r:"വൈകി.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nTire pressure = regularly → A.",
+  find:"Check tires regularly → A.",
+  trick:"💡 'Tire pressure = Weekly.'",
+  facts:"📚 അനുബന്ധം: Under-inflated tires — 5% more fuel consumption, higher accident risk. Blowout at high speed = fatal.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"ബ്രേക്ക് പ്രവർത്തിക്കാതായാൽ:",
+  options:["A) പരിഭ്രാന്തരാകണം","B) ഗിയർ താഴ്ത്തി ഹാൻഡ് ബ്രേക്ക് ക്രമേണ ഉപയോഗിക്കണം","C) എഞ്ചിൻ ഓഫ് ചെയ്ത് ചാടണം","D) ആക്സിലറേറ്റ് ചെയ്യണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ബ്രേക്ക് പ്രവർത്തിക്കാതായാൽ — പരിഭ്രാന്തരാകാതെ, ഗിയർ താഴ്ത്തി, ഹാൻഡ് ബ്രേക്ക് ക്രമേണ ഉപയോഗിക്കുക.",
+  verif:"Verified — original key correct",
+  concept:"Brake failure response: (1) Don't panic, (2) Downshift gears to use engine braking, (3) Apply handbrake gradually (not suddenly — locks rear wheels), (4) Use hazard lights, (5) Steer to safe area.",
+  steps:"Brake failure → downshift + handbrake → B.",
+  optA:[
+    {t:"A) പരിഭ്രാന്തരാകണം",v:"Incorrect",r:"അപകടം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ഗിയർ താഴ്ത്തി ഹാൻഡ് ബ്രേക്ക്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) എഞ്ചിൻ ഓഫ് + ചാടുക",v:"Incorrect",r:"മാരകം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ആക്സിലറേറ്റ്",v:"Incorrect",r:"അപകടം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nBrake fail → downshift + handbrake → B.",
+  find:"Downshift + handbrake gradually → B.",
+  trick:"💡 'Engine braking helps when brakes fail.'",
+  facts:"📚 അനുബന്ധം: Kerala hill roads — brake failure common on downhill. Use low gear before downhill.",
+  rev:"⚡ B."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"മൂടൽമഞ്ഞിൽ:",
+  options:["A) ഹൈ ബീം ഉപയോഗിക്കണം","B) ലോ ബീം/ഫോഗ് ലാമ്പ് ഉപയോഗിച്ച് വേഗം കുറയ്ക്കണം","C) വേഗം കൂട്ടണം","D) ലൈറ്റ് ഇടരുത്"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. മൂടൽമഞ്ഞിൽ ലോ ബീം അല്ലെങ്കിൽ ഫോഗ് ലാമ്പ് ഉപയോഗിച്ച് വേഗം കുറയ്ക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Fog driving: Low beam (high beam reflects off fog), fog lamps, reduce speed, increase following distance, use hazard if visibility very poor. Avoid stopping on road.",
+  steps:"Fog → low beam + slow → B.",
+  optA:[
+    {t:"A) ഹൈ ബീം",v:"Incorrect",r:"fog-ൽ reflect.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) ലോ ബീം/ഫോഗ് ലാമ്പ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വേഗം കൂട്ടുക",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ലൈറ്റ് ഇടരുത്",v:"Incorrect",r:"അപകടം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nFog → low beam + slow → B.",
+  find:"Fog = low beam + slow → B.",
+  trick:"💡 'Fog: Low beam, slow speed.'",
+  facts:"📚 അനുബന്ധം: Kerala — Munnar, Idukki areas get heavy fog in winter. Use hazard lights if visibility <50m.",
+  rev:"⚡ B."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"മഴയിൽ ബ്രേക്കിങ് ദൂരം:",
+  options:["A) കുറയുന്നു","B) കൂടുന്നു","C) മാറ്റമില്ല","D) പൂജ്യമാകുന്നു"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. മഴയിൽ ബ്രേക്കിംഗ് ദൂരം കൂടുന്നു — wet road-ൽ grip കുറയുന്നു.",
+  verif:"Verified — original key correct",
+  concept:"Wet road braking distance increases by 2x due to reduced friction. Hydroplaning risk at high speed. Increase following distance, reduce speed.",
+  steps:"Rain → braking distance increases → B.",
+  optA:[
+    {t:"A) കുറയുന്നു",v:"Incorrect",r:"വിപരീതം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) കൂടുന്നു",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) മാറ്റമില്ല",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പൂജ്യം",v:"Incorrect",r:"അസാധ്യം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nRain → braking distance ↑ → B.",
+  find:"Rain → longer braking → B.",
+  trick:"💡 'Rain = +braking distance.'",
+  facts:"📚 അനുബന്ധം: Kerala monsoon — highest accident time. Reduce speed by 20-30% in rain.",
+  rev:"⚡ B."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"വാഹനം എടുക്കുന്നതിന് മുമ്പ് കണ്ണാടികൾ:",
+  options:["A) ക്രമീകരിക്കണം","B) അതേപടി വിടണം","C) നീക്കം ചെയ്യണം","D) മൂടണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. വാഹനം എടുക്കുന്നതിന് മുമ്പ് rear-view mirrors ശരിയായി ക്രമീകരിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Mirror adjustment: See 1/3 of rear window in center mirror. Side mirrors — see side of car + blind spot. Adjust before driving, not while driving.",
+  steps:"Adjust mirrors before driving → A.",
+  optA:[
+    {t:"A) ക്രമീകരിക്കണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) അതേപടി",v:"Incorrect",r:"മോശം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നീക്കം ചെയ്യണം",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) മൂടണം",v:"Incorrect",r:"അപകടം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nAdjust mirrors before → A.",
+  find:"Adjust mirrors first → A.",
+  trick:"💡 'Mirrors first, then drive.'",
+  facts:"📚 അനുബന്ധം: Blind spot awareness — turn head to check before lane change.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"വാഹനമോടിക്കുമ്പോൾ ഉറക്കം വന്നാൽ:",
+  options:["A) തുടരണം","B) നിർത്തി വിശ്രമിക്കണം","C) വേഗം കൂട്ടണം","D) ഉച്ചത്തിൽ പാട്ട് വയ്ക്കുക മാത്രം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. ഉറക്കം വന്നാൽ സുരക്ഷിതമായി വാഹനം നിർത്തി വിശ്രമിക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Drowsy driving — as dangerous as drunk driving. Reaction time doubles. 20 min power nap effective. Coffee helps briefly.",
+  steps:"Drowsy → stop + rest → B.",
+  optA:[
+    {t:"A) തുടരണം",v:"Incorrect",r:"അപകടം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വിശ്രമിക്കണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) വേഗം കൂട്ടുക",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാട്ട് മാത്രം",v:"Incorrect",r:"മതിയാകില്ല.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nDrowsy → stop, rest → B.",
+  find:"Sleep → stop and rest → B.",
+  trick:"💡 'Drowsy = Stop.'",
+  facts:"📚 അനുബന്ധം: Kerala NH — high % of accidents due to fatigue. Every 2 hours take a break.",
+  rev:"⚡ B."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"നിർത്തൽ ദൂരം (Stopping distance) എന്നത്:",
+  options:["A) ചിന്താ ദൂരവും ബ്രേക്കിങ് ദൂരവും ചേർന്നത്","B) ടയർ-റോഡ് ദൂരം","C) വേഗവും സമയവും","D) ഇന്ധനവും ഭാരവും"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. Stopping distance = Thinking distance (reaction time) + Braking distance.",
+  verif:"Verified — original key correct",
+  concept:"Stopping distance = (reaction time × speed) + (speed² / (2 × deceleration)). At 60 km/h: ~15 m thinking + ~20 m braking = 35 m total.",
+  steps:"Stopping = thinking + braking → A.",
+  optA:[
+    {t:"A) ചിന്ത + ബ്രേക്കിങ്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ടയർ-റോഡ്",v:"Incorrect",r:"ഭാഗം മാത്രം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) വേഗം+സമയം",v:"Incorrect",r:"അപൂർണ്ണം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഇന്ധനം+ഭാരം",v:"Incorrect",r:"ബന്ധമില്ല.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nStopping = thinking + braking → A.",
+  find:"Two components: thinking + braking → A.",
+  trick:"💡 'Stopping = Think + Brake.'",
+  facts:"📚 അനുബന്ധം: Reaction time: 1-1.5 seconds (attention). Alcohol/phone doubles it.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"വാഹനത്തിൽ അമിതഭാരം കയറ്റുന്നത്:",
+  options:["A) അനുവദനീയം","B) കുറ്റകരവും അപകടകരവും","C) രാത്രി അനുവദനീയം","D) ചെറിയ യാത്രയ്ക്ക് അനുവദനീയം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വാഹനത്തിൽ അമിതഭാരം കയറ്റുന്നത് കുറ്റകരവും അപകടകരവുമാണ്.",
+  verif:"Verified — original key correct",
+  concept:"Overloading — illegal + dangerous. Affects: braking distance, tire burst, suspension damage, steering. MV Act — permit violation, ₹2,000+ fine.",
+  steps:"Overloading = illegal → B.",
+  optA:[
+    {t:"A) അനുവദനീയം",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) കുറ്റകരവും അപകടകരവും",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) രാത്രി അനുവദനീയം",v:"Incorrect",r:"എപ്പോഴും നിരോധിതം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ചെറിയ യാത്രയ്ക്ക്",v:"Incorrect",r:"എല്ലാം നിരോധിതം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nOverload = illegal → B.",
+  find:"Overloading illegal → B.",
+  trick:"💡 'No overloading, ever.'",
+  facts:"📚 അനുബന്ധം: Kerala — strict check on overloaded trucks/buses. Permit-based weight limit.",
+  rev:"⚡ B."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"ചരിവിൽ വാഹനം പാർക്ക് ചെയ്യുമ്പോൾ:",
+  options:["A) ഹാൻഡ് ബ്രേക്ക് ഇടണം","B) ബ്രേക്ക് ഇല്ലാതെ ന്യൂട്രലിൽ ഇടണം","C) റോഡിന് നടുവിൽ പാർക്ക് ചെയ്യണം","D) എഞ്ചിൻ ഓൺ ആക്കി വിടണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ചരിവിൽ പാർക്ക് ചെയ്യുമ്പോൾ ഹാൻഡ് ബ്രേക്ക് ഇടണം (കൂടാതെ gear-ൽ ഇടണം).",
+  verif:"Verified — original key correct",
+  concept:"Hill parking: Set handbrake, engage 1st gear (or reverse for downhill), turn wheels toward curb. Prevents rolling.",
+  steps:"Slope park → handbrake + gear → A.",
+  optA:[
+    {t:"A) ഹാൻഡ് ബ്രേക്ക്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ന്യൂട്രൽ",v:"Incorrect",r:"roll risk.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നടുവിൽ",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) എഞ്ചിൻ ഓൺ",v:"Incorrect",r:"wasteful.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nSlope → handbrake + gear → A.",
+  find:"Park on slope = handbrake → A.",
+  trick:"💡 'Slope: Handbrake + gear.'",
+  facts:"📚 അനുബന്ധം: Kerala hill areas — common accident: vehicle rolling downhill. Always chock wheels.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"എഞ്ചിൻ ചൂടായാൽ (overheat):",
+  options:["A) സുരക്ഷിതമായി നിർത്തി തണുത്ത ശേഷം മാത്രം റേഡിയേറ്റർ ക്യാപ് തുറക്കണം","B) ഉടൻ റേഡിയേറ്റർ ക്യാപ് തുറക്കണം","C) ചൂടുള്ള എഞ്ചിനിൽ ഉടൻ തണുത്ത വെള്ളം ഒഴിക്കണം","D) വേഗത്തിൽ ഓടിക്കണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. എഞ്ചിൻ ചൂടായാൽ സുരക്ഷിതമായി നിർത്തി, എഞ്ചിൻ തണുത്ത ശേഷം മാത്രം റേഡിയേറ്റർ ക്യാപ് തുറക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Overheating: Park safe, turn off engine, wait 20-30 min, then open radiator cap with cloth (hot steam can burn). Never add cold water to hot engine — cracks block.",
+  steps:"Overheat → stop, cool, then open → A.",
+  optA:[
+    {t:"A) തണുത്ത ശേഷം തുറക്കുക",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഉടൻ തുറക്കുക",v:"Incorrect",r:"steam burn.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) തണുത്ത വെള്ളം ഒഴിക്കുക",v:"Incorrect",r:"engine crack.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) വേഗത്തിൽ ഓടിക്കുക",v:"Incorrect",r:"worse.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nWait to cool, then open → A.",
+  find:"Cool first, then open cap → A.",
+  trick:"💡 'Hot engine — don't open radiator.'",
+  facts:"📚 അനുബന്ധം: Coolant — 50/50 water + antifreeze. Check level when engine cold only.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"ഇറക്കം ഇറങ്ങുമ്പോൾ:",
+  options:["A) താഴ്ന്ന ഗിയർ ഉപയോഗിക്കണം","B) എഞ്ചിൻ ഓഫ് ചെയ്യണം","C) ന്യൂട്രൽ ഉപയോഗിക്കണം","D) ക്ലച്ച് മാത്രം അമർത്തണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. ഇറക്കം ഇറങ്ങുമ്പോൾ താഴ്ന്ന ഗിയർ ഉപയോഗിക്കണം — engine braking സഹായിക്കും.",
+  verif:"Verified — original key correct",
+  concept:"Downhill: Use low gear (1st/2nd) — engine braking helps control speed. Never coast in neutral — dangerous, brake failure risk. Don't ride brakes — they overheat.",
+  steps:"Downhill → low gear → A.",
+  optA:[
+    {t:"A) താഴ്ന്ന ഗിയർ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) എഞ്ചിൻ ഓഫ്",v:"Incorrect",r:"അപകടം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ന്യൂട്രൽ",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ക്ലച്ച് മാത്രം",v:"Incorrect",r:"അപകടം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nDownhill = low gear → A.",
+  find:"Low gear downhill → A.",
+  trick:"💡 'Downhill = Low gear.'",
+  facts:"📚 അനുബന്ധം: Kerala hill roads — Wayanad Churam, Idukki. Brake failure common when coasting.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"കാറിൽ ചെറിയ കുട്ടികളെ ഇരുത്തേണ്ടത്:",
+  options:["A) അനുയോജ്യമായ ചൈൽഡ് റെസ്ട്രെയിന്റിൽ","B) ഡ്രൈവറുടെ മടിയിൽ","C) നിർത്തി","D) ഡിക്കിയിൽ"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. കാറിൽ ചെറിയ കുട്ടികളെ അനുയോജ്യമായ ചൈൽഡ് റെസ്ട്രെയിന്റിൽ (child seat) ഇരുത്തണം.",
+  verif:"Verified — original key correct",
+  concept:"Child safety seat — mandatory for children under 12 or under 135 cm. Rear-facing for infants, forward-facing for toddlers. Reduces child fatality by 70%.",
+  steps:"Child seat required → A.",
+  optA:[
+    {t:"A) ചൈൽഡ് റെസ്ട്രെയിന്റിൽ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) ഡ്രൈവറുടെ മടിയിൽ",v:"Incorrect",r:"അപകടം — airbag.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) നിർത്തി",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) ഡിക്കിയിൽ",v:"Incorrect",r:"മാരകം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nChild seat is safest → A.",
+  find:"Child seat → A.",
+  trick:"💡 'Child = Child seat.'",
+  facts:"📚 അനുബന്ധം: India — child restraint rule not fully enforced yet. Awareness rising. Kerala slowly adopting.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"നഗരത്തിൽ ഹൈ ബീം:",
+  options:["A) ഒഴിവാക്കണം","B) എപ്പോഴും ഉപയോഗിക്കണം","C) ട്രാഫിക് ലൈറ്റിൽ ഉപയോഗിക്കണം","D) പാർക്ക് ചെയ്യുമ്പോൾ ഉപയോഗിക്കണം"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. നഗരത്തിൽ ഹൈ ബീം ഒഴിവാക്കണം — മറ്റ് ഡ്രൈവർമാർക്കും കാൽനടക്കാർക്കും അന്ധത ഉണ്ടാക്കും.",
+  verif:"Verified — original key correct",
+  concept:"High beam blinds oncoming drivers and pedestrians. In cities with streetlights, use low beam. High beam only on dark highways with no oncoming traffic.",
+  steps:"City → low beam only → A.",
+  optA:[
+    {t:"A) ഒഴിവാക്കണം",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) എപ്പോഴും",v:"Incorrect",r:"danger.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) ട്രാഫിക് ലൈറ്റിൽ",v:"Incorrect",r:"തെറ്റ്.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാർക്ക് ചെയ്യുമ്പോൾ",v:"Incorrect",r:"തെറ്റ്.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nCity → low beam → A.",
+  find:"Avoid high beam in city → A.",
+  trick:"💡 'High beam only on empty highways.'",
+  facts:"📚 അനുബന്ധം: Kerala MVD — high beam violations common in city. ₹1,000 fine.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"സീബ്ര ക്രോസിങ്ങിലെ കാൽനടക്കാർക്ക്:",
+  options:["A) മുൻഗണന (Right of way) ഉണ്ട്","B) മുൻഗണനയില്ല","C) രാത്രി മാത്രം മുൻഗണന","D) കുട്ടികൾക്ക് മാത്രം മുൻഗണന"],
+  correct:0,
+  explanation:"ശരിയായ ഉത്തരം: A. സീബ്ര ക്രോസിംഗിൽ കാൽനടക്കാർക്ക് പൂർണ്ണ മുൻഗണന (Right of way) ഉണ്ട്.",
+  verif:"Verified — original key correct",
+  concept:"Zebra crossing — pedestrians have right of way. Vehicles must stop and allow them to cross. MV Act Sec 194A: violation = ₹500-₹5,000 fine.",
+  steps:"Zebra = pedestrian priority → A.",
+  sign:"ZEBRA",
+  optA:[
+    {t:"A) മുൻഗണന ഉണ്ട്",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"B) മുൻഗണനയില്ല",v:"Incorrect",r:"വിപരീതം.",e:"B ഒഴിവാക്കുക."},
+    {t:"C) രാത്രി മാത്രം",v:"Incorrect",r:"എല്ലായ്പ്പോഴും.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) കുട്ടികൾക്ക് മാത്രം",v:"Incorrect",r:"എല്ലാവർക്കും.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nZebra = pedestrian right → A.",
+  find:"Pedestrians have right of way on zebra → A.",
+  trick:"💡 'Zebra = Pedestrian first.'",
+  facts:"📚 അനുബന്ധം: Sec 194A — specific MV Act provision for zebra crossing violations.",
+  rev:"⚡ A."
+},
+{
+  subject:"വാഹന സുരക്ഷ",
+  question:"വാഹനം റോഡിൽ കേടായി നിന്നാൽ:",
+  options:["A) റോഡിന് നടുവിൽ ഇടണം","B) വശത്തേക്ക് മാറ്റി ഹസാർഡ് ലൈറ്റ് ഇട്ട് വാണിങ് ട്രയാംഗിൾ വയ്ക്കണം","C) എല്ലാ ലൈറ്റുകളും ഓഫ് ചെയ്യണം","D) പാത തടസ്സപ്പെടുത്തണം"],
+  correct:1,
+  explanation:"ശരിയായ ഉത്തരം: B. വാഹനം കേടായി നിന്നാൽ വശത്തേക്ക് മാറ്റി, ഹസാർഡ് ലൈറ്റ് ഇട്ട്, വാണിംഗ് ട്രയാംഗിൾ വയ്ക്കണം.",
+  verif:"Verified — original key correct",
+  concept:"Breakdown procedure: (1) Move to side/shoulder, (2) Hazard lights on, (3) Warning triangle 50-100m behind at night/highway, (4) Occupants stand away from road, (5) Call for help.",
+  steps:"Breakdown → side + hazard + triangle → B.",
+  optA:[
+    {t:"A) നടുവിൽ ഇടണം",v:"Incorrect",r:"അപകടം.",e:"A ഒഴിവാക്കുക."},
+    {t:"B) വശത്തേക്ക് + ഹസാർഡ് + ട്രയാംഗിൾ",v:"Correct ✔",r:"ശരി.",e:"ശരിയായ ഉത്തരം."},
+    {t:"C) ലൈറ്റ് ഓഫ്",v:"Incorrect",r:"അപകടം.",e:"C ഒഴിവാക്കുക."},
+    {t:"D) പാത തടസ്സപ്പെടുത്തണം",v:"Incorrect",r:"നിയമവിരുദ്ധം.",e:"D ഒഴിവാക്കുക."}
+  ],
+  reject:"Option Rejection Method\nSide + hazard + triangle → B.",
+  find:"Breakdown protocol → B.",
+  trick:"💡 'Hazard + Triangle.'",
+  facts:"📚 അനുബന്ധം: Warning triangle mandatory in cars. Reflectors help visibility.",
+  rev:"⚡ B."
+}];
+
+/* ============================================================
+   STATE & CONFIG
+   ============================================================ */
+const STORAGE_KEY = 'mvd_learner_test_v1';
+const STORAGE_VERSION = 1;
+const SECONDS_PER_QUESTION = 45;         // configurable — 45s × 100 = 75 min
+const NEGATIVE_MARKING = 0;              // MVD learner's test: no negative marking
+const PASS_PERCENT = 60;                 // MVD official pass mark
+
+let questions = [];
+let currentIndex = 0;
+let timerInterval = null;
+let timeRemaining = 0;
+let isSubmitted = false;
+let isPaused = false;
+let isStudyPaused = false;
+let questionStates = [];
+let lastSaveTime = 0;
+let saveTimeout = null;
+let themeIndex = 0;
+const THEMES = ['light', 'dark', 'sepia'];
+const THEME_ICONS = ['🌙 Dark', '📜 Sepia', '☀️ Light'];
+
+/* ============================================================
+   THEME
+   ============================================================ */
+function cycleTheme() {
+  themeIndex = (themeIndex + 1) % THEMES.length;
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+  try { localStorage.setItem('kpsc_theme', THEMES[themeIndex]); } catch (e) {}
+}
+(function loadTheme() {
+  try {
+    const s = localStorage.getItem('kpsc_theme');
+    if (s && THEMES.includes(s)) {
+      themeIndex = THEMES.indexOf(s);
+      document.documentElement.setAttribute('data-theme', s);
+    }
+  } catch (e) {}
+})();
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function esc(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+function saveAttempt() {
+  if (isSubmitted) return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      version: STORAGE_VERSION,
+      timestamp: Date.now(),
+      currentIndex: currentIndex,
+      timeRemaining: timeRemaining,
+      questionStates: questionStates,
+      totalQuestions: questions.length
+    }));
+    lastSaveTime = Date.now();
+    const el = document.getElementById('saveStatus');
+    if (el) {
+      el.classList.add('visible');
+      clearTimeout(el._hideT);
+      el._hideT = setTimeout(() => el.classList.remove('visible'), 1500);
+    }
+  } catch (e) {}
+}
+
+function throttledSave() {
+  const now = Date.now();
+  if (now - lastSaveTime > 2000) saveAttempt();
+  else {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(saveAttempt, 2000 - (now - lastSaveTime));
+  }
+}
+
+function getSavedAttempt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d || d.version !== STORAGE_VERSION) return null;
+    if (!Array.isArray(d.questionStates)) return null;
+    if (d.timeRemaining <= 0) return null;
+    if (d.totalQuestions !== sourceQuestions.length) return null;
+    return d;
+  } catch (e) { return null; }
+}
+
+/* ============================================================
+   TEST LIFECYCLE
+   ============================================================ */
+function startNewTest() {
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = questions.length * SECONDS_PER_QUESTION;
+  currentIndex = 0;
+  isSubmitted = false;
+  isPaused = false;
+  isStudyPaused = false;
+  questionStates = questions.map(() => ({
+    selectedOption: null,
+    status: 'idle',
+    markedForReview: false,
+    visited: false
+  }));
+  questionStates[0].visited = true;
+  launchTest();
+}
+
+function launchTest() {
+  document.getElementById('testView').style.display = 'flex';
+  document.getElementById('testHeader').style.display = 'flex';
+  document.getElementById('resultsView').classList.remove('visible');
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 1000);
+  updateTimerDisplay();
+  renderQuestion();
+  saveAttempt();
+}
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+function tickTimer() {
+  if (isSubmitted || isPaused || isStudyPaused) return;
+  timeRemaining--;
+  updateTimerDisplay();
+  if (timeRemaining <= 0) {
+    timeRemaining = 0;
+    updateTimerDisplay();
+    submitTest(true);
+    return;
+  }
+  if (timeRemaining % 15 === 0) saveAttempt();
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  if (!el) return;
+  const h = Math.floor(timeRemaining / 3600);
+  const m = Math.floor((timeRemaining % 3600) / 60);
+  const s = timeRemaining % 60;
+  const pad = n => String(n).padStart(2, '0');
+  el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  const box = document.getElementById('timerBox');
+  if (!box) return;
+  if (timeRemaining <= 300 && timeRemaining > 0 && !isPaused && !isStudyPaused) {
+    box.classList.add('warning');
+  } else {
+    box.classList.remove('warning');
+  }
+}
+
+/* ============================================================
+   PAUSE / RESUME
+   ============================================================ */
+function togglePause() {
+  if (isSubmitted) return;
+  if (isStudyPaused) { resumeStudy(); return; }
+  if (!isPaused) pauseTest(); else resumeTest();
+}
+
+function pauseTest() {
+  if (isPaused || isSubmitted) return;
+  isPaused = true;
+  document.getElementById('pauseOverlay').classList.add('visible');
+  document.getElementById('pauseBtn').textContent = '▶ Resume';
+  document.getElementById('pauseBtn').classList.add('resume');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('questionPanel').classList.add('locked');
+  document.getElementById('sidebar').classList.add('locked');
+  saveAttempt();
+}
+
+function resumeTest() {
+  if (!isPaused || isSubmitted) return;
+  isPaused = false;
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  updateTimerDisplay();
+}
+
+function startStudyPause() {
+  if (isStudyPaused || isSubmitted || isPaused) return;
+  isStudyPaused = true;
+  document.getElementById('studyPauseBar').classList.add('visible');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+}
+
+function resumeStudy() {
+  if (!isStudyPaused) return;
+  isStudyPaused = false;
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('timerBox').classList.remove('paused');
+  updateTimerDisplay();
+}
+
+/* ============================================================
+   RENDER QUESTION (with road-sign display)
+   ============================================================ */
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  st.visited = true;
+
+  document.getElementById('qNumber').textContent = 'Question ' + (currentIndex + 1) + ' / ' + questions.length;
+  document.getElementById('qSubject').textContent = q.subject;
+  document.getElementById('qText').textContent = q.question;
+
+  // Road sign SVG — only when this question has a sign
+  const signContainer = document.getElementById('signContainer');
+  if (q.sign && typeof SIGN_SVGS !== 'undefined' && SIGN_SVGS[q.sign]) {
+    signContainer.innerHTML = '<div class="sign-display">' + SIGN_SVGS[q.sign] + '</div>';
+  } else {
+    signContainer.innerHTML = '';
+  }
+
+  renderOptions();
+  renderExplanation();
+  renderActionButtons();
+  renderPalette();
+  updateStats();
+  throttledSave();
+}
+
+function renderOptions() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+
+    if (locked) {
+      btn.classList.add('locked');
+      if (i === q.correct) btn.classList.add('correct-highlight');
+      else if (i === st.selectedOption) btn.classList.add('wrong-highlight');
+    } else {
+      if (i === st.selectedOption) btn.classList.add('selected');
+      btn.onclick = () => {
+        st.selectedOption = i;
+        renderOptions();
+        renderActionButtons();
+        throttledSave();
+      };
+    }
+    list.appendChild(btn);
+  });
+}
+
+function renderExplanation() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const box = document.getElementById('explanationBox');
+  const orig = document.getElementById('expOriginal');
+  const supp = document.getElementById('expSupplementary');
+
+  if (st.status === 'saved' || st.status === 'revealed') {
+    let prefix = '';
+    if (st.status === 'saved' && st.selectedOption !== null) {
+      if (st.selectedOption === q.correct) {
+        prefix = '<span class="exp-correct">✔ ശരി!</span>\n\n';
+      } else {
+        prefix = '<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '\n\n';
+      }
+    } else if (st.status === 'revealed') {
+      prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + q.correct) + '</span>\n\n';
+    }
+    orig.innerHTML = prefix +
+      '<span class="verif-badge">✔ ' + esc(q.verif || 'Verified') + '</span>\n' +
+      '<strong>📖 ഒറിജിനൽ വിശദീകരണം (പരിരക്ഷിച്ചത്):</strong>\n' +
+      esc(q.explanation);
+    supp.innerHTML = buildSupplementaryHTML(q);
+    box.classList.add('visible');
+  } else {
+    box.classList.remove('visible');
+    orig.innerHTML = '';
+    supp.innerHTML = '';
+  }
+}
+
+function buildSupplementaryHTML(q) {
+  let html = '';
+  if (q.concept) html += '<div class="supp-section"><h4>🧠 അടിസ്ഥാന ആശയം</h4><p>' + esc(q.concept) + '</p></div>';
+  if (q.steps) html += '<div class="supp-section"><h4>🪜 ഘട്ടം ഘട്ടമായി യുക്തി</h4><p>' + esc(q.steps) + '</p></div>';
+  if (q.optA && q.optA.length) {
+    html += '<div class="supp-section"><h4>🔍 ഓരോ ഓപ്ഷന്റെയും വിശകലനം</h4>';
+    q.optA.forEach(o => {
+      const cls = (o.v.indexOf('Correct') === 0) ? 'correct' : 'wrong';
+      html += '<div class="opt-analysis ' + cls + '">' +
+        '<div class="oa-head">' + esc(o.t) + ' — ' + esc(o.v) + '</div>' +
+        '<div class="oa-line"><strong>കാരണം:</strong> ' + esc(o.r) + '</div>' +
+        '<div class="oa-line"><strong>ഒഴിവാക്കൽ:</strong> ' + esc(o.e) + '</div>' +
+        '</div>';
+    });
+    html += '</div>';
+  }
+  if (q.reject) html += '<div class="supp-section"><h4>❌ ഓപ്ഷൻ റിജെക്ഷൻ രീതി</h4><p>' + esc(q.reject) + '</p></div>';
+  if (q.find) html += '<div class="supp-section"><h4>🎯 ഉത്തരം കണ്ടെത്താനുള്ള വഴി</h4><p>' + esc(q.find) + '</p></div>';
+  if (q.trick) html += '<div class="supp-section"><h4>💡 ഓർമ്മ സൂത്രം</h4><p>' + esc(q.trick) + '</p></div>';
+  if (q.facts) html += '<div class="supp-section"><h4>📚 അനുബന്ധ വസ്തുതകൾ</h4><p>' + esc(q.facts) + '</p></div>';
+  if (q.rev) html += '<div class="supp-section"><h4>⚡ ദ്രുത പുനരാവലോകനം</h4><p>' + esc(q.rev) + '</p></div>';
+  return html;
+}
+
+function renderActionButtons() {
+  const st = questionStates[currentIndex];
+  const container = document.getElementById('actionButtons');
+  container.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  function add(label, cls, fn) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn ' + cls;
+    b.textContent = label;
+    b.onclick = fn;
+    container.appendChild(b);
+  }
+
+  if (!locked) {
+    if (st.selectedOption !== null) {
+      add('💾 Save', 'btn-save', saveAnswer);
+      add('✖ Clear Response', 'btn-clear', clearResponse);
+      add('👁 Show Answer', 'btn-show', showAnswer);
+      add('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      add('🔖 Mark for Review', 'btn-review', markForReview);
+      add('→ Next', 'btn-next', nextQuestion);
+    } else {
+      add('👁 Show Answer', 'btn-show', showAnswer);
+      add('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      add('🔖 Mark for Review', 'btn-review', markForReview);
+      add('→ Next', 'btn-next', nextQuestion);
+    }
+  } else {
+    add('→ Next', 'btn-next', nextQuestion);
+  }
+}
+
+function renderPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'palette-btn';
+    b.textContent = i + 1;
+    if (st.status === 'saved') b.classList.add('answered');
+    else if (st.markedForReview) b.classList.add('review');
+    else if (st.visited) b.classList.add('visited-not-answered');
+    else b.classList.add('not-visited');
+    if (i === currentIndex) b.classList.add('active');
+    b.onclick = () => gotoQuestion(i);
+    grid.appendChild(b);
+  });
+}
+
+function updateStats() {
+  let answered = 0, review = 0, attempted = 0;
+  questionStates.forEach(st => {
+    if (st.status === 'saved') { answered++; attempted++; }
+    if (st.markedForReview) review++;
+  });
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statNotAnswered').textContent = questions.length - answered;
+  document.getElementById('statReview').textContent = review;
+  document.getElementById('statAttempted').textContent = attempted;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+function saveAnswer() {
+  const st = questionStates[currentIndex];
+  if (st.selectedOption === null) return;
+  st.status = 'saved';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+
+function showAnswer() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+
+function skipAndShow() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  st.markedForReview = true;
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+
+function markForReview() {
+  const st = questionStates[currentIndex];
+  st.markedForReview = !st.markedForReview;
+  renderQuestion();
+  saveAttempt();
+}
+
+function clearResponse() {
+  const st = questionStates[currentIndex];
+  if (st.status === 'saved' || st.status === 'revealed' || st.selectedOption !== null || st.markedForReview) {
+    if (!confirm('ഈ ചോദ്യത്തിന്റെ ഉത്തരം Clear ചെയ്യണോ?')) return;
+  }
+  st.selectedOption = null;
+  st.status = 'idle';
+  st.markedForReview = false;
+  renderQuestion();
+  saveAttempt();
+}
+
+function nextQuestion() {
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    if (confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?')) submitTest(false);
+  }
+}
+
+function gotoQuestion(i) {
+  if (isStudyPaused) resumeStudy();
+  currentIndex = i;
+  renderQuestion();
+}
+
+/* ============================================================
+   SUBMIT & RESULTS
+   ============================================================ */
+function submitTest(auto) {
+  if (isSubmitted) return;
+  if (!auto && timeRemaining > 0) {
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ? Submit ചെയ്തതിന് ശേഷം മാറ്റങ്ങൾ വരുത്താൻ സാധിക്കില്ല.')) return;
+  }
+  isSubmitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  renderResults();
+}
+
+function renderResults() {
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('resultsView').classList.add('visible');
+
+  let total = questions.length, attempted = 0, correct = 0, wrong = 0, unanswered = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (st.status === 'saved') {
+      attempted++;
+      if (st.selectedOption === q.correct) correct++;
+      else wrong++;
+    } else {
+      unanswered++;
+    }
+  });
+
+  const neg = wrong * NEGATIVE_MARKING;
+  const score = correct - neg;
+  const maxScore = total;
+  const accuracy = attempted > 0 ? ((correct / attempted) * 100).toFixed(1) : '0.0';
+  const passPercentActual = ((correct / total) * 100).toFixed(1);
+  const passed = parseFloat(passPercentActual) >= PASS_PERCENT;
+
+  const cards = [
+    { label: 'ആകെ ചോദ്യങ്ങൾ', value: total, cls: '' },
+    { label: 'ശ്രമിച്ചവ', value: attempted, cls: '' },
+    { label: 'ശരിയായവ', value: correct, cls: 'correct-card' },
+    { label: 'തെറ്റായവ', value: wrong, cls: 'wrong-card' },
+    { label: 'ഉത്തരം നൽകാത്തവ', value: unanswered, cls: '' },
+    { label: 'നെഗറ്റീവ്', value: neg > 0 ? '-' + neg.toFixed(2) : '0', cls: 'negative-card' },
+    { label: 'ആകെ സ്കോർ', value: score.toFixed(2) + ' / ' + maxScore, cls: 'score-card' },
+    { label: 'കൃത്യത (Accuracy)', value: accuracy + '%', cls: '' },
+    { label: passed ? '✅ PASS' : '❌ FAIL', value: passPercentActual + '%', cls: passed ? 'correct-card' : 'wrong-card' }
+  ];
+
+  document.getElementById('summaryCards').innerHTML = cards.map(c =>
+    '<div class="summary-card ' + c.cls + '"><div class="sc-value">' + c.value + '</div><div class="sc-label">' + c.label + '</div></div>'
+  ).join('');
+
+  // Subject-wise analysis
+  const sm = {};
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (!sm[q.subject]) sm[q.subject] = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, score: 0 };
+    const s = sm[q.subject];
+    s.total++;
+    if (st.status === 'saved') {
+      s.attempted++;
+      if (st.selectedOption === q.correct) { s.correct++; s.score += 1; }
+      else { s.wrong++; s.score -= NEGATIVE_MARKING; }
+    } else {
+      s.unanswered++;
+    }
+  });
+
+  let tbl = '';
+  Object.keys(sm).forEach(sub => {
+    const s = sm[sub];
+    tbl += '<tr><td>' + esc(sub) + '</td><td>' + s.total + '</td><td>' + s.attempted + '</td><td>' + s.correct + '</td><td>' + s.wrong + '</td><td>' + s.unanswered + '</td><td>' + s.score.toFixed(2) + '</td></tr>';
+  });
+  document.getElementById('subjectTableBody').innerHTML = tbl;
+
+  // Detail list — includes road sign SVG where applicable
+  let detail = '', count = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const isWrong = st.status === 'saved' && st.selectedOption !== q.correct;
+    const isRevealed = st.status === 'revealed';
+    if (!isWrong && !isRevealed) return;
+    count++;
+    const typeLabel = isWrong ? '❌ തെറ്റായ ഉത്തരം' : '👁 ഉത്തരം കണ്ടത്';
+
+    let signHtml = '';
+    if (q.sign && typeof SIGN_SVGS !== 'undefined' && SIGN_SVGS[q.sign]) {
+      signHtml = '<div class="detail-sign">' + SIGN_SVGS[q.sign] + '</div>';
+    }
+
+    detail += '<div class="detail-item">' +
+      signHtml +
+      '<div class="di-info"><strong>Q' + (i + 1) + '</strong> · ' + esc(q.subject) + ' · ' + typeLabel + '</div>' +
+      '<div class="di-question">' + esc(q.question) + '</div>' +
+      (st.selectedOption !== null
+        ? '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">' + esc(q.options[st.selectedOption]) + '</span></div>'
+        : '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>') +
+      '<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">' + esc(q.options[q.correct]) + '</span></div>' +
+      '<div class="di-explanation">' + esc(q.explanation) + '</div>' +
+      '</div>';
+  });
+  document.getElementById('detailList').innerHTML = count > 0
+    ? detail
+    : '<p style="color:var(--gray);text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   RESTART
+   ============================================================ */
+function restartTest() {
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ? നിലവിലെ ഫലങ്ങൾ നഷ്ടപ്പെടും.')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  document.getElementById('resultsView').classList.remove('visible');
+  startNewTest();
+}
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+   ============================================================ */
+document.addEventListener('keydown', (e) => {
+  if (isSubmitted || isPaused) return;
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  const st = questionStates[currentIndex];
+  if (!st) return;
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  if (e.key >= '1' && e.key <= '4' && !locked) {
+    const idx = parseInt(e.key, 10) - 1;
+    if (idx < questions[currentIndex].options.length) {
+      st.selectedOption = idx;
+      renderOptions();
+      renderActionButtons();
+      throttledSave();
+      e.preventDefault();
+    }
+  } else if (e.key === 'Enter' && !e.shiftKey && !locked && st.selectedOption !== null) {
+    saveAnswer();
+    e.preventDefault();
+  } else if (e.key === 'Enter' && e.shiftKey && !locked) {
+    skipAndShow();
+    e.preventDefault();
+  } else if (e.key.toLowerCase() === 'r' && !locked) {
+    markForReview();
+    e.preventDefault();
+  } else if (e.key.toLowerCase() === 'c' && !locked) {
+    clearResponse();
+    e.preventDefault();
+  } else if (e.key.toLowerCase() === 'n') {
+    nextQuestion();
+    e.preventDefault();
+  } else if (e.key === ' ' && !locked) {
+    showAnswer();
+    e.preventDefault();
+  } else if (e.key.toLowerCase() === 'p') {
+    togglePause();
+    e.preventDefault();
+  } else if (e.key.toLowerCase() === 't') {
+    cycleTheme();
+    e.preventDefault();
+  }
+});
+
+/* ============================================================
+   VISIBILITY / BEFORE UNLOAD
+   ============================================================ */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !isSubmitted && !isPaused && !isStudyPaused) {
+    pauseTest();
+  }
+});
+
+window.addEventListener('beforeunload', (e) => {
+  if (!isSubmitted) {
+    saveAttempt();
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = getSavedAttempt();
+  if (saved) {
+    timeRemaining = saved.timeRemaining;
+    currentIndex = Math.min(saved.currentIndex, saved.totalQuestions - 1);
+    questions = sourceQuestions.map(q => ({ ...q }));
+    questionStates = saved.questionStates.map(st => ({
+      selectedOption: st.selectedOption,
+      status: st.status,
+      markedForReview: st.markedForReview,
+      visited: st.visited
+    }));
+    while (questionStates.length < questions.length) {
+      questionStates.push({ selectedOption: null, status: 'idle', markedForReview: false, visited: false });
+    }
+    questionStates.length = questions.length;
+    launchTest();
+  } else {
+    startNewTest();
+  }
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+});
+</script>
+</body>
+</html>

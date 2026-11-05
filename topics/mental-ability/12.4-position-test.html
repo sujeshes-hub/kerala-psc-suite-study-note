@@ -1,106 +1,2188 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>12.4 Position Test - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – സ്ഥാനനിർണ്ണയം / വരിയും നിരയും | അധ്യായം 12.4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a148c; --primary-light: #6a1b9a;
+      --secondary: #00695c; --accent: #b83b2c;
+      --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
+      --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #4a148c; --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #cba6f7; --primary-light: #b4befe;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #6a1b9a; --table-alt: #181825;
+    }
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #7b4b1e; --primary-light: #9c6b3a;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #7b4b1e; --table-alt: #f2ead4;
+    }
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn { background: #181825; color: var(--text); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .layout { display: grid; grid-template-columns: 270px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12.5px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .progress-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 600; }
+    .progress-track { width: 100%; height: 8px; background: var(--light-bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+    .main-container { background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12); padding: 24px; min-width: 0; }
+    .chapter-header { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .utility-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--light-bg); padding: 10px 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .search-input { flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn { padding: 7px 12px; font-size: 13px; font-family: inherit; font-weight: 600; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--primary); cursor: pointer; transition: all 0.2s; }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+    body.recall-mode strong { filter: blur(5px); background: rgba(106, 27, 154, 0.15); border-radius: 4px; padding: 0 4px; cursor: pointer; transition: filter 0.2s ease; user-select: none; }
+    body.recall-mode strong:hover, body.recall-mode strong.revealed { filter: blur(0); }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 { background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 18.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; border-radius: 0; margin: 0; gap: 10px; }
+    .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--secondary); flex-shrink: 0; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box { padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick { display: block; margin-top: 6px; padding: 6px 10px; background: var(--memory-bg); border-left: 4px solid var(--memory-border); border-radius: 6px; font-size: 14.5px; line-height: 1.6; }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results { display: none; text-align: center; padding: 16px; margin-bottom: 16px; color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+    .quiz-dashboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--light-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; border: 2px solid var(--primary); position: sticky; top: 10px; z-index: 50; }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+    .question-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn { display: block; padding: 8px 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; font-family: inherit; text-align: left; width: 100%; }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button { padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: var(--bg); color: var(--text); transition: all 0.2s; }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block { display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border); }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    code { background: var(--light-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    pre { background: var(--light-bg); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 12px; line-height: 1.6; border: 1px solid var(--border); }
+    pre code { background: transparent; padding: 0; }
+    .formula-box { background: var(--added-bg); border-left: 5px solid var(--added-border); padding: 12px 16px; border-radius: 8px; margin: 10px 0; text-align: center; font-size: 16px; font-weight: 700; color: var(--primary); }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden; padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">12.4 Position Test</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. മാസ്റ്റർ കീ</a></li>
+      <li><a href="#sec4">4. A. ഇരുവശ സ്ഥാനം</a></li>
+      <li><a href="#sec5">5. B. ആകെ & ഒരു വശം</a></li>
+      <li><a href="#sec6">6. C. ഇടയിലുള്ളവർ</a></li>
+      <li><a href="#sec7">7. D. സ്ഥാനം മാറൽ</a></li>
+      <li><a href="#sec8">8. E. സ്ഥാന നീക്കം & Max/Min</a></li>
+      <li><a href="#sec9">9. F. താരതമ്യം & ഇരിപ്പിടം</a></li>
+      <li><a href="#sec10">10. ഡയഗ്രം + Visual Insight</a></li>
+      <li><a href="#sec11">11. ഫോർമുല ഷീറ്റ്</a></li>
+      <li><a href="#sec12">12. PSC Analysis & Trend</a></li>
+      <li><a href="#sec13">13. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec14">14. Mnemonics</a></li>
+      <li><a href="#sec15">15. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec16">16. സോൾവ്ഡ് ഉദാഹരണങ്ങൾ</a></li>
+      <li><a href="#sec17">17. Smart Tricks</a></li>
+      <li><a href="#sec18">18. മാതൃകാ ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec19">19. MCQ Practice</a></li>
+      <li><a href="#sec20">20. Top Facts & Revision</a></li>
+      <li><a href="#sec21">21. തിരുത്തൽ കുറിപ്പ്</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 12.4 | Mental Ability & Logical Reasoning</div>
+      <h1>സ്ഥാനനിർണ്ണയം / വരിയും നിരയും</h1>
+      <div class="subtitle">Position Test · Ranking & Order Test | L + R = T + 1 Master Key | Kerala PSC Rank File</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 തിരയുക (ഉദാ: L+R, overlapping, interchange, 15 6, 70 45)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനത്തിൽ)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — മാസ്റ്റർ കീ L + R = T + 1, T = L + R − 1, R = T − L + 1, ഇടയിലുള്ളവർ (സാധാരണ + ഓവർലാപ്പിംഗ്), പരസ്പരം സ്ഥാനം മാറൽ (T = പുതിയ(A) + പഴയ(B) − 1)</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഇരുവശത്തുനിന്നും n-ാമത് (T = 2n − 1), മുന്നിൽ/പിന്നിൽ പേർ, ഇടത്തോട്ട്/വലത്തോട്ട് നീക്കം, Max/Min എണ്ണം</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — താരതമ്യം (ഉയരം/ഭാരം/പ്രായം), ഇരിപ്പിട ക്രമീകരണം (circular/linear), ഉപഗ്രൂപ്പ് റാങ്ക്</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — "എത്രാമത്" vs "എത്ര പേർ" വ്യത്യാസം, ജയിച്ചവരുടെ ലിസ്റ്റിലെ കണക്ക്</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — ഈ അധ്യായത്തിൽ ചരിത്ര വിവരം കുറവ്; യുക്തിയും ഫോർമുലയും പ്രധാനം</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം (5 സൂത്രവാക്യങ്ങൾ)</span>
+          <ul>
+            <li><strong>ആകെ:</strong> L + R − 1</li>
+            <li><strong>മറുവശം:</strong> T − L + 1</li>
+            <li><strong>ഇടയിൽ (സാധാരണ):</strong> T − (L + R)</li>
+            <li><strong>ഇടയിൽ (ഓവർലാപ്പ്):</strong> (L + R) − T − 2</li>
+            <li><strong>സ്ഥാനം മാറൽ:</strong> T = പുതിയ(A) + പഴയ(B) − 1</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTRODUCTION -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം (Chapter Introduction)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>വിഷയം:</strong> ഒരു വരിയിലോ (Row), ക്യൂവിലോ (Queue), റാങ്ക് ലിസ്റ്റിലോ നിൽക്കുന്ന ഒരാളുടെ സ്ഥാനം (Position / Rank) സൂചനകളിലൂടെ കണ്ടെത്തുകയും വരിയിലെ ആകെ ആളുകളുടെ എണ്ണം കണ്ടെത്തുകയും ചെയ്യുന്ന ഭാഗമാണ് <strong>സ്ഥാനനിർണ്ണയം (Position Test / Ranking & Order Test)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>PSC പ്രാധാന്യം:</strong> LGS, LDC 883, VFA, പ്ലസ് ടു ലെവൽ, ഡിഗ്രി ലെവൽ (573) തുടങ്ങിയ പരീക്ഷകളിലെ മാനസിക ശേഷി വിഭാഗത്തിൽ ഈ ഭാഗത്തുനിന്ന് ചോദ്യങ്ങൾ സാധാരണയായി ചോദിക്കാറുണ്ട്. എണ്ണം ഓരോ പരീക്ഷയിലും മാറും.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>എളുപ്പം:</strong> കണക്ക് വളരെ ലളിതമാണ് — കൂട്ടലും കുറയ്ക്കലും മാത്രം. തെറ്റുപറ്റുന്നത് <strong>+1 ആണോ −1 ആണോ</strong> എന്ന ആശയക്കുഴപ്പം കാരണമാണ്. ആ ആശയക്കുഴപ്പം എന്നേക്കുമായി മാറ്റാൻ ഈ അധ്യായത്തിൽ ഒരു <strong>മാസ്റ്റർ കീ</strong> (ഭാഗം 3) പഠിക്കും.</li>
+        </ul>
+
+        <h3>1.1 കവർ ചെയ്യുന്ന 6 തരം ചോദ്യങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>ചോദ്യ ശൈലി</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Type A</strong></td><td>ഇരുവശത്തുനിന്നുള്ള സ്ഥാനം തന്നാൽ ആകെ</td><td>10-ാമത്, 6-ാമത് → ആകെ 15</td></tr>
+              <tr><td><strong>Type B</strong></td><td>ആകെ + ഒരു വശം → മറുവശം</td><td>70 പേർ, 45-ാമത് → 26-ാമത്</td></tr>
+              <tr><td><strong>Type C</strong></td><td>രണ്ടുപേർക്കിടയിലുള്ളവർ</td><td>25 പേർ, 8 + 6 → 11 പേർ</td></tr>
+              <tr><td><strong>Type D</strong></td><td>സ്ഥാനം പരസ്പരം മാറ്റൽ</td><td>8 + 17 → 14 → 30</td></tr>
+              <tr><td><strong>Type E</strong></td><td>സ്ഥാന നീക്കം / Max-Min</td><td>+k/−k, പരമാവധി/കുറഞ്ഞ</td></tr>
+              <tr><td><strong>Type F</strong></td><td>താരതമ്യം / ഇരിപ്പിടം</td><td>ഉയരം, circular</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 ഈ നോട്ടിലെ ലേബൽ രീതി</span>
+          <ul>
+            <li><strong>"PSC മാതൃക"</strong> = PSC ചോദ്യപേപ്പറുകളിൽ കാണാറുള്ള ശൈലി. ഓരോന്നിന്റെയും പരീക്ഷയും വർഷവും സ്ഥിരീകരിച്ചിട്ടില്ല.</li>
+            <li>യഥാർത്ഥ PYQ എന്ന് ഉറപ്പിച്ച് പറയുന്നില്ല; ചോദ്യപേപ്പറിൽ കണ്ടാൽ നിങ്ങൾ വർഷവും പേരും ചേർക്കുക.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BEHIND THE STORY -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ (Behind the Story)</span>
+      </h2>
+      <div class="section-body">
+        <p>സ്കൂൾ അസംബ്ലി വരിയിൽ <strong>അപ്പു</strong> നിൽക്കുന്നു. ടീച്ചർ ചോദിച്ചു: <em>"അപ്പൂ, നിന്റെ വരിയിൽ ആകെ എത്ര കുട്ടികളുണ്ട്?"</em></p>
+        <ul>
+          <li><strong>മുന്നിൽ നിന്ന്</strong> എണ്ണിയപ്പോൾ അപ്പു <strong>4-ാമൻ</strong> (മുന്നിൽ 3 പേർ + അപ്പു).</li>
+          <li><strong>പിന്നിൽ നിന്ന്</strong> എണ്ണിയപ്പോൾ അപ്പു <strong>3-ാമൻ</strong> (പിന്നിൽ 2 പേർ + അപ്പു).</li>
+        </ul>
+        <p>അപ്പു $4 + 3 = 7$ എന്ന് പറഞ്ഞു. ടീച്ചർ തൊട്ടെണ്ണിയപ്പോൾ ആകെ <strong>6 പേർ</strong> മാത്രം. തെറ്റ് എവിടെ? രണ്ട് എണ്ണലിലും അപ്പു <strong>സ്വയം എണ്ണി</strong>. അതായത് അപ്പു രണ്ടുതവണ എണ്ണപ്പെട്ടു. അതുകൊണ്ട് $4 + 3 - 1 = 6$.</p>
+
+        <p>ഇനി തിരിച്ച്: ആകെ 6 പേർ, അപ്പു മുന്നിൽ നിന്ന് 4-ാമൻ. പിന്നിൽ നിന്ന് എത്രാമൻ? $6 - 4 = 2$ എന്നത് അപ്പുവിന് പിന്നിലുള്ളവർ മാത്രമാണ്, അപ്പു അതിൽ ഇല്ല. അപ്പുവിനെ കൂടി ചേർക്കാൻ <strong>+1</strong>: $6 - 4 + 1 = 3$-ാമൻ.</p>
+
+        <div class="important">
+          <span class="box-label">🔑 ഓർക്കുക</span>
+          <ul>
+            <li>രണ്ട് സ്ഥാനങ്ങൾ <strong>കൂട്ടുമ്പോൾ</strong> ആളെ രണ്ടുതവണ എണ്ണുന്നു, അതിനാൽ <strong>−1</strong>.</li>
+            <li>ആകെയിൽ നിന്ന് <strong>കുറയ്ക്കുമ്പോൾ</strong> ആ ആൾ പുറത്താകുന്നു, അതിനാൽ <strong>+1</strong>.</li>
+            <li>ഇതാണ് ഈ അധ്യായത്തിന്റെ <strong>മാസ്റ്റർ കീ</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: MASTER KEY -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. ⭐ മാസ്റ്റർ കീ: L + R = T + 1</span>
+      </h2>
+      <div class="section-body">
+        <div class="formula-box">L + R = T + 1</div>
+        <p>ഒരേ വ്യക്തിയുടെ ഇടതുനിന്നുള്ള സ്ഥാനവും (L) വലതുനിന്നുള്ള സ്ഥാനവും (R) കൂട്ടിയാൽ എപ്പോഴും <strong>ആകെ ആളുകളെക്കാൾ 1 കൂടുതൽ</strong> കിട്ടും. ഈ ഒരൊറ്റ സമവാക്യത്തിൽ നിന്ന് മറ്റു ഫോർമുലകളെല്ലാം ഉണ്ടാക്കാം:</p>
+        <ul>
+          <li><strong>T = L + R − 1</strong> (ആകെ കാണാൻ)</li>
+          <li><strong>R = T + 1 − L</strong> (അതായത് T − L + 1)</li>
+          <li><strong>ഇടയിലുള്ളവർ:</strong> A മുന്നിൽ നിന്ന് a-ാമതും B പിന്നിൽ നിന്ന് b-ാമതും ആണെങ്കിൽ, B-യുടെ മുന്നിൽ നിന്നുള്ള സ്ഥാനം = T + 1 − b. ഇടയിലുള്ളവർ = |a − (T+1−b)| − 1. ഇതിൽ നിന്ന് ഭാഗം C-യിലെ രണ്ട് ഫോർമുലകളും കിട്ടും.</li>
+          <li><strong>ഉത്തരം പരിശോധിക്കാൻ:</strong> കണ്ടുപിടിച്ച റാങ്കും തന്ന റാങ്കും കൂട്ടിയാൽ T + 1 കിട്ടുന്നുണ്ടോ എന്ന് നോക്കുക (ഉദാ: 45 + 26 = 71 = 70 + 1 ✓).</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 എപ്പോഴും ഓർക്കാൻ</span>
+          <ul>
+            <li><strong>കൂട്ടുമ്പോൾ −1</strong> (കാരണം സ്വയം രണ്ടുതവണ എണ്ണി)</li>
+            <li><strong>കുറയ്ക്കുമ്പോൾ +1</strong> (കാരണം സ്വയം പുറത്തായി)</li>
+            <li><strong>മാസ്റ്റർ കീ:</strong> L + R = T + 1 — ഇതിൽ നിന്ന് എല്ലാ ഫോർമുലയും ഉണ്ടാക്കാം</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TYPE A - BOTH SIDES -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. A. ഒരാളുടെ ഇരുവശത്തുനിന്നുമുള്ള സ്ഥാനം തന്നാൽ ആകെ എണ്ണം</span>
+      </h2>
+      <div class="section-body">
+        <div class="formula-box">T = L + R − 1</div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 1</span>
+          <p>ശില്പ മുന്നിൽ നിന്ന് 10-ാമതും പിന്നിൽ നിന്ന് 6-ാമതും. ആകെ = 10 + 6 − 1 = <strong>15</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 2</span>
+          <p>രാജു മുന്നിൽ നിന്ന് 13-ാമതും പിന്നിൽ നിന്ന് 8-ാമതും. ആകെ = 13 + 8 − 1 = <strong>20</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 3</span>
+          <p>ഒരാൾ മുന്നിൽ നിന്ന് 6-ാമതും പിന്നിൽ നിന്ന് 18-ാമതും. ആകെ = 6 + 18 − 1 = <strong>23</strong>.</p>
+        </div>
+
+        <h3>4.1 മധ്യസ്ഥാനം</h3>
+        <p>ഇരുവശത്തുനിന്നും <code>n</code>-ാമത് ആണെങ്കിൽ <strong>T = 2n − 1</strong>.</p>
+        <ul>
+          <li>അഞ്ജന ഇരുവശത്തുനിന്നും 15-ാമത് ⇒ 2 × 15 − 1 = <strong>29</strong>.</li>
+          <li>ആകെ T തന്നാൽ മധ്യസ്ഥാനം = (T+1)/2. <strong>T ഒറ്റസംഖ്യ ആയാൽ മാത്രമേ ഒത്ത നടുവിൽ ഒരാൾ ഉണ്ടാകൂ.</strong></li>
+        </ul>
+
+        <h3>4.2 മുന്നിൽ/പിന്നിൽ എത്ര പേർ എന്ന് തന്നാൽ</h3>
+        <p>ഒരാൾക്ക് മുന്നിൽ <code>a</code> പേരും പിന്നിൽ <code>b</code> പേരും ഉണ്ടെങ്കിൽ <strong>T = a + b + 1</strong>.</p>
+        <p>ഉദാ: മുന്നിൽ 3 പേർ, പിന്നിൽ 2 പേർ ⇒ 3 + 2 + 1 = <strong>6</strong>.</p>
+
+        <h3>4.3 ഒരേ വശത്തുനിന്നുള്ള രണ്ട് സ്ഥാനങ്ങൾ (p, q)</h3>
+        <ul>
+          <li>ഇടയിലുള്ളവർ = |p − q| − 1</li>
+          <li>ഇരുവരെയും ഉൾപ്പെടെ എണ്ണിയാൽ = |p − q| + 1</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 5: TYPE B - ONE SIDE KNOWN -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. B. ആകെ എണ്ണവും ഒരു വശത്തെ സ്ഥാനവും തന്നാൽ മറുവശത്തെ സ്ഥാനം</span>
+      </h2>
+      <div class="section-body">
+        <div class="formula-box">R = T − L + 1</div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 1</span>
+          <p>70 പേരുള്ള ക്ലാസ്സിൽ അനന്തുവിന്റെ റാങ്ക് 45. താഴെ നിന്ന്: 70 − 45 + 1 = <strong>26</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 2</span>
+          <p>50 പേരുള്ള പരീക്ഷയിൽ 20-ാം റാങ്ക്. താഴെ നിന്ന്: 50 − 20 + 1 = <strong>31</strong>.</p>
+        </div>
+
+        <h3>5.1 സംയോജിത ചോദ്യം (Combined Type)</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>സോജന്റെ റാങ്ക് മുകളിൽ നിന്ന് 15-ാമതും താഴെ നിന്ന് 32-ാമതും. റോഷൻ താഴെ നിന്ന് 20-ാമത് ആണെങ്കിൽ മുകളിൽ നിന്ന് റോഷന്റെ റാങ്ക്?</p>
+          <ul>
+            <li><strong>Step 1:</strong> T = 15 + 32 − 1 = <strong>46</strong></li>
+            <li><strong>Step 2:</strong> 46 − 20 + 1 = <strong>27</strong>-ാമത്</li>
+          </ul>
+        </div>
+
+        <h3>5.2 റാങ്ക് മാറ്റം</h3>
+        <p>റാങ്ക് <code>p</code>-ൽ നിന്ന് <code>q</code>-ലേക്ക് മെച്ചപ്പെട്ടാൽ (q &lt; p) അയാൾ <strong>p − q</strong> പേരെ മറികടന്നു.</p>
+        <p>ഉദാ: 45 → 30 ആയാൽ 15 പേരെ മറികടന്നു.</p>
+
+        <h3>5.3 പുതിയ ആൾ ചേർന്നാൽ</h3>
+        <p>വരിയിൽ ഒരാൾ കൂടി ചേർന്നാൽ T ഒന്ന് കൂടും. ചേർന്നത് ഏത് അറ്റത്താണോ ആ അറ്റത്തുനിന്നുള്ള റാങ്ക് മറ്റുള്ളവർക്ക് മാറും.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 6: TYPE C - BETWEEN -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. C. രണ്ടുപേർക്കിടയിലുള്ള ആളുകൾ</span>
+      </h2>
+      <div class="section-body">
+        <p>ആകെ <code>T</code>, ഒന്നാമൻ മുന്നിൽ/ഇടത്തുനിന്ന് <code>L</code>-ാമത്, രണ്ടാമൻ പിന്നിൽ/വലത്തുനിന്ന് <code>R</code>-ാമത്.</p>
+
+        <h3>6.1 കേസ് 1: സാധാരണ രീതി (L + R ≤ T)</h3>
+        <div class="formula-box">ഇടയിലുള്ളവർ = T − (L + R)</div>
+        <ul>
+          <li><strong>L + R = T</strong> ആയാൽ ഉത്തരം 0 (അവർ തൊട്ടടുത്താണ്).</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 1</span>
+          <p>25 കുട്ടികൾ, ശ്രുതി മുന്നിൽ നിന്ന് 8-ാമത്, ഗീതു പിന്നിൽ നിന്ന് 6-ാമത്. L + R = 14 &lt; 25. ഇടയിൽ = 25 − 14 = <strong>11</strong>.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 2</span>
+          <p>50 കുട്ടികൾ, മനു മുകളിൽ നിന്ന് 8-ാമൻ, ഹരി താഴെ നിന്ന് 20-ാമൻ. ഇടയിൽ = 50 − 28 = <strong>22</strong>.</p>
+        </div>
+
+        <h3>6.2 കേസ് 2: ഓവർലാപ്പിംഗ് രീതി (L + R &gt; T) – വലിയ ചതിക്കുഴി!</h3>
+        <div class="formula-box">ഇടയിലുള്ളവർ = (L + R) − T − 2</div>
+        <ul>
+          <li><strong>L + R = T + 1</strong> ആയാൽ രണ്ടുപേരും <strong>ഒരേ ആളാണ്</strong>.</li>
+          <li><strong>L + R = T + 2</strong> ആയാൽ ഉത്തരം <strong>0</strong> (തൊട്ടടുത്ത്).</li>
+        </ul>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>18 പേരുള്ള ക്യൂ. അരുൺ മുന്നിൽ നിന്ന് 7-ാമത്, ഗീത പിന്നിൽ നിന്ന് 14-ാമത്. L + R = 21 &gt; 18. ഇടയിൽ = 21 − 18 − 2 = <strong>1</strong>.</p>
+          <p><strong>പരിശോധന:</strong> ഗീത മുന്നിൽ നിന്ന് 18 + 1 − 14 = 5-ാമത്. 5-നും 7-നും ഇടയിൽ 6-ാമത്തെ ആൾ മാത്രം ⇒ 1 ✓</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ചതിക്കുഴി</span>
+          <p>ഓവർലാപ്പിംഗ് ആണോ എന്ന് തിരിച്ചറിയാതെ <strong>T − (L + R)</strong> ഉപയോഗിച്ചാൽ നെഗറ്റീവ് ഉത്തരം കിട്ടും. ആദ്യം <strong>L + R vs T</strong> താരതമ്യം ചെയ്യുക!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: TYPE D - INTERCHANGING -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. D. പരസ്പരം സ്ഥാനം വെച്ചുമാറുമ്പോൾ (Interchanging)</span>
+      </h2>
+      <div class="section-body">
+        <p>A ഇടതുനിന്ന് <code>L₁</code>-ാമതും B വലതുനിന്ന് <code>R₁</code>-ാമതും. പരസ്പരം മാറിയപ്പോൾ A ഇടതുനിന്ന് <code>L₂</code>-ാമത്.</p>
+
+        <div class="important">
+          <span class="box-label">🔑 താക്കോൽ</span>
+          <p>A ഇപ്പോൾ ഇരിക്കുന്നത് <strong>B-യുടെ പഴയ കസേരയിലാണ്</strong>. ആ ഒറ്റ കസേരയുടെ ഇടതുസ്ഥാനം (L₂) വലതുസ്ഥാനം (R₁) രണ്ടും നമുക്കറിയാം.</p>
+        </div>
+
+        <h3>7.1 ആകെ ആളുകൾ</h3>
+        <div class="formula-box">T = പുതിയ(A) + പഴയ(B) − 1</div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 1</span>
+          <p>നീതു ഇടത്തുനിന്ന് 8-ാമത്, വീണ വലത്തുനിന്ന് 17-ാമത്. മാറിയപ്പോൾ നീതു ഇടത്തുനിന്ന് 14-ാമത്.</p>
+          <p><strong>T = 14 + 17 − 1 = 30</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 2</span>
+          <p>അനിൽ ഇടത്തുനിന്ന് 19-ാമത്, സുനിൽ വലത്തുനിന്ന് 10-ാമത്. മാറിയപ്പോൾ സുനിൽ വലത്തുനിന്ന് 20-ാമത്.</p>
+          <p><strong>T = 20 + 19 − 1 = 38</strong></p>
+        </div>
+
+        <h3>7.2 രണ്ടാമന്റെ പുതിയ സ്ഥാനം (1-Second Trick)</h3>
+        <p>A-യുടെ ഇടതുസ്ഥാനം എത്ര <strong>കൂടിയോ/കുറഞ്ഞോ</strong>, B-യുടെ <strong>വലതുസ്ഥാനം</strong> അത്ര തന്നെ കൂടും/കുറയും. (കാരണം A വലത്തോട്ട് നീങ്ങുമ്പോൾ B ഇടത്തോട്ട് നീങ്ങുന്നു, ഇടത്തോട്ട് നീങ്ങിയാൽ വലതുസ്ഥാനം കൂടും.)</p>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>A ഇടത്തുനിന്ന് 14, B വലത്തുനിന്ന് 18. A മാറിയപ്പോൾ 17 ആയി (+3). B-യുടെ പുതിയ സ്ഥാനം = 18 + 3 = <strong>21</strong>-ാമത്, വലത്തുനിന്ന്.</p>
+          <p><strong>പരിശോധന:</strong> T = 17 + 18 − 1 = 34. B ഇപ്പോൾ A-യുടെ പഴയ കസേരയിൽ (ഇടത്തുനിന്ന് 14). വലത്തുനിന്ന് 34 − 14 + 1 = 21 ✓</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധ</span>
+          <p>ഈ ട്രിക്ക് <strong>A-യുടെ ഇടതുസ്ഥാനവും B-യുടെ വലതുസ്ഥാനവും</strong> ആകുമ്പോൾ മാത്രം ഉപയോഗിക്കുക. രണ്ടും ഒരേ വശത്തുനിന്നാണെങ്കിൽ B-യുടെ സ്ഥാനം എതിർദിശയിൽ (−3) മാറും.</p>
+        </div>
+
+        <h3>7.3 അവർക്കിടയിലുള്ള ആളുകൾ</h3>
+        <div class="formula-box">ഇടയിലുള്ളവർ = |പുതിയ സ്ഥാനം − പഴയ സ്ഥാനം| − 1</div>
+        <p>(ഒരേ വ്യക്തിയുടെ, <strong>ഒരേ വശത്തുനിന്നുള്ള</strong> സ്ഥാനങ്ങൾ.)</p>
+        <p>ഉദാ: നീതു 8 → 14: (14 − 8) − 1 = <strong>5</strong>.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 8: TYPE E - SHIFT & MAX/MIN -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. E. സ്ഥാനം നീങ്ങുമ്പോഴും പരമാവധി/കുറഞ്ഞ എണ്ണവും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>8.1 ഇടത്തോട്ടോ വലത്തോട്ടോ നീങ്ങുമ്പോൾ</h3>
+        <p>ഇടതുനിന്ന് <code>L</code>-ാമത് നിൽക്കുന്നയാൾ <code>k</code> സ്ഥാനം:</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>നീങ്ങുന്നത്</th><th>ഇടതുനിന്നുള്ള സ്ഥാനം</th><th>വലതുനിന്നുള്ള സ്ഥാനം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>വലത്തോട്ട്</strong></td><td>L + k (കൂടും)</td><td>R − k (കുറയും)</td></tr>
+              <tr><td><strong>ഇടത്തോട്ട്</strong></td><td>L − k (കുറയും)</td><td>R + k (കൂടും)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>30 പേർ, രമേശ് വലത്തുനിന്ന് 12-ാമൻ. ഇടത്തോട്ട് 4 സ്ഥാനം നീങ്ങി.</p>
+          <p>വലത്തുനിന്ന് = 12 + 4 = 16. ഇടത്തുനിന്ന് = 30 − 16 + 1 = <strong>15</strong>-ാമത്.</p>
+        </div>
+
+        <h3>8.2 സാധ്യമായ ആകെ എണ്ണം (Maximum / Minimum)</h3>
+        <p>A ഇടതുനിന്ന് <code>L</code>-ാമത്, B വലതുനിന്ന് <code>R</code>-ാമത്, ഇടയിൽ <code>m</code> പേർ. ഇവിടെ രണ്ട് ക്രമീകരണങ്ങൾ സാധ്യമാണ്:</p>
+        <ol>
+          <li><strong>സാധാരണ രീതി:</strong> A ഇടതുവശത്തും B വലതുവശത്തും ⇒ <strong>T<sub>max</sub> = L + R + m</strong></li>
+          <li><strong>ഓവർലാപ്പിംഗ് രീതി:</strong> A വലതുവശത്തും B ഇടതുവശത്തും ⇒ <strong>T<sub>min</sub> = (L + R) − m − 2</strong></li>
+        </ol>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>A ഇടത്തുനിന്ന് 10, B വലത്തുനിന്ന് 12, ഇടയിൽ 4 പേർ.</p>
+          <p>T<sub>max</sub> = 10 + 12 + 4 = <strong>26</strong></p>
+          <p>T<sub>min</sub> = 22 − 4 − 2 = <strong>16</strong></p>
+          <p><strong>പരിശോധന (T = 16):</strong> B ഇടത്തുനിന്ന് 16 + 1 − 12 = 5. 5-നും 10-നും ഇടയിൽ 4 പേർ (6, 7, 8, 9) ✓</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: TYPE F - COMPARISON & SEATING -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. F. താരതമ്യ സ്ഥാനനിർണ്ണയവും ഇരിപ്പിട ക്രമീകരണവും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>9.1 ഉയരം, ഭാരം, പ്രായം, മാർക്ക്</h3>
+        <p>പ്രസ്താവനകളെ <code>&gt;</code> ചിഹ്നം കൊണ്ട് ഓരോന്നായി എഴുതി, പൊതു പേരുകൾ വെച്ച് കൂട്ടിയോജിപ്പിക്കുക.</p>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>A-യ്ക്ക് B-യെക്കാൾ ഉയരമുണ്ട്, C-യെക്കാൾ ഇല്ല. D-യ്ക്ക് E-യെക്കാൾ ഉയരമുണ്ട്, B-യെക്കാൾ കുറവ്.</p>
+          <ul>
+            <li>വാചകം 1: C &gt; A &gt; B</li>
+            <li>വാചകം 2: B &gt; D &gt; E</li>
+            <li>ചേർത്താൽ: <strong>C &gt; A &gt; B &gt; D &gt; E</strong></li>
+            <li>ഏറ്റവും ഉയരം C, ഏറ്റവും കുറവ് E, നടുവിൽ B</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കുക</span>
+          <p>താരതമ്യം ഉറപ്പില്ലാത്ത ജോഡികൾ ഉണ്ടെങ്കിൽ "നിർണ്ണയിക്കാൻ കഴിയില്ല" എന്ന ഉത്തരം വരാം. ഇല്ലാത്ത ബന്ധം ഊഹിക്കരുത്.</p>
+        </div>
+
+        <h3>9.2 ഇരിപ്പിട ക്രമീകരണം (Basics)</h3>
+        <ul>
+          <li><strong>നേർവര (Linear):</strong> വടക്കോട്ട് ദർശനമായി ഇരിക്കുന്നവരുടെ ഇടത്/വലത് നമ്മുടേതിന് തുല്യം. തെക്കോട്ട് ദർശനമായി ഇരിക്കുന്നവർക്ക് ഇടതും വലതും നേരെ വിപരീതം.</li>
+          <li><strong>വൃത്തം (Circular), കേന്ദ്രത്തിലേക്ക് നോക്കി ഇരിക്കുമ്പോൾ:</strong> ഘടികാര ദിശ (Clockwise) = <strong>ഇടത്</strong>, എതിർ ഘടികാര ദിശ (Anti-clockwise) = <strong>വലത്</strong>.</li>
+          <li><strong>എതിർവശം:</strong> N (ഇരട്ടസംഖ്യ) പേർ വട്ടത്തിൽ ഇരിക്കുമ്പോൾ ഒരാളുടെ നേർ എതിർവശത്തുള്ളയാൾ N/2 സ്ഥാനം അകലെ. ഉദാ: 6 പേർ, 1-ാം ആളുടെ എതിർവശം 1 + 3 = 4-ാം ആൾ.</li>
+          <li><strong>കേന്ദ്രത്തിന് പുറത്തേക്ക് നോക്കി ഇരിക്കുമ്പോൾ</strong> ഇടതും വലതും നേരെ വിപരീതമാകും. ചോദ്യത്തിലെ ദിശ (Facing in / out) ആദ്യം ഉറപ്പിക്കുക.</li>
+        </ul>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick – Circular ദിശ ഓർക്കാൻ</span>
+          <p><strong>"Center ലേക്ക് നോക്കിയാൽ Clockwise = ഇടത്"</strong> — ഒരു ഘടികാരം കേന്ദ്രത്തിലേക്ക് നോക്കി ചുറ്റുന്നത് പോലെ സങ്കൽപ്പിക്കുക. കൈകൾ വലത്തോട്ട് ചലിക്കുമ്പോൾ നിങ്ങൾ ഇടത്തോട്ട് നോക്കുന്നു.</p>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 10: DIAGRAMS -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. ഡയഗ്രം + Visual Insight</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>10.1 ഒരാളുടെ ഇരുവശത്തെ സ്ഥാനം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Both sides position diagram">
+            <rect x="10" y="10" width="700" height="180" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">ഒരാളുടെ ഇരുവശത്തെ സ്ഥാനം</text>
+
+            <!-- Row of dots -->
+            <g fill="#4a148c">
+              <circle cx="80" cy="110" r="10"/>
+              <circle cx="140" cy="110" r="10"/>
+              <circle cx="200" cy="110" r="10"/>
+              <circle cx="280" cy="110" r="10" fill="#b83b2c"/>
+              <circle cx="320" cy="110" r="14" fill="#f9a825" stroke="#4a148c" stroke-width="2"/>
+              <circle cx="400" cy="110" r="10"/>
+              <circle cx="460" cy="110" r="10"/>
+              <circle cx="520" cy="110" r="10"/>
+              <circle cx="580" cy="110" r="10"/>
+              <circle cx="640" cy="110" r="10"/>
+            </g>
+
+            <!-- Labels -->
+            <text x="360" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="#14202b">[ ശില്പ ]</text>
+
+            <!-- Left arrow -->
+            <line x1="80" y1="155" x2="320" y2="155" stroke="#1565c0" stroke-width="2" marker-end="url(#arrL)"/>
+            <defs>
+              <marker id="arrL" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#1565c0"/>
+              </marker>
+            </defs>
+            <text x="200" y="175" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">← L = 10 (ഇടത്)</text>
+
+            <!-- Right arrow -->
+            <line x1="640" y1="155" x2="400" y2="155" stroke="#c62828" stroke-width="2" marker-end="url(#arrR)"/>
+            <defs>
+              <marker id="arrR" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#c62828"/>
+              </marker>
+            </defs>
+            <text x="520" y="175" text-anchor="middle" font-size="12" font-weight="700" fill="#b83b2c">R = 6 (വലത്) →</text>
+
+            <!-- Formula note -->
+            <rect x="230" y="42" width="260" height="20" rx="4" fill="#e8f5e9"/>
+            <text x="360" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">T = 10 + 6 − 1 = 15</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.1 — ശില്പ രണ്ടുതവണ എണ്ണപ്പെടുന്നു (ഇടത്തുനിന്നും വലത്തുനിന്നും), അതിനാൽ −1.</div>
+        </div>
+
+        <h3>10.2 രണ്ടുപേർക്കിടയിലുള്ളവർ: സാധാരണ vs ഓവർലാപ്പിംഗ്</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Between people normal vs overlapping">
+            <rect x="10" y="10" width="700" height="320" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">ഇടയിലുള്ളവർ: 2 കേസുകൾ</text>
+
+            <!-- Case A -->
+            <text x="60" y="65" font-size="12" font-weight="700" fill="#1565c0">കേസ് A (L + R ≤ T): സാധാരണ</text>
+            <rect x="20" y="78" width="680" height="80" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="1.5"/>
+            <g fill="#4a148c">
+              <circle cx="60" cy="118" r="8"/>
+              <circle cx="100" cy="118" r="8"/>
+              <circle cx="140" cy="118" r="8"/>
+              <circle cx="180" cy="118" r="8"/>
+              <circle cx="220" cy="118" r="8"/>
+              <circle cx="260" cy="118" r="8"/>
+              <circle cx="300" cy="118" r="8"/>
+              <circle cx="340" cy="118" r="8"/>
+              <circle cx="380" cy="118" r="8"/>
+              <circle cx="420" cy="118" r="8"/>
+              <circle cx="460" cy="118" r="8"/>
+              <circle cx="500" cy="118" r="8"/>
+              <circle cx="540" cy="118" r="8"/>
+              <circle cx="580" cy="118" r="8"/>
+              <circle cx="620" cy="118" r="8"/>
+              <circle cx="660" cy="118" r="8"/>
+            </g>
+            <text x="100" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">ശ്രുതി (8)</text>
+            <text x="580" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">ഗീതു (6 from right)</text>
+            <text x="360" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">ഇടയിൽ = T − (L + R)</text>
+
+            <!-- Case B -->
+            <text x="60" y="195" font-size="12" font-weight="700" fill="#b83b2c">കേസ് B (L + R &gt; T): ഓവർലാപ്പിംഗ്</text>
+            <rect x="20" y="208" width="680" height="80" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="1.5"/>
+            <g fill="#4a148c">
+              <circle cx="60" cy="248" r="8"/>
+              <circle cx="100" cy="248" r="8"/>
+              <circle cx="140" cy="248" r="8"/>
+              <circle cx="180" cy="248" r="8"/>
+              <circle cx="220" cy="248" r="8"/>
+              <circle cx="260" cy="248" r="8"/>
+              <circle cx="300" cy="248" r="8"/>
+              <circle cx="340" cy="248" r="8"/>
+              <circle cx="380" cy="248" r="8"/>
+              <circle cx="420" cy="248" r="8"/>
+              <circle cx="460" cy="248" r="8"/>
+              <circle cx="500" cy="248" r="8"/>
+              <circle cx="540" cy="248" r="8"/>
+              <circle cx="580" cy="248" r="8"/>
+              <circle cx="620" cy="248" r="8"/>
+              <circle cx="660" cy="248" r="8"/>
+            </g>
+            <text x="220" y="278" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">അരുൺ (7)</text>
+            <text x="340" y="278" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">ഗീത (14 from right)</text>
+            <text x="540" y="278" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">ഇടയിൽ = (L + R) − T − 2</text>
+
+            <text x="360" y="315" text-anchor="middle" font-size="11" font-style="italic" fill="#4a5f72">ആദ്യം L + R vs T താരതമ്യം ചെയ്യുക</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.2 — സാധാരണ രീതിയിൽ രണ്ടുപേരും വേറെ; ഓവർലാപ്പിംഗിൽ അവർ പരസ്പരം മറികടക്കുന്നു.</div>
+        </div>
+
+        <h3>10.3 പരസ്പരം സ്ഥാനം മാറുമ്പോൾ – കസേര ലോജിക്</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interchanging positions chair logic">
+            <rect x="10" y="10" width="700" height="240" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">സ്ഥാനം മാറുമ്പോൾ: കസേര ലോജിക്</text>
+
+            <!-- Before -->
+            <text x="60" y="70" font-size="12" font-weight="700" fill="#1565c0">മാറുന്നതിന് മുമ്പ്:</text>
+            <rect x="60" y="80" width="200" height="50" rx="6" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="160" y="103" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">നീതു (ഇടത്ത് 8)</text>
+            <text x="160" y="120" text-anchor="middle" font-size="10" fill="#14202b">A-യുടെ പഴയ കസേര</text>
+
+            <rect x="460" y="80" width="200" height="50" rx="6" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="560" y="103" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">വീണ (വലത്ത് 17)</text>
+            <text x="560" y="120" text-anchor="middle" font-size="10" fill="#14202b">B-യുടെ പഴയ കസേര</text>
+
+            <text x="360" y="108" text-anchor="middle" font-size="20" fill="#4a148c">⇄</text>
+
+            <!-- After -->
+            <text x="60" y="170" font-size="12" font-weight="700" fill="#1565c0">മാറിയതിന് ശേഷം:</text>
+            <rect x="60" y="180" width="200" height="50" rx="6" fill="#fce4ec" stroke="#c62828" stroke-width="2" stroke-dasharray="4"/>
+            <text x="160" y="203" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">വീണ (B)</text>
+            <text x="160" y="220" text-anchor="middle" font-size="10" fill="#14202b">ഇവിടെ ഇപ്പോൾ</text>
+
+            <rect x="460" y="180" width="200" height="50" rx="6" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" stroke-dasharray="4"/>
+            <text x="560" y="203" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">നീതു (ഇടത്ത് 14)</text>
+            <text x="560" y="220" text-anchor="middle" font-size="10" fill="#14202b">= B-യുടെ പഴയ കസേര</text>
+
+            <!-- Formula -->
+            <rect x="200" y="238" width="320" height="20" rx="4" fill="#fff8e1"/>
+            <text x="360" y="252" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">T = 14 (പുതിയ) + 17 (പഴയ) − 1 = 30</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.3 — നീതു 8-ലും 14-ലും ഉണ്ട്, പക്ഷേ അവ വ്യത്യസ്ത കസേരകളാണ്. ഒരേ കസേരയുടെ ഇടതും വലതും സ്ഥാനങ്ങളെ കൂട്ടുന്നു.</div>
+        </div>
+
+        <div class="important">
+          <span class="box-label">💡 Visual Insight</span>
+          <ol>
+            <li>സ്ഥാനം മാറിയാൽ <strong>ഒരാൾ ഇരിക്കുന്നത് മറ്റേയാളുടെ പഴയ കസേരയിലാണ്</strong> എന്ന് ഓർക്കുക.</li>
+            <li>ആ കസേരയുടെ ഇടതുസ്ഥാനവും വലതുസ്ഥാനവും കൂട്ടി 1 കുറച്ചാൽ ആകെ എണ്ണം കിട്ടും.</li>
+            <li>നീതുവിന്റെ 8-ഉം 14-ഉം തമ്മിൽ കൂട്ടരുത് — അവ രണ്ടും നീതുവിന്റെ വ്യത്യസ്ത കസേരകളാണ്!</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: FORMULA SHEET -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. ഫോർമുല ഷീറ്റ് + താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>11.1 മാസ്റ്റർ ഫോർമുല ഷീറ്റ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>#</th><th>സന്ദർഭം</th><th>സൂത്രവാക്യം</th><th>ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>മാസ്റ്റർ കീ</td><td><strong>L + R = T + 1</strong></td><td>10 + 6 = 15 + 1 ✓</td></tr>
+              <tr><td>1</td><td>ഇരുവശത്തെ സ്ഥാനം തന്നാൽ ആകെ</td><td>T = L + R − 1</td><td>13 + 8 − 1 = 20</td></tr>
+              <tr><td>2</td><td>ഇരുവശത്തുനിന്നും n-ാമത്</td><td>T = 2n − 1</td><td>2 × 15 − 1 = 29</td></tr>
+              <tr><td>3</td><td>മറുവശത്തെ സ്ഥാനം</td><td>R = T − L + 1</td><td>70 − 45 + 1 = 26</td></tr>
+              <tr><td>4</td><td>ഇടയിലുള്ളവർ (L + R ≤ T)</td><td>T − (L + R)</td><td>25 − 14 = 11</td></tr>
+              <tr><td>5</td><td>ഇടയിലുള്ളവർ (L + R &gt; T)</td><td>(L + R) − T − 2</td><td>21 − 18 − 2 = 1</td></tr>
+              <tr><td>6</td><td>സ്ഥാനം മാറുമ്പോൾ ആകെ</td><td>T = പുതിയ(A) + പഴയ(B) − 1</td><td>20 + 19 − 1 = 38</td></tr>
+              <tr><td>7</td><td>സ്ഥാനം മാറുമ്പോൾ B-യുടെ പുതിയ സ്ഥാനം</td><td>B<sub>പഴയ</sub> + (A-യുടെ മാറ്റം)</td><td>18 + 3 = 21</td></tr>
+              <tr><td>8</td><td>സ്ഥാനം മാറുമ്പോൾ ഇടയിലുള്ളവർ</td><td>|പുതിയ − പഴയ| − 1</td><td>14 − 8 − 1 = 5</td></tr>
+              <tr><td>9</td><td>സാധ്യമായ പരമാവധി എണ്ണം</td><td>L + R + m</td><td>10 + 12 + 4 = 26</td></tr>
+              <tr><td>10</td><td>സാധ്യമായ കുറഞ്ഞ എണ്ണം</td><td>(L + R) − m − 2</td><td>22 − 6 = 16</td></tr>
+              <tr><td>11</td><td>ഒരേ വശത്തുനിന്നുള്ള ഒത്ത നടുവ്</td><td>(L₁ + L₂) / 2</td><td>(8 + 16) / 2 = 12</td></tr>
+              <tr><td>12</td><td>മുന്നിൽ a, പിന്നിൽ b പേർ</td><td>T = a + b + 1</td><td>3 + 2 + 1 = 6</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>11.2 സാധാരണ രീതി vs ഓവർലാപ്പിംഗ് രീതി</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>സാധാരണ രീതി</th><th>ഓവർലാപ്പിംഗ് രീതി</th></tr></thead>
+            <tbody>
+              <tr><td><strong>എപ്പോൾ?</strong></td><td>L + R ≤ T</td><td>L + R &gt; T</td></tr>
+              <tr><td><strong>നിൽപ്പ്</strong></td><td>ഇരുവരും അകന്ന്, ഇടയിൽ ആളുകൾ</td><td>ഇരുവരും പരസ്പരം മറികടന്ന്</td></tr>
+              <tr><td><strong>ഇടയിലുള്ളവർ</strong></td><td>T − (L + R)</td><td>(L + R) − T − 2</td></tr>
+              <tr><td><strong>ആകെ എണ്ണം (m തന്നാൽ)</strong></td><td>L + R + m (പരമാവധി)</td><td>(L + R) − m − 2 (കുറഞ്ഞത്)</td></tr>
+              <tr><td><strong>പ്രത്യേക അവസ്ഥ</strong></td><td>L + R = T ⇒ 0 പേർ</td><td>L + R = T + 1 ⇒ ഒരേ ആൾ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: PSC ANALYSIS & TREND -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. Kerala PSC Exam Analysis + ചോദ്യ ട്രെൻഡ്</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>12.1 പ്രാധാന്യ വിശകലനം</h3>
+        <div class="important">
+          <span class="box-label">📝 കുറിപ്പ്</span>
+          <p>താഴെയുള്ള റേറ്റിംഗ് മുൻ ചോദ്യപേപ്പറുകളിലെ പൊതു പ്രവണതയെ അടിസ്ഥാനമാക്കിയുള്ള <strong>ഏകദേശ സൂചന മാത്രമാണ്</strong>. ഔദ്യോഗിക കണക്കല്ല. ഓരോ പരീക്ഷയുടെയും സിലബസ് വിജ്ഞാപനത്തിൽ ഉറപ്പാക്കുക.</p>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപവിഷയം</th><th>പ്രാധാന്യം</th><th>വിശകലനം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ആകെ ആളുകൾ / മറുവശത്തെ റാങ്ക്</strong> (T = L+R−1)</td><td>★★★</td><td>ഏറ്റവും അടിസ്ഥാനവും ഏറ്റവും കൂടുതൽ ചോദിക്കാറുള്ളതുമായ ഭാഗം. 10 സെക്കൻഡിൽ ചെയ്യാം.</td></tr>
+              <tr><td><strong>പരസ്പരം സ്ഥാനം മാറൽ</strong></td><td>★★★</td><td>ഡിഗ്രി/പ്ലസ് ടു/മെയിൻസ് ലെവലിൽ ആവർത്തിച്ച് കാണുന്ന ശൈലി.</td></tr>
+              <tr><td><strong>രണ്ടുപേർക്കിടയിലുള്ളവർ</strong></td><td>★★★</td><td>സാധാരണ, ഓവർലാപ്പിംഗ് രീതികൾ പരീക്ഷയിൽ വരാറുണ്ട്.</td></tr>
+              <tr><td><strong>താരതമ്യവും ഇരിപ്പിടവും</strong></td><td>★★</td><td>ഏറ്റവും ഉയരം കൂടിയ/നടുവിലുള്ള ആളെ കണ്ടെത്തുന്ന ചോദ്യങ്ങൾ.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>12.2 ചോദ്യ ട്രെൻഡ്: PSC ശൈലിയിലുള്ള ചോദ്യങ്ങളും ഉത്തരങ്ങളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>#</th><th>ചോദ്യം (PSC മാതൃക)</th><th>കണക്ക്</th><th>ഉത്തരം</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>ശില്പ മുന്നിൽ 10, പിന്നിൽ 6 → ആകെ</td><td>10+6−1</td><td><strong>15</strong></td></tr>
+              <tr><td>2</td><td>രാജു മുന്നിൽ 13, പിന്നിൽ 8 → ആകെ</td><td>13+8−1</td><td><strong>20</strong></td></tr>
+              <tr><td>3</td><td>ഒരാൾ മുന്നിൽ 6, പിന്നിൽ 18 → ആകെ</td><td>6+18−1</td><td><strong>23</strong></td></tr>
+              <tr><td>4</td><td>അഞ്ജന ഇരുവശത്തുനിന്നും 15 → ആകെ</td><td>15+15−1</td><td><strong>29</strong></td></tr>
+              <tr><td>5</td><td>70 പേർ, റാങ്ക് 45 → താഴെ നിന്ന്</td><td>70−45+1</td><td><strong>26</strong></td></tr>
+              <tr><td>6</td><td>50 പേർ, റാങ്ക് 20 → താഴെ നിന്ന്</td><td>50−20+1</td><td><strong>31</strong></td></tr>
+              <tr><td>7</td><td>50 പേർ, മനു മുകളിൽ 8, ഹരി താഴെ 20 → ഇടയിൽ</td><td>50−28</td><td><strong>22</strong></td></tr>
+              <tr><td>8</td><td>18 പേർ, അരുൺ മുന്നിൽ 7, ഗീത പിന്നിൽ 14 → ഇടയിൽ</td><td>21−18−2</td><td><strong>1</strong></td></tr>
+              <tr><td>9</td><td>നീതു ഇടത്ത് 8, വീണ വലത്ത് 17, മാറിയപ്പോൾ നീതു 14 → ആകെ</td><td>14+17−1</td><td><strong>30</strong></td></tr>
+              <tr><td>10</td><td>A ഇടത്ത് 14, B വലത്ത് 18, A → 17 ⇒ B വലത്ത്</td><td>18+3</td><td><strong>21</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: CONFUSING FACTS & TRAPS -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. ആശയക്കുഴപ്പങ്ങളും ചതിക്കുഴികളും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>13.1 ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>വ്യത്യാസം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ആകെ കാണൽ: L + R − 1</strong></td><td><strong>മറുവശത്തെ റാങ്ക്: T − L + 1</strong></td><td>കൂട്ടുമ്പോൾ ആൾ രണ്ടുതവണ എണ്ണപ്പെടും (−1). കുറയ്ക്കുമ്പോൾ ആ ആൾ പുറത്താകും (+1).</td></tr>
+              <tr><td><strong>70-ൽ 45-ാം റാങ്കുകാരന്റെ താഴെ നിന്നുള്ള റാങ്ക് = 26</strong></td><td><strong>അയാൾക്ക് താഴെയുള്ളവർ = 25 പേർ</strong></td><td>"എത്രാമത്" എന്ന് ചോദിച്ചാൽ +1. "എത്ര പേർ" എന്ന് ചോദിച്ചാൽ 70 − 45 = 25.</td></tr>
+              <tr><td><strong>സാധാരണ: T − (L+R)</strong></td><td><strong>ഓവർലാപ്പ്: (L+R) − T − 2</strong></td><td>ആദ്യം L + R-നെ T-യുമായി താരതമ്യം ചെയ്യുക.</td></tr>
+              <tr><td><strong>പുതിയ(A) + പഴയ(B) − 1</strong></td><td><strong>ഒരാളുടെ പഴയ + പുതിയ കൂട്ടൽ</strong></td><td>ഒരേ ആളുടെ 8-ഉം 14-ഉം കൂട്ടരുത്.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>13.2 PSC Trap Box</h3>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1: റാങ്കിന്റെ +1 മറക്കൽ</span>
+          <p><strong>ചോദ്യം:</strong> "50 പേരിൽ 20-ാം റാങ്ക്, താഴെ നിന്ന് റാങ്ക്? (a) 29 (b) 30 (c) 31 (d) 32"</p>
+          <p>50 − 20 = 30 കണ്ട് (b) കറുപ്പിക്കരുത്. 30 എന്നത് അയാൾക്ക് താഴെയുള്ളവരുടെ എണ്ണമാണ്. ആ 30 പേർ കഴിഞ്ഞ് അയാളാണ്, അതിനാൽ <strong>(c) 31</strong>.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2: ഓവർലാപ്പിംഗ് തിരിച്ചറിയാതിരിക്കൽ</span>
+          <p>18 പേർ, 7-ാമനും 14-ാമനും. 7 + 14 = 21 &gt; 18. 21 − 18 = 3 എന്ന് എഴുതി (3 പേർ) തെറ്റിക്കരുത്. <strong>2 കൂടി കുറച്ച് 1</strong>.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3: "ഇടത്തോട്ട് നീങ്ങി"</span>
+          <p>ഇടത്തോട്ട് k സ്ഥാനം നീങ്ങിയാൽ ഇടതുസ്ഥാനം k <strong>കുറയും</strong>, വലതുസ്ഥാനം k <strong>കൂടും</strong>.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4: "മുന്നിൽ 10 പേരുണ്ട്" vs "മുന്നിൽ നിന്ന് 10-ാമൻ"</span>
+          <p>"മുന്നിൽ 10 പേരുണ്ട്" എന്നാൽ സ്ഥാനം 10 + 1 = <strong>11</strong>. "10-ാമൻ" എന്നാൽ സ്ഥാനം 10.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5: ജയിച്ചവരുടെ ലിസ്റ്റിലെ റാങ്ക്</span>
+          <p>ജയിച്ചവരിൽ രാജു മുകളിൽ 10-ാമൻ, താഴെ 25-ാമൻ. 5 പേർ പരീക്ഷ എഴുതിയില്ല, 3 പേർ തോറ്റു. ജയിച്ചവർ = 10 + 25 − 1 = 34. ക്ലാസ്സിൽ ആകെ = 34 + 5 + 3 = <strong>42</strong>.</p>
+        </div>
+
+        <h3>13.3 പരീക്ഷാ ഹാൾ ടിപ്സ്</h3>
+        <ol>
+          <li>ഉത്തരം കിട്ടിയാൽ മാസ്റ്റർ കീ കൊണ്ട് പരിശോധിക്കുക (L + R = T + 1).</li>
+          <li>ഇടയിലുള്ളവരെ കാണുമ്പോൾ ആദ്യം L + R vs T നോക്കുക.</li>
+          <li>സംശയം വന്നാൽ 5 വരകൾ (<code>| | | | |</code>) വരച്ച് ചെറിയ വരിയിൽ പരീക്ഷിക്കുക (Small-case test).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 14: MNEMONICS -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. മെമ്മറി ട്രിക്കുകൾ (Mnemonics)</span>
+      </h2>
+      <div class="section-body">
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – മാസ്റ്റർ കീ</span>
+          <p><strong>"കൂട്ടുമ്പോൾ −1, കുറയ്ക്കുമ്പോൾ +1"</strong><br>
+          T = L + R − 1 | R = T − L + 1</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – ഒരേ വശം കോഡ്</span>
+          <p><strong>ഇടത് = മുന്നിൽ = മുകളിൽ</strong><br>
+          <strong>വലത് = പിന്നിൽ = താഴെ</strong><br>
+          ഒരേ വരിയിൽ ഈ ജോഡികൾ ഒരേ അറ്റത്തെ സൂചിപ്പിക്കുന്നു.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – തുല്യ മാറ്റം ട്രിക്ക്</span>
+          <p>കസേര മാറുമ്പോൾ A-യുടെ (ഇടതു) റാങ്കിൽ +5 ആയാൽ B-യുടെ (വലതു) റാങ്കിലും +5.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – ഒത്ത നടുവ്</span>
+          <p>ഒരേ വശത്തുനിന്ന് L₁, L₂ സ്ഥാനങ്ങളുടെ ഒത്ത നടുവ് = <strong>(L₁ + L₂) / 2</strong><br>
+          ഉദാ: (8 + 16) / 2 = 12.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – ഉപഗ്രൂപ്പ് റാങ്ക്</span>
+          <p>N-ാം റാങ്കുകാരൻ വരെയുള്ളവരിൽ നിന്ന് മറ്റു ഗ്രൂപ്പിന്റെ എണ്ണം (k) കുറച്ചാൽ ആ ഗ്രൂപ്പിൽ അയാളുടെ സ്ഥാനം കിട്ടും (N − k).</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – ഓവർലാപ്പിംഗ് ഓർക്കാൻ</span>
+          <p><strong>"ആദ്യം താരതമ്യം, പിന്നെ ഫോർമുല"</strong> — L + R-നെ T-യുമായി താരതമ്യം ചെയ്ത് ഏത് കേസ് എന്ന് തീരുമാനിക്കുക.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – Circular ദിശ</span>
+          <p>കേന്ദ്രത്തിലേക്ക് നോക്കി ഇരിക്കുമ്പോൾ <strong>ഘടികാര ദിശ = ഇടത്</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: ADDITIONAL FACTS -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. അധിക വസ്തുതകൾ (Additional Facts)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>15.1 ഉപഗ്രൂപ്പ് റാങ്ക് ചോദ്യം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p><strong>ചോദ്യം:</strong> 60 കുട്ടികൾ, പെൺകുട്ടികൾ ആൺകുട്ടികളുടെ ഇരട്ടി. കമൽ (ആൺകുട്ടി) മുകളിൽ നിന്ന് 17-ാം റാങ്ക്, അവന് മുന്നിൽ 9 പെൺകുട്ടികൾ. കമലിന് പിന്നിൽ എത്ര ആൺകുട്ടികൾ?</p>
+          <ul>
+            <li>പെൺകുട്ടികൾ = 40, ആൺകുട്ടികൾ = 20.</li>
+            <li>കമൽ ഉൾപ്പെടെ 17 പേരിൽ 9 പെൺകുട്ടികൾ ⇒ ആൺകുട്ടികൾ = 17 − 9 = 8 (കമൽ 8-ാമത്തെ ആൺകുട്ടി).</li>
+            <li>കമലിന് പിന്നിൽ ആൺകുട്ടികൾ = 20 − 8 = <strong>12</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>15.2 രണ്ട് ഘട്ട ചോദ്യം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു ക്ലാസ്സിൽ 60 കുട്ടികളുണ്ട്. ദീപയുടെ റാങ്ക് മുകളിൽ നിന്ന് 38 ആണ്. താഴെ നിന്ന് ദീപയുടെ റാങ്ക് എത്ര?</p>
+          <p><strong>പരിഹാരം:</strong> R = 60 − 38 + 1 = <strong>23</strong>.</p>
+        </div>
+
+        <h3>15.3 ഒരേ വശത്തുനിന്ന് ഒത്ത നടുവ്</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു വരിയിൽ A ഇടത്തുനിന്ന് 12-ാമത്, B ഇടത്തുനിന്ന് 18-ാമത്. അവർക്കിടയിൽ കൃത്യം നടുവിൽ C നിൽക്കുന്നു. ഇടത്തുനിന്ന് C-യുടെ സ്ഥാനം?</p>
+          <p><strong>പരിഹാരം:</strong> (12 + 18) / 2 = <strong>15</strong>-ാമത്.</p>
+        </div>
+
+        <h3>15.4 വൃത്ത ഇരിപ്പിടത്തിലെ എതിർവശം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p><strong>ചോദ്യം:</strong> 8 പേർ വട്ടത്തിൽ കേന്ദ്രത്തിലേക്ക് നോക്കി ഇരിക്കുന്നു. 1-ാം സ്ഥാനത്തുള്ള ആളുടെ നേർ എതിർവശത്തുള്ള ആൾ ഏത് സ്ഥാനത്ത്?</p>
+          <p><strong>പരിഹാരം:</strong> 8/2 = 4 സ്ഥാനം അകലെ ⇒ 1 + 4 = <strong>5-ാം സ്ഥാനം</strong>.</p>
+        </div>
+
+        <h3>15.5 പുതിയ ആൾ വരുമ്പോൾ</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം</span>
+          <p>ഒരു വരിയിൽ 25 പേരുണ്ട്. പുതിയ ആളെ മുൻപിൽ ചേർത്തപ്പോൾ മുൻപിൽ നിന്ന് 15-ാമതായിരുന്ന രാജുവിന്റെ സ്ഥാനം എന്താകും?</p>
+          <p><strong>പരിഹാരം:</strong> പുതിയ ആൾ മുൻപിൽ ചേർന്നതിനാൽ രാജു ഒരു സ്ഥാനം പിന്നോട്ട് പോകും ⇒ 15 + 1 = <strong>16-ാമത്</strong>.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 16: SOLVED EXAMPLES -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. സോൾവ്ഡ് ഉദാഹരണങ്ങൾ (Solved Examples)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>16.1 സ്ഥാനം മാറൽ – 3 ചോദ്യങ്ങൾ</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 1</span>
+          <p><strong>ചോദ്യം:</strong> കാവ്യ ഇടതുനിന്ന് 12-ാമത്, രമ്യ വലതുനിന്ന് 19-ാമത്. മാറിയപ്പോൾ കാവ്യ ഇടതുനിന്ന് 23-ാമത്.</p>
+          <ul>
+            <li><strong>(i) ആകെ:</strong> 23 + 19 − 1 = <strong>41</strong>.</li>
+            <li><strong>(ii) രമ്യയുടെ പുതിയ സ്ഥാനം:</strong> കാവ്യയുടെ സ്ഥാനം 12 → 23 (+11). രമ്യയുടെ പുതിയ വലതുസ്ഥാനം = 19 + 11 = <strong>30</strong>.</li>
+            <li><strong>പരിശോധന:</strong> രമ്യ കാവ്യയുടെ പഴയ കസേരയിൽ, ഇടത്ത് 12 ⇒ വലത്ത് 41 − 12 + 1 = 30 ✓</li>
+            <li><strong>(iii) ഇടയിൽ:</strong> (23 − 12) − 1 = <strong>10</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>16.2 ഒത്ത നടുവിലെ ആൾ</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 2</span>
+          <p><strong>ചോദ്യം:</strong> രോഹിത് ഇടതുനിന്ന് 11-ാമത്, കോഹ്‌ലി വലതുനിന്ന് 15-ാമത്. ഇരുവർക്കും കൃത്യം നടുവിൽ ധോണി. രോഹിതിനും ധോണിക്കും ഇടയിൽ 4 പേർ. വരിയിൽ ആകെ എത്ര പേർ (സാധാരണ രീതി)?</p>
+          <ul>
+            <li>ധോണിക്കും കോഹ്‌ലിക്കും ഇടയിലും 4 പേർ.</li>
+            <li>രോഹിത്–കോഹ്‌ലി ഇടയിൽ = 4 + 1 + 4 = 9.</li>
+            <li>ആകെ = 11 + 15 + 9 = <strong>35</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>16.3 രണ്ട് ഘട്ടം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 3</span>
+          <p><strong>ചോദ്യം:</strong> 40 പേരുള്ള വരിയിൽ P ഇടതുനിന്ന് 12-ാമത്, Q വലതുനിന്ന് 15-ാമത്. ഇടയിൽ എത്ര പേർ?</p>
+          <p><strong>പരിഹാരം:</strong> L + R = 27 &lt; 40 ⇒ സാധാരണ രീതി. ഇടയിൽ = 40 − 27 = <strong>13</strong>.</p>
+        </div>
+
+        <h3>16.4 സംയോജിത ഉദാഹരണം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 4</span>
+          <p><strong>ചോദ്യം:</strong> 25 പേരുള്ള വരിയിൽ A മുന്നിൽ നിന്ന് 18-ാമത്, B പിന്നിൽ നിന്ന് 12-ാമത്. ഇടയിൽ എത്ര പേർ?</p>
+          <ul>
+            <li>L + R = 30 &gt; 25 ⇒ ഓവർലാപ്പിംഗ്.</li>
+            <li>ഇടയിൽ = 30 − 25 − 2 = <strong>3</strong>.</li>
+            <li>പരിശോധന: B മുന്നിൽ നിന്ന് 26 − 12 = 14. 14-നും 18-നും ഇടയിൽ 15, 16, 17 = 3 പേർ ✓</li>
+          </ul>
+        </div>
+
+        <h3>16.5 Max/Min ഉദാഹരണം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാഹരണം 5</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു വരിയിൽ A ഇടത്തുനിന്ന് 8-ാമത്, B വലത്തുനിന്ന് 10-ാമത്. ഇവർക്കിടയിൽ 5 പേർ ഉണ്ടെങ്കിൽ വരിയിലെ പരമാവധി, കുറഞ്ഞ എണ്ണം?</p>
+          <ul>
+            <li>T<sub>max</sub> = 8 + 10 + 5 = <strong>23</strong>.</li>
+            <li>T<sub>min</sub> = 18 − 5 − 2 = <strong>11</strong>.</li>
+            <li>പരിശോധന (T = 11): B ഇടത്തുനിന്ന് 11 + 1 − 10 = 2. 2-നും 8-നും ഇടയിൽ 5 പേർ (3, 4, 5, 6, 7) ✓</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+    <!-- SECTION 17: SMART TRICKS -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks</span>
+      </h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">🔴 പ്രധാന മുന്നറിയിപ്പ്</span>
+          <p>ഈ ട്രിക്കുകൾ ശരിയുത്തരത്തിന്റെ <strong>സാധ്യത കൂട്ടുന്നു</strong>, ഉറപ്പ് തരുന്നില്ല. "ഏറ്റവും നീളമുള്ള ഓപ്ഷൻ ശരി", "എപ്പോഴും C" പോലുള്ള കെട്ടുകഥകൾക്ക് ഒരടിസ്ഥാനവുമില്ല, അവ ഉപയോഗിക്കരുത്. ഇവിടെ പറയുന്നതെല്ലാം <strong>ചോദ്യത്തിലെ വസ്തുതകളിൽ നിന്നുള്ള യുക്തി</strong> മാത്രമാണ്.</p>
+        </div>
+
+        <h3>ട്രിക്ക് 1: മാസ്റ്റർ കീ കൊണ്ട് Option Elimination + അവസാന അക്ക പരിശോധന</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> ഒരു ക്ലാസ്സിൽ 60 കുട്ടികളുണ്ട്. ദീപയുടെ റാങ്ക് മുകളിൽ നിന്ന് 38 ആണ്. താഴെ നിന്ന് ദീപയുടെ റാങ്ക് എത്ര?</p>
+          <p>(A) 21  (B) 22  (C) 23  (D) 24</p>
+          <ol>
+            <li><strong>വഴി:</strong> രണ്ട് റാങ്കുകളുടെ തുക = T + 1 = 61. 38 + x = 61.</li>
+            <li><strong>അവസാന അക്കം:</strong> 8 + x അവസാനിക്കേണ്ടത് 1-ൽ ⇒ x അവസാനിക്കേണ്ടത് 3-ൽ. 21, 22, 24 ഒഴിവാകും, <strong>(C) 23</strong> മാത്രം ബാക്കി.</li>
+          </ol>
+          <p><strong>ഉത്തരം: (C) 23.</strong></p>
+        </div>
+
+        <h3>ട്രിക്ക് 2: Common-Sense Bounds (അസാധ്യമായ ഓപ്ഷൻ ഒഴിവാക്കൽ)</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> 30 പേരുള്ള വരിയിൽ രവി ഇടതുനിന്ന് 12-ാമത്. വലതുനിന്ന് രവിയുടെ സ്ഥാനം?</p>
+          <p>(A) 17  (B) 18  (C) 19  (D) 42</p>
+          <ol>
+            <li><strong>Step 1:</strong> വരിയിൽ 30 പേർ മാത്രമേയുള്ളൂ, അതിനാൽ 42 അസാധ്യം. <strong>(D) ഒഴിവാക്കി.</strong></li>
+            <li><strong>Step 2:</strong> 12 + x = 31 ⇒ x = 19.</li>
+            <li><strong>Step 3 (ചതിക്കുഴി ഓപ്ഷൻ):</strong> 18 എന്നത് 30 − 12, അതായത് +1 മറന്നാൽ കിട്ടുന്ന ഉത്തരമാണ്. ഇത്തരം "ഒന്ന് കുറഞ്ഞ" ഓപ്ഷൻ പലപ്പോഴും ചതിക്കുഴിയായി വെക്കാറുണ്ട്.</li>
+          </ol>
+          <p><strong>ഉത്തരം: (C) 19.</strong></p>
+        </div>
+
+        <h3>ട്രിക്ക് 3: Similar-Option Comparison + Question Wording</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> 20 പേരുള്ള വരിയിൽ A മുന്നിൽ നിന്ന് 14-ാമതും B പിന്നിൽ നിന്ന് 9-ാമതും. അവർക്കിടയിൽ എത്ര പേർ?</p>
+          <p>(A) 0  (B) 1  (C) 3  (D) 6</p>
+          <ol>
+            <li><strong>Step 1:</strong> 14 + 9 = 23 &gt; 20 ⇒ ഓവർലാപ്പിംഗ്. അതായത് 3 (= 23 − 20) ശരിയല്ല.</li>
+            <li><strong>Step 2:</strong> 23 − 20 − 2 = 1.</li>
+            <li><strong>പരിശോധന:</strong> B മുന്നിൽ നിന്ന് 21 − 9 = 12-ാമത്. 12-നും 14-നും ഇടയിൽ 13-ാമത്തെ ആൾ മാത്രം ⇒ 1 ✓.</li>
+          </ol>
+          <p><strong>ഉത്തരം: (B) 1.</strong> (C) 3 ആണ് "2 കുറയ്ക്കാൻ മറന്ന" ചതിക്കുഴി; (D) 6 ആണ് 20 − 14.</p>
+        </div>
+
+        <h3>ട്രിക്ക് 4: Statement-Based Questions (ഓരോ പ്രസ്താവനയും വെവ്വേറെ പരിശോധിക്കുക)</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> ഒരു വരിയിൽ അനു മുന്നിൽ നിന്ന് 9-ാമതും പിന്നിൽ നിന്ന് 12-ാമതും ആണ്. താഴെ നൽകിയവ പരിശോധിക്കുക:</p>
+          <ol>
+            <li>വരിയിൽ ആകെ 20 പേരുണ്ട്.</li>
+            <li>അനുവിന് മുന്നിൽ 8 പേരുണ്ട്.</li>
+            <li>അനുവിന് പിന്നിൽ 12 പേരുണ്ട്.</li>
+          </ol>
+          <p>(A) 1, 2 മാത്രം ശരി  (B) 2, 3 മാത്രം ശരി  (C) 1, 3 മാത്രം ശരി  (D) എല്ലാം ശരി</p>
+          <ul>
+            <li>പ്രസ്താവന 1: 9 + 12 − 1 = 20 ✓</li>
+            <li>പ്രസ്താവന 2: മുന്നിൽ 9 − 1 = 8 ✓</li>
+            <li>പ്രസ്താവന 3: പിന്നിൽ 12 − 1 = 11, 12 അല്ല ✗</li>
+          </ul>
+          <p><strong>ഉത്തരം: (A).</strong> ഏതെങ്കിലും ഒരു പ്രസ്താവന ഉറപ്പായും തെറ്റാണെന്ന് കണ്ടാൽ (D) ഒഴിവാക്കാം. രണ്ടെണ്ണം ഉറപ്പായും ശരിയെന്ന് കണ്ടാൽ ഓപ്ഷനുകൾ ചുരുങ്ങും.</p>
+        </div>
+
+        <h3>ട്രിക്ക് 5: Match the Following (അറിയാവുന്ന ജോഡി ആദ്യം)</h3>
+        <div class="memory">
+          <p><strong>പട്ടിക I:</strong> a. മുന്നിൽ 10, പിന്നിൽ 6 ആയാൽ ആകെ  b. 50 പേരിൽ 20-ാം റാങ്കിന്റെ താഴെ നിന്നുള്ള റാങ്ക്  c. 25 പേരിൽ 8-ാമനും പിന്നിൽ നിന്ന് 6-ാമനും ഇടയിലുള്ളവർ</p>
+          <p><strong>പട്ടിക II:</strong> 1. 31  2. 15  3. 11</p>
+          <p>(A) a-2, b-1, c-3  (B) a-1, b-2, c-3  (C) a-3, b-1, c-2  (D) a-2, b-3, c-1</p>
+          <ol>
+            <li>ഏറ്റവും എളുപ്പമുള്ളത് ആദ്യം: a = 10 + 6 − 1 = 15 ⇒ a-2. ഇതോടെ (B), (C) ഒഴിവായി.</li>
+            <li>c = 25 − 14 = 11 ⇒ c-3. ഇതോടെ (D) ഒഴിവായി.</li>
+          </ol>
+          <p><strong>ഉത്തരം: (A).</strong> (b = 31 ✓ പരിശോധിക്കാൻ ബാക്കി).</p>
+        </div>
+
+        <h3>ട്രിക്ക് 6: Assertion–Reason (രണ്ടും ശരിയാണോ, R വിശദീകരിക്കുന്നുണ്ടോ?)</h3>
+        <div class="memory">
+          <ul>
+            <li><strong>(A):</strong> 25 പേരുള്ള വരിയിൽ മുന്നിൽ നിന്ന് 8-ാമനും പിന്നിൽ നിന്ന് 6-ാമനും ഇടയിൽ 11 പേരുണ്ട്.</li>
+            <li><strong>(R):</strong> രണ്ടുപേർക്കിടയിലുള്ളവരെ കാണാൻ എപ്പോഴും T − (L + R) ഉപയോഗിക്കാം.</li>
+          </ul>
+          <p>(a) A, R ശരി; R, A-യെ വിശദീകരിക്കുന്നു  (b) A, R ശരി; R വിശദീകരണമല്ല  (c) A ശരി, R തെറ്റ്  (d) A തെറ്റ്, R ശരി</p>
+          <ul>
+            <li>(A): 25 − 14 = 11 ✓ ശരി.</li>
+            <li>(R): <strong>"എപ്പോഴും"</strong> എന്ന വാക്ക് സംശയിക്കുക. L + R &gt; T ആകുമ്പോൾ ഈ ഫോർമുല തെറ്റ് (T − (L+R) നെഗറ്റീവ് ആകും). അതിനാൽ R തെറ്റ്.</li>
+          </ul>
+          <p><strong>ഉത്തരം: (c).</strong></p>
+        </div>
+
+        <h3>ട്രിക്ക് 7: Keyword / Extreme Statement Check + Small-Case Test</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> താഴെ പറയുന്നവയിൽ <strong>തെറ്റായ</strong> പ്രസ്താവന ഏത്?</p>
+          <p>(A) ഒരേ ആളുടെ ഇരുവശത്തെ റാങ്കുകളുടെ തുക എല്ലായ്പ്പോഴും T + 1 ആണ്</p>
+          <p>(B) ഇരുവശത്തുനിന്നും n-ാമത് ആയാൽ ആകെ 2n − 1</p>
+          <p>(C) ഓവർലാപ്പിംഗ് കേസിൽ ഇടയിലുള്ളവർ (L + R) − T − 2</p>
+          <p>(D) ഇരുവശത്തുനിന്നും n-ാമത് ആയാൽ ആകെ 2n + 1</p>
+          <ul>
+            <li><strong>ചോദ്യത്തിലെ "തെറ്റായ" എന്ന വാക്ക് ആദ്യം ശ്രദ്ധിക്കുക.</strong> ശരിയായത് തിരയരുത്.</li>
+            <li>(A)-യിൽ "എല്ലായ്പ്പോഴും" ഉണ്ട്. എന്നാൽ അത് <strong>ശരിയാണ്</strong>, കാരണം ഇത് മാസ്റ്റർ കീ ആണ്. <strong>"എല്ലായ്പ്പോഴും/ഒരിക്കലുമില്ല" ഉള്ള പ്രസ്താവന സ്വയം തെറ്റാകണമെന്നില്ല</strong>, വിഷയം വെച്ച് പരിശോധിക്കണം.</li>
+            <li><strong>Small-case test:</strong> വരിയിൽ ഒരാൾ മാത്രം (n = 1): 2n − 1 = 1 ✓, 2n + 1 = 3 ✗.</li>
+          </ul>
+          <p><strong>ഉത്തരം: (D).</strong></p>
+        </div>
+
+        <h3>ട്രിക്ക് 8: Informed Guessing & Negative Marking</h3>
+        <div class="memory">
+          <p>കേരള PSC പരീക്ഷകളിൽ സാധാരണയായി തെറ്റുത്തരത്തിന് <strong>മാർക്ക് കുറയ്ക്കൽ</strong> (പൊതുവെ ഒരു ചോദ്യത്തിന്റെ മാർക്കിന്റെ 1/3) ഉണ്ട്. നിങ്ങളുടെ പരീക്ഷയുടെ വിജ്ഞാപനത്തിൽ ഇത് ഉറപ്പാക്കുക. 1/3 കുറയ്ക്കൽ എന്ന് കരുതിയാൽ:</p>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>ശേഷിക്കുന്ന ഓപ്ഷനുകൾ</th><th>ശരിയാകാനുള്ള സാധ്യത</th><th>പ്രതീക്ഷിത മാർക്ക് (1 ശരിക്ക്, −⅓ തെറ്റിന്)</th><th>തീരുമാനം</th></tr></thead>
+              <tbody>
+                <tr><td>4 (ഒന്നും ഒഴിവാക്കാനായില്ല)</td><td>¼</td><td>0.25 − 0.75 × 0.33 ≈ <strong>0</strong></td><td>വിട്ടുകളയുന്നതാണ് സുരക്ഷിതം</td></tr>
+                <tr><td>3</td><td>⅓</td><td>≈ <strong>+0.11</strong></td><td>നേരിയ ഗുണം</td></tr>
+                <tr><td>2</td><td>½</td><td>≈ <strong>+0.33</strong></td><td>ഉത്തരം എഴുതുക</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>ഈ ചാപ്റ്ററിൽ ഫോർമുല പഠിച്ചാൽ ഒരു ഓപ്ഷൻ മാത്രമേ ബാക്കിയാകൂ. ഗസ്സിംഗ് ആശ്രയിക്കേണ്ട അവസ്ഥ വരുത്താതിരിക്കലാണ് ഉത്തമം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: MODEL QUESTIONS -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. മാതൃകാ ചോദ്യങ്ങൾ (5 ശൈലികൾ)</span>
+      </h2>
+      <div class="section-body">
+        <div class="correction">
+          <span class="box-label">📌 കുറിപ്പ്</span>
+          <p>PSC ശൈലിയിൽ തയ്യാറാക്കിയ <strong>പ്രാക്ടീസ് ചോദ്യങ്ങൾ</strong>. യഥാർത്ഥ PYQ എന്ന് അവകാശപ്പെടുന്നില്ല.</p>
+        </div>
+
+        <h3>18.1 ഒറ്റ ഉത്തര ചോദ്യം</h3>
+        <p><strong>ചോദ്യം:</strong> സോജന്റെ റാങ്ക് മുകളിൽ നിന്ന് 15-ാമതും താഴെ നിന്ന് 32-ാമതും. റോഷൻ താഴെ നിന്ന് 20-ാമത് ആണെങ്കിൽ മുകളിൽ നിന്ന് റോഷന്റെ റാങ്ക്?</p>
+        <p>(A) 25  (B) 26  (C) 27  (D) 28</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (C) 27</span>
+          <p><strong>പരിഹാരം:</strong> T = 15 + 32 − 1 = 46; 46 − 20 + 1 = 27.</p>
+        </div>
+
+        <h3>18.2 ആരോഹണ ക്രമം</h3>
+        <p><strong>ചോദ്യം:</strong> താഴെ പറയുന്ന വരികളിലെ ആകെ ആളുകളെ കണ്ടെത്തി ചെറുതിൽ നിന്ന് വലുതിലേക്ക് ക്രമീകരിക്കുക:</p>
+        <ol>
+          <li>ശില്പ മുന്നിൽ 10, പിന്നിൽ 6</li>
+          <li>രാജു മുന്നിൽ 13, പിന്നിൽ 8</li>
+          <li>ഒരാൾ മുന്നിൽ 6, പിന്നിൽ 18</li>
+          <li>അഞ്ജന ഇരുവശത്തുനിന്നും 15</li>
+        </ol>
+        <p>(A) 1–2–3–4  (B) 2–1–3–4  (C) 1–3–2–4  (D) 4–3–2–1</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <p><strong>പരിഹാരം:</strong> ആകെ: 15, 20, 23, 29. ക്രമം 1-2-3-4.</p>
+        </div>
+
+        <h3>18.3 പ്രസ്താവന രീതി</h3>
+        <p><strong>ചോദ്യം:</strong></p>
+        <ol>
+          <li>70 പേരുള്ള ക്ലാസ്സിൽ റാങ്ക് 45 ആയാൽ താഴെ നിന്ന് 26-ാമത്.</li>
+          <li>അനിൽ ഇടത്ത് 19, സുനിൽ വലത്ത് 10; മാറിയപ്പോൾ സുനിൽ വലത്ത് 20 ആയാൽ ആകെ 38 പേർ.</li>
+          <li>50 പേരിൽ മനു മുകളിൽ 8, ഹരി താഴെ 20 ആയാൽ ഇടയിൽ 23 പേർ.</li>
+        </ol>
+        <p>(A) 1, 2 മാത്രം  (B) 2, 3 മാത്രം  (C) 1, 3 മാത്രം  (D) എല്ലാം ശരി</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <ul>
+            <li>(1) 70 − 45 + 1 = 26 ✓</li>
+            <li>(2) 20 + 19 − 1 = 38 ✓</li>
+            <li>(3) 50 − 28 = 22 ≠ 23 ✗</li>
+          </ul>
+        </div>
+
+        <h3>18.4 ചേരുംപടി ചേർക്കുക</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പട്ടിക I</th><th>പട്ടിക II</th></tr></thead>
+            <tbody>
+              <tr><td>a. 25 പേർ, മുന്നിൽ 8, പിന്നിൽ 6, ഇടയിലുള്ളവർ</td><td>1. 30</td></tr>
+              <tr><td>b. 18 പേർ, മുന്നിൽ 7, പിന്നിൽ 14, ഇടയിലുള്ളവർ</td><td>2. 21</td></tr>
+              <tr><td>c. നീതു ഇടത്ത് 8, വീണ വലത്ത് 17, മാറിയപ്പോൾ നീതു 14: ആകെ</td><td>3. 11</td></tr>
+              <tr><td>d. A ഇടത്ത് 14, B വലത്ത് 18, മാറിയപ്പോൾ A 17: B വലത്ത്</td><td>4. 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>(A) a-3, b-4, c-1, d-2  (B) a-4, b-3, c-1, d-2  (C) a-3, b-1, c-4, d-2  (D) a-2, b-4, c-1, d-3</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <p>a = 11, b = 1, c = 30, d = 18 + 3 = 21.</p>
+        </div>
+
+        <h3>18.5 Assertion–Reason</h3>
+        <ul>
+          <li><strong>(A):</strong> ഒരാളുടെ മുന്നിൽ നിന്നുള്ള സ്ഥാനവും (L) പിന്നിൽ നിന്നുള്ള സ്ഥാനവും (R) തന്നാൽ ആകെ ആളുകൾ L + R − 1 ആണ്.</li>
+          <li><strong>(R):</strong> രണ്ട് സ്ഥാനങ്ങളും കൂട്ടുമ്പോൾ ആ വ്യക്തി രണ്ടുതവണ എണ്ണപ്പെടുന്നതിനാൽ ഒരെണ്ണം കുറയ്ക്കണം.</li>
+        </ul>
+        <p>(A) A, R ശരി; R, A-യെ വിശദീകരിക്കുന്നു  (B) A, R ശരി; R വിശദീകരണമല്ല  (C) A ശരി, R തെറ്റ്  (D) A തെറ്റ്, R ശരി</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <p>R എന്നത് A-യുടെ ശരിയായ കാരണമാണ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: MCQ PRACTICE -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. MCQ Practice (Interactive)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. 50 ഉദ്യോഗാർത്ഥികൾ എഴുതിയ പരീക്ഷയിൽ ഒരാൾക്ക് 20-ാം റാങ്ക്. താഴെ നിന്ന് അയാളുടെ റാങ്ക്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 29</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 30</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 31</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 32</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 31</div>
+            <div class="explanation">50 − 20 + 1 = 31. (B) 30 എന്നത് അയാൾക്ക് താഴെയുള്ളവരുടെ എണ്ണമാണ്. (A), (D) സ്ഥാനങ്ങൾക്ക് ന്യായീകരണമില്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. നീതു ഇടത്തുനിന്ന് 8-ാമത്, വീണ വലത്തുനിന്ന് 17-ാമത്. സ്ഥാനം മാറിയപ്പോൾ നീതു ഇടത്തുനിന്ന് 14-ാമത്. വരിയിൽ ആകെ എത്ര പേർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 25</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 30</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 31</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 22</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 30</div>
+            <div class="explanation">T = 14 + 17 − 1 = 30. (C) 31 എന്നത് 1 കുറയ്ക്കാൻ മറന്നാൽ കിട്ടുന്നത്. (A) 25 = 8 + 17 (തെറ്റായ സമീപനം).</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. 40 പേരുള്ള വരിയിൽ അമൽ ഇടത്തുനിന്ന് 15-ാമത്. അവൻ വലത്തോട്ട് 5 സ്ഥാനം നീങ്ങിയാൽ വലത്തുനിന്ന് അവന്റെ പുതിയ സ്ഥാനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 20</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 21</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 25</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 26</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 21</div>
+            <div class="explanation">ഇടത്ത് 15 + 5 = 20; വലത്ത് 40 − 20 + 1 = 21. (A) 20 എന്നത് ഇടതുസ്ഥാനമാണ്, ചോദിച്ചത് വലതുസ്ഥാനം.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. രാഹുലിന് മനുവിനെക്കാൾ പ്രായമുണ്ട്, എന്നാൽ സനുവിനെക്കാൾ കുറവ്. അജയ്ക്ക് മനുവിനെക്കാൾ പ്രായം കുറവ്, വിജയ്ക്ക് അജയ്യെക്കാൾ കുറവ്. പ്രായം കൊണ്ട് നടുവിലുള്ളത് ആര്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. സനു</button>
+            <button type="button" class="opt-btn" data-opt="B">B. രാഹുൽ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. മനു</button>
+            <button type="button" class="opt-btn" data-opt="D">D. അജയ്</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) മനു</div>
+            <div class="explanation">ക്രമം: സനു &gt; രാഹുൽ &gt; മനു &gt; അജയ് &gt; വിജയ്. നടുവിൽ മനു.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. ആൺകുട്ടികളുടെ ഒരു വരിയിൽ A ഇടത്തുനിന്ന് 15-ാമത്, B വലത്തുനിന്ന് 4-ാമത്. ഇരുവർക്കും ഇടയിൽ 3 പേർ. C, A-യുടെ തൊട്ട് ഇടതുവശത്താണ്. വലത്തുനിന്ന് C-യുടെ സ്ഥാനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 9</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 10</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 12</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 13</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 9</div>
+            <div class="explanation">A ഇടതുവശത്ത്, B വലതുവശത്ത്, ഇടയിൽ 3 പേർ ⇒ ആകെ T = 15 + 3 + 1 + 4 = 23. വലത്തുനിന്ന് A = 23 − 15 + 1 = 9-ാമത്. C, A-യുടെ തൊട്ട് ഇടതുവശത്ത് ⇒ വലത്തുനിന്ന് C = 9 + 1 = 10-ാമത്. എന്നാൽ ചോദ്യത്തിൽ C വലത്തുനിന്ന് അകലെ അല്ല, അടുത്താണ്. ശരിയായി കണക്കാക്കുമ്പോൾ: T = 23; A ഇടത്ത് 15 ⇒ A വലത്ത് 23−15+1 = 9. C A-യുടെ ഇടതുവശത്ത് ⇒ C ഇടത്ത് 14 ⇒ C വലത്ത് 23−14+1 = 10. എന്നാൽ C, A യുടെ ഇടത്, അതായത് A-യെക്കാൾ 1 സ്ഥാനം കുറവ് ⇒ 9+1 = 10. ഉത്തരം (B) 10. (ചോദ്യത്തിലെ A/B ജോഡിയെ ശ്രദ്ധിക്കുക.)</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. (ഓവർലാപ്പിംഗ്) 25 പേരുള്ള വരിയിൽ X മുന്നിൽ നിന്ന് 18-ാമത്, Y പിന്നിൽ നിന്ന് 12-ാമത്. ഇടയിലുള്ളവർ എത്ര പേർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 3</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 5</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 6</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 7</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 3</div>
+            <div class="explanation">18 + 12 = 30 &gt; 25 ⇒ ഓവർലാപ്പിംഗ്. (30) − 25 − 2 = 3. പരിശോധന: Y മുന്നിൽ നിന്ന് 26 − 12 = 14-ാമത്. 14-നും 18-നും ഇടയിൽ 15, 16, 17 = 3 പേർ ✓.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. 70 പേരുള്ള ക്ലാസ്സിൽ അനന്തുവിന്റെ റാങ്ക് മുകളിൽ നിന്ന് 45. താഴെ നിന്ന് അയാളുടെ റാങ്ക്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 25</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 26</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 27</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 30</button>
+          </div>
+          <div class="answer-label">ശരിയുത്തരം: (B) 26</div>
+          <div class="explanation">70 − 45 + 1 = 26. (A) 25 എന്നത് അയാൾക്ക് താഴെയുള്ളവരുടെ എണ്ണമാണ്.</div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. അനിൽ ഇടത്തുനിന്ന് 19-ാമത്, സുനിൽ വലത്തുനിന്ന് 10-ാമത്. സ്ഥാനം മാറിയപ്പോൾ സുനിൽ വലത്തുനിന്ന് 20-ാമത്. വരിയിൽ ആകെ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 37</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 38</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 39</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 40</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 38</div>
+            <div class="explanation">T = 20 (പുതിയ സുനിൽ) + 19 (പഴയ അനിൽ) − 1 = 38.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. ശില്പ മുന്നിൽ നിന്ന് 10-ാമതും പിന്നിൽ നിന്ന് 6-ാമതും. വരിയിൽ ആകെ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 14</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 15</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 16</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 17</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 15</div>
+            <div class="explanation">10 + 6 − 1 = 15.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. അഞ്ജന ഇരുവശത്തുനിന്നും 15-ാമത്. വരിയിൽ ആകെ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 28</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 29</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 30</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 31</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 29</div>
+            <div class="explanation">2 × 15 − 1 = 29.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. 50 പേരുള്ള പരീക്ഷയിൽ 20-ാം റാങ്ക്. താഴെ നിന്ന്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 30</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 31</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 32</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 33</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 31</div>
+            <div class="explanation">50 − 20 + 1 = 31.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. 25 പേരുള്ള വരിയിൽ ശ്രുതി മുന്നിൽ നിന്ന് 8-ാമത്, ഗീതു പിന്നിൽ നിന്ന് 6-ാമത്. ഇവർക്കിടയിൽ എത്ര പേർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 10</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 11</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 12</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 13</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 11</div>
+            <div class="explanation">L + R = 14 ≤ 25 ⇒ സാധാരണ രീതി. 25 − 14 = 11.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. 50 പേരുള്ള വരിയിൽ മനു മുകളിൽ നിന്ന് 8-ാമൻ, ഹരി താഴെ നിന്ന് 20-ാമൻ. ഇവർക്കിടയിൽ എത്ര പേർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 20</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 21</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 22</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 23</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 22</div>
+            <div class="explanation">L + R = 28 ≤ 50. ഇടയിൽ = 50 − 28 = 22.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. 20 പേരുള്ള വരിയിൽ A മുന്നിൽ നിന്ന് 14-ാമതും B പിന്നിൽ നിന്ന് 9-ാമതും. അവർക്കിടയിൽ എത്ര പേർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 0</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 1</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 3</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 6</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 1</div>
+            <div class="explanation">L + R = 23 &gt; 20 ⇒ ഓവർലാപ്പിംഗ്. (23) − 20 − 2 = 1. പരിശോധന: B മുന്നിൽ 21 − 9 = 12; 12-നും 14-നും ഇടയിൽ 1 ആൾ.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഒരു വരിയിൽ A ഇടത്തുനിന്ന് 8-ാമത്, B വലത്തുനിന്ന് 10-ാമത്, ഇടയിൽ 5 പേർ. സാധ്യമായ പരമാവധി എണ്ണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 20</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 22</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 23</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 25</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 23</div>
+            <div class="explanation">T<sub>max</sub> = L + R + m = 8 + 10 + 5 = 23.</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ഒരു ക്ലാസ്സിൽ 60 കുട്ടികളുണ്ട്. ദീപയുടെ റാങ്ക് മുകളിൽ നിന്ന് 38 ആണ്. താഴെ നിന്ന് ദീപയുടെ റാങ്ക്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 21</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 22</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 23</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 24</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 23</div>
+            <div class="explanation">60 − 38 + 1 = 23. മാസ്റ്റർ കീ പരിശോധന: 38 + 23 = 61 = 60 + 1 ✓.</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. 18 പേരുള്ള ക്യൂ. അരുൺ മുന്നിൽ നിന്ന് 7-ാമത്, ഗീത പിന്നിൽ നിന്ന് 14-ാമത്. അവർക്കിടയിൽ എത്ര പേർ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 2</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 3</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 4</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 1</div>
+            <div class="explanation">7 + 14 = 21 &gt; 18 ⇒ ഓവർലാപ്പിംഗ്. 21 − 18 − 2 = 1. പരിശോധന: ഗീത മുന്നിൽ 19 − 14 = 5; 5-നും 7-നും ഇടയിൽ 6-ാമൻ = 1.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ഒരു വരിയിൽ 30 പേർ. രമേശ് വലത്തുനിന്ന് 12-ാമൻ. ഇടത്തോട്ട് 4 സ്ഥാനം നീങ്ങിയാൽ ഇടത്തുനിന്ന് അവന്റെ പുതിയ സ്ഥാനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 14</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 15</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 16</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 17</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 15</div>
+            <div class="explanation">വലത്ത് 12 + 4 = 16 (ഇടത്തോട്ട് നീങ്ങിയാൽ വലത് സ്ഥാനം കൂടും). ഇടത്ത് = 30 − 16 + 1 = 15.</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. 8 പേർ വൃത്തത്തിൽ കേന്ദ്രത്തിലേക്ക് നോക്കി ഇരിക്കുന്നു. 1-ാം സ്ഥാനത്തുള്ള ആളുടെ നേർ എതിർവശത്തുള്ള ആൾ ഏത് സ്ഥാനത്ത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 3-ാം</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 4-ാം</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 5-ാം</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 6-ാം</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 5-ാം</div>
+            <div class="explanation">N/2 = 8/2 = 4 സ്ഥാനം അകലെ ⇒ 1 + 4 = 5.</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഒരു വരിയിൽ A ഇടത്തുനിന്ന് 12-ാമത്, B ഇടത്തുനിന്ന് 18-ാമത്. അവർക്കിടയിൽ കൃത്യം നടുവിൽ C. ഇടത്തുനിന്ന് C-യുടെ സ്ഥാനം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 13</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 14</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 15</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 16</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 15</div>
+            <div class="explanation">(12 + 18) / 2 = 15.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 20: TOP FACTS & REVISION -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. Top Facts + 5-Minute Revision</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>20.1 Top Maximum Facts</h3>
+        <ol>
+          <li><strong>മാസ്റ്റർ കീ:</strong> L + R = T + 1</li>
+          <li><strong>ആകെ കാണാൻ:</strong> T = L + R − 1</li>
+          <li><strong>മറുവശം:</strong> R = T − L + 1</li>
+          <li><strong>ഇരുവശത്തുനിന്നും n-ാമത്:</strong> T = 2n − 1</li>
+          <li><strong>ഇടയിലുള്ളവർ (സാധാരണ):</strong> T − (L + R)</li>
+          <li><strong>ഇടയിലുള്ളവർ (ഓവർലാപ്പ്):</strong> (L + R) − T − 2</li>
+          <li><strong>സ്ഥാനം മാറൽ:</strong> T = പുതിയ(A) + പഴയ(B) − 1</li>
+          <li><strong>B-യുടെ പുതിയ സ്ഥാനം:</strong> B<sub>പഴയ</sub> + (A-യുടെ മാറ്റം)</li>
+          <li><strong>സ്ഥാനം മാറൽ ഇടയിൽ:</strong> |പുതിയ − പഴയ| − 1</li>
+          <li><strong>പരമാവധി:</strong> L + R + m | <strong>കുറഞ്ഞത്:</strong> (L + R) − m − 2</li>
+          <li><strong>ഒത്ത നടുവ് (ഒരേ വശം):</strong> (L₁ + L₂) / 2</li>
+          <li><strong>വലത്തോട്ട് k:</strong> ഇടത് +k, വലത് −k</li>
+          <li><strong>ഇടത്തോട്ട് k:</strong> ഇടത് −k, വലത് +k</li>
+          <li><strong>മുന്നിൽ a, പിന്നിൽ b പേർ:</strong> T = a + b + 1</li>
+          <li><strong>Circular, കേന്ദ്രത്തിലേക്ക്:</strong> Clockwise = ഇടത്; എതിർവശം N/2 അകലെ</li>
+        </ol>
+
+        <h3>20.2 5-Minute / Last-Minute Revision</h3>
+        <div class="last-minute">
+          <span class="box-label">📝 ബുള്ളറ്റ് ഫ്ലാഷ് ലിസ്റ്റ്</span>
+          <ul>
+            <li><strong>Golden Code:</strong> കൂട്ടുമ്പോൾ −1 | കുറയ്ക്കുമ്പോൾ +1.</li>
+            <li><strong>മാസ്റ്റർ കീ:</strong> L + R = T + 1.</li>
+            <li><strong>ഓവർലാപ്പിംഗ്:</strong> ആദ്യം L + R vs T താരതമ്യം ചെയ്യുക.</li>
+            <li><strong>സ്ഥാനം മാറൽ:</strong> പുതിയ(A) + പഴയ(B) − 1.</li>
+            <li><strong>ചതിക്കുഴികൾ:</strong> "എത്രാമത്" vs "എത്ര പേർ" | "മുന്നിൽ 10 പേർ" ⇒ സ്ഥാനം 11 | ഓവർലാപ്പിൽ 2 കൂടി കുറയ്ക്കണം.</li>
+            <li><strong>Negative marking:</strong> ഒരു ഓപ്ഷനെങ്കിലും ഒഴിവാക്കിയാൽ മാത്രം ഊഹിക്കുക.</li>
+            <li><strong>Key Values:</strong> 15, 20, 23, 29, 26, 31, 22, 1, 30, 21.</li>
+          </ul>
+        </div>
+
+        <h3>20.3 ഒറ്റനോട്ട പട്ടിക – ഏത് ചോദ്യ തരം എപ്പോൾ?</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചോദ്യ ശൈലി</th><th>തരം</th><th>മികച്ച തന്ത്രം</th></tr></thead>
+            <tbody>
+              <tr><td>L, R തന്ന് ആകെ ചോദിച്ചാൽ</td><td>Type A</td><td>T = L + R − 1</td></tr>
+              <tr><td>T, L തന്ന് R ചോദിച്ചാൽ</td><td>Type B</td><td>R = T − L + 1</td></tr>
+              <tr><td>L, R തന്ന് ഇടയിലുള്ളവർ ചോദിച്ചാൽ</td><td>Type C</td><td>L+R vs T താരതമ്യം → ഫോർമുല</td></tr>
+              <tr><td>സ്ഥാനം മാറിയെന്ന് പറഞ്ഞാൽ</td><td>Type D</td><td>കസേര ലോജിക്; T = പുതിയ + പഴയ − 1</td></tr>
+              <tr><td>നീക്കം / Max-Min</td><td>Type E</td><td>ഇടത്/വലത് ചിഹ്ന ബന്ധം; L+R±m</td></tr>
+              <tr><td>ഉയരം, ഇരിപ്പിടം</td><td>Type F</td><td>&gt; ചിഹ്നത്തിൽ ശൃംഖല | circular ദിശ ഉറപ്പിക്കുക</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>സ്ഥാനനിർണ്ണയം PSC-യിൽ ഏറ്റവും എളുപ്പത്തിൽ സ്കോർ ചെയ്യാവുന്ന ഭാഗമാണ് — കാരണം കൂട്ടലും കുറയ്ക്കലും മാത്രം. പ്രധാന ട്രാപ്പുകൾ: <strong>L + R − 1-ൽ −1 മറക്കൽ, ഓവർലാപ്പിംഗ് തിരിച്ചറിയാതിരിക്കൽ, "എത്രാമത്" vs "എത്ര പേർ" വ്യത്യാസം, സ്ഥാനം മാറുമ്പോൾ രണ്ടും ഒരേ ആളുടെ സ്ഥാനങ്ങൾ എന്ന് തെറ്റിദ്ധരിക്കൽ</strong> — ഇവ ഓർമ്മിച്ചാൽ പരീക്ഷയിൽ ആശ്ചര്യപ്പെടുത്തുന്ന ഒന്നും ഉണ്ടാകില്ല.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 21: CORRECTION LOG -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec21" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">21. തിരുത്തൽ രേഖ (Correction Log)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>#</th><th>ഒറിജിനലിലെ പ്രശ്നം</th><th>തിരുത്തൽ</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>"Kerala PSC PYQ" എന്ന് ഉറപ്പിച്ച് ലേബൽ ചെയ്തവ</td><td>"PSC മാതൃക" എന്ന് മാറ്റി; വർഷവും പേരും സ്ഥിരീകരിക്കാത്തതിനാൽ PYQ എന്ന് അവകാശപ്പെടുന്നില്ല</td></tr>
+              <tr><td>2</td><td>"1–2 ചോദ്യങ്ങൾ ഉറപ്പായും വരും" എന്ന അവകാശവാദം</td><td>"സാധാരണയായി ചോദിക്കാറുണ്ട്" എന്ന് മാറ്റി; റേറ്റിംഗുകൾ ഏകദേശ സൂചനയാണെന്ന് വ്യക്തമാക്കി</td></tr>
+              <tr><td>3</td><td>ഫോർമുല ഷീറ്റിലെ Max/Min വരിയിൽ അധിക കോളം പട്ടിക തകർത്തിരുന്നു</td><td>2-കോളം പട്ടികയിൽ ശരിയാക്കി</td></tr>
+              <tr><td>4</td><td>"L + R = T" എന്ന സന്ദർഭം സാധാരണ രീതിയിൽ വ്യക്തമാക്കിയിരുന്നില്ല</td><td>"L + R = T ⇒ 0 പേർ" എന്ന് ചേർത്തു; "L + R = T + 1 ⇒ ഒരേ ആൾ" എന്നും</td></tr>
+              <tr><td>5</td><td>Max/Min "രണ്ട് ഉത്തരങ്ങൾ" എന്ന് ആശയക്കുഴപ്പം</td><td>ഒരേ വരിയുടെ രണ്ട് സാധ്യതകളാണെന്ന് വ്യക്തമാക്കി</td></tr>
+              <tr><td>6</td><td>സ്ഥാനം മാറൽ: B-യുടെ സ്ഥാനമാറ്റ നിയമത്തിന് നിബന്ധന ഇല്ലായിരുന്നു</td><td>"A ഇടതുനിന്നും B വലതുനിന്നും ആകുമ്പോൾ മാത്രം" എന്ന നിബന്ധന ചേർത്തു</td></tr>
+              <tr><td>7</td><td>ഒരേ ഫോർമുലയും ഉദാഹരണവും 4–5 സ്ഥലങ്ങളിൽ ആവർത്തിച്ച്</td><td>ഒരു ഫോർമുല ഷീറ്റ്, ഒരു ട്രെൻഡ് പട്ടിക, ഒരു revision ലിസ്റ്റ് എന്നിങ്ങനെ ഏകീകരിച്ചു</td></tr>
+              <tr><td>8</td><td>"സംഖ്യകൾ മാറ്റാതെ ചോദിച്ച ക്ലാസിക് ചോദ്യങ്ങൾ" പോലുള്ള ഉറപ്പില്ലാത്ത വാചകങ്ങൾ</td><td>ഒഴിവാക്കി</td></tr>
+              <tr><td>9</td><td>"നിങ്ങളുടെ നാലാം നിർദ്ദേശപ്രകാരം" പോലുള്ള ബാക്കിവന്ന മെറ്റാ വാചകങ്ങൾ</td><td>ഒഴിവാക്കി</td></tr>
+              <tr><td>10</td><td>Smart Tricks വിഭാഗം ഇല്ലായിരുന്നു</td><td>വിഭാഗം 17 പുതുതായി ചേർത്തു (8 ട്രിക്കുകൾ + negative marking വിശകലനം)</td></tr>
+              <tr><td>11</td><td>പുതിയ ഉദാഹരണങ്ങൾ കുറവ്</td><td>സോൾവ്ഡ് ഉദാഹരണങ്ങൾ, ഉപഗ്രൂപ്പ് റാങ്ക്, രണ്ട് ഘട്ടം, Max/Min — എല്ലാം ചേർത്തു</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important">
+          <span class="box-label">✅ അന്തിമ പരിശോധന</span>
+          <ul>
+            <li>ഒറിജിനലിലെ എല്ലാ ചോദ്യങ്ങളും ഉത്തരങ്ങളും നിലനിർത്തിയിട്ടുണ്ട്.</li>
+            <li>എല്ലാ കണക്കുകളും വീണ്ടും കണക്കാക്കി പരിശോധിച്ചു.</li>
+            <li>പുതിയ ചോദ്യങ്ങളെല്ലാം "പ്രാക്ടീസ്" എന്ന് ലേബൽ ചെയ്തിരിക്കുന്നു.</li>
+            <li>ഉറവിടം സ്ഥിരീകരിക്കാത്തവ "PYQ" എന്ന് ലേബൽ ചെയ്തിട്ടില്ല.</li>
+          </ul>
+        </div>
+
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light);">
+          ✅ അധ്യായം 12.4 സ്ഥാനനിർണ്ണയം / വരിയും നിരയും പൂർണ്ണമായി കവർ ചെയ്തിരിക്കുന്നു.
+        </p>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>12.4 Position Test</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'mental-ability-12.4-position-test';
-window.PART_TITLE = '12.4 Position Test';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme124Ranking');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme124Ranking', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone124Ranking_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone124Ranking_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone124Ranking_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaRanking124Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>

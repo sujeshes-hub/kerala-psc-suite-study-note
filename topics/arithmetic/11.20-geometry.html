@@ -1,106 +1,3257 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>11.20 Geometry - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – ജ്യാമിതി | അധ്യായം 11.20</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a148c; --primary-light: #6a1b9a;
+      --secondary: #00695c; --accent: #b83b2c;
+      --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
+      --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #4a148c; --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #cba6f7; --primary-light: #b4befe;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #6a1b9a; --table-alt: #181825;
+    }
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #7b4b1e; --primary-light: #9c6b3a;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #7b4b1e; --table-alt: #f2ead4;
+    }
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn { background: #181825; color: var(--text); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .layout { display: grid; grid-template-columns: 270px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12.5px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .progress-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 600; }
+    .progress-track { width: 100%; height: 8px; background: var(--light-bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+    .main-container { background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12); padding: 24px; min-width: 0; }
+    .chapter-header { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .utility-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--light-bg); padding: 10px 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .search-input { flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn { padding: 7px 12px; font-size: 13px; font-family: inherit; font-weight: 600; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--primary); cursor: pointer; transition: all 0.2s; }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+    body.recall-mode strong { filter: blur(5px); background: rgba(106, 27, 154, 0.15); border-radius: 4px; padding: 0 4px; cursor: pointer; transition: filter 0.2s ease; user-select: none; }
+    body.recall-mode strong:hover, body.recall-mode strong.revealed { filter: blur(0); }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 { background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 18.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; border-radius: 0; margin: 0; gap: 10px; }
+    .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--secondary); flex-shrink: 0; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box { padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick { display: block; margin-top: 6px; padding: 6px 10px; background: var(--memory-bg); border-left: 4px solid var(--memory-border); border-radius: 6px; font-size: 14.5px; line-height: 1.6; }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results { display: none; text-align: center; padding: 16px; margin-bottom: 16px; color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+    .quiz-dashboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--light-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; border: 2px solid var(--primary); position: sticky; top: 10px; z-index: 50; }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+    .question-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn { display: block; padding: 8px 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; font-family: inherit; text-align: left; width: 100%; }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button { padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: var(--bg); color: var(--text); transition: all 0.2s; }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block { display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border); }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    h4 { font-size: 15.5px; color: var(--secondary); margin: 12px 0 6px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    code { background: var(--light-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    .formula { background: var(--added-bg); padding: 8px 14px; border-radius: 8px; margin: 8px 0; border-left: 4px solid var(--added-border); font-family: 'Courier New', monospace; font-size: 14px; overflow-x: auto; }
+    .formula-lg { font-size: 15.5px; font-weight: 700; color: var(--primary); text-align: center; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden; padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">11.20 Geometry</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. അധ്യായ ആമുഖം</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. A. ബിന്ദു, രേഖ, കോണുകൾ</a></li>
+      <li><a href="#sec4">4. B. ത്രികോണങ്ങൾ</a></li>
+      <li><a href="#sec5">5. C. ബഹുഭുജങ്ങൾ &amp; വികർണ്ണങ്ങൾ</a></li>
+      <li><a href="#sec6">6. D. ചതുർഭുജങ്ങൾ &amp; ചക്രീയം</a></li>
+      <li><a href="#sec7">7. E. വൃത്തങ്ങൾ, ഞാണുകൾ, തൊടുവരകൾ</a></li>
+      <li><a href="#sec8">8. F. നിർദ്ദേശാങ്ക ജ്യാമിതി</a></li>
+      <li><a href="#sec9">9. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</a></li>
+      <li><a href="#sec10">10. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec11">11. PSC Exam Analysis</a></li>
+      <li><a href="#sec12">12. മുൻ ചോദ്യ ട്രെൻഡ്</a></li>
+      <li><a href="#sec13">13. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec14">14. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec15">15. മൂല്യങ്ങളും Mnemonics</a></li>
+      <li><a href="#sec16">16. Common PSC Traps</a></li>
+      <li><a href="#sec17">17. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec18">18. Smart Tricks</a></li>
+      <li><a href="#sec19">19. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec20">20. MCQ Practice</a></li>
+      <li><a href="#sec21">21. ഫോർമുല ഷീറ്റ്</a></li>
+      <li><a href="#sec22">22. Exam Tips &amp; Top Facts</a></li>
+      <li><a href="#sec23">23. Quick Revision</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 11.20 | ലഘുഗണിതവും മാനസിക ശേഷിയും</div>
+      <h1>ജ്യാമിതി – രേഖകൾ, കോണുകൾ, ത്രികോണങ്ങൾ, വൃത്തങ്ങൾ, നിർദ്ദേശാങ്കങ്ങൾ</h1>
+      <div class="subtitle">Pure Geometry | Kerala PSC Rank File – LGS/LDC, CPO, BFO, Degree Level Complete Verified Notes</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 തിരയുക (ഉദാ: പൂരകം, ബഹുഭുജം, Centroid, പൈതഗോറസ്, വൃത്തം)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനത്തിൽ)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — പൂരകം (90°), അനുപൂരകം (180°), ബഹുഭുജങ്ങളുടെ ആന്തര തുക (n−2)×180°, ബാഹ്യകോൺ തുക 360°, സമബഹുഭുജ ബാഹ്യകോൺ 360°/n, വികർണ്ണങ്ങൾ n(n−3)/2, ചക്രീയ ചതുർഭുജ എതിർകോൺ 180°, അർദ്ധവൃത്ത കോൺ 90°, കേന്ദ്രകോൺ = 2 × പരിധികോൺ, ത്രികോണ അസമത്വം</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ത്രികോണ കേന്ദ്രങ്ങൾ (Centroid, Incenter, Circumcenter, Orthocenter), പൈതഗോറസ് ത്രയങ്ങൾ, സർവ്വസമത (SSS/SAS/ASA/RHS), സദൃശ ത്രികോണ പരപ്പളവ് അംശബന്ധം, ചതുർഭുജ വികർണ്ണ ഗുണങ്ങൾ, ഞാണ്-കേന്ദ്ര ലംബം, തൊടുവര ⊥ ആരം, ദൂരം &amp; മധ്യബിന്ദു സൂത്രവാക്യം</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — സമാന്തര വരകളും ഛേദകവും (F/Z/C), ബാഹ്യകോൺ സിദ്ധാന്തം, ചരിവ് (slope), ഞാണ് സംഗമ നിയമം, തൊടുവര നീളം √(d²−r²)</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — പൊതു തൊടുവരകളുടെ എണ്ണം, വിഭജന സൂത്രവാക്യം, ത്രികോണ കേന്ദ്രം (centroid of coordinates)</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — യൂക്ലിഡ് (ജ്യാമിതിയുടെ പിതാവ്), ബൗധായനൻ, ആര്യഭടൻ, പൈതഗോറസ്</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം (2–3 മാർക്കിന്)</span>
+          <ul>
+            <li><strong>പൂരകം = 90° · അനുപൂരകം = 180°</strong></li>
+            <li><strong>ബഹുഭുജ ആന്തര തുക = (n−2)×180°</strong></li>
+            <li><strong>ബാഹ്യകോൺ തുക = 360° (ഏത് n-നും)</strong></li>
+            <li><strong>വികർണ്ണം = n(n−3)/2</strong></li>
+            <li><strong>ചക്രീയ ചതുർഭുജം എതിർകോൺ = 180°</strong></li>
+            <li><strong>അർദ്ധവൃത്ത കോൺ = 90°</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTRODUCTION -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖം</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> ബിന്ദുക്കൾ, വരകൾ, കോണുകൾ, രൂപങ്ങൾ എന്നിവയുടെ സ്വഭാവവും അവ തമ്മിലുള്ള ബന്ധവും പഠിക്കുന്ന ഗണിതശാഖയാണ് <strong>ജ്യാമിതി (Geometry)</strong>. തേനീച്ചക്കൂടിന്റെ ഷഡ്ഭുജ ആകൃതി മുതൽ പാലങ്ങളുടെ ഉറപ്പ് വരെ ഇതിന്റെ ഉദാഹരണങ്ങളാണ്.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>PSC ബന്ധം:</strong> LDC 883, Secretariat Assistant 573 തുടങ്ങിയ പരീക്ഷകളിൽ ഈ ഭാഗത്തുനിന്ന് സാധാരണ <strong>1–3 ചോദ്യങ്ങൾ</strong> വരാറുണ്ട് (ഇത് ഏകദേശ ട്രെൻഡ് മാത്രം; ഓരോ പരീക്ഷയിലും വ്യത്യാസപ്പെടാം).</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രധാന ചോദ്യ മേഖലകൾ:</strong> പൂരക-അനുപൂരക കോണുകൾ · ബഹുഭുജത്തിന്റെ ആന്തര/ബാഹ്യകോണുകൾ, വികർണ്ണങ്ങളുടെ എണ്ണം · ചക്രീയ ചതുർഭുജം · കേന്ദ്രകോൺ സിദ്ധാന്തം, അർദ്ധവൃത്തത്തിലെ കോൺ · ത്രികോണ അസമത്വം, ത്രികോണ കേന്ദ്രങ്ങൾ.</li>
+        </ul>
+
+        <h3>1.1 Syllabus Checklist</h3>
+        <ul class="checklist">
+          <li><strong>A:</strong> ബിന്ദു, രേഖ, രശ്മി, കോണുകളുടെ വർഗ്ഗീകരണം, പൂരക/അനുപൂരക കോണുകൾ, രേഖീയ ജോഡി, എതിർകോണുകൾ, സമാന്തര വരകളും ഛേദകവും</li>
+          <li><strong>B:</strong> ത്രികോണങ്ങൾ – തരങ്ങൾ, ബാഹ്യകോൺ സിദ്ധാന്തം, സർവ്വസമത, സദൃശത, പൈതഗോറസ്, 4 കേന്ദ്രങ്ങൾ</li>
+          <li><strong>C:</strong> ബഹുഭുജങ്ങളും വികർണ്ണങ്ങളും</li>
+          <li><strong>D:</strong> ചതുർഭുജങ്ങൾ, ചക്രീയ ചതുർഭുജം</li>
+          <li><strong>E:</strong> വൃത്തങ്ങൾ, ഞാണുകൾ, തൊടുവരകൾ</li>
+          <li><strong>F:</strong> നിർദ്ദേശാങ്ക ജ്യാമിതി അടിസ്ഥാനം – അകലം, മധ്യബിന്ദു, ചരിവ്, വിഭജന സൂത്രവാക്യം</li>
+        </ul>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഈ അധ്യായത്തിന്റെ സ്ഥാനം</span>
+          <p>ചുറ്റളവ്, പരപ്പളവ്, വ്യാപ്തം എന്നിവ 11.13–11.16 അധ്യായങ്ങളിൽ പൂർത്തിയായി. ഇവിടെ SCERT 8, 9, 10 ക്ലാസ് പാഠപുസ്തകങ്ങളിലെ <strong>ശുദ്ധ ജ്യാമിതി (Pure Geometry)</strong> ആണ് — അളവുകളല്ല, സ്വഭാവങ്ങളും ബന്ധങ്ങളുമാണ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BEHIND THE STORY -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ (Behind the Story)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>2.1 ത്രികോണ കോണുകളുടെ തുക = 180° എന്നതിന്റെ രഹസ്യം</h3>
+        <p>ഒരു കടലാസിൽ ഇഷ്ടമുള്ള ത്രികോണം വരച്ച് മൂന്ന് മൂലകളും കീറിയെടുക്കുക. അവ ഒരു നേർവരയോട് ചേർത്ത് വച്ചാൽ <strong>കൃത്യം ഒരു നേർവര (180°)</strong> ആകും. ത്രികോണം ഏതായാലും ഇത് സത്യമാണ്.</p>
+
+        <h3>2.2 ബഹുഭുജങ്ങളിലേക്കുള്ള വഴി</h3>
+        <ul>
+          <li>ചതുർഭുജത്തിൽ ഒരു വികർണ്ണം വരച്ചാൽ <strong>2 ത്രികോണം</strong> → 2 × 180° = 360°</li>
+          <li>പഞ്ചഭുജത്തിൽ <strong>3 ത്രികോണം</strong> → 3 × 180° = 540°</li>
+          <li>n വശമുള്ള ബഹുഭുജത്തിൽ <strong>(n − 2) ത്രികോണം</strong> → <strong>(n − 2) × 180°</strong></li>
+        </ul>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> ഇതാണ് ഫോർമുല മനഃപാഠമാക്കേണ്ടതില്ല എന്നതിന്റെ രഹസ്യം — ഒരു മൂലയിൽ നിന്ന് വികർണ്ണങ്ങൾ വരച്ച് ത്രികോണങ്ങൾ എണ്ണിയാൽ മതി.</p>
+
+        <h3>2.3 യൂക്ലിഡ് – ജ്യാമിതിയുടെ പിതാവ്</h3>
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>യൂക്ലിഡ് (Euclid):</strong> ബി.സി. മൂന്നാം നൂറ്റാണ്ടിലെ (ഏകദേശം ബി.സി. 300) ഗ്രീക്ക് ഗണിതശാസ്ത്രജ്ഞൻ. 13 വാല്യങ്ങളുള്ള <strong>'എലമെന്റ്സ്' (Elements)</strong> രചിച്ചു. <strong>ജ്യാമിതിയുടെ പിതാവ്</strong> എന്നറിയപ്പെടുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഇന്ത്യയിൽ:</strong> <strong>ബൗധായനൻ</strong> (ശുൽബസൂത്രങ്ങൾ), <strong>ആര്യഭടൻ</strong> എന്നിവർ ജ്യാമിതിക്ക് സംഭാവന നൽകി. (പൈതഗോറസ് സിദ്ധാന്തത്തിന്റെ ആദ്യകാല രൂപം ബൗധായന ശുൽബസൂത്രത്തിൽ കാണാം.)</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പൈതഗോറസ്</strong> (ഗ്രീക്ക്, ബി.സി. 6-ാം നൂറ്റാണ്ട്) – അദ്ദേഹത്തിന്റെ പേരിലുള്ള സിദ്ധാന്തം.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: BASIC CONCEPTS, LINES, ANGLES -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. A. അടിസ്ഥാന ആശയങ്ങൾ, രേഖകൾ, കോണുകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>3.1 ബിന്ദുവും വരകളും</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പദം</th><th>അർത്ഥം</th><th>ഓർമ്മിക്കാൻ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ബിന്ദു (Point)</strong></td><td>നീളം, വീതി, കനം ഇല്ല; സ്ഥാനം മാത്രം</td><td>പെൻസിൽ കുത്ത്</td></tr>
+              <tr><td><strong>രേഖാഖണ്ഡം (Line Segment)</strong></td><td>രണ്ട് അന്ത്യബിന്ദു, നിശ്ചിത നീളം</td><td>സ്കെയിലിലെ ഭാഗം</td></tr>
+              <tr><td><strong>രശ്മി (Ray)</strong></td><td>ഒരറ്റം മാത്രം; ഒരു ദിശയിൽ അനന്തം</td><td>ടോർച്ച് പ്രകാശം</td></tr>
+              <tr><td><strong>രേഖ (Line)</strong></td><td>രണ്ട് ദിശയിലും അനന്തം</td><td>അറ്റമില്ലാത്ത വര</td></tr>
+              <tr><td><strong>ഏകരേഖീയ ബിന്ദുക്കൾ (Collinear)</strong></td><td>ഒരേ നേർവരയിലെ ബിന്ദുക്കൾ</td><td>—</td></tr>
+              <tr><td><strong>സംഗമ രേഖകൾ (Concurrent)</strong></td><td>3+ വരകൾ ഒരേ ബിന്ദുവിൽ കൂടുന്നു</td><td>ആ ബിന്ദു = സംഗമബിന്ദു</td></tr>
+              <tr><td><strong>സമാന്തര രേഖകൾ (Parallel)</strong></td><td>ഒരിക്കലും കൂടിമുട്ടില്ല; ലംബ അകലം തുല്യം</td><td>റെയിൽപ്പാളം</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="important">
+          <span class="box-label">📌 ബിന്ദു-രേഖ ബന്ധം</span>
+          <ul>
+            <li>ഒരു ബിന്ദുവിലൂടെ <strong>അനന്തം</strong> നേർവരകൾ വരയ്ക്കാം</li>
+            <li><strong>രണ്ട് ബിന്ദുക്കളിലൂടെ ഒരേയൊരു</strong> നേർവര മാത്രം</li>
+            <li><strong>3 ഏകരേഖീയമല്ലാത്ത ബിന്ദുക്കളിലൂടെ</strong> ഒരു വൃത്തം വരയ്ക്കാം</li>
+          </ul>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <p>രണ്ട് വ്യത്യസ്ത നേർവരകൾ <strong>പരമാവധി ഒരു ബിന്ദുവിൽ</strong> മാത്രമേ കൂടിമുട്ടൂ. രണ്ട് ബിന്ദുക്കളിൽ കൂടിമുട്ടുന്ന രണ്ട് "നേർവരകൾ" യഥാർത്ഥത്തിൽ ഒരേ വരയാണ്.</p>
+        </div>
+
+        <h3>3.2 കോണുകളുടെ തരങ്ങൾ</h3>
+        <p>ഒരേ ബിന്ദുവിൽ (<strong>മൂല / Vertex</strong>) നിന്ന് പുറപ്പെടുന്ന രണ്ട് രശ്മികൾ ചേർന്നാണ് <strong>കോൺ (Angle)</strong> ഉണ്ടാകുന്നത്.</p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കോൺ</th><th>പരിധി</th></tr></thead>
+            <tbody>
+              <tr><td>ന്യൂനകോൺ (Acute)</td><td>0° &lt; θ &lt; 90°</td></tr>
+              <tr><td>മട്ടകോൺ (Right)</td><td>= 90°</td></tr>
+              <tr><td>ബൃഹത്കോൺ (Obtuse)</td><td>90° &lt; θ &lt; 180°</td></tr>
+              <tr><td>നേർകോൺ (Straight)</td><td>= 180°</td></tr>
+              <tr><td>പ്രതിവർത്തന കോൺ (Reflex)</td><td>180° &lt; θ &lt; 360°</td></tr>
+              <tr><td>പൂർണ്ണകോൺ (Complete)</td><td>= 360°</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>"ന്യൂനം = ചെറുത്, ബൃഹത് = വലുത്"</strong>. ന്യൂനകോൺ ചെറുത് (90°-ൽ താഴെ); ബൃഹത്കോൺ വലുത് (90°–180°).</p>
+        <p>📌 ലംബരേഖകൾ (Perpendicular): 90°-ൽ കൂടിമുട്ടുന്ന വരകൾ.</p>
+
+        <h3>3.3 പൂരകം, അനുപൂരകം (⭐ സ്ഥിരം ചോദ്യം)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>തുക</th><th>കോൺ θ ആയാൽ</th><th>സ്വന്തം കോണിന് തുല്യം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>പൂരക (Complementary)</strong></td><td><strong>90°</strong></td><td>90° − θ</td><td><strong>45°</strong></td></tr>
+              <tr><td><strong>അനുപൂരക (Supplementary)</strong></td><td><strong>180°</strong></td><td>180° − θ</td><td><strong>90°</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണങ്ങൾ</span>
+          <ul>
+            <li>35°-ന്റെ പൂരകം = 90 − 35 = <strong>55°</strong></li>
+            <li>105°-ന്റെ അനുപൂരകം = 180 − 105 = <strong>75°</strong></li>
+            <li>62°-ന്റെ പൂരകം = <strong>28°</strong>; അനുപൂരകം = <strong>118°</strong></li>
+          </ul>
+        </div>
+        <div class="important">
+          <span class="box-label">📌 രേഖീയ ജോഡി (Linear Pair)</span>
+          <p>ഒരു നേർവരയിൽ അടുത്തടുത്ത് വരുന്ന രണ്ട് കോണുകൾ; <strong>തുക 180°</strong>. (എല്ലാ രേഖീയ ജോഡിയും അനുപൂരകമാണ്; എല്ലാ അനുപൂരകവും രേഖീയ ജോഡിയാകണമെന്നില്ല.)</p>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Memory Trick:</span> <strong>C</strong> (Complementary) <strong>S</strong>-ന് മുമ്പ് വരുന്നു; <strong>C = 90, S = 180</strong> (Corner = 90°, Straight = 180°).</p>
+
+        <h3>3.4 എതിർകോണുകൾ (Vertically Opposite Angles)</h3>
+        <p>രണ്ട് നേർവരകൾ പരസ്പരം മുറിക്കുമ്പോൾ അഭിമുഖമായ കോണുകൾ <strong>എപ്പോഴും തുല്യം</strong>. അടുത്തടുത്ത കോണുകൾ രേഖീയ ജോഡിയാണ് (തുക 180°).</p>
+
+        <h3>3.5 സമാന്തര വരകളും ഛേദകവും (Transversal)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കോൺ ജോഡി</th><th>ആകൃതി</th><th>ബന്ധം</th></tr></thead>
+            <tbody>
+              <tr><td>സമാന കോണുകൾ (Corresponding)</td><td><strong>F</strong></td><td>തുല്യം</td></tr>
+              <tr><td>മറുകോണുകൾ (Alternate Interior)</td><td><strong>Z</strong></td><td>തുല്യം</td></tr>
+              <tr><td>സഹ-ആന്തര കോണുകൾ (Co-interior / Consecutive Interior)</td><td><strong>C / U</strong></td><td><strong>തുക 180°</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <p>ഈ ബന്ധങ്ങൾ വരകൾ <strong>സമാന്തരമാണെങ്കിൽ മാത്രം</strong>. വരകൾ സമാന്തരമല്ലെങ്കിൽ ഉപയോഗിക്കരുത്. നേരെമറിച്ച്, സമാന കോണുകളോ മറുകോണുകളോ തുല്യമാണെങ്കിൽ വരകൾ <strong>സമാന്തരമാണെന്ന് തെളിയിക്കാം</strong>.</p>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Parallel lines and transversal angles">
+            <rect x="10" y="10" width="680" height="280" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="350" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">സമാന്തര വരകളും ഛേദകവും – F, Z, C നിയമങ്ങൾ</text>
+
+            <!-- Two parallel lines -->
+            <line x1="60" y1="100" x2="640" y2="100" stroke="#1976d2" stroke-width="2.5"/>
+            <line x1="60" y1="220" x2="640" y2="220" stroke="#1976d2" stroke-width="2.5"/>
+            <text x="50" y="105" text-anchor="end" font-size="11" fill="#1976d2" font-weight="700">l₁</text>
+            <text x="50" y="225" text-anchor="end" font-size="11" fill="#1976d2" font-weight="700">l₂</text>
+
+            <!-- Transversal -->
+            <line x1="200" y1="40" x2="500" y2="280" stroke="#b83b2c" stroke-width="2.5"/>
+            <text x="510" y="285" font-size="11" fill="#b83b2c" font-weight="700">ഛേദകം</text>
+
+            <!-- Angle markers -->
+            <text x="230" y="90" font-size="12" font-weight="700" fill="#43a047">∠1</text>
+            <text x="340" y="90" font-size="12" font-weight="700" fill="#43a047">∠2</text>
+            <text x="245" y="215" font-size="12" font-weight="700" fill="#f9a825">∠3</text>
+            <text x="355" y="215" font-size="12" font-weight="700" fill="#f9a825">∠4</text>
+
+            <!-- F pattern highlight -->
+            <path d="M 230 100 Q 300 100 340 100" stroke="#43a047" stroke-width="3" fill="none" stroke-dasharray="4"/>
+            <text x="290" y="118" text-anchor="middle" font-size="10" font-weight="700" fill="#43a047">F (∠1 = ∠2, ∠3 = ∠4)</text>
+
+            <!-- Legend -->
+            <rect x="60" y="245" width="610" height="35" rx="6" fill="#fff8e1" stroke="#f9a825"/>
+            <text x="360" y="267" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">
+              F = Corresponding (തുല്യം) | Z = Alternate (തുല്യം) | C = Co-interior (തുക 180°)
+            </text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 3.1 – സമാന്തര വരകളെ ഛേദകം മുറിക്കുമ്പോൾ ഉണ്ടാകുന്ന കോൺ ബന്ധങ്ങൾ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TRIANGLES -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. B. ത്രികോണങ്ങളുടെ ജ്യാമിതി</span>
+      </h2>
+      <div class="section-body">
+        <p>മൂന്ന് വരകൾ ചേർന്ന അടഞ്ഞ രൂപം. <strong>ആന്തരകോണുകളുടെ തുക എപ്പോഴും 180°.</strong></p>
+
+        <h3>4.1 വർഗ്ഗീകരണം – വശങ്ങൾ അടിസ്ഥാനമാക്കി</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>സവിശേഷത</th></tr></thead>
+            <tbody>
+              <tr><td><strong>സമഭുജ (Equilateral)</strong></td><td>3 വശവും തുല്യം; ഓരോ കോണും 60°</td></tr>
+              <tr><td><strong>സമപാർശ്വ (Isosceles)</strong></td><td>2 വശം തുല്യം; അവയ്ക്ക് എതിർകോണുകളും തുല്യം</td></tr>
+              <tr><td><strong>വിഷമഭുജ (Scalene)</strong></td><td>3 വശവും 3 കോണും വ്യത്യസ്തം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>4.2 വർഗ്ഗീകരണം – കോണുകൾ അടിസ്ഥാനമാക്കി</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>തരം</th><th>സവിശേഷത</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ന്യൂനകോണ ത്രികോണം (Acute)</strong></td><td>3 കോണും 90°-ൽ താഴെ</td></tr>
+              <tr><td><strong>മട്ടത്രികോണം (Right)</strong></td><td>ഒരു കോൺ 90°; മറ്റ് രണ്ടും പൂരകം; ഏറ്റവും വലിയ വശം <strong>കർണ്ണം (Hypotenuse)</strong></td></tr>
+              <tr><td><strong>ബൃഹത്കോണ ത്രികോണം (Obtuse)</strong></td><td>ഒരു കോൺ 90°-ൽ കൂടുതൽ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="important">
+          <span class="box-label">📌 ക്രമ നിയമം</span>
+          <p><strong>ഒരു ത്രികോണത്തിൽ ഏറ്റവും വലിയ കോണിന് എതിർവശമാണ് ഏറ്റവും വലിയ വശം; ഏറ്റവും ചെറിയ കോണിന് എതിർവശം ഏറ്റവും ചെറിയ വശം.</strong></p>
+        </div>
+
+        <h3>4.3 ത്രികോണ അസമത്വ നിയമം (Triangle Inequality ⭐)</h3>
+        <div class="important">
+          <span class="box-label">📌 സുവർണ്ണ നിയമം</span>
+          <p>ഒരു ത്രികോണം സാധ്യമാകാൻ, <strong>ഏത് രണ്ട് വശങ്ങളുടെ തുകയും മൂന്നാം വശത്തേക്കാൾ വലുതായിരിക്കണം</strong>: a + b &gt; c</p>
+          <p>അതിനാൽ രണ്ട് വശങ്ങളുടെ <strong>വ്യത്യാസം &lt; മൂന്നാം വശം &lt; തുക</strong> (|a − b| &lt; c &lt; a + b).</p>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Quick Check:</span> രണ്ട് <strong>ചെറിയ</strong> വശങ്ങൾ കൂട്ടി <strong>വലിയ</strong> വശവുമായി താരതമ്യം ചെയ്താൽ മതി.</p>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>(A) 3, 4, 5 &nbsp;&nbsp; (B) 5, 6, 10 &nbsp;&nbsp; (C) 4, 5, 10 &nbsp;&nbsp; (D) 6, 6, 6 – ഏത് കൊണ്ട് ത്രികോണം സാധ്യമല്ല?</p>
+          <ul>
+            <li>(A) 3 + 4 = 7 &gt; 5 ✔</li>
+            <li>(B) 5 + 6 = 11 &gt; 10 ✔</li>
+            <li>(D) 6 + 6 = 12 &gt; 6 ✔</li>
+            <li>(C) 4 + 5 = 9 &lt; 10 ✘ → <strong>ഉത്തരം (C)</strong></li>
+          </ul>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <p>a + b = c ആയാൽ (ഉദാ: 3, 4, 7) ത്രികോണം <strong>സാധ്യമല്ല</strong> — വരകൾ ഒരേ നേർരേഖയിൽ വീഴും. "&gt;" കർശനമായിരിക്കണം (≥ അല്ല).</p>
+        </div>
+
+        <h3>4.4 ബാഹ്യകോൺ സിദ്ധാന്തം (SCERT ക്ലാസ് 8)</h3>
+        <div class="formula formula-lg">ബാഹ്യകോൺ = എതിർവശത്തെ രണ്ട് ആന്തരകോണുകളുടെ തുക</div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>രണ്ട് കോണുകൾ 40°, 60° ആയാൽ മൂന്നാമത്തെ കോൺ = 180 − 40 − 60 = <strong>80°</strong>.</p>
+          <ul>
+            <li>ബാഹ്യകോണുകൾ: 180 − 40 = <strong>140°</strong>, 180 − 60 = <strong>120°</strong>, 180 − 80 = <strong>100°</strong></li>
+            <li>പരിശോധന: 100° = 40° + 60° ✔</li>
+            <li>⭐ <strong>മൂന്ന് ബാഹ്യകോണുകളുടെ തുക = 140 + 120 + 100 = 360°</strong></li>
+          </ul>
+        </div>
+
+        <h3>4.5 പൈതഗോറസ് സിദ്ധാന്തം</h3>
+        <div class="formula formula-lg">മട്ടത്രികോണത്തിൽ: കർണ്ണം² = ലംബം² + പാദം² (c² = a² + b²)</div>
+
+        <div class="memory">
+          <span class="box-label">🧠 പ്രധാന ത്രയങ്ങൾ (Pythagorean Triplets)</span>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>മൂല ത്രയം</th><th>ഗുണിതങ്ങൾ</th></tr></thead>
+              <tbody>
+                <tr><td><strong>3, 4, 5</strong></td><td>6,8,10 | 9,12,15 | 12,16,20 | 15,20,25</td></tr>
+                <tr><td><strong>5, 12, 13</strong></td><td>10,24,26 | 15,36,39</td></tr>
+                <tr><td><strong>8, 15, 17</strong></td><td>16,30,34</td></tr>
+                <tr><td><strong>7, 24, 25</strong></td><td>14,48,50</td></tr>
+                <tr><td><strong>20, 21, 29</strong></td><td>—</td></tr>
+                <tr><td><strong>9, 40, 41</strong></td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <p>3, 4, 5 ത്രയത്തിൽ 5 ആണ് കർണ്ണം (ഏറ്റവും വലുത്). ചോദ്യത്തിൽ വശങ്ങൾ മട്ടത്രികോണമാണോ എന്ന് ചോദിച്ചാൽ <strong>വലിയ വശത്തിന്റെ വർഗ്ഗം = മറ്റ് രണ്ടിന്റെ വർഗ്ഗങ്ങളുടെ തുക</strong> എന്ന് പരിശോധിക്കുക.</p>
+        </div>
+
+        <h3>4.6 സർവ്വസമത്വം (Congruence)</h3>
+        <p>ആകൃതിയും വലിപ്പവും ഒരുപോലെ ഉള്ള ത്രികോണങ്ങൾ. <strong>സർവ്വസമത നിബന്ധനകൾ:</strong></p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>നിബന്ധന</th><th>അർത്ഥം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>SSS</strong></td><td>3 വശങ്ങൾ തുല്യം</td></tr>
+              <tr><td><strong>SAS</strong></td><td>2 വശങ്ങളും അവയ്ക്കിടയിലെ കോണും തുല്യം</td></tr>
+              <tr><td><strong>ASA</strong></td><td>2 കോണുകളും അവയ്ക്കിടയിലെ വശവും തുല്യം</td></tr>
+              <tr><td><strong>AAS</strong></td><td>2 കോണുകളും ഒരു വശവും തുല്യം</td></tr>
+              <tr><td><strong>RHS</strong></td><td>മട്ടത്രികോണത്തിൽ കർണ്ണവും ഒരു വശവും തുല്യം</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <ul>
+            <li><strong>AAA</strong> (മൂന്ന് കോൺ തുല്യം) സർവ്വസമത തെളിയിക്കില്ല — അത് <strong>സാദൃശ്യത്തിന്</strong> മാത്രം മതി.</li>
+            <li><strong>SSA</strong> സാധാരണ സർവ്വസമത നിബന്ധനയല്ല (മട്ടത്രികോണത്തിൽ മാത്രം RHS ആയി ബാധകം).</li>
+          </ul>
+        </div>
+
+        <h3>4.7 സദൃശ ത്രികോണങ്ങൾ (Similar Triangles)</h3>
+        <p>ആകൃതി ഒന്ന്, വലിപ്പം വ്യത്യസ്തം. <strong>കോണുകൾ തുല്യവും, തത്തുല്യ വശങ്ങൾ ഒരേ അംശബന്ധത്തിലും</strong> ആയിരിക്കും.</p>
+        <div class="important">
+          <span class="box-label">📌 വശാംശബന്ധം a : b ആയാൽ</span>
+          <ul>
+            <li>ചുറ്റളവുകളുടെ അംശബന്ധം = <strong>a : b</strong></li>
+            <li>പരപ്പളവുകളുടെ അംശബന്ധം = <strong>a² : b²</strong></li>
+            <li>ഉന്നതികളുടെ (Altitudes) അംശബന്ധം = a : b</li>
+            <li>മധ്യമങ്ങളുടെ (Medians) അംശബന്ധം = a : b</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>വശങ്ങളുടെ അംശബന്ധം 2 : 3 ആയാൽ പരപ്പളവ് അംശബന്ധം <strong>4 : 9</strong>; വശാംശബന്ധം 3 : 5 ആയാൽ പരപ്പളവ് <strong>9 : 25</strong>.</p>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>"നീളം ഒരു തവണ, വിസ്തീർണ്ണം രണ്ട് തവണ (വർഗ്ഗം)"</strong>.</p>
+
+        <h3>4.8 ത്രികോണത്തിന്റെ 4 കേന്ദ്രങ്ങൾ (⭐)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കേന്ദ്രം</th><th>ഏത് വരകളുടെ സംഗമം</th><th>പ്രത്യേകത</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>മധ്യമകേന്ദ്രം / ഭാരകേന്ദ്രം (Centroid)</strong></td>
+                <td><strong>മധ്യമങ്ങൾ</strong> (Medians: മൂലയിൽ നിന്ന് എതിർവശത്തിന്റെ മധ്യബിന്ദുവിലേക്ക്)</td>
+                <td>ഓരോ മധ്യമത്തെയും <strong>മൂലയിൽ നിന്ന് 2 : 1</strong> അംശബന്ധത്തിൽ ഭാഗിക്കുന്നു. <strong>എപ്പോഴും ത്രികോണത്തിനുള്ളിൽ</strong></td>
+              </tr>
+              <tr>
+                <td><strong>അന്തർവൃത്ത കേന്ദ്രം (Incenter)</strong></td>
+                <td><strong>കോൺ സമഭാജികൾ</strong> (Angle Bisectors)</td>
+                <td>3 വശങ്ങളിൽ നിന്നും തുല്യ അകലം; <strong>അന്തർവൃത്തത്തിന്റെ</strong> (Incircle) കേന്ദ്രം. എപ്പോഴും ഉള്ളിൽ</td>
+              </tr>
+              <tr>
+                <td><strong>പരിവൃത്ത കേന്ദ്രം (Circumcenter)</strong></td>
+                <td>വശങ്ങളുടെ <strong>ലംബസമഭാജികൾ</strong> (Perpendicular Bisectors)</td>
+                <td>3 മൂലകളിൽ നിന്നും തുല്യ അകലം; <strong>പരിവൃത്തത്തിന്റെ</strong> (Circumcircle) കേന്ദ്രം. മട്ടത്രികോണത്തിൽ <strong>കർണ്ണത്തിന്റെ മധ്യബിന്ദു</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ലംബകേന്ദ്രം (Orthocenter)</strong></td>
+                <td><strong>ഉന്നതികൾ</strong> (Altitudes: മൂലയിൽ നിന്ന് എതിർവശത്തേക്കുള്ള ലംബം)</td>
+                <td>മട്ടത്രികോണത്തിൽ <strong>മട്ടകോണുള്ള മൂല</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 സുപ്രധാന വസ്തുതകൾ</span>
+          <ul>
+            <li>⭐ <strong>സമഭുജ ത്രികോണത്തിൽ 4 കേന്ദ്രങ്ങളും ഒരേ ബിന്ദുവാണ്.</strong></li>
+            <li>⭐ <strong>കേന്ദ്രങ്ങൾ ത്രികോണത്തിന് പുറത്ത് വരുന്ന സാഹചര്യം:</strong> ബൃഹത്കോണ ത്രികോണത്തിൽ ലംബകേന്ദ്രവും പരിവൃത്ത കേന്ദ്രവും <strong>പുറത്താണ്</strong>. (മധ്യമകേന്ദ്രവും അന്തർവൃത്ത കേന്ദ്രവും എപ്പോഴും ഉള്ളിൽ.)</li>
+            <li>⭐ <strong>മട്ടത്രികോണത്തിൽ:</strong> പരിവൃത്ത കേന്ദ്രം = കർണ്ണത്തിന്റെ മധ്യബിന്ദു; ലംബകേന്ദ്രം = മട്ടമൂല.</li>
+          </ul>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four triangle centers">
+            <rect x="10" y="10" width="700" height="280" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">ത്രികോണത്തിന്റെ 4 കേന്ദ്രങ്ങൾ</text>
+
+            <!-- Triangle outline -->
+            <polygon points="360,70 130,230 590,230" fill="#fff8e1" stroke="#4a148c" stroke-width="2"/>
+
+            <!-- Medians (Centroid) -->
+            <line x1="360" y1="70" x2="360" y2="230" stroke="#43a047" stroke-width="1.8" stroke-dasharray="6"/>
+            <line x1="130" y1="230" x2="475" y2="150" stroke="#43a047" stroke-width="1.8" stroke-dasharray="6"/>
+            <line x1="590" y1="230" x2="245" y2="150" stroke="#43a047" stroke-width="1.8" stroke-dasharray="6"/>
+
+            <!-- Altitudes (Orthocenter) - drawn lightly -->
+            <line x1="360" y1="70" x2="360" y2="230" stroke="#b83b2c" stroke-width="1" opacity="0.4"/>
+            <text x="360" y="255" text-anchor="middle" font-size="11" font-weight="700" fill="#43a047">Centroid (2:1)</text>
+
+            <!-- Legend -->
+            <rect x="30" y="45" width="250" height="85" rx="6" fill="#e8f5e9" stroke="#43a047"/>
+            <text x="155" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#00695c">Centroid</text>
+            <text x="155" y="82" text-anchor="middle" font-size="10" fill="#14202b">മധ്യമങ്ങളുടെ സംഗമം</text>
+            <text x="155" y="97" text-anchor="middle" font-size="10" fill="#14202b">2 : 1 അംശബന്ധം</text>
+            <text x="155" y="112" text-anchor="middle" font-size="10" fill="#14202b">എപ്പോഴും ഉള്ളിൽ</text>
+
+            <rect x="440" y="45" width="250" height="85" rx="6" fill="#e3f2fd" stroke="#1976d2"/>
+            <text x="565" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">Circumcenter</text>
+            <text x="565" y="82" text-anchor="middle" font-size="10" fill="#14202b">ലംബസമഭാജികൾ</text>
+            <text x="565" y="97" text-anchor="middle" font-size="10" fill="#14202b">3 മൂലയിൽ നിന്നും തുല്യം</text>
+            <text x="565" y="112" text-anchor="middle" font-size="10" fill="#14202b">ബൃഹത്കോണത്തിൽ പുറത്ത്</text>
+
+            <rect x="30" y="245" width="250" height="40" rx="6" fill="#fce4ec" stroke="#c62828"/>
+            <text x="155" y="262" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">Incenter = കോൺ സമഭാജികൾ</text>
+            <text x="155" y="277" text-anchor="middle" font-size="10" fill="#14202b">എപ്പോഴും ഉള്ളിൽ</text>
+
+            <rect x="440" y="245" width="250" height="40" rx="6" fill="#fff3e0" stroke="#ef6c00"/>
+            <text x="565" y="262" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">Orthocenter = ഉന്നതികൾ</text>
+            <text x="565" y="277" text-anchor="middle" font-size="10" fill="#14202b">മട്ടത്രികോണത്തിൽ മട്ടമൂല</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 4.1 – ത്രികോണത്തിന്റെ 4 കേന്ദ്രങ്ങൾ ഒറ്റനോട്ടത്തിൽ.</div>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Memory Trick – 4 കേന്ദ്രങ്ങൾ</span>
+          <ul>
+            <li><strong>Centroid = Medians</strong> (C-M: "സി.എം." — മുഖ്യമന്ത്രി)</li>
+            <li><strong>Incenter = Interior bisectors</strong> (I = Inside, Incircle)</li>
+            <li><strong>Circumcenter = Circle through vertices</strong> (Perpendicular bisector)</li>
+            <li><strong>Orthocenter = Ortho (ലംബം) = Altitudes</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: POLYGONS & DIAGONALS -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. C. ബഹുഭുജങ്ങളും വികർണ്ണങ്ങളും</span>
+      </h2>
+      <div class="section-body">
+        <p>മൂന്നോ അതിലധികമോ വശങ്ങൾ ചേർന്ന അടഞ്ഞ രൂപം. വശങ്ങൾ = മൂലകൾ = കോണുകൾ = <strong>n</strong>.</p>
+
+        <h3>5.1 ബഹുഭുജങ്ങളുടെ പേരുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വശം</th><th>പേര്</th><th>വശം</th><th>പേര്</th></tr></thead>
+            <tbody>
+              <tr><td>3</td><td>ത്രികോണം (Triangle)</td><td>8</td><td>അഷ്ടഭുജം (Octagon)</td></tr>
+              <tr><td>4</td><td>ചതുർഭുജം (Quadrilateral)</td><td>9</td><td>നവഭുജം (Nonagon)</td></tr>
+              <tr><td>5</td><td>പഞ്ചഭുജം (Pentagon)</td><td>10</td><td>ദശഭുജം (Decagon)</td></tr>
+              <tr><td>6</td><td>ഷഡ്ഭുജം (Hexagon)</td><td>11</td><td>ഏകാദശഭുജം (Hendecagon)</td></tr>
+              <tr><td>7</td><td>സപ്തഭുജം (Heptagon)</td><td>12</td><td>ദ്വാദശഭുജം (Dodecagon)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Memory Trick:</span> ത്രി-ചതുർ-പഞ്ച-ഷഡ്-സപ്ത-അഷ്ട-നവ-ദശ = <strong>3-4-5-6-7-8-9-10</strong> (സംസ്കൃത അക്കങ്ങൾ).</p>
+        <p class="trick">🧠 <span class="trick-label">ഇംഗ്ലീഷ്:</span> <strong>T-Q-P-H-H-O-N-D</strong> (Triangle, Quad, Pentagon, Hexagon, Heptagon, Octagon, Nonagon, Decagon).</p>
+
+        <h3>5.2 6 സുവർണ്ണ നിയമങ്ങൾ (n വശങ്ങൾ)</h3>
+
+        <div class="important">
+          <span class="box-label">📌 നിയമം 1 – ആന്തരകോണുകളുടെ തുക</span>
+          <div class="formula formula-lg">ആന്തരകോൺ തുക = (n − 2) × 180°</div>
+          <p>(വശം 1 കൂടിയാൽ തുക 180° കൂടും.) ഫലം എപ്പോഴും 180-ന്റെ ഗുണിതം.</p>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 നിയമം 2 – ബാഹ്യകോണുകളുടെ തുക</span>
+          <div class="formula formula-lg">ബാഹ്യകോൺ തുക = 360° &nbsp; (n എത്രയായാലും!)</div>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 നിയമം 3 – ഒരു മൂലയിൽ</span>
+          <div class="formula formula-lg">ആന്തരകോൺ + ബാഹ്യകോൺ = 180°</div>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 നിയമം 4 – സമബഹുഭുജം (Regular Polygon – എല്ലാ വശവും കോണും തുല്യം)</span>
+          <div class="formula formula-lg">ഒരു ബാഹ്യകോൺ = 360° / n</div>
+          <div class="formula formula-lg">n = 360° / (ഒരു ബാഹ്യകോൺ)</div>
+          <div class="formula formula-lg">ഒരു ആന്തരകോൺ = 180° − 360°/n = [(n−2) × 180°] / n</div>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 നിയമം 5 – വികർണ്ണങ്ങൾ (Diagonals)</span>
+          <p>അടുത്തടുത്തല്ലാത്ത രണ്ട് മൂലകളെ യോജിപ്പിക്കുന്ന വര. ഒരു മൂലയിൽ നിന്ന് <strong>(n − 3)</strong> വികർണ്ണങ്ങൾ; അവ ബഹുഭുജത്തെ <strong>(n − 2)</strong> ത്രികോണങ്ങളാക്കുന്നു.</p>
+          <div class="formula formula-lg">ആകെ വികർണ്ണങ്ങൾ = n(n − 3) / 2</div>
+        </div>
+
+        <h3>5.3 പ്രധാന പട്ടിക (ഓർത്തുവയ്ക്കാം)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>ബഹുഭുജം</th>
+                <th>n</th>
+                <th>ആന്തര തുക</th>
+                <th>ഒരു ബാഹ്യകോൺ</th>
+                <th>ഒരു ആന്തരകോൺ</th>
+                <th>വികർണ്ണങ്ങൾ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>ത്രികോണം</td><td>3</td><td>180°</td><td>120°</td><td>60°</td><td>0</td></tr>
+              <tr><td>ചതുർഭുജം</td><td>4</td><td>360°</td><td>90°</td><td>90°</td><td>2</td></tr>
+              <tr><td>പഞ്ചഭുജം</td><td>5</td><td>540°</td><td>72°</td><td>108°</td><td>5</td></tr>
+              <tr><td>ഷഡ്ഭുജം</td><td>6</td><td>720°</td><td>60°</td><td>120°</td><td>9</td></tr>
+              <tr><td>സപ്തഭുജം</td><td>7</td><td>900°</td><td>≈51.43°</td><td>≈128.57°</td><td>14</td></tr>
+              <tr><td>അഷ്ടഭുജം</td><td>8</td><td>1080°</td><td>45°</td><td>135°</td><td>20</td></tr>
+              <tr><td>നവഭുജം</td><td>9</td><td>1260°</td><td>40°</td><td>140°</td><td>27</td></tr>
+              <tr><td>ദശഭുജം</td><td>10</td><td>1440°</td><td>36°</td><td>144°</td><td>35</td></tr>
+              <tr><td>ദ്വാദശഭുജം</td><td>12</td><td>1800°</td><td>30°</td><td>150°</td><td>54</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Mnemonic – അഷ്ടഭുജം 20 വികർണ്ണങ്ങൾ</span>
+          <p><strong>8 × (8 − 3) / 2 = 8 × 5 / 2 = 20</strong> – ചോദ്യ ഉത്തരമായി വരാറുണ്ട്.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <ul>
+            <li>ഈ ഫോർമുലകൾ <strong>കോൺവെക്സ് (Convex)</strong> ബഹുഭുജങ്ങൾക്കാണ്.</li>
+            <li>സമബഹുഭുജത്തിലെ ഒരു കോണിന്റെ ഫോർമുല <strong>സമബഹുഭുജത്തിന് മാത്രം</strong>; തുക ഏത് ബഹുഭുജത്തിനും.</li>
+            <li>"ബഹുഭുജ തുക" എന്ന് ചോദിച്ചാൽ ആന്തര തുക എന്നാണ് സാധാരണ അർത്ഥമാക്കുന്നത് — ചോദ്യം ബാഹ്യ തുക ചോദിക്കുന്നുണ്ടോ എന്ന് ശ്രദ്ധിക്കുക.</li>
+          </ul>
+        </div>
+
+        <h3>5.4 SCERT-ശൈലി ഉദാഹരണങ്ങൾ</h3>
+
+        <div class="added-fact">
+          <span class="box-label">➕ Q1. 27 വശങ്ങളുള്ള ബഹുഭുജത്തിന്റെ കോണുകളുടെ തുക?</span>
+          <p><strong>പരിഹാരം:</strong> (27 − 2) × 180° = 25 × 180° = <strong>4500°</strong></p>
+          <p><em>മറ്റ് ഉദാഹരണങ്ങൾ:</em> 52 വശം: 50 × 180 = <strong>9000°</strong>; 20 വശം: 18 × 180 = <strong>3240°</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ Q2. ആന്തരകോണുകളുടെ തുക 8100° ആയാൽ വശങ്ങൾ?</span>
+          <p><strong>പരിഹാരം:</strong> (n − 2) = 8100 ÷ 180 = 45 → <strong>n = 47</strong></p>
+          <p><em>മറ്റൊന്ന്:</em> തുക 2160° ആയാൽ (n − 2) = 12 → <strong>n = 14</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ Q3. 15 വശമുള്ള സമബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യ, ആന്തരകോൺ?</span>
+          <p><strong>പരിഹാരം:</strong> ബാഹ്യകോൺ = 360 ÷ 15 = <strong>24°</strong> → ആന്തരകോൺ = 180 − 24 = <strong>156°</strong></p>
+          <p><em>മറ്റൊന്ന്:</em> 18 വശം: ബാഹ്യ <strong>20°</strong>, ആന്തര <strong>160°</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ Q4. ഒരു ആന്തരകോൺ 168° ആയാൽ വശങ്ങൾ?</span>
+          <p><strong>പരിഹാരം:</strong> ബാഹ്യകോൺ = 180 − 168 = 12° → n = 360 ÷ 12 = <strong>30</strong></p>
+          <p><em>മറ്റൊന്ന്:</em> ആന്തരകോൺ 144° ആയാൽ ബാഹ്യ 36° → <strong>n = 10</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ Q5. ആന്തര, ബാഹ്യ തുകകൾ തുല്യമാകുന്നത് ഏത് ബഹുഭുജത്തിൽ?</span>
+          <p><strong>പരിഹാരം:</strong> (n − 2) × 180 = 360 → n − 2 = 2 → <strong>n = 4, ചതുർഭുജം</strong></p>
+          <p><em>ബന്ധം:</em> ബാഹ്യ തുക ആന്തരത്തിന്റെ <strong>ഇരട്ടി</strong>: ത്രികോണം (360 = 2 × 180); <strong>പകുതി</strong>: ഷഡ്ഭുജം (360 = ½ × 720)</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ Q6. 20 വികർണ്ണങ്ങളുള്ള ബഹുഭുജത്തിന് എത്ര വശം?</span>
+          <p><strong>പരിഹാരം:</strong> n(n − 3) = 40 → വ്യത്യാസം 3 വരുന്ന രണ്ട് സംഖ്യകളുടെ ഗുണനഫലം 40 → 8 × 5 → <strong>n = 8 (അഷ്ടഭുജം)</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Shortcut</span>
+          <p>ആന്തരകോൺ 150° ആയാൽ ബാഹ്യ 30° → n = 12. <strong>ബാഹ്യകോൺ എപ്പോഴും ആദ്യം കാണുക; അത് 360-ന്റെ ഹരണം (factor) ആയിരിക്കണം.</strong></p>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Polygon interior angle formula">
+            <rect x="10" y="10" width="700" height="240" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">ബഹുഭുജത്തെ ത്രികോണങ്ങളാക്കി മാറ്റൽ – ഫോർമുലയുടെ രഹസ്യം</text>
+
+            <!-- Triangle -->
+            <polygon points="80,80 50,170 110,170" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="80" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">n = 3</text>
+            <text x="80" y="210" text-anchor="middle" font-size="10" fill="#14202b">1 ത്രികോണം</text>
+            <text x="80" y="225" text-anchor="middle" font-size="10" fill="#14202b">180°</text>
+
+            <!-- Quadrilateral -->
+            <polygon points="230,70 320,70 320,170 230,170" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <line x1="230" y1="70" x2="320" y2="170" stroke="#1976d2" stroke-width="1" stroke-dasharray="3"/>
+            <text x="275" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">n = 4</text>
+            <text x="275" y="210" text-anchor="middle" font-size="10" fill="#14202b">2 ത്രികോണം</text>
+            <text x="275" y="225" text-anchor="middle" font-size="10" fill="#14202b">360°</text>
+
+            <!-- Pentagon -->
+            <polygon points="420,70 480,90 480,150 420,170 400,120" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <line x1="420" y1="70" x2="480" y2="150" stroke="#f9a825" stroke-width="1" stroke-dasharray="3"/>
+            <line x1="420" y1="70" x2="400" y2="120" stroke="#f9a825" stroke-width="1" stroke-dasharray="3"/>
+            <text x="440" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">n = 5</text>
+            <text x="440" y="210" text-anchor="middle" font-size="10" fill="#14202b">3 ത്രികോണം</text>
+            <text x="440" y="225" text-anchor="middle" font-size="10" fill="#14202b">540°</text>
+
+            <!-- Hexagon -->
+            <polygon points="580,80 630,100 630,150 580,170 530,150 530,100" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <line x1="580" y1="80" x2="630" y2="150" stroke="#c62828" stroke-width="1" stroke-dasharray="3"/>
+            <line x1="580" y1="80" x2="530" y2="150" stroke="#c62828" stroke-width="1" stroke-dasharray="3"/>
+            <line x1="580" y1="80" x2="580" y2="170" stroke="#c62828" stroke-width="1" stroke-dasharray="3"/>
+            <text x="580" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">n = 6</text>
+            <text x="580" y="210" text-anchor="middle" font-size="10" fill="#14202b">4 ത്രികോണം</text>
+            <text x="580" y="225" text-anchor="middle" font-size="10" fill="#14202b">720°</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 5.1 – ഒരു മൂലയിൽ നിന്ന് വികർണ്ണങ്ങൾ വരച്ചാൽ (n − 2) ത്രികോണങ്ങൾ കിട്ടും; തുക = (n − 2) × 180°.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: QUADRILATERALS & CYCLIC -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. D. ചതുർഭുജങ്ങൾ &amp; ചക്രീയ ചതുർഭുജം</span>
+      </h2>
+      <div class="section-body">
+        <p>നാല് വശം; <strong>കോണുകളുടെ തുക 360°</strong>.</p>
+
+        <h3>6.1 ചതുർഭുജങ്ങളുടെ തരങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചതുർഭുജം</th><th>പ്രധാന സവിശേഷതകൾ</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>സാമാന്തരികം (Parallelogram)</strong></td>
+                <td>എതിർവശങ്ങൾ തുല്യവും സമാന്തരവും; എതിർകോണുകൾ തുല്യം; അടുത്തടുത്ത കോണുകളുടെ തുക 180°; <strong>വികർണ്ണങ്ങൾ പരസ്പരം സമഭാഗിക്കുന്നു</strong></td>
+              </tr>
+              <tr>
+                <td><strong>സമഭുജ സാമാന്തരികം (Rhombus)</strong></td>
+                <td>4 വശവും തുല്യം; <strong>വികർണ്ണങ്ങൾ പരസ്പരം ലംബമായി (90°) സമഭാഗിക്കുന്നു</strong>; വികർണ്ണങ്ങൾ കോണുകളെ സമഭാഗിക്കുന്നു; വികർണ്ണങ്ങൾ <strong>തുല്യമല്ല</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ചതുരം (Rectangle)</strong></td>
+                <td>4 കോണും 90°; <strong>വികർണ്ണങ്ങൾ തുല്യം</strong> (പരസ്പരം സമഭാഗിക്കും, ലംബമല്ല)</td>
+              </tr>
+              <tr>
+                <td><strong>സമചതുരം (Square)</strong></td>
+                <td>4 വശവും 4 കോണും തുല്യം; <strong>വികർണ്ണങ്ങൾ തുല്യവും പരസ്പരം ലംബസമഭാഗിയും</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ലംബകം (Trapezium)</strong></td>
+                <td><strong>ഒരു ജോഡി</strong> എതിർവശങ്ങൾ മാത്രം സമാന്തരം. സമാന്തരവശങ്ങൾക്കിടയിലെ ഒരേ വശത്തെ കോണുകളുടെ തുക 180°. സമാന്തരമല്ലാത്ത വശങ്ങൾ തുല്യമായാൽ <strong>സമപാർശ്വ ലംബകം</strong></td>
+              </tr>
+              <tr>
+                <td><strong>പട്ടം (Kite)</strong></td>
+                <td>അടുത്തടുത്ത 2 ജോഡി വശങ്ങൾ തുല്യം; വികർണ്ണങ്ങൾ ലംബം</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 പ്രധാന ബന്ധങ്ങൾ</span>
+          <ul>
+            <li>⭐ <strong>സമചതുരം = ചതുരവും സമഭുജ സാമാന്തരികവും ഒരുമിച്ചാണ്.</strong></li>
+            <li>എല്ലാ ചതുരവും സാമാന്തരികമാണ്; എല്ലാ സമചതുരവും ചതുരമാണ്.</li>
+            <li>എല്ലാ സമചതുരവും സമഭുജ സാമാന്തരികമാണ്; പക്ഷേ എല്ലാ സമഭുജ സാമാന്തരികവും സമചതുരമല്ല.</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <ul>
+            <li>ചതുരത്തിന്റെ വികർണ്ണങ്ങൾ <strong>ലംബമല്ല</strong> (സമചതുരത്തിന്റേത് ലംബം).</li>
+            <li>സമഭുജ സാമാന്തരികത്തിന്റെ വികർണ്ണങ്ങൾ <strong>തുല്യമല്ല</strong>.</li>
+            <li>ബ്രിട്ടീഷ് / അമേരിക്കൻ പദപ്രയോഗത്തിൽ Trapezium, Trapezoid എന്നിവ പരസ്പരം മാറാം; SCERT/PSC-യിൽ "ലംബകം = ഒരു ജോഡി സമാന്തരം".</li>
+          </ul>
+        </div>
+
+        <h3>6.2 വികർണ്ണങ്ങളുടെ താരതമ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചതുർഭുജം</th><th>തുല്യം?</th><th>ലംബം?</th><th>പരസ്പരം സമഭാഗിക്കും?</th></tr></thead>
+            <tbody>
+              <tr><td>സാമാന്തരികം</td><td>✘</td><td>✘</td><td>✔</td></tr>
+              <tr><td>സമഭുജ സാമാന്തരികം</td><td>✘</td><td>✔</td><td>✔</td></tr>
+              <tr><td>ചതുരം</td><td>✔</td><td>✘</td><td>✔</td></tr>
+              <tr><td>സമചതുരം</td><td>✔</td><td>✔</td><td>✔</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Memory Trick:</span> "**ചതുരത്തിന് തുല്യം, സമഭുജത്തിന് ലംബം, സമചതുരത്തിന് രണ്ടും.**"</p>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagonals comparison">
+            <rect x="10" y="10" width="700" height="220" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">ചതുർഭുജ വികർണ്ണങ്ങൾ – തുല്യം vs ലംബം</text>
+
+            <!-- Parallelogram -->
+            <polygon points="50,80 160,80 140,160 30,160" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <line x1="50" y1="80" x2="140" y2="160" stroke="#b83b2c" stroke-width="1.5"/>
+            <line x1="160" y1="80" x2="30" y2="160" stroke="#b83b2c" stroke-width="1.5"/>
+            <text x="95" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">സാമാന്തരികം</text>
+            <text x="95" y="212" text-anchor="middle" font-size="10" fill="#14202b">✘ തുല്യം  ✘ ലംബം  ✔ സമഭാഗം</text>
+
+            <!-- Rhombus -->
+            <polygon points="245,60 320,120 245,180 170,120" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <line x1="245" y1="60" x2="245" y2="180" stroke="#b83b2c" stroke-width="1.5"/>
+            <line x1="170" y1="120" x2="320" y2="120" stroke="#b83b2c" stroke-width="1.5"/>
+            <text x="245" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">സമഭുജ സാമാന്തരികം</text>
+            <text x="245" y="217" text-anchor="middle" font-size="10" fill="#14202b">✘ തുല്യം  ✔ ലംബം  ✔ സമഭാഗം</text>
+
+            <!-- Rectangle -->
+            <rect x="380" y="70" width="130" height="100" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <line x1="380" y1="70" x2="510" y2="170" stroke="#b83b2c" stroke-width="1.5"/>
+            <line x1="510" y1="70" x2="380" y2="170" stroke="#b83b2c" stroke-width="1.5"/>
+            <text x="445" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#1565c0">ചതുരം</text>
+            <text x="445" y="212" text-anchor="middle" font-size="10" fill="#14202b">✔ തുല്യം  ✘ ലംബം  ✔ സമഭാഗം</text>
+
+            <!-- Square -->
+            <rect x="580" y="70" width="100" height="100" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <line x1="580" y1="70" x2="680" y2="170" stroke="#b83b2c" stroke-width="1.5"/>
+            <line x1="680" y1="70" x2="580" y2="170" stroke="#b83b2c" stroke-width="1.5"/>
+            <text x="630" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">സമചതുരം</text>
+            <text x="630" y="212" text-anchor="middle" font-size="10" fill="#14202b">✔ തുല്യം  ✔ ലംബം  ✔ സമഭാഗം</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 6.1 – വികർണ്ണങ്ങളുടെ 3 ഗുണങ്ങൾ: തുല്യം / ലംബം / പരസ്പരം സമഭാഗിക്കൽ.</div>
+        </div>
+
+        <h3>6.3 ചക്രീയ ചതുർഭുജം (Cyclic Quadrilateral – SCERT ക്ലാസ് 10)</h3>
+        <p>നാല് മൂലയും ഒരു വൃത്തത്തിൽ വരുന്ന ചതുർഭുജം.</p>
+
+        <div class="important">
+          <span class="box-label">📌 സുപ്രധാന സവിശേഷതകൾ</span>
+          <ul>
+            <li>⭐ <strong>എതിർകോണുകളുടെ തുക 180°:</strong> ∠A + ∠C = 180°, ∠B + ∠D = 180°</li>
+            <li>⭐ ഒരു വശം നീട്ടിയാൽ <strong>ബാഹ്യകോൺ = എതിർ ആന്തരകോൺ</strong></li>
+            <li>എല്ലാ <strong>ചതുരങ്ങളും സമചതുരങ്ങളും സമപാർശ്വ ലംബകങ്ങളും</strong> ചക്രീയമാണ്.</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <p>എല്ലാ സാമാന്തരികങ്ങളും ചക്രീയമല്ല (സാമാന്തരികം ചക്രീയമാകാൻ അത് <strong>ചതുരം</strong> ആകണം). സമഭുജ സാമാന്തരികം (ചതുരമല്ലാത്തത്) ചക്രീയമല്ല.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>ഒരു ചക്രീയ ചതുർഭുജത്തിന്റെ ഒരു കോൺ 85° ആയാൽ എതിർകോൺ?</p>
+          <p><strong>പരിഹാരം:</strong> 180 − 85 = <strong>95°</strong></p>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cyclic quadrilateral">
+            <rect x="10" y="10" width="580" height="280" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="300" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">ചക്രീയ ചതുർഭുജം – എതിർകോണുകളുടെ തുക 180°</text>
+
+            <!-- Circle -->
+            <circle cx="300" cy="160" r="105" fill="#e8f5e9" stroke="#43a047" stroke-width="1.5" opacity="0.5"/>
+
+            <!-- Quadrilateral ABCD -->
+            <polygon points="300,55 400,150 300,265 200,150" fill="#fff8e1" stroke="#b83b2c" stroke-width="2.5"/>
+
+            <!-- Vertices -->
+            <circle cx="300" cy="55" r="5" fill="#b83b2c"/>
+            <text x="300" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">A</text>
+            <circle cx="400" cy="150" r="5" fill="#b83b2c"/>
+            <text x="415" y="155" font-size="13" font-weight="700" fill="#b83b2c">B</text>
+            <circle cx="300" cy="265" r="5" fill="#b83b2c"/>
+            <text x="300" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">C</text>
+            <circle cx="200" cy="150" r="5" fill="#b83b2c"/>
+            <text x="185" y="155" text-anchor="end" font-size="13" font-weight="700" fill="#b83b2c">D</text>
+
+            <!-- Rule box -->
+            <rect x="30" y="220" width="180" height="60" rx="6" fill="#fce4ec" stroke="#c62828"/>
+            <text x="120" y="240" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">എതിർകോണുകൾ</text>
+            <text x="120" y="257" text-anchor="middle" font-size="11" fill="#14202b">∠A + ∠C = 180°</text>
+            <text x="120" y="273" text-anchor="middle" font-size="11" fill="#14202b">∠B + ∠D = 180°</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 6.2 – ചക്രീയ ചതുർഭുജത്തിൽ എതിർകോണുകൾ അനുപൂരകമാണ്.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: CIRCLES, CHORDS, TANGENTS -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. E. വൃത്തങ്ങൾ, ഞാണുകൾ, തൊടുവരകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>7.1 അടിസ്ഥാന പദങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പദം</th><th>അർത്ഥം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ആരം (Radius)</strong></td><td>കേന്ദ്രത്തിൽ നിന്ന് പരിധിയിലേക്കുള്ള ദൂരം (r)</td></tr>
+              <tr><td><strong>വ്യാസം (Diameter)</strong></td><td>2r; കേന്ദ്രത്തിലൂടെ കടന്നുപോകുന്ന ഏറ്റവും നീളമുള്ള ഞാൺ</td></tr>
+              <tr><td><strong>ഞാൺ (Chord)</strong></td><td>വൃത്തത്തിലെ രണ്ട് ബിന്ദുക്കളെ യോജിപ്പിക്കുന്ന രേഖാഖണ്ഡം</td></tr>
+              <tr><td><strong>ചാപം (Arc)</strong></td><td>വൃത്തത്തിന്റെ ഒരു ഭാഗം (Minor / Major)</td></tr>
+              <tr><td><strong>ഖണ്ഡം (Segment)</strong></td><td>ഞാണിനാൽ വേർതിരിക്കപ്പെടുന്ന വൃത്തത്തിന്റെ ഭാഗം</td></tr>
+              <tr><td><strong>സെക്ടർ (Sector)</strong></td><td>രണ്ട് ആരങ്ങളും ഒരു ചാപവും ചേർന്ന ഭാഗം</td></tr>
+              <tr><td><strong>ഛേദകം (Secant)</strong></td><td>വൃത്തത്തെ രണ്ട് ബിന്ദുക്കളിൽ ഛേദിക്കുന്ന നേർവര</td></tr>
+              <tr><td><strong>തൊടുവര (Tangent)</strong></td><td>വൃത്തത്തെ ഒരേയൊരു ബിന്ദുവിൽ തൊടുന്ന നേർവര</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>7.2 കേന്ദ്രകോൺ സിദ്ധാന്തം ⭐</h3>
+        <div class="important">
+          <span class="box-label">📌 സുപ്രധാന സിദ്ധാന്തം</span>
+          <div class="formula formula-lg">കേന്ദ്രകോൺ = 2 × (അതേ ചാപത്തിലെ പരിധികോൺ)</div>
+          <p>ഒരു ചാപം <strong>കേന്ദ്രത്തിൽ</strong> ഉണ്ടാക്കുന്ന കോൺ = <strong>മറുചാപത്തിലെ (പരിധിയിലെ) കോണിന്റെ ഇരട്ടി</strong>.</p>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>കേന്ദ്രകോൺ 110° ആയാൽ പരിധിയിലെ കോൺ = 110 ÷ 2 = <strong>55°</strong>.</p>
+          <p>പരിധിയിലെ കോൺ 65° ആയാൽ കേന്ദ്രകോൺ = 2 × 65 = <strong>130°</strong>.</p>
+        </div>
+
+        <h3>7.3 അർദ്ധവൃത്തത്തിലെ കോൺ = 90° ⭐</h3>
+        <div class="important">
+          <span class="box-label">📌 പ്രത്യേക കേസ്</span>
+          <p>വ്യാസത്തിന്റെ രണ്ടറ്റവും പരിധിയിലെ ഏതൊരു ബിന്ദുവുമായി യോജിപ്പിച്ചാൽ ഉണ്ടാകുന്ന കോൺ <strong>മട്ടകോൺ (90°)</strong>.</p>
+          <p><em>കാരണം:</em> കേന്ദ്രകോൺ 180° ആണ് (വ്യാസം ഒരു നേർവര) → പരിധിയിൽ 180 ÷ 2 = <strong>90°</strong>.</p>
+        </div>
+
+        <h3>7.4 ഒരേ ഖണ്ഡത്തിലെ കോണുകൾ തുല്യം</h3>
+        <p>ഒരു ഞാണിന്റെ ഒരേ വശത്തെ പരിധിയിലെ കോണുകൾ <strong>തുല്യം</strong>.</p>
+
+        <h3>7.5 ഞാൺ - കേന്ദ്ര ലംബം</h3>
+        <div class="formula formula-lg">r² = d² + (L/2)²</div>
+        <p>r = ആരം, d = കേന്ദ്രത്തിൽ നിന്നുള്ള ലംബ അകലം, L = ഞാണിന്റെ നീളം.</p>
+        <p>കേന്ദ്രത്തിൽ നിന്ന് ഞാണിലേക്കുള്ള ലംബം ഞാണിനെ <strong>സമഭാഗിക്കുന്നു</strong>.</p>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>r = 5, d = 3 → L/2 = √(25 − 9) = 4 → <strong>ഞാൺ = 8</strong> (3-4-5 ത്രയം!)</p>
+          <p>r = 13, d = 5 → L/2 = √(169 − 25) = 12 → <strong>ഞാൺ = 24</strong> (5-12-13 ത്രയം)</p>
+        </div>
+
+        <h3>7.6 ഞാണുകളുടെ സംഗമ നിയമം</h3>
+        <div class="formula formula-lg">AB, CD ഞാണുകൾ വൃത്തത്തിനുള്ളിൽ P-യിൽ കൂടിമുട്ടിയാൽ: PA × PB = PC × PD</div>
+
+        <h3>7.7 തൊടുവരകൾ (Tangents)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>വിവരം</th></tr></thead>
+            <tbody>
+              <tr><td>തൊടുന്ന ബിന്ദുക്കൾ</td><td>വൃത്തത്തെ <strong>ഒരേയൊരു ബിന്ദുവിൽ</strong> മാത്രം തൊടുന്നു</td></tr>
+              <tr><td>ആരവുമായുള്ള ബന്ധം</td><td>തൊടുബിന്ദുവിലെ <strong>ആരം തൊടുവരയ്ക്ക് ലംബം (90°)</strong></td></tr>
+              <tr><td>രണ്ട് തൊടുവരകൾ</td><td>പുറത്തെ ബിന്ദുവിൽ നിന്നുള്ള <strong>രണ്ട് തൊടുവരകളുടെ നീളം തുല്യം</strong></td></tr>
+              <tr><td>തൊടുവര-ഛേദക ബന്ധം</td><td><strong>PT² = PA × PB</strong></td></tr>
+              <tr><td>തൊടുവര നീളം</td><td>√(d² − r²) &nbsp; (d = കേന്ദ്രത്തിൽ നിന്ന് പുറത്തെ ബിന്ദുവിലേക്കുള്ള ദൂരം)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം</span>
+          <p>d = 13, r = 5 → തൊടുവര നീളം = √(169 − 25) = √144 = <strong>12</strong></p>
+          <p>d = 17, r = 8 → √(289 − 64) = √225 = <strong>15</strong> (8-15-17 ത്രയം)</p>
+        </div>
+
+        <h3>7.8 ഒരു ബിന്ദുവിൽ നിന്നുള്ള തൊടുവരകളുടെ എണ്ണം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ബിന്ദുവിന്റെ സ്ഥാനം</th><th>തൊടുവരകളുടെ എണ്ണം</th></tr></thead>
+            <tbody>
+              <tr><td>വൃത്തത്തിന് <strong>പുറത്ത്</strong></td><td><strong>2</strong></td></tr>
+              <tr><td>വൃത്തത്തിന്റെ <strong>മേൽ</strong> (പരിധിയിൽ)</td><td><strong>1</strong></td></tr>
+              <tr><td>വൃത്തത്തിന് <strong>ഉള്ളിൽ</strong></td><td><strong>0</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>7.9 രണ്ട് വൃത്തങ്ങളുടെ പൊതു തൊടുവരകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വൃത്തങ്ങളുടെ സ്ഥാനം</th><th>പൊതു തൊടുവരകൾ</th></tr></thead>
+            <tbody>
+              <tr><td>പൂർണ്ണമായി വേർപെട്ടിരിക്കുന്നു</td><td><strong>4</strong> (2 പുറം + 2 അകം)</td></tr>
+              <tr><td>പുറമെ തൊട്ടിരിക്കുന്നു</td><td><strong>3</strong> (2 പുറം + 1 അകം)</td></tr>
+              <tr><td>രണ്ട് ബിന്ദുവിൽ ഛേദിക്കുന്നു</td><td><strong>2</strong> (2 പുറം മാത്രം)</td></tr>
+              <tr><td>അകമെ തൊട്ടിരിക്കുന്നു</td><td><strong>1</strong> (1 പുറം മാത്രം)</td></tr>
+              <tr><td>ഒന്നിനുള്ളിൽ മറ്റൊന്ന്</td><td><strong>0</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ട്രാപ്പ്</span>
+          <ul>
+            <li>കേന്ദ്രകോൺ <strong>ഇരട്ടി</strong>; പരിധിയിലെ കോൺ <strong>പകുതി</strong>.</li>
+            <li>ചാപം ഒരേ വൃത്തത്തിലെ <strong>ഒരേ ചാപത്തിന്</strong> ആണ് ഈ ബന്ധം.</li>
+            <li>തൊടുവരയും ഛേദകവും ഒന്നല്ല: തൊടുവര 1 ബിന്ദു, ഛേദകം 2 ബിന്ദു.</li>
+          </ul>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circle theorems">
+            <rect x="10" y="10" width="680" height="300" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="350" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">വൃത്ത സിദ്ധാന്തങ്ങൾ – 3 പ്രധാന കേസുകൾ</text>
+
+            <!-- Case 1: Central angle = 2× inscribed -->
+            <circle cx="120" cy="170" r="70" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <circle cx="120" cy="170" r="4" fill="#43a047"/>
+            <text x="120" y="192" text-anchor="middle" font-size="10" font-weight="700" fill="#00695c">O</text>
+            <!-- Central angle -->
+            <line x1="120" y1="170" x2="65" y2="120" stroke="#b83b2c" stroke-width="2"/>
+            <line x1="120" y1="170" x2="175" y2="120" stroke="#b83b2c" stroke-width="2"/>
+            <!-- Inscribed angle point -->
+            <circle cx="120" cy="240" r="4" fill="#1976d2"/>
+            <text x="135" y="248" font-size="10" font-weight="700" fill="#1976d2">P</text>
+            <line x1="65" y1="120" x2="120" y2="240" stroke="#1976d2" stroke-width="1.5"/>
+            <line x1="175" y1="120" x2="120" y2="240" stroke="#1976d2" stroke-width="1.5"/>
+            <text x="120" y="300" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">കേന്ദ്രകോൺ = 2 × പരിധികോൺ</text>
+
+            <!-- Case 2: Semicircle 90° -->
+            <circle cx="350" cy="170" r="70" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <line x1="280" y1="170" x2="420" y2="170" stroke="#b83b2c" stroke-width="2"/>
+            <circle cx="280" cy="170" r="4" fill="#b83b2c"/>
+            <circle cx="420" cy="170" r="4" fill="#b83b2c"/>
+            <circle cx="350" cy="100" r="4" fill="#1976d2"/>
+            <line x1="280" y1="170" x2="350" y2="100" stroke="#1976d2" stroke-width="1.5"/>
+            <line x1="420" y1="170" x2="350" y2="100" stroke="#1976d2" stroke-width="1.5"/>
+            <text x="350" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">90°</text>
+            <text x="350" y="300" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">അർദ്ധവൃത്ത കോൺ = 90°</text>
+
+            <!-- Case 3: Tangent perpendicular to radius -->
+            <circle cx="580" cy="170" r="60" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <circle cx="580" cy="170" r="4" fill="#1976d2"/>
+            <text x="580" y="190" text-anchor="middle" font-size="10" font-weight="700" fill="#1565c0">O</text>
+            <!-- Radius to tangent point -->
+            <line x1="580" y1="170" x2="580" y2="110" stroke="#1976d2" stroke-width="2"/>
+            <circle cx="580" cy="110" r="4" fill="#b83b2c"/>
+            <text x="600" y="115" font-size="10" font-weight="700" fill="#b83b2c">T</text>
+            <!-- Tangent line -->
+            <line x1="490" y1="110" x2="670" y2="110" stroke="#b83b2c" stroke-width="2"/>
+            <!-- Right angle marker -->
+            <path d="M 580 110 L 595 110 L 595 125" stroke="#b83b2c" stroke-width="1.5" fill="none"/>
+            <text x="600" y="130" font-size="10" font-weight="700" fill="#b83b2c">90°</text>
+            <text x="580" y="300" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">തൊടുവര ⊥ ആരം</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 7.1 – വൃത്തത്തിലെ 3 പ്രധാന സിദ്ധാന്തങ്ങൾ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: COORDINATE GEOMETRY -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. F. നിർദ്ദേശാങ്ക ജ്യാമിതി അടിസ്ഥാനം</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>8.1 അടിസ്ഥാന ആശയങ്ങൾ</h3>
+        <ul>
+          <li><strong>X-അക്ഷം</strong> തിരശ്ചീനം; <strong>Y-അക്ഷം</strong> ലംബം. ഇവ കൂടിമുട്ടുന്ന ബിന്ദു <strong>മൂലബിന്ദു (Origin) = (0, 0)</strong>.</li>
+          <li>X-അക്ഷത്തിലെ ബിന്ദു: <strong>(x, 0)</strong>; Y-അക്ഷത്തിലെ ബിന്ദു: <strong>(0, y)</strong>.</li>
+          <li>ബിന്ദു എഴുതുമ്പോൾ ക്രമം <strong>(x, y)</strong> – ആദ്യം x (തിരശ്ചീനം), പിന്നെ y (ലംബം).</li>
+        </ul>
+
+        <h3>8.2 ചതുരാംശങ്ങൾ (Quadrants)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചതുരാംശം</th><th>x</th><th>y</th><th>ഉദാ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>I</strong> (ഒന്നാം)</td><td>+</td><td>+</td><td>(3, 4)</td></tr>
+              <tr><td><strong>II</strong> (രണ്ടാം)</td><td>−</td><td>+</td><td>(−3, 4)</td></tr>
+              <tr><td><strong>III</strong> (മൂന്നാം)</td><td>−</td><td>−</td><td>(−3, −4)</td></tr>
+              <tr><td><strong>IV</strong> (നാലാം)</td><td>+</td><td>−</td><td>(3, −4)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>I = (+,+) · II = (−,+) · III = (−,−) · IV = (+,−)</strong> — എതിർ ഘടികാരദിശയിൽ (counterclockwise).</p>
+
+        <h3>8.3 പ്രധാന സൂത്രവാക്യങ്ങൾ</h3>
+
+        <div class="formula formula-lg">മൂലബിന്ദുവിൽ നിന്ന് (x, y) ലേക്കുള്ള അകലം = √(x² + y²)</div>
+
+        <div class="formula formula-lg">രണ്ട് ബിന്ദുക്കൾ തമ്മിലുള്ള അകലം d = √[(x₂ − x₁)² + (y₂ − y₁)²]</div>
+
+        <div class="formula formula-lg">മധ്യബിന്ദു M = [(x₁ + x₂)/2, (y₁ + y₂)/2]</div>
+
+        <div class="formula formula-lg">ചരിവ് (Slope) m = (y₂ − y₁) / (x₂ − x₁)</div>
+
+        <div class="formula formula-lg">നേർവരയുടെ സമവാക്യം: y = mx + c</div>
+
+        <div class="formula formula-lg">ത്രികോണ കേന്ദ്രം (Centroid) = [(x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3]</div>
+
+        <div class="formula formula-lg">വിഭജന സൂത്രവാക്യം (m : n ആന്തരമായി) = [(mx₂ + nx₁)/(m+n), (my₂ + ny₁)/(m+n)]</div>
+
+        <h3>8.4 ചരിവ് ബന്ധങ്ങൾ</h3>
+        <div class="important">
+          <span class="box-label">📌 4 പ്രധാന നിയമങ്ങൾ</span>
+          <ul>
+            <li><strong>സമാന്തര വരകൾ:</strong> ചരിവ് തുല്യം (m₁ = m₂)</li>
+            <li><strong>ലംബ വരകൾ:</strong> ചരിവുകളുടെ ഗുണനഫലം −1 (m₁ × m₂ = −1)</li>
+            <li><strong>X-അക്ഷത്തിന് സമാന്തര വര:</strong> ചരിവ് = 0</li>
+            <li><strong>Y-അക്ഷത്തിന് സമാന്തര വര:</strong> ചരിവ് നിർവ്വചിതമല്ല (undefined)</li>
+          </ul>
+        </div>
+
+        <h3>8.5 ഉദാഹരണങ്ങൾ</h3>
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാ 1 – അകലം</span>
+          <p>(1, 2), (4, 6) തമ്മിലുള്ള അകലം = √[(4−1)² + (6−2)²] = √(9 + 16) = √25 = <strong>5</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാ 2 – മധ്യബിന്ദു</span>
+          <p>(2, 4), (6, 10)-ന്റെ മധ്യബിന്ദു = [(2+6)/2, (4+10)/2] = (4, 7) → <strong>(4, 7)</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാ 3 – ചരിവ്</span>
+          <p>(1, 2), (3, 6)-ന്റെ ചരിവ് = (6−2)/(3−1) = 4/2 = <strong>2</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാ 4 – മൂലബിന്ദുവിൽ നിന്നുള്ള അകലം</span>
+          <p>(3, 4)-ൽ നിന്ന് മൂലബിന്ദുവിലേക്കുള്ള അകലം = √(9 + 16) = √25 = <strong>5</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാ 5 – ത്രികോണ കേന്ദ്രം</span>
+          <p>(1, 2), (4, 5), (7, 3) എന്നീ മൂലകളുള്ള ത്രികോണത്തിന്റെ കേന്ദ്രം?</p>
+          <p>Centroid = [(1+4+7)/3, (2+5+3)/3] = [12/3, 10/3] = <strong>(4, 10/3)</strong></p>
+        </div>
+
+        <div class="viz-box">
+          <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cartesian coordinate system">
+            <rect x="10" y="10" width="580" height="380" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="300" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">കാർട്ടീഷ്യൻ നിർദ്ദേശാങ്ക വ്യവസ്ഥ</text>
+
+            <!-- Origin at (300, 210) -->
+            <!-- X-axis -->
+            <line x1="60" y1="210" x2="540" y2="210" stroke="#4a148c" stroke-width="2"/>
+            <polygon points="540,210 530,205 530,215" fill="#4a148c"/>
+            <text x="550" y="215" font-size="12" font-weight="700" fill="#4a148c">X</text>
+
+            <!-- Y-axis -->
+            <line x1="300" y1="60" x2="300" y2="360" stroke="#4a148c" stroke-width="2"/>
+            <polygon points="300,60 295,70 305,70" fill="#4a148c"/>
+            <text x="300" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">Y</text>
+
+            <!-- Origin -->
+            <circle cx="300" cy="210" r="4" fill="#b83b2c"/>
+            <text x="285" y="228" font-size="10" font-weight="700" fill="#b83b2c">O</text>
+
+            <!-- Quadrant labels -->
+            <text x="420" y="130" text-anchor="middle" font-size="14" font-weight="700" fill="#43a047" opacity="0.7">I (+,+)</text>
+            <text x="180" y="130" text-anchor="middle" font-size="14" font-weight="700" fill="#1976d2" opacity="0.7">II (−,+)</text>
+            <text x="180" y="300" text-anchor="middle" font-size="14" font-weight="700" fill="#f9a825" opacity="0.7">III (−,−)</text>
+            <text x="420" y="300" text-anchor="middle" font-size="14" font-weight="700" fill="#b83b2c" opacity="0.7">IV (+,−)</text>
+
+            <!-- Sample point -->
+            <circle cx="430" cy="130" r="5" fill="#43a047"/>
+            <text x="440" y="135" font-size="11" font-weight="700" fill="#00695c">P(3,4)</text>
+
+            <!-- Tick marks -->
+            <text x="330" y="225" font-size="9" fill="#4a5f72">1</text>
+            <text x="360" y="225" font-size="9" fill="#4a5f72">2</text>
+            <text x="390" y="225" font-size="9" fill="#4a5f72">3</text>
+            <text x="295" y="195" font-size="9" fill="#4a5f72" text-anchor="end">1</text>
+            <text x="295" y="170" font-size="9" fill="#4a5f72" text-anchor="end">2</text>
+            <text x="295" y="145" font-size="9" fill="#4a5f72" text-anchor="end">3</text>
+            <text x="295" y="120" font-size="9" fill="#4a5f72" text-anchor="end">4</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 8.1 – 4 ചതുരാംശങ്ങളും ചിഹ്ന കൺവെൻഷനും.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: DIAGRAMS & CHARTS -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>9.1 ബഹുഭുജ ഫോർമുല സംഗ്രഹം</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Polygon formula summary">
+            <rect x="10" y="10" width="700" height="360" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#4a148c">ബഹുഭുജ ഫോർമുല സംഗ്രഹം (n വശങ്ങൾ)</text>
+
+            <line x1="20" y1="50" x2="700" y2="50" stroke="#e1bee7"/>
+            <text x="20" y="70" font-size="11" font-weight="700" fill="#4a148c">ബഹുഭുജം</text>
+            <text x="150" y="70" font-size="11" font-weight="700" fill="#4a148c">n</text>
+            <text x="220" y="70" font-size="11" font-weight="700" fill="#4a148c">ആന്തര തുക</text>
+            <text x="380" y="70" font-size="11" font-weight="700" fill="#4a148c">ഒരു ബാഹ്യകോൺ</text>
+            <text x="540" y="70" font-size="11" font-weight="700" fill="#4a148c">വികർണ്ണങ്ങൾ</text>
+
+            <line x1="20" y1="80" x2="700" y2="80" stroke="#e1bee7"/>
+            <text x="20" y="100" font-size="11" fill="#14202b">ത്രികോണം</text>
+            <text x="150" y="100" font-size="11" fill="#14202b">3</text>
+            <text x="220" y="100" font-size="11" fill="#14202b">180°</text>
+            <text x="380" y="100" font-size="11" fill="#14202b">120°</text>
+            <text x="540" y="100" font-size="11" fill="#14202b">0</text>
+
+            <line x1="20" y1="112" x2="700" y2="112" stroke="#e1bee7"/>
+            <text x="20" y="132" font-size="11" fill="#14202b">ചതുർഭുജം</text>
+            <text x="150" y="132" font-size="11" fill="#14202b">4</text>
+            <text x="220" y="132" font-size="11" fill="#14202b">360°</text>
+            <text x="380" y="132" font-size="11" fill="#14202b">90°</text>
+            <text x="540" y="132" font-size="11" fill="#14202b">2</text>
+
+            <line x1="20" y1="144" x2="700" y2="144" stroke="#e1bee7"/>
+            <text x="20" y="164" font-size="11" fill="#14202b">പഞ്ചഭുജം</text>
+            <text x="150" y="164" font-size="11" fill="#14202b">5</text>
+            <text x="220" y="164" font-size="11" fill="#14202b">540°</text>
+            <text x="380" y="164" font-size="11" fill="#14202b">72°</text>
+            <text x="540" y="164" font-size="11" fill="#14202b">5</text>
+
+            <line x1="20" y1="176" x2="700" y2="176" stroke="#e1bee7"/>
+            <text x="20" y="196" font-size="11" fill="#14202b">ഷഡ്ഭുജം</text>
+            <text x="150" y="196" font-size="11" fill="#14202b">6</text>
+            <text x="220" y="196" font-size="11" fill="#14202b">720°</text>
+            <text x="380" y="196" font-size="11" fill="#14202b">60°</text>
+            <text x="540" y="196" font-size="11" fill="#14202b">9</text>
+
+            <line x1="20" y1="208" x2="700" y2="208" stroke="#e1bee7"/>
+            <text x="20" y="228" font-size="11" fill="#14202b">സപ്തഭുജം</text>
+            <text x="150" y="228" font-size="11" fill="#14202b">7</text>
+            <text x="220" y="228" font-size="11" fill="#14202b">900°</text>
+            <text x="380" y="228" font-size="11" fill="#14202b">≈51.43°</text>
+            <text x="540" y="228" font-size="11" fill="#14202b">14</text>
+
+            <line x1="20" y1="240" x2="700" y2="240" stroke="#e1bee7"/>
+            <text x="20" y="260" font-size="11" fill="#14202b">അഷ്ടഭുജം</text>
+            <text x="150" y="260" font-size="11" fill="#14202b">8</text>
+            <text x="220" y="260" font-size="11" fill="#14202b">1080°</text>
+            <text x="380" y="260" font-size="11" fill="#14202b">45°</text>
+            <text x="540" y="260" font-size="11" fill="#14202b">20</text>
+
+            <line x1="20" y1="272" x2="700" y2="272" stroke="#e1bee7"/>
+            <text x="20" y="292" font-size="11" fill="#14202b">നവഭുജം</text>
+            <text x="150" y="292" font-size="11" fill="#14202b">9</text>
+            <text x="220" y="292" font-size="11" fill="#14202b">1260°</text>
+            <text x="380" y="292" font-size="11" fill="#14202b">40°</text>
+            <text x="540" y="292" font-size="11" fill="#14202b">27</text>
+
+            <line x1="20" y1="304" x2="700" y2="304" stroke="#e1bee7"/>
+            <text x="20" y="324" font-size="11" fill="#14202b">ദശഭുജം</text>
+            <text x="150" y="324" font-size="11" fill="#14202b">10</text>
+            <text x="220" y="324" font-size="11" fill="#14202b">1440°</text>
+            <text x="380" y="324" font-size="11" fill="#14202b">36°</text>
+            <text x="540" y="324" font-size="11" fill="#14202b">35</text>
+
+            <line x1="20" y1="336" x2="700" y2="336" stroke="#e1bee7"/>
+            <text x="20" y="356" font-size="11" fill="#14202b">ദ്വാദശഭുജം</text>
+            <text x="150" y="356" font-size="11" fill="#14202b">12</text>
+            <text x="220" y="356" font-size="11" fill="#14202b">1800°</text>
+            <text x="380" y="356" font-size="11" fill="#14202b">30°</text>
+            <text x="540" y="356" font-size="11" fill="#14202b">54</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 9.1 – n=3 മുതൽ n=12 വരെയുള്ള എല്ലാ ബഹുഭുജ മൂല്യങ്ങളും.</div>
+        </div>
+
+        <h3>9.2 കോൺ ബന്ധങ്ങൾ – ഒറ്റനോട്ട ചാർട്ട്</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Angle relationships">
+            <rect x="10" y="10" width="700" height="240" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="34" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="14" font-weight="700" fill="#4a148c">കോൺ ബന്ധങ്ങൾ – ഒറ്റനോട്ടത്തിൽ</text>
+
+            <!-- Complementary -->
+            <rect x="30" y="60" width="155" height="170" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="107" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#00695c">പൂരകം</text>
+            <text x="107" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#4a148c">90°</text>
+            <text x="107" y="140" text-anchor="middle" font-size="11" fill="#14202b">Complementary</text>
+            <text x="107" y="165" text-anchor="middle" font-size="11" fill="#14202b">θ + (90−θ) = 90</text>
+            <text x="107" y="190" text-anchor="middle" font-size="11" fill="#14202b">സ്വന്തം = 45°</text>
+
+            <!-- Supplementary -->
+            <rect x="200" y="60" width="155" height="170" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="277" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">അനുപൂരകം</text>
+            <text x="277" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#4a148c">180°</text>
+            <text x="277" y="140" text-anchor="middle" font-size="11" fill="#14202b">Supplementary</text>
+            <text x="277" y="165" text-anchor="middle" font-size="11" fill="#14202b">θ + (180−θ) = 180</text>
+            <text x="277" y="190" text-anchor="middle" font-size="11" fill="#14202b">സ്വന്തം = 90°</text>
+
+            <!-- Linear pair -->
+            <rect x="370" y="60" width="155" height="170" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="447" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#1565c0">രേഖീയ ജോഡി</text>
+            <text x="447" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#4a148c">180°</text>
+            <text x="447" y="140" text-anchor="middle" font-size="11" fill="#14202b">Linear Pair</text>
+            <text x="447" y="165" text-anchor="middle" font-size="11" fill="#14202b">നേർവരയിൽ അടുത്ത്</text>
+            <text x="447" y="190" text-anchor="middle" font-size="11" fill="#14202b">എല്ലാം അനുപൂരകം</text>
+
+            <!-- Vertically opposite -->
+            <rect x="540" y="60" width="155" height="170" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="617" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#b83b2c">എതിർകോൺ</text>
+            <text x="617" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#4a148c">=</text>
+            <text x="617" y="140" text-anchor="middle" font-size="11" fill="#14202b">Vertically Opp.</text>
+            <text x="617" y="165" text-anchor="middle" font-size="11" fill="#14202b">രണ്ട് വര മുറിക്കുമ്പോൾ</text>
+            <text x="617" y="190" text-anchor="middle" font-size="11" fill="#14202b">എപ്പോഴും തുല്യം</text>
+
+            <text x="360" y="245" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">💡 C=90, S=180, L=180, V=Equal</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 9.2 – നാല് പ്രധാന കോൺ ബന്ധങ്ങൾ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: IMPORTANT FACTS -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. പ്രധാന വസ്തുതകൾ (Important Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ ഒറ്റനോട്ടത്തിൽ</span>
+          <ol>
+            <li>ത്രികോണ ആന്തരകോൺ തുക <strong>180°</strong>; ചതുർഭുജം <strong>360°</strong>.</li>
+            <li>ഏത് ബഹുഭുജത്തിന്റെയും ബാഹ്യകോൺ തുക <strong>360°</strong>.</li>
+            <li>സമബഹുഭുജത്തിൽ ഒരു ബാഹ്യകോൺ = <strong>360°/n</strong>.</li>
+            <li>വികർണ്ണങ്ങൾ = <strong>n(n − 3)/2</strong>.</li>
+            <li>മധ്യമകേന്ദ്രം മധ്യമത്തെ <strong>2 : 1</strong>-ൽ ഭാഗിക്കുന്നു.</li>
+            <li>മട്ടത്രികോണത്തിൽ പരിവൃത്ത കേന്ദ്രം = കർണ്ണത്തിന്റെ മധ്യബിന്ദു; ലംബകേന്ദ്രം = മട്ടമൂല.</li>
+            <li>ചക്രീയ ചതുർഭുജത്തിൽ എതിർകോൺ തുക <strong>180°</strong>.</li>
+            <li>അർദ്ധവൃത്തത്തിലെ കോൺ <strong>90°</strong>; കേന്ദ്രകോൺ = <strong>2 × പരിധികോൺ</strong>.</li>
+            <li>തൊടുവര ⊥ ആരം; പുറത്തെ ബിന്ദുവിൽ നിന്നുള്ള തൊടുവരകൾ തുല്യം.</li>
+            <li>സദൃശ ത്രികോണങ്ങളിൽ പരപ്പളവ് അംശബന്ധം = <strong>വശാംശബന്ധത്തിന്റെ വർഗ്ഗം</strong>.</li>
+            <li>പൂരകം = <strong>90°</strong>; അനുപൂരകം = <strong>180°</strong>.</li>
+            <li>ത്രികോണ അസമത്വം: <strong>a + b &gt; c</strong> (കർശനമായും വലുത്).</li>
+            <li>ചതുരം: വികർണ്ണം തുല്യം; സമഭുജം: ലംബം; സമചതുരം: രണ്ടും.</li>
+            <li>സർവ്വസമത നിബന്ധനകൾ: SSS, SAS, ASA, AAS, RHS (AAA ഇല്ല).</li>
+            <li>ഒരു ബിന്ദുവിൽ നിന്ന് വൃത്തത്തിന്: പുറത്ത് 2, മേൽ 1, ഉള്ളിൽ 0 തൊടുവരകൾ.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: PSC EXAM ANALYSIS -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. Kerala PSC Exam Analysis (പ്രാധാന്യ വിശകലനം)</span>
+      </h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കുക</span>
+          <p>ഈ റേറ്റിംഗ് <strong>ആവർത്തന സാധ്യതയുടെ ഏകദേശ വിലയിരുത്തലാണ്</strong>, ഉറപ്പല്ല. ഓരോ പരീക്ഷയിലെയും യഥാർത്ഥ ചോദ്യ വിതരണം വ്യത്യസ്തമായിരിക്കും.</p>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഭാഗം</th><th>പ്രാധാന്യം</th><th>സാധാരണ ചോദ്യ രീതി</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>ബഹുഭുജ കോണുകൾ, വികർണ്ണങ്ങൾ</strong></td>
+                <td>⭐⭐⭐ (ഉയർന്നത്)</td>
+                <td>ഫോർമുല പ്രയോഗം, വശങ്ങളുടെ എണ്ണം കാണൽ</td>
+              </tr>
+              <tr>
+                <td><strong>പൂരക / അനുപൂരക</strong></td>
+                <td>⭐⭐⭐</td>
+                <td>x-ൽ സമവാക്യം</td>
+              </tr>
+              <tr>
+                <td><strong>ത്രികോണം (തരം, അസമത്വം, കേന്ദ്രങ്ങൾ)</strong></td>
+                <td>⭐⭐</td>
+                <td>വസ്തുതാ ചോദ്യം</td>
+              </tr>
+              <tr>
+                <td><strong>ചതുർഭുജ സവിശേഷതകൾ</strong></td>
+                <td>⭐⭐</td>
+                <td>വികർണ്ണ ഗുണങ്ങൾ</td>
+              </tr>
+              <tr>
+                <td><strong>വൃത്ത സിദ്ധാന്തങ്ങൾ</strong></td>
+                <td>⭐⭐</td>
+                <td>കോൺ കാണൽ</td>
+              </tr>
+              <tr>
+                <td><strong>നിർദ്ദേശാങ്കങ്ങൾ</strong></td>
+                <td>⭐</td>
+                <td>അകലം / മധ്യബിന്ദു</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>11.1 ചോദ്യങ്ങളുടെ തരം തിരിച്ച്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചോദ്യ തരം</th><th>ഉദാഹരണം</th><th>ഉപയോഗിക്കേണ്ട സൂത്രവാക്യം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Direct n-ബഹുഭുജ തുക</strong></td><td>27 വശത്തിന്റെ തുക?</td><td>(n−2)×180°</td></tr>
+              <tr><td><strong>Reverse n കാണൽ</strong></td><td>തുക 1440° ആയാൽ n?</td><td>n = (തുക/180) + 2</td></tr>
+              <tr><td><strong>ബാഹ്യകോൺ → n</strong></td><td>ബാഹ്യ 30° ആയാൽ n?</td><td>n = 360/ബാഹ്യകോൺ</td></tr>
+              <tr><td><strong>വികർണ്ണം</strong></td><td>അഷ്ടഭുജത്തിന് എത്ര?</td><td>n(n−3)/2</td></tr>
+              <tr><td><strong>പൂരക-അനുപൂരക</strong></td><td>62°-ന്റെ പൂരകം?</td><td>90 − x / 180 − x</td></tr>
+              <tr><td><strong>ത്രികോണ അസമത്വം</strong></td><td>ഏത് ത്രികോണം സാധ്യം?</td><td>a + b &gt; c</td></tr>
+              <tr><td><strong>ചക്രീയ ചതുർഭുജം</strong></td><td>ഒരു കോൺ 85° → എതിർ?</td><td>180 − x</td></tr>
+              <tr><td><strong>കേന്ദ്രകോൺ</strong></td><td>കേന്ദ്ര 130° → പരിധി?</td><td>കേന്ദ്ര/2</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>11.2 സമയ തന്ത്രം</h3>
+        <ul>
+          <li>ഓരോ ജ്യാമിതി ചോദ്യത്തിനും <strong>30–45 സെക്കൻഡ്</strong> എന്ന് കരുതി പരിശീലിക്കുക.</li>
+          <li>ബഹുഭുജ ചോദ്യത്തിന് <strong>ബാഹ്യകോൺ ആദ്യം കാണുക</strong> — n എളുപ്പം കിട്ടും.</li>
+          <li>ചതുർഭുജ വികർണ്ണ ചോദ്യങ്ങളിൽ "തുല്യം/ലംബം" എന്ന് വേർതിരിക്കുക.</li>
+          <li>ത്രികോണ അസമത്വം: രണ്ട് ചെറിയ വശങ്ങൾ കൂട്ടി വലിയ വശവുമായി താരതമ്യം ചെയ്യുക.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 12: QUESTION TREND -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. മുൻ ചോദ്യ ട്രെൻഡ് (Previous Question Trend)</span>
+      </h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ ലേബൽ സൂചന</span>
+          <p>ഇത് പൊതു ട്രെൻഡ് സൂചന മാത്രമാണ്. ഇവിടെ നൽകിയിരിക്കുന്ന ചോദ്യങ്ങൾ SCERT-ശൈലിയിലുള്ള <strong>മാതൃകാ (practice) ചോദ്യങ്ങളാണ്</strong>; ഒരു യഥാർത്ഥ PSC ചോദ്യമായി അവയെ കണക്കാക്കരുത്. യഥാർത്ഥ PYQ വർഷം സഹിതം പരിശോധിക്കാൻ PSC ഔദ്യോഗിക ചോദ്യപേപ്പർ ഉപയോഗിക്കുക.</p>
+        </div>
+
+        <h3>12.1 പതിവായി കാണുന്ന ചോദ്യ ശൈലികൾ</h3>
+        <ul>
+          <li><strong>ബഹുഭുജങ്ങൾ:</strong> "n വശമുള്ള ബഹുഭുജത്തിന്റെ കോണുകളുടെ തുക", "സമബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യകോൺ / വശങ്ങളുടെ എണ്ണം", "വികർണ്ണങ്ങളുടെ എണ്ണം".</li>
+          <li><strong>ത്രികോണം:</strong> "ഏത് അളവുകൾ കൊണ്ട് ത്രികോണം വരയ്ക്കാം", "ബാഹ്യകോൺ", "മധ്യമകേന്ദ്രം".</li>
+          <li><strong>കോണുകൾ:</strong> "പൂരകം", "അനുപൂരകം", "x-ന്റെ വില".</li>
+          <li><strong>വൃത്തം:</strong> "അർദ്ധവൃത്തത്തിലെ കോൺ", "ചക്രീയ ചതുർഭുജം".</li>
+        </ul>
+
+        <h3>12.2 ചോദ്യ ശൈലി ഉദാഹരണങ്ങൾ</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 മാതൃക 1 – ബഹുഭുജ തുക</span>
+          <p><strong>ചോദ്യം:</strong> 20 വശമുള്ള ബഹുഭുജത്തിന്റെ ആന്തരകോണുകളുടെ തുക?</p>
+          <p><strong>പരിഹാരം:</strong> (20−2) × 180 = 18 × 180 = <strong>3240°</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📌 മാതൃക 2 – ബാഹ്യകോൺ → n</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു സമബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യകോൺ 24° ആയാൽ വശങ്ങൾ?</p>
+          <p><strong>പരിഹാരം:</strong> n = 360/24 = <strong>15</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📌 മാതൃക 3 – പൂരകം</span>
+          <p><strong>ചോദ്യം:</strong> 48°-ന്റെ പൂരക കോൺ?</p>
+          <p><strong>പരിഹാരം:</strong> 90 − 48 = <strong>42°</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📌 മാതൃക 4 – വികർണ്ണം</span>
+          <p><strong>ചോദ്യം:</strong> ദശഭുജത്തിന്റെ വികർണ്ണങ്ങളുടെ എണ്ണം?</p>
+          <p><strong>പരിഹാരം:</strong> 10 × 7 / 2 = <strong>35</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📌 മാതൃക 5 – കേന്ദ്രകോൺ</span>
+          <p><strong>ചോദ്യം:</strong> കേന്ദ്രകോൺ 130° ആയാൽ പരിധിയിലെ കോൺ?</p>
+          <p><strong>പരിഹാരം:</strong> 130 ÷ 2 = <strong>65°</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: CONFUSING FACTS -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ആശയക്കുഴപ്പം</th><th>വ്യക്തത</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>പൂരകം vs അനുപൂരകം</strong></td>
+                <td>പൂരകം <strong>90°</strong>, അനുപൂരകം <strong>180°</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ബാഹ്യകോൺ തുക</strong></td>
+                <td>എപ്പോഴും <strong>360°</strong> (n-നെ ആശ്രയിക്കില്ല)</td>
+              </tr>
+              <tr>
+                <td><strong>ആന്തരകോൺ തുക</strong></td>
+                <td><strong>(n − 2) × 180°</strong> (n-നെ ആശ്രയിക്കും)</td>
+              </tr>
+              <tr>
+                <td><strong>ചതുരം vs സമഭുജ സാമാന്തരികം</strong></td>
+                <td>ചതുരം: വികർണ്ണം <strong>തുല്യം</strong>; സമഭുജം: വികർണ്ണം <strong>ലംബം</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Centroid vs Orthocenter</strong></td>
+                <td>Centroid = <strong>മധ്യമം</strong>; Orthocenter = <strong>ഉന്നതി</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Incenter vs Circumcenter</strong></td>
+                <td>Incenter = <strong>കോൺ സമഭാജി</strong> (അകത്തെ വൃത്തം); Circumcenter = <strong>ലംബസമഭാജി</strong> (പുറത്തെ വൃത്തം)</td>
+              </tr>
+              <tr>
+                <td><strong>സർവ്വസമം vs സദൃശം</strong></td>
+                <td>സർവ്വസമം: വലിപ്പവും ആകൃതിയും; സദൃശം: <strong>ആകൃതി മാത്രം</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ഞാൺ vs വ്യാസം</strong></td>
+                <td>വ്യാസം = കേന്ദ്രത്തിലൂടെയുള്ള <strong>ഏറ്റവും നീളമുള്ള ഞാൺ</strong></td>
+              </tr>
+              <tr>
+                <td><strong>തൊടുവര vs ഛേദകം</strong></td>
+                <td>തൊടുവര <strong>1 ബിന്ദു</strong>; ഛേദകം <strong>2 ബിന്ദു</strong></td>
+              </tr>
+              <tr>
+                <td><strong>വികർണ്ണം vs വശം</strong></td>
+                <td>വികർണ്ണം <strong>അടുത്തടുത്തല്ലാത്ത</strong> മൂലകളെ യോജിപ്പിക്കുന്നു</td>
+              </tr>
+              <tr>
+                <td><strong>ആന്തരകോൺ vs ബാഹ്യകോൺ</strong></td>
+                <td>ഒരു മൂലയിൽ: ആന്തര + ബാഹ്യ = <strong>180°</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ഒരേ ചുറ്റളവിൽ വൃത്തം vs സമചതുരം</strong></td>
+                <td>വൃത്തത്തിനാണ് <strong>കൂടുതൽ പരപ്പളവ്</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ PSC Trap Box</span>
+          <p><strong>"ഒരു ബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യകോൺ 40° (സമബഹുഭുജം). ഒരു ആന്തരകോൺ എത്ര?"</strong></p>
+          <p><strong>തെറ്റ്:</strong> n = 360/40 = 9 എന്ന് മാത്രം എഴുതുക (ചോദിച്ചത് കോൺ ആണ്, n അല്ല!)</p>
+          <p><strong>ശരി:</strong> ആന്തരകോൺ = 180 − 40 = <strong>140°</strong></p>
+          <p><em>ചോദ്യം ഡിഗ്രിയാണോ വശങ്ങളുടെ എണ്ണമാണോ എന്ന് നോക്കുക.</strong></em></p>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 ചെറിയ പരിശോധന</span>
+          <p><strong>"ഒരു ത്രികോണത്തിന്റെ രണ്ട് വശങ്ങൾ 5, 9. മൂന്നാം വശം എത്ര പരിധിയിൽ?"</strong></p>
+          <p>|9−5| &lt; x &lt; 9+5 → <strong>4 &lt; x &lt; 14</strong> (4-ഉം 14-ഉം ഉൾപ്പെടില്ല!)</p>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 രണ്ടാം പരിശോധന</span>
+          <p><strong>"സമചതുരത്തിന്റെ ഒരു വികർണ്ണം 10 സെ.മീ. വശം?"</strong></p>
+          <p>d = a√2 → 10 = a√2 → a = 10/√2 = 5√2 = <strong>5√2 സെ.മീ ≈ 7.07</strong></p>
+          <p><em>കെണി:</em> d = a എന്നോ d = 2a എന്നോ തെറ്റായി കരുതൽ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: COMPARISON TABLES -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. താരതമ്യ പട്ടികകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>14.1 കോൺ ജോഡികൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ജോഡി</th><th>നിബന്ധന</th></tr></thead>
+            <tbody>
+              <tr><td>പൂരകം</td><td>തുക <strong>90°</strong></td></tr>
+              <tr><td>അനുപൂരകം</td><td>തുക <strong>180°</strong></td></tr>
+              <tr><td>രേഖീയ ജോഡി</td><td>അടുത്ത്, നേർവരയിൽ, തുക <strong>180°</strong></td></tr>
+              <tr><td>എതിർകോൺ</td><td><strong>തുല്യം</strong></td></tr>
+              <tr><td>സമാന കോൺ (F)</td><td><strong>തുല്യം</strong> (സമാന്തര വരകൾ)</td></tr>
+              <tr><td>മറുകോൺ (Z)</td><td><strong>തുല്യം</strong> (സമാന്തര വരകൾ)</td></tr>
+              <tr><td>സഹ-ആന്തര (C)</td><td>തുക <strong>180°</strong> (സമാന്തര വരകൾ)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>14.2 സർവ്വസമത vs സാദൃശ്യം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>സവിശേഷത</th><th>സർവ്വസമം (Congruent)</th><th>സദൃശം (Similar)</th></tr></thead>
+            <tbody>
+              <tr><td>ആകൃതി</td><td>ഒന്ന്</td><td>ഒന്ന്</td></tr>
+              <tr><td>വലിപ്പം</td><td>ഒന്ന്</td><td>വ്യത്യസ്തം</td></tr>
+              <tr><td>നിബന്ധന</td><td>SSS, SAS, ASA, AAS, RHS</td><td>AAA / AA, വശാംശബന്ധം</td></tr>
+              <tr><td>ചിഹ്നം</td><td>≅</td><td>~</td></tr>
+              <tr><td>പരപ്പളവ്</td><td>തുല്യം</td><td>വശാംശബന്ധത്തിന്റെ വർഗ്ഗം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>14.3 ചതുർഭുജ വികർണ്ണ ഗുണങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ചതുർഭുജം</th><th>തുല്യം</th><th>ലംബം</th><th>സമഭാഗിക്കും</th></tr></thead>
+            <tbody>
+              <tr><td>സാമാന്തരികം</td><td>✘</td><td>✘</td><td>✔</td></tr>
+              <tr><td>സമഭുജ സാമാന്തരികം</td><td>✘</td><td>✔</td><td>✔</td></tr>
+              <tr><td>ചതുരം</td><td>✔</td><td>✘</td><td>✔</td></tr>
+              <tr><td>സമചതുരം</td><td>✔</td><td>✔</td><td>✔</td></tr>
+              <tr><td>ലംബകം</td><td>സമപാർശ്വത്തിൽ ✔</td><td>✘</td><td>✘</td></tr>
+              <tr><td>പട്ടം</td><td>✘</td><td>✔</td><td>ഒന്ന് മാത്രം</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>14.4 ത്രികോണ കേന്ദ്രങ്ങൾ – ഒറ്റനോട്ടം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കേന്ദ്രം</th><th>വരകൾ</th><th>സ്ഥാനം</th><th>പ്രത്യേകത</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Centroid</strong></td><td>മധ്യമങ്ങൾ</td><td>എപ്പോഴും ഉള്ളിൽ</td><td>2 : 1 അംശബന്ധം</td></tr>
+              <tr><td><strong>Incenter</strong></td><td>കോൺ സമഭാജികൾ</td><td>എപ്പോഴും ഉള്ളിൽ</td><td>അന്തർവൃത്തം</td></tr>
+              <tr><td><strong>Circumcenter</strong></td><td>ലംബസമഭാജികൾ</td><td>ത്രികോണ തരത്തെ ആശ്രയിച്ച്</td><td>പരിവൃത്തം</td></tr>
+              <tr><td><strong>Orthocenter</strong></td><td>ഉന്നതികൾ</td><td>ത്രികോണ തരത്തെ ആശ്രയിച്ച്</td><td>മട്ടത്രികോണത്തിൽ മട്ടമൂല</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>14.5 ത്രികോണ തരം vs കേന്ദ്ര സ്ഥാനം</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ത്രികോണം</th><th>Circumcenter</th><th>Orthocenter</th></tr></thead>
+            <tbody>
+              <tr><td>ന്യൂനകോൺ</td><td>ഉള്ളിൽ</td><td>ഉള്ളിൽ</td></tr>
+              <tr><td>മട്ടത്രികോൺ</td><td>കർണ്ണ മധ്യബിന്ദു (വശത്ത്)</td><td>മട്ടമൂല (ശീർഷത്തിൽ)</td></tr>
+              <tr><td>ബൃഹത്കോൺ</td><td>പുറത്ത്</td><td>പുറത്ത്</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>14.6 ബഹുഭുജ സമബഹുഭുജ മൂല്യങ്ങൾ – ഓർമ്മ പട്ടിക</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>n</th><th>ബഹുഭുജം</th><th>ആന്തര തുക</th><th>ആന്തരകോൺ</th><th>ബാഹ്യകോൺ</th><th>വികർണ്ണം</th></tr></thead>
+            <tbody>
+              <tr><td>3</td><td>ത്രികോണം</td><td>180°</td><td>60°</td><td>120°</td><td>0</td></tr>
+              <tr><td>4</td><td>ചതുർഭുജം</td><td>360°</td><td>90°</td><td>90°</td><td>2</td></tr>
+              <tr><td>5</td><td>പഞ്ചഭുജം</td><td>540°</td><td>108°</td><td>72°</td><td>5</td></tr>
+              <tr><td><strong>6</strong></td><td><strong>ഷഡ്ഭുജം</strong></td><td><strong>720°</strong></td><td><strong>120°</strong></td><td><strong>60°</strong></td><td><strong>9</strong></td></tr>
+              <tr><td>7</td><td>സപ്തഭുജം</td><td>900°</td><td>≈128.57°</td><td>≈51.43°</td><td>14</td></tr>
+              <tr><td><strong>8</strong></td><td><strong>അഷ്ടഭുജം</strong></td><td><strong>1080°</strong></td><td><strong>135°</strong></td><td><strong>45°</strong></td><td><strong>20</strong></td></tr>
+              <tr><td>9</td><td>നവഭുജം</td><td>1260°</td><td>140°</td><td>40°</td><td>27</td></tr>
+              <tr><td><strong>10</strong></td><td><strong>ദശഭുജം</strong></td><td><strong>1440°</strong></td><td><strong>144°</strong></td><td><strong>36°</strong></td><td><strong>35</strong></td></tr>
+              <tr><td>12</td><td>ദ്വാദശഭുജം</td><td>1800°</td><td>150°</td><td>30°</td><td>54</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: KEY VALUES & MNEMONICS -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. പ്രധാന മൂല്യങ്ങൾ &amp; മെമ്മറി ട്രിക്കുകൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>15.1 പ്രധാന ബഹുഭുജ മൂല്യങ്ങൾ (Polygon Milestones)</h3>
+        <div class="style-grid">
+          <ul>
+            <li><strong>360</strong> → ബാഹ്യകോൺ തുക; ചതുർഭുജ ആന്തര തുക</li>
+            <li><strong>540</strong> → പഞ്ചഭുജം</li>
+            <li><strong>720</strong> → ഷഡ്ഭുജം</li>
+            <li><strong>1080</strong> → അഷ്ടഭുജം</li>
+            <li><strong>1440</strong> → ദശഭുജം</li>
+          </ul>
+          <ul>
+            <li><strong>120° / 90° / 72° / 60° / 45° / 36°</strong> → n = 3, 4, 5, 6, 8, 10 എന്നിവയിലെ ബാഹ്യകോൺ</li>
+            <li><strong>9, 20, 35, 54</strong> → ഷഡ്ഭുജം, അഷ്ടഭുജം, ദശഭുജം, ദ്വാദശഭുജം എന്നിവയുടെ വികർണ്ണങ്ങൾ</li>
+          </ul>
+        </div>
+
+        <h3>15.2 മെമ്മറി ട്രിക്കുകൾ (Mnemonics)</h3>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – ത്രികോണ കേന്ദ്രങ്ങൾ</span>
+          <p><strong>"മധ്യമം – മധ്യമകേന്ദ്രം; ഉന്നതി – ലംബകേന്ദ്രം"</strong> (Median–Centroid; Altitude–Orthocenter).</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – പൂരക = 90, അനുപൂരക = 180</span>
+          <p><strong>C</strong> (Corner/Complementary) = <strong>90</strong>; <strong>S</strong> (Straight/Supplementary) = <strong>180</strong>.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – ബഹുഭുജ തുക</span>
+          <p><strong>"n മൈനസ് 2, ഗുണം 180"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – ബാഹ്യകോൺ</span>
+          <p><strong>"360 ഹരിക്കൂ n കൊണ്ട്"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – വികർണ്ണം</span>
+          <p><strong>"n ഗുണം (n − 3), പകുതി"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – സമാന്തരവര കോണുകൾ</span>
+          <p><strong>"F – തുല്യം; Z – തുല്യം; C – 180"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – വൃത്തത്തിൽ</span>
+          <p><strong>"കേന്ദ്രം ഇരട്ടി, പരിധി പകുതി"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 8 – ചക്രീയ ചതുർഭുജം</span>
+          <p><strong>"എതിരെ എതിരെ 180"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 9 – ചരിവ്</span>
+          <p><strong>"ഉയർച്ച / ദൂരം"</strong> (Rise over Run) = (y₂ − y₁)/(x₂ − x₁).</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 10 – ചതുർഭുജ വികർണ്ണം</span>
+          <p><strong>"ചതുരത്തിന് തുല്യം, സമഭുജത്തിന് ലംബം, സമചതുരത്തിന് രണ്ടും"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 11 – സർവ്വസമത നിബന്ധനകൾ</span>
+          <p><strong>"SSS, SAS, ASA, AAS, RHS — 5 എണ്ണം; AAA ഇല്ല"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 12 – ബഹുഭുജ പേരുകൾ</span>
+          <p><strong>ത്രി-ചതുർ-പഞ്ച-ഷഡ്-സപ്ത-അഷ്ട-നവ-ദശ</strong> = 3-4-5-6-7-8-9-10 (സംസ്കൃത അക്കങ്ങൾ).</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 13 – ത്രികോണ അസമത്വം</span>
+          <p><strong>"രണ്ട് ചെറിയ വശങ്ങൾ കൂട്ടി വലിയ വശവുമായി താരതമ്യം"</strong></p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 14 – മൂല്യ ഓർമ്മ</span>
+          <p><strong>"3-4-5 എന്ന ത്രയത്തിൽ 5 ആണ് കർണ്ണം"</strong>; <strong>"8-15-17, 5-12-13, 7-24-25"</strong> എന്നീ ത്രയങ്ങളും ഉറപ്പ്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: COMMON PSC TRAPS -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. Common PSC Traps (പരീക്ഷയിലെ ചതിക്കുഴികൾ)</span>
+      </h2>
+      <div class="section-body">
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 – ബാഹ്യകോൺ / ആന്തരകോൺ മാറിപ്പോകൽ</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു സമബഹുഭുജത്തിന്റെ ഒരു <strong>ബാഹ്യകോൺ</strong> 30° ആയാൽ n?</p>
+          <p><strong>ശരി:</strong> n = 360/30 = <strong>12</strong></p>
+          <p><strong>ചോദ്യം:</strong> ഒരു സമബഹുഭുജത്തിന്റെ ഒരു <strong>ആന്തരകോൺ</strong> 30° ആകുമോ?</p>
+          <p><strong>അസാധ്യം!</strong> സമബഹുഭുജത്തിലെ ആന്തരകോൺ എപ്പോഴും n കൂടുമ്പോൾ 180°-നോട് അടുക്കും, എന്നാൽ 30° എന്ന് വരില്ല (n=3-ൽ പോലും 60°).</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 – +1 vs +2 കുഴയ്ക്കൽ</span>
+          <p><strong>ചോദ്യം:</strong> ബഹുഭുജത്തിന്റെ ആന്തര തുക 1260° ആയാൽ n?</p>
+          <p><strong>തെറ്റ്:</strong> 1260/180 = 7 → n = 7 (ഇത് തെറ്റാണ്! n − 2 = 7, അല്ല!)</p>
+          <p><strong>ശരി:</strong> (n − 2) = 1260/180 = 7 → <strong>n = 7 + 2 = 9</strong> (നവഭുജം)</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 – a + b = c vs a + b > c</span>
+          <p><strong>ചോദ്യം:</strong> 3, 4, 7 കൊണ്ട് ത്രികോണം സാധ്യമോ?</p>
+          <p><strong>തെറ്റ്:</strong> "3 + 4 = 7 ആണെങ്കിലും സാധ്യമാകും" എന്ന് കരുതൽ.</p>
+          <p><strong>ശരി:</strong> 3 + 4 = 7 (തുല്യം) → <strong>ത്രികോണം സാധ്യമല്ല</strong>. കർശനമായും "&gt;" ആയിരിക്കണം.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 – AAA സർവ്വസമത</span>
+          <p><strong>ചോദ്യം:</strong> AAA സർവ്വസമത നിബന്ധനയാണോ?</p>
+          <p><strong>തെറ്റ്:</strong> "അതെ" എന്ന് കരുതൽ.</p>
+          <p><strong>ശരി:</strong> AAA <strong>സർവ്വസമതയല്ല</strong> — അത് <strong>സാദൃശ്യത്തിന്</strong> മാത്രം മതി.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 – കേന്ദ്രകോൺ = പരിധികോൺ</span>
+          <p><strong>ചോദ്യം:</strong> കേന്ദ്രകോൺ 80° ആയാൽ പരിധിയിലെ കോൺ?</p>
+          <p><strong>തെറ്റ്:</strong> 80° (ഇരട്ടി മറന്നു!)</p>
+          <p><strong>ശരി:</strong> 80/2 = <strong>40°</strong></p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 – പൂരകം / അനുപൂരകം കുഴയ്ക്കൽ</span>
+          <p><strong>ചോദ്യം:</strong> 55°-ന്റെ പൂരകം?</p>
+          <p><strong>തെറ്റ്:</strong> 180 − 55 = 125° (ഇത് അനുപൂരകം!)</p>
+          <p><strong>ശരി:</strong> 90 − 55 = <strong>35°</strong></p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 – ചതുര വികർണ്ണം "ലംബം"</span>
+          <p><strong>ചോദ്യം:</strong> ചതുരത്തിന്റെ വികർണ്ണങ്ങൾ ലംബമാണോ?</p>
+          <p><strong>തെറ്റ്:</strong> "അതെ" എന്ന് കരുതൽ.</p>
+          <p><strong>ശരി:</strong> ചതുരത്തിന്റെ വികർണ്ണങ്ങൾ <strong>തുല്യം</strong>, പക്ഷേ <strong>ലംബമല്ല</strong> (ലംബമാകുന്നത് സമചതുരത്തിനും സമഭുജ സാമാന്തരികത്തിനും മാത്രം).</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 – സമാന്തരമല്ലാത്ത വരകളിൽ F, Z, C</span>
+          <p>സമാന കോണുകൾ, മറുകോണുകൾ, സഹ-ആന്തര കോണുകൾ — ഈ ബന്ധങ്ങൾ <strong>വരകൾ സമാന്തരമാണെങ്കിൽ മാത്രം</strong>. സമാന്തരമല്ലെങ്കിൽ ഉപയോഗിക്കരുത്.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 9 – ത്രികോണ കേന്ദ്രങ്ങളുടെ പേരുകൾ</span>
+          <p><strong>Circumcenter</strong> ↔ <strong>Incenter</strong> കുഴയ്ക്കൽ — Circumcenter = <strong>പുറത്തെ വൃത്തം</strong> (ലംബസമഭാജി), Incenter = <strong>അകത്തെ വൃത്തം</strong> (കോൺ സമഭാജി).</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 10 – സദൃശ പരപ്പളവ് അംശബന്ധം</span>
+          <p><strong>ചോദ്യം:</strong> രണ്ട് സദൃശ ത്രികോണങ്ങളുടെ വശാംശബന്ധം 3 : 5 ആയാൽ പരപ്പളവ് അംശബന്ധം?</p>
+          <p><strong>തെറ്റ്:</strong> 3 : 5 (വശാംശബന്ധം തന്നെ പരപ്പളവിന് എന്ന് കരുതൽ)</p>
+          <p><strong>ശരി:</strong> 9 : 25 (വർഗ്ഗം!)</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 11 – ഞാൺ നീളം / അകലം കുഴയ്ക്കൽ</span>
+          <p><strong>ചോദ്യം:</strong> r = 10, d = 6 → ഞാണിന്റെ നീളം?</p>
+          <p><strong>തെറ്റ്:</strong> 8 (√(100 − 36) — ഇത് പകുതി ഞാൺ!)</p>
+          <p><strong>ശരി:</strong> 2 × 8 = <strong>16</strong></p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 12 – തൊടുവര ⊥ ആരം</span>
+          <p>തൊടുബിന്ദുവിൽ തൊടുവര ആരത്തിന് <strong>എപ്പോഴും ലംബം (90°)</strong>. ഇത് മറന്നാൽ തൊടുവര നീളം കണക്കാക്കാൻ പറ്റില്ല.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 13 – വ്യാസം vs ആരം</span>
+          <p>ചോദ്യത്തിൽ <strong>വ്യാസം (diameter)</strong> തന്നാൽ ആരം = d/2 ആക്കണം. ഉദാ: വ്യാസം 14 → r = 7 (14 അല്ല!).</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 14 – ന്യൂനകോൺ vs ബൃഹത്കോൺ</span>
+          <p>ന്യൂനകോൺ: 0° &lt; θ &lt; 90°; ബൃഹത്കോൺ: 90° &lt; θ &lt; 180°. 90° = മട്ടം (ഇവയിൽ ഉൾപ്പെടില്ല!).</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 15 – സമചതുര വികർണ്ണം d²/2 vs a²</span>
+          <p>സമചതുരത്തിന്റെ വികർണ്ണം d തന്നാൽ പരപ്പളവ് = <strong>d²/2</strong>; വശം a തന്നാൽ = <strong>a²</strong>. രണ്ടും കുഴയ്ക്കരുത്.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 16 – Circumcenter of Right Triangle</span>
+          <p>മട്ടത്രികോണത്തിൽ <strong>Circumcenter = കർണ്ണത്തിന്റെ മധ്യബിന്ദു</strong>; Orthocenter = <strong>മട്ടമൂല</strong>. ഇവ രണ്ടും ഒരുമിച്ച് കുഴയ്ക്കരുത്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 17: ADDITIONAL KERALA PSC FACTS -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. Additional Kerala PSC Facts (അധിക വസ്തുതകൾ)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐</span> <strong>മധ്യരേഖാ സിദ്ധാന്തം (Midpoint Theorem):</strong> ഒരു ത്രികോണത്തിന്റെ രണ്ട് വശങ്ങളുടെ മധ്യബിന്ദുക്കളെ യോജിപ്പിക്കുന്ന വര മൂന്നാം വശത്തിന് <strong>സമാന്തരവും അതിന്റെ പകുതി നീളവും</strong> ആയിരിക്കും.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>സമഭുജ ത്രികോണത്തിന്റെ പരപ്പളവ്</strong> = (√3 / 4) × a²</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>മട്ടത്രികോണ പരപ്പളവ്</strong> = ½ × പാദം × ഉന്നതി</li>
+          <li><span class="stars">⭐⭐⭐</span> ത്രികോണത്തിന്റെ 3 ഉന്നതികളും, 3 മധ്യമങ്ങളും <strong>എപ്പോഴും ഒരു ബിന്ദുവിൽ കൂടും (concurrent)</strong>.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ഷഡ്ഭുജത്തിൽ</strong> ഒരു ആന്തരകോൺ 120° (സമബഹുഭുജം); തേനീച്ചക്കൂട് ഷഡ്ഭുജാകൃതിയിൽ.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ബൗധായനൻ / ആര്യഭടൻ</strong> ഭാരതീയ ഗണിതശാസ്ത്രജ്ഞർ; <strong>യൂക്ലിഡ്</strong> ജ്യാമിതിയുടെ പിതാവ്.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>പൈതഗോറസ്</strong> (ഗ്രീക്ക്, ബി.സി. 6-ാം നൂറ്റാണ്ട്) പേരിലുള്ള സിദ്ധാന്തം.</li>
+          <li><span class="stars">⭐⭐</span> ഒരു വൃത്തത്തിനുള്ളിൽ ഒരേ ഞാണിനോട് ചേർന്ന <strong>വിപരീത ഖണ്ഡങ്ങളിലെ കോണുകളുടെ തുക 180°</strong> (ചക്രീയ ചതുർഭുജ നിയമത്തിന് തുല്യം).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഒരു ബിന്ദുവിന് ചുറ്റും</strong> തുല്യ വൃത്തങ്ങൾ വരയ്ക്കുമ്പോൾ ആകെ കോൺ 360°.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ത്രികോണത്തിന്റെ 3 ബാഹ്യകോണുകളുടെ തുക = 360°</strong> (ഏത് ബഹുഭുജത്തിലെയും പോലെ).</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഏത് ത്രികോണത്തിന്റെയും 3 വശങ്ങളുടെ ലംബസമഭാജികൾ ഒരു ബിന്ദുവിൽ കൂടും</strong> — ആ ബിന്ദു = Circumcenter.</li>
+          <li><span class="stars">⭐⭐</span> <strong>ഏത് ത്രികോണത്തിന്റെയും 3 കോൺ സമഭാജികൾ ഒരു ബിന്ദുവിൽ കൂടും</strong> — ആ ബിന്ദു = Incenter.</li>
+          <li><span class="stars">⭐</span> <strong>ത്രികോണ അസമത്വ നിയമത്തിന് തുല്യമായ രൂപം:</strong> |a − b| &lt; c &lt; a + b.</li>
+          <li><span class="stars">⭐</span> <strong>സമബഹുഭുജത്തിൽ 4 കേന്ദ്രങ്ങൾ ഒരേ ബിന്ദുവാണ്</strong> (Centroid = Incenter = Circumcenter = Orthocenter).</li>
+          <li><span class="stars">⭐</span> <strong>വൃത്തത്തിന് അകത്ത് ഒരു ബിന്ദുവിൽ നിന്ന് തൊടുവര വരയ്ക്കാൻ കഴിയില്ല</strong> (0 തൊടുവരകൾ).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 18: SMART TRICKS -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⚠️ പ്രധാന മുന്നറിയിപ്പ്</span>
+          <p>ഈ ട്രിക്കുകൾ ശരിയായ ഉത്തരത്തിന്റെ <strong>സാധ്യത കൂട്ടുന്നു</strong>; അറിവിന് പകരമല്ല. "നീളമുള്ള ഓപ്ഷൻ ശരി", "എപ്പോഴും C" തുടങ്ങിയ മിഥ്യാധാരണകൾ വിശ്വസിക്കരുത്. <strong>നെഗറ്റീവ് മാർക്ക് ഉണ്ടെങ്കിൽ</strong> (PSC-യിൽ സാധാരണ 1/3 കുറയ്ക്കൽ, നോട്ടിഫിക്കേഷൻ പരിശോധിക്കുക): 4 ഓപ്ഷനുകളിൽ 2 എണ്ണം സുരക്ഷിതമായി ഒഴിവാക്കാൻ കഴിഞ്ഞാൽ ഊഹം ലാഭകരം; ഒന്നും ഒഴിവാക്കാൻ പറ്റുന്നില്ലെങ്കിൽ ഒഴിവാക്കുന്നത് സുരക്ഷിതം.</p>
+        </div>
+
+        <h3>Trick 1: Option Elimination (ഒഴിവാക്കൽ വിദ്യ)</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> 40° കോണിന്റെ പൂരക കോൺ?</p>
+          <p>(A) 140° &nbsp; (B) 50° &nbsp; (C) 320° &nbsp; (D) 90°</p>
+          <ul>
+            <li>പൂരകം = 90°-ൽ <strong>താഴെ</strong> ആയിരിക്കും (കോൺ പോസിറ്റീവ് ആകുമ്പോൾ) → (A) 140°, (C) 320° <strong>ഒഴിവാക്കാം</strong>.</li>
+            <li>(D) 90° = മട്ടകോൺ; 40° + 90° = 130° ≠ 90° → <strong>ഒഴിവാക്കാം</strong>.</li>
+            <li>ബാക്കി (B) 50°: 40 + 50 = 90 ✔ → <strong>ഉത്തരം (B)</strong>.</li>
+          </ul>
+          <p>🔑 സിദ്ധാന്തം മറന്നാലും "90-ൽ താഴെ" എന്ന അറിവ് മതി 3 ഓപ്ഷൻ ഒഴിവാക്കാൻ.</p>
+        </div>
+
+        <h3>Trick 2: Keyword Check (കീവേഡ് പരിശോധന)</h3>
+        <p><em>only, always, never, all, none, first, largest, NOT, EXCEPT, incorrect</em> എന്നിവ <strong>സൂചനകളാണ്</strong>, ശരി/തെറ്റ് തീരുമാനിക്കുന്ന നിയമങ്ങളല്ല.</p>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> ചതുർഭുജങ്ങളെക്കുറിച്ചുള്ള തെറ്റായ പ്രസ്താവന ഏത്?</p>
+          <p>(A) ചതുരത്തിന്റെ വികർണ്ണങ്ങൾ തുല്യം<br>
+          (B) സമഭുജ സാമാന്തരികത്തിന്റെ വികർണ്ണങ്ങൾ ലംബം<br>
+          (C) ചതുരത്തിന്റെ വികർണ്ണങ്ങൾ എപ്പോഴും ലംബമാണ്<br>
+          (D) സാമാന്തരികത്തിന്റെ വികർണ്ണങ്ങൾ പരസ്പരം സമഭാഗിക്കും</p>
+          <ul>
+            <li>"<strong>തെറ്റായത്</strong>" എന്ന വാക്ക് ശ്രദ്ധിക്കുക → ഓരോന്നും പരിശോധിക്കുക.</li>
+            <li>(A) ശരി, (B) ശരി, (D) ശരി.</li>
+            <li>(C): "എപ്പോഴും ലംബം" – ചതുരത്തിൽ വികർണ്ണം ലംബമാകുന്നത് സമചതുരമാകുമ്പോൾ മാത്രം → <strong>തെറ്റ് → ഉത്തരം (C)</strong>.</li>
+            <li>ഇവിടെ "എപ്പോഴും" എന്ന വാക്ക് തെറ്റാണെന്ന് <strong>പരിശോധിച്ച ശേഷമാണ്</strong> നമ്മൾ തീരുമാനിച്ചത്; വാക്ക് കണ്ടത് കൊണ്ട് മാത്രമല്ല.</li>
+            <li>⚠️ "എപ്പോഴും" ഉള്ള പ്രസ്താവനയും ശരിയാകാം: "ഏത് ബഹുഭുജത്തിന്റെയും ബാഹ്യകോണുകളുടെ തുക <strong>എപ്പോഴും</strong> 360°" – ഇത് ശരിയാണ്.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 3: Common-Sense Logic (യുക്തി)</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> ഒരു ത്രികോണത്തിന്റെ രണ്ട് കോണുകൾ 70°, 80° ആയാൽ മൂന്നാമത്തേത്?</p>
+          <p>(A) 150° &nbsp; (B) 30° &nbsp; (C) 170° &nbsp; (D) 10°</p>
+          <ul>
+            <li>മൂന്ന് കോണിന്റെ തുക 180°; 70 + 80 = 150 ഇതിനകം → മൂന്നാമത്തേത് <strong>30°</strong>.</li>
+            <li>(A) 150, (C) 170 ഒഴിവാക്കാം (തുക 180 കവിയും). (D) 10 → 70 + 80 + 10 = 160 ≠ 180 ✘. <strong>ഉത്തരം (B) 30°</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 4: Extreme Statement Check</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> "ത്രികോണത്തിന്റെ ഏത് രണ്ട് വശങ്ങളുടെ തുകയും മൂന്നാമത്തെ വശത്തേക്കാൾ വലുതായിരിക്കും." ഇത് ശരിയാണോ?</p>
+          <ul>
+            <li>"ഏത് രണ്ട്" എന്നത് എല്ലാ കോമ്പിനേഷനും എന്നർത്ഥം. സ്കെച്ച് വരച്ച് ചിന്തിക്കുക: രണ്ട് വശങ്ങൾ ചേർന്ന് "ചുറ്റിവളഞ്ഞ് വഴിയായി" പോയാലും നേരിട്ടുള്ള വഴിയേക്കാൾ (മൂന്നാം വശം) കുറഞ്ഞ ദൂരമാവില്ല → <strong>ശരി</strong>.</li>
+            <li>✔ പരിശോധനയാണ് പ്രധാനം; "എപ്പോഴും/ഏത്" ഉള്ളത് കൊണ്ട് തള്ളിക്കളയരുത്.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 5: Match-the-Following</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <table style="max-width: 500px;">
+            <thead><tr><th>1. Centroid</th><th>a. ലംബസമഭാജികൾ</th></tr></thead>
+            <tbody>
+              <tr><td>2. Circumcenter</td><td>b. മധ്യമങ്ങൾ</td></tr>
+              <tr><td>3. Orthocenter</td><td>c. ഉന്നതികൾ</td></tr>
+              <tr><td>4. Incenter</td><td>d. കോൺ സമഭാജികൾ</td></tr>
+            </tbody>
+          </table>
+          <p>Options: (A) 1-b, 2-a, 3-c, 4-d (B) 1-a, 2-b, 3-c, 4-d (C) 1-c, 2-a, 3-b, 4-d (D) 1-b, 2-d, 3-c, 4-a</p>
+          <ul>
+            <li>ഉറപ്പുള്ള ജോഡി ആദ്യം: <strong>Centroid = മധ്യമങ്ങൾ (1-b)</strong> → (B), (C) ഒഴിവാക്കാം.</li>
+            <li>ബാക്കി (A), (D): <strong>Incenter = കോൺ സമഭാജി (4-d)</strong> → (D)-ൽ 4-a → ഒഴിവാക്കാം.</li>
+            <li><strong>ഉത്തരം (A)</strong>. (2 ജോഡി അറിഞ്ഞാൽ തന്നെ ഉത്തരം ഉറപ്പിക്കാം.)</li>
+          </ul>
+        </div>
+
+        <h3>Trick 6: Statement-Based Questions</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> പ്രസ്താവനകൾ പരിഗണിക്കുക:</p>
+          <ul>
+            <li>(i) ബഹുഭുജത്തിന്റെ ബാഹ്യകോൺ തുക 360° ആണ്.</li>
+            <li>(ii) ത്രികോണത്തിന്റെ ആന്തരകോൺ തുക 360° ആണ്.</li>
+            <li>(iii) ചക്രീയ ചതുർഭുജത്തിൽ എതിർകോണുകൾ അനുപൂരകമാണ്.</li>
+          </ul>
+          <p>Options: (A) (i) മാത്രം (B) (i), (iii) (C) (ii), (iii) (D) മൂന്നും</p>
+          <ul>
+            <li>(i) ശരി; (ii) <strong>തെറ്റ്</strong> (180°); (iii) ശരി.</li>
+            <li>(ii) തെറ്റായതിനാൽ (C), (D) ഒഴിവാക്കാം. (i), (iii) രണ്ടും ശരി → <strong>(B)</strong>.</li>
+            <li>ഓരോ പ്രസ്താവനയും <strong>വെവ്വേറെ</strong> പരിശോധിക്കുക.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 7: Assertion–Reason</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>A:</strong> ഏത് ബഹുഭുജത്തിന്റെയും ബാഹ്യകോൺ തുക 360° ആണ്.</p>
+          <p><strong>R:</strong> ഒരു മൂലയിലെ ആന്തര + ബാഹ്യകോൺ = 180° ആണ്.</p>
+          <p>Options: (a) A, R ശരി; R, A-യെ വിശദീകരിക്കുന്നു (b) A, R ശരി; R, A-യെ വിശദീകരിക്കുന്നില്ല (c) A ശരി, R തെറ്റ് (d) A തെറ്റ്, R ശരി</p>
+          <ul>
+            <li>A ശരി, R ശരി.</li>
+            <li>R പറയുന്നത് ഒരു മൂലയിലെ ബന്ധമാണ്; 360° തുക ലഭിക്കാൻ അത് ഉപയോഗിക്കുമെങ്കിലും <strong>ഇത് പൂർണ്ണ വിശദീകരണമല്ല</strong> (കാരണം 360° ലഭിക്കാൻ ഉള്ളിൽ ആന്തര തുക (n−2)×180° വേണം).</li>
+            <li>ഏറ്റവും സുരക്ഷിത ഉത്തരം <strong>(b)</strong>.</li>
+            <li>⚠️ ഈ വിഭാഗത്തിൽ വ്യാഖ്യാനം വ്യത്യാസപ്പെടാം; ചോദ്യത്തിൽ നൽകിയ ഓപ്ഷനുകൾ അനുസരിച്ച് തീരുമാനിക്കുക.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 8: Number Logic (സംഖ്യാ യുക്തി)</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> ഒരു ബഹുഭുജത്തിന്റെ ആന്തരകോണുകളുടെ തുക ഏത്?</p>
+          <p>(A) 1000° &nbsp; (B) 1080° &nbsp; (C) 1100° &nbsp; (D) 1200°</p>
+          <ul>
+            <li>ആന്തരകോൺ തുക <strong>180-ന്റെ ഗുണിതം</strong> ആയിരിക്കണം.</li>
+            <li>1000 ÷ 180 ≈ 5.55; 1100 ÷ 180 ≈ 6.11; 1200 ÷ 180 ≈ 6.67 → ഇവ ഗുണിതമല്ല.</li>
+            <li>1080 ÷ 180 = 6 ✔ → <strong>(B)</strong> (അഷ്ടഭുജം).</li>
+          </ul>
+        </div>
+
+        <h3>Trick 9: Similar-Option Comparison</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> സമബഹുഭുജത്തിൽ ഒരു ആന്തരകോൺ എത്ര?</p>
+          <p>(A) (n−2)180/n &nbsp; (B) (n−2)180/2 &nbsp; (C) 360/n &nbsp; (D) (n−2)180</p>
+          <ul>
+            <li>(D) = ആകെ തുക; (C) = ഒരു <strong>ബാഹ്യകോൺ</strong>; (A) = തുക ÷ n ✔ → ശരി.</li>
+            <li>n = 4 വച്ച് പരിശോധിക്കാം: (A) = 360/4 = 90 ✔ (സമചതുരം). (B) = 180 ✘.</li>
+            <li>🔑 <strong>n-ന് ഒരു ചെറിയ വില (n = 3, 4) വച്ച് പരിശോധിക്കുക</strong> – ഫോർമുല ഓപ്ഷനുകളിൽ ഏറ്റവും ഫലപ്രദമായ ട്രിക്ക്.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 10: Question Wording</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <ul>
+            <li><strong>"ഒരു ആന്തരകോൺ" vs "ആകെ തുക"</strong>, <strong>"ബാഹ്യ" vs "ആന്തര"</strong>, <strong>"അല്ലാത്തത്" (NOT)</strong>.</li>
+            <li><strong>Q.</strong> "ഒരു ബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യകോൺ 40° (സമബഹുഭുജം). <strong>ഒരു ആന്തരകോൺ</strong> എത്ര?" → 180 − 40 = <strong>140°</strong> (n = 9 എന്ന് മാത്രം പറയുന്നത് തെറ്റ്).</li>
+            <li>ചോദിച്ചത് ഡിഗ്രിയാണോ വശങ്ങളുടെ എണ്ണമാണോ എന്ന് നോക്കുക.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 11: Informed Guessing (4 → 2 → 1)</h3>
+        <div class="added-fact">
+          <span class="box-label">📌 ഉദാഹരണം</span>
+          <p><strong>Q.</strong> 12 വശമുള്ള സമബഹുഭുജത്തിന്റെ ഒരു ആന്തരകോൺ?</p>
+          <p>(A) 30° &nbsp; (B) 120° &nbsp; (C) 150° &nbsp; (D) 170°</p>
+          <ul>
+            <li>ഫോർമുല ഓർമ്മയില്ലെന്ന് കരുതുക. <strong>വശങ്ങൾ കൂടുമ്പോൾ ആന്തരകോൺ 180°-നോട് അടുക്കുന്നു</strong> (ത്രികോണം 60°, ചതുർഭുജം 90°, ഷഡ്ഭുജം 120°).</li>
+            <li>n = 12 > 6 → കോൺ <strong>120°-ൽ കൂടുതൽ</strong> → (A) 30°, (B) 120° ഒഴിവാക്കാം.</li>
+            <li>ശേഷിക്കുന്നത് (C) 150°, (D) 170° → <strong>ഇനി 50 : 50</strong>. 170° ആകണമെങ്കിൽ ബാഹ്യകോൺ 10° → n = 36 വേണം; അത് 12 അല്ല. 150° → ബാഹ്യ 30° → n = 12 ✔.</li>
+            <li><strong>ഉത്തരം (C) 150°</strong>. (ഇവിടെ അവസാന പരിശോധന ഗണിതമാണ്; ഊഹം അല്ല.)</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ഈ ട്രിക്കുകൾ പരാജയപ്പെടുന്ന സന്ദർഭം</span>
+          <p>ഓപ്ഷനുകളെല്ലാം യുക്തിപരമായി ഒരേ പോലെ സാധ്യമെങ്കിൽ (ഉദാ: "ഏത് വ്യക്തി ജ്യാമിതിയുടെ പിതാവ്?" എന്ന GK ചോദ്യം) ട്രിക്ക് കൊണ്ട് കാര്യമില്ല; വസ്തുത അറിയണം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: EXPECTED QUESTIONS -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (മാതൃകാ ചോദ്യങ്ങളും വിശദീകരണവും)</span>
+      </h2>
+      <div class="section-body">
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കുക</span>
+          <p>എല്ലാം പരിശീലനത്തിനുള്ള <strong>മാതൃകാ ചോദ്യങ്ങളാണ്</strong>; യഥാർത്ഥ PYQ അല്ല.</p>
+        </div>
+
+        <h3>19.1 ഒറ്റ ഉത്തര ചോദ്യങ്ങൾ</h3>
+
+        <div class="added-fact">
+          <span class="box-label">Q1. പൂരകം</span>
+          <p><strong>ചോദ്യം:</strong> 62°-ന്റെ പൂരക കോൺ?</p>
+          <p>(A) 28° &nbsp; (B) 118° &nbsp; (C) 38° &nbsp; (D) 72°</p>
+          <p><strong>ഉത്തരം: (A) 28°</strong>. 90 − 62 = 28. (B) അനുപൂരകമാണ് (180 − 62 = 118).</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q2. ബാഹ്യകോൺ → n</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു സമബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യകോൺ 30° ആയാൽ വശങ്ങൾ?</p>
+          <p>(A) 10 &nbsp; (B) 12 &nbsp; (C) 8 &nbsp; (D) 6</p>
+          <p><strong>ഉത്തരം: (B) 12</strong>. 360 ÷ 30 = 12.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q3. വികർണ്ണം</span>
+          <p><strong>ചോദ്യം:</strong> ഷഡ്ഭുജത്തിന്റെ വികർണ്ണങ്ങളുടെ എണ്ണം?</p>
+          <p>(A) 6 &nbsp; (B) 9 &nbsp; (C) 12 &nbsp; (D) 15</p>
+          <p><strong>ഉത്തരം: (B) 9</strong>. 6 × 3 ÷ 2 = 9.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q4. ത്രികോണ കേന്ദ്രം</span>
+          <p><strong>ചോദ്യം:</strong> ത്രികോണത്തിന്റെ മധ്യമങ്ങൾ കൂടിച്ചേരുന്ന ബിന്ദു?</p>
+          <p>(A) Incenter &nbsp; (B) Circumcenter &nbsp; (C) Centroid &nbsp; (D) Orthocenter</p>
+          <p><strong>ഉത്തരം: (C)</strong>. Centroid.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q5. ചക്രീയ ചതുർഭുജം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു ചക്രീയ ചതുർഭുജത്തിന്റെ ഒരു കോൺ 85° ആയാൽ എതിർകോൺ?</p>
+          <p>(A) 85° &nbsp; (B) 95° &nbsp; (C) 105° &nbsp; (D) 275°</p>
+          <p><strong>ഉത്തരം: (B) 95°</strong>. 180 − 85.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q6. കേന്ദ്രകോൺ</span>
+          <p><strong>ചോദ്യം:</strong> വൃത്തകേന്ദ്രത്തിലെ കോൺ 130° ആയാൽ പരിധിയിലെ കോൺ?</p>
+          <p>(A) 130° &nbsp; (B) 260° &nbsp; (C) 65° &nbsp; (D) 50°</p>
+          <p><strong>ഉത്തരം: (C) 65°</strong>. 130/2.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q7. അകലം</span>
+          <p><strong>ചോദ്യം:</strong> (2, 3), (5, 7) എന്നീ ബിന്ദുക്കൾ തമ്മിലുള്ള അകലം?</p>
+          <p>(A) 3 &nbsp; (B) 4 &nbsp; (C) 5 &nbsp; (D) 7</p>
+          <p><strong>ഉത്തരം: (C) 5</strong>. √(9 + 16) = 5.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">Q8. ആന്തര തുക → n</span>
+          <p><strong>ചോദ്യം:</strong> ആന്തരകോൺ തുക 1440° ആയ ബഹുഭുജം?</p>
+          <p>(A) അഷ്ടഭുജം &nbsp; (B) നവഭുജം &nbsp; (C) ദശഭുജം &nbsp; (D) ഏകാദശഭുജം</p>
+          <p><strong>ഉത്തരം: (C)</strong>. 1440 ÷ 180 = 8, 8 + 2 = 10 (ദശഭുജം).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 20: MCQ PRACTICE (Interactive) -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. MCQ Practice (KPSC-Style – Interactive)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. ഒരു ത്രികോണത്തിന്റെ കോണുകൾ 2 : 3 : 4 എന്ന അംശബന്ധത്തിലാണ്. ഏറ്റവും വലിയ കോൺ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 60°</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 80°</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 90°</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 100°</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 80°</div>
+            <div class="explanation">2+3+4 = 9 ഭാഗം = 180° → 1 ഭാഗം = 20° → 4 × 20 = 80°. (A) 3 ഭാഗം; (C), (D) ഭാഗങ്ങളുമായി ചേരില്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. സമഭുജ ത്രികോണത്തിന്റെ ഒരു ബാഹ്യകോൺ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 60°</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 90°</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 120°</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 150°</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 120°</div>
+            <div class="explanation">180 − 60 = 120°. (A) ആന്തരകോൺ; (B), (D) തെറ്റ്.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. ഒരു സാമാന്തരികത്തിന്റെ ഒരു കോൺ 70° ആയാൽ അടുത്ത കോൺ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 70°</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 110°</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 20°</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 290°</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 110°</div>
+            <div class="explanation">അടുത്തടുത്ത കോണുകൾ തുക 180°. 180 − 70 = 110.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. ഒരു ബഹുഭുജത്തിന് 35 വികർണ്ണങ്ങൾ. വശങ്ങൾ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 8</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 9</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 10</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 12</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 10</div>
+            <div class="explanation">n(n−3) = 70 → 10 × 7 ✔ → n = 10 (ദശഭുജം).</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. വൃത്തത്തിൽ വ്യാസത്തിന് മുകളിലുള്ള കോൺ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 45°</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 60°</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 90°</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 180°</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 90°</div>
+            <div class="explanation">അർദ്ധവൃത്തത്തിലെ കോൺ 90°. (D) 180° കേന്ദ്രകോൺ ആണ്.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. ആരം 10 സെ.മീ. ഉള്ള വൃത്തത്തിൽ കേന്ദ്രത്തിൽ നിന്ന് 6 സെ.മീ. അകലെയുള്ള ഞാണിന്റെ നീളം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 8 cm</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 12 cm</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 16 cm</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 20 cm</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 16 cm</div>
+            <div class="explanation">√(100 − 36) = 8 → ഞാൺ = 2 × 8 = 16. (A) പകുതി നീളം മാത്രം (ട്രാപ്പ്!).</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. പുറത്തെ ബിന്ദുവിൽ നിന്ന് കേന്ദ്രത്തിലേക്ക് 17 സെ.മീ., ആരം 8 സെ.മീ. ആയാൽ തൊടുവരയുടെ നീളം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 9 cm</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 15 cm</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 25 cm</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 12 cm</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 15 cm</div>
+            <div class="explanation">√(289 − 64) = √225 = 15 (8-15-17 ത്രയം).</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. (−3, 4), (3, −4) എന്നീ ബിന്ദുക്കളുടെ മധ്യബിന്ദു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. (0, 0)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. (3, 4)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. (−3, −4)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. (6, 8)</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) (0, 0)</div>
+            <div class="explanation">[(−3+3)/2, (4+(−4))/2] = (0, 0).</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. ഒരു ചക്രീയ ചതുർഭുജത്തിന്റെ കോണുകൾ x, 2x, 3x, y ആയാൽ y-ന്റെ വില?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 120°</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 60°</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 90°</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 100°</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 90°</div>
+            <div class="explanation">ചക്രീയ ചതുർഭുജത്തിൽ എതിർ കോണുകൾ (x, 3x) അനുപൂരകം: 4x = 180 → x = 45°. അപ്പോൾ 2x = 90° → y = 180 − 90 = 90°.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. രണ്ട് സദൃശ ത്രികോണങ്ങളുടെ വശാംശബന്ധം 3 : 5 ആയാൽ പരപ്പളവുകളുടെ അംശബന്ധം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 3 : 5</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 6 : 10</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 9 : 25</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 27 : 125</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 9 : 25</div>
+            <div class="explanation">സദൃശ ത്രികോണങ്ങളിൽ പരപ്പളവ് = വശാംശബന്ധത്തിന്റെ വർഗ്ഗം: 3² : 5² = 9 : 25. (D) വ്യാപ്തത്തിന്റെ അംശബന്ധമാണ് (ഘനം).</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. ഒരു സമബഹുഭുജത്തിന്റെ ഒരു ആന്തരകോൺ 150° ആയാൽ വശങ്ങളുടെ എണ്ണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 8</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 10</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 12</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 15</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 12</div>
+            <div class="explanation">ബാഹ്യകോൺ = 180 − 150 = 30° → n = 360/30 = 12.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. ഏത് അളവുകൾ കൊണ്ട് ഒരു ത്രികോണം വരയ്ക്കാൻ കഴിയും?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 3, 4, 7 cm</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 4, 5, 9 cm</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 3, 4, 5 cm</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 2, 3, 6 cm</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 3, 4, 5 cm</div>
+            <div class="explanation">(C): 3 + 4 = 7 > 5 ✔. (A): 3 + 4 = 7 (തുല്യം, > അല്ല) ✘. (B): 4 + 5 = 9 (തുല്യം) ✘. (D): 2 + 3 = 5 < 6 ✘.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. 8, 10, 12 എന്നീ ബിന്ദുക്കൾക്ക് തുല്യ അകലത്തിൽ ഇരിക്കുന്ന ബിന്ദു?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. (10, 10, 10)</button>
+            <button type="button" class="opt-btn" data-opt="B">B. (8, 10, 12)</button>
+            <button type="button" class="opt-btn" data-opt="C">C. (10, 10)</button>
+            <button type="button" class="opt-btn" data-opt="D">D. (0, 0)</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) (10, 10)</div>
+            <div class="explanation">8, 10, 12 എന്ന മൂന്ന് സംഖ്യകളുടെ ശരാശരി = (8+10+12)/3 = 10. (A) 3D coordinate — ചോദ്യം 2D ആണ്. (B) ഒരു ബിന്ദു രണ്ട് അക്കങ്ങളിലെ പദമാകാൻ പറ്റില്ല. (D) എല്ലാ ബിന്ദുവും 0 അല്ല.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. ഒരു സമബഹുഭുജത്തിന്റെ ഓരോ ബാഹ്യകോണും 45° ആയാൽ അതിന്റെ വികർണ്ണങ്ങളുടെ എണ്ണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 14</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 20</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 27</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 35</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 20</div>
+            <div class="explanation">n = 360/45 = 8 → വികർണ്ണം = 8(8−3)/2 = 8×5/2 = 20. (A) n=7 (ബാഹ്യകോൺ ≈51.4°); (C) n=9; (D) n=10.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. ഒരു വൃത്തത്തിൽ നിന്ന് ഒരു ബിന്ദുവിൽ നിന്ന് വരയ്ക്കാവുന്ന പരമാവധി തൊടുവരകൾ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 1</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 2</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 3</button>
+            <button type="button" class="opt-btn" data-opt="D">D. അനന്തം</button>
+          </div>
+          <div class="answer-label">ശരിയുത്തരം: (B) 2</div>
+          <div class="answer-block">
+            <div class="explanation">വൃത്തത്തിന് പുറത്തുള്ള ഒരു ബിന്ദുവിൽ നിന്ന് പരമാവധി 2 തൊടുവരകൾ മാത്രം. (A) 1 — വൃത്തത്തിന്റെ പരിധിയിൽ (വൃത്തത്തിൽ). (C) 3 — അസാധ്യം. (D) അനന്തം — തെറ്റ്.</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. ഒരു ചതുരത്തിന്റെ വികർണ്ണം 10 സെ.മീ. ആയാൽ, അതേ ചതുരത്തിന്റെ വശങ്ങളുടെ എണ്ണം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 2</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 4</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 6</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 8</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 4</div>
+            <div class="explanation">ചതുരത്തിന് എപ്പോഴും 4 വശം. വികർണ്ണത്തിന്റെ നീളം വശങ്ങളുടെ എണ്ണത്തെ മാറ്റില്ല (ബലൂൺ ചോദ്യം).</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. ഒരു ബഹുഭുജത്തിന്റെ എല്ലാ ആന്തരകോണുകളുടെയും തുക 2160° ആയാൽ വശങ്ങൾ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 10</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 12</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 14</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 16</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 14</div>
+            <div class="explanation">(n − 2) × 180 = 2160 → n − 2 = 12 → n = 14.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. ഒരു മട്ടത്രികോണത്തിന്റെ രണ്ട് കോണുകൾ 30° ഉം 60° ഉം ആയാൽ, ചെറിയ വശത്തിന് എതിർവശത്തെ കോൺ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 30°</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 60°</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 90°</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 45°</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 30°</div>
+            <div class="explanation">ചെറിയ വശത്തിന് എതിർവശത്തെ കോൺ ചെറുതാണ് → 30°. (B) 60° വലിയ ലംബവശത്തിന് എതിർ; (C) 90° കർണ്ണത്തിന് എതിർ (ഏറ്റവും വലിയ കോൺ).</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. വൃത്തത്തിന്റെ ആരം 13 സെ.മീ., കേന്ദ്രത്തിൽ നിന്ന് 12 സെ.മീ. അകലെയുള്ള ഞാണിന്റെ നീളം?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 5 cm</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 10 cm</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 24 cm</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 26 cm</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 10 cm</div>
+            <div class="explanation">L/2 = √(169 − 144) = √25 = 5 → L = 2×5 = 10. (A) പകുതി ഞാൺ (ട്രാപ്പ്!); (D) 26 = വ്യാസം.</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഒരു സമചതുരത്തിന്റെ വികർണ്ണം 10 സെ.മീ. ആയാൽ പരപ്പളവ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 25 cm²</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 50 cm²</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 100 cm²</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 200 cm²</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 50 cm²</div>
+            <div class="explanation">A = d²/2 = 100/2 = 50. (C) 100 = d² (ഇരട്ടി ട്രാപ്പ്); (A) 25 = d²/4; (D) 200 = 2d².</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 21: FORMULA SHEET -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec21" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">21. മാസ്റ്റർ ഫോർമുല ഷീറ്റ് &amp; സോൾവ്ഡ് ഉദാഹരണങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>21.1 പൂർണ്ണ ഫോർമുല ഷീറ്റ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>വിഷയം</th><th>ഫോർമുല</th></tr></thead>
+            <tbody>
+              <tr><td>ത്രികോണ ആന്തര തുക</td><td>180°</td></tr>
+              <tr><td>ബഹുഭുജ ആന്തര തുക</td><td>(n − 2) × 180°</td></tr>
+              <tr><td>ബഹുഭുജ ബാഹ്യ തുക</td><td>360°</td></tr>
+              <tr><td>സമബഹുഭുജ ബാഹ്യകോൺ</td><td>360°/n</td></tr>
+              <tr><td>സമബഹുഭുജ ആന്തരകോൺ</td><td>180° − 360°/n</td></tr>
+              <tr><td>വികർണ്ണങ്ങൾ</td><td>n(n − 3)/2</td></tr>
+              <tr><td>പൈതഗോറസ്</td><td>c² = a² + b²</td></tr>
+              <tr><td>ഞാൺ</td><td>r² = d² + (L/2)²</td></tr>
+              <tr><td>ഞാൺ സംഗമം</td><td>PA·PB = PC·PD</td></tr>
+              <tr><td>തൊടുവര</td><td>PT² = PA·PB; നീളം = √(d² − r²)</td></tr>
+              <tr><td>ദൂരം</td><td>√[(x₂ − x₁)² + (y₂ − y₁)²]</td></tr>
+              <tr><td>മധ്യബിന്ദു</td><td>((x₁+x₂)/2, (y₁+y₂)/2)</td></tr>
+              <tr><td>ചരിവ്</td><td>(y₂ − y₁)/(x₂ − x₁)</td></tr>
+              <tr><td>ത്രികോണ കേന്ദ്രം (coordinates)</td><td>((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3)</td></tr>
+              <tr><td>പൂരകം</td><td>90° − θ</td></tr>
+              <tr><td>അനുപൂരകം</td><td>180° − θ</td></tr>
+              <tr><td>സദൃശ പരപ്പളവ്</td><td>വശാംശബന്ധത്തിന്റെ വർഗ്ഗം</td></tr>
+              <tr><td>കേന്ദ്രകോൺ</td><td>2 × പരിധികോൺ</td></tr>
+              <tr><td>അർദ്ധവൃത്ത കോൺ</td><td>90°</td></tr>
+              <tr><td>ചക്രീയ ചതുർഭുജം</td><td>എതിർകോൺ തുക = 180°</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>21.2 സോൾവ്ഡ് ഉദാഹരണങ്ങൾ</h3>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം 1 – പൂരക അംശബന്ധം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു കോണും അതിന്റെ പൂരകവും 2 : 1 അംശബന്ധത്തിലാണ്. കോൺ ഏത്?</p>
+          <p><strong>പരിഹാരം:</strong> തുക = 90° → 3 ഭാഗം = 90 → 1 ഭാഗം = 30° → കോൺ = <strong>60°</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം 2 – അനുപൂരക ബന്ധം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു കോണിന്റെ അനുപൂരകം, അതിന്റെ പൂരകത്തിന്റെ 3 മടങ്ങാണ്. കോൺ ഏത്?</p>
+          <p><strong>പരിഹാരം:</strong> θ എന്ന് എടുക്കുക: 180 − θ = 3(90 − θ) → 180 − θ = 270 − 3θ → 2θ = 90 → <strong>θ = 45°</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം 3 – സമഭുജ ത്രികോണ ഉന്നതി</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു സമഭുജ ത്രികോണത്തിൽ (വശം 6 സെ.മീ.) ഉന്നതി?</p>
+          <p><strong>പരിഹാരം:</strong> ഉന്നതി = (√3 / 2) × 6 = <strong>3√3 സെ.മീ.</strong></p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം 4 – സമബഹുഭുജ വികർണ്ണം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു സമബഹുഭുജത്തിന്റെ ഒരു ബാഹ്യകോൺ 40° ആയാൽ വികർണ്ണങ്ങളുടെ എണ്ണം?</p>
+          <p><strong>പരിഹാരം:</strong> n = 360/40 = 9 → വികർണ്ണം = 9(9−3)/2 = 9×6/2 = <strong>27</strong>.</p>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം 5 – ചക്രീയ ചതുർഭുജം</span>
+          <p><strong>ചോദ്യം:</strong> ഒരു ചക്രീയ ചതുർഭുജത്തിന്റെ കോണുകൾ x, x+20°, 2x, 2x+10° ആയാൽ x?</p>
+          <p><strong>പരിഹാരം:</strong> ചക്രീയ ചതുർഭുജത്തിൽ എതിർ കോണുകൾ അനുപൂരകം. രണ്ട് ജോഡികൾ: (x, 2x) ഉം (x+20°, 2x+10°) ഉം:</p>
+          <ul>
+            <li>x + 2x = 180 → 3x = 180 → x = 60°</li>
+            <li>പരിശോധന: (x+20°) + (2x+10°) = 80 + 130 = 210 ≠ 180 ✘</li>
+            <li>ശരിയായ ജോഡി: (x, 2x+10°) ഉം (x+20°, 2x) ഉം:</li>
+            <li>x + 2x+10 = 180 → 3x = 170 → x = 170/3 (പൂർണ്ണസംഖ്യ അല്ല — ചോദ്യത്തിൽ തെറ്റ്)</li>
+            <li><em>ചോദ്യത്തിൽ കോണുകൾ: x, x+20°, 2x, 2x+10°. തുക = 360°:</em></li>
+            <li>x + (x+20) + 2x + (2x+10) = 360 → 6x + 30 = 360 → 6x = 330 → <strong>x = 55°</strong></li>
+          </ul>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">➕ ഉദാഹരണം 6 – ത്രികോണ അസമത്വം</span>
+          <p><strong>ചോദ്യം:</strong> 5, 8, x എന്നീ വശങ്ങളുള്ള ത്രികോണത്തിന് x-ന്റെ പരിധി?</p>
+          <p><strong>പരിഹാരം:</strong> |8−5| &lt; x &lt; 8+5 → <strong>3 &lt; x &lt; 13</strong> (3-ഉം 13-ഉം ഉൾപ്പെടില്ല!)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 22: EXAM TIPS & TOP FACTS -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec22" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">22. Exam Tips &amp; Top Maximum Facts</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>22.1 Exam Tips (പരീക്ഷയിൽ ഓർക്കേണ്ടത്)</h3>
+        <ol>
+          <li><strong>ഫോർമുല ഓർമ്മയില്ലെങ്കിൽ n = 3, 4 വച്ച് പരിശോധിക്കുക</strong> (ത്രികോണം 180°, ചതുർഭുജം 360°).</li>
+          <li><strong>വേഗത:</strong> ഒരു ബഹുഭുജ ചോദ്യത്തിന് 30–45 സെക്കൻഡ് മതി; <strong>ബാഹ്യകോൺ ആദ്യം കാണുക</strong>.</li>
+          <li><strong>ഡിഗ്രി ചിഹ്നം:</strong> ഓപ്ഷനുകളിൽ ഡിഗ്രി/വശങ്ങൾ/സെ.മീ. എന്ന യൂണിറ്റ് ശ്രദ്ധിക്കുക.</li>
+          <li><strong>ഒഴിവാക്കേണ്ടത്:</strong> പകുതി ഞാൺ നീളം ഉത്തരമായി എഴുതൽ; ആന്തര/ബാഹ്യകോൺ മാറിപ്പോകൽ; കേന്ദ്രകോണിനെ പകുതിയാക്കാൻ മറക്കൽ.</li>
+          <li><strong>പരിശീലനം:</strong> ദിവസവും 5 ബഹുഭുജ ചോദ്യങ്ങൾ + 5 വൃത്ത ചോദ്യങ്ങൾ.</li>
+          <li><strong>"എപ്പോഴും/ഏത്" പോലുള്ള വാക്കുകൾ</strong> സൂക്ഷ്മമായി പരിശോധിക്കാൻ സൂചന — എന്നാൽ എപ്പോഴും തെറ്റാണെന്ന് സ്വയം കരുതരുത്.</li>
+          <li><strong>ചോദ്യത്തിലെ യൂണിറ്റ് (ഡിഗ്രി / വശം / സെ.മീ.)</strong> കൃത്യമായി വായിക്കുക — ഉത്തരം ഏത് രൂപത്തിലാണ് വേണ്ടതെന്ന്.</li>
+          <li><strong>സമചതുര വികർണ്ണം d തന്നാൽ</strong> വശം കാണാതെ നേരിട്ട് A = d²/2 ഉപയോഗിക്കാം.</li>
+        </ol>
+
+        <h3>22.2 Top Maximum Facts (ഏറ്റവും പ്രധാനപ്പെട്ട 15 വസ്തുതകൾ)</h3>
+        <ol>
+          <li>🔥 ബാഹ്യകോൺ തുക = <strong>360°</strong> (ഏത് ബഹുഭുജവും)</li>
+          <li>🔥 ആന്തര തുക = <strong>(n − 2) × 180°</strong></li>
+          <li>🔥 വികർണ്ണം = <strong>n(n − 3)/2</strong></li>
+          <li>🔥 സമബഹുഭുജ ബാഹ്യകോൺ = <strong>360°/n</strong></li>
+          <li>🔥 ചക്രീയ ചതുർഭുജ എതിർകോൺ തുക = <strong>180°</strong></li>
+          <li>🔥 അർദ്ധവൃത്ത കോൺ = <strong>90°</strong>; കേന്ദ്രകോൺ = <strong>2 × പരിധികോൺ</strong></li>
+          <li>🔥 പൂരകം = <strong>90°</strong>; അനുപൂരകം = <strong>180°</strong></li>
+          <li>🔥 മധ്യമകേന്ദ്രം <strong>2 : 1</strong></li>
+          <li>🔥 മട്ടത്രികോണ പരിവൃത്ത കേന്ദ്രം = <strong>കർണ്ണ മധ്യബിന്ദു</strong></li>
+          <li>🔥 ത്രികോണ അസമത്വം: <strong>രണ്ട് ചെറിയ വശങ്ങളുടെ തുക &gt; വലിയ വശം</strong></li>
+          <li>🔥 തൊടുവര ⊥ ആരം (തൊടുബിന്ദുവിൽ)</li>
+          <li>🔥 സർവ്വസമത: SSS, SAS, ASA, AAS, RHS (AAA ഇല്ല)</li>
+          <li>🔥 സദൃശ പരപ്പളവ് അംശബന്ധം = വശാംശബന്ധത്തിന്റെ <strong>വർഗ്ഗം</strong></li>
+          <li>🔥 സമചതുരത്തിൽ 4 കേന്ദ്രവും ഒരേ ബിന്ദു</li>
+          <li>🔥 ചക്രീയ ചതുർഭുജം: ചതുരം, സമചതുരം, സമപാർശ്വ ലംബകം എപ്പോഴും ചക്രീയം</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 23: QUICK REVISION -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec23" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">23. ഉത്തര സൂചിക &amp; Quick Revision</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>23.1 ഉത്തര സൂചിക (Answer Key)</h3>
+        <div style="overflow-x: auto;">
+          <table style="max-width: 700px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(B)</td><td>6</td><td>(C)</td><td>11</td><td>(C)</td><td>16</td><td>(B)</td></tr>
+              <tr><td>2</td><td>(C)</td><td>7</td><td>(B)</td><td>12</td><td>(C)</td><td>17</td><td>(C)</td></tr>
+              <tr><td>3</td><td>(B)</td><td>8</td><td>(A)</td><td>13</td><td>(C)</td><td>18</td><td>(A)</td></tr>
+              <tr><td>4</td><td>(C)</td><td>9</td><td>(C)</td><td>14</td><td>(B)</td><td>19</td><td>(B)</td></tr>
+              <tr><td>5</td><td>(C)</td><td>10</td><td>(C)</td><td>15</td><td>(B)</td><td>20</td><td>(B)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>23.2 5-Minute / Last-Minute Revision</h3>
+        <div class="last-minute">
+          <span class="box-label">📝 ഒറ്റനോട്ട റിവിഷൻ</span>
+          <ul>
+            <li><strong>കോൺ:</strong> ന്യൂനം &lt;90°, മട്ടം =90°, ബൃഹത് 90–180°, നേർ =180°, പ്രതിവർത്തനം 180–360°</li>
+            <li><strong>പൂരകം 90, അനുപൂരകം 180</strong>; എതിർകോൺ തുല്യം</li>
+            <li><strong>സമാന്തരം:</strong> F = തുല്യം, Z = തുല്യം, C = 180</li>
+            <li><strong>ത്രികോണം:</strong> കോൺ തുക 180; ബാഹ്യകോൺ = എതിർ ആന്തര രണ്ടിന്റെ തുക; അസമത്വം a + b &gt; c</li>
+            <li><strong>കേന്ദ്രങ്ങൾ:</strong> മധ്യമം→Centroid (2:1); കോൺ സമഭാജി→Incenter; ലംബസമഭാജി→Circumcenter; ഉന്നതി→Orthocenter</li>
+            <li><strong>സർവ്വസമം:</strong> SSS, SAS, ASA, AAS, RHS (AAA ഇല്ല); സദൃശ പരപ്പളവ് = വർഗ്ഗം</li>
+            <li><strong>ബഹുഭുജം:</strong> (n−2)180; ബാഹ്യ 360; ഒരു ബാഹ്യം 360/n; വികർണ്ണം n(n−3)/2</li>
+            <li><strong>ചതുർഭുജം:</strong> ചതുരം→വികർണ്ണം തുല്യം; സമഭുജം→ലംബം; സമചതുരം→രണ്ടും</li>
+            <li><strong>ചക്രീയ:</strong> എതിർ കോൺ തുക 180</li>
+            <li><strong>വൃത്തം:</strong> കേന്ദ്രം ഇരട്ടി; വ്യാസകോൺ 90°; തൊടുവര ⊥ ആരം; തൊടുവരകൾ തുല്യം; PT² = PA·PB</li>
+            <li><strong>നിർദ്ദേശാങ്കം:</strong> ദൂരം, മധ്യബിന്ദു, ചരിവ്; ലംബ വരകളുടെ ചരിവ് ഗുണനഫലം −1</li>
+            <li><strong>പൈതഗോറസ് ത്രയങ്ങൾ:</strong> 3-4-5, 5-12-13, 8-15-17, 7-24-25</li>
+            <li><strong>അഷ്ടഭുജം:</strong> വികർണ്ണം 20, ബാഹ്യകോൺ 45°, ആന്തരകോൺ 135°</li>
+            <li><strong>ഷഡ്ഭുജം:</strong> വികർണ്ണം 9, ബാഹ്യകോൺ 60°, ആന്തരകോൺ 120°</li>
+          </ul>
+        </div>
+
+        <h3>23.3 Teacher's Note</h3>
+        <div class="important">
+          <span class="box-label">📝 അധ്യാപക കുറിപ്പ്</span>
+          <p>ജ്യാമിതി ഭാഗത്തിൽ PSC-യിൽ ഏറ്റവും കൂടുതൽ ചോദ്യങ്ങൾ വരുന്നത് <strong>ബഹുഭുജങ്ങളുടെ കോണുകളും വികർണ്ണങ്ങളും</strong> ആണ്. <strong>ബാഹ്യകോൺ ആദ്യം കണ്ടെത്തുക, n = 360/ബാഹ്യകോൺ</strong> എന്ന ശീലം വളർത്തിയാൽ 30 സെക്കൻഡിൽ തീർക്കാം. <strong>പൂരകം/അനുപൂരകം, ചക്രീയ ചതുർഭുജം, കേന്ദ്രകോൺ, അർദ്ധവൃത്തം</strong> — ഈ നാല് വിഷയങ്ങളും ഉറപ്പായി പഠിക്കുക. <strong>യൂക്ലിഡ് = ജ്യാമിതിയുടെ പിതാവ്, ബൗധായനൻ = ഭാരതീയ ജ്യാമിതി</strong> എന്നീ ചരിത്ര വസ്തുതകളും ഓർക്കുക.</p>
+        </div>
+
+        <div class="correction">
+          <span class="box-label">⚠️ ഉറപ്പിക്കേണ്ടവ</span>
+          <ul>
+            <li>ചാപ്റ്റർ കോഡ് <strong>11.20</strong>, സിലബസ് ടാഗ് <strong>B</strong> — ഔദ്യോഗിക വിജ്ഞാപനവുമായി ഒത്തുനോക്കുക.</li>
+            <li>ഓരോ പരീക്ഷയിലെയും ചോദ്യ എണ്ണം, നെഗറ്റീവ് മാർക്ക് നിരക്ക് — അതത് വിജ്ഞാപനത്തിൽ ഉറപ്പിക്കുക.</li>
+            <li>സർവ്വസമത നിബന്ധനകളിൽ "SSA" ഉൾപ്പെടുത്തരുത് — അത് മട്ടത്രികോണത്തിൽ RHS ആയി മാത്രം.</li>
+          </ul>
+        </div>
+
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light);">
+          ✅ അധ്യായം 11.20 – ജ്യാമിതി (Pure Geometry) പൂർണ്ണമായി കവർ ചെയ്തിരിക്കുന്നു.
+        </p>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>11.20 Geometry</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'arithmetic-11.20-geometry';
-window.PART_TITLE = '11.20 Geometry';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaThemeGeometry11_20');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaThemeGeometry11_20', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDoneGeometry11_20_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDoneGeometry11_20_' + secId, '1');
+        else localStorage.removeItem('keralaSecDoneGeometry11_20_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaGeometry11_20Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
