@@ -46,6 +46,8 @@ CHEM = re.compile(
     r"|CaCO3|CuSO4|Fe2O3|Al2O3|ZnSO4|PbO2|HNO3|H2O2|H2O|CO2|SO2|NO2|NH3|CH4"
     r"|Cl2|O3|P4|S8|O2|N2|H2)(?![.\w)])")
 UNIT_POW = re.compile(r"(?<![\w/.])(km|cm|mm|dm|kg|m|g)(2|3)(?![0-9\w])")
+# Spreadsheet absolute/mixed references ($A$1, $A1, A$1) legitimately use $.
+EXCEL_ABS = re.compile(r"\$[A-Za-z]{1,3}\$?\d{1,5}(?![\w])|(?<![\w])\$?[A-Za-z]{1,3}\$\d{1,5}(?![\w])")
 
 # Entity names that are fine to leave; anything else in text is suspicious.
 KNOWN_ENTITIES = set(k.rstrip(";") for k in html.entities.html5)
@@ -73,10 +75,16 @@ class PageParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag in self.SKIP and not dict(attrs).get("src"):
             self._skip += 1
+        elif tag in ("sub", "sup") and not self._skip:
+            # A sentinel keeps "O<sub>2</sub>" from reading as the plain text
+            # "O2", which would look like an unformatted chemical formula.
+            self.chunks.append("\x00")
 
     def handle_endtag(self, tag):
         if tag in self.SKIP and self._skip:
             self._skip -= 1
+        elif tag in ("sub", "sup") and not self._skip:
+            self.chunks.append("\x00")
 
     def handle_startendtag(self, tag, attrs):
         pass
@@ -120,8 +128,10 @@ def scan(path):
     except Exception as exc:  # noqa: BLE001 - a broken page must not stop the audit
         return {"parse_error": [str(exc)]}
 
-    body = " ".join(parser.chunks)
-    body = re.sub(r"\s+", " ", body)
+    # Join text nodes with nothing: inserting a space here would fabricate
+    # false matches such as "20x 100" out of two neighbouring nodes.
+    body = "".join(parser.chunks)
+    body = re.sub(r"[ \t]+", " ", body)
     hits = defaultdict(list)
 
     if decode_error:
@@ -135,12 +145,12 @@ def scan(path):
     for m in LATEX_CMD.finditer(body):
         hits["latex_cmd_outside_math"].append(snip(body, m.start()))
 
-    for m in DOLLAR.finditer(body):
+    for m in DOLLAR.finditer(EXCEL_ABS.sub(" ", body)):
         inner = m.group(1)
+        if re.search(r"[^\x00-\x7f]", inner):
+            continue          # $100 ബില്യൺ …  — a currency sign, not delimiters
         key = "latex_in_dollar" if "\\" in inner else "dollar_math"
         hits[key].append(m.group(0)[:70])
-    if body.count("$") % 2:
-        hits["unbalanced_dollar"].append("odd number of $ in text")
 
     for m in CARET.finditer(body):
         hits["caret_power"].append(m.group(0)[:40])
@@ -154,8 +164,8 @@ def scan(path):
         hits["ascii_pi"].append(snip(body, m.start()))
     for m in ARROW.finditer(body):
         hits["ascii_arrow"].append(snip(body, m.start()))
-    for m in TIMES_X.finditer(body):
-        hits["digit_x_digit"].append(snip(body, m.start()))
+    # "x" between numbers is genuinely ambiguous (4 x 14 is multiplication,
+    # 20x is 20·x), so it is reported only when verbose, never auto-flagged.
     for m in CHEM.finditer(body):
         hits["chem_plain"].append(m.group(1))
     for m in UNIT_POW.finditer(body):

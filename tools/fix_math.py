@@ -61,9 +61,11 @@ UNIT = re.compile(r"(?<![\w/.])(km|cm|mm|dm|kg|m|g)(2|3)(?![0-9\w])")
 BARE_SUB = re.compile(r"(?<![\w$])([A-Za-z]{1,3})_(?:\{(\w+)\}|([^\W\d]\w{0,12}))")
 BARE_SUP = re.compile(r"(?<![\w$])([A-Za-z0-9\)\]])\^(?:\{([^{}]+)\}|(-?\w))")
 SQRT_CALL = re.compile(r"\bsqrt\s*\(([^()]*)\)")
+# "4 x 14" is multiplication; "20x" (no space before x) is algebraic 20·x.
+MULT_X = re.compile(r"(?<=\d)[ \t]+x[ \t]+(?=\d)")
 
 MATH_ONLY = re.compile(
-    r"^[\sA-Za-z0-9+\-*/^_=<>()\[\]{}.,:;!|'\"\\%×÷±√π∞°≤≥≠≈·…→←⇒⇔∑$]*$")
+    r"^[\sA-Za-z0-9+\-*/^_=<>()\[\]{}.,:;!?|'\"\\%×÷±√π∞°≤≥≠≈·…→←⇒⇔∑$]*$")
 EXCEL_REF = re.compile(r"^\s*[A-Z]{1,3}\d{0,4}\s*$")
 # Absolute / mixed spreadsheet references: $A$1, $A1, A$1.
 EXCEL_ABS = re.compile(r"\$[A-Za-z]{1,3}\$?\d{1,5}(?![\w])|(?<![\w])\$?[A-Za-z]{1,3}\$\d{1,5}(?![\w])")
@@ -222,6 +224,7 @@ def convert_dollar(text):
         looks_like_math = (
             "\\" in inner
             or (MATH_ONLY.match(inner) and re.search(r"[A-Za-z0-9]", inner))
+            or re.fullmatch(r"[+\-*/=<>±×÷]\s*[+\-]?\d*(?:\.\d+)?", inner.strip())
             or re.fullmatch(r"[A-Za-z][\w]{0,2}", inner.strip())
         )
         if not looks_like_math:
@@ -260,26 +263,34 @@ def convert_bare(text):
     text = re.sub(r"\\text\{([^{}]*)\}", lambda m: esc(m.group(1)), text)
     text = BARE_SUB.sub(sub, text)
     text = BARE_SUP.sub(sup, text)
+    text, n = MULT_X.subn(" × ", text)
+    if n:
+        stats["times_sign"] += n
     return text
 
 
 def convert_svg_text(text):
-    """Inside <svg><text> the only portable markup is Unicode."""
+    """Inside <svg><text> the portable options are Unicode or <tspan>."""
     def sup(m):
         exp = m.group(2) or m.group(3)
         uni = to_unicode(exp, SUP_MAP)
-        if uni is None:
-            return m.group(0)
-        stats["svg_sup"] += 1
-        return m.group(1) + uni
+        if uni is not None:
+            stats["svg_sup"] += 1
+            return m.group(1) + uni
+        # no Unicode form (e.g. uppercase): shift the baseline with tspan
+        stats["svg_sup_tspan"] += 1
+        return (f'{m.group(1)}<tspan baseline-shift="super" font-size="0.72em">'
+                f'{exp}</tspan>')
 
     def sub(m):
         idx = m.group(2) or m.group(3)
         uni = to_unicode(idx, SUB_MAP)
-        if uni is None:
-            return m.group(0)
-        stats["svg_sub"] += 1
-        return m.group(1) + uni
+        if uni is not None:
+            stats["svg_sub"] += 1
+            return m.group(1) + uni
+        stats["svg_sub_tspan"] += 1
+        return (f'{m.group(1)}<tspan baseline-shift="sub" font-size="0.72em">'
+                f'{idx}</tspan>')
 
     def chem(m):
         stats["svg_chem"] += 1
