@@ -41,10 +41,11 @@ TIMES_X = re.compile(r"(?<=\d)\s*x\s*(?=\d)")
 
 # Formulas that only read correctly with subscripts.  Species without digits
 # (NaCl, HCl, CaO, NaOH, KOH, MgO) are deliberately absent: they are correct.
-CHEM = re.compile(
+CHEM_FORMULA = re.compile(
     r"(?<![\w><])(H2SO4|H2SO3|H2CO3|C6H12O6|C2H5OH|CH3COOH|KMnO4|NaHCO3|Na2CO3"
     r"|CaCO3|CuSO4|Fe2O3|Al2O3|ZnSO4|PbO2|HNO3|H2O2|H2O|CO2|SO2|NO2|NH3|CH4"
-    r"|Cl2|O3|P4|S8|O2|N2|H2)(?![.\w)])")
+    r"|Cl2|O3|P4|S8)(?![\w<])")
+CHEM_SHORT = re.compile(r"(?<![\w><])(O2|N2|H2)(?![.\w)])")
 UNIT_POW = re.compile(r"(?<![\w/.])(km|cm|mm|dm|kg|m|g)(2|3)(?![0-9\w])")
 # Spreadsheet absolute/mixed references ($A$1, $A1, A$1) legitimately use $.
 EXCEL_ABS = re.compile(r"\$[A-Za-z]{1,3}\$?\d{1,5}(?![\w])|(?<![\w])\$?[A-Za-z]{1,3}\$\d{1,5}(?![\w])")
@@ -117,7 +118,7 @@ def read(path):
 
 def snip(text, pos, width=64):
     start = max(0, pos - 12)
-    return re.sub(r"\s+", " ", text[start:start + width]).strip()
+    return re.sub(r"\s+", " ", text[start:start + width].replace("\x01", " ")).strip()
 
 
 def scan(path):
@@ -128,9 +129,10 @@ def scan(path):
     except Exception as exc:  # noqa: BLE001 - a broken page must not stop the audit
         return {"parse_error": [str(exc)]}
 
-    # Join text nodes with nothing: inserting a space here would fabricate
-    # false matches such as "20x 100" out of two neighbouring nodes.
-    body = "".join(parser.chunks)
+    # Join text nodes with a non-word sentinel: joining with a space fabricates
+    # phrases like "20x 100", and joining with nothing fabricates "S8" out of a
+    # cell holding "S" followed by one holding "8".
+    body = "\x01".join(parser.chunks)
     body = re.sub(r"[ \t]+", " ", body)
     hits = defaultdict(list)
 
@@ -166,7 +168,9 @@ def scan(path):
         hits["ascii_arrow"].append(snip(body, m.start()))
     # "x" between numbers is genuinely ambiguous (4 x 14 is multiplication,
     # 20x is 20·x), so it is reported only when verbose, never auto-flagged.
-    for m in CHEM.finditer(body):
+    for m in CHEM_FORMULA.finditer(body):
+        hits["chem_plain"].append(m.group(1))
+    for m in CHEM_SHORT.finditer(body):
         hits["chem_plain"].append(m.group(1))
     for m in UNIT_POW.finditer(body):
         hits["unit_power"].append(m.group(0))

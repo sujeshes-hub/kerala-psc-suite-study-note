@@ -53,10 +53,14 @@ SYMBOLS = {
     r"\\": " ", r"\ ": " ",
 }
 
-CHEM = re.compile(
-    r"(?<![\w><])(H2SO4|H2SO3|H2CO3|C6H12O6|C2H5OH|CH3COOH|KMnO4|NaHCO3|Na2CO3"
-    r"|CaCO3|CuSO4|Fe2O3|Al2O3|ZnSO4|PbO2|HNO3|H2O2|H2O|CO2|SO2|NO2|NH3|CH4"
-    r"|Cl2|O3|P4|S8|O2|N2|H2)(?![.\w)])")
+CHEM_FORMULA = re.compile(
+    r"(?<![\w><])(H2SO4|H2SO3|H2CO3|H3PO4|C6H12O6|C2H5OH|CH3COOH|KMnO4|NaHCO3"
+    r"|Na2CO3|CaCO3|CuSO4|Fe2O3|Al2O3|ZnSO4|PbO2|HNO3|HNO2|H2O2|H2O|CO2|SO2"
+    r"|SO3|NO2|N2O|SiO2|NH3|CH4|CHCl3|CCl4|Cl2|Br2|I2|O3|P4|S8|K2Cr2O7|BF3|PCl5"
+    r"|SF6|XeF4|H2S)(?![\w<])")
+# Short species double as question labels ("N2." in a numbering list), so they
+# are only converted when not followed by a full stop or a bracket.
+CHEM_SHORT = re.compile(r"(?<![\w><])(O2|N2|H2)(?![.\w)])")
 UNIT = re.compile(r"(?<![\w/.])(km|cm|mm|dm|kg|m|g)(2|3)(?![0-9\w])")
 BARE_SUB = re.compile(r"(?<![\w$])([A-Za-z]{1,3})_(?:\{(\w+)\}|([^\W\d]\w{0,12}))")
 BARE_SUP = re.compile(r"(?<![\w$])([A-Za-z0-9\)\]])\^(?:\{([^{}]+)\}|(-?\w))")
@@ -257,7 +261,8 @@ def convert_bare(text):
         inner = m.group(1).replace("*", "×")
         return f"√({inner})" if len(inner) > 1 else f"√{inner}"
 
-    text = CHEM.sub(chem, text)
+    text = CHEM_FORMULA.sub(chem, text)
+    text = CHEM_SHORT.sub(chem, text)
     text = UNIT.sub(unit, text)
     text = SQRT_CALL.sub(sqrt, text)
     text = re.sub(r"\\text\{([^{}]*)\}", lambda m: esc(m.group(1)), text)
@@ -296,7 +301,8 @@ def convert_svg_text(text):
         stats["svg_chem"] += 1
         return "".join(SUB_MAP.get(c, c) if c.isdigit() else c for c in m.group(1))
 
-    text = CHEM.sub(chem, text)
+    text = CHEM_FORMULA.sub(chem, text)
+    text = CHEM_SHORT.sub(chem, text)
     text = BARE_SUP.sub(sup, text)
     text = BARE_SUB.sub(sub, text)
     return re.sub(r"&(?![a-zA-Z#][a-zA-Z0-9]*;)", "&amp;", text)

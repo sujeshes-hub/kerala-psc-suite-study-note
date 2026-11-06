@@ -123,11 +123,14 @@ backs them up first under `tools/_backup/<timestamp>/` (with a `restore.ps1`).
 ```bash
 python tools/serve.py               # local preview; rebuilds manifests on request
 python tools/site_audit.py          # link + data integrity; exit 1 on failure
+python tools/math_audit.py          # LaTeX / symbol / character formatting
 python tools/check_inline_js.py     # parse every inline page script with Node
 node   tools/render_check.js        # render a listing page headlessly, show the cards
 python tools/build_content.py       # WRITES: mock-test manifests (+ --keep-dates)
 node   tools/export_syllabus.js     # WRITES: data/syllabus.json
 python tools/reduce_borders.py      # WRITES: thinner borders on topic pages
+python tools/fix_math.py            # WRITES: LaTeX/ASCII math -> native HTML
+python tools/fix_bare_latex.py      # WRITES: leftover commands outside $...$
 python tools/repair_site.py         # one-off historical repairs (idempotent)
 ```
 
@@ -163,18 +166,46 @@ styles in `topics/**/*.html` and `assets/css/app.css` (used only by the topic
 stub pages — `landing.css` is shared with the subject/chapter/mock pages and is
 deliberately excluded). Add `--dry-run` to see what it would change.
 
+### Mathematics and symbols
+
+The site works offline, so there is no MathJax or KaTeX: every formula is
+native HTML plus Unicode.
+
+| Written as | Rendered as |
+| --- | --- |
+| `$a_n = a + (n-1)d$` | `a<sub>n</sub> = a + (n-1)d` |
+| `$b = \sqrt{ac}$` | `b = √(ac)` |
+| `$\frac{a+c}{2}$` | a stacked fraction (`.kfrac`, 1px rule, no external CSS) |
+| `$2^n\pm1$` | `2<sup>n</sup>±1` |
+| `H2O`, `CO2`, `H2SO4` | `H<sub>2</sub>O`, `CO<sub>2</sub>`, `H<sub>2</sub>SO<sub>4</sub>` |
+| `F_c`, `E_g`, `a^k` | `F<sub>c</sub>`, `E<sub>g</sub>`, `a<sup>k</sup>` |
+
+`<svg><text>` cannot hold `<sup>`/`<sub>`, so inside diagrams the scripts use
+Unicode (`aᵐ`, `H₂O`) or a `<tspan baseline-shift>` when no Unicode form exists.
+`$A$1` spreadsheet references and a `$` used as an operator in a coding question
+are left exactly as they are — `fix_math.py` protects them explicitly.
+
+```bash
+python tools/math_audit.py     # raw LaTeX, ASCII stand-ins, broken characters
+python tools/fix_math.py       # WRITES: converts to native HTML/Unicode
+python tools/fix_bare_latex.py # WRITES: leftover \dfrac / \sqrt outside $...$
+```
+
+`math_audit.py` reads text nodes only — never markup, attributes, `<script>`,
+`<style>` or `<code>` — and reports `0 findings` on the current tree.
+
 Run the audit before publishing: it checks every internal `href`/`src`, every
 path referenced by `syllabus.js`, that each mock-test manifest matches the
 folder, and that `data/syllabus.json` still resolves.
 
-Current status: **0 failures**. The audit also lists 14 advisory "stale pages"
-(§6).
+Current status: **0 failures**, and `math_audit.py` reports **0 findings**
+across all 371 topic pages. The audit also lists 12 advisory "stale pages" (§6).
 
 ---
 
 ## 6. Known issues / technical debt
 
-* **Stale chapter stubs (advisory).** 14 HTML files under `chapters/` and
+* **Stale chapter stubs (advisory).** 12 HTML files under `chapters/` and
   `topics/` are not reachable from `syllabus.js` — older duplicates such as
   `chapters/biology/6.1-biology.html` (its chapter id `6.1` no longer exists,
   so it renders "Chapter not found") and Malayalam-named copies such as
@@ -186,9 +217,9 @@ Current status: **0 failures**. The audit also lists 14 advisory "stale pages"
   a progress recorder into the papers or remove the placeholders.
 * **Mock-test pages still contain a GitHub-API fallback.** It only runs when a
   folder has no `list.js`; it never works from `file://`.
-* **Legacy root pages.** `chapters/03-economics.html` and
-  `chapters/1.1-kerala-history.html` are early subject/chapter pages that now
-  duplicate `subjects/03-economics.html` and `chapters/history/1.1-kerala-history.html`.
+* **Prose still quotes a few ASCII forms on purpose.** `pi * r^2` inside a
+  `<code>` block is a deliberate example of the old raw style, and `20x`
+  (meaning 20·x) is algebraic, so neither is auto-converted.
 * `_generate.ps1` / `_generate.bat` build topic-page *stubs* from a hard-coded
   list. The list is older than the published pages, so do not run it on the
   live tree without reviewing the diff.
