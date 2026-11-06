@@ -11,7 +11,7 @@ window.MOCK_TESTS_883 = [
     "key": "qp-883-1",
     "title": "KPSC Inspecting Assistant (Legal Metrology) – Mock Test 9",
     "titleMl": "",
-    "updated": "2026-11-01",
+    "updated": "2026-11-06",
     "desc": "100 questions",
     "file": "qp-883-1.html",
     "qs": 100,
