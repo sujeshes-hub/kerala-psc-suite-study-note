@@ -67,6 +67,16 @@ class Handler(SimpleHTTPRequestHandler):
 
     def _serve_live_manifest(self):
         path = self.path.split("?", 1)[0].split("#", 1)[0]
+
+        # question-papers/papers.js — the hub's index of every paper
+        if path == "/question-papers/papers.js" and SERVE_ROOT == ROOT:
+            if not BUILDER.papers_index_stale():
+                return False
+            entries = BUILDER.collect_papers(BUILDER.read_git_index_dates())
+            self._send_js(BUILDER.render_papers_js(entries))
+            print(f"  rebuilt question-papers/papers.js -> {len(entries)} paper(s)")
+            return True
+
         entry = MANIFESTS.get(path)
         if not entry:
             return False
@@ -78,7 +88,12 @@ class Handler(SimpleHTTPRequestHandler):
             return False
         papers = BUILDER.describe_folder(folder, tag, with_subject,
                                          BUILDER.read_git_index_dates())
-        body = BUILDER.render_manifest(var, papers, label).encode("utf-8")
+        self._send_js(BUILDER.render_manifest(var, papers, label))
+        print(f"  rebuilt {folder_rel}/list.js -> {len(papers)} paper(s)")
+        return True
+
+    def _send_js(self, text):
+        body = text.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/javascript; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
@@ -86,14 +101,12 @@ class Handler(SimpleHTTPRequestHandler):
         self._cache_control_sent = True
         self.end_headers()
         self.wfile.write(body)
-        print(f"  rebuilt {folder_rel}/list.js -> {len(papers)} paper(s)")
-        return True
 
     def end_headers(self):
         # The file on disk may be current, but never let the browser cache a
         # manifest that a later paper could invalidate.
         if (not getattr(self, "_cache_control_sent", False)
-                and self.path.split("?", 1)[0].endswith("/list.js")):
+                and self.path.split("?", 1)[0].endswith(("/list.js", "/papers.js"))):
             self.send_header("Cache-Control", "no-store")
         super().end_headers()
 

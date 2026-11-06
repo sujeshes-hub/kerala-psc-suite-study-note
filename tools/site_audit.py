@@ -189,6 +189,38 @@ def check_manifests(problems):
     problems["manifests"] = out
 
 
+def check_papers_index(problems):
+    """question-papers/papers.js must list exactly what is in the folder."""
+    index = os.path.join(ROOT, "question-papers", "papers.js")
+    disk_html, disk_json = set(), set()
+    base = os.path.join(ROOT, "question-papers")
+    for dirpath, dirnames, filenames in os.walk(base):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        for name in filenames:
+            relp = os.path.relpath(os.path.join(dirpath, name), ROOT).replace("\\", "/")
+            if name.lower().endswith(".json"):
+                try:
+                    data = json.loads(read_text(os.path.join(dirpath, name)))
+                    if isinstance(data, dict) and isinstance(data.get("questions"), list):
+                        disk_json.add(relp)
+                except ValueError:
+                    pass
+            elif name.lower().endswith(".html") and name.lower() != "index.html":
+                disk_html.add(relp)
+
+    listed_html, listed_json = set(), set()
+    if os.path.isfile(index):
+        text = read_text(index)
+        listed_html = set(re.findall(r'"file"\s*:\s*"([^"]+)"', text))
+        listed_json = set(re.findall(r'"data"\s*:\s*"([^"]+)"', text))
+
+    problems["papers_index"] = {
+        "exists": os.path.isfile(index),
+        "html": (len(disk_html), len(listed_html), sorted(disk_html - listed_html), sorted(listed_html - disk_html)),
+        "json": (len(disk_json), len(listed_json), sorted(disk_json - listed_json), sorted(listed_json - disk_json)),
+    }
+
+
 def check_duplicates(pages, problems):
     titles = Counter()
     dup_ids = []

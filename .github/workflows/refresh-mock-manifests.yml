@@ -1,15 +1,16 @@
 name: Refresh mock-test manifests
 
-# Keeps question-papers/*/list.js in step with the papers actually committed,
-# so adding a paper is a one-step action: drop the file in and push.
-# The listing pages read these manifests (they are what makes the lists work
-# offline), and on GitHub Pages they additionally fold in anything the
-# contents API reports as newer.
+# Keeps the generated indexes in step with the papers actually committed:
+#   question-papers/*/list.js   — the per-exam HTML listings
+#   question-papers/papers.js   — the hub's index of every paper
+# So adding a paper is a one-step action: drop the file in and push.  On GitHub
+# Pages the pages also fold in anything the contents API reports as newer.
 
 on:
   push:
     paths:
       - "question-papers/**/*.html"
+      - "question-papers/**/*.json"
   workflow_dispatch:
 
 permissions:
@@ -49,8 +50,8 @@ jobs:
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- question-papers/*/list.js
+          git add -- question-papers/*/list.js question-papers/papers.js
           # No [skip ci]: this commit must still trigger the Pages deploy.
-          # The job cannot loop, because its trigger only matches *.html files.
+          # The job cannot loop, because its trigger only matches .html/.json.
           git commit -m "chore: refresh mock-test manifests"
           git push

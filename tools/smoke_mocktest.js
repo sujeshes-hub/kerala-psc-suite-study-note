@@ -255,28 +255,34 @@ const BIO = "question-papers/573/qp-573-bio-001.json";
       : bad(7, `saved=${pending} banner=${bannerShown} orderSame=${before === after} answers=${answers} vs ${want}`);
   }
 
-  /* T8 - index page cards */
+  /* T8 - the hub links the three data papers through the shell */
   {
     const html = fs.readFileSync(path.join(ROOT, "question-papers", "index.html"), "utf8");
-    const ctx = { console: { log() {} } };
-    ctx.window = ctx;
     const grid = { innerHTML: "" };
-    ctx.document = { getElementById: () => grid };
+    const ctx = {
+      console: { log() {}, warn() {} },
+      Promise, URLSearchParams,
+      location: { hostname: "localhost", pathname: "/question-papers/index.html" },
+      document: { getElementById: () => grid },
+      fetch: () => Promise.reject(new Error("offline")),
+    };
+    ctx.window = ctx;
     vm.createContext(ctx);
-    vm.runInContext(fs.readFileSync(path.join(ROOT, "assets/js/syllabus.js"), "utf8"), ctx);
-    vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1], ctx);
-    const cards = [...grid.innerHTML.matchAll(/<a class="card" href="([^"]+)">/g)].map((m) => m[1]);
+    vm.runInContext(fs.readFileSync(path.join(ROOT, "question-papers", "papers.js"), "utf8"), ctx);
+    vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/g).pop().replace(/^<script>|<\/script>$/g, ""), ctx);
+
+    const cards = [...grid.innerHTML.matchAll(/<a class="card[^"]*" href="([^"]+)">/g)].map((m) => m[1]);
     const want = [
-      "../mock-test.html?paper=question-papers%2F573%2Fqp-573-001-full-mock-1.json",
-      "../mock-test.html?paper=question-papers%2F573%2Fqp-573-002-full-mock-2.json",
-      "../mock-test.html?paper=question-papers%2F573%2Fqp-573-bio-001.json",
+      "qp-573-001-full-mock-1.json",
+      "qp-573-002-full-mock-2.json",
+      "qp-573-bio-001.json",
     ];
-    // resolve each href the way a browser would, from /question-papers/index.html
-    const resolved = cards.map((h) => new URL(h, "https://site.example/question-papers/index.html").href);
-    const resolves = resolved.every((u) => u.startsWith("https://site.example/mock-test.html?paper="));
-    cards.length === 3 && want.every((w) => cards.includes(w)) && resolves
-      ? ok(8, "3 cards; every href resolves to /mock-test.html?paper=...")
-      : bad(8, `${cards.join(" | ")} -> ${resolved.join(" | ")}`);
+    const shellLinks = cards.map((h) => new URL(h, "https://site.example/question-papers/index.html"))
+                             .filter((u) => u.pathname === "/mock-test.html");
+    const papers = shellLinks.map((u) => decodeURIComponent(u.searchParams.get("paper") || ""));
+    want.every((w) => papers.some((p) => p.endsWith(w)))
+      ? ok(8, `all 3 data papers linked via mock-test.html?paper= (${shellLinks.length} shell links)`)
+      : bad(8, `shell links: ${papers.join(" | ")}`);
   }
 
   /* T9 - the other two papers load through the same shell */
@@ -303,6 +309,54 @@ const BIO = "question-papers/573/qp-573-bio-001.json";
     } finally {
       fs.unlinkSync(tmp);
     }
+  }
+
+  /* T12 - the hub lists the folder automatically (no registry) */
+  {
+    // what is actually on disk
+    const expected = [];
+    (function walk(dir) {
+      for (const name of fs.readdirSync(dir)) {
+        const p = path.join(dir, name);
+        if (fs.statSync(p).isDirectory()) { walk(p); continue; }
+        if (name.toLowerCase() === "index.html") continue;
+        if (/\.json$/i.test(name)) {
+          const j = JSON.parse(fs.readFileSync(p, "utf8"));
+          if (Array.isArray(j.questions)) expected.push({ kind: "json", p });
+        } else if (/\.html?$/i.test(name)) {
+          expected.push({ kind: "html", p });
+        }
+      }
+    })(path.join(ROOT, "question-papers"));
+
+    const idxHtml = fs.readFileSync(path.join(ROOT, "question-papers", "index.html"), "utf8");
+    const grid = { innerHTML: "" };
+    const hint = { textContent: "" };
+    const ctx = {
+      console: { log() {}, warn() {} },
+      Promise, URLSearchParams, encodeURIComponent, encodeURI,
+      location: { hostname: "localhost", pathname: "/question-papers/index.html" },
+      document: { getElementById: (id) => (id === "grid" ? grid : id === "hint" ? hint : { innerHTML: "" }) },
+      fetch: () => Promise.reject(new Error("offline")),
+    };
+    ctx.window = ctx;
+    vm.createContext(ctx);
+    vm.runInContext(fs.readFileSync(path.join(ROOT, "question-papers", "papers.js"), "utf8"), ctx);
+    vm.runInContext(idxHtml.match(/<script>([\s\S]*?)<\/script>/g).pop().replace(/^<script>|<\/script>$/g, ""), ctx);
+
+    const cards = [...grid.innerHTML.matchAll(/<a class="card[^"]*" href="([^"]+)">/g)].map((m) => m[1]);
+    const links = cards.map((h) => new URL(h, "https://site.example/question-papers/index.html"));
+    const shellLinks = links.filter((u) => u.pathname === "/mock-test.html");
+    const directLinks = links.filter((u) => u.pathname !== "/mock-test.html");
+    const jsonOk = shellLinks.every((u) => {
+      const rel = decodeURIComponent(u.searchParams.get("paper") || "");
+      return rel.startsWith("question-papers/") && fs.existsSync(path.join(ROOT, rel));
+    });
+    const htmlOk = directLinks.every((u) => fs.existsSync(path.join(ROOT, decodeURIComponent(u.pathname))));
+    const counts = { total: cards.length, expected: expected.length, viaShell: shellLinks.length, direct: directLinks.length };
+    cards.length === expected.length && jsonOk && htmlOk
+      ? ok(12, `hub lists ${counts.total} papers from the folder (${counts.viaShell} via shell, ${counts.direct} direct), all links resolve`)
+      : bad(12, JSON.stringify(counts) + ` jsonOk=${jsonOk} htmlOk=${htmlOk}`);
   }
 
   /* T11 - JSON questions are a byte-for-byte copy of the HTML source */
