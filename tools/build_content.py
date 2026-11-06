@@ -30,6 +30,7 @@ import shutil
 import struct
 import sys
 import time
+from urllib.parse import quote
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -326,6 +327,130 @@ def wire_page(rel, manifest_src, var, grid_id):
     return save(path, text) if text != original else False
 
 
+def _paper_tag(folder_rel, data=None):
+    """Which exam a paper belongs to, from its folder (or the JSON itself)."""
+    name = os.path.basename(folder_rel)
+    if data and data.get("tag"):
+        return data["tag"]
+    if name in ("573", "883"):
+        return name
+    return "BOTH"
+
+
+def collect_papers(index_dates=None, keep_dates=False):
+    """Every mock test under question-papers/, whatever format it is in.
+
+    * `.json`  -> a data paper, opened through mock-test.html?paper=…
+    * `.html`  -> a legacy standalone paper, opened directly
+
+    This is what makes the hub self-updating: add a file to the folder, rebuild,
+    and it is listed.  Nothing is registered by hand.
+    """
+    index_dates = index_dates or {}
+    base = os.path.join(ROOT, "question-papers")
+    entries = []
+
+    for dirpath, dirnames, filenames in os.walk(base):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".") and d != "_backup"]
+        folder_rel = os.path.relpath(dirpath, ROOT).replace("\\", "/")
+        tag = _paper_tag(folder_rel)
+
+        # ---- data papers (JSON) ----
+        for name in sorted(filenames):
+            if not name.lower().endswith(".json"):
+                continue
+            rel = f"{folder_rel}/{name}"
+            path = os.path.join(dirpath, name)
+            try:
+                data = json.loads(read(path))
+            except (ValueError, OSError):
+                print(f"  ! skipped unreadable JSON: {rel}")
+                continue
+            if not isinstance(data, dict) or not isinstance(data.get("questions"), list):
+                print(f"  ! skipped (no questions[]): {rel}")
+                continue
+            qs = len(data["questions"])
+            spq = data.get("secondsPerQuestion") or 45
+            stem = os.path.splitext(name)[0]
+            entries.append({
+                "id": data.get("id") or slugify(stem),
+                "kind": "json",
+                "title": data.get("title") or fallback_title(name),
+                "titleMl": data.get("titleMl") or "",
+                "url": "../mock-test.html?paper=" + quote(rel, safe="/"),
+                "data": rel,
+                "qs": qs,
+                "duration": round(qs * spq / 60) if qs else 0,
+                "tag": _paper_tag(folder_rel, data),
+                "updated": resolve_updated(path, index_dates, ""),
+            })
+
+        # ---- legacy standalone papers (HTML) ----
+        html_names = [n for n in sorted(filenames)
+                      if n.lower().endswith(".html") and n.lower() != "index.html"]
+        if not html_names:
+            continue
+        described = describe_folder(dirpath, tag, False, index_dates, keep_dates)
+        by_name = {d["file"]: d for d in described}
+        for name in html_names:
+            d = by_name.get(name)
+            if not d:
+                continue
+            entries.append({
+                "id": d.get("key") or slugify(os.path.splitext(name)[0]),
+                "kind": "html",
+                "title": d["title"],
+                "titleMl": d.get("titleMl") or "",
+                "url": quote(os.path.basename(folder_rel), safe="/") + "/" + quote(name, safe=""),
+                "file": f"{folder_rel}/{name}",
+                "qs": d.get("qs") or 0,
+                "duration": d.get("duration") or 0,
+                "tag": d.get("tag") or tag,
+                "subject": d.get("subject") or "",
+                "updated": d.get("updated") or "",
+            })
+
+    entries.sort(key=lambda p: (p.get("updated", ""), p.get("title", "")), reverse=True)
+    return entries
+
+
+def render_papers_js(entries):
+    body = json.dumps(entries, ensure_ascii=False, indent=2)
+    return (
+        "/* =====================================================================\n"
+        "   question-papers/papers.js — generated index of every mock test\n"
+        "   ---------------------------------------------------------------------\n"
+        "   Nothing here is written by hand: the build scans question-papers/ and\n"
+        "   lists each .json (data paper) and .html (standalone paper) it finds.\n"
+        "   Rebuild with:  python tools/build_content.py\n"
+        "   ===================================================================== */\n"
+        f"window.KPSC_PAPERS = {body};\n"
+    )
+
+
+def papers_manifest_path():
+    return os.path.join(ROOT, "question-papers", "papers.js")
+
+
+def papers_index_stale():
+    """True when a paper is newer than papers.js (or papers.js is missing)."""
+    target = papers_manifest_path()
+    if not os.path.isfile(target):
+        return True
+    newest = 0.0
+    for dirpath, dirnames, filenames in os.walk(os.path.join(ROOT, "question-papers")):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        for name in filenames:
+            if name.lower().endswith((".json", ".html")):
+                newest = max(newest, os.path.getmtime(os.path.join(dirpath, name)))
+    return newest > os.path.getmtime(target)
+
+
+def write_papers_index(index_dates=None, keep_dates=False):
+    entries = collect_papers(index_dates, keep_dates)
+    return save(papers_manifest_path(), render_papers_js(entries)), entries
+
+
 def main():
     keep_dates = "--keep-dates" in sys.argv
     print("Kerala PSC Study Suite — content build")
@@ -347,6 +472,13 @@ def main():
         total += len(papers)
 
     print(f"  {total} paper(s) described")
+
+    changed_papers, entries = write_papers_index(index_dates, keep_dates)
+    json_n = sum(1 for e in entries if e["kind"] == "json")
+    html_n = len(entries) - json_n
+    if changed_papers:
+        print(f"  index     question-papers/papers.js -> {len(entries)} paper(s)"
+              f" ({json_n} data, {html_n} standalone)")
 
     for rel, src, var, grid in PAGE_WIRING:
         if wire_page(rel, src, var, grid):
