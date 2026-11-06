@@ -84,6 +84,11 @@ function makeDom(store, opts = {}) {
     console: { log() {}, warn() {}, error() {} },
     alert: (m) => { sandbox.__alert = m; },
     confirm: () => true,
+    scrollTo: () => {},
+    scrollBy: () => {},
+    getComputedStyle: () => ({ getPropertyValue: () => "" }),
+    requestAnimationFrame: (fn) => setTimeout(fn, 0),
+    cancelAnimationFrame: () => {},
     Promise, Math, Date, JSON, String, Number, Array, Object, RegExp, parseInt, parseFloat,
     __errors: [],
   };
