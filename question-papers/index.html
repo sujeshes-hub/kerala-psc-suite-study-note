@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mock Tests – Kerala PSC</title>
+<style>
+  body{font-family:'Noto Sans Malayalam','Segoe UI',system-ui,sans-serif;
+       background:#f4f6f9;margin:0;padding:24px;color:#1a1a2e}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{color:#2c3e8f;margin-bottom:8px}
+  .sub{color:#5b6b85;margin-bottom:24px;font-size:.92rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+        gap:14px}
+  .card{background:#fff;border-radius:12px;padding:18px;
+        box-shadow:0 2px 12px rgba(0,0,0,.08);text-decoration:none;
+        color:inherit;border-top:4px solid #2c3e8f;
+        transition:transform .15s;display:block}
+  .card:hover{transform:translateY(-3px)}
+  .card h3{margin:0 0 6px;font-size:1rem;color:#2c3e8f}
+  .card .ml{font-size:.85rem;color:#5b6b85;margin-bottom:8px}
+  .card .meta{font-size:.78rem;color:#8a8f9e;text-transform:uppercase;
+              font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📝 Mock Tests</h1>
+  <p class="sub">ഒരു പേപ്പർ തിരഞ്ഞെടുത്ത് പരീക്ഷ ആരംഭിക്കുക</p>
+  <div class="grid" id="grid">Loading…</div>
+</div>
+<script src="../assets/js/syllabus.js"></script>
+<script>
+  (function(){
+    const grid = document.getElementById('grid');
+    const S = window.KPSC_SYLLABUS;
+    const papers = (S && S.QUESTION_PAPERS) || [];
+    if (!papers.length) {
+      grid.innerHTML = '<p>No mock tests registered in syllabus.js.</p>';
+      return;
+    }
+    grid.innerHTML = papers.map(p => {
+      const base = p.html || 'mock-test.html';
+      const url = base + '?paper=' + encodeURIComponent(p.data || p.file || '');
+      return '<a class="card" href="' + url + '">' +
+             '<h3>' + p.title + '</h3>' +
+             '<div class="ml">' + (p.titleMl || '') + '</div>' +
+             '<div class="meta">' + (p.qs || 0) + ' Q · ' +
+             (p.duration || 0) + ' min</div>' +
+             '</a>';
+    }).join('');
+  })();
+</script>
+</body>
+</html>

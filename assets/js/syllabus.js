@@ -903,8 +903,8 @@
       title: "Full Length Mock Test 1",
       titleMl: "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 1",
       desc: "All subjects · 100 questions · 75 min",
-      file: "question-papers/573/qp-573-001-full-mock-1.html",
-      key: "qp-001",
+      html: "mock-test.html",
+      data: "question-papers/573/qp-573-001-full-mock-1.json",
       qs: 100,
       duration: 75,
       tag: "BOTH"
@@ -914,13 +914,31 @@
       title: "Full Length Mock Test 2",
       titleMl: "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 2",
       desc: "All subjects · 100 questions · 75 min",
-      file: "question-papers/573/qp-573-002-full-mock-2.html",
-      key: "qp-002",
+      html: "mock-test.html",
+      data: "question-papers/573/qp-573-002-full-mock-2.json",
       qs: 100,
       duration: 75,
       tag: "BOTH"
+    },
+    {
+      id: "qp-bio-001",
+      title: "Biology & Public Health Mock Test",
+      titleMl: "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
+      desc: "Biology · 25 questions · 12.5 min",
+      html: "mock-test.html",
+      data: "question-papers/573/qp-573-bio-001.json",
+      qs: 25,
+      duration: 13,
+      tag: "BOTH"
     }
   ];
+
+  /* Papers live in JSON now; `file` stays as a ready-to-use URL so older
+     code that reads paper.file keeps working. */
+  function paperUrl(p) {
+    return (p.html || "mock-test.html") + '?paper=' + encodeURIComponent(p.data || p.file);
+  }
+  QUESTION_PAPERS.forEach(p => { if (!p.file) p.file = paperUrl(p); });
 
   /* =================================================================
      MASTER SYLLABUS (nested)
