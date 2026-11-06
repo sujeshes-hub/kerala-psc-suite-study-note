@@ -269,6 +269,7 @@ def main():
     check_absolute_base(list(pages.keys()), problems)
     check_manifests(problems)
     check_data_export(problems)
+    check_papers_index(problems)
     check_duplicates(pages, problems)
 
     print("=" * 72)
@@ -331,12 +332,29 @@ def main():
     for f, ids in problems["duplicate_ids"][:10]:
         print(f"    {f}: {ids}")
 
+    pi = problems["papers_index"]
+    print("\n[8] question-papers/papers.js (hub index)")
+    if not pi["exists"]:
+        print("    missing — run `python tools/build_content.py`")
+    else:
+        for kind, label in (("html", "standalone"), ("json", "data")):
+            on_disk, listed, unlisted, stale = pi[kind]
+            print(f"    {label:<11} {on_disk:3d} on disk, {listed:3d} listed"
+                  f"   unlisted={len(unlisted)} stale={len(stale)}")
+            for rel_path in unlisted[:5]:
+                print(f"        not listed: {rel_path}")
+            for rel_path in stale[:5]:
+                print(f"        gone:       {rel_path}")
+
     total = (len(broken) + len(missing) + len(rr)
              + sum(len(m["listed_but_missing"]) for m in problems["manifests"])
              + sum(len(m["on_disk_but_unlisted"]) for m in problems["manifests"])
              + len(exp.get("missing", []))
              + (0 if exp["exists"] and not exp.get("error") else 1)
-             + len(problems["duplicate_ids"]))
+             + len(problems["duplicate_ids"])
+             + (0 if pi["exists"] else 1)
+             + len(pi["html"][2]) + len(pi["html"][3])
+             + len(pi["json"][2]) + len(pi["json"][3]))
     print("\n" + "=" * 72)
     print(f"FAILURES: {total}    ADVISORY (stale pages): {len(orphans)}")
     print(f"RESULT: {'CLEAN' if total == 0 else str(total) + ' problem(s)'}")
