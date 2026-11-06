@@ -77,23 +77,31 @@ tools/      maintenance scripts (§5)
    ```
 3. Add a Malayalam title under `TITLE_ML` if it is missing.
 
-**A mock-test paper**
+**A mock-test paper — drop the file in, nothing to register**
 
-1. Drop the paper into `question-papers/573/`, `question-papers/883/` or
-   `question-papers/subjects/`.
-2. That's it — the list picks it up by itself:
+`question-papers/index.html` (the hub) lists **everything** under
+`question-papers/` by itself:
 
-   * previewing with `python tools/serve.py` → the manifest is rebuilt on the
-     next request, so a refresh shows the new paper;
-   * on GitHub Pages → the commit triggers the workflow that rebuilds the
-     manifest, and the page also folds in files the contents API reports as
-     not yet in it;
-   * opened from `file://` → the committed manifest is used, so run
-     `python tools/build_content.py` (see §5 for why this one case cannot be
-     automatic).
+| You add | You get |
+| --- | --- |
+| `question-papers/573/my-paper.json` (a data paper) | a card that opens `mock-test.html?paper=…` |
+| `question-papers/573/my-paper.html` (a standalone paper) | a card that opens the page directly |
 
-   `python tools/site_audit.py` reports any paper still missing as
-   "on disk, unlisted".
+No entry in `syllabus.js` is needed. The hub reads the generated
+`question-papers/papers.js`, which `tools/build_content.py` writes by scanning
+the folder; a data paper only needs `{ questions: [...] }` to be picked up.
+
+Keeping it current:
+
+* `python tools/serve.py` → `papers.js` is rebuilt on the next request, so a
+  refresh shows the new paper;
+* GitHub Pages → the commit triggers the workflow that rebuilds it, and the hub
+  also folds in anything the contents API reports as not yet indexed;
+* `file://` → the committed `papers.js` is used, so run
+  `python tools/build_content.py` (a browser cannot list a folder from disk).
+
+`python tools/site_audit.py` reports any mismatch under
+"[8] question-papers/papers.js".
 
 **A subject or chapter** — add the node to `SYLLABUS` in `syllabus.js`, map it
 in `FILES` / `CHAPTER_FILES`, then re-run `node tools/export_syllabus.js`.
@@ -105,6 +113,7 @@ in `FILES` / `CHAPTER_FILES`, then re-run `node tools/export_syllabus.js`.
 | File | Produced by |
 | --- | --- |
 | `question-papers/*/list.js` | `python tools/build_content.py` |
+| `question-papers/papers.js` | `python tools/build_content.py` |
 | `data/syllabus.json` | `node tools/export_syllabus.js` |
 
 `list.js` carries each paper's title, question count, duration, tag and
