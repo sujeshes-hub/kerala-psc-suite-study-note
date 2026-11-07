@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Kerala PSC Mock Test – Simple Arithmetic &amp; Mental Ability</title>
+
+<!-- CHANGE 1: BLOCKING SYNC LOADER (Loads sync.js immediately) -->
+<script>
+  (function(){
+    var p = location.pathname.replace(/\\/g,"/"),
+        m = p.match(/^(.*?\/)(?:topics|chapters|question-papers|mock-tests|subjects)\//),
+        b = m ? m[1] : p.replace(/[^\/]*$/,"");
+    if (!window.KPSC_Sync) document.write('<script src="' + b + 'assets/js/sync.js"><\/script>');
+  })();
+</script>
+
+<style>
+:root{
+  --bg:#f4f6f9;--panel:#fff;--text:#1a1a2e;--secondary:#4a4a6a;--border:#d0d4de;
+  --primary:#2c3e8f;--primary-light:#e8ecf7;--accent:#c8a600;--green:#1e7b3c;
+  --green-bg:#e6f4ea;--red:#b32d2d;--red-bg:#fde8e8;--orange:#c75b12;--orange-bg:#fef0e0;
+  --gray:#8a8f9e;--gray-bg:#eef0f4;--shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:10px;--radius-sm:6px;
+  --font:'Noto Sans Malayalam','Manjari','Nirmala UI','Kartika','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;
+  font-size:16px;transition:background 0.2s,color 0.2s;
+}
+[data-theme="dark"]{
+  --bg:#1e1e2e;--panel:#252537;--text:#cdd6f4;--secondary:#a6adc8;--border:#313244;
+  --primary:#cba6f7;--primary-light:#2a2438;--accent:#f9e2af;--green:#a6e3a1;
+  --green-bg:#1e2e1e;--red:#f38ba8;--red-bg:#2e1e24;--orange:#fab387;--orange-bg:#2e241e;
+  --gray:#6c7086;--gray-bg:#1e1e2e;--shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+[data-theme="sepia"]{
+  --bg:#fdf6e3;--panel:#fefcf4;--text:#433422;--secondary:#65533c;--border:#d3cbb7;
+  --primary:#8b5a2b;--primary-light:#f0e6d2;--accent:#b8860b;--green:#2e7d32;
+  --green-bg:#e8f5e9;--red:#c62828;--red-bg:#ffebee;--orange:#e65100;--orange-bg:#fff3e0;
+  --gray:#8a8070;--gray-bg:#f0e8d8;--shadow:0 2px 12px rgba(0,0,0,0.1);
+}
+.header{
+  position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:10px;box-shadow:var(--shadow);
+}
+.header-title{font-size:1.05rem;font-weight:700;color:var(--primary);flex:1 1 auto;min-width:130px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.timer-box{
+  display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:700;
+  background:var(--primary-light);padding:6px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--primary);font-variant-numeric:tabular-nums;letter-spacing:1px;
+}
+.timer-box.warning{border-color:var(--red);color:var(--red);background:var(--red-bg);animation:pulse 1.2s infinite}
+.timer-box.paused{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.pause-btn{
+  padding:8px 16px;border-radius:var(--radius-sm);border:2px solid var(--orange);
+  background:var(--orange-bg);color:var(--orange);font-family:var(--font);font-size:.9rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.pause-btn:hover{background:var(--orange);color:#fff}
+.pause-btn.resume{background:var(--green);border-color:var(--green);color:#fff}
+.theme-btn{
+  padding:8px 12px;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--panel);color:var(--text);font-family:var(--font);font-size:.85rem;
+  font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:4px;
+}
+.theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.study-pause-bar{
+  display:none;background:#fff7e6;border:2px solid var(--orange);color:var(--orange);
+  padding:8px 16px;margin:8px 10px 0;border-radius:8px;font-size:.88rem;font-weight:600;
+  align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.study-pause-bar.visible{display:flex}
+.study-pause-bar button{
+  padding:6px 14px;border-radius:6px;border:none;background:var(--green);color:#fff;
+  font-family:var(--font);font-weight:700;cursor:pointer;font-size:.82rem;min-height:34px;
+}
+.save-status{
+  font-size:.72rem;color:var(--green);font-weight:600;padding:4px 10px;border-radius:12px;
+  background:var(--green-bg);border:1px solid var(--green);white-space:nowrap;opacity:0;transition:opacity .3s;
+}
+.save-status.visible{opacity:1}
+.resume-banner{
+  display:none;background:linear-gradient(135deg,#1e40af,#3730a3);color:#fff;padding:18px 20px;
+  margin:10px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.15);
+}
+.resume-banner.visible{display:block}
+.resume-banner-title{font-size:1rem;font-weight:700;margin-bottom:8px}
+.resume-banner-info{
+  font-size:.88rem;line-height:1.7;margin-bottom:14px;background:rgba(255,255,255,0.12);
+  padding:10px 14px;border-radius:8px;
+}
+.resume-banner-info strong{color:#fef08a}
+.resume-banner-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.banner-btn{
+  padding:10px 20px;border-radius:8px;border:2px solid #fff;background:transparent;
+  color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px;
+}
+.banner-btn:hover{background:#fff;color:#1e40af}
+.banner-btn.primary{background:#fff;color:#1e40af}
+.banner-btn.danger{border-color:#fca5a5;color:#fca5a5}
+.banner-btn.danger:hover{background:#fca5a5;color:#7f1d1d}
+.main-container{
+  display:flex;flex:1;gap:16px;max-width:1400px;width:100%;margin:0 auto;padding:16px;
+  align-items:flex-start;
+}
+.question-panel{
+  flex:1;background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px 28px;min-width:0;transition:filter .3s;
+}
+.question-panel.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.sidebar{
+  flex:0 0 320px;display:flex;flex-direction:column;gap:16px;width:320px;transition:filter .3s;
+}
+.sidebar.locked{filter:blur(3px) grayscale(60%);pointer-events:none;user-select:none}
+.q-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.q-number{
+  font-weight:700;font-size:1.05rem;color:var(--primary);background:var(--primary-light);
+  padding:3px 12px;border-radius:20px;
+}
+.q-subject{
+  font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--accent);background:#fdf8e3;padding:3px 12px;border-radius:20px;border:1px solid #e8dca0;
+}
+.q-text{font-size:1.02rem;font-weight:500;white-space:pre-line;margin-bottom:18px;line-height:1.7}
+.options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.option-btn{
+  display:block;width:100%;text-align:left;padding:13px 18px;background:var(--panel);
+  border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;
+  font-size:.95rem;font-family:var(--font);color:var(--text);transition:all .2s;
+  line-height:1.5;white-space:pre-line;user-select:none;touch-action:manipulation;min-height:48px;
+}
+.option-btn:hover:not(.locked):not(.correct-highlight):not(.wrong-highlight){
+  border-color:var(--primary);background:var(--primary-light);
+}
+.option-btn.selected{border-color:var(--primary);background:var(--primary-light);box-shadow:0 0 0 1px var(--primary)}
+.option-btn.locked{cursor:default;pointer-events:none}
+.option-btn.correct-highlight{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600;pointer-events:none}
+.option-btn.wrong-highlight{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600;pointer-events:none}
+.explanation-box{
+  background:var(--bg);border-left:4px solid var(--primary);padding:16px 18px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:18px;font-size:.9rem;
+  line-height:1.7;color:var(--secondary);display:none;
+}
+.explanation-box.visible{display:block}
+.exp-label{font-weight:700;color:var(--primary);display:block;margin-bottom:4px;font-size:.85rem;text-transform:uppercase}
+.exp-correct{font-weight:600;color:var(--green)}.exp-wrong{font-weight:600;color:var(--red)}
+.action-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
+  font-family:var(--font);font-size:.88rem;font-weight:600;transition:all .2s;
+  touch-action:manipulation;min-height:44px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.btn-save{background:var(--green);color:#fff}.btn-show{background:var(--primary);color:#fff}
+.btn-skip-show{background:var(--accent);color:#1a1a2e}
+.btn-review{background:var(--orange);color:#fff}.btn-clear{background:var(--red);color:#fff}
+.btn-next{background:var(--gray);color:#fff}
+.btn-submit{background:#d4a017;color:#1a1a2e;padding:12px 20px;font-size:1rem;font-weight:700;width:100%}
+.palette-card,.stats-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.palette-card h3,.stats-card h3{font-size:.9rem;font-weight:700;color:var(--secondary);text-transform:uppercase;margin-bottom:12px}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px}
+.palette-btn{
+  width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:2px solid var(--border);
+  background:var(--gray-bg);color:var(--secondary);font-weight:700;font-size:.85rem;
+  cursor:pointer;transition:all .2s;font-family:var(--font);display:flex;align-items:center;justify-content:center;min-height:40px;
+}
+.palette-btn.visited-not-answered{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.palette-btn.answered{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.palette-btn.review{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.palette-btn.active{outline:3px solid var(--primary);outline-offset:1px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{background:var(--bg);padding:10px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);display:block}
+.stat-label{font-size:.7rem;color:var(--secondary);text-transform:uppercase;font-weight:600}
+.pause-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,50,0.85);
+  z-index:9999;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px);
+}
+.pause-overlay.visible{display:flex}
+.pause-modal{
+  background:var(--panel);border-radius:16px;padding:40px 32px;max-width:460px;width:100%;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+.pause-icon{font-size:4rem;margin-bottom:16px;line-height:1}
+.pause-modal h2{font-size:1.5rem;color:var(--orange);margin-bottom:12px;font-weight:700}
+.pause-modal p{color:var(--secondary);margin-bottom:24px;font-size:1rem;line-height:1.7}
+.pause-modal .resume-main-btn{
+  padding:14px 36px;border-radius:var(--radius-sm);border:none;background:var(--green);
+  color:#fff;font-family:var(--font);font-size:1.05rem;font-weight:700;cursor:pointer;min-height:50px;
+}
+.results-view{display:none;flex:1;max-width:1100px;width:100%;margin:20px auto;padding:0 16px}
+.results-view.visible{display:block}
+.results-title{text-align:center;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:24px}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px}
+.summary-card{
+  background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px 16px;text-align:center;border-top:4px solid var(--primary);
+}
+.summary-card .sc-value{font-size:2rem;font-weight:700}
+.summary-card .sc-label{font-size:.8rem;color:var(--secondary);text-transform:uppercase}
+.summary-card.correct-card{border-top-color:var(--green)}.summary-card.correct-card .sc-value{color:var(--green)}
+.summary-card.wrong-card{border-top-color:var(--red)}.summary-card.wrong-card .sc-value{color:var(--red)}
+.summary-card.negative-card{border-top-color:var(--orange)}.summary-card.negative-card .sc-value{color:var(--orange)}
+.summary-card.score-card{border-top-color:var(--primary);background:var(--primary-light)}
+.results-table-section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px;overflow-x:auto}
+.results-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.results-table th,.results-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.results-table th{background:var(--primary-light);color:var(--primary);font-weight:700;text-transform:uppercase;font-size:.75rem}
+.result-detail-list{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:24px}
+.detail-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;background:var(--bg)}
+.di-question{font-weight:600;margin-bottom:6px;white-space:pre-line}
+.di-info{font-size:.85rem;color:var(--secondary);margin-bottom:4px}
+.di-correct{color:var(--green);font-weight:600}.di-wrong{color:var(--red);font-weight:600}
+.di-explanation{font-size:.85rem;color:var(--secondary);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+@media (max-width:900px){
+  .main-container{flex-direction:column;padding:10px;gap:12px}
+  .question-panel{padding:16px}
+  .sidebar{width:100%;flex-direction:column;gap:12px}
+  .header-title{font-size:.9rem}
+  .timer-box{font-size:1.05rem;padding:4px 10px}
+  .pause-btn{font-size:.8rem;padding:6px 12px;min-height:36px}
+  .theme-btn{font-size:.75rem;padding:6px 8px;min-height:36px}
+  .q-text{font-size:.92rem}
+  .option-btn{padding:11px 14px;font-size:.86rem}
+  .btn{padding:8px 12px;font-size:.78rem}
+}
+
+.exp-verdict{font-weight:700;margin-bottom:12px;font-size:.95rem}
+.exp-sec{margin:0 0 10px;padding:10px 14px;border-radius:var(--radius-sm);border-left:4px solid var(--primary);background:var(--panel);color:var(--text);white-space:normal}
+.exp-sec:last-child{margin-bottom:0}
+.exp-sec h4{font-size:.78rem;font-weight:700;margin-bottom:4px;color:var(--primary)}
+.exp-sec p{margin:0}
+.exp-sec ol{margin:0;padding-left:22px}
+.exp-sec li{margin:3px 0}
+.exp-steps{border-left-color:var(--gray)}.exp-steps h4{color:var(--secondary)}
+.exp-trick{border-left-color:var(--orange);background:var(--orange-bg)}.exp-trick h4{color:var(--orange)}
+.exp-trap{border-left-color:var(--red);background:var(--red-bg)}.exp-trap h4{color:var(--red)}
+.exp-psc{border-left-color:var(--green);background:var(--green-bg)}.exp-psc h4{color:var(--green)}
+.exp-fix{border-left-color:var(--primary);background:var(--primary-light)}
+.di-explanation{white-space:normal}
+@media (max-width:900px){.exp-sec{padding:8px 11px}}
+</style>
+</head>
+<body>
+
+<header class="header" id="testHeader" style="display:none;">
+<span class="header-title">Kerala PSC Mock Test · Arithmetic &amp; Mental Ability</span>
+<div class="header-right">
+<div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">00:00:00</span></div>
+<span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="theme-btn" id="themeBtn" onclick="cycleTheme()">🌙 Dark</button>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
+</div>
+</header>
+
+<div class="study-pause-bar" id="studyPauseBar">
+<span>⏸ ഉത്തരം കാണുമ്പോൾ ടൈമർ നിർത്തിയിരിക്കുന്നു (Study Pause)</span>
+<button onclick="resumeStudy()">▶ Resume Timer</button>
+</div>
+
+<div class="resume-banner" id="resumeBanner" style="display:none;">
+<div class="resume-banner-title">📥 Saved attempt found</div>
+<div class="resume-banner-info" id="resumeInfo">Loading...</div>
+<div class="resume-banner-buttons">
+<button class="banner-btn primary" onclick="resumeAttempt()">▶ Resume</button>
+<button class="banner-btn danger" onclick="startFresh()">🔄 Start Fresh</button>
+</div>
+</div>
+
+<div class="pause-overlay" id="pauseOverlay">
+<div class="pause-modal" id="pauseModal">
+<div class="pause-icon" id="pauseIcon">⏸</div>
+<h2 id="pauseTitle">Exam Paused</h2>
+<p id="pauseMessage">പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.</p>
+<button class="resume-main-btn" onclick="togglePause()">▶ Resume Exam</button>
+</div>
+</div>
+
+<div id="syncLoader" style="text-align:center;margin-top:50px;font-weight:bold;color:var(--primary);font-size:1.2rem;">☁️ Checking cloud for saved progress...</div>
+
+<div class="main-container" id="testView" style="display:none;">
+<div class="question-panel" id="questionPanel">
+<div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
+<div class="q-text" id="qText">Loading...</div>
+<div class="options-list" id="optionsList"></div>
+<div class="explanation-box" id="explanationBox"><span class="exp-label">വിശദീകരണം</span><div id="expContent"></div></div>
+<div class="action-buttons" id="actionButtons"></div>
+</div>
+
+<div class="sidebar" id="sidebar">
+<div class="palette-card">
+<h3>Question Palette</h3>
+<div class="palette-grid" id="paletteGrid"></div>
+</div>
+<div class="stats-card">
+<h3>Live Stats</h3>
+<div class="stats-grid">
+<div class="stat-item"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statNotAnswered">0</span><span class="stat-label">Not Answered</span></div>
+<div class="stat-item"><span class="stat-value" id="statReview">0</span><span class="stat-label">Review</span></div>
+<div class="stat-item"><span class="stat-value" id="statAttempted">0</span><span class="stat-label">Attempted</span></div>
+</div>
+</div>
+<button class="btn btn-submit" onclick="submitTest(false)">Submit Test</button>
+</div>
+</div>
+
+<div class="results-view" id="resultsView">
+<h2 class="results-title">📋 Mock Test Results</h2>
+<div class="summary-cards" id="summaryCards"></div>
+<div class="results-table-section">
+<h3>Subject-wise Analysis</h3>
+<div style="overflow-x:auto;"><table class="results-table"><thead><tr><th>Subject</th><th>Total</th><th>Attempted</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>Score</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div>
+</div>
+<div class="result-detail-list"><h3>❌ തെറ്റായ ഉത്തരങ്ങളും വിട്ടുകളഞ്ഞവയും</h3><div id="detailList"></div></div>
+<div style="text-align:center;padding:20px;"><button class="btn btn-next" onclick="restartTest()">🔄 Restart Test</button></div>
+</div>
+
+<script>
+// IMPORTANT: Use a unique key for every different mock test.
+const STORAGE_KEY = 'kpsc_arith_mental_mock_1';
+const STORAGE_VERSION = 1;
+const SECONDS_PER_QUESTION = 45;
+const NEGATIVE_MARKING = 0.33;
+
+// --- 100 QUESTIONS: Part 1 = Arithmetic (1-50), Part 2 = Mental Ability (51-100) ---
+// exp fields: b = ലളിതമായ ആശയം (beginner), k = ഘട്ടങ്ങൾ (steps), t = ഓർമ്മ ട്രിക്ക്,
+//             w = കെണി, p = PSC ഫോക്കസ്, x = ഒറിജിനലിലെ തിരുത്തൽ
+const A = "ലഘുഗണിതം (Arithmetic)";
+const M = "മാനസികശേഷി (Mental Ability)";
+function Q(subject, question, options, correct, exp) { return { subject, question, options, correct, exp }; }
+const P1 = [
+Q(A,"ആദ്യത്തെ 50 എണ്ണൽസംഖ്യകളുടെ (natural numbers) ശരാശരി (average) എത്ര?",["A) 25","B) 25.5","C) 26","D) 50.5"],1,{
+b:"ശരാശരി എന്നാൽ എല്ലാ സംഖ്യകളുടെയും തുകയെ എണ്ണം കൊണ്ട് ഹരിച്ചത്. 1, 2, 3 ... എന്നിങ്ങനെ തുല്യ വ്യത്യാസത്തിൽ പോകുന്ന സംഖ്യകളുടെ ശരാശരി എപ്പോഴും നടുവിലെ സംഖ്യയായിരിക്കും. 1 മുതൽ 50 വരെയുള്ളതിൽ നടുവ് 25-നും 26-നും ഇടയിലാണ് (50 ഇരട്ടസംഖ്യയായതിനാൽ നടുവിൽ ഒറ്റ സംഖ്യയില്ല). ഓപ്ഷനുകളിൽ അങ്ങനെ ഇടയിൽ വരുന്നത് 25.5 മാത്രം.",
+k:["ആദ്യത്തെ n എണ്ണൽസംഖ്യകളുടെ ശരാശരി = (n + 1) ÷ 2","n = 50 ആയതിനാൽ (50 + 1) ÷ 2 = 51 ÷ 2 = 25.5","ഉറപ്പിക്കാൻ: തുക = 50 × 51 ÷ 2 = 1275; 1275 ÷ 50 = 25.5"],
+t:"ആദ്യത്തെ n എണ്ണൽസംഖ്യകളുടെ ശരാശരി = (n+1)/2. ആദ്യത്തെ n ഇരട്ടസംഖ്യകളുടെ ശരാശരി = n+1."}),
+
+Q(A,"A:B = 2:3 ഉം B:C = 4:5 ഉം ആയാൽ A:B:C എത്ര?",["A) 8:12:15","B) 2:3:5","C) 8:15:12","D) 6:12:15"],0,{
+b:"രണ്ട് അനുപാതങ്ങളിലും B പൊതുവാണ്. ആദ്യത്തേതിൽ B = 3, രണ്ടാമത്തേതിൽ B = 4. B-യുടെ സംഖ്യ ഒരുപോലെ ആക്കിയാലേ രണ്ടും ഒന്നിച്ചെഴുതാൻ പറ്റൂ. ഓപ്ഷൻ നോക്കിയും ഉത്തരം കിട്ടും: ഉത്തരത്തിലെ ആദ്യ രണ്ട് സംഖ്യകൾ 2:3 ആകണം, അവസാന രണ്ട് 4:5 ആകണം. 8:12 = 2:3 ✓, 12:15 = 4:5 ✓. 2:3:5-ൽ 3:5 ആണ് (തെറ്റ്), 6:12 = 1:2 (തെറ്റ്).",
+k:["B-യുടെ രണ്ട് സംഖ്യകൾ 3 ഉം 4 ഉം → LCM = 12","A:B = 2:3 ഇരുവശവും ×4 → 8:12","B:C = 4:5 ഇരുവശവും ×3 → 12:15","B = 12 ഒരുപോലെയായി → A:B:C = 8:12:15"],
+p:"'പൊതുവായ' സംഖ്യ (ഇവിടെ B) LCM എടുത്ത് തുല്യമാക്കുക എന്നതാണ് PSC-യിലെ സ്ഥിരം രീതി."}),
+
+Q(A,"A ഒരു ജോലി 15 ദിവസം കൊണ്ടും B 10 ദിവസം കൊണ്ടും ചെയ്യും. ഒരുമിച്ച് ചെയ്താൽ എത്ര ദിവസം വേണം?",["A) 5 ദിവസം","B) 6 ദിവസം","C) 8 ദിവസം","D) 12.5 ദിവസം"],1,{
+b:"ഒരാൾ തനിച്ച് ചെയ്യുന്നതിനേക്കാൾ വേഗത്തിൽ ഒരുമിച്ച് തീരും. അതിനാൽ ഏറ്റവും വേഗമുള്ളയാളുടെ സമയമായ 10 ദിവസത്തിൽ കുറവായിരിക്കണം ഉത്തരം; 12.5 ഉടൻ തള്ളാം. ജോലിയെ 30 ഭാഗമായി കരുതൂ (15-ന്റെയും 10-ന്റെയും LCM).",
+k:["A ഒരു ദിവസം 30 ÷ 15 = 2 ഭാഗം ചെയ്യും","B ഒരു ദിവസം 30 ÷ 10 = 3 ഭാഗം ചെയ്യും","ഒരുമിച്ച് ഒരു ദിവസം 2 + 3 = 5 ഭാഗം","ആകെ ദിവസം = 30 ÷ 5 = 6"],
+t:"ഷോർട്ട്കട്ട്: രണ്ടുപേർ ഒരുമിച്ച് = (a × b) ÷ (a + b) = (15 × 10) ÷ 25 = 6 ദിവസം. ഗുണനഫലം ÷ തുക."}),
+
+Q(A,"150 മീറ്റർ നീളമുള്ള ഒരു ട്രെയിൻ മണിക്കൂറിൽ 72 കിലോമീറ്റർ വേഗതയിൽ പോകുന്നു. ഒരു നിശ്ചല തൂണിനെ (pole) കടന്നുപോകാൻ എത്ര സമയം വേണം?",["A) 10 സെക്കൻഡ്","B) 7.5 സെക്കൻഡ്","C) 12 സെക്കൻഡ്","D) 15 സെക്കൻഡ്"],1,{
+b:"തൂണിന് നീളമില്ല (ഒരു ബിന്ദു മാത്രം). ട്രെയിനിന്റെ മുൻഭാഗം തൂണിനടുത്ത് എത്തിയത് മുതൽ പിൻഭാഗം തൂണിനെ കടക്കുന്നതുവരെ ട്രെയിൻ ഓടേണ്ട ദൂരം ട്രെയിനിന്റെ സ്വന്തം നീളം (150 m) മാത്രമാണ്.",
+k:["വേഗം m/s ആക്കാം: 72 × 5/18 = 20 m/s","സമയം = ദൂരം ÷ വേഗം = 150 ÷ 20 = 7.5 സെക്കൻഡ്","പരിശോധന: ഒരു സെക്കൻഡിൽ 20 m; 7 സെക്കൻഡിൽ 140 m, 8 സെക്കൻഡിൽ 160 m → 150 m അതിനിടയിൽ"],
+t:"km/h → m/s ആക്കാൻ ×5/18. m/s → km/h ആക്കാൻ ×18/5. തൂണിനെ കടക്കാൻ ട്രെയിനിന്റെ നീളം മാത്രം ദൂരമായി എടുക്കുക."}),
+
+Q(A,"12 സാധനങ്ങളുടെ വാങ്ങൽ വില (cost price) 10 സാധനങ്ങളുടെ വിൽപ്പന വിലയ്ക്ക് (selling price) തുല്യമാണ്. ലാഭശതമാനം എത്ര?",["A) 16.66%","B) 20%","C) 25%","D) 15%"],1,{
+b:"ഒരു സാധനത്തിന്റെ വാങ്ങൽ വില ₹10 എന്നെടുക്കൂ. 12 സാധനത്തിന് ₹120. ഇതേ ₹120-ന് 10 സാധനം വിറ്റു → ഒരെണ്ണത്തിന് ₹12 കിട്ടി. ₹10-ന് വാങ്ങി ₹12-ന് വിറ്റു → ലാഭം ₹2.",
+k:["ഒരെണ്ണത്തിന്റെ ലാഭം = 12 − 10 = ₹2","ലാഭ % = ലാഭം ÷ വാങ്ങൽ വില × 100 = 2 ÷ 10 × 100 = 20%"],
+w:"2/12 = 16.66% ആണ് കെണി ഓപ്ഷൻ. ലാഭം എപ്പോഴും വാങ്ങിയ വിലയുടെ ശതമാനമാണ്; ഇവിടെ അടിസ്ഥാനം 10 ആണ്, 12 അല്ല."}),
+
+Q(A,"ഒരു തുക സാധാരണ പലിശയിൽ (simple interest) 8 വർഷം കൊണ്ട് ഇരട്ടിയാകുന്നു. വാർഷിക പലിശ നിരക്ക് എത്ര?",["A) 12.5%","B) 10%","C) 8%","D) 15%"],0,{
+b:"തുക ഇരട്ടിയാകണമെങ്കിൽ മൂലധനത്തിന്റെ 100% പലിശയായി കിട്ടണം. 8 വർഷം കൊണ്ട് 100% എന്നാൽ ഒരു വർഷം 100 ÷ 8 = 12.5%. 10% ആയാൽ 10 വർഷം വേണം, 8 വർഷം മതിയാകില്ല.",
+k:["ഇരട്ടി = മൂലധനം + 100% പലിശ","നിരക്ക് = (n − 1) × 100 ÷ വർഷം = 100 ÷ 8 = 12.5%"],
+t:"ഇരട്ടി = 100 ÷ വർഷം. മൂന്നിരട്ടി = 200 ÷ വർഷം. നാലിരട്ടി = 300 ÷ വർഷം."}),
+
+Q(A,"₹5000-ന് 2 വർഷത്തേക്ക് 10% വാർഷിക നിരക്കിൽ കൂട്ടുപലിശയും (compound interest) സാധാരണ പലിശയും തമ്മിലുള്ള വ്യത്യാസം?",["A) ₹25","B) ₹50","C) ₹100","D) ₹75"],1,{
+b:"കൂട്ടുപലിശയിൽ അധികമായി കിട്ടുന്നത് 'പലിശയ്ക്ക് കിട്ടുന്ന പലിശ' മാത്രമാണ്. ഒന്നാം വർഷ പലിശ ₹500. രണ്ടാം വർഷം ഈ ₹500-ന് 10% = ₹50. അതാണ് വ്യത്യാസം.",
+k:["2 വർഷത്തെ വ്യത്യാസം = P × (R/100)²","= 5000 × (10/100)² = 5000 × 1/100 = ₹50"],
+t:"2 വർഷം: P(R/100)². 3 വർഷം: P(R/100)²(300 + R)/100."}),
+
+Q(A,"ഒരാളുടെ ശമ്പളം ആദ്യം 20% കൂട്ടി, പിന്നീട് 20% കുറച്ചു. ആകെ മാറ്റം എന്ത്?",["A) 0% (മാറ്റമില്ല)","B) 4% വർധന","C) 4% കുറവ്","D) 20% കുറവ്"],2,{
+b:"ശമ്പളം ₹100 എന്നെടുക്കൂ. 20% കൂട്ടിയാൽ ₹120. ഇനി 120-ന്റെ 20% = ₹24 കുറച്ചാൽ ₹96. ₹4 കുറവ് → 4%.",
+k:["സൂത്രവാക്യം: x + y + xy/100 = 20 − 20 − 400/100 = −4%","നെഗറ്റീവ് ആയതിനാൽ 4% കുറവ്"],
+w:"'കൂട്ടി, അത്രതന്നെ കുറച്ചു, അപ്പോൾ പഴയതു തന്നെ' എന്നത് ക്ലാസിക് കെണിയാണ്. രണ്ടാമത്തെ 20% കൂടിയ തുകയുടെ 20% ആണ്, പഴയതിന്റേതല്ല."}),
+
+Q(A,"വൃത്തത്തിന്റെ ആരം (radius) 10% കൂട്ടിയാൽ പരപ്പളവ് (area) എത്ര ശതമാനം കൂടും?",["A) 10%","B) 20%","C) 21%","D) 100%"],2,{
+b:"ആരം 10 എന്നെടുക്കൂ → 11 ആകും. പരപ്പളവ് ആരത്തിന്റെ വർഗത്തിന് ആനുപാതികം: 10² = 100, 11² = 121. വർധന 21 → 21%. 10% തള്ളാം, കാരണം വർഗമായതിനാൽ ആരത്തേക്കാൾ കൂടുതൽ ശതമാനം കൂടും.",
+k:["ഷോർട്ട്കട്ട്: 2R + R²/100 = 20 + 100/100 = 21%"],
+t:"ചതുരത്തിന്റെ വശം / വൃത്തത്തിന്റെ ആരം x% കൂടിയാൽ പരപ്പളവ് 2x + x²/100 % കൂടും."}),
+
+Q(A,"2³ × 2⁴ ÷ 2² ന്റെ വില എത്ര?",["A) 16","B) 32","C) 64","D) 8"],1,{
+b:"ആദ്യം ഓരോന്നിന്റെയും വില കാണാം: 2³ = 8, 2⁴ = 16, 2² = 4. 8 × 16 = 128. 128 ÷ 4 = 32.",
+k:["ഷോർട്ട്കട്ട്: ഗുണിക്കുമ്പോൾ ഘാതങ്ങൾ കൂട്ടുക, ഹരിക്കുമ്പോൾ കുറയ്ക്കുക","2^(3 + 4 − 2) = 2⁵ = 32"],
+t:"aᵐ × aⁿ = aᵐ⁺ⁿ ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ"}),
+
+Q(A,"₹1000 രേഖപ്പെടുത്തിയ വിലയിൽ (marked price) 10% ഡിസ്കൗണ്ട് നൽകിയിട്ടും കച്ചവടക്കാരന് 20% ലാഭം കിട്ടുന്നു. വാങ്ങൽ വില (cost price) എത്ര?",["A) ₹800","B) ₹750","C) ₹720","D) ₹850"],1,{
+b:"ആദ്യം വിൽപ്പന വില കണ്ടെത്തുക: 1000 − 10% = ₹900. 20% ലാഭം എന്നാൽ വിൽപ്പന വില = വാങ്ങൽ വിലയുടെ 1.2 ഇരട്ടി. ഓപ്ഷനുകൾ പരിശോധിക്കാം: 750 × 1.2 = 900 ✓. (800 × 1.2 = 960, അത് 900-ൽ കൂടുതലാണ്.)",
+k:["വിൽപ്പന വില = 1000 − 100 = ₹900","വാങ്ങൽ വില = 900 ÷ 1.2 = ₹750"],
+x:"നൽകിയിരുന്ന ഉത്തരസൂചികയിൽ C (₹720) എന്നായിരുന്നു. ശരിയായ ഉത്തരം B (₹750)."}),
+
+Q(A,"ഒരു ചതുരത്തിന്റെ ചുറ്റളവ് (perimeter) 40 സെ.മീ., നീളം 12 സെ.മീ. ആണ്. പരപ്പളവ് എത്ര?",["A) 96 ച.സെ.മീ.","B) 80 ച.സെ.മീ.","C) 144 ച.സെ.മീ.","D) 100 ച.സെ.മീ."],0,{
+b:"ചുറ്റളവ് = 2 × (നീളം + വീതി). അതിനാൽ നീളം + വീതി = 20. നീളം 12 ആയതിനാൽ വീതി 8. 144 (12 × 12) ഉം 100 (10 × 10) ഉം സമചതുരത്തിന്റെ വിലകളാണ്; ഇവിടെ ചതുരമായതിനാൽ തള്ളാം.",
+k:["2(L + B) = 40 ⇒ L + B = 20 ⇒ B = 20 − 12 = 8","പരപ്പളവ് = L × B = 12 × 8 = 96 ച.സെ.മീ."]}),
+
+Q(A,"x-ന്റെ 15% = y-യുടെ 20% ആയാൽ x:y എത്ര?",["A) 3:4","B) 4:3","C) 15:20","D) 5:4"],1,{
+b:"ചെറിയ ശതമാനം (15%) എടുത്തിട്ടും അതേ തുക കിട്ടണമെങ്കിൽ സംഖ്യ വലുതായിരിക്കണം. അതിനാൽ x വലുത്, y ചെറുത് → x:y-യിൽ ആദ്യ സംഖ്യ വലുത്. 3:4 ഉം 15:20 ഉം (ഇത് 3:4 തന്നെ) തള്ളാം. ബാക്കി 4:3, 5:4. കണക്ക് നോക്കിയാൽ x/y = 20/15 = 4/3.",
+k:["15x/100 = 20y/100 ⇒ 15x = 20y","x/y = 20/15 = 4/3 ⇒ x:y = 4:3"],
+w:"ശതമാനങ്ങൾ അതേ ക്രമത്തിൽ എഴുതിയാൽ (15:20) തെറ്റും. ക്രോസ് ആയി മറിച്ചാണ് വരുന്നത്."}),
+
+Q(A,"A, B എന്നീ രണ്ട് പൈപ്പുകൾ ഒരു ടാങ്ക് യഥാക്രമം 20 മിനിറ്റ്, 30 മിനിറ്റ് കൊണ്ട് നിറയ്ക്കും. രണ്ടും ഒരുമിച്ച് തുറന്നാൽ എത്ര സമയം വേണം?",["A) 50 മിനിറ്റ്","B) 12 മിനിറ്റ്","C) 15 മിനിറ്റ്","D) 10 മിനിറ്റ്"],1,{
+b:"ഒരുമിച്ച് തുറന്നാൽ ഏറ്റവും വേഗമുള്ള പൈപ്പിന്റെ 20 മിനിറ്റിനേക്കാൾ കുറവ് സമയമേ വേണ്ടൂ. അതിനാൽ 50 ഉടൻ തള്ളാം. ടാങ്ക് 60 ലിറ്റർ എന്നെടുക്കൂ (20, 30 ന്റെ LCM): A മിനിറ്റിൽ 3 ലിറ്റർ, B മിനിറ്റിൽ 2 ലിറ്റർ → ഒരുമിച്ച് 5.",
+k:["60 ÷ 5 = 12 മിനിറ്റ്","ഷോർട്ട്കട്ട്: (20 × 30) ÷ (20 + 30) = 600 ÷ 50 = 12"]}),
+
+Q(A,"സമാന്തര ശ്രേണി (AP) 3, 7, 11, 15 ... ന്റെ 10-ാം പദം കണ്ടെത്തുക.",["A) 39","B) 40","C) 35","D) 43"],0,{
+b:"ഓരോ പദത്തിനും 4 കൂടുന്നു. ഒന്നാം പദം 3 ൽ നിന്ന് 10-ാം പദത്തിലെത്താൻ 9 തവണ 4 കൂട്ടണം: 3 + 36 = 39. ഒറ്റസംഖ്യയോട് ഇരട്ടസംഖ്യ (4) കൂട്ടിയാൽ എപ്പോഴും ഒറ്റസംഖ്യയാണ് കിട്ടുക, അതിനാൽ 40 തള്ളാം.",
+k:["n-ാം പദം = a + (n − 1)d","= 3 + 9 × 4 = 39"],
+w:"10 തവണ അല്ല, 9 തവണയാണ് വ്യത്യാസം കൂട്ടുന്നത് (n − 1). 3 + 10 × 4 = 43 കെണി ഓപ്ഷനാണ്."}),
+
+Q(A,"ഒരു ബോട്ട് ഒഴുക്കിന്റെ ദിശയിൽ (downstream) മണിക്കൂറിൽ 14 കി.മീ., ഒഴുക്കിനെതിരെ (upstream) 10 കി.മീ. വേഗത്തിൽ പോകുന്നു. ഒഴുക്കിന്റെ വേഗം?",["A) 12 km/h","B) 4 km/h","C) 2 km/h","D) 24 km/h"],2,{
+b:"ഒഴുക്ക് ഒരിക്കൽ ബോട്ടിന്റെ വേഗം കൂട്ടുന്നു, ഒരിക്കൽ കുറയ്ക്കുന്നു. രണ്ടും തമ്മിലുള്ള വ്യത്യാസം 4 എന്നാൽ അത് ഒഴുക്കിന്റെ 2 മടങ്ങ്. അതിനാൽ ഒഴുക്ക് = 4 ÷ 2 = 2.",
+k:["ഒഴുക്കിന്റെ വേഗം = (downstream − upstream) ÷ 2 = (14 − 10) ÷ 2 = 2 km/h","ശാന്തജലത്തിൽ ബോട്ടിന്റെ വേഗം = (14 + 10) ÷ 2 = 12 km/h"],
+w:"വ്യത്യാസം 4 നേരിട്ട് ഉത്തരമായി എഴുതരുത്, 2 കൊണ്ട് ഹരിക്കണം. 12 ആണ് ബോട്ടിന്റെ സ്വന്തം വേഗം."}),
+
+Q(A,"a/b = 3/4 ആയാൽ (2a + b)/(a + 2b) ന്റെ വില?",["A) 10/11","B) 1/2","C) 5/11","D) 3/4"],0,{
+b:"അനുപാതം തന്നിട്ടുള്ളതിനാൽ a = 3, b = 4 എന്ന് വെച്ച് നേരിട്ട് കണക്കാക്കാം.",
+k:["മുകളിൽ: 2a + b = 2×3 + 4 = 10","താഴെ: a + 2b = 3 + 2×4 = 11","ഉത്തരം = 10/11"],
+t:"അനുപാതം തന്നിട്ടുള്ള ചോദ്യങ്ങളിൽ സംഖ്യകൾ നേരിട്ട് വെച്ച് കണക്കാക്കുക."}),
+
+Q(A,"A ഒരു ജോലി 18 ദിവസം കൊണ്ടും B 9 ദിവസം കൊണ്ടും ചെയ്യും. ഇരുവരും 3 ദിവസം ഒരുമിച്ച് ജോലി ചെയ്തശേഷം A പോയി. ബാക്കി ജോലി തീർക്കാൻ B-ക്ക് എത്ര ദിവസം വേണം?",["A) 4.5 ദിവസം","B) 5 ദിവസം","C) 6 ദിവസം","D) 3 ദിവസം"],0,{
+b:"ജോലി 18 ഭാഗം എടുക്കൂ. A ദിവസം 1 ഭാഗം, B ദിവസം 2 ഭാഗം ചെയ്യും. 3 ദിവസം ഒരുമിച്ച് = 3 × 3 = 9 ഭാഗം (പകുതി ജോലി). ബാക്കി പകുതി ജോലി B-യുടെ മുഴുവൻ സമയമായ 9 ദിവസത്തിന്റെ പകുതി = 4.5 ദിവസം.",
+k:["ഒരുമിച്ച് ഒരു ദിവസം = 1/18 + 1/9 = 1/6","3 ദിവസം = 3 × 1/6 = 1/2 ജോലി","ബാക്കി 1/2 → B-ക്ക് 9 × 1/2 = 4.5 ദിവസം"]}),
+
+Q(A,"40 കുട്ടികളുള്ള ക്ലാസിന്റെ ശരാശരി ഭാരം 45 കിലോ. അധ്യാപകന്റെ ഭാരം കൂടി ചേർത്തപ്പോൾ ശരാശരി 1 കിലോ കൂടി. അധ്യാപകന്റെ ഭാരം?",["A) 86 kg","B) 46 kg","C) 85 kg","D) 80 kg"],0,{
+b:"അധ്യാപകൻ വന്നപ്പോൾ 40 കുട്ടികൾക്കും 1 കിലോ വീതം 'കൂടി കൊടുത്തു' എന്ന് ചിന്തിക്കൂ: അത് 40 കിലോ. അധ്യാപകൻ പുതിയ ശരാശരിയായ 46-ന് പുറമെ ഈ 40 കൂടി ഉള്ളയാളാണ്. 46 + 40 = 86.",
+k:["ഷോർട്ട്കട്ട്: പുതിയ ശരാശരി + (പഴയ എണ്ണം × വർധന)","= 46 + 40 × 1 = 86 kg"],
+w:"46 ആണ് പുതിയ ശരാശരി, അധ്യാപകന്റെ ഭാരമല്ല. അത് കെണി ഓപ്ഷൻ."}),
+
+Q(A,"അച്ഛന്റെയും മകന്റെയും ഇപ്പോഴത്തെ വയസ്സ് 5:2 എന്ന അനുപാതത്തിലാണ്. 5 വർഷം കഴിയുമ്പോൾ അനുപാതം 11:5 ആകും. അച്ഛന്റെ ഇപ്പോഴത്തെ വയസ്സ്?",["A) 45 വയസ്സ്","B) 50 വയസ്സ്","C) 40 വയസ്സ്","D) 55 വയസ്സ്"],1,{
+b:"ഓപ്ഷനുകൾ ഓരോന്നായി പരീക്ഷിക്കൂ (substitution). അച്ഛൻ 50 എങ്കിൽ മകൻ 50 ÷ 5 × 2 = 20. 5 വർഷം കഴിഞ്ഞാൽ 55 : 25 = 11 : 5 ✓. അച്ഛൻ 45 എങ്കിൽ മകൻ 18; 50 : 23 ≠ 11 : 5 ✗.",
+k:["വയസ്സ് 5x, 2x എന്നെടുക്കാം","(5x + 5)/(2x + 5) = 11/5","25x + 25 = 22x + 55 ⇒ x = 10","അച്ഛൻ = 5x = 50"],
+p:"വയസ്സ് ചോദ്യങ്ങളിൽ ഓപ്ഷൻ വെച്ച് പരിശോധിക്കുന്നതാണ് ഏറ്റവും വേഗം."}),
+
+Q(A,"12, 15, 20 എന്നിവയുടെ ലഘുതമ സാധാരണ ഗുണിതം (LCM) കണ്ടെത്തുക.",["A) 60","B) 120","C) 30","D) 45"],0,{
+b:"LCM എന്നാൽ മൂന്ന് സംഖ്യകളും കൃത്യമായി ഹരിക്കുന്ന ഏറ്റവും ചെറിയ സംഖ്യ. അത് 20-ന്റെ ഗുണിതമായിരിക്കണം. 30, 45 ഇവ 20-ന്റെ ഗുണിതമല്ല, തള്ളാം. 60, 120 ബാക്കി. 12, 15 രണ്ടും 60-നെ ഹരിക്കും. ഏറ്റവും ചെറിയത് 60.",
+k:["12 = 2²×3, 15 = 3×5, 20 = 2²×5","ഓരോ അഭാജ്യസംഖ്യയുടെയും ഏറ്റവും വലിയ ഘാതം എടുക്കുക","LCM = 2² × 3 × 5 = 60"]}),
+
+Q(A,"ഒരു സംഖ്യയുടെ 3/4 ഭാഗം 60 ആണ്. ആ സംഖ്യയുടെ 1/2 ഭാഗം എത്ര?",["A) 30","B) 40","C) 50","D) 80"],1,{
+b:"3/4 ഭാഗം = 60 എന്നാൽ 1/4 ഭാഗം = 20. സംഖ്യ = 20 × 4 = 80. അതിന്റെ പകുതി 40.",
+k:["(3/4)x = 60 ⇒ x = 80","80-ന്റെ 1/2 = 40"],
+w:"80 എന്നത് സംഖ്യ തന്നെയാണ്. ചോദ്യം 'പകുതി' ചോദിക്കുന്നു എന്ന് മറക്കരുത്."}),
+
+Q(A,"3 സെ.മീ. ആരമുള്ള ഒരു ഗോളത്തിന്റെ (sphere) വ്യാപ്തം (volume) എത്ര? (π ചേർത്ത് ഉത്തരം എഴുതുക)",["A) 27π ഘന സെ.മീ.","B) 36π ഘന സെ.മീ.","C) 9π ഘന സെ.മീ.","D) 18π ഘന സെ.മീ."],1,{
+b:"ഗോളത്തിന്റെ വ്യാപ്തം 4/3 × π × r³. r³ = 3 × 3 × 3 = 27. 4/3 × 27 = 36. 27π എന്നത് 4/3 ചേർക്കാൻ മറന്നാൽ കിട്ടുന്ന കെണി ഉത്തരമാണ്.",
+k:["V = (4/3)πr³ = (4/3) × π × 27 = 36π ഘന സെ.മീ."],
+t:"ഗോളം: വ്യാപ്തം (4/3)πr³, ഉപരിതല വിസ്തീർണം 4πr². അർധഗോളം: 2/3 πr³, വക്രതല വിസ്തീർണം 2πr²."}),
+
+Q(A,"ഒരു സമചതുരത്തിന്റെ വശം ഇരട്ടിയാക്കിയാൽ പരപ്പളവ് എത്ര മടങ്ങാകും?",["A) 2 മടങ്ങ്","B) 3 മടങ്ങ്","C) 4 മടങ്ങ്","D) 8 മടങ്ങ്"],2,{
+b:"വശം 1 → 2 എന്നെടുക്കൂ. പരപ്പളവ് 1 × 1 = 1 ആയിരുന്നത് 2 × 2 = 4 ആകും. വരച്ചു നോക്കിയാൽ ഒരു വലിയ സമചതുരത്തിൽ 4 ചെറിയ സമചതുരം കാണാം.",
+k:["പുതിയ പരപ്പളവ് = (2a)² = 4a²"],
+t:"നീളങ്ങൾ k മടങ്ങായാൽ പരപ്പളവ് k² മടങ്ങ്, വ്യാപ്തം k³ മടങ്ങ്."}),
+
+Q(A,"0.125 നെ ഭിന്നസംഖ്യയാക്കുക.",["A) 1/8","B) 1/4","C) 1/5","D) 1/25"],0,{
+b:"1/4 = 0.25 എന്ന് നമുക്കറിയാം. 0.125 അതിന്റെ പകുതി ആയതിനാൽ 1/8.",
+k:["0.125 = 125/1000","125 കൊണ്ട് ഹരിച്ചാൽ = 1/8"],
+t:"1/2 = 0.5, 1/4 = 0.25, 1/5 = 0.2, 1/8 = 0.125, 1/16 = 0.0625."}),
+];
+
+const P2 = [
+Q(A,"4 പുരുഷന്മാർ അല്ലെങ്കിൽ 6 സ്ത്രീകൾ ഒരു ജോലി 12 ദിവസം കൊണ്ട് ചെയ്യും. 2 പുരുഷന്മാരും 3 സ്ത്രീകളും ചേർന്നാൽ എത്ര ദിവസം വേണം?",["A) 12 ദിവസം","B) 6 ദിവസം","C) 24 ദിവസം","D) 8 ദിവസം"],0,{
+b:"4 പുരുഷന്മാർ = 6 സ്ത്രീകൾ. ഇരുവശവും പകുതിയാക്കിയാൽ 2 പുരുഷന്മാർ = 3 സ്ത്രീകൾ. അപ്പോൾ 2 പുരുഷന്മാരും 3 സ്ത്രീകളും ചേർന്നാൽ 3 + 3 = 6 സ്ത്രീകൾക്ക് തുല്യം. 6 സ്ത്രീകൾക്ക് ജോലി തീരാൻ 12 ദിവസം.",
+k:["ഓപ്ഷൻ രീതി: 12 ÷ (2/4 + 3/6) = 12 ÷ (0.5 + 0.5) = 12 ദിവസം"]}),
+
+Q(A,"√144 + √256 ന്റെ വില?",["A) 20","B) 28","C) 30","D) 32"],1,{
+b:"12 × 12 = 144, അതിനാൽ √144 = 12. 16 × 16 = 256, അതിനാൽ √256 = 16. 12 + 16 = 28.",
+k:["√144 = 12","√256 = 16","12 + 16 = 28"],
+t:"വർഗമൂലങ്ങൾ ഓർമ്മിക്കുക: 11²=121, 12²=144, 13²=169, 14²=196, 15²=225, 16²=256, 17²=289, 18²=324, 19²=361, 20²=400.",
+p:"1 മുതൽ 20 വരെയുള്ള വർഗങ്ങൾ പഠിച്ചാൽ ഇത്തരം ചോദ്യം 5 സെക്കൻഡിൽ തീരും."}),
+
+Q(A,"ഒരു ത്രികോണത്തിന്റെ കോണുകൾ 2:3:4 എന്ന അനുപാതത്തിലാണ്. ഏറ്റവും വലിയ കോൺ എത്ര?",["A) 40°","B) 60°","C) 80°","D) 100°"],2,{
+b:"ത്രികോണത്തിന്റെ മൂന്ന് കോണിന്റെയും തുക എപ്പോഴും 180°. അനുപാത ഭാഗങ്ങൾ 2 + 3 + 4 = 9. ഒരു ഭാഗം = 180 ÷ 9 = 20°. ഏറ്റവും വലിയ കോൺ 4 ഭാഗം = 80°. 4/9 എന്നത് പകുതിയിലും (4.5) കുറവായതിനാൽ കോൺ 90°-ൽ താഴെ വരും; അതിനാൽ 100° തള്ളാം.",
+k:["ഒരു ഭാഗം = 180° ÷ 9 = 20°","വലിയ കോൺ = 4 × 20° = 80°","അല്ലെങ്കിൽ 4/9 × 180 = 80°"]}),
+
+Q(A,"₹400-ന് വാങ്ങിയ സാധനം ₹350-ന് വിറ്റു. നഷ്ടശതമാനം എത്ര?",["A) 10.5%","B) 12.5%","C) 15%","D) 20%"],1,{
+b:"നഷ്ടം = 400 − 350 = ₹50. 400-ന്റെ 10% = 40, നഷ്ടം അതിലും കൂടുതലാണ് (50). അതിനാൽ 10.5% തള്ളാം. 50/400 = 1/8 = 12.5%.",
+k:["നഷ്ട % = (നഷ്ടം ÷ വാങ്ങൽ വില) × 100","= 50/400 × 100 = 12.5%"],
+w:"നഷ്ടശതമാനം എപ്പോഴും വാങ്ങൽ വിലയുടെ (400) ശതമാനമാണ്, വിൽപ്പന വിലയുടേതല്ല."}),
+
+Q(A,"ആദ്യത്തെ 20 ഇരട്ട എണ്ണൽസംഖ്യകളുടെ തുക കണ്ടെത്തുക.",["A) 400","B) 420","C) 210","D) 440"],1,{
+b:"സംഖ്യകൾ 2 + 4 + 6 + ... + 40. ആദ്യത്തേതും അവസാനത്തേതും കൂട്ടിയാൽ 42; ശരാശരിയും 21. 20 സംഖ്യകൾ × 21 = 420. 210 എന്നത് ആദ്യത്തെ 20 എണ്ണൽസംഖ്യകളുടെ തുകയാണ് (കെണി).",
+k:["ആദ്യത്തെ n ഇരട്ടസംഖ്യകളുടെ തുക = n(n + 1)","= 20 × 21 = 420"],
+t:"ആദ്യത്തെ n എണ്ണൽസംഖ്യകൾ: n(n+1)/2. ആദ്യത്തെ n ഒറ്റസംഖ്യകൾ: n². ആദ്യത്തെ n ഇരട്ടസംഖ്യകൾ: n(n+1)."}),
+
+Q(A,"A = 30° ആയാൽ sin A + cos(90° − A) ന്റെ വില?",["A) 1","B) 1/2","C) √3","D) 0"],0,{
+b:"cos(90° − A) എന്നത് എപ്പോഴും sin A തന്നെയാണ്. അതിനാൽ ചോദ്യം sin 30° + sin 30° ആയി മാറും.",
+k:["sin 30° = 1/2","cos(90° − 30°) = cos 60° = 1/2","തുക = 1/2 + 1/2 = 1"],
+t:"sin 30° = 1/2, sin 45° = 1/√2, sin 60° = √3/2. cos-ൽ ഇതേ ക്രമം തിരിച്ച്."}),
+
+Q(A,"ഒരു സമചതുരത്തിന്റെ വികർണം (diagonal) 10√2 സെ.മീ. ആണ്. അതിന്റെ ചുറ്റളവ് കണ്ടെത്തുക.",["A) 40 സെ.മീ.","B) 20 സെ.മീ.","C) 80 സെ.മീ.","D) 40√2 സെ.മീ."],0,{
+b:"സമചതുരത്തിന്റെ വികർണം = വശം × √2. ഇവിടെ 10√2 = വശം × √2, അതിനാൽ വശം 10. ചുറ്റളവ് = 4 വശങ്ങൾ.",
+k:["വശം a = 10 സെ.മീ.","ചുറ്റളവ് = 4a = 4 × 10 = 40 സെ.മീ."]}),
+
+Q(A,"₹1000-ന് 10% വാർഷിക നിരക്കിൽ 3 വർഷത്തെ കൂട്ടുപലിശ എത്ര?",["A) ₹300","B) ₹331","C) ₹1331","D) ₹310"],1,{
+b:"ഓരോ വർഷവും കൂട്ടിനോക്കൂ: 1000 → 1100 → 1210 → 1331. ആകെ തുക (amount) ₹1331. പലിശ = 1331 − 1000 = ₹331. കൂട്ടുപലിശ എപ്പോഴും സാധാരണ പലിശയായ ₹300-നേക്കാൾ കൂടുതലായിരിക്കും, അതിനാൽ ₹300 തള്ളാം.",
+k:["A = P(1 + R/100)ⁿ = 1000 × (1.1)³ = 1331","കൂട്ടുപലിശ = 1331 − 1000 = ₹331"],
+w:"₹1331 എന്നത് തുക (Amount) ആണ്. ചോദ്യം പലിശയാണ് (Interest) ചോദിച്ചത്."}),
+
+Q(A,"ഒരു കാർ 4 മണിക്കൂർ കൊണ്ട് മണിക്കൂറിൽ 60 കി.മീ. വേഗതയിൽ ഒരു ദൂരം പിന്നിടുന്നു. അതേ ദൂരം 3 മണിക്കൂർ കൊണ്ട് എത്താൻ വേഗം എത്ര വേണം?",["A) 75 km/h","B) 80 km/h","C) 90 km/h","D) 100 km/h"],1,{
+b:"സമയം 4-ൽ നിന്ന് 3 ആയി, അതായത് 3/4 ആയി കുറഞ്ഞു. ദൂരം മാറുന്നില്ലെങ്കിൽ വേഗം സമയത്തിന്റെ വിപരീതമായ 4/3 മടങ്ങ് കൂടണം.",
+k:["ദൂരം = 60 × 4 = 240 km","പുതിയ വേഗം = 240 ÷ 3 = 80 km/h"],
+t:"ദൂരം ഒന്നായിരിക്കുമ്പോൾ വേഗവും സമയവും വിപരീത അനുപാതത്തിലാണ്."}),
+
+Q(A,"ഒരു ക്യൂബിന്റെ വ്യാപ്തം 512 ഘന സെ.മീ. ആണ്. അതിന്റെ ആകെ ഉപരിതല വിസ്തീർണം (total surface area) എത്ര?",["A) 384 ച.സെ.മീ.","B) 256 ച.സെ.മീ.","C) 512 ച.സെ.മീ.","D) 192 ച.സെ.മീ."],0,{
+b:"8 × 8 × 8 = 512, അതിനാൽ വശം 8 സെ.മീ. ഒരു മുഖത്തിന്റെ പരപ്പളവ് 8 × 8 = 64. ക്യൂബിന് 6 മുഖം ഉണ്ട് → 6 × 64 = 384.",
+k:["TSA = 6a² = 6 × 64 = 384 ച.സെ.മീ."],
+t:"ക്യൂബ്: വ്യാപ്തം a³, TSA 6a², വികർണം a√3. ക്യൂബോയ്ഡ്: TSA 2(lb + bh + hl)."}),
+
+Q(A,"36, 84 ഇവയുടെ ഉ.സാ.ഘ. (HCF) കണ്ടെത്തുക.",["A) 6","B) 12","C) 18","D) 24"],1,{
+b:"HCF രണ്ട് സംഖ്യകളെയും ഹരിക്കണം, 36-നേക്കാൾ വലുതാകില്ല. 24 കൊണ്ട് 36 ഹരിക്കാനാവില്ല; 18 കൊണ്ട് 84 ഹരിക്കാനാവില്ല. 6, 12 രണ്ടും ഹരിക്കും. അതിൽ വലുത് 12.",
+k:["36 = 2² × 3²","84 = 2² × 3 × 7","പൊതുവായവ: 2², 3 → HCF = 2² × 3 = 12"]}),
+
+Q(A,"ഒരു മിശ്രിതത്തിൽ പാലും വെള്ളവും 3:2 എന്ന അനുപാതത്തിലാണ്. 5 ലിറ്റർ വെള്ളം ചേർത്തപ്പോൾ അനുപാതം 3:3 ആയി. തുടക്കത്തിൽ എത്ര ലിറ്റർ പാൽ ഉണ്ടായിരുന്നു?",["A) 10 ലിറ്റർ","B) 12 ലിറ്റർ","C) 15 ലിറ്റർ","D) 20 ലിറ്റർ"],2,{
+b:"പാൽ മാറുന്നില്ല; വെള്ളം മാത്രമാണ് കൂടിയത്. വെള്ളത്തിന്റെ ഭാഗം 2 ൽ നിന്ന് 3 ആയി, അതായത് 1 ഭാഗം = 5 ലിറ്റർ. പാൽ 3 ഭാഗം.",
+k:["1 ഭാഗം = 5 L","പാൽ = 3 × 5 = 15 L"]}),
+
+Q(A,"0.05 × 0.09 = ?",["A) 0.45","B) 0.045","C) 0.0045","D) 0.00045"],2,{
+b:"ദശാംശം മറന്ന് 5 × 9 = 45 എടുക്കൂ. 0.05-ൽ 2 ദശാംശസ്ഥാനം, 0.09-ൽ 2 ദശാംശസ്ഥാനം, ആകെ 4. 45 ന്റെ വലത്തുനിന്ന് 4 സ്ഥാനം → 0.0045. ഏകദേശ പരിശോധന: 0.05 × 0.1 = 0.005; 0.09 അതിലും അല്പം കുറവ്, അതിനാൽ 0.0045.",
+k:["5 × 9 = 45","ദശാംശസ്ഥാനങ്ങൾ 2 + 2 = 4","⇒ 0.0045"]}),
+
+Q(A,"രണ്ട് സംഖ്യകളുടെ തുക 25, വ്യത്യാസം 5. അവയുടെ ഗുണനഫലം?",["A) 100","B) 125","C) 150","D) 120"],2,{
+b:"തുകയും വ്യത്യാസവും അറിയാമെങ്കിൽ: വലിയ സംഖ്യ = (തുക + വ്യത്യാസം) ÷ 2, ചെറിയ സംഖ്യ = (തുക − വ്യത്യാസം) ÷ 2.",
+k:["വലിയ സംഖ്യ = (25 + 5) ÷ 2 = 15","ചെറിയ സംഖ്യ = (25 − 5) ÷ 2 = 10","ഗുണനഫലം = 15 × 10 = 150"]}),
+
+Q(A,"10% സാധാരണ പലിശയിൽ ഒരു തുക മൂന്നിരട്ടി ആകാൻ എത്ര കാലം വേണം?",["A) 10 വർഷം","B) 15 വർഷം","C) 20 വർഷം","D) 30 വർഷം"],2,{
+b:"മൂന്നിരട്ടി ആകാൻ തുകയുടെ 200% പലിശയായി കിട്ടണം (മൂലധനം 100% + പലിശ 200%). വർഷം 10% കിട്ടുന്നതിനാൽ 200 ÷ 10 = 20 വർഷം.",
+k:["സമയം = (n − 1) × 100 ÷ R","= 2 × 100 ÷ 10 = 20 വർഷം"],
+w:"10 വർഷം കൊണ്ട് ഇരട്ടിയാകും (100%). മൂന്നിരട്ടി ആകാൻ അതിന്റെ ഇരട്ടി സമയം വേണം."}),
+
+Q(A,"3 സെ.മീ. ആരവും 4 സെ.മീ. ഉയരവുമുള്ള ഒരു ലോഹ സിലിണ്ടർ ഉരുക്കി 1 സെ.മീ. ആരമുള്ള ചെറിയ ഗോളങ്ങളാക്കുന്നു. എത്ര ഗോളങ്ങൾ ഉണ്ടാക്കാം?",["A) 27","B) 15","C) 135","D) 33"],0,{
+b:"ഉരുക്കി രൂപം മാറ്റിയാലും ലോഹത്തിന്റെ അളവ് (വ്യാപ്തം) മാറില്ല. അതിനാൽ സിലിണ്ടറിന്റെ വ്യാപ്തം ÷ ഒരു ഗോളത്തിന്റെ വ്യാപ്തം = ഗോളങ്ങളുടെ എണ്ണം. സിലിണ്ടർ വ്യാപ്തം = π × 3² × 4 = 36π. ഒരു ഗോളം (4/3 × π × 1³) = 4π/3.",
+k:["ഗോളങ്ങളുടെ എണ്ണം = 36π ÷ (4π/3) = 36 × 3/4 = 27","ഷോർട്ട്കട്ട്: 3 സെ.മീ. ആരമുള്ള ഒരു വലിയ ഗോളത്തിന് തുല്യമായ വ്യാപ്തം; വ്യാപ്തം ആരത്തിന്റെ ഘനത്തിന് ആനുപാതികം: 3³ = 27 ചെറിയ ഗോളങ്ങൾ"],
+x:"ഒറിജിനൽ ചോദ്യത്തിൽ ഉയരം 5 സെ.മീ. ആയിരുന്നു; അപ്പോൾ ഉത്തരം 33.75 ആയി പൂർണസംഖ്യ അല്ലാതായി (PSC-യിൽ അങ്ങനെ വരില്ല). ഉയരം 4 സെ.മീ. ആക്കി, ഓപ്ഷൻ A '45' → '27' എന്നും മാറ്റി."}),
+
+Q(A,"ഒരു സംഖ്യയുടെ 75% നോട് 75 കൂട്ടിയാൽ സംഖ്യ തന്നെ കിട്ടും. സംഖ്യ ഏത്?",["A) 150","B) 200","C) 300","D) 400"],2,{
+b:"സംഖ്യ 100% ആണ്. 75% + 75 = 100% ആയാൽ, 75 = ബാക്കിയുള്ള 25%. 25% = 75 ആയാൽ 100% = 75 × 4 = 300.",
+k:["25% = 75","100% = 75 × 4 = 300"]}),
+
+Q(A,"ഒരു മട്ടത്രികോണത്തിന്റെ (right-angled triangle) പാദം (base) 6 സെ.മീ., കർണം (hypotenuse) 10 സെ.മീ. ആണ്. പരപ്പളവ് എത്ര?",["A) 60 ച.സെ.മീ.","B) 48 ച.സെ.മീ.","C) 24 ച.സെ.മീ.","D) 30 ച.സെ.മീ."],2,{
+b:"6, 8, 10 ഒരു പൈതഗോറസ് ത്രയമാണ് (3-4-5 ന്റെ ഇരട്ടി). അതിനാൽ ഉയരം 8. പരപ്പളവ് ½ × പാദം × ഉയരം. 60 എന്നത് 6 × 10 ആണ്; ത്രികോണത്തിന്റെ പരപ്പളവ് അങ്ങനെ കിട്ടില്ല.",
+k:["ഉയരം = √(10² − 6²) = √64 = 8","പരപ്പളവ് = ½ × 6 × 8 = 24 ച.സെ.മീ."],
+t:"പൈതഗോറസ് ത്രയങ്ങൾ: 3-4-5, 5-12-13, 8-15-17, 7-24-25 (ഇവയുടെ ഗുണിതങ്ങളും)."}),
+
+Q(A,"2/3, 4/5, 6/7, 7/9 ഇവയിൽ ഏറ്റവും വലിയ ഭിന്നസംഖ്യ ഏത്?",["A) 2/3","B) 4/5","C) 6/7","D) 7/9"],2,{
+b:"ഓരോന്നും '1-ൽ നിന്ന് എത്ര കുറവ്' എന്ന് നോക്കൂ: 2/3 → 1/3 കുറവ്, 4/5 → 1/5, 6/7 → 1/7, 7/9 → 2/9. ഏറ്റവും ചെറിയ കുറവ് 1/7. അതായത് 6/7 ആണ് 1-നോട് ഏറ്റവും അടുത്തത്, അതിനാൽ ഏറ്റവും വലുത്.",
+k:["ദശാംശത്തിൽ: 2/3 = 0.67, 4/5 = 0.80, 6/7 = 0.857, 7/9 = 0.78","ഏറ്റവും വലുത് 6/7"],
+t:"ന്യൂമറേറ്ററും ഡിനോമിനേറ്ററും തമ്മിൽ 1 വ്യത്യാസം മാത്രമുള്ള ഭിന്നസംഖ്യകളിൽ ഡിനോമിനേറ്റർ വലുതാകുന്തോറും മൂല്യം വലുതാകും (1-നോട് അടുക്കും)."}),
+
+Q(A,"3x − 5 = 2x + 7 ആയാൽ x ന്റെ വില?",["A) 2","B) 12","C) −12","D) 7"],1,{
+b:"x ഉള്ളതെല്ലാം ഒരു വശത്തേക്ക്, സംഖ്യകൾ മറുവശത്തേക്ക് മാറ്റുക. മാറ്റുമ്പോൾ ചിഹ്നം മാറും.",
+k:["3x − 2x = 7 + 5","x = 12","പരിശോധന: 3×12 − 5 = 31, 2×12 + 7 = 31 ✓"]}),
+
+Q(A,"₹144-ന് വിൽക്കുമ്പോൾ ഒരാൾക്ക് 10% നഷ്ടം. 10% ലാഭം കിട്ടാൻ എത്ര രൂപയ്ക്ക് വിൽക്കണം?",["A) ₹158.4","B) ₹176","C) ₹160","D) ₹180"],1,{
+b:"നഷ്ടത്തിൽ വിറ്റപ്പോൾ ₹144 എന്നാൽ വാങ്ങൽ വിലയുടെ 90%. അതിനാൽ വാങ്ങൽ വില = 144 ÷ 0.9 = ₹160. 10% ലാഭം = 160 + 16 = ₹176.",
+k:["വാങ്ങൽ വില = 144 ÷ 0.9 = ₹160","ഷോർട്ട്കട്ട്: SP = 144 × 110 ÷ 90 = 176"],
+w:"₹158.4 എന്നത് 144 × 1.1 ആണ്. ലാഭം/നഷ്ടം കണക്കാക്കേണ്ടത് വാങ്ങൽ വിലയിൽ നിന്നാണ്, നഷ്ടത്തിൽ വിറ്റ വിലയിൽ നിന്നല്ല."}),
+
+Q(A,"ജയിക്കാൻ 40% മാർക്ക് വേണം. ഒരു കുട്ടിക്ക് 150 മാർക്ക് കിട്ടി, 10 മാർക്കിന് തോറ്റു. ആകെ മാർക്ക് എത്ര?",["A) 400","B) 500","C) 600","D) 300"],0,{
+b:"ജയിക്കാൻ 150 + 10 = 160 മാർക്ക് വേണം. ഈ 160 ആണ് ആകെ മാർക്കിന്റെ 40%. 40% = 160 ആയാൽ 10% = 40, 100% = 400.",
+k:["ആകെ മാർക്കിന്റെ 40% = 160","ആകെ = 160 × 100 ÷ 40 = 400"]}),
+
+Q(A,"a:b = 3:4 ആയാൽ (4a − b)/(2a + 3b) ന്റെ വില?",["A) 1/2","B) 4/9","C) 2/3","D) 5/9"],1,{
+b:"അനുപാതം തന്നിട്ടുള്ളതിനാൽ a = 3, b = 4 എന്ന് വെക്കാം. ഏകദേശ പരിശോധന: 8 എന്നത് 18-ന്റെ പകുതിയായ 9-നേക്കാൾ കുറവ്, അതിനാൽ ഉത്തരം ½-ൽ കുറവായിരിക്കും. ½-ൽ താഴെ വരുന്ന ഓപ്ഷൻ 4/9 മാത്രം.",
+k:["മുകളിൽ: 4a − b = 12 − 4 = 8","താഴെ: 2a + 3b = 6 + 12 = 18","8/18 = 4/9"],
+x:"ഒറിജിനലിൽ ഓപ്ഷനുകൾ കുഴഞ്ഞിരുന്നു (4/9, 8/18, 4/18, ...). അവ വൃത്തിയാക്കി A) 1/2 B) 4/9 C) 2/3 D) 5/9 എന്നാക്കി. ഉത്തരം B."}),
+
+Q(A,"100 മീറ്ററും 120 മീറ്ററും നീളമുള്ള രണ്ട് ട്രെയിനുകൾ എതിർദിശയിൽ യഥാക്രമം 54 km/h, 36 km/h വേഗതയിൽ പോകുന്നു. അവ പരസ്പരം പൂർണമായി കടന്നുപോകാൻ എത്ര സമയം വേണം?",["A) 10 സെക്കൻഡ്","B) 8.8 സെക്കൻഡ്","C) 12 സെക്കൻഡ്","D) 15 സെക്കൻഡ്"],1,{
+b:"എതിർദിശയിൽ പോകുമ്പോൾ വേഗം കൂട്ടണം: 54 + 36 = 90 km/h = 25 m/s. രണ്ട് ട്രെയിനിന്റെയും നീളം കൂട്ടിയ ദൂരം 220 m കടക്കണം. 25 × 8 = 200, ബാക്കി 20 → 0.8 സെക്കൻഡ് കൂടി. ആകെ 8.8.",
+k:["ആപേക്ഷിക വേഗം = 54 + 36 = 90 km/h = 90 × 5/18 = 25 m/s","ദൂരം = 100 + 120 = 220 m","സമയം = 220 ÷ 25 = 8.8 സെക്കൻഡ്"],
+t:"എതിർദിശ: വേഗം കൂട്ടുക. ഒരേ ദിശ: വേഗം കുറയ്ക്കുക. ദൂരം = രണ്ട് നീളങ്ങളുടെ തുക."}),
+
+Q(A,"₹12,000-ന് 8% വാർഷിക നിരക്കിൽ 9 മാസത്തെ സാധാരണ പലിശ കണക്കാക്കുക.",["A) ₹720","B) ₹640","C) ₹800","D) ₹960"],0,{
+b:"ഒരു വർഷത്തെ പലിശ = 12000-ന്റെ 8% = ₹960. 9 മാസം എന്നാൽ വർഷത്തിന്റെ ¾ ഭാഗം. 960-ന്റെ ¾ = 720. ₹960 എന്നത് ഒരു മുഴുവൻ വർഷത്തെ പലിശയാണ് (കെണി).",
+k:["SI = P × R × T ÷ 100","= 12000 × 8 × (9/12) ÷ 100 = ₹720"],
+x:"ഒറിജിനലിൽ ഓപ്ഷനുകൾ കുഴഞ്ഞിരുന്നു; അവ A) ₹720 B) ₹640 C) ₹800 D) ₹960 എന്ന് വൃത്തിയാക്കി. ഉത്തരം A."}),
+];
+
+const P3 = [
+Q(M,"ശ്രേണിയിലെ അടുത്ത സംഖ്യ കണ്ടെത്തുക: 2, 5, 10, 17, 26, ___",["A) 35","B) 36","C) 37","D) 39"],2,{
+b:"സംഖ്യകൾ തമ്മിലുള്ള വ്യത്യാസം എഴുതൂ: 3, 5, 7, 9. വ്യത്യാസം ഓരോ തവണയും 2 വീതം കൂടുന്നു. അടുത്ത വ്യത്യാസം 11. അതിനാൽ 26 + 11 = 37.",
+k:["വ്യത്യാസങ്ങൾ: 3, 5, 7, 9, 11","26 + 11 = 37","മറ്റൊരു രീതി: ഓരോ പദവും n² + 1 (1²+1 = 2, 2²+1 = 5, ... 6²+1 = 37)"],
+t:"ശ്രേണിയിൽ ആദ്യം വ്യത്യാസം നോക്കുക; വ്യത്യാസവും മാറുന്നുണ്ടെങ്കിൽ വർഗം (square) / ഘനം (cube) സംശയിക്കുക."}),
+
+Q(M,"ശ്രേണി നോക്കൂ: 36, 34, 30, 28, 24, ... അടുത്ത സംഖ്യ ഏത്?",["A) 20","B) 22","C) 23","D) 26"],1,{
+b:"ഓരോ ഘട്ടത്തിലും എത്ര കുറയുന്നു എന്ന് നോക്കൂ: −2, −4, −2, −4. അടുത്തത് −2 ആകണം. 24 − 2 = 22. എല്ലാ സംഖ്യയും ഇരട്ടസംഖ്യ ആയതിനാൽ 23 തള്ളാം.",
+k:["വ്യത്യാസങ്ങൾ: −2, −4, −2, −4, ...","അടുത്തത് −2 → 24 − 2 = 22"],
+t:"−2, −4 എന്ന ക്രമം ആവർത്തിക്കുന്ന ശ്രേണി."}),
+
+Q(M,"കൂട്ടത്തിൽ പെടാത്തത് ഏത്? (Odd one out)",["A) ഇരുമ്പ് (Iron)","B) ചെമ്പ് (Copper)","C) പിച്ചള (Brass)","D) വെള്ളി (Silver)"],2,{
+b:"ഇരുമ്പ്, ചെമ്പ്, വെള്ളി എന്നിവ ശുദ്ധ ലോഹങ്ങൾ (elements) ആണ്. പിച്ചള രണ്ട് ലോഹങ്ങൾ ചേർന്ന ഒരു ലോഹസങ്കരമാണ് (alloy: ചെമ്പ് + സിങ്ക്).",
+k:["ശുദ്ധ ലോഹങ്ങൾ ഒറ്റ മൂലകമാണ്","ലോഹസങ്കരം മിശ്രിതമാണ്"],
+t:"പിച്ചള = ചെമ്പ് + സിങ്ക്. വെങ്കലം = ചെമ്പ് + ടിൻ. ഉരുക്ക് = ഇരുമ്പ് + കാർബൺ."}),
+
+Q(M,"'APPLE' എന്നത് 'ETTPI' എന്ന് കോഡ് ചെയ്താൽ 'MANGO' എങ്ങനെ കോഡ് ചെയ്യാം?",["A) QERKS","B) PERKS","C) QEQKS","D) PEQKS"],0,{
+b:"APPLE → ETTPI നോക്കൂ: A→E, P→T, P→T, L→P, E→I. ഓരോ അക്ഷരത്തിനും 4 സ്ഥാനം മുന്നോട്ട് (A B C D E). അതേ നിയമം MANGO-യ്ക്ക്: M→Q, A→E, N→R, G→K, O→S = QERKS.",
+k:["ആദ്യത്തെ അക്ഷരം മാത്രം പരിശോധിച്ചാലും ഉത്തരം കിട്ടും: M + 4 = Q, അതിനാൽ Q-വിൽ തുടങ്ങുന്ന ഓപ്ഷൻ A (QERKS) അല്ലെങ്കിൽ C (QEQKS)","മൂന്നാം അക്ഷരം N + 4 = R, അതിനാൽ A"],
+x:"ഒറിജിനലിൽ 'EQQPI' എന്ന് ടൈപ്പ് ചെയ്തിരുന്നു; അതിൽ ഒരു നിയമവും ഒത്തുവരില്ല. 'ETTPI' (എല്ലാ അക്ഷരത്തിനും +4) എന്നാക്കി; ഉത്തരം QERKS (A)."}),
+
+Q(M,"ഒരു ഫോട്ടോയിലെ ആൺകുട്ടിയെ ചൂണ്ടി സുരേഷ് പറഞ്ഞു: 'ഇവൻ എന്റെ അമ്മയുടെ ഏക മകന്റെ മകനാണ്.' സുരേഷിന് ആ കുട്ടിയുമായുള്ള ബന്ധം?",["A) സഹോദരൻ","B) അമ്മാവൻ","C) കസിൻ","D) അച്ഛൻ"],3,{
+b:"'എന്റെ അമ്മയുടെ ഏക മകൻ' എന്നാൽ സുരേഷ് തന്നെ (അമ്മയ്ക്ക് ഒരേയൊരു മകൻ). അപ്പോൾ ആ കുട്ടി സുരേഷിന്റെ മകൻ. അതിനാൽ സുരേഷ് ആ കുട്ടിയുടെ അച്ഛൻ.",
+k:["ബന്ധങ്ങളിൽ വാക്യം ഇടത്തുനിന്ന് വലത്തോട്ട് ഒരു ഘട്ടം ഒരു ഘട്ടമായി ചുരുക്കുക","'എന്റെ അമ്മയുടെ ഏക മകൻ' = ഞാൻ → 'ഞാൻ' ന്റെ മകൻ = ഇവൻ"],
+t:"'എന്റെ അമ്മയുടെ ഏക മകൻ' = ഞാൻ തന്നെ. 'എന്റെ അച്ഛന്റെ ഏക മകൻ' = ഞാൻ തന്നെ."}),
+
+Q(M,"ഒരാൾ തെക്കോട്ട് 5 കി.മീ. നടന്നശേഷം വലത്തോട്ട് തിരിഞ്ഞ് 3 കി.മീ. നടന്നു. പിന്നെ ഇടത്തോട്ട് തിരിഞ്ഞ് 5 കി.മീ. നടന്നു. തുടങ്ങിയ സ്ഥലത്തുനിന്ന് ഏത് ദിശയിലാണ് ഇപ്പോൾ?",["A) തെക്ക്-പടിഞ്ഞാറ്","B) തെക്ക്","C) വടക്ക്-കിഴക്ക്","D) പടിഞ്ഞാറ്"],0,{
+b:"ചെറിയ ചിത്രം വരച്ച് നോക്കൂ. തെക്കോട്ട് നോക്കി നിൽക്കുന്ന ഒരാളുടെ വലതുവശം പടിഞ്ഞാറാണ്, അതിനാൽ 3 കി.മീ. പടിഞ്ഞാറ്. ഇനി പടിഞ്ഞാറോട്ട് നോക്കി നിൽക്കുമ്പോൾ ഇടതുവശം തെക്കാണ്, അതിനാൽ വീണ്ടും തെക്കോട്ട് 5 കി.മീ.",
+k:["തെക്ക്: 5 + 5 = 10 km","പടിഞ്ഞാറ്: 3 km","⇒ തെക്ക്-പടിഞ്ഞാറ് (South-West)"],
+t:"തെക്കോട്ട് നോക്കിയാൽ വലതുവശം പടിഞ്ഞാറ്, ഇടതുവശം കിഴക്ക്. വടക്കോട്ട് നോക്കിയാൽ വലത് കിഴക്ക്, ഇടത് പടിഞ്ഞാറ്. 'ഇടത്തോട്ട്/വലത്തോട്ട്' തിരിയുമ്പോൾ എപ്പോഴും ഇപ്പോൾ നോക്കുന്ന ദിശയെ അടിസ്ഥാനമാക്കി ചിന്തിക്കുക."}),
+
+Q(M,"3:30 ന് ഘടികാരത്തിലെ മിനിറ്റ് സൂചിയും മണിക്കൂർ സൂചിയും തമ്മിലുള്ള കോൺ എത്ര?",["A) 90°","B) 75°","C) 105°","D) 60°"],1,{
+b:"ഘടികാരത്തിൽ ഓരോ അക്കത്തിനും ഇടയിൽ 30° ആണ്. 3:30-ന് മണിക്കൂർ സൂചി 3-നും 4-നും നടുവിൽ (3½) ആണ്. മിനിറ്റ് സൂചി 6-ൽ. 3½-നും 6-നും ഇടയിൽ 2½ കള്ളി. 2.5 × 30° = 75°.",
+k:["സൂത്രവാക്യം: |30H − 5.5M| = |30×3 − 5.5×30| = |90 − 165| = 75°"],
+w:"3:30 ന് മണിക്കൂർ സൂചി 3-ൽ തന്നെ നിൽക്കില്ല, പകുതി നീങ്ങിയിരിക്കും. അത് മറന്നാൽ 90° എന്ന് തെറ്റും."}),
+
+Q(M,"2024 ജനുവരി 1 തിങ്കളാഴ്ച ആണെങ്കിൽ 2024 ഡിസംബർ 31 ഏത് ദിവസം ആയിരിക്കും?",["A) തിങ്കൾ","B) ചൊവ്വ","C) ഞായർ","D) ബുധൻ"],1,{
+b:"2024 അധിവർഷം (leap year) ആണ്: 366 ദിവസം. ജനുവരി 1 തിങ്കൾ ആയതിനാൽ ഡിസംബർ 31 ആകുന്നത് 365 ദിവസം കഴിഞ്ഞാണ്. 365 = 52 ആഴ്ച + 1 ദിവസം. തിങ്കളിൽ നിന്ന് 1 ദിവസം മുന്നോട്ട് = ചൊവ്വ.",
+k:["അധിവർഷത്തിൽ ആദ്യ ദിവസവും അവസാന ദിവസവും തമ്മിൽ 1 ദിവസത്തെ വ്യത്യാസം (365 ÷ 7 ശിഷ്ടം 1)"],
+t:"സാധാരണ വർഷം: ആദ്യ-അന്ത്യ ദിവസം ഒന്നുതന്നെ (ഒരു വർഷത്തെ അവസാന ദിവസം ആദ്യ ദിവസത്തിന്റെ അതേ ദിവസം). അധിവർഷം: അവസാന ദിവസം ആദ്യ ദിവസത്തിന്റെ അടുത്ത ദിവസം."}),
+
+Q(M,"അക്ഷരശ്രേണി പൂരിപ്പിക്കുക: A, C, F, J, O, ___",["A) T","B) U","C) S","D) V"],1,{
+b:"അക്ഷരങ്ങൾ തമ്മിലുള്ള അകലം നോക്കൂ: A→C ന് 2 സ്ഥാനം, C→F ന് 3, F→J ന് 4, J→O ന് 5. അടുത്തത് 6 സ്ഥാനം: O (15) + 6 = 21 = U.",
+k:["അകലങ്ങൾ: 2, 3, 4, 5, 6 എന്ന് കൂടിക്കൊണ്ടിരിക്കുന്നു","O = 15, 15 + 6 = 21 → U"],
+t:"അക്ഷരങ്ങളുടെ സ്ഥാനവില: A=1 ... E=5, J=10, O=15, T=20, Z=26."}),
+
+Q(M,"'പുസ്തകം' എന്നത് 'എഴുത്തുകാരൻ' (Author) മായി ബന്ധപ്പെട്ടിരിക്കുന്ന അതേ രീതിയിൽ 'പ്രതിമ' (Statue) ബന്ധപ്പെട്ടിരിക്കുന്നത്?",["A) ചിത്രകാരൻ","B) ശില്പി (Sculptor)","C) ശില്പകലാ വാസ്തുശാസ്ത്രജ്ഞൻ (Architect)","D) മേസ്തിരി (Mason)"],1,{
+b:"പുസ്തകം ഉണ്ടാക്കുന്നത് എഴുത്തുകാരൻ. പ്രതിമ ഉണ്ടാക്കുന്നത് ശില്പി.",
+k:["ബന്ധം: സൃഷ്ടി : സ്രഷ്ടാവ്"]}),
+
+Q(M,"'+' എന്നാൽ 'കുറയ്ക്കൽ', '−' എന്നാൽ 'ഗുണനം', '×' എന്നാൽ 'ഹരണം', '÷' എന്നാൽ 'കൂട്ടൽ' ആയാൽ 10 × 5 ÷ 3 − 2 + 3 ന്റെ വില?",["A) 5","B) 21","C) 12","D) 7"],0,{
+b:"ചിഹ്നങ്ങൾ ഓരോന്നായി മാറ്റി എഴുതൂ: × → ÷, ÷ → +, − → ×, + → −. പുതിയ രൂപം: 10 ÷ 5 + 3 × 2 − 3. ആദ്യം ÷, × (BODMAS), പിന്നെ + , −.",
+k:["10 ÷ 5 = 2; 3 × 2 = 6","2 + 6 − 3 = 5"],
+x:"ഉത്തരസൂചികയിൽ 'B' എന്നെഴുതിയിരുന്നെങ്കിലും വിശദീകരണത്തിൽ വില 5 ആണ് കിട്ടിയത്, 5 എന്നത് ഓപ്ഷൻ A ആണ്. ശരിയായ ഉത്തരം A."}),
+
+Q(M,"ഒറ്റയാൻ ജോഡി ഏത്?",["A) പേന : എഴുതുക","B) കത്തി : മുറിക്കുക","C) കോരിക : കുഴിക്കുക","D) കസേര : മരം"],3,{
+b:"ആദ്യ മൂന്ന് ജോഡികളിലും 'ഉപകരണം : അത് ചെയ്യുന്ന പ്രവൃത്തി' എന്ന ബന്ധമാണ്. 'കസേര : മരം' എന്നത് 'വസ്തു : അത് നിർമ്മിച്ച പദാർഥം' ആണ്.",
+k:["ജോഡിയിലെ ബന്ധം ഏതെന്ന് ആദ്യം ഒരു വാക്യത്തിൽ പറഞ്ഞു നോക്കൂ"]}),
+
+Q(M,"'MEASUREMENT' എന്ന വാക്കിലെ അക്ഷരങ്ങൾ കൊണ്ട് ഉണ്ടാക്കാൻ കഴിയാത്ത വാക്ക് ഏത്?",["A) TEAM","B) MASTER","C) SURE","D) SUMMIT"],3,{
+b:"MEASUREMENT ൽ M, E, A, S, U, R, E, M, E, N, T എന്നീ അക്ഷരങ്ങളുണ്ട്. 'SUMMIT' ൽ ഒരു 'I' വേണം, ആ വാക്കിൽ 'I' ഇല്ല. അതിനാൽ SUMMIT ഉണ്ടാക്കാൻ പറ്റില്ല.",
+k:["ഓപ്ഷനിലെ ഓരോ അക്ഷരവും മൂലവാക്കിൽ ഉണ്ടോ എന്ന് ടിക്ക് ചെയ്ത് നോക്കുക","ഒരു അക്ഷരം ഇല്ലെങ്കിലോ ആവശ്യത്തിന് എണ്ണം ഇല്ലെങ്കിലോ ആ വാക്ക് ഉത്തരം"],
+x:"ഒറിജിനലിലെ ഓപ്ഷൻ A 'TENT' ന് രണ്ട് 'T' വേണം; MEASUREMENT ൽ ഒരു 'T' മാത്രമേയുള്ളൂ. അതായത് TENT ഉം ഉണ്ടാക്കാൻ പറ്റില്ല, രണ്ട് ഉത്തരം വരും. അതിനാൽ 'TEAM' എന്ന് മാറ്റി."}),
+
+Q(M,"ഒരു നിരയിൽ രാഹുൽ ഇടത്തുനിന്ന് 15-ാമനും വലത്തുനിന്ന് 12-ാമനുമാണ്. നിരയിൽ ആകെ എത്ര കുട്ടികൾ?",["A) 27","B) 26","C) 25","D) 28"],1,{
+b:"ഇടത്തുനിന്നുള്ള 15 ൽ രാഹുൽ ഉണ്ട്, വലത്തുനിന്നുള്ള 12 ൽ രാഹുൽ ഉണ്ട്. രണ്ടും കൂട്ടിയാൽ രാഹുലിനെ രണ്ടുതവണ എണ്ണും. അതിനാൽ 1 കുറയ്ക്കണം.",
+k:["ആകെ = ഇടത് + വലത് − 1","= 15 + 12 − 1 = 26"],
+w:"27 ആണ് കെണി (1 കുറയ്ക്കാൻ മറന്നാൽ)."}),
+
+Q(M,"അച്ഛന് മകന്റെ 3 മടങ്ങ് പ്രായം. 5 വർഷം മുമ്പ് 4 മടങ്ങ് ആയിരുന്നു. മകന്റെ ഇപ്പോഴത്തെ പ്രായം?",["A) 12","B) 15","C) 18","D) 20"],1,{
+b:"ഓപ്ഷൻ വെച്ച് പരിശോധിക്കൂ. മകൻ 15 ആയാൽ അച്ഛൻ 45. 5 വർഷം മുമ്പ് 40 ഉം 10 ഉം → 40 = 4 × 10 ✓. മകൻ 12 ആയാൽ അച്ഛൻ 36; 5 വർഷം മുമ്പ് 31 ഉം 7 ഉം → 4 മടങ്ങല്ല ✗.",
+k:["അച്ഛൻ 3x, മകൻ x","5 വർഷം മുമ്പ്: 3x − 5 = 4(x − 5)","3x − 5 = 4x − 20 ⇒ x = 15"]}),
+
+Q(M,"ഒരു ഘടികാരത്തിന്റെ കണ്ണാടിപ്രതിബിംബം (mirror image) 8:20 കാണിക്കുന്നു. ശരിയായ സമയം?",["A) 4:40","B) 3:40","C) 8:20","D) 3:20"],1,{
+b:"കണ്ണാടി സമയം ഒരു 12-മണിക്കൂർ ഘടികാരത്തിൽ 11:60 ൽ നിന്ന് കുറച്ചാൽ ശരിയായ സമയം കിട്ടും. 11:60 − 8:20 = 3:40.",
+k:["ശരിയായ സമയം = 11:60 − കണ്ണാടി സമയം","= 11:60 − 8:20 = 3:40"],
+t:"കണ്ണാടി സമയം ↔ ശരിയായ സമയം: 11:60 − സമയം. (കണ്ണാടി സമയം 12-നും 1-നും ഇടയിലാണെങ്കിൽ 23:60 − സമയം.)"}),
+
+Q(M,"1, 8, 27, 64, 125, ___",["A) 216","B) 196","C) 256","D) 225"],0,{
+b:"ഇവ 1³, 2³, 3³, 4³, 5³ ആണ്. അടുത്തത് 6³ = 6 × 6 × 6 = 216.",
+k:["ഘനസംഖ്യകൾ (cubes) തിരിച്ചറിയുക"],
+t:"ഘനങ്ങൾ: 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000."}),
+
+Q(M,"വിട്ടുപോയ സംഖ്യ കണ്ടെത്തുക: 5, 11, 23, 47, ___",["A) 94","B) 95","C) 96","D) 97"],1,{
+b:"ഓരോ സംഖ്യയും ഏകദേശം ഇരട്ടി ആകുന്നു (5 → 11 → 23 → 47), അതിനാൽ അടുത്തത് ഏകദേശം 94. കൃത്യമായി: ഇരട്ടിയാക്കി 1 കൂട്ടുക.",
+k:["5 × 2 + 1 = 11","11 × 2 + 1 = 23","23 × 2 + 1 = 47","47 × 2 + 1 = 95"],
+w:"94 എന്നത് 'ഇരട്ടി' മാത്രം എടുത്താൽ കിട്ടുന്ന കെണി. +1 മറക്കരുത്."}),
+
+Q(M,"പ്രസ്താവന: ചില പേനകൾ പെൻസിലുകളാണ്. എല്ലാ പെൻസിലുകളും റബ്ബറുകളാണ്.\nനിഗമനം I: ചില പേനകൾ റബ്ബറുകളാണ്.\nനിഗമനം II: എല്ലാ റബ്ബറുകളും പെൻസിലുകളാണ്.",["A) I മാത്രം ശരി","B) II മാത്രം ശരി","C) I ഉം II ഉം ശരി","D) രണ്ടും ശരിയല്ല"],0,{
+b:"ഒരു ചെറിയ ചിത്രം വരയ്ക്കൂ: പെൻസിൽ എന്ന ചെറിയ വൃത്തം റബ്ബർ എന്ന വലിയ വൃത്തത്തിനുള്ളിൽ. പേന എന്ന വൃത്തം പെൻസിലിന്റെ ഒരു ഭാഗവുമായി ചേരുന്നു. ആ ഭാഗം റബ്ബറിനുള്ളിലും ഉണ്ട് → I ശരി. റബ്ബർ വൃത്തം പെൻസിലിനേക്കാൾ വലുതാണ് → 'എല്ലാ റബ്ബറും പെൻസിൽ' എന്ന II തെറ്റ്.",
+k:["'എല്ലാ A-യും B' എന്നതിന്റെ തിരിച്ച് 'എല്ലാ B-യും A' എപ്പോഴും ശരിയാകില്ല"],
+p:"'ചില' (some) + 'എല്ലാ' (all) = 'ചില' എന്ന നിഗമനം ശരിയാകും. 'എല്ലാ'യുടെ തിരിച്ചുള്ള നിഗമനം തെറ്റാകും."}),
+
+Q(M,"A=1, B=2, ... എന്ന ക്രമത്തിൽ RED ന്റെ കോഡ് 27 ആയാൽ BLUE ന്റെ കോഡ് എത്ര?",["A) 40","B) 41","C) 39","D) 42"],0,{
+b:"ആദ്യം RED പരിശോധിക്കൂ: R=18, E=5, D=4 → 18 + 5 + 4 = 27 ✓. അക്ഷരങ്ങളുടെ സ്ഥാനവില കൂട്ടുകയാണ് നിയമം.",
+k:["B = 2, L = 12, U = 21, E = 5","2 + 12 + 21 + 5 = 40"],
+t:"A1 B2 C3 D4 E5 F6 G7 H8 I9 J10 K11 L12 M13 N14 O15 P16 Q17 R18 S19 T20 U21 V22 W23 X24 Y25 Z26."}),
+
+Q(M,"ഒറ്റയാനെ കണ്ടെത്തുക:",["A) മാർച്ച്","B) മേയ്","C) ഓഗസ്റ്റ്","D) സെപ്റ്റംബർ"],3,{
+b:"മാർച്ച്, മേയ്, ഓഗസ്റ്റ് എന്നിവയ്ക്ക് 31 ദിവസം വീതം. സെപ്റ്റംബറിന് 30 ദിവസം മാത്രം.",
+k:["31 ദിവസമുള്ള മാസങ്ങൾ: ജനുവരി, മാർച്ച്, മേയ്, ജൂലൈ, ഓഗസ്റ്റ്, ഒക്ടോബർ, ഡിസംബർ"],
+t:"മുഷ്ടി ട്രിക്ക്: മുഷ്ടി ചുരുട്ടി വിരൽപ്പുറത്തെ കുന്നുകൾ 31 ദിവസം, കുഴികൾ 30 ദിവസം (ഫെബ്രുവരി ഒഴികെ)."}),
+
+Q(M,"തെക്ക്-കിഴക്ക് (south-east) വടക്കും, വടക്ക്-കിഴക്ക് (north-east) പടിഞ്ഞാറും ആയി മാറിയാൽ പടിഞ്ഞാറ് ഏതാകും?",["A) വടക്ക്-കിഴക്ക്","B) വടക്ക്-പടിഞ്ഞാറ്","C) തെക്ക്-കിഴക്ക്","D) തെക്ക്-പടിഞ്ഞാറ്"],2,{
+b:"മാറ്റം നോക്കൂ: തെക്ക്-കിഴക്ക് → വടക്ക്, വടക്ക്-കിഴക്ക് → പടിഞ്ഞാറ്. ദിശകളെല്ലാം 135° വെച്ച് വാമാവർത്തം (anticlockwise) തിരിഞ്ഞിരിക്കുന്നു. പടിഞ്ഞാറ് 135° വാമാവർത്തം തിരിഞ്ഞാൽ തെക്ക്-കിഴക്ക്.",
+k:["വടക്ക് = 0°, വടക്ക്-കിഴക്ക് = 45°, കിഴക്ക് = 90°, തെക്ക്-കിഴക്ക് = 135°, ... പടിഞ്ഞാറ് = 270° (ഘടികാരദിശയിൽ അളക്കുന്നു)","തെക്ക്-കിഴക്ക് (135°) → വടക്ക് (0°); വടക്ക്-കിഴക്ക് (45°) → പടിഞ്ഞാറ് (270°). രണ്ടിലും 135° വാമാവർത്തം","പടിഞ്ഞാറ് (270°) − 135° = 135° = തെക്ക്-കിഴക്ക്"],
+x:"ഉത്തരസൂചികയിൽ '135° ക്ലോക്ക്വൈസ്' എന്നായിരുന്നു; ശരിയായത് 135° ആന്റി-ക്ലോക്ക്വൈസ് ആണ്. ഉത്തരം തെക്ക്-കിഴക്ക് (C) തന്നെ."}),
+
+Q(M,"ഒരു പകിടയിൽ (dice) 1-ന് എതിർവശത്ത് 6, 2-ന് എതിർവശത്ത് 5, 3-ന് എതിർവശത്ത് 4 ആണ്. 3-ന് എതിർവശത്തെ സംഖ്യ ഏത്?",["A) 1","B) 4","C) 5","D) 2"],1,{
+b:"ചോദ്യത്തിൽ തന്നെ ഉത്തരം ഉണ്ട്: 3-ന് എതിർവശത്ത് 4.",
+k:["ചോദ്യം ശ്രദ്ധിച്ച് വായിക്കുക; ചിലപ്പോൾ ഉത്തരം ചോദ്യത്തിൽ തന്നെ ഉണ്ടാകും."]}),
+
+Q(M,"A, B യുടെ സഹോദരൻ; B, C യുടെ സഹോദരി; C, D യുടെ അച്ഛൻ. D, A യുടെ ആരാണ്?",["A) അനന്തരവൻ (നെഫ്യൂ)","B) അനന്തരവൾ (നീസ്)","C) നിശ്ചയിക്കാൻ കഴിയില്ല","D) അമ്മാവൻ"],2,{
+b:"A, B, C സഹോദരങ്ങളാണ്. C യുടെ മകനോ മകളോ ആണ് D. D ആണോ പെണ്ണോ എന്ന് പറഞ്ഞിട്ടില്ല. അതിനാൽ 'അനന്തരവൻ' ആണോ 'അനന്തരവൾ' ആണോ എന്ന് ഉറപ്പിച്ച് പറയാൻ കഴിയില്ല.",
+k:["ചോദ്യം 'D, A യുടെ ആരാണ്?' എന്നാണ്. 'അമ്മാവൻ' എന്നത് A യ്ക്ക് D യോടുള്ള ബന്ധമാണ്, തിരിച്ചല്ല."],
+x:"ഉത്തരസൂചികയിൽ D (അമ്മാവൻ) എന്നായിരുന്നു. ഇത് തെറ്റാണ്, കാരണം അത് A-യുടെ ബന്ധം D-യോടാണ്. D യുടെ ലിംഗം തന്നിട്ടില്ലാത്തതിനാൽ ശരിയായ ഉത്തരം C."}),
+
+Q(M,"അടുത്ത അക്ഷരം കണ്ടെത്തുക: B, E, H, K, N, ___",["A) P","B) Q","C) R","D) O"],1,{
+b:"ഓരോ അക്ഷരവും 3 സ്ഥാനം മുന്നോട്ട്. N (14) + 3 = Q (17).",
+k:["B(2) E(5) H(8) K(11) N(14) Q(17)"]}),
+];
+
+const P4 = [
+Q(M,"ബന്ധം കണ്ടെത്തുക: തെർമോമീറ്റർ : താപനില :: സ്ഫിഗ്മോമാനോമീറ്റർ : ?",["A) രക്തസമ്മർദം (Blood pressure)","B) ഹൃദയമിടിപ്പ്","C) അന്തരീക്ഷമർദം","D) ആർദ്രത"],0,{
+b:"തെർമോമീറ്റർ താപനില അളക്കും. സ്ഫിഗ്മോമാനോമീറ്റർ രക്തസമ്മർദം അളക്കും.",
+k:["ബന്ധം: ഉപകരണം : അത് അളക്കുന്നത്"],
+p:"അന്തരീക്ഷമർദം അളക്കുന്നത് ബാരോമീറ്റർ. ആർദ്രത അളക്കുന്നത് ഹൈഗ്രോമീറ്റർ. ഹൃദയമിടിപ്പ് രേഖപ്പെടുത്തുന്നത് ഇസിജി/സ്റ്റെതസ്കോപ്പ്."}),
+
+Q(M,"ഒരു സമചതുരത്തിൽ രണ്ട് വികർണങ്ങളും വരച്ചാൽ എത്ര ത്രികോണങ്ങൾ ഉണ്ടാകും?",["A) 4","B) 6","C) 8","D) 10"],2,{
+b:"രണ്ട് വികർണങ്ങളും വരച്ചാൽ 4 ചെറിയ ത്രികോണങ്ങൾ ഉണ്ടാകും. ഒരു വികർണം മാത്രം എടുത്താൽ സമചതുരം രണ്ട് വലിയ ത്രികോണമാകും; രണ്ട് വികർണത്തിനും കൂടി 4 വലിയ ത്രികോണം (2 + 2).",
+k:["ചെറിയ 4 + രണ്ടെണ്ണം ചേർന്ന വലിയ 4 = 8"],
+w:"ചിത്രത്തിലെ ത്രികോണങ്ങൾ എണ്ണുമ്പോൾ ചെറിയവ മാത്രം എണ്ണി (4) നിർത്തരുത്. ചെറിയവ ചേർന്ന വലിയ ത്രികോണങ്ങളും എണ്ണണം."}),
+
+Q(M,"വിട്ടുപോയ സംഖ്യ കണ്ടെത്തുക: 3, 4, 7, 11, 18, ___",["A) 25","B) 27","C) 29","D) 31"],2,{
+b:"മുൻപുള്ള രണ്ട് സംഖ്യകളുടെ തുകയാണ് അടുത്ത സംഖ്യ: 3 + 4 = 7, 4 + 7 = 11, 7 + 11 = 18. അടുത്തത് 11 + 18 = 29.",
+k:["ഫിബൊനാച്ചി (Fibonacci) രീതിയിലുള്ള ശ്രേണി"]}),
+
+Q(M,"ഒരു ക്ലോക്ക് 1 മണിക്ക് ഒരു തവണയും 2 മണിക്ക് രണ്ട് തവണയും എന്ന ക്രമത്തിൽ അടിക്കുന്നു. 24 മണിക്കൂറിൽ എത്ര തവണ അടിക്കും?",["A) 78","B) 156","C) 24","D) 300"],1,{
+b:"12 മണിക്കൂറിൽ 1 + 2 + ... + 12 = 78 തവണ അടിക്കും. 24 മണിക്കൂറിൽ ഇത് രണ്ടുതവണ ആവർത്തിക്കും: 78 × 2 = 156.",
+k:["1 മുതൽ 12 വരെ തുക = 12 × 13 ÷ 2 = 78","24 മണിക്കൂർ → 78 × 2 = 156"],
+w:"78 എന്നത് 12 മണിക്കൂറിലെ എണ്ണമാണ്. ചോദ്യം 24 മണിക്കൂറാണ്."}),
+
+Q(M,"ഒരു കോഡിൽ '157' എന്നാൽ 'mother is good', '258' എന്നാൽ 'father is good', '193' എന്നാൽ 'mother and child'. 'mother' ന്റെ കോഡ് ഏത്?",["A) 1","B) 5","C) 7","D) 9"],0,{
+b:"'mother' ഉള്ള രണ്ട് വാക്യങ്ങളിൽ (157, 193) പൊതുവായുള്ള അക്കം 1. 'good' ഉള്ള വാക്യങ്ങളിൽ (157, 258) പൊതുവായ അക്കം 5 ('good' = 5). അതിനാൽ mother = 1.",
+k:["ഒരേ വാക്ക് ഉള്ള രണ്ട് വാക്യങ്ങളിലെ പൊതുവായ അക്കമാണ് ആ വാക്കിന്റെ കോഡ്"]}),
+
+Q(M,"2023 ന്റെ അതേ കലണ്ടർ ലഭിക്കുന്ന വർഷം ഏത്?",["A) 2034","B) 2028","C) 2033","D) 2031"],0,{
+b:"2023 അധിവർഷമല്ല, അതിനാൽ ഉത്തരവും അധിവർഷമല്ലാത്ത വർഷമായിരിക്കണം. 2028 അധിവർഷമാണ്, തള്ളാം. ഇനി ദിവസത്തിന്റെ മാറ്റം കൂട്ടൂ: സാധാരണ വർഷം കടക്കുമ്പോൾ ഓരോ ദിവസം, അധിവർഷം കടക്കുമ്പോൾ 2 ദിവസം.",
+k:["2023 → 2034: 11 വർഷം, ഇടയിൽ 3 അധിവർഷം (2024, 2028, 2032)","മാറ്റം = 11 + 3 = 14 ദിവസം = ശരിക്കും 2 ആഴ്ച, അതായത് ദിവസം മാറുന്നില്ല ✓"],
+t:"കലണ്ടർ ആവർത്തിക്കാൻ: വർഷങ്ങളുടെ എണ്ണം + ഇടയിലെ അധിവർഷങ്ങളുടെ എണ്ണം 7-ന്റെ ഗുണിതമാകണം."}),
+
+Q(M,"ഒരു ക്ലാസിൽ അരുൺ മുകളിൽ നിന്ന് 7-ാം റാങ്കും താഴെ നിന്ന് 28-ാം റാങ്കുമാണ്. ക്ലാസിൽ ആകെ എത്ര കുട്ടികൾ?",["A) 34","B) 35","C) 36","D) 33"],0,{
+b:"ഇവിടെയും അരുണിനെ രണ്ടുതവണ എണ്ണും. അതിനാൽ ഒരു തവണ കുറയ്ക്കണം.",
+k:["ആകെ = മുകളിൽ നിന്നുള്ള റാങ്ക് + താഴെ നിന്നുള്ള റാങ്ക് − 1","= 7 + 28 − 1 = 34"],
+t:"'ഇടത്/വലത്', 'മുകളിൽ/താഴെ' ഏത് ചോദ്യത്തിലും ആകെ = രണ്ടും കൂട്ടി 1 കുറയ്ക്കുക."}),
+
+Q(M,"വാക്കുകൾ അർഥവത്തായ ക്രമത്തിൽ ക്രമീകരിക്കുക: 1. ജില്ല 2. ഗ്രാമം 3. സംസ്ഥാനം 4. പട്ടണം",["A) 2, 4, 1, 3","B) 2, 1, 4, 3","C) 4, 2, 1, 3","D) 1, 2, 3, 4"],0,{
+b:"ചെറുതിൽ നിന്ന് വലുതിലേക്ക്: ഗ്രാമം (2) → പട്ടണം (4) → ജില്ല (1) → സംസ്ഥാനം (3).",
+k:["ഓപ്ഷനിൽ ആദ്യം 'ഗ്രാമം' (2) ൽ തുടങ്ങുന്നത് A, B ഇവ മാത്രം. അതിൽ രണ്ടാമത് 'പട്ടണം' വരുന്നത് A."],
+x:"ഒറിജിനലിൽ ഈ ചോദ്യത്തിലെ ഒന്നാം പദത്തിന് 84 എന്ന് തെറ്റായി നമ്പർ വീണിരുന്നു; അതുകാരണം ഇതിനുശേഷമുള്ള എല്ലാ ചോദ്യങ്ങളും ഒന്നുവീതം പിന്നിൽ കൂടിയ നമ്പറിൽ ആയിരുന്നു (101 വരെ). ഇവിടെ 100 ചോദ്യങ്ങളായി ശരിയായി നമ്പർ ചെയ്തു."}),
+
+Q(M,"കൂട്ടത്തിൽ പെടാത്തത് ഏത്?",["A) ത്രികോണം","B) വൃത്തം","C) ചതുരം","D) സമചതുരം"],1,{
+b:"ത്രികോണം, ചതുരം, സമചതുരം എന്നിവയ്ക്ക് നേർരേഖാ വശങ്ങളുണ്ട് (polygons). വൃത്തത്തിന് വശങ്ങളോ കോണുകളോ ഇല്ല.",
+k:["ബഹുഭുജങ്ങൾ (polygons) ഒരു കൂട്ടം; വളഞ്ഞ ആകൃതി മറ്റൊന്ന്"]}),
+
+Q(M,"ഒരാൾ ഒരു സ്ത്രീയോട് പറഞ്ഞു: 'നിങ്ങളുടെ അമ്മയുടെ ഭർത്താവിന്റെ സഹോദരി എന്റെ അമ്മായി ആണ്.' ആ സ്ത്രീ അയാളുടെ ആരാണ്?",["A) സഹോദരി","B) അമ്മ","C) അമ്മായി","D) മകൾ"],0,{
+b:"സ്ത്രീയുടെ അമ്മയുടെ ഭർത്താവ് = സ്ത്രീയുടെ അച്ഛൻ. അച്ഛന്റെ സഹോദരി = സ്ത്രീയുടെ അമ്മായി. ആ അമ്മായി അയാളുടെയും അമ്മായി ആണ്. അതായത് അവർ ഒരേ അച്ഛന്റെ മക്കൾ. സ്ത്രീ അയാളുടെ സഹോദരി.",
+k:["ബന്ധചോദ്യങ്ങളിൽ 'എന്റെ അമ്മയുടെ ഭർത്താവ്' = 'എന്റെ അച്ഛൻ' എന്ന് ഉടൻ മാറ്റി എഴുതുക"],
+p:"ഇത്തരം ചോദ്യങ്ങളിൽ PSC ഉത്തരം 'സഹോദരി' ആണ് (ഒരേ അച്ഛന്റെ മക്കൾ എന്ന് കരുതി)."}),
+
+Q(M,"'ഉരുകുക' (Melt) എന്നത് 'ദ്രാവകം' (Liquid) ആയി ബന്ധപ്പെട്ടിരിക്കുന്നതുപോലെ 'ഉറയുക' (Freeze) എന്നത് ?",["A) ഐസ്","B) ഖരം (Solid)","C) ഘനീഭവിക്കുക","D) തള്ളുക"],1,{
+b:"ഉരുകിയാൽ ദ്രാവകം കിട്ടും. ഉറഞ്ഞാൽ ഖരം കിട്ടും. 'ഐസ്' ഒരു പ്രത്യേക വസ്തുവാണ്, അവസ്ഥയല്ല.",
+k:["ബന്ധം: പ്രക്രിയ : അവസാനം ഉണ്ടാകുന്ന അവസ്ഥ"]}),
+
+Q(M,"CAT = 24, DOG = 26 ആയാൽ BIRD = ?",["A) 33","B) 35","C) 38","D) 40"],0,{
+b:"ആദ്യം പരിശോധിക്കൂ: CAT = 3 + 1 + 20 = 24 ✓, DOG = 4 + 15 + 7 = 26 ✓. അതിനാൽ അക്ഷരങ്ങളുടെ സ്ഥാനവില കൂട്ടുകയാണ് നിയമം.",
+k:["B = 2, I = 9, R = 18, D = 4","2 + 9 + 18 + 4 = 33"],
+x:"ഒറിജിനലിലെ ഓപ്ഷനുകൾ 32, 35, 38, 40 ആയിരുന്നു; ശരിയായ ഉത്തരം 33 അതിൽ ഇല്ലായിരുന്നു. ഓപ്ഷൻ A '32' → '33' എന്ന് തിരുത്തി."}),
+
+Q(M,"അടുത്ത രൂപം ഏത്? O, OO, OOO, OOOO, ___",["A) OO","B) OOOOO","C) OOO","D) OOOOOO"],1,{
+b:"ഓരോ തവണയും ഒരു 'O' കൂടുന്നു. 4 O ന് ശേഷം 5 O.",
+k:["എണ്ണം: 1, 2, 3, 4, ... അടുത്തത് 5"]}),
+
+Q(M,"ശ്രേണി നോക്കൂ: 2, 1, (1/2), (1/4)... അടുത്ത സംഖ്യ ഏത്?",["A) 1/3","B) 1/8","C) 2/8","D) 1/16"],1,{
+b:"ഓരോ സംഖ്യയും തൊട്ടുമുമ്പത്തേതിന്റെ പകുതിയാണ്. 1/4 ന്റെ പകുതി = 1/8. (2/8 = 1/4, അത് ഇപ്പോൾ തന്നെ ഉണ്ട്.)",
+k:["2 → 1 → 1/2 → 1/4 → 1/8","എല്ലായിടത്തും ÷ 2"]}),
+
+Q(M,"ഞാൻ കിഴക്കോട്ട് നോക്കി നിൽക്കുന്നു. ഘടികാരദിശയിൽ (clockwise) 100° തിരിഞ്ഞു, പിന്നെ വാമാവർത്തത്തിൽ (anticlockwise) 145° തിരിഞ്ഞു. ഇപ്പോൾ ഏത് ദിശയിൽ?",["A) കിഴക്ക്","B) വടക്ക്-കിഴക്ക്","C) വടക്ക്","D) തെക്ക്-പടിഞ്ഞാറ്"],1,{
+b:"രണ്ട് തിരിവും ഒന്നിച്ച് കൂട്ടൂ: 145° വാമാവർത്തം − 100° ഘടികാരദിശ = 45° വാമാവർത്തം. കിഴക്കിൽ നിന്ന് 45° വാമാവർത്തം തിരിഞ്ഞാൽ വടക്ക്-കിഴക്ക്.",
+k:["ഘടികാരദിശ = +, വാമാവർത്തം = −","100 − 145 = −45° → 45° വാമാവർത്തം"],
+t:"കിഴക്ക് → (വാമാവർത്തം 45°) വടക്ക്-കിഴക്ക് → (45°) വടക്ക്. ഘടികാരദിശയിൽ കിഴക്ക് → തെക്ക്-കിഴക്ക് → തെക്ക്."}),
+
+Q(M,"ശ്രേണിയിലെ തെറ്റായ സംഖ്യ കണ്ടെത്തുക: 4, 9, 16, 25, 36, 49, 63",["A) 25","B) 36","C) 49","D) 63"],3,{
+b:"ഇവ 2², 3², 4², 5², 6², 7² എന്ന വർഗങ്ങളാണ്. അടുത്തത് 8² = 64. 63 ഒരു പൂർണവർഗമല്ല.",
+k:["പൂർണവർഗങ്ങൾ തിരിച്ചറിയുക"]}),
+
+Q(M,"50 കുട്ടികളിൽ 30 പേർക്ക് ക്രിക്കറ്റ് ഇഷ്ടം, 25 പേർക്ക് ഫുട്ബോൾ ഇഷ്ടം, 10 പേർക്ക് രണ്ടും ഇഷ്ടം. രണ്ടും ഇഷ്ടമല്ലാത്തവർ എത്ര?",["A) 10","B) 5","C) 15","D) 0"],1,{
+b:"ഏതെങ്കിലും ഒരു കളി ഇഷ്ടമുള്ളവർ = 30 + 25 − 10 = 45 (രണ്ടും ഇഷ്ടമുള്ളവരെ രണ്ടുതവണ എണ്ണിയതിനാൽ 10 കുറച്ചു). ആകെ 50 → 50 − 45 = 5.",
+k:["രണ്ടും ഇഷ്ടമല്ലാത്തവർ = ആകെ − (ക്രിക്കറ്റ് + ഫുട്ബോൾ − രണ്ടും)","= 50 − (30 + 25 − 10) = 5"]}),
+
+Q(M,"ബന്ധം കണ്ടെത്തുക: ഷൂ : കാൽ :: ഹെൽമെറ്റ് : ?",["A) ഓടിക്കുക","B) തല (Head)","C) സുരക്ഷ","D) മോട്ടോർസൈക്കിൾ"],1,{
+b:"ഷൂ കാലിനെ സംരക്ഷിക്കുന്നു, ഹെൽമെറ്റ് തലയെ സംരക്ഷിക്കുന്നു.",
+k:["ബന്ധം: സംരക്ഷണ വസ്തു : സംരക്ഷിക്കുന്ന ശരീരഭാഗം"]}),
+
+Q(M,"6:00 മണിക്ക് ഘടികാരത്തിലെ രണ്ട് സൂചികൾ തമ്മിലുള്ള കോൺ?",["A) 0°","B) 90°","C) 180°","D) 360°"],2,{
+b:"6:00 ന് മിനിറ്റ് സൂചി 12-ലും മണിക്കൂർ സൂചി 6-ലും. നേരെ എതിർവശത്ത്, ഒരു നേർരേഖ. നേർരേഖയുടെ കോൺ 180°.",
+k:["ഘടികാരത്തിൽ ഓരോ അക്കത്തിനും ഇടയിൽ 30°","12 നും 6 നും ഇടയിൽ 6 × 30 = 180°"],
+t:"3:00 / 9:00 → 90°, 6:00 → 180°, 12:00 → 0°, 4:00 / 8:00 → 120°."}),
+
+Q(M,"ഒരു കുടുംബത്തിൽ ദമ്പതികൾക്ക് 3 ആൺമക്കൾ. ഓരോ മകനും 2 സഹോദരിമാർ ഉണ്ട്. കുടുംബത്തിൽ ആകെ എത്ര അംഗങ്ങൾ?",["A) 11","B) 9","C) 7","D) 10"],2,{
+b:"ഓരോ മകനും '2 സഹോദരിമാർ' എന്ന് പറഞ്ഞാൽ എല്ലാ ആൺമക്കൾക്കും ഒരേ 2 പെൺകുട്ടികൾ തന്നെ. 3 × 2 = 6 പെൺകുട്ടികൾ എന്ന് കരുതരുത്.",
+k:["അച്ഛൻ + അമ്മ = 2","ആൺമക്കൾ = 3","പെൺമക്കൾ = 2","ആകെ = 2 + 3 + 2 = 7"],
+w:"'ഓരോരുത്തർക്കും' എന്ന് കേട്ട് ഗുണിക്കരുത്; സഹോദരിമാർ എല്ലാവർക്കും പൊതുവായ ആളുകളാണ്. 11 ആണ് കെണി ഉത്തരം."}),
+
+Q(M,"ശൂന്യസ്ഥാനം പൂരിപ്പിക്കുക: 8, 27, 64, ___, 216",["A) 100","B) 125","C) 144","D) 169"],1,{
+b:"ഇവ 2³, 3³, 4³, ... 6³ (216) ആണ്. നടുവിൽ വിട്ടുപോയത് 5³ = 125.",
+k:["ഘനസംഖ്യകൾ: 8, 27, 64, 125, 216"]}),
+
+Q(M,"1 മുതൽ 100 വരെയുള്ള സംഖ്യകൾ എഴുതുമ്പോൾ '9' എന്ന അക്കം എത്ര തവണ എഴുതും?",["A) 19","B) 20","C) 21","D) 18"],1,{
+b:"ഒറ്റയുടെ സ്ഥാനത്ത് 9 വരുന്ന സംഖ്യകൾ: 9, 19, 29, ... 99 = 10 തവണ. പത്തിന്റെ സ്ഥാനത്ത് 9 വരുന്ന സംഖ്യകൾ: 90 മുതൽ 99 വരെ = 10 തവണ. ആകെ 20. (99-ൽ രണ്ട് 9 ഉണ്ട്, രണ്ടും ഇതിൽ എണ്ണിക്കഴിഞ്ഞു.)",
+k:["1 മുതൽ 100 വരെ ഓരോ അക്കവും (1 മുതൽ 9 വരെ) 20 തവണ വീതം വരും"],
+w:"19 ആണ് കെണി: 99-ൽ രണ്ട് 9 ഉണ്ടെന്ന കാര്യം മറന്ന് 19 എന്ന് എണ്ണുന്നവർക്ക് പറ്റുന്ന തെറ്റ്."}),
+
+Q(M,"ഒറ്റയാനായ വാക്ക് ഏത്?",["A) തിമിംഗലം (Whale)","B) സ്രാവ് (Shark)","C) ഡോൾഫിൻ","D) വവ്വാൽ (Bat)"],1,{
+b:"തിമിംഗലം, ഡോൾഫിൻ, വവ്വാൽ എന്നിവ സസ്തനികളാണ് (mammals). സ്രാവ് ഒരു മത്സ്യമാണ്.",
+k:["പാൽ കൊടുത്ത് കുഞ്ഞുങ്ങളെ വളർത്തുന്നവ സസ്തനികൾ","തിമിംഗലവും ഡോൾഫിനും ജലത്തിൽ ജീവിച്ചാലും സസ്തനികളാണ്"],
+p:"വെള്ളത്തിൽ ജീവിക്കുന്ന സസ്തനികൾ: തിമിംഗലം, ഡോൾഫിൻ, കടൽപ്പശു (manatee). പറക്കുന്ന സസ്തനി: വവ്വാൽ."}),
+
+Q(M,"ഒരു ആൺകുട്ടി തെക്കോട്ട് 10 മീ. നടന്നു, വലത്തോട്ട് തിരിഞ്ഞ് 10 മീ. നടന്നു, വീണ്ടും വലത്തോട്ട് തിരിഞ്ഞ് 10 മീ. നടന്നു. തുടങ്ങിയ സ്ഥലത്തുനിന്ന് എത്ര ദൂരെയാണ്?",["A) 0 മീ.","B) 10 മീ.","C) 20 മീ.","D) 30 മീ."],1,{
+b:"തെക്ക് 10, പിന്നെ പടിഞ്ഞാറ് 10, പിന്നെ വടക്ക് 10. ഒരു ചതുരത്തിന്റെ 3 വശം നടന്നു. തെക്ക് പോയതും വടക്ക് വന്നതും കൂടി റദ്ദാകും. ബാക്കി പടിഞ്ഞാറോട്ടുള്ള 10 മീ. മാത്രം. തുടക്കത്തിൽ നിന്ന് 10 മീ. പടിഞ്ഞാറ്.",
+k:["ഒരു സമചതുരത്തിന്റെ 3 വശം നടന്നാൽ തുടക്കത്തിൽ നിന്ന് ഒരു വശത്തിന്റെ അത്രയും ദൂരമേ ഉണ്ടാകൂ"]}),
+
+Q(M,"വിട്ടുപോയ സംഖ്യ കണ്ടെത്തുക: 1, 4, 9, 16, 25, ___",["A) 30","B) 35","C) 36","D) 40"],2,{
+b:"ഇവ 1², 2², 3², 4², 5² ആണ്. അടുത്തത് 6² = 36. വ്യത്യാസം നോക്കിയാലും: 3, 5, 7, 9 → അടുത്തത് 11, 25 + 11 = 36.",
+k:["പൂർണവർഗ ശ്രേണി: 1, 4, 9, 16, 25, 36, 49, 64"]}),
+];
+
+
+const sourceQuestions = [...P1, ...P2, ...P3, ...P4];
+
+/* ============================================================
+   STATE & LOGIC
+   ============================================================ */
+let questions = [];
+let currentIndex = 0;
+let timerInterval = null;
+let timeRemaining = 0;
+let isSubmitted = false;
+let isPaused = false;
+let isAutoPaused = false;
+let isStudyPaused = false;
+let questionStates = [];
+let lastSaveTime = 0;
+let saveTimeout = null;
+let themeIndex = 0;
+const THEMES = ['light', 'dark', 'sepia'];
+const THEME_ICONS = ['🌙 Dark', '📜 Sepia', '☀️ Light'];
+
+function cycleTheme() {
+  themeIndex = (themeIndex + 1) % THEMES.length;
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+  try { localStorage.setItem('kpsc_theme', THEMES[themeIndex]); } catch(e) {}
+}
+(function loadTheme() {
+  try {
+    const saved = localStorage.getItem('kpsc_theme');
+    if (saved && THEMES.includes(saved)) {
+      themeIndex = THEMES.indexOf(saved);
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  } catch(e) {}
+})();
+
+function saveAttempt() {
+  if (isSubmitted) return;
+  try {
+    const data = {
+      version: STORAGE_VERSION,
+      timestamp: Date.now(),
+      currentIndex: currentIndex,
+      timeRemaining: timeRemaining,
+      questionStates: questionStates,
+      totalQuestions: questions.length
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    lastSaveTime = Date.now();
+    showSaveStatus();
+  } catch(e) {}
+}
+function showSaveStatus() {
+  const el = document.getElementById('saveStatus');
+  if (!el) return;
+  el.textContent = '💾 Saved';
+  el.classList.add('visible');
+  clearTimeout(el._hideT);
+  el._hideT = setTimeout(() => el.classList.remove('visible'), 1500);
+}
+function throttledSave() {
+  const now = Date.now();
+  if (now - lastSaveTime > 2000) saveAttempt();
+  else { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAttempt, 2000 - (now - lastSaveTime)); }
+}
+function getSavedAttempt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || data.version !== STORAGE_VERSION) return null;
+    if (!data.questionStates || !Array.isArray(data.questionStates)) return null;
+    if (data.timeRemaining <= 0) return null;
+    return data;
+  } catch(e) { return null; }
+}
+function formatTimeAgo(ts) {
+  const diff = Math.floor((Date.now() - ts) / 1000);
+  if (diff < 60) return diff + ' seconds ago';
+  if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+  return Math.floor(diff / 86400) + ' day(s) ago';
+}
+function formatTimeLeft(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return h + 'h ' + m + 'm ' + s + 's';
+  return m + 'm ' + s + 's';
+}
+function countAnswered(states) {
+  let n = 0;
+  states.forEach(st => { if (st.status === 'saved') n++; });
+  return n;
+}
+
+function checkSavedAndShowBanner() {
+  const saved = getSavedAttempt();
+  if (!saved) { hideBanner(); startNewTest(); return; }
+  const answered = countAnswered(saved.questionStates);
+  document.getElementById('resumeInfo').innerHTML =
+    'Saved at <strong>Q' + (saved.currentIndex + 1) + '/' + saved.totalQuestions + '</strong> · ' +
+    '<strong>' + answered + '</strong> answered · ' +
+    '<strong>' + formatTimeLeft(saved.timeRemaining) + '</strong> left · ' +
+    'saved <strong>' + formatTimeAgo(saved.timestamp) + '</strong>';
+  
+  document.getElementById('resumeBanner').style.display = 'block';
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+}
+function hideBanner() { document.getElementById('resumeBanner').style.display = 'none'; }
+
+function resumeAttempt() {
+  const saved = getSavedAttempt();
+  if (!saved) { startFresh(); return; }
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = saved.timeRemaining;
+  currentIndex = Math.min(saved.currentIndex, questions.length - 1);
+  isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = saved.questionStates.map(st => ({
+    selectedOption: st.selectedOption,
+    status: st.status,
+    markedForReview: st.markedForReview,
+    visited: st.visited
+  }));
+  while (questionStates.length < questions.length) {
+    questionStates.push({ selectedOption: null, status: 'idle', markedForReview: false, visited: false });
+  }
+  questionStates.length = questions.length;
+  hideBanner();
+  launchTest();
+}
+function startFresh() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  hideBanner();
+  startNewTest();
+}
+function startNewTest() {
+  questions = sourceQuestions.map(q => ({ ...q }));
+  timeRemaining = questions.length * SECONDS_PER_QUESTION;
+  currentIndex = 0; isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
+  questionStates = questions.map(() => ({
+    selectedOption: null, status: 'idle', markedForReview: false, visited: false
+  }));
+  questionStates[0].visited = true;
+  launchTest();
+}
+function launchTest() {
+  document.getElementById('testView').style.display = 'flex';
+  document.getElementById('testHeader').style.display = 'flex';
+  document.getElementById('resultsView').classList.remove('visible');
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 1000);
+  updateTimerDisplay();
+  renderQuestion();
+  renderPalette();
+  updateStats();
+  saveAttempt();
+}
+
+/* CHANGE 2: WAIT FOR CLOUD BEFORE STARTING */
+async function initTest() {
+  if (window.KPSC_Sync && window.KPSC_Sync.whenReady) {
+    await window.KPSC_Sync.whenReady(10000); // wait for the cloud merge (sync.js extends this when signed in)
+  }
+  document.getElementById('syncLoader').style.display = 'none';
+  
+  if (getSavedAttempt()) checkSavedAndShowBanner();
+  else startNewTest();
+}
+
+/* CHANGE 3: PREVENT RELOAD IF EXAM IS ACTIVE */
+function hasProgress() {
+  return questionStates.some(st => st.status !== 'idle' || st.selectedOption !== null || st.markedForReview);
+}
+window.addEventListener('kpsc-sync-applied', function(e) {
+  const keys = (e.detail && e.detail.keys) || [];
+  // not about this test, or the test is already finished -> never reload
+  if (isSubmitted || keys.indexOf(STORAGE_KEY) === -1) { e.preventDefault(); return; }
+  // user is answering on THIS device right now -> keep local; it syncs up on the next save
+  if (hasProgress() && !isPaused) { e.preventDefault(); return; }
+  // otherwise let sync.js reload: the "Saved attempt found" banner shows the other device's attempt
+});
+
+function tickTimer() {
+  if (isSubmitted || isPaused || isStudyPaused) return;
+  timeRemaining--;
+  updateTimerDisplay();
+  if (timeRemaining <= 0) {
+    timeRemaining = 0;
+    updateTimerDisplay();
+    submitTest(true);
+    return;
+  }
+  if (timeRemaining % 15 === 0) saveAttempt();
+}
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  const h = Math.floor(timeRemaining / 3600);
+  const m = Math.floor((timeRemaining % 3600) / 60);
+  const s = timeRemaining % 60;
+  const pad = n => String(n).padStart(2, '0');
+  el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  const box = document.getElementById('timerBox');
+  if (timeRemaining <= 300 && timeRemaining > 0 && !isPaused && !isStudyPaused) box.classList.add('warning');
+  else box.classList.remove('warning');
+}
+
+function togglePause() {
+  if (isSubmitted) return;
+  if (isStudyPaused) { resumeStudy(); return; }
+  if (!isPaused) pauseTest(false); else resumeTest();
+}
+function pauseTest(auto) {
+  if (isPaused || isSubmitted) return;
+  isPaused = true; isAutoPaused = auto;
+  const modal = document.getElementById('pauseModal');
+  const icon = document.getElementById('pauseIcon');
+  const title = document.getElementById('pauseTitle');
+  const message = document.getElementById('pauseMessage');
+  if (auto) {
+    icon.textContent = '🔒';
+    title.textContent = 'Exam Auto-Paused';
+    message.innerHTML = 'Tab switch കാരണം പരീക്ഷ സ്വയം നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  } else {
+    icon.textContent = '⏸';
+    title.textContent = 'Exam Paused';
+    message.innerHTML = 'പരീക്ഷ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.<br>ടൈമർ നിലച്ചിട്ടുണ്ട്.';
+  }
+  document.getElementById('pauseOverlay').classList.add('visible');
+  document.getElementById('pauseBtn').textContent = '▶ Resume';
+  document.getElementById('pauseBtn').classList.add('resume');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+  document.getElementById('questionPanel').classList.add('locked');
+  document.getElementById('sidebar').classList.add('locked');
+  saveAttempt();
+}
+function resumeTest() {
+  if (!isPaused || isSubmitted) return;
+  isPaused = false; isAutoPaused = false;
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('pauseBtn').textContent = '⏸ Pause';
+  document.getElementById('pauseBtn').classList.remove('resume');
+  document.getElementById('timerBox').classList.remove('paused');
+  document.getElementById('questionPanel').classList.remove('locked');
+  document.getElementById('sidebar').classList.remove('locked');
+  updateTimerDisplay();
+}
+function startStudyPause() {
+  if (isStudyPaused || isSubmitted || isPaused) return;
+  isStudyPaused = true;
+  document.getElementById('studyPauseBar').classList.add('visible');
+  document.getElementById('timerBox').classList.add('paused');
+  document.getElementById('timerBox').classList.remove('warning');
+}
+function resumeStudy() {
+  if (!isStudyPaused) return;
+  isStudyPaused = false;
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('timerBox').classList.remove('paused');
+  updateTimerDisplay();
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  st.visited = true;
+
+  document.getElementById('qNumber').textContent = 'Question ' + (currentIndex + 1);
+  document.getElementById('qSubject').textContent = q.subject;
+  document.getElementById('qText').textContent = q.question;
+
+  renderOptions();
+  renderExplanation();
+  renderActionButtons();
+  renderPalette();
+  updateStats();
+  throttledSave();
+}
+
+function renderOptions() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    if (locked) {
+      btn.classList.add('locked');
+      if (i === q.correct) btn.classList.add('correct-highlight');
+      else if (i === st.selectedOption) btn.classList.add('wrong-highlight');
+    } else {
+      if (i === st.selectedOption) btn.classList.add('selected');
+      btn.onclick = () => {
+        st.selectedOption = i;
+        renderOptions();
+        renderActionButtons();
+        throttledSave();
+      };
+    }
+    list.appendChild(btn);
+  });
+}
+
+function buildExpHTML(q) {
+  const e = q.exp || {};
+  const sec = (cls, title, body) => '<div class="exp-sec ' + cls + '"><h4>' + title + '</h4>' + body + '</div>';
+  let h = '';
+  if (e.b) h += sec('exp-concept', '💡 ലളിതമായി മനസ്സിലാക്കാം (തുടക്കക്കാർക്ക്)', '<p>' + escapeHtml(e.b) + '</p>');
+  if (e.k && e.k.length) h += sec('exp-steps', '🧮 കണക്ക് / ഘട്ടങ്ങൾ', '<ol>' + e.k.map(s => '<li>' + escapeHtml(s) + '</li>').join('') + '</ol>');
+  if (e.t) h += sec('exp-trick', '🧠 ഓർമ്മ ട്രിക്ക്', '<p>' + escapeHtml(e.t) + '</p>');
+  if (e.w) h += sec('exp-trap', '⚠️ കെണി ശ്രദ്ധിക്കുക', '<p>' + escapeHtml(e.w) + '</p>');
+  if (e.p) h += sec('exp-psc', '🎯 PSC ഫോക്കസ്', '<p>' + escapeHtml(e.p) + '</p>');
+  if (e.x) h += sec('exp-fix', '📝 ഒറിജിനലിലെ തിരുത്തൽ', '<p>' + escapeHtml(e.x) + '</p>');
+  return h;
+}
+
+function renderExplanation() {
+  const q = questions[currentIndex];
+  const st = questionStates[currentIndex];
+  const box = document.getElementById('explanationBox');
+  const content = document.getElementById('expContent');
+  if (st.status === 'saved' || st.status === 'revealed') {
+    const correctText = escapeHtml(q.options[q.correct]);
+    let verdict = '';
+    if (st.status === 'saved' && st.selectedOption !== null) {
+      if (st.selectedOption === q.correct) {
+        verdict = '<div class="exp-verdict exp-correct">✔ ശരി! ഉത്തരം: ' + correctText + '</div>';
+      } else {
+        verdict = '<div class="exp-verdict exp-wrong">✘ തെറ്റ്. ശരിയായ ഉത്തരം: ' + correctText + '</div>';
+      }
+    } else {
+      verdict = '<div class="exp-verdict exp-correct">✔ ശരിയായ ഉത്തരം: ' + correctText + '</div>';
+    }
+    content.innerHTML = verdict + buildExpHTML(q);
+    box.classList.add('visible');
+  } else {
+    box.classList.remove('visible');
+    content.innerHTML = '';
+  }
+}
+
+function renderActionButtons() {
+  const st = questionStates[currentIndex];
+  const container = document.getElementById('actionButtons');
+  container.innerHTML = '';
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  function addBtn(label, cls, fn) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn ' + cls;
+    b.textContent = label;
+    b.onclick = fn;
+    container.appendChild(b);
+  }
+
+  if (!locked) {
+    if (st.selectedOption !== null) {
+      addBtn('💾 Save', 'btn-save', saveAnswer);
+      addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    } else {
+      addBtn('👁 Show Answer', 'btn-show', showAnswer);
+      addBtn('⏭ Skip & Show', 'btn-skip-show', skipAndShow);
+      addBtn('🔖 Mark for Review', 'btn-review', markForReview);
+      addBtn('→ Next', 'btn-next', nextQuestion);
+    }
+  } else {
+    addBtn('✖ Clear Response', 'btn-clear', clearResponse);
+    addBtn('→ Next', 'btn-next', nextQuestion);
+  }
+}
+
+function renderPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'palette-btn';
+    btn.textContent = i + 1;
+    if (st.status === 'saved') btn.classList.add('answered');
+    else if (st.markedForReview) btn.classList.add('review');
+    else if (st.visited) btn.classList.add('visited-not-answered');
+    else btn.classList.add('not-visited');
+    if (i === currentIndex) btn.classList.add('active');
+    btn.onclick = () => gotoQuestion(i);
+    grid.appendChild(btn);
+  });
+}
+
+function updateStats() {
+  let answered = 0, review = 0, attempted = 0;
+  questionStates.forEach(st => {
+    if (st.status === 'saved') { answered++; attempted++; }
+    if (st.markedForReview) review++;
+  });
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statNotAnswered').textContent = questions.length - answered;
+  document.getElementById('statReview').textContent = review;
+  document.getElementById('statAttempted').textContent = attempted;
+}
+
+function saveAnswer() {
+  const st = questionStates[currentIndex];
+  if (st.selectedOption === null) return;
+  st.status = 'saved';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+function showAnswer() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+}
+function skipAndShow() {
+  const st = questionStates[currentIndex];
+  st.status = 'revealed';
+  st.markedForReview = true;
+  startStudyPause();
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1 && isStudyPaused) {
+      currentIndex++;
+      renderQuestion();
+    }
+  }, 1800);
+}
+function markForReview() {
+  const st = questionStates[currentIndex];
+  st.markedForReview = !st.markedForReview;
+  renderQuestion();
+  saveAttempt();
+  setTimeout(() => {
+    if (currentIndex < questions.length - 1) nextQuestion();
+  }, 400);
+}
+function clearResponse() {
+  const st = questionStates[currentIndex];
+  st.selectedOption = null;
+  st.status = 'idle';
+  st.markedForReview = false;
+  renderQuestion();
+  saveAttempt();
+}
+function nextQuestion() {
+  if (isStudyPaused) resumeStudy();
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    if (!isStudyPaused) {
+      if (confirm('ഇത് അവസാന ചോദ്യമാണ്. പരീക്ഷ Submit ചെയ്യണോ?')) submitTest(false);
+    }
+  }
+}
+function gotoQuestion(i) {
+  if (isStudyPaused) resumeStudy();
+  currentIndex = i;
+  renderQuestion();
+}
+
+function submitTest(auto) {
+  if (isSubmitted) return;
+  if (!auto && timeRemaining > 0) {
+    if (!confirm('പരീക്ഷ Submit ചെയ്യണോ?')) return;
+  }
+  isSubmitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  renderResults();
+}
+
+function renderResults() {
+  document.getElementById('testView').style.display = 'none';
+  document.getElementById('testHeader').style.display = 'none';
+  document.getElementById('pauseOverlay').classList.remove('visible');
+  document.getElementById('studyPauseBar').classList.remove('visible');
+  document.getElementById('resultsView').classList.add('visible');
+
+  let total = questions.length;
+  let attempted = 0, correct = 0, wrong = 0, unanswered = 0;
+
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (st.status === 'saved') {
+      attempted++;
+      if (st.selectedOption === q.correct) correct++;
+      else wrong++;
+    } else {
+      unanswered++;
+    }
+  });
+
+  const negativeMarks = wrong * NEGATIVE_MARKING;
+  const score = correct * 1 - negativeMarks;
+
+  const cards = [
+    { label: 'ആകെ ചോദ്യങ്ങൾ', value: total, cls: '' },
+    { label: 'ശ്രമിച്ചവ', value: attempted, cls: '' },
+    { label: 'ശരിയായവ', value: correct, cls: 'correct-card' },
+    { label: 'തെറ്റായവ', value: wrong, cls: 'wrong-card' },
+    { label: 'നെഗറ്റീവ് മാർക്ക്', value: '-' + negativeMarks.toFixed(2), cls: 'negative-card' },
+    { label: 'ആകെ സ്കോർ', value: score.toFixed(2), cls: 'score-card' },
+    { label: 'ഉത്തരം നൽകാത്തവ', value: unanswered, cls: '' }
+  ];
+
+  document.getElementById('summaryCards').innerHTML = cards.map(c =>
+    '<div class="summary-card ' + c.cls + '"><div class="sc-value">' + c.value + '</div><div class="sc-label">' + c.label + '</div></div>'
+  ).join('');
+
+  const subjectMap = {};
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    if (!subjectMap[q.subject]) subjectMap[q.subject] = { total: 0, attempted: 0, correct: 0, wrong: 0, unanswered: 0, score: 0 };
+    const s = subjectMap[q.subject];
+    s.total++;
+    if (st.status === 'saved') {
+      s.attempted++;
+      if (st.selectedOption === q.correct) { s.correct++; s.score += 1; }
+      else { s.wrong++; s.score -= NEGATIVE_MARKING; }
+    } else {
+      s.unanswered++;
+    }
+  });
+
+  let tableHTML = '';
+  Object.keys(subjectMap).forEach(sub => {
+    const s = subjectMap[sub];
+    tableHTML += '<tr><td>' + sub + '</td><td>' + s.total + '</td><td>' + s.attempted + '</td><td>' + s.correct + '</td><td>' + s.wrong + '</td><td>' + s.unanswered + '</td><td>' + s.score.toFixed(2) + '</td></tr>';
+  });
+  document.getElementById('subjectTableBody').innerHTML = tableHTML;
+
+  let detailHTML = '';
+  let count = 0;
+  questions.forEach((q, i) => {
+    const st = questionStates[i];
+    const isWrong = st.status === 'saved' && st.selectedOption !== q.correct;
+    const isRevealed = st.status === 'revealed';
+    const isReviewedSkipped = st.status !== 'saved' && st.markedForReview;
+    if (!isWrong && !isRevealed && !isReviewedSkipped) return;
+    count++;
+    let typeLabel = isWrong ? '❌ തെറ്റായ ഉത്തരം' : (isRevealed ? '👁 ഉത്തരം കണ്ടത്' : '🔖 Review');
+    detailHTML += '<div class="detail-item">' +
+      '<div class="di-info"><strong>Q' + (i + 1) + '</strong> · ' + q.subject + ' · ' + typeLabel + '</div>' +
+      '<div class="di-question">' + escapeHtml(q.question) + '</div>' +
+      (st.selectedOption !== null ? '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <span class="di-wrong">' + escapeHtml(q.options[st.selectedOption]) + '</span></div>' : '<div class="di-info">നിങ്ങളുടെ ഉത്തരം: <em>നൽകിയിട്ടില്ല</em></div>') +
+      '<div class="di-info">ശരിയായ ഉത്തരം: <span class="di-correct">' + escapeHtml(q.options[q.correct]) + '</span></div>' +
+      '<div class="di-explanation">' + buildExpHTML(q) + '</div>' +
+      '</div>';
+  });
+  document.getElementById('detailList').innerHTML = count > 0 ? detailHTML : '<p style="color:var(--gray);text-align:center;padding:20px;">എല്ലാ ചോദ്യങ്ങൾക്കും ശരിയായ ഉത്തരം നൽകിയിട്ടുണ്ട്! 🎉</p>';
+  window.scrollTo(0, 0);
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function restartTest() {
+  if (!confirm('പരീക്ഷ വീണ്ടും ആരംഭിക്കണോ?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('resultsView').classList.remove('visible');
+  startNewTest();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (isSubmitted || isPaused) return;
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  const st = questionStates[currentIndex];
+  const locked = st.status === 'saved' || st.status === 'revealed';
+
+  if (e.key >= '1' && e.key <= '4' && !locked) {
+    const idx = parseInt(e.key, 10) - 1;
+    if (idx < questions[currentIndex].options.length) {
+      st.selectedOption = idx;
+      renderOptions(); renderActionButtons(); throttledSave();
+      e.preventDefault();
+    }
+  } else if (e.key === 'Enter' && !e.shiftKey && !locked && st.selectedOption !== null) {
+    saveAnswer(); e.preventDefault();
+  } else if (e.key === 'Enter' && e.shiftKey && !locked) {
+    skipAndShow(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'r' && !locked) {
+    markForReview(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'c' && !locked) {
+    clearResponse(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 'n') {
+    nextQuestion(); e.preventDefault();
+  } else if (e.key === ' ') {
+    if (!locked) { showAnswer(); e.preventDefault(); }
+  } else if (e.key.toLowerCase() === 'p') {
+    togglePause(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 't') {
+    cycleTheme(); e.preventDefault();
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !isSubmitted && !isPaused && !isStudyPaused) {
+    pauseTest(true);
+  }
+});
+
+window.addEventListener('beforeunload', (e) => {
+  if (!isSubmitted) {
+    saveAttempt();
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTest();
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+});
+</script>
+</body>
+</html>

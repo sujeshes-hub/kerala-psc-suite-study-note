@@ -1,106 +1,2341 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>12.10 Coding and Decoding - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>കേരള PSC – കോഡിംഗും ഡീകോഡിംഗും | അധ്യായം 12.10</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a148c; --primary-light: #6a1b9a;
+      --secondary: #00695c; --accent: #b83b2c;
+      --bg: #ffffff; --light-bg: #f3e5f5; --border: #e1bee7;
+      --text: #14202b; --text-light: #4a5f72;
+      --important-bg: #fff8e1; --important-border: #f9a825;
+      --memory-bg: #e8f5e9; --memory-border: #43a047;
+      --trap-bg: #fce4ec; --trap-border: #c62828;
+      --correction-bg: #fff3e0; --correction-border: #ef6c00;
+      --added-bg: #e3f2fd; --added-border: #1976d2;
+      --revision-bg: #f3e5f5; --revision-border: #8e24aa;
+      --table-head: #4a148c; --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e2e; --light-bg: #11111b; --border: #313244;
+      --text: #cdd6f4; --text-light: #a6adc8;
+      --primary: #cba6f7; --primary-light: #b4befe;
+      --important-bg: #2c2518; --memory-bg: #192b22;
+      --trap-bg: #2d1920; --correction-bg: #2c2018;
+      --added-bg: #182432; --revision-bg: #22182b;
+      --table-head: #6a1b9a; --table-alt: #181825;
+    }
+    [data-theme="sepia"] {
+      --bg: #fdf6e3; --light-bg: #eee8d5; --border: #d3cbb7;
+      --text: #433422; --text-light: #65533c;
+      --primary: #7b4b1e; --primary-light: #9c6b3a;
+      --important-bg: #f7efd8; --memory-bg: #e9f0dd;
+      --trap-bg: #f4e0e0; --correction-bg: #f8e8d4;
+      --added-bg: #e0e8f0; --revision-bg: #ece0ee;
+      --table-head: #7b4b1e; --table-alt: #f2ead4;
+    }
+    [data-theme="dark"] .question-item,
+    [data-theme="dark"] .viz-box,
+    [data-theme="dark"] .options .opt-btn { background: #181825; color: var(--text); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.7; color: var(--text);
+      background: var(--light-bg); padding: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .layout { display: grid; grid-template-columns: 270px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .toc {
+      position: sticky; top: 16px; height: calc(100vh - 32px); overflow-y: auto;
+      background: var(--bg); border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px; align-self: start;
+    }
+    .toc-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .toc-controls { display: flex; gap: 6px; margin-bottom: 12px; }
+    .toc-controls button {
+      flex: 1; padding: 6px 8px; font-size: 11px; font-family: inherit;
+      background: var(--light-bg); color: var(--primary);
+      border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+    .toc-nav a {
+      display: block; padding: 5px 10px; font-size: 12.5px;
+      color: var(--text-light); text-decoration: none;
+      border-radius: 6px; border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+    .toc-nav a.active { background: var(--light-bg); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+    .progress-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 600; }
+    .progress-track { width: 100%; height: 8px; background: var(--light-bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+    .main-container { background: var(--bg); border-radius: 16px; box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12); padding: 24px; min-width: 0; }
+    .chapter-header { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .chapter-header .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; margin-bottom: 8px; }
+    .chapter-header h1 { font-size: 25px; line-height: 1.4; margin-bottom: 8px; }
+    .chapter-header .subtitle { font-size: 14px; opacity: 0.9; font-style: italic; }
+    .utility-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--light-bg); padding: 10px 16px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .search-input { flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; }
+    .utility-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .util-btn { padding: 7px 12px; font-size: 13px; font-family: inherit; font-weight: 600; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--primary); cursor: pointer; transition: all 0.2s; }
+    .util-btn:hover { background: var(--light-bg); }
+    .util-btn.active { background: var(--primary); color: var(--bg); }
+    body.recall-mode strong { filter: blur(5px); background: rgba(106, 27, 154, 0.15); border-radius: 4px; padding: 0 4px; cursor: pointer; transition: filter 0.2s ease; user-select: none; }
+    body.recall-mode strong:hover, body.recall-mode strong.revealed { filter: blur(0); }
+    .section { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .section h2 { background: var(--light-bg); color: var(--primary); padding: 14px 18px; font-size: 18.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; border-radius: 0; margin: 0; gap: 10px; }
+    .section h2:hover { background: #ede7f6; }
+    [data-theme="dark"] .section h2:hover { background: #2a2a3c; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+    .section-title-text { flex: 1; }
+    .section-done-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--secondary); flex-shrink: 0; }
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box { padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 5px solid; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: var(--bg); border-left-color: var(--primary); text-align: center; border: 1px solid var(--border); }
+    .viz-caption { font-size: 13px; color: var(--text-light); margin-top: 8px; font-style: italic; }
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+    .trick { display: block; margin-top: 6px; padding: 6px 10px; background: var(--memory-bg); border-left: 4px solid var(--memory-border); border-radius: 6px; font-size: 14.5px; line-height: 1.6; }
+    p.trick { margin: 8px 0; }
+    .trick-label { font-weight: 700; color: var(--secondary); }
+    [data-theme="dark"] .trick-label { color: #81c784; }
+    .no-results { display: none; text-align: center; padding: 16px; margin-bottom: 16px; color: var(--text-light); border: 1px dashed var(--border); border-radius: 8px; }
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); }
+    thead th { background: var(--table-head); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: var(--light-bg); }
+    .quiz-dashboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--light-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; border: 2px solid var(--primary); position: sticky; top: 10px; z-index: 50; }
+    .score-stats { display: flex; gap: 16px; font-weight: 700; font-size: 14px; flex-wrap: wrap; }
+    .score-stats span { color: var(--text); }
+    .score-stats .sc-correct { color: var(--memory-border); }
+    .score-stats .sc-wrong { color: var(--trap-border); }
+    .score-stats .sc-total { color: var(--primary); }
+    .question-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; }
+    .q-text { font-weight: 600; font-size: 15.5px; margin-bottom: 10px; color: var(--primary); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .options .opt-btn { display: block; padding: 8px 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; font-family: inherit; text-align: left; width: 100%; }
+    .options .opt-btn:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options .opt-btn.selected { border-color: var(--primary); background: var(--light-bg); font-weight: 600; }
+    .options .opt-btn.correct { border-color: var(--memory-border); background: #c8e6c9; color: #14202b; }
+    .options .opt-btn.wrong { border-color: var(--trap-border); background: #ffcdd2; color: #14202b; }
+    .options .opt-btn.locked { cursor: not-allowed; opacity: 0.8; }
+    [data-theme="dark"] .options .opt-btn.correct { background: #1e4d2b; color: #cdd6f4; }
+    [data-theme="dark"] .options .opt-btn.wrong { background: #4d1e22; color: #cdd6f4; }
+    .q-controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+    .q-controls button { padding: 6px 12px; font-size: 12px; font-family: inherit; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: var(--bg); color: var(--text); transition: all 0.2s; }
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #14202b !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+    .answer-block { display: none; margin-top: 10px; padding: 10px 14px; background: var(--memory-bg); border-radius: 8px; border-left: 4px solid var(--memory-border); }
+    .answer-block.show { display: block; }
+    .answer-label { font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+    .explanation { font-size: 13.5px; color: var(--text-light); }
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+    code { background: var(--light-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+    pre { background: var(--light-bg); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.6; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+    pre code { background: transparent; padding: 0; }
+    .formula-box { background: var(--added-bg); border-left: 5px solid var(--added-border); padding: 12px 16px; border-radius: 8px; margin: 10px 0; text-align: center; font-size: 16px; font-weight: 700; color: var(--primary); }
+    .alpha-grid { display: grid; grid-template-columns: repeat(13, 1fr); gap: 3px; margin: 8px 0; }
+    .alpha-grid .cell { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; text-align: center; padding: 4px 2px; font-size: 11px; }
+    .alpha-grid .cell strong { display: block; font-size: 14px; color: var(--primary); font-family: 'JetBrains Mono', monospace; }
+    .alpha-grid .cell span { color: var(--text-light); font-size: 10px; font-family: 'JetBrains Mono', monospace; }
+    .pair-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0; }
+    .pair-grid .cell { background: var(--memory-bg); border: 1px solid var(--memory-border); border-radius: 6px; text-align: center; padding: 6px 4px; font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--secondary); }
+    .code-sample { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    .code-sample .arrow { color: var(--accent); font-weight: 700; padding: 0 6px; }
+    .badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; background: var(--important-bg); color: var(--b83b2c); }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: sticky; top: 0; height: auto; max-height: 60px; overflow-x: auto; overflow-y: hidden; padding: 8px 12px; border-radius: 0 0 12px 12px; z-index: 100; }
+      .toc-title, .toc-controls, .progress-wrap { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a { padding: 6px 12px; background: var(--light-bg); border-radius: 20px; border-left: none; font-size: 12px; }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+      .quiz-dashboard { position: static; }
+      .alpha-grid { grid-template-columns: repeat(7, 1fr); }
+      .pair-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options .opt-btn { font-size: 13.5px; }
+      .alpha-grid { grid-template-columns: repeat(5, 1fr); }
+      .pair-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; color: #000; }
+      .layout { display: block; }
+      .toc, .utility-bar, .quiz-dashboard, .section-done-check { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">12.10 Coding and Decoding</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+<div class="layout">
+  <nav class="toc" aria-label="ഉള്ളടക്കം">
+    <div class="toc-title">ഉള്ളടക്കം</div>
+    <div class="toc-controls">
+      <button id="expandAll" type="button">എല്ലാം തുറക്കുക</button>
+      <button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button>
+    </div>
+    <ul class="toc-nav" id="tocNav">
+      <li><a href="#sec0">⭐ Star Guide</a></li>
+      <li><a href="#sec1">1. ആമുഖം & പദാവലി</a></li>
+      <li><a href="#sec2">2. പിന്നാമ്പുറ കഥ</a></li>
+      <li><a href="#sec3">3. A. അക്ഷര സ്ഥാനമാറ്റം</a></li>
+      <li><a href="#sec4">4. B. ക്രോസ് & വിപരീതം</a></li>
+      <li><a href="#sec5">5. C. സംഖ്യ/ചിഹ്ന/മാട്രിക്സ്</a></li>
+      <li><a href="#sec6">6. D. പകരം വയ്ക്കൽ</a></li>
+      <li><a href="#sec7">7. E. കൃത്രിമ ഭാഷ</a></li>
+      <li><a href="#sec8">8. F. നിബന്ധനാ കോഡിംഗ്</a></li>
+      <li><a href="#sec9">9. ഡീകോഡിംഗ്</a></li>
+      <li><a href="#sec10">10. ഡയഗ്രങ്ങളും ചാർട്ടുകളും</a></li>
+      <li><a href="#sec11">11. പ്രധാന വസ്തുതകൾ</a></li>
+      <li><a href="#sec12">12. PSC Exam Analysis</a></li>
+      <li><a href="#sec13">13. ചോദ്യ ട്രെൻഡ്</a></li>
+      <li><a href="#sec14">14. ആശയക്കുഴപ്പങ്ങൾ</a></li>
+      <li><a href="#sec15">15. താരതമ്യ പട്ടികകൾ</a></li>
+      <li><a href="#sec16">16. വിപരീത ജോഡികൾ</a></li>
+      <li><a href="#sec17">17. Mnemonics</a></li>
+      <li><a href="#sec18">18. PSC Traps</a></li>
+      <li><a href="#sec19">19. അധിക വസ്തുതകൾ</a></li>
+      <li><a href="#sec20">20. Smart Tricks</a></li>
+      <li><a href="#sec21">21. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li>
+      <li><a href="#sec22">22. MCQ Practice</a></li>
+      <li><a href="#sec23">23. Master Rule Sheet</a></li>
+      <li><a href="#sec24">24. Answer Key & Quick Revision</a></li>
+      <li><a href="#sec25">25. Correction Log</a></li>
+    </ul>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>📊 പഠന പുരോഗതി</span><span id="progressPercent">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
+  <main class="main-container">
+
+    <header class="chapter-header">
+      <div class="label">കേരള PSC | അധ്യായം 12.10 | Mental Ability & Logical Reasoning</div>
+      <h1>കോഡിംഗും ഡീകോഡിംഗും (Coding and Decoding)</h1>
+      <div class="subtitle">Letter Shifting · Cross/Reversal · Opposite Letters · Substitution · Fictitious Language | Kerala PSC Rank File</div>
+    </header>
+
+    <div class="utility-bar">
+      <input type="search" id="noteSearch" class="search-input" placeholder="🔍 തിരയുക (ഉദാ: Caesar, EJOTY, JOURNEY, PRVX, opposite, fictitious)...">
+      <div class="utility-btns">
+        <button type="button" class="util-btn" id="toggleRecall" title="പ്രധാന വാക്കുകൾ മറയ്ക്കുക">🧠 Flashcard Mode</button>
+        <button type="button" class="util-btn" id="toggleTheme">🌙 Dark Mode</button>
+        <button type="button" class="util-btn" id="resetQuiz">🔄 Reset Quiz</button>
+      </div>
+    </div>
+    <p class="no-results" id="noResults" role="status">🔍 ഒന്നും കണ്ടെത്തിയില്ല. മറ്റൊരു വാക്ക് ശ്രമിക്കുക.</p>
+
+    <!-- SECTION 0: STAR GUIDE -->
+    <section class="section" id="sec0">
+      <h2 role="button" tabindex="0" aria-expanded="true">
+        <input type="checkbox" class="section-done-check" data-sec="sec0" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">⭐ Star Guide</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ (Kerala PSC അടിസ്ഥാനത്തിൽ)</span>
+          <ul>
+            <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — അക്ഷര സ്ഥാനവിലകൾ (A=1…Z=26), EJOTY, CFILORUX, Uniform +n/-n shifting (PASTE→SDVWH), Cross/Reversal (JOURNEY→VPKSOFZ), Opposite Letter (27-n), Substitution coding</li>
+            <li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — Mixed/Progressive shift, Fictitious Language (pit dar na), Number/Symbol coding, Decoding (reverse the rule), Letter-to-Number sum (CAT=24)</li>
+            <li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — Conditional coding, Matrix coding, Half-reversal, Wrap-around (Z+1=A), Cross coding first-3-reverse pattern</li>
+            <li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ROT13, Morse Code, Braille, Enigma, Alan Turing, QR code history</li>
+            <li><span class="stars">⭐</span> <strong>ചരിത്ര വിവരം</strong> — Julius Caesar, Caesar Cipher (3-shift)</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">➕ ചുരുക്കം (1-3 മാർക്കിന്)</span>
+          <ul>
+            <li><strong>PASTE→SDVWH</strong> (+3); <strong>CATCH→FDWFK</strong></li>
+            <li><strong>BARK→DCTM</strong> (+2); <strong>DATE→FCVG</strong></li>
+            <li><strong>JOURNEY→VPKSOFZ</strong>; <strong>ACQUIRE→RDBVJSF</strong></li>
+            <li><strong>Opposite:</strong> 27 - n (K↔P, M↔N)</li>
+            <li><strong>EJOTY:</strong> E=5, J=10, O=15, T=20, Y=25</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTRODUCTION -->
+    <section class="section" id="sec1">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec1" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">1. അധ്യായ ആമുഖവും അടിസ്ഥാന പദാവലിയും</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അടിസ്ഥാന ആശയം:</strong> ഒരു സന്ദേശമോ വാക്കോ മറ്റുള്ളവർക്ക് നേരിട്ട് മനസ്സിലാകാത്ത രീതിയിൽ ഒരു രഹസ്യ നിയമം (Secret Rule / Pattern) ഉപയോഗിച്ച് മറ്റ് അക്ഷരങ്ങളോ സംഖ്യകളോ ചിഹ്നങ്ങളോ ആക്കി മാറ്റുന്നതിനെ <strong>കോഡിംഗ് (Coding)</strong> എന്ന് പറയുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഡീകോഡിംഗ്:</strong> ആ നിയമം കണ്ടെത്തി കോഡിനെ തിരികെ യഥാർത്ഥ വാക്കാക്കി മാറ്റുന്നതിനെ <strong>ഡീകോഡിംഗ് (Decoding)</strong> എന്നും പറയുന്നു.</li>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ക്രിപ്റ്റോഗ്രാഫി:</strong> വിവരങ്ങൾ സുരക്ഷിതമായി കൈമാറാനുള്ള ശാസ്ത്രശാഖയായ <strong>ക്രിപ്റ്റോഗ്രാഫി (Cryptography)</strong>-യുടെ ഏറ്റവും ലളിതമായ രൂപമാണിത്.</li>
+          <li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>PSC പ്രാധാന്യം:</strong> കേരള PSC പരീക്ഷകളിൽ (പത്താം ക്ലാസ് തലം, പ്ലസ് ടു തലം, ഡിഗ്രി ലെവൽ) മാനസിക ശേഷി വിഭാഗത്തിൽ സാധാരണയായി <strong>1 മുതൽ 3 വരെ ചോദ്യങ്ങൾ</strong> ഈ ഭാഗത്ത് നിന്ന് വരാറുണ്ട്. ഇത് കണക്ക് അറിയാത്തവർക്കും കിട്ടാവുന്ന മാർക്കാണ്. ഒരു രീതി പഠിച്ചാൽ 10–20 സെക്കൻഡിൽ ഉത്തരം കിട്ടും.</li>
+        </ul>
+
+        <h3>അടിസ്ഥാന പദാവലി (Important English Terms)</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>English Term</th><th>മലയാളത്തിൽ അർത്ഥം</th></tr></thead>
+            <tbody>
+              <tr><td>Coding / Encoding</td><td>കോഡാക്കി മാറ്റൽ</td></tr>
+              <tr><td>Decoding / Decryption</td><td>കോഡിൽ നിന്ന് യഥാർത്ഥ വാക്ക് വീണ്ടെടുക്കൽ</td></tr>
+              <tr><td>Cipher</td><td>രഹസ്യ ലിപി / കോഡ് ഉണ്ടാക്കുന്ന രീതി</td></tr>
+              <tr><td>Cryptography</td><td>രഹസ്യ ലിപി ശാസ്ത്രം</td></tr>
+              <tr><td>Position Value</td><td>അക്ഷരമാലയിൽ അക്ഷരത്തിന്റെ സ്ഥാനസംഖ്യ (A=1 … Z=26)</td></tr>
+              <tr><td>Forward / Backward Shift</td><td>അക്ഷരമാലയിൽ മുന്നോട്ട് / പിന്നോട്ട് നീങ്ങൽ</td></tr>
+              <tr><td>Opposite Letter</td><td>അക്ഷരമാലയുടെ മറുവശത്തെ അതേ അകലത്തിലുള്ള അക്ഷരം</td></tr>
+              <tr><td>Reversal</td><td>തിരിച്ചിടൽ</td></tr>
+              <tr><td>Substitution</td><td>പകരം വയ്ക്കൽ</td></tr>
+              <tr><td>Vowel / Consonant</td><td>സ്വരാക്ഷരം (A, E, I, O, U) / വ്യഞ്ജനാക്ഷരം</td></tr>
+              <tr><td>Perfect Square</td><td>പൂർണ്ണ വർഗ്ഗം (1, 4, 9, 16, 25 …)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BEHIND THE STORY -->
+    <section class="section" id="sec2">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec2" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">2. പിന്നാമ്പുറ കഥ (Behind the Story) – സീസർ സൈഫർ</span>
+      </h2>
+      <div class="section-body">
+        <p>റോമൻ റിപ്പബ്ലിക്കിലെ പ്രശസ്ത സൈന്യാധിപനും ഭരണാധികാരിയുമായിരുന്നു <strong>ജൂലിയസ് സീസർ (Julius Caesar)</strong>. (ഇദ്ദേഹം ഏകാധിപതിയായിരുന്നു. റോമൻ <strong>സാമ്രാജ്യത്തിലെ ആദ്യ ചക്രവർത്തി അഗസ്റ്റസ്</strong> ആണ്.) യുദ്ധമുഖത്തുള്ള തന്റെ സൈന്യാധിപന്മാർക്ക് രഹസ്യസന്ദേശം അയക്കുമ്പോൾ സീസർ ഒരു സൂത്രം ഉപയോഗിച്ചിരുന്നു:</p>
+        <ul>
+          <li>സാധാരണ ഭാഷയിൽ എഴുതിയാൽ ശത്രുവിന്റെ ചാരന്മാർ വഴിയിൽ വെച്ച് കത്ത് പിടിച്ച് വായിച്ചേക്കാം.</li>
+          <li>അതുകൊണ്ട് ഓരോ അക്ഷരത്തിനും പകരം അക്ഷരമാലയിൽ <strong>3 സ്ഥാനം മുന്നോട്ടുള്ള അക്ഷരം</strong> എഴുതി: A→D, B→E, C→F.</li>
+          <li>നിയമം അറിയാവുന്ന ജനറൽ ഓരോ അക്ഷരത്തിൽ നിന്നും 3 സ്ഥാനം പിന്നോട്ട് മാറി യഥാർത്ഥ സന്ദേശം വായിച്ചെടുത്തു.</li>
+        </ul>
+        <p>ചരിത്രത്തിലെ ഈ ആദ്യകാല കോഡിംഗ് രീതിയെ <strong>സീസർ സൈഫർ (Caesar Cipher)</strong> എന്ന് വിളിക്കുന്നു (ഷിഫ്റ്റ് സൈഫർ എന്നും പറയാറുണ്ട്).</p>
+        <p>പി.എസ്.സി ചോദ്യത്തിലും ഇതേ കളിയാണ്. പരീക്ഷകൻ ഒരു വാക്കിനെ ഒരു രഹസ്യ നിയമം ഉപയോഗിച്ച് കോഡാക്കിയിട്ടുണ്ടാകും. നിങ്ങൾ <strong>നിയമം കണ്ടെത്തുക, അതേ നിയമം അടുത്ത വാക്കിൽ പ്രയോഗിക്കുക</strong> എന്നീ രണ്ട് കാര്യങ്ങൾ മാത്രം ചെയ്താൽ മതി.</p>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>"ഏത് വിദ്യ കൊണ്ടാണ് പൂട്ട് തുറന്നത്?"</strong> — അതാണ് കോഡിംഗ് നിയമം. അതേ വിദ്യ തന്നെ അടുത്ത വാക്കിൽ പ്രയോഗിക്കുക.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 3: LETTER SHIFTING (A) -->
+    <section class="section" id="sec3">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec3" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">3. A. അക്ഷര കോഡിംഗ് – സ്ഥാനമാറ്റങ്ങൾ</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">📌 ആദ്യം ഇത് ഓർക്കുക</span>
+          <p>എല്ലാ കോഡിംഗ് ചോദ്യങ്ങളും ആദ്യം <strong>അക്ഷരങ്ങളെ സംഖ്യകളാക്കി</strong> (A=1 … Z=26) നോക്കുക. നിയമം കണ്ടെത്തുന്നത് അപ്പോൾ എളുപ്പമാകും.</p>
+        </div>
+        <p>തന്നിരിക്കുന്ന വാക്കിലെ ഓരോ അക്ഷരവും നിശ്ചിത സ്ഥാനങ്ങൾ മുന്നോട്ടോ (<code>+</code>) പിന്നോട്ടോ (<code>−</code>) നീങ്ങി പുതിയ അക്ഷരമാകുന്ന രീതിയാണിത്.</p>
+        <div class="formula-box">നിയമം: Z കഴിഞ്ഞാൽ വീണ്ടും A-യിലേക്ക് വരും (ചക്രീയം)</div>
+        <p><strong>ഉദാഹരണം:</strong> X(24)+3 = 27 → 27−26 = 1 = A. A-യുടെ മുമ്പ് Z വരും: A(1)−2 = −1 → −1+26 = 25 = Y.</p>
+
+        <h3>3.1 ഒരേ സംഖ്യ എല്ലാ അക്ഷരത്തിനും (Uniform Shifting)</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ 1</span>
+          <p><strong>PASTE</strong> എന്നത് <strong>SDVWH</strong> എന്ന് എഴുതിയാൽ <strong>CATCH</strong> എങ്ങനെ എഴുതാം?</p>
+          <ul>
+            <li>P(16)→S(19) (+3), A(1)→D(4) (+3), S(19)→V(22) (+3), T(20)→W(23) (+3), E(5)→H(8) (+3). എല്ലാം <strong>+3</strong>.</li>
+            <li>CATCH: C+3=F, A+3=D, T+3=W, C+3=F, H+3=K ⇒ <strong>FDWFK</strong>.</li>
+          </ul>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ 2</span>
+          <p><strong>BARK → DCTM</strong> ആയാൽ <strong>DATE → ?</strong></p>
+          <ul>
+            <li>B(2)→D(4), A(1)→C(3), R(18)→T(20), K(11)→M(13) ⇒ എല്ലാം <strong>+2</strong>.</li>
+            <li>DATE: D+2=F, A+2=C, T+2=V, E+2=G ⇒ <strong>FCVG</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>3.2 ഓരോ അക്ഷരത്തിനും വ്യത്യസ്ത സംഖ്യ (Progressive / Mixed Shifting)</h3>
+        <p>ഓരോ സ്ഥാനത്തിനും ഒരു നിശ്ചിത മാറ്റ-ക്രമം ഉണ്ടാകും (ഉദാ: +1, +1, +2, +3, +4 അല്ലെങ്കിൽ +1, −1, +1, −1). <strong>ഓരോ അക്ഷരത്തിന്റെയും വ്യത്യാസം പ്രത്യേകം എഴുതി</strong> ക്രമം കണ്ടെത്തുക.</p>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ (തെളിയിച്ചത്)</span>
+          <p><strong>SOAK → TSWF, PLAY → QPWT</strong> ആയാൽ <strong>RACY → ?</strong></p>
+          <ul>
+            <li>SOAK: S(19)→T(20): +1. O(15)→S(19): +4. A(1)→W(23): −4 (1−4=−3 → +26 = 23). K(11)→F(6): −5.</li>
+            <li>ക്രമം: <strong>+1, +4, −4, −5</strong>. PLAY പരിശോധിക്കുക: P+1=Q, L+4=P, A−4=W, Y−5=T ✓.</li>
+            <li>RACY: R+1=S, A+4=E, C−4=Y (3−4=−1 → 25), Y−5=T ⇒ <strong>SEYT</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>3.3 അക്ഷരമാലാ സ്ഥാനവില പട്ടിക</h3>
+        <div class="alpha-grid">
+          <div class="cell"><strong>A</strong><span>1</span></div>
+          <div class="cell"><strong>B</strong><span>2</span></div>
+          <div class="cell"><strong>C</strong><span>3</span></div>
+          <div class="cell"><strong>D</strong><span>4</span></div>
+          <div class="cell"><strong>E</strong><span>5</span></div>
+          <div class="cell"><strong>F</strong><span>6</span></div>
+          <div class="cell"><strong>G</strong><span>7</span></div>
+          <div class="cell"><strong>H</strong><span>8</span></div>
+          <div class="cell"><strong>I</strong><span>9</span></div>
+          <div class="cell"><strong>J</strong><span>10</span></div>
+          <div class="cell"><strong>K</strong><span>11</span></div>
+          <div class="cell"><strong>L</strong><span>12</span></div>
+          <div class="cell"><strong>M</strong><span>13</span></div>
+          <div class="cell"><strong>N</strong><span>14</span></div>
+          <div class="cell"><strong>O</strong><span>15</span></div>
+          <div class="cell"><strong>P</strong><span>16</span></div>
+          <div class="cell"><strong>Q</strong><span>17</span></div>
+          <div class="cell"><strong>R</strong><span>18</span></div>
+          <div class="cell"><strong>S</strong><span>19</span></div>
+          <div class="cell"><strong>T</strong><span>20</span></div>
+          <div class="cell"><strong>U</strong><span>21</span></div>
+          <div class="cell"><strong>V</strong><span>22</span></div>
+          <div class="cell"><strong>W</strong><span>23</span></div>
+          <div class="cell"><strong>X</strong><span>24</span></div>
+          <div class="cell"><strong>Y</strong><span>25</span></div>
+          <div class="cell"><strong>Z</strong><span>26</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CROSS & OPPOSITE (B) -->
+    <section class="section" id="sec4">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec4" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">4. B. ക്രോസ്/റിവേഴ്സൽ, വിപരീത അക്ഷര കോഡിംഗ്</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>4.1 ക്രോസ്-റിവേഴ്സൽ കോഡിംഗ് (ഉയർന്ന നിലവാരം – ഡിഗ്രി ലെവൽ)</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p><strong>JOURNEY → VPKSOFZ</strong> ആയാൽ <strong>ACQUIRE → ?</strong></p>
+          <p>(A) BDRJSVF  (B) VJSFBDR  (C) RDBVJSF  (D) JDRBSFV</p>
+          <p><strong>പരിഹാരം:</strong></p>
+          <ol>
+            <li>JOURNEY (7 അക്ഷരം) → ആദ്യ 3 (J O U), നടുവിലെ 1 (R), അവസാന 3 (N E Y).</li>
+            <li>എല്ലാറ്റിനും +1: J O U → K P V; R → S; N E Y → O F Z.</li>
+            <li>കോഡ് VPKSOFZ നോക്കൂ: ആദ്യ മൂന്ന് <strong>തിരിച്ചിട്ടിരിക്കുന്നു</strong> (K P V → <strong>V P K</strong>), നടുവിലെ <strong>S</strong>, അവസാന മൂന്ന് <strong>നേരെ</strong> (O F Z).</li>
+            <li>ACQUIRE: ആദ്യ 3 A C Q → +1 → B D R → തിരിച്ചിട്ടാൽ <strong>R D B</strong>. നടുവിലെ U → <strong>V</strong>. അവസാന 3 I R E → <strong>J S F</strong>.</li>
+            <li>ഉത്തരം: <strong>RDBVJSF</strong> ⇒ <strong>ഓപ്ഷൻ (C)</strong>.</li>
+          </ol>
+        </div>
+
+        <h3>4.2 വിപരീത അക്ഷര കോഡിംഗ് (Opposite Letter – തുക = 27)</h3>
+        <div class="formula-box">വിപരീത അക്ഷരത്തിന്റെ സ്ഥാനവില = 27 − സ്ഥാനവില</div>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p><strong>KING → PRMT</strong> ആയാൽ <strong>RAIL → ?</strong></p>
+          <ul>
+            <li>പരിശോധന: K(11)+P(16)=27 ✓, I(9)+R(18)=27 ✓, N(14)+M(13)=27 ✓, G(7)+T(20)=27 ✓.</li>
+            <li>RAIL: R↔I, A↔Z, I↔R, L↔O ⇒ <strong>IZRO</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 ഓർക്കുക</span>
+          <p>ഉത്തരത്തിലെ ഓരോ അക്ഷരവും ചോദ്യത്തിലെ അക്ഷരത്തോട് ചേർത്ത് തുക 27 വരുന്നുണ്ടോ എന്ന് നോക്കി പരിശോധിക്കാം. <strong>7+20 = 27 ✔</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: NUMBER/SYMBOL/MATRIX (C) -->
+    <section class="section" id="sec5">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec5" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">5. C. സംഖ്യാ, ചിഹ്ന, മാട്രിക്സ് കോഡിംഗ്</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>5.1 നേരിട്ടുള്ള അക്ഷര–സംഖ്യാ മാപ്പിംഗ്</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p><strong>GIVE = 5137, BAT = 924</strong> ആയാൽ <strong>GATE = ?</strong></p>
+          <ul>
+            <li>G=5, I=1, V=3, E=7; B=9, A=2, T=4.</li>
+            <li>GATE: G=5, A=2, T=4, E=7 ⇒ <strong>5247</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>5.2 സ്ഥാനവിലകളുടെ തുക (Sum of Place Values)</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p><strong>BAD = 7, CAT = 24</strong> ആയാൽ <strong>DOG = ?</strong></p>
+          <ul>
+            <li>B(2)+A(1)+D(4)=7 ✓; C(3)+A(1)+T(20)=24 ✓.</li>
+            <li>DOG: 4+15+7 = <strong>26</strong>.</li>
+          </ul>
+        </div>
+        <div class="important">
+          <span class="box-label">📌 മറ്റ് സംഖ്യാ രീതികൾ</span>
+          <p>അക്ഷരങ്ങളുടെ <strong>ഗുണനഫലം</strong>, <strong>അക്ഷരങ്ങളുടെ എണ്ണം</strong>, <strong>സ്ഥാനവിലകളുടെ വർഗ്ഗം</strong>, <strong>വിപരീത സ്ഥാനവിലകൾ</strong> (A=26 … Z=1). ഒരു ഉദാഹരണം വച്ച് ഏത് രീതിയെന്ന് ആദ്യം ഉറപ്പിക്കുക.</p>
+        </div>
+
+        <h3>5.3 ചിഹ്ന കോഡിംഗ് (Symbol Coding)</h3>
+        <p>അക്ഷരങ്ങൾക്ക് പകരം @, #, $, %, &amp;, © തുടങ്ങിയ ചിഹ്നങ്ങൾ.</p>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p><strong>B=@, E=#, A=$, T=%</strong> ആയാൽ <strong>BEAT → @#$%</strong>. പട്ടിക വായിച്ച് ഓരോ അക്ഷരവും നേരിട്ട് മാറ്റുക.</p>
+        </div>
+
+        <h3>5.4 മാട്രിക്സ് കോഡിംഗ് (Matrix Coding)</h3>
+        <p>അക്ഷരങ്ങൾ ഒരു പട്ടികയിൽ (വരി = Row, നിര = Column) നൽകി, അക്ഷരത്തിന്റെ <strong>വരി നമ്പറും നിര നമ്പറും</strong> ചേർത്ത് കോഡ് ഉണ്ടാക്കും. <em>(താഴെയുള്ളത് മാതൃകാ പരിശീലന ചോദ്യമാണ്, മുൻ ചോദ്യമല്ല.)</em></p>
+        <div style="overflow-x: auto;">
+          <table style="text-align:center;">
+            <thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+            <tbody>
+              <tr><td><strong>0</strong></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr>
+              <tr><td><strong>1</strong></td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td></tr>
+              <tr><td><strong>2</strong></td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td></tr>
+              <tr><td><strong>3</strong></td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td></tr>
+              <tr><td><strong>4</strong></td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>നിയമം:</strong> കോഡ് = (വരി)(നിര). KING → K=20, I=13, N=23, G=11 ⇒ <strong>20132311</strong>.</p>
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കുക</span>
+          <p>പരീക്ഷയിൽ വരി–നിര ക്രമം (ആദ്യം വരിയോ നിരയോ) ചോദ്യത്തിൽ പറഞ്ഞിരിക്കും. അത് തെറ്റിക്കരുത്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: SUBSTITUTION (D) -->
+    <section class="section" id="sec6">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec6" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">6. D. പകരമുള്ള / പേരുമാറ്റ കോഡിംഗ് (Substitution)</span>
+      </h2>
+      <div class="section-body">
+        <p>ഒരു വസ്തുവിന് പകരം മറ്റൊരു പേര് നൽകിയിട്ട് യഥാർത്ഥ വസ്തുവിന്റെ പുതിയ പേര് ചോദിക്കുന്ന രീതിയാണിത്.</p>
+        <div class="important">
+          <span class="box-label">🏆 സുവർണ്ണ നിയമം (3 ഘട്ടങ്ങൾ)</span>
+          <ol>
+            <li>ചോദ്യത്തിന്റെ <strong>അവസാന വാചകം</strong> വായിച്ച് ആ ചോദ്യത്തിന്റെ <strong>യഥാർത്ഥ ഉത്തരം</strong> മനസ്സിൽ കാണുക (ഉദാ: രക്തത്തിന്റെ നിറം = ചുവപ്പ്).</li>
+            <li>തുടക്കത്തിലെ പേരുമാറ്റ ശൃംഖലയിൽ (chain) <strong>ആ യഥാർത്ഥ ഉത്തരത്തെ ഇപ്പോൾ എന്ത് വിളിക്കുന്നു</strong> എന്ന് നോക്കുക.</li>
+            <li>ആ <strong>പുതിയ പേരാണ്</strong> ഉത്തരം. (ശൃംഖല ഒരു പടി മാത്രം പിന്തുടരുക. ഉത്തരത്തിൽ നിന്ന് വീണ്ടും മുന്നോട്ട് പോകരുത്.)</li>
+          </ol>
+        </div>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p>വെള്ളത്തെ ആകാശം എന്നും, ആകാശത്തെ കാറ്റ് എന്നും, കാറ്റിനെ വെളിച്ചം എന്നും, വെളിച്ചത്തെ തീ എന്നും വിളിച്ചാൽ <strong>മനുഷ്യൻ ശ്വസിക്കുന്നത് എന്ത്?</strong></p>
+          <ul>
+            <li>മനുഷ്യൻ ശ്വസിക്കുന്നത് <strong>കാറ്റ് (വായു)</strong>. ചോദ്യത്തിൽ കാറ്റിനെ വിളിക്കുന്നത് <strong>വെളിച്ചം</strong> ⇒ ഉത്തരം: <strong>വെളിച്ചം</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: FICTITIOUS LANGUAGE (E) -->
+    <section class="section" id="sec7">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec7" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">7. E. കൃത്രിമ ഭാഷാ / മെസ്സേജ് കോഡിംഗ് (Fictitious Language)</span>
+      </h2>
+      <div class="section-body">
+        <p>അർത്ഥമില്ലാത്ത കോഡ് വാക്കുകളും അവയുടെ ഇംഗ്ലീഷ് വാക്യങ്ങളും തന്നിരിക്കും. <strong>രണ്ട് വാക്യങ്ങളിൽ പൊതുവായി വരുന്ന വാക്കും പൊതുവായ കോഡും തമ്മിൽ ചേർക്കുക</strong> (Common Elimination).</p>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <ol>
+            <li><code>pit dar na</code> = <code>you are good</code></li>
+            <li><code>dar tok pa</code> = <code>good and bad</code></li>
+            <li><code>tim na tok</code> = <code>they are bad</code></li>
+          </ol>
+          <p><strong>ചോദ്യം:</strong> <code>they</code> എന്ന വാക്കിന്റെ കോഡ്?</p>
+          <p><strong>പരിഹാരം:</strong></p>
+          <ul>
+            <li>(1), (2) ഇവയിൽ പൊതുവായത്: <code>good</code> ↔ <code>dar</code> ⇒ <code>good = dar</code>.</li>
+            <li>(1), (3) ഇവയിൽ പൊതുവായത്: <code>are</code> ↔ <code>na</code> ⇒ <code>are = na</code>.</li>
+            <li>(2), (3) ഇവയിൽ പൊതുവായത്: <code>bad</code> ↔ <code>tok</code> ⇒ <code>bad = tok</code>.</li>
+            <li>(3)-ൽ <code>na</code> (are), <code>tok</code> (bad) കഴിഞ്ഞ് ബാക്കി <strong><code>tim</code></strong> ⇒ <strong><code>they = tim</code></strong>.</li>
+          </ul>
+        </div>
+        <p class="trick">🧠 <span class="trick-label">Trick:</span> <strong>രണ്ട് വാക്യങ്ങളിൽ പൊതുവായ വാക്കുകൾ വെട്ടിമാറ്റുക</strong> — ബാക്കിയുള്ളത് കോഡ്.</p>
+      </div>
+    </section>
+    <!-- SECTION 8: CONDITIONAL CODING (F) -->
+    <section class="section" id="sec8">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec8" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">8. F. നിബന്ധനകളോടെയുള്ള കോഡിംഗ് (Conditional Coding)</span>
+      </h2>
+      <div class="section-body">
+        <p>അക്കങ്ങൾ/അക്ഷരങ്ങൾ/ചിഹ്നങ്ങൾ അടങ്ങിയ ഒരു കോഡ് പട്ടികയും 2–3 നിബന്ധനകളും നൽകും. ഗ്രൂപ്പ് ഏത് നിബന്ധനയ്ക്ക് ചേരുമെന്ന് നോക്കി കോഡ് ചെയ്യണം. <em>(താഴെയുള്ളത് മാതൃകാ പരിശീലന ചോദ്യമാണ്.)</em></p>
+
+        <h3>8.1 കോഡ് പട്ടിക</h3>
+        <div style="overflow-x: auto;">
+          <table style="text-align:center;">
+            <thead><tr><th>സംഖ്യ</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>
+            <tbody>
+              <tr><td>കോഡ്</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>8.2 നിബന്ധനകൾ</h3>
+        <ol>
+          <li>ആദ്യ സംഖ്യ ഒറ്റസംഖ്യയും അവസാന സംഖ്യ ഇരട്ടസംഖ്യയും ആണെങ്കിൽ ആദ്യത്തെയും അവസാനത്തെയും സംഖ്യകളെ <code>Z</code> എന്ന് കോഡ് ചെയ്യുക.</li>
+          <li>രണ്ടാമത്തെയും മൂന്നാമത്തെയും സംഖ്യകൾ പൂർണ്ണ വർഗ്ഗങ്ങളാണെങ്കിൽ മൂന്നാമത്തെ സംഖ്യയെ രണ്ടാമത്തെ സംഖ്യയുടെ കോഡ് കൊണ്ട് കോഡ് ചെയ്യുക.</li>
+          <li>രണ്ട് നിബന്ധനകളും ബാധകമെങ്കിൽ രണ്ടും പ്രയോഗിക്കുക.</li>
+        </ol>
+
+        <h3>8.3 ചോദ്യം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ചോദ്യം</span>
+          <p><code>3 4 9 8</code> എന്ന ഗ്രൂപ്പിന്റെ കോഡ്?</p>
+          <p>(A) RSXW  (B) ZSSZ  (C) ZSXZ  (D) RSSW</p>
+          <p><strong>പരിഹാരം:</strong></p>
+          <ul>
+            <li>ആദ്യം 3 (ഒറ്റ), അവസാനം 8 (ഇരട്ട) → നിബന്ധന 1 ബാധകം → ആദ്യവും അവസാനവും <code>Z</code>.</li>
+            <li>രണ്ടാമത് 4, മൂന്നാമത് 9 രണ്ടും പൂർണ്ണ വർഗ്ഗം → നിബന്ധന 2 ബാധകം → 9 → 4-ന്റെ കോഡ് <code>S</code>.</li>
+            <li>ഉത്തരം: <strong>Z S S Z</strong> ⇒ <strong>(B)</strong>.</li>
+          </ul>
+        </div>
+
+        <h3>8.4 ചിഹ്ന നിബന്ധന ഉദാഹരണം</h3>
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p>നിബന്ധന: "ആദ്യ അക്ഷരം സ്വരവും അവസാന അക്ഷരം വ്യഞ്ജനവുമാണെങ്കിൽ രണ്ടിനെയും <code>#</code> ആക്കുക."</p>
+          <ul>
+            <li><code>ACT</code> → A (സ്വരം), T (വ്യഞ്ജനം) → <strong>#C#</strong>.</li>
+            <li><code>ABLE</code> → അവസാനം E (സ്വരം) ആയതിനാൽ മാറ്റമില്ല.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 തന്ത്രം</span>
+          <p>ഓരോ നിബന്ധനയും ഓരോന്നായി ഗ്രൂപ്പിനോട് ഒത്തുനോക്കി "ബാധകം / ബാധകമല്ല" എന്ന് രേഖപ്പെടുത്തുക. ഒരേസമയം ഒന്നിലധികം ബാധകമാകാം. ഏത് ക്രമത്തിൽ എന്നത് ചോദ്യത്തിലുണ്ടാകും.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: DECODING -->
+    <section class="section" id="sec9">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec9" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">9. ഡീകോഡിംഗ് (Decoding) – കോഡിൽ നിന്ന് യഥാർത്ഥ വാക്കിലേക്ക്</span>
+      </h2>
+      <div class="section-body">
+        <p>ചോദ്യത്തിൽ <strong>കോഡ് ചെയ്ത വാക്ക് തന്ന് യഥാർത്ഥ വാക്ക് ചോദിച്ചാൽ</strong>, ഉപയോഗിച്ച നിയമത്തിന്റെ <strong>വിപരീതം</strong> പ്രയോഗിക്കണം:</p>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കോഡിംഗ് നിയമം</th><th>ഡീകോഡിംഗ് നിയമം</th></tr></thead>
+            <tbody>
+              <tr><td>+3</td><td>−3</td></tr>
+              <tr><td>−2</td><td>+2</td></tr>
+              <tr><td>വിപരീത അക്ഷരം (27−n)</td><td>അതേ നിയമം തന്നെ (സ്വയം വിപരീതം)</td></tr>
+              <tr><td>ആദ്യ 3 തിരിച്ചിടൽ</td><td>വീണ്ടും തിരിച്ചിടുക</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="added-fact">
+          <span class="box-label">📝 ഉദാ</span>
+          <p><strong>PASTE → SDVWH</strong> എന്ന കോഡിൽ <strong>HDOOR</strong> എന്നത് ഏത് വാക്കിന്റെ കോഡാണ്?</p>
+          <ul>
+            <li>H−3=E, D−3=A, O−3=L, O−3=L, R−3=O ⇒ <strong>EALLO</strong>.</li>
+            <li>ഒരിക്കൽ കൂടി നോക്കുക: H(8)−3=5=E ✓; D(4)−3=1=A ✓; O(15)−3=12=L ✓.</li>
+            <li><strong>EALLO</strong> (അർത്ഥമില്ലാത്ത വാക്കും ചോദ്യത്തിൽ വരാം, നിയമം മാത്രം പാലിക്കുക).</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ശ്രദ്ധിക്കുക</span>
+          <p>ഡീകോഡിംഗിൽ ഏറ്റവും സാധാരണമായ തെറ്റ്: <strong>നിയമം തിരിച്ചിടാൻ മറക്കുക</strong>. കോഡിംഗ് ചോദ്യത്തിൽ +3 ഉപയോഗിച്ചാൽ, ഡീകോഡിംഗ് ചോദ്യത്തിൽ −3 ഉപയോഗിക്കണം.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: DIAGRAMS -->
+    <section class="section" id="sec10">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec10" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">10. ഡയഗ്രങ്ങളും ചാർട്ടുകളും (Visual Insight)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>10.1 കോഡിംഗ് നിയമം കണ്ടെത്താനുള്ള ഫ്ലോചാർട്ട്</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coding pattern detection flowchart">
+            <rect x="10" y="10" width="700" height="500" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#4a148c">കോഡിംഗ് നിയമം കണ്ടെത്താനുള്ള ഫ്ലോചാർട്ട്</text>
+
+            <defs>
+              <marker id="flowarrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="#4a148c"/>
+              </marker>
+            </defs>
+
+            <rect x="250" y="55" width="220" height="45" rx="8" fill="#4a148c"/>
+            <text x="360" y="83" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">വാക്കും കോഡും എഴുതുക</text>
+
+            <line x1="360" y1="100" x2="360" y2="125" stroke="#4a148c" stroke-width="2" marker-end="url(#flowarrow)"/>
+
+            <polygon points="360,125 540,160 360,195 180,160" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="360" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">അക്ഷര എണ്ണം തുല്യമോ?</text>
+            <text x="360" y="172" text-anchor="middle" font-size="10" fill="#14202b">(വാക്കിലും കോഡിലും)</text>
+
+            <line x1="540" y1="160" x2="640" y2="160" stroke="#b83b2c" stroke-width="2" marker-end="url(#flowarrow)"/>
+            <text x="585" y="152" font-size="10" font-weight="700" fill="#b83b2c">അല്ല</text>
+
+            <rect x="560" y="200" width="150" height="55" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="635" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">സംഖ്യാ/തുക/എണ്ണം</text>
+            <text x="635" y="237" text-anchor="middle" font-size="10" fill="#14202b">(Sum, Count, Number)</text>
+
+            <line x1="360" y1="195" x2="360" y2="225" stroke="#4a148c" stroke-width="2" marker-end="url(#flowarrow)"/>
+            <text x="375" y="215" font-size="10" font-weight="700" fill="#00695c">അതെ</text>
+
+            <rect x="180" y="225" width="360" height="45" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+            <text x="360" y="245" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">ഓരോ അക്ഷരത്തിന്റെയും വ്യത്യാസം എഴുതുക</text>
+            <text x="360" y="262" text-anchor="middle" font-size="10" fill="#14202b">(ഉദാ: P=16, S=19 → +3)</text>
+
+            <line x1="360" y1="270" x2="360" y2="295" stroke="#4a148c" stroke-width="2" marker-end="url(#flowarrow)"/>
+
+            <rect x="30" y="295" width="160" height="65" rx="8" fill="#e8f5e9" stroke="#43a047" stroke-width="2"/>
+            <text x="110" y="315" text-anchor="middle" font-size="11" font-weight="700" fill="#00695c">എല്ലാം തുല്യം</text>
+            <text x="110" y="332" text-anchor="middle" font-size="11" fill="#14202b">Uniform Shift</text>
+            <text x="110" y="349" text-anchor="middle" font-size="10" fill="#4a5f72">(+n / −n)</text>
+
+            <rect x="210" y="295" width="160" height="65" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+            <text x="290" y="315" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">ക്രമത്തിൽ മാറുന്നു</text>
+            <text x="290" y="332" text-anchor="middle" font-size="11" fill="#14202b">Mixed Shift</text>
+            <text x="290" y="349" text-anchor="middle" font-size="10" fill="#4a5f72">(+1,+2,+3...)</text>
+
+            <rect x="390" y="295" width="160" height="65" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+            <text x="470" y="315" text-anchor="middle" font-size="11" font-weight="700" fill="#b83b2c">ജോഡി തുക 27</text>
+            <text x="470" y="332" text-anchor="middle" font-size="11" fill="#14202b">Opposite</text>
+            <text x="470" y="349" text-anchor="middle" font-size="10" fill="#4a5f72">(27 − n)</text>
+
+            <rect x="560" y="295" width="150" height="65" rx="8" fill="#f3e5f5" stroke="#8e24aa" stroke-width="2"/>
+            <text x="635" y="315" text-anchor="middle" font-size="11" font-weight="700" fill="#4a148c">ഒരേ അക്ഷരം</text>
+            <text x="635" y="332" text-anchor="middle" font-size="11" fill="#14202b">Reversal</text>
+            <text x="635" y="349" text-anchor="middle" font-size="10" fill="#4a5f72">(തിരിച്ചിടൽ)</text>
+
+            <line x1="360" y1="360" x2="360" y2="395" stroke="#4a148c" stroke-width="2" marker-end="url(#flowarrow)"/>
+
+            <rect x="200" y="395" width="320" height="45" rx="8" fill="#e1bee7" stroke="#6a1b9a" stroke-width="2"/>
+            <text x="360" y="417" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">ഒന്നും ചേരുന്നില്ല?</text>
+            <text x="360" y="432" text-anchor="middle" font-size="10" fill="#14202b">ക്രോസ്/റിവേഴ്സൽ പരിശോധിക്കുക</text>
+
+            <line x1="360" y1="440" x2="360" y2="465" stroke="#4a148c" stroke-width="2" marker-end="url(#flowarrow)"/>
+
+            <rect x="230" y="465" width="260" height="35" rx="8" fill="#4a148c"/>
+            <text x="360" y="488" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">പകുതി തിരിച്ചിടൽ + ഷിഫ്റ്റ്</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.1 – ഓരോ കോഡിംഗ് ചോദ്യവും ഈ ക്രമത്തിൽ പരിശോധിക്കുക.</div>
+        </div>
+
+        <h3>10.2 വിപരീത അക്ഷര ജോഡികൾ (തുക = 27)</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Opposite letter pairs">
+            <rect x="10" y="10" width="700" height="260" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#4a148c">വിപരീത അക്ഷര ജോഡികൾ (തുക = 27)</text>
+
+            <g font-family="JetBrains Mono, monospace" font-size="12">
+              <!-- A-Z row -->
+              <rect x="30" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="50" y="76" text-anchor="middle" fill="#00695c" font-weight="700">A·Z</text>
+              <rect x="80" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="100" y="76" text-anchor="middle" fill="#00695c" font-weight="700">B·Y</text>
+              <rect x="130" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="150" y="76" text-anchor="middle" fill="#00695c" font-weight="700">C·X</text>
+              <rect x="180" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="200" y="76" text-anchor="middle" fill="#00695c" font-weight="700">D·W</text>
+              <rect x="230" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="250" y="76" text-anchor="middle" fill="#00695c" font-weight="700">E·V</text>
+              <rect x="280" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="300" y="76" text-anchor="middle" fill="#00695c" font-weight="700">F·U</text>
+              <rect x="330" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="350" y="76" text-anchor="middle" fill="#00695c" font-weight="700">G·T</text>
+              <rect x="380" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="400" y="76" text-anchor="middle" fill="#00695c" font-weight="700">H·S</text>
+              <rect x="430" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="450" y="76" text-anchor="middle" fill="#00695c" font-weight="700">I·R</text>
+              <rect x="480" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="500" y="76" text-anchor="middle" fill="#00695c" font-weight="700">J·Q</text>
+              <rect x="530" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="550" y="76" text-anchor="middle" fill="#00695c" font-weight="700">K·P</text>
+              <rect x="580" y="55" width="40" height="32" rx="4" fill="#e8f5e9" stroke="#43a047"/><text x="600" y="76" text-anchor="middle" fill="#00695c" font-weight="700">L·O</text>
+              <rect x="630" y="55" width="40" height="32" rx="4" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/><text x="650" y="76" text-anchor="middle" fill="#b83b2c" font-weight="700">M·N</text>
+            </g>
+
+            <text x="360" y="120" text-anchor="middle" font-size="13" font-weight="700" fill="#4a148c">ഓർമ്മ കോഡുകൾ</text>
+
+            <g font-family="Noto Sans Malayalam, sans-serif" font-size="12" text-anchor="start">
+              <text x="40" y="150" fill="#14202b"><tspan fill="#00695c" font-weight="700">A-Z:</tspan> A to Z</text>
+              <text x="220" y="150" fill="#14202b"><tspan fill="#00695c" font-weight="700">B-Y:</tspan> Boy</text>
+              <text x="380" y="150" fill="#14202b"><tspan fill="#00695c" font-weight="700">E-V:</tspan> Evening</text>
+              <text x="540" y="150" fill="#14202b"><tspan fill="#00695c" font-weight="700">H-S:</tspan> High School</text>
+
+              <text x="40" y="178" fill="#14202b"><tspan fill="#00695c" font-weight="700">I-R:</tspan> Indian Railway</text>
+              <text x="220" y="178" fill="#14202b"><tspan fill="#00695c" font-weight="700">J-Q:</tspan> Jack &amp; Queen</text>
+              <text x="420" y="178" fill="#14202b"><tspan fill="#00695c" font-weight="700">K-P:</tspan> Kerala PSC</text>
+
+              <text x="40" y="206" fill="#14202b"><tspan fill="#00695c" font-weight="700">L-O:</tspan> Love</text>
+              <text x="220" y="206" fill="#14202b"><tspan fill="#00695c" font-weight="700">M-N:</tspan> Man</text>
+              <text x="420" y="206" fill="#14202b"><tspan fill="#00695c" font-weight="700">G-T:</tspan> GT Road</text>
+            </g>
+
+            <text x="360" y="240" text-anchor="middle" font-size="11" font-style="italic" fill="#4a5f72">"ഓരോ ജോഡിയുടെയും സ്ഥാനവിലകളുടെ തുക = 27"</text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.2 – 13 വിപരീത ജോഡികൾ + ഓർമ്മ കോഡുകൾ.</div>
+        </div>
+
+        <h3>10.3 ക്രോസ്-റിവേഴ്സൽ മാതൃക</h3>
+        <div class="viz-box">
+          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cross reversal pattern">
+            <rect x="10" y="10" width="700" height="200" rx="12" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+            <text x="360" y="36" text-anchor="middle" font-family="Noto Sans Malayalam, sans-serif" font-size="15" font-weight="700" fill="#4a148c">ക്രോസ്-റിവേഴ്സൽ മാതൃക (JOURNEY → VPKSOFZ)</text>
+
+            <g font-family="JetBrains Mono, monospace" font-size="14">
+              <text x="60" y="90" fill="#14202b" font-weight="700">JOURNEY</text>
+              <text x="220" y="90" fill="#b83b2c" font-weight="700">+1 →</text>
+              <text x="320" y="90" fill="#00695c" font-weight="700">KPVSOFZ</text>
+              <text x="480" y="90" fill="#b83b2c" font-weight="700">→ ആദ്യ 3 തിരിച്ചിടൽ →</text>
+              <text x="630" y="90" fill="#4a148c" font-weight="700">VPKSOFZ</text>
+
+              <text x="60" y="140" fill="#14202b" font-weight="700">ACQUIRE</text>
+              <text x="220" y="140" fill="#b83b2c" font-weight="700">+1 →</text>
+              <text x="320" y="140" fill="#00695c" font-weight="700">BDRVJSF</text>
+              <text x="480" y="140" fill="#b83b2c" font-weight="700">→ ആദ്യ 3 തിരിച്ചിടൽ →</text>
+              <text x="630" y="140" fill="#4a148c" font-weight="700">RDBVJSF</text>
+            </g>
+
+            <text x="360" y="185" text-anchor="middle" font-size="11" font-style="italic" fill="#4a5f72">
+              7 അക്ഷര വാക്കുകളിൽ: ആദ്യ 3 തിരിച്ചിടൽ + നടുവിലെ 1 + അവസാന 3 നേരെ
+            </text>
+          </svg>
+          <div class="viz-caption">ചിത്രം 10.3 – 7-അക്ഷര ക്രോസ്-റിവേഴ്സൽ മാതൃക.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: IMPORTANT FACTS -->
+    <section class="section" id="sec11">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec11" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">11. പ്രധാന വസ്തുതകൾ (Important Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⭐ ഒറ്റനോട്ടത്തിൽ</span>
+          <ol>
+            <li>ഇംഗ്ലീഷ് അക്ഷരമാലയിൽ <strong>26 അക്ഷരങ്ങൾ</strong> (A=1 … Z=26); <strong>5 സ്വരാക്ഷരങ്ങൾ</strong> (A, E, I, O, U), <strong>21 വ്യഞ്ജനാക്ഷരങ്ങൾ</strong>.</li>
+            <li>5-ന്റെ ഗുണിത സ്ഥാനങ്ങളിലെ അക്ഷരങ്ങൾ: <strong>EJOTY</strong> (5, 10, 15, 20, 25).</li>
+            <li>3-ന്റെ ഗുണിത സ്ഥാനങ്ങളിലെ അക്ഷരങ്ങൾ: <strong>CFILORUX</strong> (3, 6, 9, 12, 15, 18, 21, 24).</li>
+            <li>സ്വരാക്ഷരങ്ങളുടെ സ്ഥാനവില: A=1, E=5, I=9, O=15, U=21.</li>
+            <li><strong>വിപരീത അക്ഷരത്തിന്റെ സ്ഥാനവില = 27 − സ്ഥാനവില</strong>.</li>
+            <li>പേരുമാറ്റ കോഡിംഗിൽ: <strong>യഥാർത്ഥ ഉത്തരം കണ്ടെത്തി, അതിന് ചോദ്യത്തിൽ നൽകിയ പുതിയ പേര്</strong> ഉത്തരമാക്കുക.</li>
+            <li>ചരിത്രപരമായി: <strong>സീസർ സൈഫർ</strong> (3 സ്ഥാനം മാറ്റം) പ്രസിദ്ധമായ ആദ്യകാല കോഡിംഗ് രീതികളിലൊന്നാണ്.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: PSC EXAM ANALYSIS -->
+    <section class="section" id="sec12">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec12" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">12. Kerala PSC Exam Analysis (പ്രാധാന്യ വിശകലനം)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഉപവിഷയം</th><th>പ്രാധാന്യം</th><th>വിശകലനം</th></tr></thead>
+            <tbody>
+              <tr><td><strong>അക്ഷര സ്ഥാനമാറ്റ കോഡിംഗ്</strong> (+n, −n)</td><td>★★★</td><td>പത്താം ക്ലാസ് തലം പരീക്ഷകളിൽ ഏറ്റവും കൂടുതൽ വരുന്ന രീതി (PASTE:SDVWH, BARK:DCTM മാതൃകകൾ).</td></tr>
+              <tr><td><strong>ക്രോസ്സ് &amp; വിപരീത അക്ഷര കോഡിംഗ്</strong></td><td>★★★</td><td>ഡിഗ്രി ലെവൽ പരീക്ഷകളിൽ JOURNEY:VPKSOFZ പോലെ പകുതി മുറിച്ച് തിരിക്കുന്ന മാതൃക.</td></tr>
+              <tr><td><strong>വാക്യ / മെസ്സേജ് കോഡിംഗ്</strong></td><td>★★</td><td>pit dar na = you are good മാതൃക പ്ലസ് ടു / ഡിഗ്രി പരീക്ഷകളിൽ കാണാറുണ്ട്.</td></tr>
+              <tr><td><strong>പേരുമാറ്റ &amp; സംഖ്യാ കോഡിംഗ്</strong></td><td>★★</td><td>"വെള്ളത്തെ ആകാശം എന്ന് വിളിച്ചാൽ…", CAT = 24 തരം ചോദ്യങ്ങൾ സ്ഥിരമായി വരാം.</td></tr>
+              <tr><td><strong>നിബന്ധനാ / മാട്രിക്സ് കോഡിംഗ്</strong></td><td>★</td><td>ഉയർന്ന തലത്തിലുള്ള പരീക്ഷകളിൽ വല്ലപ്പോഴും.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="correction">
+          <span class="box-label">📌 കുറിപ്പ്</span>
+          <p>റേറ്റിംഗ് പഠനത്തിനുള്ള മാർഗ്ഗനിർദ്ദേശം മാത്രമാണ്. ഓരോ വർഷവും ചോദ്യങ്ങളുടെ എണ്ണം മാറും.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 13: QUESTION TREND -->
+    <section class="section" id="sec13">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec13" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">13. മുൻ ചോദ്യ ട്രെൻഡ് (Previous Question Trend)</span>
+      </h2>
+      <div class="section-body">
+        <div class="correction">
+          <span class="box-label">⚠️ സ്ഥിരീകരണ കുറിപ്പ്</span>
+          <p>താഴെ നൽകിയവ ചോദ്യ മാതൃകകളാണ്. <strong>ഓരോ ചോദ്യത്തിന്റെയും വർഷം / കാറ്റഗറി നമ്പർ ഔദ്യോഗിക ചോദ്യപേപ്പർ നോക്കി ഉറപ്പാക്കണം</strong>. ഉറപ്പാക്കുന്നതുവരെ ഇവയെ "PYQ-മാതൃക" ആയി മാത്രം കരുതുക. ഉത്തരങ്ങൾ ഈ പതിപ്പിൽ ഗണിച്ച് പരിശോധിച്ചതാണ്.</p>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ക്രമം</th><th>ചോദ്യ മാതൃക</th><th>നിയമം</th><th>ഉത്തരം</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>JOURNEY → VPKSOFZ; ACQUIRE → ?</td><td>ആദ്യ 3 തിരിച്ചിടൽ + എല്ലാറ്റിനും +1</td><td><strong>RDBVJSF</strong></td></tr>
+              <tr><td>2</td><td>PASTE → SDVWH; CATCH → ?</td><td>+3 വീതം</td><td><strong>FDWFK</strong></td></tr>
+              <tr><td>3</td><td>BARK → DCTM; DATE → ?</td><td>+2 വീതം</td><td><strong>FCVG</strong></td></tr>
+              <tr><td>4</td><td>ELECT → FMGFX, COILS → DPKOW; CREED → ?</td><td>+1, +1, +2, +3, +4</td><td><strong>DSGHH</strong></td></tr>
+              <tr><td>5</td><td>CURIA → FYQFV, DALES → GEKBN; APNEA → ?</td><td>+3, +4, −1, −3, −5</td><td><strong>DTMBV</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>13.1 ചോദ്യം 4-ന്റെ തെളിവ്</h3>
+        <div class="code-sample">
+          ELECT: E+1=F, L+1=M, E+2=G, C+3=F, T+4=X ✓ (FMGFX)<br>
+          CREED: C+1=D, R+1=S, E+2=G, E+3=H, D+4=H ⇒ <strong>DSGHH</strong>
+        </div>
+
+        <h3>13.2 ചോദ്യം 5-ന്റെ തെളിവ്</h3>
+        <div class="code-sample">
+          CURIA: C+3=F, U+4=Y, R−1=Q, I−3=F, A−5=V (1−5=−4 → 22) ✓ (FYQFV)<br>
+          DALES: D+3=G, A+4=E, L−1=K, E−3=B, S−5=N ✓ (GEKBN)<br>
+          APNEA: A+3=D, P+4=T, N−1=M, E−3=B, A−5=V ⇒ <strong>DTMBV</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 14: CONFUSING FACTS -->
+    <section class="section" id="sec14">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec14" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">14. ആശയക്കുഴപ്പമുണ്ടാക്കുന്ന വസ്തുതകൾ (Confusing Facts)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>Fact 1</th><th>Fact 2</th><th>വ്യത്യാസവും ഓർമ്മിക്കേണ്ട സൂചനയും</th></tr></thead>
+            <tbody>
+              <tr><td><strong>കോഡിംഗ് ചോദ്യം</strong> (വാക്ക് തന്ന് കോഡ് ചോദിക്കൽ)</td><td><strong>ഡീകോഡിംഗ് ചോദ്യം</strong> (കോഡ് തന്ന് വാക്ക് ചോദിക്കൽ)</td><td>ഡീകോഡിംഗിൽ നിയമത്തിന്റെ <strong>വിപരീതം</strong> പ്രയോഗിക്കണം (+3 ആണെങ്കിൽ −3). ഇത് മറന്നാണ് കൂടുതൽ പേർക്കും തെറ്റുന്നത്.</td></tr>
+              <tr><td><strong>നേർ ഷിഫ്റ്റ്</strong> (വ്യത്യാസം ഒരേ ക്രമത്തിൽ)</td><td><strong>വിപരീത അക്ഷരം</strong> (തുക 27)</td><td>വ്യത്യാസങ്ങൾ മാറിമാറി വരുന്നെങ്കിലും ജോഡികളുടെ <strong>തുക 27</strong> ആണെങ്കിൽ അത് വിപരീത അക്ഷര കോഡ്.</td></tr>
+              <tr><td><strong>"A is called B"</strong></td><td><strong>"A means B"</strong></td><td>രണ്ടിലും സാധാരണ നിയമം ഒന്നാണ്: <strong>A-യുടെ സ്ഥാനത്ത് B ഉപയോഗിക്കുന്നു.</strong> യഥാർത്ഥ വസ്തുവിനെ ചോദ്യത്തിൽ ഏത് പേരിലാണ് വിളിക്കുന്നത് എന്ന് ശൃംഖലയിൽ നോക്കുക.</td></tr>
+              <tr><td><strong>വിപരീത അക്ഷരത്തിന് 27</strong></td><td><strong>ചക്രീയ ഷിഫ്റ്റിന് 26</strong></td><td>A+Z=27. എന്നാൽ Z കഴിഞ്ഞ് A-യിലേക്ക് പോകുമ്പോൾ 26 കുറയ്ക്കണം (W(23)+5=28 → 28−26 = 2 = B).</td></tr>
+              <tr><td><strong>അക്ഷരത്തിന്റെ സ്ഥാനവില</strong></td><td><strong>വാക്കിലെ അക്ഷരത്തിന്റെ സ്ഥാനം</strong></td><td>T-യുടെ സ്ഥാനവില 20; CAT-ൽ T 3-ാമത്തെ അക്ഷരം. രണ്ടും ഒന്നല്ല.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 15: COMPARISON TABLES -->
+    <section class="section" id="sec15">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec15" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">15. താരതമ്യ പട്ടികകൾ (Comparison Tables)</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>പട്ടിക 1: കോഡിംഗ്-ഡീകോഡിംഗിലെ പ്രധാന ചോദ്യ വിഭാഗങ്ങൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ക്രമം</th><th>കോഡിംഗ് തരം</th><th>നിയമം</th><th>മാതൃകാ ഉദാഹരണം</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>തുല്യ അക്ഷര സ്ഥാനമാറ്റം</strong></td><td>എല്ലാ അക്ഷരത്തിനും +n / −n</td><td>PASTE : SDVWH :: CATCH : FDWFK</td></tr>
+              <tr><td>2</td><td><strong>മാറിവരുന്ന സ്ഥാനമാറ്റം</strong></td><td>ക്രമമായി മാറുന്ന +/-</td><td>SOAK : TSWF :: RACY : SEYT</td></tr>
+              <tr><td>3</td><td><strong>ക്രോസ്സ്-റിവേഴ്സൽ</strong></td><td>പകുതി തിരിച്ചിട്ട് +1</td><td>JOURNEY : VPKSOFZ :: ACQUIRE : RDBVJSF</td></tr>
+              <tr><td>4</td><td><strong>വിപരീത അക്ഷരം</strong></td><td>തുക 27</td><td>KING : PRMT :: RAIL : IZRO</td></tr>
+              <tr><td>5</td><td><strong>നേരിട്ടുള്ള സംഖ്യാ കോഡ്</strong></td><td>അക്ഷരത്തിന് ഒരു സംഖ്യ</td><td>GIVE = 5137, BAT = 924 ⇒ GATE = 5247</td></tr>
+              <tr><td>6</td><td><strong>തുക കോഡ്</strong></td><td>സ്ഥാനവിലകളുടെ തുക</td><td>CAT = 24, DOG = 26</td></tr>
+              <tr><td>7</td><td><strong>പേരുമാറ്റ കോഡ്</strong></td><td>യഥാർത്ഥ വസ്തുവിന് പുതിയ പേര്</td><td>രക്തത്തിന്റെ നിറം → ചുവപ്പിന്റെ പുതിയ പേര്</td></tr>
+              <tr><td>8</td><td><strong>മെസ്സേജ് കോഡ്</strong></td><td>പൊതു വാക്കുകൾ ഒഴിവാക്കൽ</td><td>pit dar na = you are good ⇒ good = dar</td></tr>
+              <tr><td>9</td><td><strong>നിബന്ധനാ കോഡ്</strong></td><td>നിബന്ധനകൾ ഒത്തുനോക്കൽ</td><td>Section 8</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>പട്ടിക 2: ഒരേ സംഖ്യ vs മാറിവരുന്ന സംഖ്യ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഘടകം</th><th>Uniform Shifting</th><th>Mixed / Progressive Shifting</th></tr></thead>
+            <tbody>
+              <tr><td>നിയമം</td><td>എല്ലാ അക്ഷരത്തിനും ഒരേ വ്യത്യാസം</td><td>ഓരോ സ്ഥാനത്തിനും വ്യത്യസ്ത വ്യത്യാസം</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>PASTE → SDVWH (+3)</td><td>SOAK → TSWF (+1,+4,−4,−5)</td></tr>
+              <tr><td>പരിശോധന</td><td>ആദ്യ 2 അക്ഷരം മതി</td><td>എല്ലാ അക്ഷരവും കണക്കാക്കണം</td></tr>
+              <tr><td>PSC-യിൽ</td><td>പത്താം തലം, LDC, LGS</td><td>ഡിഗ്രി ലെവൽ, SI, Secretariat</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>പട്ടിക 3: കോഡിംഗ് vs ഡീകോഡിംഗ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ഘടകം</th><th>കോഡിംഗ്</th><th>ഡീകോഡിംഗ്</th></tr></thead>
+            <tbody>
+              <tr><td>ചോദ്യ രൂപം</td><td>വാക്ക് തന്ന് കോഡ് ചോദിക്കൽ</td><td>കോഡ് തന്ന് വാക്ക് ചോദിക്കൽ</td></tr>
+              <tr><td>നിയമം</td><td>അതേ നിയമം പ്രയോഗിക്കുക</td><td>നിയമത്തിന്റെ <strong>വിപരീതം</strong> പ്രയോഗിക്കുക</td></tr>
+              <tr><td>ഉദാഹരണം</td><td>PASTE → SDVWH</td><td>SDVWH → PASTE</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 16: OPPOSITE PAIRS -->
+    <section class="section" id="sec16">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec16" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">16. വിപരീത അക്ഷര ജോഡികൾ + Revision Points</span>
+      </h2>
+      <div class="section-body">
+        <div class="pair-grid">
+          <div class="cell">A ↔ Z (1+26)</div>
+          <div class="cell">B ↔ Y (2+25)</div>
+          <div class="cell">C ↔ X (3+24)</div>
+          <div class="cell">D ↔ W (4+23)</div>
+          <div class="cell">E ↔ V (5+22)</div>
+          <div class="cell">F ↔ U (6+21)</div>
+          <div class="cell">G ↔ T (7+20)</div>
+          <div class="cell">H ↔ S (8+19)</div>
+          <div class="cell">I ↔ R (9+18)</div>
+          <div class="cell">J ↔ Q (10+17)</div>
+          <div class="cell">K ↔ P (11+16)</div>
+          <div class="cell">L ↔ O (12+15)</div>
+          <div class="cell">M ↔ N (13+14)</div>
+        </div>
+
+        <h3>16.1 ഓർമ്മ കോഡുകൾ</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ജോഡി</th><th>ഓർക്കാനുള്ള വഴി</th><th>ജോഡി</th><th>ഓർക്കാനുള്ള വഴി</th></tr></thead>
+            <tbody>
+              <tr><td><strong>A ↔ Z</strong></td><td>A to Z</td><td><strong>H ↔ S</strong></td><td>High School</td></tr>
+              <tr><td><strong>B ↔ Y</strong></td><td>Boy</td><td><strong>I ↔ R</strong></td><td>Indian Railway</td></tr>
+              <tr><td><strong>C ↔ X</strong></td><td>Crux</td><td><strong>J ↔ Q</strong></td><td>Jack &amp; Queen</td></tr>
+              <tr><td><strong>D ↔ W</strong></td><td>Down</td><td><strong>K ↔ P</strong></td><td>Kerala PSC</td></tr>
+              <tr><td><strong>E ↔ V</strong></td><td>EVening</td><td><strong>L ↔ O</strong></td><td>LOve</td></tr>
+              <tr><td><strong>F ↔ U</strong></td><td>FUn</td><td><strong>M ↔ N</strong></td><td>MaN</td></tr>
+              <tr><td><strong>G ↔ T</strong></td><td>GT Road</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="important">
+          <span class="box-label">📌 സ്ഥിരീകരണം</span>
+          <p>A(1)+Z(26)=27, H(8)+S(19)=27, J(10)+Q(17)=27, M(13)+N(14)=27 ✓.</p>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 17: MNEMONICS -->
+    <section class="section" id="sec17">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec17" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">17. മെമ്മറി ട്രിക്കുകൾ (Mnemonics & Shortcut Codes)</span>
+      </h2>
+      <div class="section-body">
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 1 – EJOTY (5-ന്റെ ഗുണിതങ്ങൾ)</span>
+          <p><strong>E=5, J=10, O=15, T=20, Y=25</strong>. ഇതിൽ നിന്ന് അടുത്തുള്ള അക്ഷരത്തിന്റെ സ്ഥാനം ഉടൻ പറയാം (ഉദാ: T=20 ⇒ S=19, U=21).</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 2 – സ്വരാക്ഷര സ്ഥാനം</span>
+          <p><strong>"1-5-9-15-21"</strong> → A=1, E=5, I=9, O=15, U=21.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 3 – 7 അക്ഷര വാക്കുകളിലെ 3+1+3 ട്രിക്ക്</span>
+          <p>JOURNEY, ACQUIRE പോലുള്ള 7 അക്ഷര വാക്കുകളിൽ ആദ്യ 3 തിരിയുമ്പോൾ <strong>നടുവിലെ (4-ാമത്തെ) അക്ഷരം സ്വന്തം സ്ഥാനത്ത് നിൽക്കും</strong>; ഇതുപോലുള്ള വാക്കുകളിൽ ഈ ഘടന ആദ്യം പരിശോധിക്കുക.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 4 – പേരുമാറ്റ ചോദ്യങ്ങൾ</span>
+          <p>കഥ മുഴുവൻ വായിക്കും മുമ്പ് <strong>അവസാന ചോദ്യവാചകം</strong> വായിച്ച് യഥാർത്ഥ ഉത്തരം മനസ്സിൽ ഉറപ്പിക്കുക.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 5 – ആദ്യ/അവസാന അക്ഷര ട്രിക്ക്</span>
+          <p>ഓപ്ഷനുകളിൽ ആദ്യത്തെയും അവസാനത്തെയും അക്ഷരം മാത്രം കോഡ് ചെയ്ത് നോക്കിയാൽ പലപ്പോഴും രണ്ടോ മൂന്നോ ഓപ്ഷൻ ഒഴിവാകും (Section 20).</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 6 – CFILORUX (3-ന്റെ ഗുണിതങ്ങൾ)</span>
+          <p><strong>C=3, F=6, I=9, L=12, O=15, R=18, U=21, X=24</strong>. ഇവയും ഓർത്താൽ സ്ഥാനവില കണ്ടുപിടിക്കൽ വേഗത്തിലാകും.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 7 – വിപരീത ജോഡി വേഗം</span>
+          <p>27 − n എന്ന ഫോർമുല ഉപയോഗിക്കുക. ഉദാ: K=11 → 27−11 = 16 = P. H=8 → 27−8 = 19 = S.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 8 – Fictitious Language</span>
+          <p>"<strong>രണ്ട് വാക്യങ്ങളിൽ പൊതുവായത് വെട്ടുക</strong>" — ബാക്കിയുള്ളത് ഉത്തരം. ഓരോ വാക്കും എല്ലാ വാക്യങ്ങളിലും തിരയേണ്ട.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 9 – Substitution coding</span>
+          <p>ചോദ്യത്തിന്റെ <strong>അവസാന വാചകത്തിൽ നിന്ന് യഥാർത്ഥ ഉത്തരം</strong> കണ്ടെത്തി, ആ ഉത്തരത്തിന് ചോദ്യത്തിൽ നൽകിയ പേര് ഉത്തരമാക്കുക. ശൃംഖല ഒരു പടി മാത്രം പിന്തുടരുക.</p>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">🧠 Trick 10 – ഷിഫ്റ്റ് ദിശ പരിശോധിക്കുക</span>
+          <p>A→D (+3) ആണോ അതോ A→X (−3) ആണോ എന്ന് ഉറപ്പിക്കുക. <strong>ചെറിയ അക്ഷരത്തിൽ നിന്ന് വലിയ അക്ഷരത്തിലേക്ക് → +</strong>; വലിയതിൽ നിന്ന് ചെറിയതിലേക്ക് → −. പക്ഷേ ചക്രീയം (Z→A) ഉണ്ടെങ്കിൽ ഇത് മാറും.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 18: PSC TRAPS -->
+    <section class="section" id="sec18">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec18" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">18. Common PSC Traps (പരീക്ഷയിലെ ചതിക്കുഴികൾ)</span>
+      </h2>
+      <div class="section-body">
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 1 – ക്രോസ്സ് കോഡിംഗിൽ ക്രമം തെറ്റൽ</span>
+          <p>ACQUIRE-ൽ A+1 = B ശരിയാണ്. പക്ഷേ ആദ്യ മൂന്ന് <strong>തിരിച്ചിടേണ്ടതിനാൽ</strong> B ആദ്യമല്ല, <strong>മൂന്നാമതാണ്</strong> വരേണ്ടത് (R D B). B-യിൽ തുടങ്ങുന്ന <code>BDRJSVF</code> ഒരു കെണി ഓപ്ഷനാണ്.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 2 – അകലം എണ്ണൽ</span>
+          <p>A=1 മുതൽ D=4 വരെ വ്യത്യാസം <strong>+3</strong> ആണ്. ഇടയിലെ അക്ഷരങ്ങൾ (2 എണ്ണം) എണ്ണി +2 എന്ന് കരുതരുത്.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 3 – പകുതി ശരിയായ ഓപ്ഷൻ</span>
+          <p>ഓപ്ഷനുകളിൽ ആദ്യ രണ്ട് അക്ഷരം ശരിയാക്കി ബാക്കി തെറ്റിക്കും. <strong>എല്ലാ അക്ഷരവും</strong> പരിശോധിക്കുക.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 4 – ഡീകോഡിംഗിൽ നിയമം തിരിച്ചിടാതിരിക്കൽ</span>
+          <p>കോഡിൽ നിന്ന് വാക്ക് ചോദിക്കുമ്പോൾ + നിയമത്തെ − ആക്കണം.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 5 – Z കഴിഞ്ഞ് A</span>
+          <p>X, Y, Z പോലുള്ള അക്ഷരങ്ങൾ +n ചെയ്യുമ്പോൾ അക്ഷരമാല ചുറ്റി A-യിലേക്ക് വരുന്നത് മറക്കരുത്.</p>
+          <p>ഉദാ: Z+1 = A, Z+2 = B, Z+3 = C. അതുപോലെ A−1 = Z, B−2 = Z (ചെറിയ കേസുകളിൽ ചക്രീയം സൂക്ഷിക്കുക).</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 6 – ഒരു ഉദാഹരണം മാത്രം നോക്കൽ</span>
+          <p>രണ്ട് ഉദാഹരണം തന്നാൽ <strong>രണ്ടിലും</strong> നിയമം ശരിയാണെന്ന് പരിശോധിക്കുക. ഒരു ഉദാഹരണത്തിൽ യോജിച്ചു എന്നത് മാത്രം മതിയല്ല.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 7 – Fictitious Language-ൽ ഓവർ-ഇന്റർപ്രെറ്റേഷൻ</span>
+          <p>ഓരോ കോഡ് വാക്കും അതിന്റെ ഇംഗ്ലീഷ് വാക്കും വെവ്വേറെ ജോടിയാണ്; പല വാക്കുകളിൽ നിന്ന് ഒരേ സമയം നിഗമനം എടുക്കരുത്. <strong>ഒരു ജോഡിയിൽ ഉറപ്പിച്ച ശേഷം മറ്റൊരു ജോഡി നോക്കുക.</strong></p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 8 – പേരുമാറ്റ ശൃംഖലയിൽ അമിതമായി മുന്നോട്ട് പോകൽ</span>
+          <p>ചോദ്യത്തിൽ "വെള്ളത്തെ ആകാശം എന്ന് വിളിച്ചാൽ" എന്ന് മാത്രമേ ഉള്ളൂ എന്ന് കരുതുക; "ആകാശത്തെ മേഘം എന്ന് വിളിച്ചാൽ" എന്ന് ചോദ്യത്തിൽ ഇല്ലെങ്കിൽ അത് ഉപയോഗിക്കരുത്. <strong>ചോദ്യത്തിൽ എഴുതിയത് മാത്രം</strong>.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 9 – Sum coding-ൽ അക്ഷരം vs സ്ഥാനം</span>
+          <p>CAT = 24 (3+1+20) എന്നതിന് പകരം CAT = 3 × 1 × 20 = 60 എന്നും സാധ്യമാണ്. ചോദ്യത്തിലെ ഉദാഹരണം ഉപയോഗിച്ച് ഏത് രീതി എന്ന് ഉറപ്പിക്കുക.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ Trap 10 – Cross coding-ൽ "first/last" confusion</span>
+          <p>7-അക്ഷര വാക്കിൽ "ആദ്യ 3 തിരിച്ചിട്ടിരിക്കുന്നു" എന്ന് പറഞ്ഞിട്ടുണ്ടോ, അതോ "അവസാന 3 തിരിച്ചിട്ടിരിക്കുന്നു" എന്നോ എന്ന് ശ്രദ്ധിക്കുക. രണ്ടു സാധ്യതയും ഉണ്ട്.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 19: ADDITIONAL FACTS -->
+    <section class="section" id="sec19">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec19" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">19. Additional Kerala PSC Facts (അധിക വസ്തുതകൾ)</span>
+      </h2>
+      <div class="section-body">
+        <ul>
+          <li><span class="stars">⭐⭐⭐⭐</span> <strong>ROT13:</strong> അക്ഷരമാലയിൽ 13 സ്ഥാനം മാറ്റുന്ന സീസർ സൈഫർ. 26-ന്റെ പകുതി ആയതിനാൽ ഒരേ നിയമം രണ്ടുതവണ പ്രയോഗിച്ചാൽ യഥാർത്ഥ വാക്ക് തിരികെ കിട്ടും. (ROT13-ൽ A↔N, B↔O, ..., M↔Z).</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>മോഴ്സ് കോഡ് (Morse Code):</strong> കുത്തുകളും വരകളും ഉപയോഗിച്ചുള്ള കോഡ്; <strong>സാമുവൽ മോഴ്സ് (Samuel Morse)</strong> വികസിപ്പിച്ച ടെലിഗ്രാഫ് സമ്പ്രദായത്തിൽ ഉപയോഗിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ബ്രെയിൽ ലിപി (Braille):</strong> കാഴ്ചയില്ലാത്തവർക്കുള്ള ഉയർന്ന കുത്തുകളുടെ കോഡ്; <strong>ലൂയി ബ്രെയിൽ</strong> കണ്ടുപിടിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>എനിഗ്മ യന്ത്രം (Enigma):</strong> രണ്ടാം ലോകമഹായുദ്ധകാലത്ത് ജർമ്മനി ഉപയോഗിച്ച കോഡ് യന്ത്രം; ബ്രിട്ടീഷ് ശാസ്ത്രജ്ഞരുടെ സംഘത്തിൽ <strong>അലൻ ട്യൂറിംഗ്</strong> ഇത് ഭേദിക്കാൻ പ്രധാന പങ്ക് വഹിച്ചു.</li>
+          <li><span class="stars">⭐⭐⭐</span> <strong>ബാർകോഡ്, QR കോഡ്:</strong> ഇവ രഹസ്യകോഡുകളല്ല, വിവരം യന്ത്രങ്ങൾക്ക് വായിക്കാൻ വേണ്ടി രേഖപ്പെടുത്തുന്ന രീതികളാണ്. (QR = Quick Response code.)</li>
+          <li><span class="stars">⭐⭐</span> <strong>ASCII / Unicode:</strong> കമ്പ്യൂട്ടറിൽ അക്ഷരങ്ങളെയും ചിഹ്നങ്ങളെയും സംഖ്യകളാക്കി മാറ്റുന്ന രീതികൾ. ASCII = American Standard Code for Information Interchange (7-bit, 128 ചിഹ്നങ്ങൾ; Extended 8-bit, 256). Unicode = എല്ലാ ഭാഷകൾക്കും ഒരേ എൻകോഡിംഗ്.</li>
+          <li><span class="stars">⭐⭐</span> <strong>PSC-യിൽ:</strong> സിലബസിൽ കോഡിംഗ്-ഡീകോഡിംഗിന്റെ ഗണിത ഭാഗമാണ് ചോദിക്കുക. ഈ ചരിത്ര വസ്തുതകൾ പൊതുവിജ്ഞാന ചോദ്യങ്ങൾക്ക് ഉപകാരപ്പെടും.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 20: SMART TRICKS -->
+    <section class="section" id="sec20">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec20" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">20. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks</span>
+      </h2>
+      <div class="section-body">
+        <div class="important">
+          <span class="box-label">⚠️ മുന്നറിയിപ്പ്</span>
+          <p>ഈ തന്ത്രങ്ങൾ ശരിയുത്തരം കിട്ടാനുള്ള <strong>സാധ്യത കൂട്ടുക മാത്രമാണ്</strong> ചെയ്യുന്നത്. അവ വിഷയജ്ഞാനത്തിന് പകരമാകില്ല. "ഓപ്ഷൻ C തിരഞ്ഞെടുക്കുക", "ഏറ്റവും നീളമുള്ള ഉത്തരം ശരിയാണ്", "മുൻ വർഷങ്ങളിലെ ഉത്തരരീതി ആവർത്തിക്കും" തുടങ്ങിയവ <strong>തെറ്റായ ധാരണകളാണ്</strong>. ഒരു ഓപ്ഷൻ ശരിയാണെന്ന് ഉറപ്പിക്കേണ്ടത് <strong>ചോദ്യത്തിലെ വസ്തുതകൾ വച്ചാണ്</strong>, ഊഹത്തിന്റെ അടിസ്ഥാനത്തിലല്ല.</p>
+        </div>
+
+        <h3>Trick 1: Option Elimination (ആദ്യ–അവസാന അക്ഷര പരിശോധന)</h3>
+        <div class="memory">
+          <p>അക്ഷര കോഡിംഗിൽ ഏറ്റവും ഫലപ്രദമായ തന്ത്രം. <strong>ഒരു അക്ഷരം മാത്രം കോഡ് ചെയ്ത് തെറ്റായ ഓപ്ഷനുകൾ വെട്ടുക.</strong></p>
+          <p><strong>ചോദ്യം:</strong> ഒരു കോഡിൽ <code>TABLE</code> എന്നത് <code>WDEOH</code> ആയാൽ <code>CHAIR</code> എങ്ങനെ എഴുതാം?</p>
+          <p>(A) FKDLU  (B) FKDLV  (C) EJCKT  (D) FKCLU</p>
+          <ol>
+            <li>നിയമം കണ്ടെത്തുക: T+3=W, A+3=D ⇒ <strong>+3</strong>.</li>
+            <li>ആദ്യ അക്ഷരം: C+3=F ⇒ (C) E… ഒഴിവാക്കി.</li>
+            <li>അവസാന അക്ഷരം: R+3=U ⇒ (B) …V ഒഴിവാക്കി.</li>
+            <li>ബാക്കി (A), (D): മൂന്നാം അക്ഷരം A+3=D ⇒ (D)-ൽ C ആയതിനാൽ ഒഴിവാക്കി.</li>
+            <li><strong>ഉത്തരം: (A) FKDLU.</strong> (H+3=K, I+3=L ✓).</li>
+          </ol>
+          <p><strong>ശ്രദ്ധ:</strong> ആദ്യ–അവസാന അക്ഷരം മാത്രം നോക്കി ഉത്തരം ഉറപ്പിക്കരുത്. ഇത് ഒഴിവാക്കാനുള്ള മാർഗ്ഗമാണ്. രണ്ട് ഓപ്ഷൻ ബാക്കിയായാൽ മറ്റ് അക്ഷരങ്ങൾ നോക്കുക.</p>
+        </div>
+
+        <h3>Trick 2: Similar-Option Comparison</h3>
+        <div class="memory">
+          <p>ഓപ്ഷനുകൾ തമ്മിൽ <strong>എവിടെയാണ് വ്യത്യാസം</strong> എന്ന് ആദ്യം നോക്കുക. ആ ഒരു സ്ഥാനം മാത്രം കോഡ് ചെയ്താൽ മതി.</p>
+          <p><strong>ചോദ്യം:</strong> <code>DOG</code> → <code>WLT</code> (വിപരീത അക്ഷര കോഡ്) ആയാൽ <code>CAT</code> → ?</p>
+          <p>(A) XZG  (B) XAG  (C) ZXG  (D) XZT</p>
+          <ul>
+            <li>ഓപ്ഷനുകളിൽ വ്യത്യാസം 2-ാം അക്ഷരത്തിലും (Z/A/X) 3-ാം അക്ഷരത്തിലും (G/T).</li>
+            <li>A↔Z അറിയാമെങ്കിൽ 2-ാം അക്ഷരം Z ⇒ (B) ഒഴിവാക്കി.</li>
+            <li>C↔X ആയതിനാൽ ആദ്യം X ⇒ (C) ഒഴിവാക്കി.</li>
+            <li>T↔G ⇒ (D) ഒഴിവാക്കി.</li>
+            <li><strong>ഉത്തരം: (A) XZG.</strong></li>
+          </ul>
+        </div>
+
+        <h3>Trick 3: Common-Sense Logic &amp; Structure Check</h3>
+        <div class="memory">
+          <ul>
+            <li>അക്ഷര കോഡിംഗിൽ <strong>കോഡിലെ അക്ഷരങ്ങളുടെ എണ്ണം വാക്കിലെ അക്ഷരങ്ങളുടെ എണ്ണത്തിന് തുല്യമായിരിക്കും</strong> (ക്രോസ്, ഷിഫ്റ്റ്, വിപരീതം എന്നിവയിൽ). എണ്ണം വ്യത്യസ്തമായ ഓപ്ഷൻ ഒഴിവാക്കാം.</li>
+            <li>ഷിഫ്റ്റ് കോഡിൽ <strong>ഒരേ അക്ഷരം ആവർത്തിക്കുന്ന സ്ഥാനങ്ങൾ</strong> (ഉദാ: CATCH-ലെ രണ്ട് C) കോഡിലും ഒരേപോലെ ആവർത്തിക്കണം (FDWFK-ൽ രണ്ട് F). ഇത് പാലിക്കാത്ത ഓപ്ഷൻ ഒഴിവാക്കാം.</li>
+            <li><em>(ഇത് നിയമം ഒരേ സംഖ്യയുള്ള ഷിഫ്റ്റിനും വിപരീതത്തിനും ബാധകം. മാറിമാറി വരുന്ന ഷിഫ്റ്റിൽ ആവർത്തന അക്ഷരങ്ങൾ വ്യത്യസ്തമായേക്കാം.)</em></li>
+          </ul>
+        </div>
+
+        <h3>Trick 4: Extreme Statement Check &amp; Statement-Based Questions</h3>
+        <div class="memory">
+          <p>"എപ്പോഴും", "എല്ലാ", "ഒരിക്കലും", "മാത്രം" തുടങ്ങിയ വാക്കുകൾ <strong>സംശയിച്ച് പരിശോധിക്കാനുള്ള സൂചന</strong> മാത്രമാണ്, സ്വയം തെറ്റാണെന്ന് അർത്ഥമില്ല.</p>
+          <p><strong>ചോദ്യം:</strong> ചുവടെയുള്ള പ്രസ്താവനകൾ പരിഗണിക്കുക:</p>
+          <ol>
+            <li>വിപരീത അക്ഷരങ്ങളുടെ സ്ഥാനവിലകളുടെ തുക എപ്പോഴും 27 ആണ്.</li>
+            <li>എല്ലാ കോഡിംഗ് ചോദ്യങ്ങളിലും അക്ഷരങ്ങൾ മുന്നോട്ട് മാത്രമേ നീങ്ങൂ.</li>
+            <li>CAT-ന്റെ അക്ഷര സ്ഥാനവിലകളുടെ തുക 24 ആണ്.</li>
+          </ol>
+          <p>(A) 1, 2 മാത്രം  (B) 1, 3 മാത്രം  (C) 2, 3 മാത്രം  (D) 1, 2, 3</p>
+          <ul>
+            <li>പ്രസ്താവന 1: <strong>ശരി</strong> (27−n നിയമം, "എപ്പോഴും" ഇവിടെ ന്യായമാണ്).</li>
+            <li>പ്രസ്താവന 2: <strong>തെറ്റ്</strong> (പിന്നോട്ടും (−n) വിപരീതവും ഉണ്ട്).</li>
+            <li>പ്രസ്താവന 3: <strong>ശരി</strong> (3+1+20).</li>
+            <li>2 തെറ്റ് ⇒ (A), (C), (D) ഒഴിവാക്കി. <strong>ഉത്തരം: (B).</strong></li>
+            <li><strong>ഓർക്കുക:</strong> ഓരോ പ്രസ്താവനയും പ്രത്യേകം പരിശോധിക്കുക. ഒരു പ്രസ്താവന തെറ്റെന്ന് ഉറപ്പിച്ചാൽ അത് ഉൾപ്പെടുന്ന എല്ലാ ഓപ്ഷനും ഒഴിവാക്കാം.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 5: Match-the-Following</h3>
+        <div class="memory">
+          <p>അറിയാവുന്ന <strong>ഒരു ജോഡി</strong> ആദ്യം ഉറപ്പിച്ച് അതുമായി ചേരാത്ത ഓപ്ഷനുകൾ വെട്ടുക.</p>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>പട്ടിക I</th><th>പട്ടിക II</th></tr></thead>
+              <tbody>
+                <tr><td>a. BARK</td><td>1. FDWFK</td></tr>
+                <tr><td>b. CATCH</td><td>2. DCTM</td></tr>
+                <tr><td>c. CAT (സ്ഥാനവില തുക)</td><td>3. 26</td></tr>
+                <tr><td>d. DOG (സ്ഥാനവില തുക)</td><td>4. 24</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>(A) a-2, b-1, c-4, d-3  (B) a-1, b-2, c-4, d-3  (C) a-2, b-1, c-3, d-4  (D) a-3, b-4, c-1, d-2</p>
+          <p><strong>വഴി:</strong> BARK→DCTM (+2) ഉറപ്പിച്ച് a-2 ഉള്ള ഓപ്ഷൻ (A), (C) മാത്രം. CATCH→FDWFK (+3) ⇒ b-1 ഉള്ള (A), (C) തന്നെ. CAT = 24 ⇒ c-4 ഉള്ള (A) മാത്രം. <strong>ഉത്തരം: (A).</strong></p>
+        </div>
+
+        <h3>Trick 6: Assertion–Reason</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong></p>
+          <ul>
+            <li><strong>A:</strong> വിപരീത അക്ഷര കോഡിംഗിൽ K-യ്ക്ക് പകരം P വരും.</li>
+            <li><strong>R:</strong> വിപരീത അക്ഷര ജോഡികളുടെ സ്ഥാനവിലകളുടെ തുക 27 ആണ്.</li>
+          </ul>
+          <p>(A) A, R ശരി; R, A-യെ വിശദീകരിക്കുന്നു  (B) A, R ശരി; R വിശദീകരിക്കുന്നില്ല  (C) A ശരി, R തെറ്റ്  (D) A തെറ്റ്, R ശരി</p>
+          <ul>
+            <li>ഘട്ടം 1: A ശരിയോ? K=11, P=16, 11+16=27 ✓.</li>
+            <li>ഘട്ടം 2: R ശരിയോ? ✓.</li>
+            <li>ഘട്ടം 3: R മൂലമാണോ K↔P വരുന്നത്? 27−11=16, അതെ.</li>
+            <li><strong>ഉത്തരം: (A).</strong></li>
+            <li>ഘട്ടം 3 അവഗണിക്കരുത്. രണ്ടും ശരിയാണെങ്കിലും R വിശദീകരിക്കാത്ത ചോദ്യങ്ങളുണ്ടാകും.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 7: Question Wording (ചോദ്യത്തിന്റെ വാക്ക് ശ്രദ്ധിക്കുക)</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> താഴെയുള്ളവയിൽ വിപരീത അക്ഷര ജോഡിയല്ലാത്തത് ഏത്?</p>
+          <p>(A) A–Z  (B) K–P  (C) H–S  (D) M–O</p>
+          <ul>
+            <li>"<strong>അല്ലാത്തത്</strong>" എന്ന വാക്ക് കണ്ടാൽ ശരിയായവ വെട്ടുക.</li>
+            <li>A–Z, K–P, H–S ശരി.</li>
+            <li>M(13)+O(15)=28 ≠ 27 ⇒ <strong>ഉത്തരം: (D)</strong> (M-ന്റെ ജോഡി N).</li>
+            <li>"ഇവയിൽ തെറ്റായത്", "ഒഴികെ", "ഏത് മാത്രം", ഏത് തരം ചോദ്യമെന്ന് (കോഡ്/ഡീകോഡ്) എന്നിവ ശ്രദ്ധിച്ച് വായിക്കുക.</li>
+          </ul>
+        </div>
+
+        <h3>Trick 8: Number Logic (സംഖ്യാ കോഡിംഗിൽ)</h3>
+        <div class="memory">
+          <p>CAT = 24 പോലെ തുക ചോദിക്കുമ്പോൾ ഓപ്ഷനിലെ സംഖ്യയ്ക്ക് സാധ്യമായ പരിധി നോക്കുക:</p>
+          <ul>
+            <li>3 അക്ഷര വാക്ക് ⇒ പരമാവധി 26×3 = 78, കുറഞ്ഞത് 1+1+1 = 3.</li>
+            <li>4 അക്ഷര വാക്ക് ⇒ പരമാവധി 26×4 = 104, കുറഞ്ഞത് 4.</li>
+            <li>ഗുണനഫലം ആണെങ്കിൽ ⇒ പരമാവധി 26×26×26 = 17576 (3 അക്ഷരം).</li>
+          </ul>
+          <p>പരിധിക്ക് പുറത്തുള്ള ഓപ്ഷനുകൾ ഒഴിവാക്കാം.</p>
+        </div>
+
+        <h3>Trick 9: Informed Guessing &amp; Negative Marking</h3>
+        <div class="memory">
+          <p><strong>ചോദ്യം:</strong> <code>SOUP</code> → <code>TNVO</code> ആയാൽ <code>BOWL</code> → ?</p>
+          <p>(A) CPXK  (B) CNXK  (C) APXK  (D) CNWM</p>
+          <ul>
+            <li>ഒന്നും ഓർമ്മയില്ലെന്ന് കരുതുക. പക്ഷേ ഒരു അക്ഷരം പരിശോധിക്കാം:</li>
+            <li>S→T (+1) ⇒ B→C ⇒ (C) ഒഴിവാക്കി.</li>
+            <li>U→V (+1) ⇒ W→X ⇒ (D) ഒഴിവാക്കി.</li>
+            <li>ബാക്കി (A), (B): രണ്ടാം അക്ഷരം O→N (−1) ⇒ O→N ⇒ <strong>(B) CNXK.</strong></li>
+            <li>ഒരു അക്ഷരം മാത്രം ചെക്ക് ചെയ്ത് നാലിൽ നിന്ന് രണ്ടിലേക്ക് ചുരുക്കാം. ഇതാണ് <strong>Informed Guessing</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="memory">
+          <span class="box-label">📊 നെഗറ്റീവ് മാർക്ക് (1/3) കണക്ക്</span>
+          <p>കേരള PSC പരീക്ഷകളിൽ സാധാരണയായി തെറ്റുത്തരത്തിന് മാർക്ക് കുറയ്ക്കാറുണ്ട് (മിക്കപ്പോഴും 1/3). <strong>ഓരോ പരീക്ഷയുടെ വിജ്ഞാപനത്തിലും ഇത് ഉറപ്പാക്കുക.</strong></p>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead><tr><th>ശേഷിക്കുന്ന ഓപ്ഷൻ</th><th>ശരിയാകാൻ സാധ്യത</th><th>പ്രതീക്ഷിത മാർക്ക്</th></tr></thead>
+              <tbody>
+                <tr><td>4 (ഒന്നും വെട്ടിയില്ല)</td><td>25%</td><td>¼ − ¾·⅓ = <strong>0</strong></td></tr>
+                <tr><td>3</td><td>33%</td><td>⅓ − ⅔·⅓ = <strong>+1/9 ≈ +0.11</strong></td></tr>
+                <tr><td>2</td><td>50%</td><td>½ − ½·⅓ = <strong>+1/3 ≈ +0.33</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>നിഗമനം:</strong> ഒന്നും വെട്ടാൻ കഴിയുന്നില്ലെങ്കിൽ ഉത്തരം ഒഴിവാക്കുന്നതാണ് സുരക്ഷിതം.</p>
+        </div>
+
+        <div class="trap">
+          <span class="box-label">⚠️ ഈ തന്ത്രങ്ങൾ പരാജയപ്പെടുന്ന സാഹചര്യങ്ങൾ</span>
+          <ul>
+            <li><strong>Fictitious Language കോഡിംഗ്:</strong> ഓപ്ഷൻ ഒഴിവാക്കൽ ബുദ്ധിമുട്ടാണ്; വെട്ടിമാറ്റൽ രീതി തന്നെ വേണം.</li>
+            <li><strong>ഓപ്ഷനുകൾ ഒരേപോലെ തോന്നുമ്പോൾ:</strong> എല്ലാ അക്ഷരവും പരിശോധിക്കണം.</li>
+            <li><strong>ഒരു ഉദാഹരണത്തിൽ നിന്ന് നിയമം തെറ്റായി ഊഹിച്ചാൽ:</strong> ഒഴിവാക്കിയ ഓപ്ഷനും തെറ്റാകാം. രണ്ട് ഉദാഹരണത്തിലും നിയമം പരിശോധിക്കുക.</li>
+            <li><strong>PSC Pattern Awareness:</strong> "കോഡിംഗ് ചോദ്യങ്ങളിൽ ക്രോസ്സ് പാറ്റേൺ ഡിഗ്രി ലെവലിൽ കണ്ടിട്ടുണ്ട്" എന്നത് ഏത് നിയമം പരിശോധിച്ചു തുടങ്ങണമെന്ന് നിശ്ചയിക്കാൻ മാത്രമാണ്; ഉത്തരം ഉറപ്പിക്കാനല്ല.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 21: EXPECTED QUESTIONS -->
+    <section class="section" id="sec21">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec21" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">21. Expected Kerala PSC Questions (വിവിധ ചോദ്യ രീതികൾ)</span>
+      </h2>
+      <div class="section-body">
+        <p><em>ഇവ മാതൃകാ ചോദ്യങ്ങളാണ്. ഇവ യഥാർത്ഥ പരീക്ഷയിൽ വന്നതായി അവകാശപ്പെടുന്നില്ല.</em></p>
+
+        <h3>21.1 ഒറ്റ ഉത്തര ചോദ്യം (ക്രോസ്സ് മാതൃക)</h3>
+        <p><strong>ചോദ്യം:</strong> JOURNEY → VPKSOFZ ആയാൽ ACQUIRE → ?</p>
+        <p>(A) BDRJSVF  (B) VJSFBDR  (C) RDBVJSF  (D) JDRBSFV</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (C) RDBVJSF</span>
+          <p>ആദ്യ 3 (ACQ → BDR → RDB), നടുവിൽ (U → V), അവസാന 3 (IRE → JSF). (A) ആദ്യ മൂന്ന് തിരിച്ചിട്ടില്ല. (B), (D) ഘടന തെറ്റ്.</p>
+        </div>
+
+        <h3>21.2 കോഡിംഗ് ക്രമം കണ്ടെത്തൽ</h3>
+        <p><strong>ചോദ്യം:</strong> PASTE → SDVWH ആയാൽ CATCH → ?</p>
+        <p>(A) FDWFK  (B) FCWFK  (C) EDVGJ  (D) FDWGL</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A) FDWFK</span>
+          <p>എല്ലാം +3.</p>
+        </div>
+
+        <h3>21.3 പ്രസ്താവന രീതി</h3>
+        <p><strong>ചോദ്യം:</strong></p>
+        <ol>
+          <li>BARK → DCTM എന്ന കോഡിൽ ഓരോ അക്ഷരത്തിനും +2 ആണ് ഉപയോഗിച്ചത്.</li>
+          <li>CAT-ന്റെ അക്ഷര സ്ഥാനവിലകളുടെ തുക 24 ആണ്.</li>
+          <li>വിപരീത അക്ഷര ജോഡികളുടെ സ്ഥാനവിലകളുടെ തുക 26 ആണ്.</li>
+        </ol>
+        <p>(A) 1, 2 മാത്രം  (B) 2, 3 മാത്രം  (C) 1, 3 മാത്രം  (D) 1, 2, 3</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <p>പ്രസ്താവന 3 തെറ്റ്. തുക 27 ആണ്.</p>
+        </div>
+
+        <h3>21.4 ചേരുംപടി ചേർക്കുക</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>പട്ടിക I</th><th>പട്ടിക II</th></tr></thead>
+            <tbody>
+              <tr><td>a. BARK (+2 കോഡ്)</td><td>1. FDWFK</td></tr>
+              <tr><td>b. CATCH (+3 കോഡ്)</td><td>2. DCTM</td></tr>
+              <tr><td>c. CAT (സ്ഥാനവില തുക)</td><td>3. 26</td></tr>
+              <tr><td>d. DOG (സ്ഥാനവില തുക)</td><td>4. 24</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>(A) a-2, b-1, c-4, d-3  (B) a-1, b-2, c-4, d-3  (C) a-2, b-1, c-3, d-4  (D) a-3, b-4, c-1, d-2</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <p>BARK→DCTM; CATCH→FDWFK; CAT=24; DOG=26.</p>
+        </div>
+
+        <h3>21.5 Assertion–Reason</h3>
+        <ul>
+          <li><strong>A:</strong> ഒരു കോഡിൽ BARK → DCTM ആണെങ്കിൽ DATE → FCVG.</li>
+          <li><strong>R:</strong> ആ കോഡിൽ ഓരോ അക്ഷരവും 2 സ്ഥാനം മുന്നോട്ട് നീങ്ങുന്നു.</li>
+        </ul>
+        <p>(A) A, R ശരി; R വിശദീകരിക്കുന്നു  (B) A, R ശരി; R വിശദീകരിക്കുന്നില്ല  (C) A ശരി, R തെറ്റ്  (D) A തെറ്റ്, R ശരി</p>
+        <div class="important">
+          <span class="box-label">✅ ഉത്തരം: (A)</span>
+          <p>D+2=F, A+2=C, T+2=V, E+2=G.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 22: MCQ PRACTICE -->
+    <section class="section" id="sec22">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec22" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">22. MCQ Practice (Interactive)</span>
+      </h2>
+      <div class="section-body">
+        <div class="quiz-dashboard">
+          <div class="score-stats">
+            <span class="sc-total">📝 ആകെ: <span id="scTotal">0</span></span>
+            <span class="sc-correct">✅ ശരി: <span id="scCorrect">0</span></span>
+            <span class="sc-wrong">❌ തെറ്റ്: <span id="scWrong">0</span></span>
+          </div>
+          <button type="button" class="util-btn" id="resetQuizBottom">🔄 റീസെറ്റ്</button>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-item" data-qindex="0">
+          <div class="q-text">1. PASTE → SDVWH ആയാൽ CATCH → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. FDWFK</button>
+            <button type="button" class="opt-btn" data-opt="B">B. FCWFK</button>
+            <button type="button" class="opt-btn" data-opt="C">C. EDVGJ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. FDWGL</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) FDWFK</div>
+            <div class="explanation">എല്ലാം +3. C+3=F, A+3=D, T+3=W, C+3=F, H+3=K.</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-item" data-qindex="1">
+          <div class="q-text">2. BARK → DCTM ആയാൽ DATE → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. FCVG</button>
+            <button type="button" class="opt-btn" data-opt="B">B. FCTG</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ECVG</button>
+            <button type="button" class="opt-btn" data-opt="D">D. FCVG</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) FCVG</div>
+            <div class="explanation">എല്ലാം +2. D+2=F, A+2=C, T+2=V, E+2=G.</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-item" data-qindex="2">
+          <div class="q-text">3. JOURNEY → VPKSOFZ ആയാൽ ACQUIRE → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. BDRJSVF</button>
+            <button type="button" class="opt-btn" data-opt="B">B. VJSFBDR</button>
+            <button type="button" class="opt-btn" data-opt="C">C. RDBVJSF</button>
+            <button type="button" class="opt-btn" data-opt="D">D. JDRBSFV</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) RDBVJSF</div>
+            <div class="explanation">ആദ്യ 3 തിരിച്ചിട്ട് +1: ACQ→BDR→RDB. നടുവിൽ U→V. അവസാന 3 IRE→JSF.</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-item" data-qindex="3">
+          <div class="q-text">4. KING → PRMT ആയാൽ RAIL → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. IZRO</button>
+            <button type="button" class="opt-btn" data-opt="B">B. IZOR</button>
+            <button type="button" class="opt-btn" data-opt="C">C. JZSO</button>
+            <button type="button" class="opt-btn" data-opt="D">D. HZQP</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) IZRO</div>
+            <div class="explanation">വിപരീത ജോഡി (27−n). R↔I, A↔Z, I↔R, L↔O.</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-item" data-qindex="4">
+          <div class="q-text">5. GIVE = 5137, BAT = 924 ആയാൽ GATE = ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 5247</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 5137</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 9247</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 5274</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 5247</div>
+            <div class="explanation">G=5, A=2, T=4, E=7.</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-item" data-qindex="5">
+          <div class="q-text">6. CAT = 24 ആയാൽ DOG = ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 24</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 25</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 26</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 27</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 26</div>
+            <div class="explanation">CAT = 3+1+20 = 24; DOG = 4+15+7 = 26.</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-item" data-qindex="6">
+          <div class="q-text">7. pit dar na = you are good; dar tok pa = good and bad; tim na tok = they are bad. 'they' എന്നതിന്റെ കോഡ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. pit</button>
+            <button type="button" class="opt-btn" data-opt="B">B. dar</button>
+            <button type="button" class="opt-btn" data-opt="C">C. tok</button>
+            <button type="button" class="opt-btn" data-opt="D">D. tim</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (D) tim</div>
+            <div class="explanation">good=dar, are=na, bad=tok. (3)-ൽ ബാക്കി tim = they.</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-item" data-qindex="7">
+          <div class="q-text">8. COILS → DPKOW, ELECT → FMGFX ആയാൽ CREED → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. DPFEE</button>
+            <button type="button" class="opt-btn" data-opt="B">B. DTFHX</button>
+            <button type="button" class="opt-btn" data-opt="C">C. DSGHH</button>
+            <button type="button" class="opt-btn" data-opt="D">D. DSFHX</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) DSGHH</div>
+            <div class="explanation">ക്രമം +1,+1,+2,+3,+4. C+1=D, R+1=S, E+2=G, E+3=H, D+4=H.</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-item" data-qindex="8">
+          <div class="q-text">9. നീലയെ പച്ച എന്നും, പച്ചയെ ചുവപ്പ് എന്നും, ചുവപ്പിനെ വെളുപ്പ് എന്നും, വെളുപ്പിനെ മഞ്ഞ എന്നും വിളിച്ചാൽ രക്തത്തിന്റെ നിറമെന്ത്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. ചുവപ്പ്</button>
+            <button type="button" class="opt-btn" data-opt="B">B. പച്ച</button>
+            <button type="button" class="opt-btn" data-opt="C">C. വെളുപ്പ്</button>
+            <button type="button" class="opt-btn" data-opt="D">D. മഞ്ഞ</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) വെളുപ്പ്</div>
+            <div class="explanation">രക്തത്തിന്റെ യഥാർത്ഥ നിറം ചുവപ്പ്; ചുവപ്പിനെ ഇവിടെ "വെളുപ്പ്" എന്ന് വിളിക്കുന്നു.</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-item" data-qindex="9">
+          <div class="q-text">10. SOUP → TNVO ആയാൽ BOWL → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. CPXK</button>
+            <button type="button" class="opt-btn" data-opt="B">B. CNXK</button>
+            <button type="button" class="opt-btn" data-opt="C">C. APXK</button>
+            <button type="button" class="opt-btn" data-opt="D">D. CNWM</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) CNXK</div>
+            <div class="explanation">ക്രമം +1,−1,+1,−1. B+1=C, O−1=N, W+1=X, L−1=K.</div>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-item" data-qindex="10">
+          <div class="q-text">11. SUN = 54 ആയാൽ MOON = ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 51</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 57</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 48</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 60</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) 57</div>
+            <div class="explanation">SUN: 19+21+14 = 54. MOON: 13+15+15+14 = 57.</div>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-item" data-qindex="11">
+          <div class="q-text">12. 123 = hot filtered coffee; 356 = very hot day; 589 = day and night. 'very'-ന്റെ കോഡ്?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 3</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 5</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 6</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 8</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (C) 6</div>
+            <div class="explanation">(1),(2) പൊതുവായി hot=3; (2),(3) പൊതുവായി day=5; (2)-ൽ ബാക്കി 6 = very.</div>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-item" data-qindex="12">
+          <div class="q-text">13. DOG → WLT ആയാൽ BAT → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. YZG</button>
+            <button type="button" class="opt-btn" data-opt="B">B. YAG</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ZYG</button>
+            <button type="button" class="opt-btn" data-opt="D">D. YZT</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) YZG</div>
+            <div class="explanation">വിപരീത ജോഡി: B↔Y, A↔Z, T↔G.</div>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-item" data-qindex="13">
+          <div class="q-text">14. HDOOR എന്നത് +3 നിയമത്തിൽ കോഡ് ചെയ്തതാണെങ്കിൽ യഥാർത്ഥ വാക്ക് ഏത്? (ഡീകോഡിംഗ്)</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. EALLO</button>
+            <button type="button" class="opt-btn" data-opt="B">B. IEPPS</button>
+            <button type="button" class="opt-btn" data-opt="C">C. GCNNQ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. FBMMP</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) EALLO</div>
+            <div class="explanation">ഡീകോഡിംഗിൽ −3: H−3=E, D−3=A, O−3=L, O−3=L, R−3=O.</div>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-item" data-qindex="14">
+          <div class="q-text">15. 3 4 9 8 എന്ന ഗ്രൂപ്പിന്റെ കോഡ്? (Section 8 നിബന്ധനകൾ)</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. RSXW</button>
+            <button type="button" class="opt-btn" data-opt="B">B. ZSSZ</button>
+            <button type="button" class="opt-btn" data-opt="C">C. ZSXZ</button>
+            <button type="button" class="opt-btn" data-opt="D">D. RSSW</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (B) ZSSZ</div>
+            <div class="explanation">ആദ്യം 3 ഒറ്റ, അവസാനം 8 ഇരട്ട → രണ്ടും Z. 4, 9 പൂർണ്ണ വർഗ്ഗം → 9-ന് 4-ന്റെ കോഡ് S. അതിനാൽ Z S S Z.</div>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-item" data-qindex="15">
+          <div class="q-text">16. SOAK → TSWF, PLAY → QPWT ആയാൽ RACY → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. SEYT</button>
+            <button type="button" class="opt-btn" data-opt="B">B. SFYT</button>
+            <button type="button" class="opt-btn" data-opt="C">C. REZT</button>
+            <button type="button" class="opt-btn" data-opt="D">D. SEZS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) SEYT</div>
+            <div class="explanation">ക്രമം +1,+4,−4,−5. R+1=S, A+4=E, C−4=Y (3−4=−1→25), Y−5=T.</div>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-item" data-qindex="16">
+          <div class="q-text">17. CURIA → FYQFV, DALES → GEKBN ആയാൽ APNEA → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. DTMBV</button>
+            <button type="button" class="opt-btn" data-opt="B">B. DUMAU</button>
+            <button type="button" class="opt-btn" data-opt="C">C. DTMBS</button>
+            <button type="button" class="opt-btn" data-opt="D">D. DTNBV</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) DTMBV</div>
+            <div class="explanation">ക്രമം +3,+4,−1,−3,−5. A+3=D, P+4=T, N−1=M, E−3=B, A−5=V.</div>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-item" data-qindex="17">
+          <div class="q-text">18. GIVE = 5137, BAT = 924 ആയാൽ GATE = ? (Section 3-C-1 ഉദാഹരണം പരിശോധിക്കുക)</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 5247</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 5427</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 5274</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 2547</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 5247</div>
+            <div class="explanation">G=5, A=2, T=4, E=7.</div>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-item" data-qindex="18">
+          <div class="q-text">19. GREAT എന്നത് 14207 എന്ന കോഡിൽ എഴുതിയാൽ EAT = ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. 207</button>
+            <button type="button" class="opt-btn" data-opt="B">B. 142</button>
+            <button type="button" class="opt-btn" data-opt="C">C. 420</button>
+            <button type="button" class="opt-btn" data-opt="D">D. 027</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) 207</div>
+            <div class="explanation">GREAT = G(1)R(4)E(2)A(0)T(7). E=2, A=0, T=7 → 207.</div>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-item" data-qindex="19">
+          <div class="q-text">20. ഒരു കോഡിൽ MOUSE → NPVTF ആയാൽ TIGER → ?</div>
+          <div class="options">
+            <button type="button" class="opt-btn" data-opt="A">A. UJHFS</button>
+            <button type="button" class="opt-btn" data-opt="B">B. UJHGS</button>
+            <button type="button" class="opt-btn" data-opt="C">C. TJHFS</button>
+            <button type="button" class="opt-btn" data-opt="D">D. UJGFS</button>
+          </div>
+          <div class="answer-block">
+            <div class="answer-label">ശരിയുത്തരം: (A) UJHFS</div>
+            <div class="explanation">MOUSE → NPVTF: എല്ലാം +1. TIGER: T+1=U, I+1=J, G+1=H, E+1=F, R+1=S → UJHFS.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 23: MASTER RULE SHEET -->
+    <section class="section" id="sec23">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec23" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">23. മാസ്റ്റർ റൂൾ ഷീറ്റ് (Master Rule Sheet)</span>
+      </h2>
+      <div class="section-body">
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>ക്രമം</th><th>കോഡിംഗ് രീതി</th><th>പരിശോധിക്കേണ്ട നിയമം</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Direct Shift</strong></td><td>എല്ലാ അക്ഷരത്തിനും +n / −n</td></tr>
+              <tr><td>2</td><td><strong>Mixed Shift</strong></td><td>ഓരോ സ്ഥാനത്തിനും വ്യത്യാസം എഴുതി ക്രമം കണ്ടെത്തുക</td></tr>
+              <tr><td>3</td><td><strong>Opposite Letters</strong></td><td>ജോഡികളുടെ തുക 27</td></tr>
+              <tr><td>4</td><td><strong>Half Reversal / Cross</strong></td><td>വാക്ക് പകുതിയാക്കി തിരിച്ചിടൽ + ഷിഫ്റ്റ്</td></tr>
+              <tr><td>5</td><td><strong>Letter to Number</strong></td><td>സ്ഥാനവിലകളുടെ തുക / നേരിട്ടുള്ള മാപ്പിംഗ്</td></tr>
+              <tr><td>6</td><td><strong>Substitution</strong></td><td>യഥാർത്ഥ ഉത്തരം → അതിന്റെ പുതിയ പേര്</td></tr>
+              <tr><td>7</td><td><strong>Fictitious Language</strong></td><td>പൊതു വാക്കുകൾ/കോഡുകൾ വെട്ടിമാറ്റൽ</td></tr>
+              <tr><td>8</td><td><strong>Conditional</strong></td><td>നിബന്ധനകൾ ഓരോന്നായി ഒത്തുനോക്കൽ</td></tr>
+              <tr><td>9</td><td><strong>Decoding</strong></td><td>നിയമത്തിന്റെ വിപരീതം പ്രയോഗിക്കുക</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>23.1 സ്ഥാനവില ഓർമ്മ ഷീറ്റ്</h3>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead><tr><th>കോഡ്</th><th>അക്ഷരങ്ങൾ</th><th>സ്ഥാനവിലകൾ</th></tr></thead>
+            <tbody>
+              <tr><td><strong>EJOTY</strong></td><td>E, J, O, T, Y</td><td>5, 10, 15, 20, 25</td></tr>
+              <tr><td><strong>CFILORUX</strong></td><td>C, F, I, L, O, R, U, X</td><td>3, 6, 9, 12, 15, 18, 21, 24</td></tr>
+              <tr><td><strong>Vowels</strong></td><td>A, E, I, O, U</td><td>1, 5, 9, 15, 21</td></tr>
+              <tr><td><strong>Middle</strong></td><td>M, N</td><td>13, 14</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>23.2 വിപരീത ജോഡി ഷീറ്റ് (തുക = 27)</h3>
+        <div class="pair-grid">
+          <div class="cell">A↔Z</div>
+          <div class="cell">B↔Y</div>
+          <div class="cell">C↔X</div>
+          <div class="cell">D↔W</div>
+          <div class="cell">E↔V</div>
+          <div class="cell">F↔U</div>
+          <div class="cell">G↔T</div>
+          <div class="cell">H↔S</div>
+          <div class="cell">I↔R</div>
+          <div class="cell">J↔Q</div>
+          <div class="cell">K↔P</div>
+          <div class="cell">L↔O</div>
+          <div class="cell">M↔N</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 24: ANSWER KEY & QUICK REVISION -->
+    <section class="section" id="sec24">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec24" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">24. ഉത്തര സൂചിക & Quick Revision</span>
+      </h2>
+      <div class="section-body">
+
+        <h3>24.1 ഉത്തര സൂചിക (Answer Key)</h3>
+        <div style="overflow-x: auto;">
+          <table style="max-width: 680px; margin: 0 auto; text-align: center;">
+            <thead>
+              <tr><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th><th>Q.No</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>(A)</td><td>5</td><td>(A)</td><td>9</td><td>(C)</td><td>13</td><td>(A)</td><td>17</td><td>(A)</td></tr>
+              <tr><td>2</td><td>(A)</td><td>6</td><td>(C)</td><td>10</td><td>(B)</td><td>14</td><td>(A)</td><td>18</td><td>(A)</td></tr>
+              <tr><td>3</td><td>(C)</td><td>7</td><td>(D)</td><td>11</td><td>(B)</td><td>15</td><td>(B)</td><td>19</td><td>(A)</td></tr>
+              <tr><td>4</td><td>(A)</td><td>8</td><td>(C)</td><td>12</td><td>(C)</td><td>16</td><td>(A)</td><td>20</td><td>(A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>24.2 Top Maximum Facts (ഏറ്റവും പ്രധാനപ്പെട്ട വസ്തുതകൾ)</h3>
+        <ol>
+          <li><strong>JOURNEY → VPKSOFZ</strong> ആയാൽ <strong>ACQUIRE → RDBVJSF</strong>.</li>
+          <li><strong>PASTE → SDVWH</strong> ആയാൽ <strong>CATCH → FDWFK</strong> (+3).</li>
+          <li><strong>BARK → DCTM</strong> ആയാൽ <strong>DATE → FCVG</strong> (+2).</li>
+          <li><strong>COILS → DPKOW</strong> ആയാൽ <strong>CREED → DSGHH</strong> (+1,+1,+2,+3,+4).</li>
+          <li>വിപരീത അക്ഷരങ്ങളുടെ സ്ഥാനവിലകളുടെ തുക <strong>27</strong>.</li>
+          <li>5-ന്റെ ഗുണിത സ്ഥാനങ്ങൾ: <strong>EJOTY</strong>.</li>
+          <li><strong>CAT = 24, DOG = 26</strong> (സ്ഥാനവിലകളുടെ തുക).</li>
+          <li>പേരുമാറ്റ കോഡിംഗിൽ യഥാർത്ഥ ഉത്തരത്തിന്റെ <strong>പുതിയ പേര്</strong> ഉത്തരം.</li>
+          <li>മെസ്സേജ് കോഡിംഗിൽ <strong>പൊതു വാക്കുകൾ വെട്ടിമാറ്റി</strong> കോഡ് കണ്ടെത്തുക.</li>
+          <li>ഡീകോഡിംഗിൽ നിയമത്തിന്റെ <strong>വിപരീതം</strong> പ്രയോഗിക്കുക.</li>
+        </ol>
+
+        <h3>24.3 5-Minute / Last-Minute Revision</h3>
+        <div class="last-minute">
+          <span class="box-label">📝 ബുള്ളറ്റ് ഫ്ലാഷ് ലിസ്റ്റ്</span>
+          <ul>
+            <li><strong>Letter Shift:</strong> Forward (+n) | Backward (−n) | Mixed (+1,−1,+1,−1). Z കഴിഞ്ഞാൽ A (26 കുറയ്ക്കുക).</li>
+            <li><strong>Cross:</strong> JOURNEY → VPKSOFZ :: ACQUIRE → <strong>RDBVJSF</strong>.</li>
+            <li><strong>PASTE → SDVWH :: CATCH → FDWFK</strong> (+3).</li>
+            <li><strong>BARK → DCTM :: DATE → FCVG</strong> (+2).</li>
+            <li><strong>Opposites:</strong> A-Z, B-Y, C-X, D-W, E-V, F-U, G-T, H-S, I-R, J-Q, K-P, L-O, M-N (തുക = 27).</li>
+            <li><strong>EJOTY:</strong> E(5), J(10), O(15), T(20), Y(25).</li>
+            <li><strong>Sum Coding:</strong> CAT=24, DOG=26, SUN=54, MOON=57.</li>
+            <li><strong>Substitution:</strong> യഥാർത്ഥ ഉത്തരം → പുതിയ പേര്.</li>
+            <li><strong>Message Coding:</strong> പൊതു വാക്ക് ↔ പൊതു കോഡ്.</li>
+            <li><strong>Decoding:</strong> നിയമം തിരിച്ചിടുക.</li>
+            <li><strong>Smart Trick:</strong> ആദ്യ–അവസാന അക്ഷരം ചെക്ക് ചെയ്ത് ഓപ്ഷൻ വെട്ടുക; എണ്ണം/ആവർത്തന അക്ഷരം പരിശോധിക്കുക. നെഗറ്റീവ് മാർക്ക് ഉണ്ടെങ്കിൽ ഒരു ഓപ്ഷനെങ്കിലും ഉറപ്പായി വെട്ടാൻ കഴിയുമ്പോൾ മാത്രം ഊഹിക്കുക.</li>
+          </ul>
+        </div>
+
+        <h3>24.4 പൊതു ഉപദേശം</h3>
+        <div class="important">
+          <span class="box-label">📝 Teacher's Note</span>
+          <p>കോഡിംഗ്-ഡീകോഡിംഗ് PSC-യിൽ ഏറ്റവും എളുപ്പത്തിൽ സ്കോർ ചെയ്യാവുന്ന ഭാഗങ്ങളിലൊന്നാണ് — കാരണം അടിസ്ഥാന പാറ്റേണുകൾ കുറവാണ്. പ്രധാന ട്രാപ്പുകൾ: <strong>ക്രോസ് കോഡിംഗിൽ ക്രമം തെറ്റൽ, Z കഴിഞ്ഞ് A മറക്കൽ, ഡീകോഡിംഗിൽ നിയമം തിരിച്ചിടാതിരിക്കൽ, പകുതി ശരിയായ ഓപ്ഷൻ, ഒരു ഉദാഹരണം മാത്രം നോക്കി നിയമം ഊഹിക്കൽ</strong> — ഇവ ഓർമ്മിച്ചാൽ പരീക്ഷയിൽ ആശ്ചര്യപ്പെടുത്തുന്ന ഒന്നും ഉണ്ടാകില്ല.</p>
+        </div>
+
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light);">
+          ✅ ഈ അധ്യായത്തിൽ 12.10 കോഡിംഗും ഡീകോഡിംഗും (A–F + Decoding) പൂർണ്ണമായി കവർ ചെയ്തിരിക്കുന്നു.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 25: CORRECTION LOG -->
+    <section class="section" id="sec25">
+      <h2 role="button" tabindex="0" aria-expanded="false">
+        <input type="checkbox" class="section-done-check" data-sec="sec25" title="പൂർത്തിയായി അടയാളപ്പെടുത്തുക">
+        <span class="section-title-text">25. ഈ പതിപ്പിലെ തിരുത്തലുകൾ (Correction Log)</span>
+      </h2>
+      <div class="section-body">
+        <div class="revision">
+          <span class="box-label">📝 തിരുത്തലുകളുടെ ചുരുക്കം</span>
+          <ol>
+            <li><strong>CREED ഉത്തരം തിരുത്തി:</strong> DTFHX → <strong>DSGHH</strong>. പഴയ നിയമം (+1,+2,+1,+2) ELECT/COILS ഉദാഹരണങ്ങളുമായി ചേരില്ലായിരുന്നു. ശരിയായ ക്രമം +1,+1,+2,+3,+4. ഇതോടെ MCQ 8-ലെ ഓപ്ഷനുകളും പുനഃക്രമീകരിച്ചു.</li>
+            <li><strong>BOWL ഉത്തരം തിരുത്തി:</strong> CPXK → <strong>CNXK</strong> (O−1=N, P അല്ല).</li>
+            <li><strong>ചേരുംപടി ചേർക്കുക ചോദ്യം തിരുത്തി:</strong> PASTE-ന്റെ കോഡ് SDVWH ആണ്; FDWFK CATCH-ന്റേതാണ്. പട്ടിക ശരിയാക്കി.</li>
+            <li><strong>ജൂലിയസ് സീസർ:</strong> "റോമാ സാമ്രാജ്യ ചക്രവർത്തി" എന്നത് തിരുത്തി (റിപ്പബ്ലിക്കിലെ സൈന്യാധിപൻ/ഏകാധിപതി).</li>
+            <li><strong>"is called / means" നിയമം:</strong> ദിശ വ്യത്യാസപ്പെടുന്നു എന്ന പ്രസ്താവന അടിസ്ഥാനമില്ലാത്തതിനാൽ ശരിയായ വിശദീകരണം നൽകി.</li>
+            <li><strong>അപൂർണ്ണമായ നിബന്ധനാ കോഡിംഗ് ഉദാഹരണം:</strong> (പട്ടിക ഇല്ലാതിരുന്നത്) പൂർണ്ണ പരിശീലന ചോദ്യമാക്കി.</li>
+            <li><strong>CURIA/APNEA ചോദ്യത്തിന് ഉത്തരം:</strong> (DTMBV) തെളിവോടെ ചേർത്തു.</li>
+            <li><strong>"Snippet 983" പോലുള്ള ഉറവിട അടയാളങ്ങൾ</strong> നീക്കി; PYQ ലേബലുകൾ "ഒത്തുനോക്കി ഉറപ്പാക്കുക" എന്ന നിബന്ധനയോടെ മാറ്റി.</li>
+            <li><strong>പ്രസ്താവന ചോദ്യത്തിലെ</strong> പരീക്ഷാ-ടിപ്പ് രൂപത്തിലുള്ള പ്രസ്താവന മാറ്റി, ശരി/തെറ്റ് തെളിയിക്കാവുന്ന പ്രസ്താവനകൾ ചേർത്തു.</li>
+            <li><strong>പുതുതായി ചേർത്തത്:</strong> പദാവലി, സ്ഥാനവില പട്ടിക, ഡീകോഡിംഗ് വിഭാഗം, മാട്രിക്സ് കോഡിംഗ്, ഫ്ലോചാർട്ട്, Smart Tricks വിഭാഗം, അധിക വസ്തുതകൾ.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>12.10 Coding and Decoding</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
 
 <script>
-window.PART_KEY   = 'mental-ability-12.10-coding-decoding';
-window.PART_TITLE = '12.10 Coding and Decoding';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
+  var sections = Array.from(document.querySelectorAll('.section'));
+  var tocLinks = Array.from(document.querySelectorAll('.toc-nav a'));
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (h2 && !h2.querySelector('.toggle-icon')) {
+      var icon = document.createElement('span');
+      icon.className = 'toggle-icon';
+      icon.textContent = '▾';
+      h2.appendChild(icon);
+    }
+  });
+
+  function toggleSection(sec) {
+    var isCollapsed = sec.classList.toggle('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', !isCollapsed);
+    if (!isCollapsed) {
+      sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function openOnly(sec) {
+    sec.classList.remove('collapsed');
+    var h2 = sec.querySelector('h2');
+    if (h2) h2.setAttribute('aria-expanded', 'true');
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector('h2');
+    if (!h2) return;
+    h2.addEventListener('click', function (e) {
+      if (e.target.classList.contains('section-done-check')) return;
+      toggleSection(sec);
+    });
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('section-done-check')) return;
+        e.preventDefault();
+        toggleSection(sec);
+      }
+    });
+  });
+
+  if (sections.length > 0) { openOnly(sections[0]); }
+
+  var expandAllBtn = document.getElementById('expandAll');
+  var collapseAllBtn = document.getElementById('collapseAll');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.remove('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function () {
+      sections.forEach(function (s) {
+        s.classList.add('collapsed');
+        var h2 = s.querySelector('h2');
+        if (h2) h2.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // THEME TOGGLE
+  var themeBtn = document.getElementById('toggleTheme');
+  var themes = ['light', 'dark', 'sepia'];
+  var currentThemeIdx = 0;
+
+  try {
+    var savedTheme = localStorage.getItem('keralaTheme1210coding');
+    if (savedTheme && themes.indexOf(savedTheme) !== -1) {
+      currentThemeIdx = themes.indexOf(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '📜 Sepia' : savedTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+    }
+  } catch (e) {}
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      var nextTheme = themes[currentThemeIdx];
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      themeBtn.textContent = nextTheme === 'dark' ? '📜 Sepia' : nextTheme === 'sepia' ? '☀️ Light' : '🌙 Dark';
+      try { localStorage.setItem('keralaTheme1210coding', nextTheme); } catch (e) {}
+    });
+  }
+
+  // ACTIVE RECALL
+  var recallBtn = document.getElementById('toggleRecall');
+  if (recallBtn) {
+    recallBtn.addEventListener('click', function () {
+      var active = document.body.classList.toggle('recall-mode');
+      recallBtn.classList.toggle('active', active);
+      document.querySelectorAll('strong.revealed').forEach(function (el) {
+        el.classList.remove('revealed');
+      });
+    });
+
+    document.body.addEventListener('click', function (e) {
+      if (document.body.classList.contains('recall-mode') && e.target.tagName === 'STRONG') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  }
+
+  // LIVE SEARCH
+  var searchInput = document.getElementById('noteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var query = this.value.trim().toLowerCase();
+      sections.forEach(function (sec) {
+        if (!query) {
+          sec.style.display = '';
+          return;
+        }
+        var text = sec.textContent.toLowerCase();
+        if (text.indexOf(query) !== -1) {
+          sec.classList.remove('collapsed');
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      if (!query) {
+        sections.forEach(function (sec) { sec.style.display = ''; });
+      }
+      var nr = document.getElementById('noResults');
+      if (nr) nr.style.display = (query && sections.every(function (s) { return s.style.display === 'none'; })) ? 'block' : 'none';
+    });
+  }
+
+  // PROGRESS
+  var doneChecks = Array.from(document.querySelectorAll('.section-done-check'));
+  var progressFill = document.getElementById('progressFill');
+  var progressPercent = document.getElementById('progressPercent');
+
+  function updateProgress() {
+    var total = doneChecks.length;
+    var checked = doneChecks.filter(function (c) { return c.checked; }).length;
+    var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+  }
+
+  doneChecks.forEach(function (chk) {
+    var secId = chk.getAttribute('data-sec');
+    try {
+      if (localStorage.getItem('keralaSecDone1210coding_' + secId) === '1') {
+        chk.checked = true;
+      }
+    } catch (e) {}
+
+    chk.addEventListener('click', function (e) { e.stopPropagation(); });
+    chk.addEventListener('change', function () {
+      try {
+        if (chk.checked) localStorage.setItem('keralaSecDone1210coding_' + secId, '1');
+        else localStorage.removeItem('keralaSecDone1210coding_' + secId);
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // TOC
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+
+      openOnly(target);
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+
+      var headerOffset = 20;
+      var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observerOptions = { rootMargin: '-15% 0px -75% 0px', threshold: 0 };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach(function (link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+    sections.forEach(function (sec) { observer.observe(sec); });
+  }
+
+  // MCQ
+  var questionItems = Array.from(document.querySelectorAll('.question-item'));
+  var quizPrefix = 'keralaCoding1210Q_';
+
+  function updateScoreboard() {
+    var total = questionItems.length;
+    var correct = 0;
+    var wrong = 0;
+    questionItems.forEach(function (item) {
+      var qIndex = item.getAttribute('data-qindex');
+      if (qIndex === null) return;
+      try {
+        var stored = localStorage.getItem(quizPrefix + qIndex);
+        if (stored) {
+          var parsed = JSON.parse(stored);
+          if (parsed && parsed.saved && parsed.selected && parsed.correctLetter) {
+            if (parsed.selected === parsed.correctLetter) correct++;
+            else wrong++;
+          }
+        }
+      } catch (e) {}
+    });
+    var scTotal = document.getElementById('scTotal');
+    var scCorrect = document.getElementById('scCorrect');
+    var scWrong = document.getElementById('scWrong');
+    if (scTotal) scTotal.textContent = total;
+    if (scCorrect) scCorrect.textContent = correct;
+    if (scWrong) scWrong.textContent = wrong;
+  }
+
+  questionItems.forEach(function (item) {
+    var qIndex = item.getAttribute('data-qindex');
+    if (qIndex === null) return;
+    var storageKey = quizPrefix + qIndex;
+
+    var answerBlock = item.querySelector('.answer-block');
+    var answerLabel = item.querySelector('.answer-block .answer-label');
+    var optionsContainer = item.querySelector('.options');
+    var optionSpans = Array.from(optionsContainer.querySelectorAll('button.opt-btn'));
+
+    var correctLetter = null;
+    if (answerLabel) {
+      var match = answerLabel.textContent.match(/\(([A-D])\)/);
+      if (match) correctLetter = match[1];
+    }
+
+    if (answerBlock) answerBlock.style.display = 'none';
+
+    var state = {
+      selected: null, saved: false, marked: false, locked: false,
+      correctLetter: correctLetter
+    };
+
+    try {
+      var stored = localStorage.getItem(storageKey);
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed) {
+          state.selected = parsed.selected || null;
+          state.saved = !!parsed.saved;
+          state.marked = !!parsed.marked;
+          state.locked = !!parsed.locked;
+          state.correctLetter = parsed.correctLetter || correctLetter;
+        }
+      }
+    } catch (e) {}
+
+    if (state.selected) {
+      optionSpans.forEach(function (span) {
+        if (span.getAttribute('data-opt') === state.selected) {
+          span.classList.add('selected');
+        }
+      });
+    }
+
+    if (state.saved && state.selected && correctLetter) {
+      optionSpans.forEach(function (span) {
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    var controls = document.createElement('div');
+    controls.className = 'q-controls';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'btn-save';
+    saveBtn.textContent = 'Save Answer';
+
+    var showBtn = document.createElement('button');
+    showBtn.type = 'button';
+    showBtn.className = 'btn-show';
+    showBtn.textContent = 'Show Answer';
+
+    var markBtn = document.createElement('button');
+    markBtn.type = 'button';
+    markBtn.className = 'btn-mark';
+    markBtn.textContent = 'Mark for Review';
+
+    var lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn-lock';
+    lockBtn.textContent = '🔒 Lock';
+
+    var statusSpan = document.createElement('span');
+    statusSpan.className = 'q-status';
+    statusSpan.textContent = '';
+
+    controls.appendChild(saveBtn);
+    controls.appendChild(showBtn);
+    controls.appendChild(markBtn);
+    controls.appendChild(lockBtn);
+    controls.appendChild(statusSpan);
+
+    optionsContainer.parentNode.insertBefore(controls, optionsContainer.nextSibling);
+
+    if (state.marked) markBtn.classList.add('active');
+
+    if (state.locked) {
+      applyLock(true);
+      lockBtn.textContent = '🔓 Unlock';
+      statusSpan.textContent = 'Locked';
+    }
+
+    function persist() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function showResult() {
+      if (!state.selected || !correctLetter) return;
+      optionSpans.forEach(function (span) {
+        span.classList.remove('correct', 'wrong');
+        var opt = span.getAttribute('data-opt');
+        if (opt === correctLetter) span.classList.add('correct');
+        if (opt === state.selected && opt !== correctLetter) span.classList.add('wrong');
+      });
+      statusSpan.textContent = (state.selected === correctLetter) ? '✅ Correct' : '❌ Wrong';
+      if (answerBlock) answerBlock.style.display = 'block';
+    }
+
+    function applyLock(locked) {
+      state.locked = locked;
+      optionSpans.forEach(function (span) {
+        if (locked) span.classList.add('locked');
+        else span.classList.remove('locked');
+      });
+      if (locked) {
+        lockBtn.textContent = '🔓 Unlock';
+        statusSpan.textContent = 'Locked';
+        if (state.selected) showResult();
+      } else {
+        lockBtn.textContent = '🔒 Lock';
+        if (!state.saved) statusSpan.textContent = 'Unlocked';
+        else showResult();
+      }
+      persist();
+    }
+
+    optionSpans.forEach(function (span) {
+      span.addEventListener('click', function () {
+        if (state.locked) return;
+        optionSpans.forEach(function (s) {
+          s.classList.remove('selected', 'correct', 'wrong');
+        });
+        span.classList.add('selected');
+        state.selected = span.getAttribute('data-opt');
+        state.saved = false;
+        statusSpan.textContent = '';
+        if (answerBlock) answerBlock.style.display = 'none';
+        persist();
+      });
+    });
+
+    saveBtn.addEventListener('click', function () {
+      if (state.locked) return;
+      if (!state.selected) {
+        statusSpan.textContent = 'Select an option';
+        return;
+      }
+      state.saved = true;
+      persist();
+      showResult();
+      statusSpan.textContent += ' — Saved';
+      updateScoreboard();
+    });
+
+    showBtn.addEventListener('click', function () {
+      if (answerBlock) {
+        if (answerBlock.style.display === 'none' || answerBlock.style.display === '') {
+          answerBlock.style.display = 'block';
+        } else {
+          answerBlock.style.display = 'none';
+        }
+      }
+    });
+
+    markBtn.addEventListener('click', function () {
+      state.marked = !state.marked;
+      markBtn.classList.toggle('active', state.marked);
+      persist();
+    });
+
+    lockBtn.addEventListener('click', function () {
+      applyLock(!state.locked);
+    });
+  });
+
+  updateScoreboard();
+
+  function resetAllQuiz() {
+    if (!confirm('എല്ലാ ഉത്തരങ്ങളും റീസെറ്റ് ചെയ്യണോ? (Reset all saved quiz answers?)')) return;
+    try {
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.indexOf(quizPrefix) === 0) localStorage.removeItem(key);
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
+  var resetBtn = document.getElementById('resetQuiz');
+  if (resetBtn) resetBtn.addEventListener('click', resetAllQuiz);
+  var resetBtnBottom = document.getElementById('resetQuizBottom');
+  if (resetBtnBottom) resetBtnBottom.addEventListener('click', resetAllQuiz);
+});
+</script>
+
 </body>
 </html>
