@@ -122,5 +122,18 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 75,
     "tag": "BOTH",
     "subject": "Uncategorised"
+  },
+  {
+    "id": "vfa",
+    "key": "vfa",
+    "title": "Kerala PSC VFA Mock Test — 94/26-M",
+    "titleMl": "",
+    "updated": "2026-11-08",
+    "desc": "100 questions",
+    "file": "vfa.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
   }
 ];

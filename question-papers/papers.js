@@ -137,6 +137,19 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-08"
   },
   {
+    "id": "vfa",
+    "kind": "html",
+    "title": "Kerala PSC VFA Mock Test — 94/26-M",
+    "titleMl": "",
+    "url": "subjects/vfa.html",
+    "file": "question-papers/subjects/vfa.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "",
+    "updated": "2026-11-08"
+  },
+  {
     "id": "kerala-psc-vfa-mock-test-092-2026-m",
     "kind": "html",
     "title": "Kerala PSC VFA Mock Test 092/2026-M",
