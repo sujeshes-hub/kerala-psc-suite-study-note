@@ -12,10 +12,10 @@ window.MOCK_TESTS_SUBJECTS = [
     "title": "Kerala PSC – Kerala Administration, Governance & Important Acts",
     "titleMl": "",
     "updated": "2026-11-08",
-    "desc": "100 questions",
+    "desc": "101 questions",
     "file": "Kerala Administration, Governance & Acts.html",
-    "qs": 100,
-    "duration": 0,
+    "qs": 101,
+    "duration": 76,
     "tag": "BOTH",
     "subject": "Kerala Admin"
   },
