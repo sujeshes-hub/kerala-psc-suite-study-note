@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kerala PSC General English – Enhanced Mock Test</title>
+
+<!-- ══════ BLOCKING SYNC LOADER ══════ -->
+<script>
+  (function(){
+    var p = location.pathname.replace(/\\/g,"/"),
+        m = p.match(/^(.*?\/)(?:topics|chapters|question-papers|mock-tests|subjects)\//),
+        b = m ? m[1] : p.replace(/[^\/]*$/,"");
+    if (!window.KPSC_Sync) document.write('<script src="' + b + 'assets/js/sync.js"><\/script>');
+  })();
+</script>
 <style>
 :root{
   --font-mal:'Noto Sans Malayalam','Nirmala UI','Segoe UI',system-ui,sans-serif;
@@ -211,14 +221,21 @@ body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);line-he
 .nb-related{background:var(--gray-tint);border-left-color:var(--navy)}
 .nb-pin,.nb-warn{background:var(--red-tint);border-left-color:var(--red)}
 .nb-hook{background:var(--gold-tint);border-left-color:var(--gold)}
+
+/* ===== THEMES + extras ===== */
+[data-theme="dark"]{--ink:#cdd6f4;--ink-soft:#a6adc8;--paper:#1e1e2e;--panel:#252537;--line:#3a3a52;--navy:#cba6f7;--navy-deep:#181825;--navy-tint:#2a2438;--gold:#f9e2af;--gold-tint:#3a3524;--green:#a6e3a1;--green-tint:#1e2e1e;--red:#f38ba8;--red-tint:#2e1e24;--amber:#fab387;--amber-tint:#2e241e;--gray-tint:#1e1e2e;--cyan:#89dceb;--cyan-tint:#1c2a30;--purple:#cba6f7;--purple-tint:#2a2438}
+[data-theme="sepia"]{--ink:#433422;--ink-soft:#65533c;--paper:#fdf6e3;--panel:#fefcf4;--line:#d3cbb7;--navy:#8b5a2b;--navy-deep:#5c3d1e;--navy-tint:#f0e6d2;--gold:#b8860b;--gold-tint:#f5e8c0;--gray-tint:#f0e8d8}
+.theme-btn{padding:8px 12px;border-radius:var(--radius-sm);border:2px solid var(--gold);background:transparent;color:#fdf3d6;font-family:var(--font-ui);font-size:.85rem;font-weight:700;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:4px}
+.theme-btn:hover{background:var(--gold);color:var(--navy-deep)}
 </style>
 </head>
 <body>
-<header class="header" id="testHeader">
+<header class="header" id="testHeader" style="display:none;">
 <span class="header-title">Kerala PSC General English – Enhanced Mock Test</span>
 <div class="header-right">
 <div class="timer-box" id="timerBox"><span>⏱</span><span id="timerDisplay">75:00</span></div>
 <span class="save-status" id="saveStatus">💾 Saved</span>
+<button class="theme-btn" id="themeBtn" onclick="cycleTheme()">🌙 Dark</button>
 <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ Pause</button>
 </div>
 </header>
@@ -248,7 +265,9 @@ body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);line-he
 </div>
 </div>
 
-<div class="main-container" id="testView">
+<div id="syncLoader" style="text-align:center;margin-top:50px;font-weight:bold;color:var(--navy);font-size:1.2rem;">☁️ Checking cloud for saved progress...</div>
+
+<div class="main-container" id="testView" style="display:none;">
 <div class="question-panel" id="questionPanel">
 <div class="q-meta"><span class="q-number" id="qNumber">Question 1</span><span class="q-subject" id="qSubject">Loading...</span></div>
 <div class="q-text" id="qText">Loading...</div>
@@ -314,9 +333,36 @@ body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);line-he
    ============================================================ */
 
 const STORAGE_KEY = 'kpsc_gen_eng_enhanced_v2';
-const STORAGE_VERSION = 2;
+const STORAGE_VERSION = 3;
 const SECONDS_PER_QUESTION = 45;
 const NEGATIVE_MARKING = 0.33;
+/* Option shuffle: set true to randomise option order each attempt.
+   (Enabled. Note: some note text may mention original option letters.) */
+const SHUFFLE_OPTIONS = true;
+
+/* ========== THEME ========== */
+let themeIndex = 0;
+const THEMES = ['light','dark','sepia'];
+const THEME_ICONS = ['🌙 Dark','📜 Sepia','☀️ Light'];
+function cycleTheme(){
+  themeIndex = (themeIndex + 1) % THEMES.length;
+  document.documentElement.setAttribute('data-theme', THEMES[themeIndex]);
+  document.getElementById('themeBtn').textContent = THEME_ICONS[themeIndex];
+  try{ localStorage.setItem('kpsc_theme', THEMES[themeIndex]); }catch(e){}
+}
+(function loadTheme(){
+  try{
+    const s = localStorage.getItem('kpsc_theme');
+    if (s && THEMES.includes(s)){ themeIndex = THEMES.indexOf(s); document.documentElement.setAttribute('data-theme', s); }
+  }catch(e){}
+})();
+function makeShuffleOrder(n){
+  const a = Array.from({length:n},(_,i)=>i);
+  for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function newOrder(q){ return SHUFFLE_OPTIONS ? makeShuffleOrder(q.options.length) : q.options.map((_,i)=>i); }
+function optText(o){ return String(o||'').replace(/^[A-D]\)\s*/,''); }
 
 const sourceQuestions = [
 /* Q1 */
@@ -5441,13 +5487,14 @@ function resumeAttempt(){
   timeRemaining = saved.timeRemaining;
   currentIndex = Math.min(saved.currentIndex, questions.length - 1);
   isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
-  questionStates = saved.questionStates.map(st => ({
+  questionStates = saved.questionStates.map((st, i) => ({
     selectedOption: (st && typeof st.selectedOption === 'number') ? st.selectedOption : null,
     status: (st && (st.status === 'saved' || st.status === 'revealed')) ? st.status : 'idle',
     markedForReview: !!(st && st.markedForReview),
-    visited: !!(st && st.visited)
+    visited: !!(st && st.visited),
+    shuffleOrder: (st && Array.isArray(st.shuffleOrder) && st.shuffleOrder.length === questions[i].options.length) ? st.shuffleOrder : newOrder(questions[i])
   }));
-  while (questionStates.length < questions.length) questionStates.push({selectedOption:null, status:'idle', markedForReview:false, visited:false});
+  while (questionStates.length < questions.length) questionStates.push({selectedOption:null, status:'idle', markedForReview:false, visited:false, shuffleOrder:newOrder(questions[questionStates.length])});
   questionStates.length = questions.length;
   if (!questionStates[currentIndex].visited) questionStates[currentIndex].visited = true;
   hideBanner();
@@ -5463,7 +5510,7 @@ function startNewTest(){
   timeRemaining = questions.length * SECONDS_PER_QUESTION;
   currentIndex = 0;
   isSubmitted = false; isPaused = false; isAutoPaused = false; isStudyPaused = false;
-  questionStates = questions.map(() => ({selectedOption:null, status:'idle', markedForReview:false, visited:false}));
+  questionStates = questions.map(q => ({selectedOption:null, status:'idle', markedForReview:false, visited:false, shuffleOrder:newOrder(q)}));
   questionStates[0].visited = true;
   launchTest();
 }
@@ -5486,10 +5533,18 @@ function launchTest(){
   updateStats();
   saveAttempt();
 }
-function initTest(){
+async function initTest(){
+  if (window.KPSC_Sync && window.KPSC_Sync.whenReady){
+    try{ await window.KPSC_Sync.whenReady(4000); }catch(e){}
+  }
+  const ld = document.getElementById('syncLoader'); if (ld) ld.style.display = 'none';
+  const tb = document.getElementById('themeBtn'); if (tb) tb.textContent = THEME_ICONS[themeIndex];
   if (getSavedAttempt()) checkSavedAndShowBanner();
   else startNewTest();
 }
+window.addEventListener('kpsc-sync-applied', function(e){
+  if (!isSubmitted && !isPaused && !isStudyPaused){ e.preventDefault(); console.log('Cloud data merged in background.'); }
+});
 
 /* ========== TIMER ========== */
 function tickTimer(){
@@ -5576,10 +5631,16 @@ function resumeStudy(){
 }
 
 /* ========== RENDER ========== */
+let lastOpenedIndex = -1;
 function renderQuestion(){
   const q = questions[currentIndex];
   const st = questionStates[currentIndex];
   st.visited = true;
+  /* Reshuffle options every time an unanswered question is opened */
+  if (SHUFFLE_OPTIONS && currentIndex !== lastOpenedIndex && st.status !== 'saved' && st.status !== 'revealed'){
+    st.shuffleOrder = makeShuffleOrder(q.options.length);
+  }
+  lastOpenedIndex = currentIndex;
   document.getElementById('qNumber').textContent = 'Question ' + (currentIndex + 1);
   document.getElementById('qSubject').textContent = q.subject;
   document.getElementById('qText').textContent = q.question;
@@ -5597,10 +5658,11 @@ function renderOptions(){
   const list = document.getElementById('optionsList');
   list.innerHTML = '';
   const locked = st.status === 'saved' || st.status === 'revealed';
-  q.options.forEach((opt, i) => {
+  const order = st.shuffleOrder || q.options.map((_, i) => i);
+  order.forEach((i, pos) => {
     const btn = document.createElement('button');
     btn.className = 'option-btn';
-    btn.textContent = opt;
+    btn.textContent = SHUFFLE_OPTIONS ? (String.fromCharCode(65 + pos) + ') ' + optText(q.options[i])) : q.options[i];
     if (locked){
       btn.classList.add('locked');
       if (i === q.correct) btn.classList.add('correct-highlight');
@@ -5623,12 +5685,12 @@ function renderExplanation(){
   const box = document.getElementById('explanationBox');
   const content = document.getElementById('expContent');
   if (st.status === 'saved' || st.status === 'revealed'){
-    const ans = '<div class="exp-answer">ശരിയായ ഉത്തരം: <strong>' + escapeHtml(q.options[q.correct]) + '</strong></div>';
+    const ans = '<div class="exp-answer">ശരിയായ ഉത്തരം: <strong>' + escapeHtml(SHUFFLE_OPTIONS ? optText(q.options[q.correct]) : q.options[q.correct]) + '</strong></div>';
     let verdict = '';
     if (st.status === 'saved' && st.selectedOption !== null){
       verdict = (st.selectedOption === q.correct)
         ? '<span class="exp-correct">✔ Correct!</span>'
-        : '<span class="exp-wrong">✘ Wrong.</span> നിങ്ങളുടെ ഉത്തരം: ' + escapeHtml(q.options[st.selectedOption]);
+        : '<span class="exp-wrong">✘ Wrong.</span> നിങ്ങളുടെ ഉത്തരം: ' + escapeHtml(SHUFFLE_OPTIONS ? optText(q.options[st.selectedOption]) : q.options[st.selectedOption]);
     }
     content.innerHTML = (verdict ? '<div class="exp-verdict">' + verdict + '</div>' : '') + ans +
       '<div class="exp-text">' + escapeHtml(q.explanation) + '</div>';
@@ -5683,8 +5745,11 @@ function renderLearningPanel(){
   }
   if (q.optionAnalysis && q.optionAnalysis.length){
     let inner = '';
-    q.optionAnalysis.forEach((oa, i) => {
-      inner += '<div class="lp-option-item ' + (i === q.correct ? 'correct' : 'wrong') + '">' + escapeHtml(oa) + '</div>';
+    const ord = st.shuffleOrder || q.optionAnalysis.map((_, i) => i);
+    ord.forEach((i, pos) => {
+      if (q.optionAnalysis[i] === undefined) return;
+      const txt = SHUFFLE_OPTIONS ? String.fromCharCode(65 + pos) + ') ' + optText(q.optionAnalysis[i]) : q.optionAnalysis[i];
+      inner += '<div class="lp-option-item ' + (i === q.correct ? 'correct' : 'wrong') + '">' + escapeHtml(txt) + '</div>';
     });
     html += lpSection(2, 'options', '🔍 Option-by-Option Analysis / ഓരോ ഓപ്ഷനും', inner);
   }
@@ -5939,9 +6004,10 @@ document.addEventListener('keydown', (e) => {
   const st = questionStates[currentIndex];
   const locked = st.status === 'saved' || st.status === 'revealed';
   if (e.key >= '1' && e.key <= '4' && !locked){
-    const idx = parseInt(e.key, 10) - 1;
-    if (idx < questions[currentIndex].options.length){
-      st.selectedOption = idx;
+    const pos = parseInt(e.key, 10) - 1;
+    const ord = st.shuffleOrder || questions[currentIndex].options.map((_, i) => i);
+    if (pos < ord.length){
+      st.selectedOption = ord[pos];
       renderOptions(); renderActionButtons(); throttledSave();
       e.preventDefault();
     }
@@ -5959,6 +6025,8 @@ document.addEventListener('keydown', (e) => {
     if (!locked){ showAnswer(); e.preventDefault(); }
   } else if (e.key.toLowerCase() === 'p'){
     togglePause(); e.preventDefault();
+  } else if (e.key.toLowerCase() === 't'){
+    cycleTheme(); e.preventDefault();
   }
 });
 
@@ -5979,6 +6047,5 @@ window.addEventListener('beforeunload', (e) => {
 /* ========== INIT ========== */
 initTest();
 </script>
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
 </body>
 </html>
