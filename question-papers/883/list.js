@@ -7,15 +7,15 @@
    ===================================================================== */
 window.MOCK_TESTS_883 = [
   {
-    "id": "1kpsc-legal-metrology-883-2025",
-    "key": "1kpsc-legal-metrology-883-2025",
-    "title": "Kerala PSC — Inspecting Assistant (Legal Metrology) | Cat. 883/2025",
+    "id": "kpsc-883-2025-legal-metrology-mock-test",
+    "key": "kpsc-883-2025-legal-metrology-mock-test",
+    "title": "Kerala PSC Mock Test – Inspecting Assistant (Legal Metrology) 883/2025",
     "titleMl": "",
-    "updated": "2026-11-07",
-    "desc": "100 questions",
-    "file": "1kpsc-legal-metrology-883-2025.html",
-    "qs": 100,
-    "duration": 0,
+    "updated": "2026-11-08",
+    "desc": "1 questions",
+    "file": "kpsc-883-2025-legal-metrology-mock-test.html",
+    "qs": 1,
+    "duration": 1,
     "tag": "883"
   },
   {
@@ -23,7 +23,7 @@ window.MOCK_TESTS_883 = [
     "key": "qp-883-1",
     "title": "KPSC Inspecting Assistant (Legal Metrology) – Mock Test 9",
     "titleMl": "",
-    "updated": "2026-11-07",
+    "updated": "2026-11-08",
     "desc": "100 questions",
     "file": "qp-883-1.html",
     "qs": 100,
