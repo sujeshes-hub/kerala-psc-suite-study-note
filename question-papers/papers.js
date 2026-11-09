@@ -104,8 +104,8 @@ window.KPSC_PAPERS = [
     "titleMl": "",
     "url": "subjects/Kerala%20Administration%2C%20Governance%20%26%20Acts.html",
     "file": "question-papers/subjects/Kerala Administration, Governance & Acts.html",
-    "qs": 100,
-    "duration": 0,
+    "qs": 101,
+    "duration": 76,
     "tag": "BOTH",
     "subject": "",
     "updated": "2026-11-08"
