@@ -11,7 +11,7 @@ window.MOCK_TESTS_883 = [
     "key": "kpsc-883-2025-legal-metrology-mock-test",
     "title": "Kerala PSC Mock Test – Inspecting Assistant (Legal Metrology) 883/2025",
     "titleMl": "",
-    "updated": "2026-11-08",
+    "updated": "2026-11-09",
     "desc": "1 questions",
     "file": "kpsc-883-2025-legal-metrology-mock-test.html",
     "qs": 1,
@@ -19,11 +19,23 @@ window.MOCK_TESTS_883 = [
     "tag": "883"
   },
   {
+    "id": "nike-test-metro",
+    "key": "nike-test-metro",
+    "title": "Kerala PSC Inspecting Assistant (Legal Metrology) – Mock Test 883/2025",
+    "titleMl": "",
+    "updated": "2026-11-09",
+    "desc": "101 questions",
+    "file": "nike test metro.html",
+    "qs": 101,
+    "duration": 91,
+    "tag": "883"
+  },
+  {
     "id": "qp-883-1",
     "key": "qp-883-1",
     "title": "KPSC Inspecting Assistant (Legal Metrology) – Mock Test 9",
     "titleMl": "",
-    "updated": "2026-11-08",
+    "updated": "2026-11-09",
     "desc": "100 questions",
     "file": "qp-883-1.html",
     "qs": 100,
