@@ -182,6 +182,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   .option-btn{padding:11px 14px;font-size:.86rem}
   .btn{padding:8px 12px;font-size:.78rem}
 }
+
+.opt-card{border:1px solid var(--border);border-left-width:4px;border-radius:var(--radius-sm);padding:9px 12px;margin-bottom:9px;background:var(--bg)}
+.opt-card.opt-good{border-left-color:var(--green)}.opt-card.opt-bad{border-left-color:var(--red)}
+.opt-main{font-weight:600;white-space:pre-line}
+.opt-rej{margin-top:4px;color:var(--secondary);font-size:.82rem;white-space:pre-line}
+.opt-final{font-weight:600;color:var(--primary);border-top:1px dashed var(--border);padding-top:8px}
+.di-learn details{margin-top:8px}
 </style>
 </head>
 <body>
@@ -3906,31 +3913,79 @@ function renderExplanation() {
       if (st.selectedOption === correctIdx) {
         prefix = '<span class="exp-correct">✔ ശരി!</span>\n\n';
       } else {
-        prefix = '<span class="exp-wrong">✘ തെറ്റ്.</span> ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + correctIdx) + '\n\n';
+        prefix = '<span class="exp-wrong">✘ തെറ്റ്.</span>\n\n';
       }
     } else if (st.status === 'revealed') {
-      prefix = '<span class="exp-correct">✔ ശരിയായ ഉത്തരം: ' + String.fromCharCode(65 + correctIdx) + '</span>\n\n';
+      prefix = '';
     }
-    content.innerHTML = prefix + escapeHtml(q.explanation);
-    box.classList.add('visible');
+    const expText = dedupeExplanation(q);
+    content.innerHTML = prefix + escapeHtml(expText);
+    box.classList.toggle('visible', !!(prefix || expText));
   } else {
     box.classList.remove('visible');
     content.innerHTML = '';
   }
 }
 
-function makeLearnSection(title, content, isArray) {
-  if (!content) return '';
-  let body = '';
-  if (isArray && Array.isArray(content)) {
-    body = content.map(txt => '<div class="learn-para">' + escapeHtml(txt) + '</div>').join('');
-  } else if (typeof content === 'string') {
-    body = escapeHtml(content);
+
+/* ===== Structured, de-duplicated study guide (render-time only; question data is never modified) ===== */
+function normTxt(s){return String(s||'').replace(/[\s•\-–—:;,.()\[\]'"‘’“”|→]+/g,'').toLowerCase();}
+function dropSeenLines(text, seen){
+  if (!text) return '';
+  const out = String(text).split('\n').filter(l => {
+    const n = normTxt(l);
+    return !n || n.length < 8 || seen.indexOf(n) === -1;
+  });
+  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+function dedupeExplanation(q){
+  let e = String(q.explanation || '').trim();
+  e = e.replace(/^ഉത്തരം\s*:\s*\(?[A-Da-d]\)?\s*/, '');           // answer letter is already shown in the Verified box
+  const opt = String(q.options[(q.verified !== null && q.verified !== undefined) ? q.verified : q.correct] || '').replace(/^\(?[A-D]\)\s*/, '');
+  if (opt && normTxt(e).indexOf(normTxt(opt)) === 0 && normTxt(e).length === normTxt(opt).length) e = '';   // pure repeat of the option text
+  return e.trim();
+}
+function guideSection(title, bodyHtml, open){
+  if (!bodyHtml) return '';
+  return '<details class="learn-item"' + (open ? ' open' : '') + '><summary>' + title + '</summary><div class="learn-content">' + bodyHtml + '</div></details>';
+}
+function paras(text){
+  return String(text).split(/\n{2,}/).map(p => '<div class="learn-para">' + escapeHtml(p.trim()) + '</div>').join('');
+}
+function buildGuideSections(q){
+  const L = q.learn; if (!L) return '';
+  let html = '';
+  const seen = [];
+  const remember = s => { if (s) String(s).split('\n').forEach(l => { const n = normTxt(l); if (n) seen.push(n); }); };
+
+  if (L.beginner) { html += guideSection('🧑‍🎓 Detailed Beginner Explanation', paras(L.beginner), true); remember(L.beginner); }
+  if (L.storyline) { html += guideSection('🎬 Step 1 · Understand the Topic (കഥ രൂപത്തിൽ)', paras(L.storyline), !L.beginner); remember(L.storyline); }
+  if (L.howToFind) { html += guideSection('🧭 Step 2 · How to Find the Answer', paras(L.howToFind), false); remember(L.howToFind); }
+
+  const A = Array.isArray(L.optionAnalysis) ? L.optionAnalysis : [];
+  const R = Array.isArray(L.rejection) ? L.rejection : [];
+  if (A.length && R.length >= A.length) {
+    let body = '';
+    A.forEach((a, i) => {
+      const good = /[—-]\s*ശരി/.test(a) && !/[—-]\s*തെറ്റ്/.test(a);
+      let r = String(R[i] || '').replace(/^Option\s*[A-D]\s*:\s*/i, '');
+      if (normTxt(a).indexOf(normTxt(r)) !== -1) r = '';
+      body += '<div class="opt-card ' + (good ? 'opt-good' : 'opt-bad') + '"><div class="opt-main">' + escapeHtml(a) + '</div>' +
+              (r ? '<div class="opt-rej">' + (good ? '✅ ' : '🚫 ') + escapeHtml(r) + '</div>' : '') + '</div>';
+    });
+    R.slice(A.length).forEach(x => { body += '<div class="learn-para opt-final">' + escapeHtml(x) + '</div>'; });
+    html += guideSection('🔍 Step 3 · Every Option Checked & Eliminated', body, false);
   } else {
-    return '';
+    if (A.length) html += guideSection('🔍 Step 3 · Option Analysis', A.map(x => '<div class="learn-para">' + escapeHtml(x) + '</div>').join(''), false);
+    if (R.length) html += guideSection('🚫 Option Rejection Method', R.map(x => '<div class="learn-para">' + escapeHtml(x) + '</div>').join(''), false);
   }
-  if (!body) return '';
-  return '<details class="learn-item"><summary>' + title + '</summary><div class="learn-content">' + body + '</div></details>';
+
+  if (L.memoryTrick) html += guideSection('🧠 Step 4 · Memory Trick', paras(L.memoryTrick), false);
+  const rel = dropSeenLines(L.relatedFacts, seen);
+  if (rel) { html += guideSection('📚 Step 5 · Related Facts & Exam Traps', paras(rel), false); remember(rel); }
+  const qr = dropSeenLines(L.quickRevision, seen);
+  if (qr) html += guideSection('⚡ Quick Revision', paras(qr), false);
+  return html;
 }
 
 function renderLearnBlocks() {
@@ -3938,20 +3993,8 @@ function renderLearnBlocks() {
   const st = questionStates[currentIndex];
   const box = document.getElementById('learnBox');
   const show = st.status === 'saved' || st.status === 'revealed';
-  if (!show || !q.learn) {
-    box.classList.remove('visible');
-    box.innerHTML = '';
-    return;
-  }
-  let html = '<div class="learn-header">🆕 Added by review</div>';
-  html += makeLearnSection('🎬 Beginner Storyline Guide (കഥ രൂപത്തിൽ)', q.learn.storyline);
-  html += makeLearnSection('🔍 Analysis of EVERY Option', q.learn.optionAnalysis, true);
-  html += makeLearnSection('🚫 Option Rejection Method', q.learn.rejection, true);
-  html += makeLearnSection('🧭 How to Find the Answer Without Memorising', q.learn.howToFind);
-  html += makeLearnSection('🧠 Memory Trick', q.learn.memoryTrick);
-  html += makeLearnSection('📚 Related Facts & Exam Traps', q.learn.relatedFacts);
-  html += makeLearnSection('⚡ Quick Revision', q.learn.quickRevision);
-  box.innerHTML = html;
+  if (!show || !q.learn) { box.classList.remove('visible'); box.innerHTML = ''; return; }
+  box.innerHTML = '<div class="learn-header">📖 Beginner Study Guide</div>' + buildGuideSections(q);
   box.classList.add('visible');
 }
 
@@ -4193,7 +4236,7 @@ function renderResults() {
         ? '<div class="di-verified"><span class="status-badge ' + statusClass(q.status) + '">' + escapeHtml(q.status || 'Verified') + '</span> Verified answer: ' + escapeHtml(q.options[q.verified]) + (q.correct !== q.verified ? ' <em>(corrected from original key)</em>' : '') + '</div>'
         : '') +
       (q.correctionNote ? '<div class="di-info" style="color:var(--orange);margin-top:4px;"><strong>Correction note:</strong> ' + escapeHtml(q.correctionNote) + '</div>' : '') +
-      '<div class="di-explanation">' + escapeHtml(q.explanation) + '</div>' +
+      (dedupeExplanation(q) ? '<div class="di-explanation">' + escapeHtml(dedupeExplanation(q)) + '</div>' : '') +
       (q.learn ? renderLearnForResult(q) : '') +
       '</div>';
   });
@@ -4202,29 +4245,8 @@ function renderResults() {
 }
 
 function renderLearnForResult(q) {
-  const L = q.learn;
-  function detail(title, content, isArray) {
-    if (!content) return '';
-    let body = '';
-    if (isArray && Array.isArray(content)) {
-      body = content.map(t => '<div class="learn-para">' + escapeHtml(t) + '</div>').join('');
-    } else if (typeof content === 'string') {
-      body = escapeHtml(content);
-    } else {
-      return '';
-    }
-    return '<details><summary>' + title + '</summary><div class="learn-content">' + body + '</div></details>';
-  }
-  let html = '<div class="di-learn"><details><summary>🆕 Added by review</summary><div class="learn-content">';
-  html += detail('🎬 Storyline', L.storyline);
-  html += detail('🔍 Option Analysis', L.optionAnalysis, true);
-  html += detail('🚫 Rejection Method', L.rejection, true);
-  html += detail('🧭 How to Find', L.howToFind);
-  html += detail('🧠 Memory Trick', L.memoryTrick);
-  html += detail('📚 Related Facts', L.relatedFacts);
-  html += detail('⚡ Quick Revision', L.quickRevision);
-  html += '</div></details></div>';
-  return html;
+  if (!q.learn) return '';
+  return '<div class="di-learn"><details><summary>📖 Beginner Study Guide</summary>' + buildGuideSections(q) + '</details></div>';
 }
 
 function restartTest() {
