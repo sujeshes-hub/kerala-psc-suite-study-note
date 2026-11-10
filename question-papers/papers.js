@@ -17,7 +17,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "mvd-learner-test",
@@ -30,7 +30,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kpsc-073-2026-mock",
@@ -43,7 +43,7 @@ window.KPSC_PAPERS = [
     "duration": 3,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-test8-hard-mock-100q",
@@ -56,7 +56,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-test-11-2-11-26",
@@ -69,7 +69,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-full-mock-test-30-10-26-100",
@@ -82,7 +82,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "physics-mock-test",
@@ -95,7 +95,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-administration-governance-acts",
@@ -108,7 +108,7 @@ window.KPSC_PAPERS = [
     "duration": 76,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "extreme-hard-mock-test-15",
@@ -121,7 +121,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-vfa-mock-test",
@@ -134,7 +134,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "vfa",
@@ -147,7 +147,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-vfa-mock-test-092-2026-m",
@@ -160,7 +160,7 @@ window.KPSC_PAPERS = [
     "duration": 90,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "university-assistant-mock-test-91-26-m",
@@ -173,7 +173,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kpsc-arithmetic-mental-ability-mock",
@@ -186,7 +186,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kpsc-883-2025-legal-metrology-mock-test",
@@ -199,7 +199,7 @@ window.KPSC_PAPERS = [
     "duration": 1,
     "tag": "883",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-mock-test-7-restructured",
@@ -212,7 +212,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "hard-moke-test-6",
@@ -225,7 +225,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-573-005-full-mock-5",
@@ -238,7 +238,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-573-003-full-mock-3",
@@ -251,7 +251,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-573-004-full-mock-4",
@@ -264,7 +264,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "extreme-hard-mock-test-14",
@@ -277,7 +277,7 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "hard-mock-test-3",
@@ -290,7 +290,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "hard-mock-test-2",
@@ -303,7 +303,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-ja-assistant-grade-ii-hard-mock-test-1",
@@ -316,7 +316,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-573-006-full-mock-6",
@@ -329,20 +329,20 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "nike-test-metro",
     "kind": "html",
     "title": "Kerala PSC Inspecting Assistant (Legal Metrology) – Mock Test 883/2025",
     "titleMl": "",
-    "url": "883/nike%20test%20metro.html",
-    "file": "question-papers/883/nike test metro.html",
+    "url": "883/nike_test_metro.html",
+    "file": "question-papers/883/nike_test_metro.html",
     "qs": 101,
     "duration": 91,
     "tag": "883",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-history-kerala-india-world",
@@ -355,7 +355,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "hard-mock-test-5",
@@ -368,7 +368,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kpsc-mock-test-10",
@@ -381,7 +381,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-geography",
@@ -394,7 +394,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "english1",
@@ -407,7 +407,7 @@ window.KPSC_PAPERS = [
     "duration": 76,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-economics",
@@ -420,7 +420,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kerala-psc-constitution-governance",
@@ -433,7 +433,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "kpsc-080-2026-mock-test",
@@ -446,7 +446,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-883-1",
@@ -459,7 +459,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "883",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "hard-mock-test-4",
@@ -472,7 +472,7 @@ window.KPSC_PAPERS = [
     "duration": 75,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-002",
@@ -484,7 +484,7 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "573",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-001",
@@ -496,7 +496,7 @@ window.KPSC_PAPERS = [
     "qs": 99,
     "duration": 74,
     "tag": "573",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-573-bio-001",
@@ -508,7 +508,7 @@ window.KPSC_PAPERS = [
     "qs": 25,
     "duration": 12,
     "tag": "573",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   },
   {
     "id": "qp-573-001-full-sample-mock-test",
@@ -521,6 +521,6 @@ window.KPSC_PAPERS = [
     "duration": 2,
     "tag": "573",
     "subject": "",
-    "updated": "2026-11-09"
+    "updated": "2026-11-10"
   }
 ];
