@@ -7,6 +7,18 @@
    ===================================================================== */
 window.MOCK_TESTS_883 = [
   {
+    "id": "deepseek-html-20261116-758c71",
+    "key": "deepseek-html-20261116-758c71",
+    "title": "Kerala PSC Inspecting Assistant (Legal Metrology) — Full Mock Test",
+    "titleMl": "",
+    "updated": "2026-11-16",
+    "desc": "100 questions",
+    "file": "deepseek_html_20261116_758c71.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "883"
+  },
+  {
     "id": "kpsc-883-2025-legal-metrology-mock-test",
     "key": "kpsc-883-2025-legal-metrology-mock-test",
     "title": "Kerala PSC Mock Test – Inspecting Assistant (Legal Metrology) 883/2025",
