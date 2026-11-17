@@ -358,6 +358,19 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-16"
   },
   {
+    "id": "deepseek-html-20261116-758c71",
+    "kind": "html",
+    "title": "Kerala PSC Inspecting Assistant (Legal Metrology) — Full Mock Test",
+    "titleMl": "",
+    "url": "883/deepseek_html_20261116_758c71.html",
+    "file": "question-papers/883/deepseek_html_20261116_758c71.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "883",
+    "subject": "",
+    "updated": "2026-11-16"
+  },
+  {
     "id": "nike-test-metro",
     "kind": "html",
     "title": "Kerala PSC Inspecting Assistant (Legal Metrology) – Mock Test 883/2025",
