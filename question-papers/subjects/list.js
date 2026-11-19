@@ -150,6 +150,19 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "English"
   },
   {
+    "id": "kerala-admin-100q-mock-test",
+    "key": "kerala-admin-100q-mock-test",
+    "title": "കേരളം ഭരണവും ഭരണസംവിധാനങ്ങളും — Kerala PSC 100 Q Mock Test",
+    "titleMl": "",
+    "updated": "2026-11-19",
+    "desc": "101 questions",
+    "file": "kerala_admin_100q_mock_test.html",
+    "qs": 101,
+    "duration": 76,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
     "id": "kerala-history-mock-test-125",
     "key": "kerala-history-mock-test-125",
     "title": "കേരള ചരിത്രവും നവോത്ഥാനവും — PSC Mock Test (125)",

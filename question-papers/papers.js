@@ -7,6 +7,19 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
+    "id": "kerala-admin-100q-mock-test",
+    "kind": "html",
+    "title": "കേരളം ഭരണവും ഭരണസംവിധാനങ്ങളും — Kerala PSC 100 Q Mock Test",
+    "titleMl": "",
+    "url": "subjects/kerala_admin_100q_mock_test.html",
+    "file": "question-papers/subjects/kerala_admin_100q_mock_test.html",
+    "qs": 101,
+    "duration": 76,
+    "tag": "BOTH",
+    "subject": "",
+    "updated": "2026-11-19"
+  },
+  {
     "id": "kerala-history-mock-test-125",
     "kind": "html",
     "title": "കേരള ചരിത്രവും നവോത്ഥാനവും — PSC Mock Test (125)",
