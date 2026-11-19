@@ -111,6 +111,19 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "Geography"
   },
   {
+    "id": "kerala-psc-geography-mock-test-stage1-shell",
+    "key": "kerala-psc-geography-mock-test-stage1-shell",
+    "title": "Kerala PSC Geography Mock Test",
+    "titleMl": "",
+    "updated": "2026-11-19",
+    "desc": "101 questions",
+    "file": "Kerala_PSC_Geography_Mock_Test_STAGE1_shell.html",
+    "qs": 101,
+    "duration": 76,
+    "tag": "BOTH",
+    "subject": "Geography"
+  },
+  {
     "id": "physics-mock-test",
     "key": "physics-mock-test",
     "title": "Kerala PSC – Physics Mock Test (100 Q)",

@@ -475,6 +475,19 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-19"
   },
   {
+    "id": "kerala-psc-geography-mock-test-stage1-shell",
+    "kind": "html",
+    "title": "Kerala PSC Geography Mock Test",
+    "titleMl": "",
+    "url": "subjects/Kerala_PSC_Geography_Mock_Test_STAGE1_shell.html",
+    "file": "question-papers/subjects/Kerala_PSC_Geography_Mock_Test_STAGE1_shell.html",
+    "qs": 101,
+    "duration": 76,
+    "tag": "BOTH",
+    "subject": "",
+    "updated": "2026-11-19"
+  },
+  {
     "id": "english1",
     "kind": "html",
     "title": "Kerala PSC General English – Enhanced Mock Test",
