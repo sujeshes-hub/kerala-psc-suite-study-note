@@ -553,6 +553,19 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-20"
   },
   {
+    "id": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
+    "kind": "html",
+    "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
+    "titleMl": "",
+    "url": "subjects/KPSC_Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
+    "file": "question-papers/subjects/KPSC_Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "",
+    "updated": "2026-11-20"
+  },
+  {
     "id": "kpsc-malayalam-100q-mock-test-improved",
     "kind": "html",
     "title": "KPSC Mock Test v3 – 100 Q (Malayalam 14.2–14.15)",

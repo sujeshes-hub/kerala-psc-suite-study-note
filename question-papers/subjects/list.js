@@ -46,6 +46,19 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "Malayalam"
   },
   {
+    "id": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
+    "key": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
+    "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
+    "titleMl": "",
+    "updated": "2026-11-20",
+    "desc": "101 questions",
+    "file": "KPSC_Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Mental Ability"
+  },
+  {
     "id": "kerala-administration-governance-acts",
     "key": "kerala-administration-governance-acts",
     "title": "Kerala PSC – Kerala Administration, Governance & Important Acts",
