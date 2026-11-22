@@ -6,29 +6,649 @@
 <title>883/2025 Mock Tests — Kerala PSC</title>
 <link rel="stylesheet" href="../assets/css/landing.css">
 <style>
-.card .file-name{
-  display:inline-block;
-  max-width:100%;
-  margin:.1rem 0 .45rem;
-  padding:.18rem .5rem;
-  border-radius:6px;
-  background:#f1f5f9;
-  border:1px solid var(--line);
-  color:var(--muted);
-  font-family:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace;
-  font-size:.73rem;
-  line-height:1.35;
-  overflow-wrap:anywhere;
-  word-break:break-word;
+/* =====================================================================
+   883/2025 Mock Tests — Modern UI + Light / Sepia / Dark Themes
+   ===================================================================== */
+:root {
+  --bg: #f1f5f9;
+  --surface-2: #f8fafc;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --brand: #0b5d63;
+  --brand2: #0f8a8f;
+  --brand-soft: #e6f5f5;
+  --line: #e2e8f0;
+  --ok: #15803d;
+  --ok-bg: #ecfdf5;
+  --shadow: 0 2px 10px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 14px 28px rgba(11, 93, 99, 0.14), 0 4px 10px rgba(15, 23, 42, 0.06);
+  --radius: 18px;
+}
+
+html[data-theme="sepia"] {
+  --bg: #f4ecd8;
+  --surface-2: #efe4ca;
+  --card: #fbf6e9;
+  --ink: #2c2418;
+  --muted: #6b5d47;
+  --brand: #0b5d63;
+  --brand2: #128a8f;
+  --brand-soft: #e6eadc;
+  --line: #dfd2b5;
+  --ok-bg: #e7f2e3;
+  --shadow: 0 2px 10px rgba(44, 36, 24, 0.06);
+  --shadow-lg: 0 14px 26px rgba(44, 36, 24, 0.12);
+}
+
+html[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface-2: #111c2e;
+  --card: #152236;
+  --ink: #f1f5f9;
+  --muted: #94a3b8;
+  --brand: #2dd4bf;
+  --brand2: #14b8a6;
+  --brand-soft: rgba(45, 212, 191, 0.12);
+  --line: #23334d;
+  --ok: #4ade80;
+  --ok-bg: rgba(34, 197, 94, 0.14);
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.48);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  padding: 2.3rem 1.2rem 3.1rem;
+  background:
+    radial-gradient(circle at 14% 20%, rgba(167, 139, 250, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 86% 24%, rgba(45, 212, 191, 0.22) 0%, transparent 42%),
+    linear-gradient(135deg, #073f45 0%, #0b5d63 50%, #0f8a8f 100%);
+  box-shadow: 0 10px 30px rgba(7, 63, 69, 0.25);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.hero::after {
+  height: 26px;
+  border-radius: 26px 26px 0 0;
+  background: var(--bg);
+  transition: background-color 0.25s ease;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hero-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.15rem;
+}
+
+.hero-topbar .back-btn {
+  position: static;
+}
+
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-switch button {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.theme-switch button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.theme-switch button.active {
+  background: #ffffff;
+  color: #0b5d63;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.hero h1 {
+  font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.hero-stats {
+  margin-top: 1.15rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-stats span {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 0.32rem 0.82rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* ---------- MAIN ---------- */
+main {
+  max-width: 1160px;
+  padding: 0.2rem 1.1rem 4rem;
+}
+
+.breadcrumb {
+  color: var(--muted);
+}
+
+.breadcrumb span {
+  color: var(--ink);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.section-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.section-head h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.section-head h2::before {
+  content: "";
+  width: 4px;
+  height: 1.15em;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6d28d9, #8b5cf6);
+}
+
+.count-pill {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--brand-soft);
+  padding: 0.18rem 0.62rem;
+  border-radius: 999px;
+}
+
+.head-actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.48rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.16s ease;
+}
+
+.btn:hover {
+  border-color: var(--brand2);
+  background: var(--surface-2);
+}
+
+.btn.accent {
+  background: linear-gradient(135deg, #0b5d63, #128a8f);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(11, 93, 99, 0.22);
+}
+
+.btn.accent:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+/* ---------- CONTROLS PANEL ---------- */
+.controls-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 1.15rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1 1 250px;
+  display: flex;
+  align-items: center;
+}
+
+.search-wrap .s-ico {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.search-wrap input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.86rem;
+  padding: 0.5rem 2rem 0.5rem 2.15rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.search-wrap input:focus {
+  border-color: var(--brand2);
+  box-shadow: 0 0 0 3px rgba(15, 138, 143, 0.14);
+}
+
+.search-wrap .clear-btn {
+  position: absolute;
+  right: 0.45rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  display: none;
+}
+
+.search-wrap .clear-btn.show {
+  display: inline-block;
+}
+
+.ctrl-select {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.48rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.chip-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--line);
+}
+
+.chip-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+  margin-right: 0.2rem;
+}
+
+.fchip {
+  font-family: inherit;
+  font-size: 0.77rem;
+  font-weight: 700;
+  padding: 0.32rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  transition: all 0.15s ease;
+}
+
+.fchip:hover {
+  border-color: var(--brand2);
+  color: var(--ink);
+}
+
+.fchip.active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .fchip.active {
+  color: #062528;
+}
+
+/* ---------- RANDOM PICK BANNER ---------- */
+.pick-banner {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: var(--card);
+  border: 1px solid var(--brand2);
+  border-left: 5px solid var(--brand2);
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.pick-banner.show {
+  display: flex;
+}
+
+.pick-banner .pick-txt {
+  flex: 1 1 220px;
+  font-size: 0.86rem;
+}
+
+.pick-banner .pick-txt b {
+  color: var(--brand);
+}
+
+.pick-banner .pick-open {
+  background: linear-gradient(135deg, #0b5d63, #128a8f);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.44rem 0.9rem;
+  border-radius: 9px;
+}
+
+.pick-banner .pick-close {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+/* ---------- CARDS ---------- */
+.grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.95rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.05rem 1.15rem;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--brand2);
+}
+
+.card.picked-flash {
+  border-color: var(--brand2);
+  box-shadow: 0 0 0 4px rgba(15, 138, 143, 0.28), var(--shadow-lg);
+}
+
+.card-badges {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.55rem;
+}
+
+.card .badge {
+  position: static;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.18rem 0.58rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+
+.card .badge.c573 {
+  background: rgba(234, 88, 12, 0.14);
+  color: #c2410c;
+}
+
+.card .badge.c883 {
+  background: rgba(109, 40, 217, 0.14);
+  color: #6d28d9;
+}
+
+.card .badge.new-pill {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+html[data-theme="dark"] .card .badge.c573 {
+  background: rgba(251, 146, 60, 0.18);
+  color: #fdba74;
+}
+
+html[data-theme="dark"] .card .badge.c883 {
+  background: rgba(167, 139, 250, 0.18);
+  color: #c4b5fd;
+}
+
+.card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 0.35rem;
+  padding-right: 0;
+  line-height: 1.35;
+}
+
+.card .file-name {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 0 0.5rem;
+  padding: 0.18rem 0.52rem;
+  border-radius: 7px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.card .desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0 0 0.7rem;
+  min-height: 0;
+  flex: 1;
+}
+
+.card .meta {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.55rem;
+}
+
+.card .meta span {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+
+.card .bar {
+  background: var(--surface-2);
+}
+
+.card .progressline {
+  color: var(--muted);
+}
+
+.empty-msg {
+  grid-column: 1 / -1;
+  padding: 24px 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+}
+
+.empty-msg code {
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+footer {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 1.35rem 0.95rem 2.5rem;
+  }
+  main {
+    padding: 0.1rem 0.85rem 3.5rem;
+  }
+}
+
+@media print {
+  .theme-switch, .controls-panel, .head-actions, .pick-banner {
+    display: none !important;
+  }
 }
 </style>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem("kpsc_theme");
+    if (saved === "dark" || saved === "sepia" || saved === "light") {
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 
 <header class="hero">
-  <button class="back-btn" type="button" onclick="location.href='../index.html'">← Back</button>
-  <h1>📄 883/2025 Mock Tests</h1>
-  <p>883/2025 മോക്ക് ടെസ്റ്റുകൾ</p>
+  <div class="hero-inner">
+    <div class="hero-topbar">
+      <button class="back-btn" type="button" onclick="location.href='../index.html'">← Back</button>
+      <div class="theme-switch" role="group" aria-label="Reading theme">
+        <button type="button" data-set-theme="light">☀️ Light</button>
+        <button type="button" data-set-theme="sepia">📜 Sepia</button>
+        <button type="button" data-set-theme="dark">🌙 Dark</button>
+      </div>
+    </div>
+
+    <h1>📐 883/2025 Mock Tests</h1>
+    <p>883/2025 മോക്ക് ടെസ്റ്റുകൾ · Sorted newest update first</p>
+
+    <div class="hero-stats">
+      <span id="statPapers">0 Papers</span>
+      <span id="statQs">0 MCQs</span>
+      <span id="statLatest">Latest: —</span>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -39,9 +659,47 @@
 
   <section>
     <div class="section-head">
-      <h2>Papers</h2>
-      <button class="btn ghost" id="refreshPapers" type="button">↻ Refresh list</button>
+      <div class="section-title-group">
+        <h2>Papers</h2>
+        <span class="count-pill" id="visibleCountPill">Loading…</span>
+      </div>
+      <div class="head-actions">
+        <button class="btn accent" id="randomPaperBtn" type="button">🎲 Random Pick</button>
+        <button class="btn ghost" id="refreshPapers" type="button">↻ Refresh list</button>
+      </div>
     </div>
+
+    <div class="controls-panel">
+      <div class="controls-row">
+        <div class="search-wrap">
+          <span class="s-ico">🔎</span>
+          <input type="search" id="paperSearch" placeholder="Search title, filename, or description…" autocomplete="off">
+          <button type="button" class="clear-btn" id="clearSearch" aria-label="Clear search">&times;</button>
+        </div>
+
+        <select id="sortSelect" class="ctrl-select" aria-label="Sort papers">
+          <option value="newest" selected>Sort: Newest updated</option>
+          <option value="oldest">Sort: Oldest updated</option>
+          <option value="title">Sort: Title (A–Z)</option>
+          <option value="qs">Sort: Most questions</option>
+        </select>
+      </div>
+
+      <div class="chip-bar" id="filterBar">
+        <span class="chip-label">Filter:</span>
+        <button type="button" class="fchip active" data-filter="ALL">All</button>
+        <button type="button" class="fchip" data-filter="NEW">✨ New (7d)</button>
+        <button type="button" class="fchip" data-filter="FULL">Full (100+ Qs)</button>
+        <button type="button" class="fchip" data-filter="MINI">Mini (&lt;100 Qs)</button>
+      </div>
+    </div>
+
+    <div class="pick-banner" id="pickBanner">
+      <div class="pick-txt" id="pickText"></div>
+      <a href="#" class="pick-open" id="pickOpenLink">Open paper →</a>
+      <button type="button" class="pick-close" id="pickCloseBtn" aria-label="Close">&times;</button>
+    </div>
+
     <div class="grid" id="paperGrid">
       <p class="empty">Loading…</p>
     </div>
@@ -57,11 +715,45 @@
   var FOLDER    = "question-papers/883";
   var BASE_PATH = "../question-papers/883/";
   var CACHE_KEY = "kpsc_qp_" + EXAM_CODE + "_v3";
-  var CACHE_TTL = 1000 * 60 * 30;   /* 30 minutes */
+  var CACHE_TTL = 1000 * 60 * 30;
+  var RECENT_MS = 1000 * 60 * 60 * 24 * 7;
 
-  var grid = document.getElementById("paperGrid");
-  var refreshBtn = document.getElementById("refreshPapers");
+  var grid           = document.getElementById("paperGrid");
+  var refreshBtn     = document.getElementById("refreshPapers");
+  var randomBtn      = document.getElementById("randomPaperBtn");
+  var searchInput    = document.getElementById("paperSearch");
+  var clearSearchBtn = document.getElementById("clearSearch");
+  var sortSelect     = document.getElementById("sortSelect");
+  var filterBar      = document.getElementById("filterBar");
+  var visibleCountEl = document.getElementById("visibleCountPill");
+  var pickBanner     = document.getElementById("pickBanner");
+  var pickText       = document.getElementById("pickText");
+  var pickOpenLink   = document.getElementById("pickOpenLink");
+  var pickCloseBtn   = document.getElementById("pickCloseBtn");
 
+  var state = {
+    allItems: [],
+    query: "",
+    filter: "ALL",
+    sort: "newest"
+  };
+
+  /* -------- theme -------- */
+  var themeBtns = document.querySelectorAll("[data-set-theme]");
+  function applyTheme(mode) {
+    var t = (mode === "dark" || mode === "sepia") ? mode : "light";
+    document.documentElement.setAttribute("data-theme", t);
+    try { localStorage.setItem("kpsc_theme", t); } catch (e) {}
+    themeBtns.forEach(function (b) {
+      b.classList.toggle("active", b.dataset.setTheme === t);
+    });
+  }
+  applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+  themeBtns.forEach(function (b) {
+    b.addEventListener("click", function () { applyTheme(b.dataset.setTheme); });
+  });
+
+  /* -------- helpers -------- */
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -72,7 +764,6 @@
     return BASE_PATH + String(file || "").split("/").map(encodeURIComponent).join("/");
   }
 
-  /* -------- detect repo from location -------- */
   function detectRepo() {
     var host = location.hostname;
     var parts = location.pathname.split("/").filter(Boolean);
@@ -80,7 +771,6 @@
     return { owner: host.replace(".github.io", ""), repo: parts[0] };
   }
 
-  /* -------- cache -------- */
   function readCache() {
     try {
       var raw = localStorage.getItem(CACHE_KEY);
@@ -96,7 +786,7 @@
     } catch (e) {}
   }
 
-  /* -------- date parsing & newest-first sort -------- */
+  /* -------- date parsing & sorting -------- */
   function getRawUpdated(item) {
     if (!item) return "";
     return item.updated || item.updatedAt || item.updateDate ||
@@ -110,35 +800,24 @@
     var str = String(raw).trim();
     if (!str) return 0;
 
-    /* ISO timestamp with timezone (e.g. 2026-11-22T13:15:00Z or +05:30) */
     if (/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+\-]\d{2}:?\d{2})$/i.test(str)) {
       var iso = Date.parse(str);
       if (!isNaN(iso)) return iso;
     }
 
-    /* YYYY-MM-DD or YYYY/MM/DD with optional time */
     var ymd = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
     if (ymd) {
       return new Date(
-        Number(ymd[1]),
-        Number(ymd[2]) - 1,
-        Number(ymd[3]),
-        Number(ymd[4] || 0),
-        Number(ymd[5] || 0),
-        Number(ymd[6] || 0)
+        Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3]),
+        Number(ymd[4] || 0), Number(ymd[5] || 0), Number(ymd[6] || 0)
       ).getTime();
     }
 
-    /* DD-MM-YYYY or DD/MM/YYYY with optional time */
     var dmy = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
     if (dmy) {
       return new Date(
-        Number(dmy[3]),
-        Number(dmy[2]) - 1,
-        Number(dmy[1]),
-        Number(dmy[4] || 0),
-        Number(dmy[5] || 0),
-        Number(dmy[6] || 0)
+        Number(dmy[3]), Number(dmy[2]) - 1, Number(dmy[1]),
+        Number(dmy[4] || 0), Number(dmy[5] || 0), Number(dmy[6] || 0)
       ).getTime();
     }
 
@@ -153,13 +832,26 @@
     var ms = parseDateMs(str);
     if (!ms) return str;
     var d = new Date(ms);
-    var y = d.getFullYear();
-    var m = String(d.getMonth() + 1).padStart(2, "0");
-    var day = String(d.getDate()).padStart(2, "0");
-    return y + "-" + m + "-" + day;
+    return d.getFullYear() + "-" +
+           String(d.getMonth() + 1).padStart(2, "0") + "-" +
+           String(d.getDate()).padStart(2, "0");
   }
 
-  /* Newest update date first; filename breaks ties consistently. */
+  function isRecent(raw) {
+    var ms = parseDateMs(raw);
+    if (!ms) return false;
+    var diff = Date.now() - ms;
+    return diff >= -86400000 && diff <= RECENT_MS;
+  }
+
+  function titleFromFilename(name) {
+    return String(name || "")
+      .replace(/\.html?$/i, "")
+      .replace(/^qp-\d+-/, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
   function byUpdated(a, b) {
     var ta = parseDateMs(getRawUpdated(a));
     var tb = parseDateMs(getRawUpdated(b));
@@ -167,7 +859,32 @@
     return (a.file || "").localeCompare(b.file || "");
   }
 
-  /* -------- GitHub API: folder contents & commit date fallback -------- */
+  function comparator(mode) {
+    if (mode === "oldest") {
+      return function (a, b) {
+        var ta = parseDateMs(getRawUpdated(a));
+        var tb = parseDateMs(getRawUpdated(b));
+        if (ta !== tb) return ta - tb;
+        return (a.file || "").localeCompare(b.file || "");
+      };
+    }
+    if (mode === "title") {
+      return function (a, b) {
+        var ta = (a.title || titleFromFilename(a.file)).toLowerCase();
+        var tb = (b.title || titleFromFilename(b.file)).toLowerCase();
+        return ta.localeCompare(tb);
+      };
+    }
+    if (mode === "qs") {
+      return function (a, b) {
+        var diff = (Number(b.qs) || 0) - (Number(a.qs) || 0);
+        return diff !== 0 ? diff : byUpdated(a, b);
+      };
+    }
+    return byUpdated;
+  }
+
+  /* -------- GitHub API fallback -------- */
   async function fetchFolderList() {
     var repo = detectRepo();
     if (!repo) throw new Error("Not on GitHub Pages — folder listing unavailable.");
@@ -204,7 +921,6 @@
     return "";
   }
 
-  /* -------- read meta tags + update date of one paper -------- */
   async function readMeta(filename, force, repo) {
     try {
       var res = await fetch(safeHref(filename), { cache: force ? "no-cache" : "default" });
@@ -238,39 +954,95 @@
     } catch (e) { return {}; }
   }
 
-  function titleFromFilename(name) {
-    return name
-      .replace(/\.html?$/i, "")
-      .replace(/^qp-\d+-/, "")
-      .replace(/[-_]+/g, " ")
-      .replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  /* -------- stats & filtering -------- */
+  function updateHeroStats(items) {
+    var totalQs = 0;
+    var latestMs = 0;
+    var latestRaw = "";
+    items.forEach(function (p) {
+      totalQs += Number(p.qs) || 0;
+      var raw = getRawUpdated(p);
+      var ms = parseDateMs(raw);
+      if (ms > latestMs) { latestMs = ms; latestRaw = raw; }
+    });
+    document.getElementById("statPapers").textContent = items.length + " Paper" + (items.length === 1 ? "" : "s");
+    document.getElementById("statQs").textContent     = totalQs.toLocaleString() + " MCQs";
+    document.getElementById("statLatest").textContent = "Latest: " + (latestRaw ? formatDisplayDate(latestRaw) : "—");
   }
 
-  function render(items) {
-    if (!items || !items.length) {
-      grid.innerHTML = '<p class="empty">No papers found in <code>' + esc(FOLDER) + '</code>.</p>';
+  function getFilteredItems() {
+    var q = state.query.trim().toLowerCase();
+    return state.allItems.filter(function (p) {
+      var qs = Number(p.qs) || 0;
+      if (state.filter === "NEW" && !isRecent(getRawUpdated(p))) return false;
+      if (state.filter === "FULL" && qs < 100) return false;
+      if (state.filter === "MINI" && qs >= 100) return false;
+      if (!q) return true;
+      var hay = [p.title, p.titleMl, p.desc, p.file, p.tag].join(" ").toLowerCase();
+      return hay.indexOf(q) !== -1;
+    });
+  }
+
+  /* -------- render -------- */
+  function renderView() {
+    var all = state.allItems;
+    if (!all.length) {
+      if (visibleCountEl) visibleCountEl.textContent = "0 Papers";
+      grid.innerHTML = '<div class="empty-msg">No papers found in <code>' + esc(FOLDER) + '</code>.</div>';
       return;
     }
 
-    var sorted = items.slice().sort(byUpdated);
+    var items = getFilteredItems().sort(comparator(state.sort));
+    if (visibleCountEl) {
+      visibleCountEl.textContent = items.length === all.length
+        ? items.length + " Paper" + (items.length === 1 ? "" : "s")
+        : items.length + " of " + all.length;
+    }
 
-    grid.innerHTML = sorted.map(function (p) {
+    if (!items.length) {
+      grid.innerHTML =
+        '<div class="empty-msg">' +
+        'No mock tests match your current search or filter.<br><br>' +
+        '<button type="button" class="btn" id="resetFiltersBtn">Reset filters</button>' +
+        '</div>';
+      var resetBtn = document.getElementById("resetFiltersBtn");
+      if (resetBtn) {
+        resetBtn.addEventListener("click", function () {
+          state.query = "";
+          state.filter = "ALL";
+          if (searchInput) searchInput.value = "";
+          if (clearSearchBtn) clearSearchBtn.classList.remove("show");
+          filterBar.querySelectorAll("[data-filter]").forEach(function (b) {
+            b.classList.toggle("active", b.dataset.filter === "ALL");
+          });
+          renderView();
+        });
+      }
+      return;
+    }
+
+    grid.innerHTML = items.map(function (p) {
       var badgeCls = p.tag === "573" ? "c573" : p.tag === "883" ? "c883" : "";
       var badgeTxt = p.tag === "573" ? "573 only" : p.tag === "883" ? "883 only" : "BOTH";
       var title    = p.title || titleFromFilename(p.file);
-      var key      = p.key || p.file.replace(/\.html?$/i, "");
-      var dateText = formatDisplayDate(getRawUpdated(p));
+      var key      = p.key || String(p.file || "").replace(/\.html?$/i, "");
+      var rawDate  = getRawUpdated(p);
+      var dateText = formatDisplayDate(rawDate);
       var descHtml = (p.titleMl ? esc(p.titleMl) : "") +
                      (p.titleMl && p.desc ? "<br>" : "") +
                      (p.desc ? esc(p.desc) : "");
-      return '<a href="' + safeHref(p.file) + '" class="card" data-part="' + esc(key) + '" data-total="' + (p.qs || 0) + '">' +
-        '<span class="badge ' + badgeCls + '">' + (p.qs || 0) + ' Qs</span>' +
+
+      return '<a href="' + safeHref(p.file) + '" class="card" data-part="' + esc(key) + '" data-file="' + esc(p.file) + '" data-total="' + (p.qs || 0) + '">' +
+        '<div class="card-badges">' +
+          '<span class="badge ' + badgeCls + '">' + (p.qs || 0) + ' Qs</span>' +
+          (isRecent(rawDate) ? '<span class="badge new-pill">NEW</span>' : '') +
+        '</div>' +
         '<h3>📄 ' + esc(title) + '</h3>' +
         '<div class="file-name" title="' + esc(p.file) + '">📁 ' + esc(p.file) + '</div>' +
         '<p class="desc">' + descHtml + '</p>' +
         '<div class="meta">' +
           (p.duration ? '<span>⏱ ' + p.duration + ' min</span>' : '') +
-          (dateText ? '<span>📅 ' + esc(dateText) + '</span>' : '') +
+          (dateText ? '<span title="' + esc(rawDate) + '">📅 ' + esc(dateText) + '</span>' : '') +
           '<span>' + badgeTxt + '</span>' +
         '</div>' +
         '<div class="bar"><i style="width:0%"></i></div>' +
@@ -286,13 +1058,83 @@
     }
   }
 
-  /* ------------------------------------------------------------------
-     The manifest is the offline source of truth. A paper dropped into
-     the folder afterwards is not in it yet, so ask the host for the
-     folder listing and fold in anything the manifest does not know.
-     Not on GitHub Pages (file://, local server) -> the call throws and
-     the manifest list stands unchanged.
-     ------------------------------------------------------------------ */
+  function render(items) {
+    state.allItems = (items || []).slice();
+    updateHeroStats(state.allItems);
+    renderView();
+  }
+
+  /* -------- interactions -------- */
+  if (searchInput) {
+    searchInput.addEventListener("input", function (e) {
+      state.query = e.target.value;
+      if (clearSearchBtn) clearSearchBtn.classList.toggle("show", !!state.query);
+      renderView();
+    });
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener("click", function () {
+      state.query = "";
+      searchInput.value = "";
+      clearSearchBtn.classList.remove("show");
+      renderView();
+      searchInput.focus();
+    });
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", function () {
+      state.sort = sortSelect.value;
+      renderView();
+    });
+  }
+
+  if (filterBar) {
+    filterBar.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-filter]");
+      if (!btn) return;
+      state.filter = btn.dataset.filter;
+      filterBar.querySelectorAll("[data-filter]").forEach(function (b) {
+        b.classList.toggle("active", b === btn);
+      });
+      renderView();
+    });
+  }
+
+  if (randomBtn) {
+    randomBtn.addEventListener("click", function () {
+      var pool = getFilteredItems();
+      if (!pool.length) return;
+      var pick = pool[Math.floor(Math.random() * pool.length)];
+      var title = pick.title || titleFromFilename(pick.file);
+
+      pickText.innerHTML = '🎲 Random pick: <b>' + esc(title) + '</b> <span style="opacity:.75">(' + esc(pick.file) + ')</span>';
+      pickOpenLink.href = safeHref(pick.file);
+      pickBanner.classList.add("show");
+
+      var cards = grid.querySelectorAll(".card");
+      cards.forEach(function (c) { c.classList.remove("picked-flash"); });
+      for (var i = 0; i < cards.length; i++) {
+        if (cards[i].getAttribute("data-file") === pick.file) {
+          cards[i].classList.add("picked-flash");
+          cards[i].scrollIntoView({ behavior: "smooth", block: "center" });
+          break;
+        }
+      }
+    });
+  }
+
+  if (pickCloseBtn) {
+    pickCloseBtn.addEventListener("click", function () {
+      pickBanner.classList.remove("show");
+      grid.querySelectorAll(".card.picked-flash").forEach(function (c) {
+        c.classList.remove("picked-flash");
+      });
+    });
+  }
+
+  /* -------- load & supplement -------- */
   var supplementTried = false;
   async function supplement(local, force) {
     if (supplementTried || !local.length) return;
@@ -358,7 +1200,7 @@
           desc:     m.desc,
           duration: m.duration,
           qs:       m.qs,
-          tag:      m.tag,
+          tag:      m.tag || EXAM_CODE,
           key:      m.key,
           updated:  m.updated || ""
         };
@@ -370,12 +1212,13 @@
 
     } catch (err) {
       console.warn("Auto-list failed:", err.message);
-      grid.innerHTML = '<p class="empty">' +
+      grid.innerHTML =
+        '<div class="empty-msg">' +
         '⚠️ Could not auto-load the paper list.<br>' +
         '<small>' + esc(err.message) + '</small><br><br>' +
         'If you are viewing this file locally (file://), open the site through ' +
         '<a href="https://sujeshes-hub.github.io/kerala-psc-suite/">GitHub Pages</a> instead.' +
-      '</p>';
+        '</div>';
     }
   }
 
