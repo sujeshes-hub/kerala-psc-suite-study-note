@@ -6,48 +6,890 @@
 <title>Kerala PSC Study Suite</title>
 <link rel="stylesheet" href="assets/css/landing.css">
 <style>
-.section-head .actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
-.btn.qr{background:linear-gradient(135deg,#0b5d63,#128a8f);color:#fff;border-color:transparent;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;}
-.btn.qr:hover{background:linear-gradient(135deg,#0a4f54,#0f7679);color:#fff;text-decoration:none;}
-.hero .badges .qr-badge{background:#fff;color:#0b5d63;border-color:#fff;text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:.35rem;}
-.hero .badges .qr-badge:hover{background:#e6f4f6;color:#0b5d63;text-decoration:none;}
+/* =====================================================================
+   Kerala PSC Study Suite — Upgraded Home Page Styles (Light / Sepia / Dark)
+   ===================================================================== */
+:root {
+  --bg: #f1f5f9;
+  --surface-2: #f8fafc;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --brand: #0b5d63;
+  --brand2: #0f8a8f;
+  --brand-soft: #e6f5f5;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --ok: #15803d;
+  --ok-bg: #ecfdf5;
+  --bad: #dc2626;
+  --bad-bg: #fef2f2;
+  --shadow: 0 2px 10px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 14px 30px rgba(11, 93, 99, 0.14), 0 4px 10px rgba(15, 23, 42, 0.06);
+  --radius: 18px;
+}
 
-/* Sync Banner */
-.sync-prompt{
-  display:none;align-items:center;gap:12px;
-  background:#e6f6ff;border:1px solid #a9d8f2;border-left:5px solid #0b8ac9;
-  border-radius:12px;padding:12px 16px;margin:.2rem 0 1rem;font-size:.88rem;color:#0b5a86;
-  transition: all 0.3s ease;
+html[data-theme="sepia"] {
+  --bg: #f4ecd8;
+  --surface-2: #efe4ca;
+  --card: #fbf6e9;
+  --ink: #2c2418;
+  --muted: #6b5d47;
+  --brand: #0b5d63;
+  --brand2: #128a8f;
+  --brand-soft: #e6eadc;
+  --line: #dfd2b5;
+  --line-strong: #cbb994;
+  --ok-bg: #e7f2e3;
+  --bad-bg: #f7e4df;
+  --shadow: 0 2px 10px rgba(44, 36, 24, 0.06);
+  --shadow-lg: 0 14px 28px rgba(44, 36, 24, 0.12);
 }
-.sync-prompt.show{display:flex;flex-wrap:wrap}
-.sync-prompt.success{
-  background:#eefaf4;border-color:#a8e0c0;border-left-color:#17a06a;color:#0f7a4f;
+
+html[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface-2: #111c2e;
+  --card: #152236;
+  --ink: #f1f5f9;
+  --muted: #94a3b8;
+  --brand: #2dd4bf;
+  --brand2: #14b8a6;
+  --brand-soft: rgba(45, 212, 191, 0.12);
+  --line: #23334d;
+  --line-strong: #334869;
+  --ok: #4ade80;
+  --ok-bg: rgba(34, 197, 94, 0.13);
+  --bad: #f87171;
+  --bad-bg: rgba(239, 68, 68, 0.13);
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 34px rgba(0, 0, 0, 0.48);
 }
-.sync-prompt .txt{flex:1 1 220px;line-height:1.5}
-.sync-prompt b{display:block;font-size:.92rem;margin-bottom:2px}
-.sync-prompt button{
-  font-family:inherit;font-weight:700;font-size:.83rem;
-  background:linear-gradient(135deg,#0b5d63,#128a8f);color:#fff;
-  border:none;border-radius:10px;padding:.55rem 1rem;cursor:pointer;
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
-.sync-prompt.success button{background:linear-gradient(135deg,#0f7a4f,#17a06a);}
-.sync-prompt .close{
-  background:none!important;border:none;color:inherit;font-size:1.2rem;
-  cursor:pointer;padding:0 6px;line-height:1;opacity:0.6;
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  padding: 2.6rem 1.25rem 3.4rem;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(45, 212, 191, 0.26) 0%, transparent 45%),
+    radial-gradient(circle at 88% 22%, rgba(250, 204, 21, 0.16) 0%, transparent 42%),
+    linear-gradient(135deg, #073f45 0%, #0b5d63 48%, #0f8a8f 100%);
+  box-shadow: 0 10px 32px rgba(7, 63, 69, 0.28);
 }
-.sync-prompt .close:hover{opacity:1}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.hero::after {
+  height: 28px;
+  border-radius: 28px 28px 0 0;
+  background: var(--bg);
+  transition: background-color 0.25s ease;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.35rem;
+}
+
+.exam-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.34rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #ecfeff;
+}
+
+.exam-pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.28);
+}
+
+/* Theme switcher */
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-switch button {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.theme-switch button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.theme-switch button.active {
+  background: #ffffff;
+  color: #0b5d63;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.hero h1 {
+  font-size: clamp(1.65rem, 3.6vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.16);
+}
+
+.hero p {
+  font-size: 1rem;
+  opacity: 0.92;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.hero .badges {
+  margin-top: 1.3rem;
+  gap: 0.55rem;
+}
+
+.hero .badges span {
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 0.36rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.hero .badges .qr-badge {
+  background: #ffffff;
+  color: #0b5d63;
+  border: 1px solid #ffffff;
+  padding: 0.42rem 1.05rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.hero .badges .qr-badge:hover {
+  background: #f0fdfa;
+  color: #08484d;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.24);
+  text-decoration: none;
+}
+
+/* ---------- MAIN LAYOUT ---------- */
+main {
+  max-width: 1160px;
+  padding: 0.2rem 1.1rem 4.2rem;
+}
+
+section {
+  margin-top: 2rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-head h2 {
+  font-size: 1.22rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-head h2::before {
+  content: "";
+  width: 4px;
+  height: 1.15em;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--brand), var(--brand2));
+  display: inline-block;
+}
+
+.count-pill {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--brand-soft);
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+}
+
+.section-head .actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn.qr {
+  background: linear-gradient(135deg, #0b5d63, #128a8f);
+  color: #ffffff;
+  border: 0;
+  border-radius: 11px;
+  padding: 0.52rem 1rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(11, 93, 99, 0.25);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.btn.qr:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 18px rgba(11, 93, 99, 0.34);
+  filter: brightness(1.05);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* ---------- SYNC BANNER ---------- */
+.sync-prompt {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid #0284c7;
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin: 0.35rem 0 1.4rem;
+  font-size: 0.88rem;
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  transition: all 0.25s ease;
+}
+
+.sync-prompt.show {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sync-prompt.success {
+  border-left-color: #16a34a;
+}
+
+.sync-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(2, 132, 199, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex: 0 0 42px;
+}
+
+.sync-prompt.success .sync-icon-wrap {
+  background: var(--ok-bg);
+}
+
+.sync-prompt .txt {
+  flex: 1 1 220px;
+  line-height: 1.45;
+}
+
+.sync-prompt b {
+  display: block;
+  font-size: 0.94rem;
+  margin-bottom: 2px;
+  color: var(--ink);
+}
+
+.sync-prompt #syncPromptDesc {
+  color: var(--muted);
+  font-size: 0.83rem;
+}
+
+.sync-prompt button {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.83rem;
+  background: linear-gradient(135deg, #0b5d63, #128a8f);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.56rem 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(11, 93, 99, 0.22);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.sync-prompt button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.sync-prompt.success button {
+  background: linear-gradient(135deg, #15803d, #16a34a);
+  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.22);
+}
+
+.sync-prompt .close {
+  background: none !important;
+  box-shadow: none !important;
+  border: none;
+  color: var(--muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  border-radius: 8px;
+}
+
+.sync-prompt .close:hover {
+  color: var(--ink);
+  background: var(--surface-2) !important;
+  transform: none;
+}
+
+/* ---------- MOCK TEST FEATURE CARDS ---------- */
+#mtGrid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.2rem 1.1rem;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--brand2);
+}
+
+.card.mt-card {
+  padding-top: 1.3rem;
+}
+
+.card.mt-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0b5d63, #14b8a6);
+}
+
+.card.mt-card.mt-573::before {
+  background: linear-gradient(90deg, #ea580c, #f59e0b);
+}
+
+.card.mt-card.mt-883::before {
+  background: linear-gradient(90deg, #6d28d9, #8b5cf6);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.icon-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: var(--brand-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex: 0 0 44px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .icon-tile {
+  transform: scale(1.06);
+}
+
+.mt-573 .icon-tile {
+  background: rgba(234, 88, 12, 0.12);
+}
+
+.mt-883 .icon-tile {
+  background: rgba(109, 40, 217, 0.12);
+}
+
+.card .badge {
+  position: static;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.22rem 0.62rem;
+  border-radius: 999px;
+  letter-spacing: 0.25px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  white-space: nowrap;
+}
+
+.card .badge.c573 {
+  background: rgba(234, 88, 12, 0.14);
+  color: #c2410c;
+}
+
+.card .badge.c883 {
+  background: rgba(109, 40, 217, 0.14);
+  color: #6d28d9;
+}
+
+html[data-theme="dark"] .card .badge.c573 {
+  background: rgba(251, 146, 60, 0.18);
+  color: #fdba74;
+}
+
+html[data-theme="dark"] .card .badge.c883 {
+  background: rgba(167, 139, 250, 0.18);
+  color: #c4b5fd;
+}
+
+.card h3 {
+  font-size: 1.04rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 0.25rem;
+  padding-right: 0;
+  line-height: 1.32;
+}
+
+.card .ml-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--brand);
+  margin: 0 0 0.35rem;
+}
+
+.card .desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+  min-height: 0;
+  flex: 1;
+  line-height: 1.48;
+}
+
+.card .meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin: auto 0 0;
+  padding-top: 0.72rem;
+  border-top: 1px dashed var(--line);
+}
+
+.card .meta-chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.card .meta span {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.18rem 0.56rem;
+  border-radius: 7px;
+}
+
+.card .cta-arrow {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  color: var(--brand) !important;
+  font-weight: 800 !important;
+  font-size: 0.8rem !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.18s ease;
+}
+
+.card:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- SUBJECT FILTER BAR ---------- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.55rem 0.7rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1 1 230px;
+  display: flex;
+  align-items: center;
+}
+
+.search-wrap .s-ico {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.search-wrap input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.87rem;
+  padding: 0.52rem 2rem 0.52rem 2.15rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.search-wrap input:focus {
+  border-color: var(--brand2);
+  box-shadow: 0 0 0 3px rgba(15, 138, 143, 0.14);
+}
+
+.search-wrap .clear-btn {
+  position: absolute;
+  right: 0.45rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  display: none;
+}
+
+.search-wrap .clear-btn.show {
+  display: inline-block;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.fchip {
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.fchip:hover {
+  border-color: var(--brand2);
+  color: var(--ink);
+}
+
+.fchip.active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .fchip.active {
+  color: #062528;
+}
+
+#subjectGrid {
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 0.95rem;
+}
+
+.badge-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ---------- OVERALL PROGRESS ---------- */
+.summary {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.3rem 1.35rem;
+  box-shadow: var(--shadow);
+}
+
+.summary-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.summary h3 {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.summary-note {
+  font-size: 0.76rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0;
+}
+
+.stat {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  position: relative;
+  transition: transform 0.16s ease;
+}
+
+.stat:hover {
+  transform: translateY(-2px);
+}
+
+.stat .k {
+  font-size: 0.71rem;
+  letter-spacing: 0.45px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.stat .v {
+  font-size: 1.42rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-top: 0.22rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat.stat-ok {
+  background: var(--ok-bg);
+  border-color: rgba(21, 128, 61, 0.2);
+}
+
+.stat.stat-ok .v {
+  color: var(--ok);
+}
+
+.stat.stat-bad {
+  background: var(--bad-bg);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+.stat.stat-bad .v {
+  color: var(--bad);
+}
+
+.stat.stat-net {
+  background: linear-gradient(135deg, #0b5d63, #128a8f);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(11, 93, 99, 0.22);
+}
+
+.stat.stat-net .k {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stat.stat-net .v {
+  color: #ffffff;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  margin-top: 1.5rem;
+  padding: 1.6rem 1rem 2.4rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .hero {
+    padding: 1.4rem 0.95rem 2.7rem;
+  }
+  .hero-topbar {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 0.88rem;
+  }
+  main {
+    padding: 0.1rem 0.85rem 3.5rem;
+  }
+  section {
+    margin-top: 1.5rem;
+  }
+  .summary {
+    padding: 1.05rem;
+  }
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .stat .v {
+    font-size: 1.22rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+}
+
+@media print {
+  .theme-switch, .filter-bar, .sync-prompt, .btn.qr {
+    display: none !important;
+  }
+}
 </style>
+<script>
+/* Apply saved theme before first paint to prevent flash */
+(function () {
+  try {
+    var saved = localStorage.getItem("kpsc_theme");
+    if (saved === "dark" || saved === "sepia" || saved === "light") {
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 
 <header class="hero">
-  <h1>Kerala PSC Study Suite</h1>
-  <p>573/2025 + 883/2025 — Master Combined Syllabus</p>
-  <div class="badges">
-    <span>Works offline</span>
-    <span>17 subjects</span>
-    <span>Progress saved locally</span>
-    <a href="all-subjects-quick-revision.html" class="qr-badge">⚡ Quick Revision</a>
+  <div class="hero-inner">
+    <div class="hero-topbar">
+      <div class="exam-pill"><span class="dot"></span> 573/2025 + 883/2025 Combined</div>
+      <div class="theme-switch" role="group" aria-label="Reading theme">
+        <button type="button" data-set-theme="light">☀️ Light</button>
+        <button type="button" data-set-theme="sepia">📜 Sepia</button>
+        <button type="button" data-set-theme="dark">🌙 Dark</button>
+      </div>
+    </div>
+
+    <h1>Kerala PSC Study Suite</h1>
+    <p>Master Combined Syllabus · Notes, Topic Practice &amp; Full-Length Mock Tests</p>
+
+    <div class="badges">
+      <span>📴 Works offline</span>
+      <span>📚 17 subjects</span>
+      <span>💾 Progress saved locally</span>
+      <a href="all-subjects-quick-revision.html" class="qr-badge">⚡ Quick Revision</a>
+    </div>
   </div>
 </header>
 
@@ -55,7 +897,7 @@
 
   <!-- SYNC BANNER -->
   <div class="sync-prompt" id="syncPrompt">
-    <span style="font-size:1.4rem" id="syncPromptIcon">💾</span>
+    <div class="sync-icon-wrap" id="syncPromptIcon">💾</div>
     <div class="txt">
       <b id="syncPromptTitle">Sync across devices</b>
       <span id="syncPromptDesc">Sign in once to save your progress to the cloud — continue on any phone or PC.</span>
@@ -64,82 +906,239 @@
     <button type="button" class="close" id="syncPromptClose" aria-label="Dismiss">&times;</button>
   </div>
 
+  <!-- MOCK TESTS -->
   <section>
     <div class="section-head">
-      <h2>📄 Mock Tests</h2>
+      <div class="section-title-group">
+        <h2>Mock Tests</h2>
+        <span class="count-pill">3 Collections</span>
+      </div>
     </div>
     <div class="grid" id="mtGrid"></div>
   </section>
 
+  <!-- SUBJECTS -->
   <section>
     <div class="section-head">
-      <h2>Subjects</h2>
+      <div class="section-title-group">
+        <h2>Subjects</h2>
+        <span class="count-pill" id="subjectCountPill">17 Subjects</span>
+      </div>
       <div class="actions">
         <a href="all-subjects-quick-revision.html" class="btn qr">⚡ Quick Revision</a>
       </div>
     </div>
+
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <span class="s-ico">🔎</span>
+        <input type="search" id="subjectSearch" placeholder="Search subjects (English, മലയാളം, or 01–17)…" autocomplete="off">
+        <button type="button" class="clear-btn" id="clearSearch" aria-label="Clear search">&times;</button>
+      </div>
+      <div class="filter-chips" id="examFilter">
+        <button type="button" class="fchip active" data-tag="ALL">All</button>
+        <button type="button" class="fchip" data-tag="573">573/2025</button>
+        <button type="button" class="fchip" data-tag="883">883/2025</button>
+      </div>
+    </div>
+
     <div class="grid" id="subjectGrid"></div>
   </section>
 
+  <!-- OVERALL PROGRESS -->
   <section>
     <div class="summary">
-      <h3>Overall Progress</h3>
+      <div class="summary-head">
+        <h3>📊 Overall Progress</h3>
+        <span class="summary-note">Updates automatically as you practice</span>
+      </div>
       <div class="summary-grid">
         <div class="stat"><span class="k">Subjects started</span><span class="v" id="sumParts">0</span></div>
         <div class="stat"><span class="k">Total questions</span><span class="v" id="sumTotal">0</span></div>
         <div class="stat"><span class="k">Attempted</span><span class="v" id="sumAtt">0</span></div>
-        <div class="stat"><span class="k">Correct</span><span class="v" id="sumCor">0</span></div>
-        <div class="stat"><span class="k">Wrong</span><span class="v" id="sumWr">0</span></div>
-        <div class="stat"><span class="k">Net score</span><span class="v" id="sumNet">0.00</span></div>
+        <div class="stat stat-ok"><span class="k">Correct</span><span class="v" id="sumCor">0</span></div>
+        <div class="stat stat-bad"><span class="k">Wrong</span><span class="v" id="sumWr">0</span></div>
+        <div class="stat stat-net"><span class="k">Net score</span><span class="v" id="sumNet">0.00</span></div>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer>Kerala PSC Study Suite — Works fully offline</footer>
+<footer>Kerala PSC Study Suite · Works fully offline</footer>
 
 <script src="assets/js/syllabus.js"></script>
 <script>
 (async () => {
   await Syllabus.load();
 
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, c => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+    ));
+  }
+
+  /* ---------- Theme Switcher ---------- */
+  const themeBtns = document.querySelectorAll('[data-set-theme]');
+  function applyTheme(mode) {
+    const t = (mode === 'dark' || mode === 'sepia') ? mode : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('kpsc_theme', t); } catch (e) {}
+    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.setTheme === t));
+  }
+  applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+  themeBtns.forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.setTheme)));
+
   /* ---------- Mock Tests ---------- */
   const mtGrid = document.getElementById('mtGrid');
   const EXAMS = [
-    { code: "573", title: "573/2025 Mock Tests",       titleMl: "573/2025 മോക്ക് ടെസ്റ്റുകൾ",            desc: "Full-length papers for the 573 exam",        file: "mock-tests/573.html",        tag: "573"  },
-    { code: "883", title: "883/2025 Mock Tests",       titleMl: "883/2025 മോക്ക് ടെസ്റ്റുകൾ",            desc: "Inspecting Assistant (Legal Metrology)",       file: "mock-tests/883.html",        tag: "883"  },
-    { code: "SUB", title: "Subject-wise Mock Tests",   titleMl: "വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ", desc: "Chapter mock tests grouped by subject",        file: "mock-tests/subjects.html",   tag: "BOTH" }
+    {
+      code: "573",
+      icon: "📝",
+      cardCls: "mt-573",
+      title: "573/2025 Mock Tests",
+      titleMl: "573/2025 മോക്ക് ടെസ്റ്റുകൾ",
+      desc: "Full-length papers for the 573/2025 exam",
+      file: "mock-tests/573.html",
+      tag: "573"
+    },
+    {
+      code: "883",
+      icon: "📐",
+      cardCls: "mt-883",
+      title: "883/2025 Mock Tests",
+      titleMl: "883/2025 മോക്ക് ടെസ്റ്റുകൾ",
+      desc: "Inspecting Assistant (Legal Metrology)",
+      file: "mock-tests/883.html",
+      tag: "883"
+    },
+    {
+      code: "SUB",
+      icon: "🎯",
+      cardCls: "mt-both",
+      title: "Subject-wise Mock Tests",
+      titleMl: "വിഷയാടിസ്ഥാന മോക്ക് ടെസ്റ്റുകൾ",
+      desc: "Chapter mock tests grouped by subject",
+      file: "mock-tests/subjects.html",
+      tag: "BOTH"
+    }
   ];
 
   mtGrid.innerHTML = EXAMS.map(e => {
-    let cls = "", txt = "";
-    if (e.tag === "573")      { cls = "c573"; txt = "573 only"; }
-    else if (e.tag === "883") { cls = "c883"; txt = "883 only"; }
-    else                      { cls = "";     txt = "BOTH"; }
-    return '<a href="' + e.file + '" class="card">' +
-      '<span class="badge ' + cls + '">' + txt + '</span>' +
-      '<h3>📄 ' + e.title + '</h3>' +
-      '<p class="desc">' + e.titleMl + '<br>' + e.desc + '</p>' +
-      '<div class="meta"><span>Open list →</span></div>' +
-    '</a>';
-  }).join('');
-
-  /* ---------- Subjects ---------- */
-  const grid = document.getElementById('subjectGrid');
-  const list = Syllabus.getAllSubjects();
-  grid.innerHTML = list.map(S => {
-    const totalTopics = S.chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
-    return '<a href="subjects/' + S.code + '-' + S.id + '.html" class="card">' +
-      '<span class="badge">' + S.code + '</span>' +
-      '<h3>' + S.icon + ' ' + S.title + '</h3>' +
-      '<p class="desc">' + S.titleMl + ' — ' + S.desc + '</p>' +
+    const cls = e.tag === "573" ? "c573" : e.tag === "883" ? "c883" : "";
+    const txt = e.tag === "573" ? "573 only" : e.tag === "883" ? "883 only" : "BOTH";
+    return '<a href="' + esc(e.file) + '" class="card mt-card ' + e.cardCls + '">' +
+      '<div class="card-top">' +
+        '<span class="icon-tile">' + e.icon + '</span>' +
+        '<span class="badge ' + cls + '">' + txt + '</span>' +
+      '</div>' +
+      '<h3>' + esc(e.title) + '</h3>' +
+      '<p class="ml-title">' + esc(e.titleMl) + '</p>' +
+      '<p class="desc">' + esc(e.desc) + '</p>' +
       '<div class="meta">' +
-        '<span>' + S.chapters.length + ' chapter' + (S.chapters.length === 1 ? '' : 's') + '</span>' +
-        '<span>' + totalTopics + ' topics</span>' +
+        '<span>Exam Papers</span>' +
+        '<span class="cta-arrow">Open list →</span>' +
       '</div>' +
     '</a>';
   }).join('');
+
+  /* ---------- Subjects (with search & exam filter) ---------- */
+  const grid = document.getElementById('subjectGrid');
+  const countPill = document.getElementById('subjectCountPill');
+  const searchInput = document.getElementById('subjectSearch');
+  const clearSearch = document.getElementById('clearSearch');
+  const examFilter = document.getElementById('examFilter');
+  const list = Syllabus.getAllSubjects();
+
+  let activeTag = "ALL";
+  let query = "";
+
+  function subjectTag(S) {
+    const chTag = (S.chapters && S.chapters[0] && S.chapters[0].tag) || "BOTH";
+    return chTag;
+  }
+
+  function renderSubjects() {
+    const q = query.trim().toLowerCase();
+    const filtered = list.filter(S => {
+      const tag = subjectTag(S);
+      if (activeTag !== "ALL" && tag !== "BOTH" && tag !== activeTag) return false;
+      if (!q) return true;
+      const hay = (S.code + " " + S.title + " " + S.titleMl + " " + S.desc).toLowerCase();
+      return hay.indexOf(q) !== -1;
+    });
+
+    if (countPill) {
+      countPill.textContent = filtered.length === list.length
+        ? list.length + " Subjects"
+        : filtered.length + " of " + list.length;
+    }
+
+    if (!filtered.length) {
+      grid.innerHTML = '<p class="empty">No matching subjects found.</p>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(S => {
+      const totalTopics = S.chapters.reduce((a, c) => a + ((c.topics || []).length), 0);
+      const tag = subjectTag(S);
+      const tagBadge = tag === "573"
+        ? '<span class="badge c573">573 only</span>'
+        : tag === "883"
+          ? '<span class="badge c883">883 only</span>'
+          : '';
+
+      return '<a href="subjects/' + esc(S.code + '-' + S.id) + '.html" class="card">' +
+        '<div class="card-top">' +
+          '<span class="icon-tile">' + esc(S.icon) + '</span>' +
+          '<div class="badge-group">' +
+            tagBadge +
+            '<span class="badge">' + esc(S.code) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<h3>' + esc(S.title) + '</h3>' +
+        '<p class="ml-title">' + esc(S.titleMl) + '</p>' +
+        '<p class="desc">' + esc(S.desc) + '</p>' +
+        '<div class="meta">' +
+          '<div class="meta-chips">' +
+            '<span>' + S.chapters.length + ' chapter' + (S.chapters.length === 1 ? '' : 's') + '</span>' +
+            '<span>' + totalTopics + ' topics</span>' +
+          '</div>' +
+          '<span class="cta-arrow">Study →</span>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', e => {
+      query = e.target.value;
+      if (clearSearch) clearSearch.classList.toggle('show', !!query);
+      renderSubjects();
+    });
+  }
+
+  if (clearSearch) {
+    clearSearch.addEventListener('click', () => {
+      query = "";
+      searchInput.value = "";
+      clearSearch.classList.remove('show');
+      renderSubjects();
+      searchInput.focus();
+    });
+  }
+
+  if (examFilter) {
+    examFilter.addEventListener('click', e => {
+      const btn = e.target.closest('.fchip');
+      if (!btn) return;
+      activeTag = btn.dataset.tag;
+      examFilter.querySelectorAll('.fchip').forEach(c => c.classList.toggle('active', c === btn));
+      renderSubjects();
+    });
+  }
+
+  renderSubjects();
 })();
 </script>
 
@@ -156,8 +1155,7 @@
 
   function refreshPrompt() {
     if (!prompt) return;
-    
-    // If user closed the banner manually, keep it closed
+
     if (localStorage.getItem(DISMISS_KEY) === "1") {
       prompt.classList.remove("show");
       return;
@@ -167,7 +1165,6 @@
     var user = window.KPSC_Sync && window.KPSC_Sync.getCurrentUser ? window.KPSC_Sync.getCurrentUser() : null;
 
     if (connected) {
-      // STATE: LOGGED IN
       var email = (user && user.email) ? user.email : "Cloud Account";
       titleEl.textContent = "Cloud Sync Active";
       descEl.textContent = "Signed in as " + email + ". Progress saves automatically.";
@@ -175,18 +1172,16 @@
       iconEl.textContent = "✅";
       prompt.classList.add("success");
     } else {
-      // STATE: LOGGED OUT
       titleEl.textContent = "Sync across devices";
       descEl.textContent = "Sign in once to save your progress to the cloud — continue on any phone or PC.";
       btn.textContent = "Sign in";
       iconEl.textContent = "💾";
       prompt.classList.remove("success");
     }
-    
+
     prompt.classList.add("show");
   }
 
-  // The button opens the modal (or acts as a shortcut to account settings)
   btn.onclick = function () {
     if (window.KPSC_Sync && window.KPSC_Sync.open) {
       window.KPSC_Sync.open();
@@ -198,18 +1193,14 @@
     refreshPrompt();
   };
 
-  // Listen for the login event from sync.js
   window.addEventListener("kpsc-auth-changed", refreshPrompt);
-  
-  // Also listen when data is synced (just in case)
   window.addEventListener("kpsc-sync-applied", refreshPrompt);
 
-  // Wait for sync.js to finish loading on page load
   var tries = 0;
   var iv = setInterval(function () {
-    if (window.KPSC_Sync || tries > 40) { 
-      clearInterval(iv); 
-      refreshPrompt(); 
+    if (window.KPSC_Sync || tries > 40) {
+      clearInterval(iv);
+      refreshPrompt();
     }
     tries++;
   }, 250);
