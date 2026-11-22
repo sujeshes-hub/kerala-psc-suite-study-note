@@ -7,19 +7,19 @@ Kerala PSC Study Suite — content build.
        question-papers/883/list.js       -> window.MOCK_TESTS_883
        question-papers/subjects/list.js  -> window.MOCK_TESTS_SUBJECTS
    Titles, question counts and timings are read out of each paper, so the
-   manifests can no longer drift from the folder (they had drifted badly:
-   573 listed 2 of 25 papers, 883 listed 2 papers that do not exist).
+   manifests can no longer drift from the folder.
 
 2. Wires those manifests into the three listing pages so the lists render
-   from a local file instead of the GitHub contents API.  That makes the
-   lists work offline / from file:// as the site claims, and stops each
-   visit from downloading every paper just to read metadata.
+   from a local file instead of the GitHub contents API.
 
-Each entry carries an `updated` date and the lists are ordered newest first.
-The date comes from .git/index (the file's own mtime when it was staged),
-falling back to the filesystem mtime.  Pass --keep-dates in CI: a fresh
-checkout stamps every file with the same time, so recomputing there would
-flatten the order.
+Each entry carries an `updated` timestamp (`YYYY-MM-DD HH:MM:SS`) and the
+lists are ordered newest first. Date resolution order:
+  1. Explicit `<meta name="mock:updated" content="...">` (or JSON `"updated"`).
+  2. Existing manifest date when `--keep-dates` is passed.
+  3. Live filesystem mtime for locally modified or untracked files.
+  4. `.git/index` mtime (if distinct across the folder), falling back to
+     filesystem mtime or per-file `git log` history when a bulk edit or
+     checkout flattened timestamps.
 
 Every file is backed up first; the script is idempotent.
 """
@@ -28,6 +28,7 @@ import os
 import re
 import shutil
 import struct
+import subprocess
 import sys
 import time
 from urllib.parse import quote
@@ -41,12 +42,21 @@ BACKUP = os.path.join(ROOT, "tools", "_backup", STAMP)
 
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S | re.I)
 SECONDS_RE = re.compile(r"SECONDS_PER_QUESTION\s*=\s*(\d+)")
+META_UPDATED_RE = re.compile(
+    r'<meta\s+[^>]*name=["\']mock:(?:updated|update-date|date)["\'][^>]*content=["\']([^"\']+)["\']',
+    re.I,
+)
+META_UPDATED_RE_REV = re.compile(
+    r'<meta\s+[^>]*content=["\']([^"\']+)["\'][^>]*name=["\']mock:(?:updated|update-date|date)["\']',
+    re.I,
+)
+
 # Question-count heuristics: papers use four different literal shapes.
 COUNTERS = [
-    (re.compile(r'\{s:"'), "compact"),          # {s:"..",q:"..",o:[..],a:1}
-    (re.compile(r'(?<![\w$])["\']?question["\']?\s*:'), "long"),   # {subject:..,question:..}
-    (re.compile(r"\bq\(\s*['\"]"), "helper"),   # q('H', mt(`..`))
-    (re.compile(r"(?<![\w$])q\s*:"), "bare"),   # { q: "..", o: [..] }
+    (re.compile(r'\{s:"'), "compact"),                                # {s:"..",q:"..",o:[..],a:1}
+    (re.compile(r'(?<![\w$])["\']?question["\']?\s*:'), "long"),      # {subject:..,question:..}
+    (re.compile(r"\bq\(\s*['\"]"), "helper"),                         # q('H', mt(`..`))
+    (re.compile(r"(?<![\w$])q\s*:"), "bare"),                         # { q: "..", o: [..] }
 ]
 
 SUBJECT_OF = [
@@ -80,7 +90,10 @@ PAGE_WIRING = [
     ("mock-tests/subjects.html", "../question-papers/subjects/list.js", "MOCK_TESTS_SUBJECTS", "subjectHost"),
 ]
 
+GENERIC_TITLES = {"", "kerala psc mock test", "kerala psc", "mock test"}
+
 changed = []
+_GIT_INFO_CACHE = None
 
 
 def read(path):
@@ -143,14 +156,51 @@ def subject_for(name):
     return "Uncategorised"
 
 
-def read_git_index_dates():
-    """path -> epoch seconds, from .git/index.
+def extract_meta_updated(text):
+    m = META_UPDATED_RE.search(text) or META_UPDATED_RE_REV.search(text)
+    return m.group(1).strip() if m else ""
 
-    Each index entry stores the file's own modification time as recorded when it
-    was staged, so the date survives later rewrites of the file and is available
-    without the `git` binary.  A CI checkout instead produces one uniform
-    timestamp for every file, which is why the workflow passes --keep-dates.
-    """
+
+def format_ts(stamp):
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(stamp))
+
+
+def normalize_date_key(raw):
+    """Comparable sortable key for YYYY-MM-DD, DD-MM-YYYY, or ISO timestamps."""
+    s = str(raw or "").strip()
+    if not s:
+        return ""
+    m = re.match(
+        r"^(\d{4})[/-](\d{1,2})[/-](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?",
+        s,
+    )
+    if m:
+        return "%04d-%02d-%02d %02d:%02d:%02d" % (
+            int(m.group(1)),
+            int(m.group(2)),
+            int(m.group(3)),
+            int(m.group(4) or 0),
+            int(m.group(5) or 0),
+            int(m.group(6) or 0),
+        )
+    m = re.match(
+        r"^(\d{1,2})[/-](\d{1,2})[/-](\d{4})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?",
+        s,
+    )
+    if m:
+        return "%04d-%02d-%02d %02d:%02d:%02d" % (
+            int(m.group(3)),
+            int(m.group(2)),
+            int(m.group(1)),
+            int(m.group(4) or 0),
+            int(m.group(5) or 0),
+            int(m.group(6) or 0),
+        )
+    return s
+
+
+def read_git_index_dates():
+    """path -> epoch seconds, from .git/index (supports index v2 and v3)."""
     idx = os.path.join(ROOT, ".git", "index")
     if not os.path.isfile(idx):
         return {}
@@ -163,73 +213,259 @@ def read_git_index_dates():
         return {}
     try:
         version, count = struct.unpack(">II", data[4:12])
-        if version != 2:
+        if version not in (2, 3):
             return {}
         dates, pos = {}, 12
         for _ in range(count):
             start = pos
-            mtime = struct.unpack(">I", data[pos + 8:pos + 12])[0]
-            namelen = struct.unpack(">H", data[pos + 60:pos + 62])[0] & 0x0FFF
-            name_start = pos + 62
-            path = data[name_start:name_start + namelen].decode("utf-8", "replace")
-            pos = start + ((name_start + namelen - start + 8) & ~7)
+            mtime = struct.unpack(">I", data[start + 8 : start + 12])[0]
+            flags = struct.unpack(">H", data[start + 60 : start + 62])[0]
+            namelen = flags & 0x0FFF
+            name_start = start + 62
+            if version >= 3 and (flags & 0x4000):
+                name_start += 2
+            if namelen < 0x0FFF:
+                name_end = name_start + namelen
+            else:
+                name_end = data.index(b"\x00", name_start)
+            path = data[name_start:name_end].decode("utf-8", "replace")
+            pos = start + (((name_end - start) + 8) & ~7)
             dates[path.replace("/", os.sep)] = mtime
         return dates
-    except (struct.error, IndexError):
+    except (struct.error, IndexError, ValueError):
         return {}
 
 
+def read_git_info():
+    """Read git log commit history and dirty/untracked files once per run."""
+    global _GIT_INFO_CACHE
+    if _GIT_INFO_CACHE is not None:
+        return _GIT_INFO_CACHE
+
+    info = {"dirty": set(), "latest": {}, "nonbulk": {}, "added": {}}
+
+    # 1. Dirty / untracked files under question-papers/
+    try:
+        proc = subprocess.run(
+            ["git", "status", "--porcelain", "--", "question-papers"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=10,
+        )
+        if proc.returncode == 0:
+            for line in proc.stdout.splitlines():
+                if len(line) < 4:
+                    continue
+                p = line[3:].strip()
+                if " -> " in p:
+                    p = p.split(" -> ", 1)[1].strip()
+                p = p.strip('"').replace("/", os.sep)
+                info["dirty"].add(p)
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+    # 2. Commit history under question-papers/
+    try:
+        proc = subprocess.run(
+            ["git", "log", "--format=__KPSC_TS__%at", "--name-only", "--", "question-papers"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=15,
+        )
+        if proc.returncode == 0:
+            commits = []
+            cur_ts = 0
+            cur_files = []
+            for line in proc.stdout.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith("__KPSC_TS__"):
+                    if cur_ts and cur_files:
+                        commits.append((cur_ts, cur_files))
+                    try:
+                        cur_ts = int(line[len("__KPSC_TS__"):])
+                    except ValueError:
+                        cur_ts = 0
+                    cur_files = []
+                elif cur_ts:
+                    cur_files.append(line.replace("/", os.sep))
+            if cur_ts and cur_files:
+                commits.append((cur_ts, cur_files))
+
+            for ts, files in commits:
+                # Group files touched in this commit by folder to spot bulk edits
+                by_folder = {}
+                for rel in files:
+                    if rel.lower().endswith((".html", ".json")):
+                        by_folder.setdefault(os.path.dirname(rel), []).append(rel)
+
+                for folder_rel, f_list in by_folder.items():
+                    is_bulk = len(f_list) >= 8
+                    for rel in f_list:
+                        if rel not in info["latest"]:
+                            info["latest"][rel] = ts
+                        if not is_bulk and rel not in info["nonbulk"]:
+                            info["nonbulk"][rel] = ts
+                        info["added"][rel] = ts
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+    _GIT_INFO_CACHE = info
+    return info
+
+
+def _has_spread(timestamps):
+    vals = [t for t in timestamps if t]
+    return len(vals) >= 2 and (max(vals) - min(vals)) > 10
+
+
+def _pick_folder_source(paths, index_dates, git_info):
+    """Choose the best timestamp source that wasn't flattened by a bulk edit."""
+    rels = [os.path.relpath(p, ROOT) for p in paths]
+    fs_vals = []
+    for p in paths:
+        try:
+            fs_vals.append(os.path.getmtime(p))
+        except OSError:
+            fs_vals.append(0)
+
+    idx_vals = [index_dates.get(r, 0) for r in rels]
+    lat_vals = [git_info["latest"].get(r, 0) for r in rels]
+    nb_vals = [git_info["nonbulk"].get(r, 0) for r in rels]
+    add_vals = [git_info["added"].get(r, 0) for r in rels]
+
+    if _has_spread(idx_vals):
+        return "index"
+    if _has_spread(fs_vals):
+        return "fs"
+    if _has_spread(lat_vals):
+        return "latest"
+    if _has_spread(nb_vals):
+        return "nonbulk"
+    if _has_spread(add_vals):
+        return "added"
+    return "fs"
+
+
 def read_manifest_dates(folder):
-    """name -> updated, from a previously generated list.js."""
+    """file -> updated, parsed cleanly from a previously generated list.js."""
     path = os.path.join(folder, "list.js")
     if not os.path.isfile(path):
         return {}
     try:
         text = read(path)
-        return {m.group(1): m.group(2)
-                for m in re.finditer(r'"file"\s*:\s*"([^"]+)"[^}]*?"updated"\s*:\s*"([^"]*)"', text, re.S)}
     except OSError:
         return {}
 
+    m = re.search(r"window\.[A-Za-z0-9_]+\s*=\s*(\[.*\])\s*;?\s*$", text, re.S)
+    if m:
+        try:
+            items = json.loads(m.group(1))
+            if isinstance(items, list):
+                return {
+                    item["file"]: item.get("updated", "")
+                    for item in items
+                    if isinstance(item, dict) and item.get("file") and item.get("updated")
+                }
+        except ValueError:
+            pass
 
-def resolve_updated(path, index_dates, known):
-    """Publication-ish date for a paper: known manifest value, git index, mtime."""
-    rel = os.path.relpath(path, ROOT)
+    # Fallback regex supporting either field order
+    dates = {}
+    for block in re.findall(r"\{[^{}]*\}", text):
+        mf = re.search(r'"file"\s*:\s*"([^"]+)"', block)
+        mu = re.search(r'"updated"\s*:\s*"([^"]*)"', block)
+        if mf and mu and mu.group(1):
+            dates[mf.group(1)] = mu.group(1)
+    return dates
+
+
+def resolve_updated(path, index_dates, known="", meta_updated="", source="index", git_info=None):
+    """Full update timestamp (YYYY-MM-DD HH:MM:SS) for a paper."""
+    if meta_updated:
+        return meta_updated
     if known:
         return known
-    stamp = index_dates.get(rel)
-    if not stamp:
-        try:
-            stamp = os.path.getmtime(path)
-        except OSError:
-            return ""
-    return time.strftime("%Y-%m-%d", time.localtime(stamp))
+
+    rel = os.path.relpath(path, ROOT)
+    index_dates = index_dates or {}
+    git_info = git_info or {"dirty": set(), "latest": {}, "nonbulk": {}, "added": {}}
+
+    try:
+        fs_mtime = os.path.getmtime(path)
+    except OSError:
+        fs_mtime = 0
+
+    # Locally modified or newly added (untracked) paper always gets live mtime
+    if rel in git_info["dirty"] and fs_mtime:
+        return format_ts(fs_mtime)
+
+    stamp = 0
+    if source == "index":
+        stamp = index_dates.get(rel) or fs_mtime
+    elif source == "latest":
+        stamp = git_info["latest"].get(rel) or index_dates.get(rel) or fs_mtime
+    elif source == "nonbulk":
+        stamp = (
+            git_info["nonbulk"].get(rel)
+            or git_info["added"].get(rel)
+            or git_info["latest"].get(rel)
+            or fs_mtime
+        )
+    elif source == "added":
+        stamp = git_info["added"].get(rel) or git_info["latest"].get(rel) or fs_mtime
+    else:
+        stamp = fs_mtime or index_dates.get(rel)
+
+    return format_ts(stamp) if stamp else ""
 
 
 def describe_folder(folder, tag, with_subject, index_dates=None, keep_dates=False):
     papers = []
     if not os.path.isdir(folder):
         return papers
+
     index_dates = index_dates or {}
+    git_info = read_git_info()
     recorded = read_manifest_dates(folder) if keep_dates else {}
-    for name in sorted(os.listdir(folder)):
-        if not name.lower().endswith(".html"):
-            continue
-        if name.lower() == "index.html":
-            continue
-        path = os.path.join(folder, name)
+
+    names = [
+        name
+        for name in sorted(os.listdir(folder))
+        if name.lower().endswith(".html") and name.lower() != "index.html"
+    ]
+    paths = [os.path.join(folder, name) for name in names]
+    source = _pick_folder_source(paths, index_dates, git_info)
+
+    for name, path in zip(names, paths):
         text = read(path)
         stem = os.path.splitext(name)[0]
         qs = count_questions(text)
         secs = SECONDS_RE.search(text)
         secs_per_q = int(secs.group(1)) if secs else 0
         title_match = TITLE_RE.search(text)
+        meta_updated = extract_meta_updated(text)
+
         entry = {
             "id": slugify(stem),
             "key": slugify(stem),
             "title": clean_title(title_match.group(1) if title_match else "", fallback_title(name)),
             "titleMl": "",
-            "updated": resolve_updated(path, index_dates, recorded.get(name, "")),
+            "updated": resolve_updated(
+                path,
+                index_dates,
+                recorded.get(name, ""),
+                meta_updated=meta_updated,
+                source=source,
+                git_info=git_info,
+            ),
             "desc": (f"{qs} questions" if qs else "Question paper"),
             "file": name,
             "qs": qs,
@@ -241,13 +477,10 @@ def describe_folder(folder, tag, with_subject, index_dates=None, keep_dates=Fals
         papers.append(entry)
 
     dedupe_titles(papers, folder)
-    # Newest first; the filename keeps the order stable inside the same day.
-    papers.sort(key=lambda p: p["file"])
-    papers.sort(key=lambda p: p.get("updated", ""), reverse=True)
+    # Newest update first; filename keeps exact ties stable.
+    papers.sort(key=lambda p: p["file"].lower())
+    papers.sort(key=lambda p: normalize_date_key(p.get("updated", "")), reverse=True)
     return papers
-
-
-GENERIC_TITLES = {"", "kerala psc mock test", "kerala psc", "mock test"}
 
 
 def fallback_title(filename):
@@ -260,11 +493,7 @@ def fallback_title(filename):
 
 
 def dedupe_titles(papers, folder):
-    """Several papers carry the same generic <title>; fall back to the filename.
-
-    Without this the list showed three cards all titled "Kerala PSC Mock Test",
-    which is indistinguishable for a student choosing a paper.
-    """
+    """Several papers carry the same generic <title>; fall back to the filename."""
     seen = {}
     for entry in papers:
         key = entry["title"].strip().lower()
@@ -292,8 +521,10 @@ def render_manifest(var, papers, exam_label):
 
 
 def write_manifest(folder, var, papers, exam_label):
-    return save(os.path.join(folder, "list.js"),
-                render_manifest(var, papers, exam_label))
+    return save(
+        os.path.join(folder, "list.js"),
+        render_manifest(var, papers, exam_label),
+    )
 
 
 def wire_page(rel, manifest_src, var, grid_id):
@@ -309,7 +540,7 @@ def wire_page(rel, manifest_src, var, grid_id):
         m = re.search(r"<script>\s*\(function \(\) \{", text)
         if not m:
             return False
-        text = text[:m.start()] + tag_line + text[m.start():]
+        text = text[: m.start()] + tag_line + text[m.start() :]
 
     # (b) render from the manifest first, API/cache only as fallback
     guard = (
@@ -322,7 +553,7 @@ def wire_page(rel, manifest_src, var, grid_id):
         m = re.search(r"(?:grid|host)\.innerHTML = '<p class=\"empty\">Loading…</p>';\r?\n", text)
         if not m:
             return False
-        text = text[:m.end()] + guard + text[m.end():]
+        text = text[: m.end()] + guard + text[m.end() :]
 
     return save(path, text) if text != original else False
 
@@ -338,15 +569,9 @@ def _paper_tag(folder_rel, data=None):
 
 
 def collect_papers(index_dates=None, keep_dates=False):
-    """Every mock test under question-papers/, whatever format it is in.
-
-    * `.json`  -> a data paper, opened through mock-test.html?paper=…
-    * `.html`  -> a legacy standalone paper, opened directly
-
-    This is what makes the hub self-updating: add a file to the folder, rebuild,
-    and it is listed.  Nothing is registered by hand.
-    """
+    """Every mock test under question-papers/, whatever format it is in."""
     index_dates = index_dates or {}
+    git_info = read_git_info()
     base = os.path.join(ROOT, "question-papers")
     entries = []
 
@@ -356,11 +581,12 @@ def collect_papers(index_dates=None, keep_dates=False):
         tag = _paper_tag(folder_rel)
 
         # ---- data papers (JSON) ----
-        for name in sorted(filenames):
-            if not name.lower().endswith(".json"):
-                continue
+        json_names = [n for n in sorted(filenames) if n.lower().endswith(".json")]
+        json_paths = [os.path.join(dirpath, n) for n in json_names]
+        json_source = _pick_folder_source(json_paths, index_dates, git_info) if json_paths else "fs"
+
+        for name, path in zip(json_names, json_paths):
             rel = f"{folder_rel}/{name}"
-            path = os.path.join(dirpath, name)
             try:
                 data = json.loads(read(path))
             except (ValueError, OSError):
@@ -382,12 +608,22 @@ def collect_papers(index_dates=None, keep_dates=False):
                 "qs": qs,
                 "duration": round(qs * spq / 60) if qs else 0,
                 "tag": _paper_tag(folder_rel, data),
-                "updated": resolve_updated(path, index_dates, ""),
+                "updated": resolve_updated(
+                    path,
+                    index_dates,
+                    "",
+                    meta_updated=data.get("updated") or "",
+                    source=json_source,
+                    git_info=git_info,
+                ),
             })
 
         # ---- legacy standalone papers (HTML) ----
-        html_names = [n for n in sorted(filenames)
-                      if n.lower().endswith(".html") and n.lower() != "index.html"]
+        html_names = [
+            n
+            for n in sorted(filenames)
+            if n.lower().endswith(".html") and n.lower() != "index.html"
+        ]
         if not html_names:
             continue
         described = describe_folder(dirpath, tag, False, index_dates, keep_dates)
@@ -410,7 +646,10 @@ def collect_papers(index_dates=None, keep_dates=False):
                 "updated": d.get("updated") or "",
             })
 
-    entries.sort(key=lambda p: (p.get("updated", ""), p.get("title", "")), reverse=True)
+    entries.sort(
+        key=lambda p: (normalize_date_key(p.get("updated", "")), p.get("title", "")),
+        reverse=True,
+    )
     return entries
 
 
@@ -456,10 +695,14 @@ def main():
     print("Kerala PSC Study Suite — content build")
     print("-" * 64)
     index_dates = read_git_index_dates()
+    git_info = read_git_info()
     if keep_dates:
         print("  dates     : keeping the dates already in each manifest")
-    elif index_dates:
-        print(f"  dates     : .git/index ({len(index_dates)} entries)")
+    elif index_dates or git_info["latest"]:
+        print(
+            f"  dates     : auto (.git/index={len(index_dates)}, "
+            f"git-log={len(git_info['latest'])}, dirty={len(git_info['dirty'])})"
+        )
     else:
         print("  dates     : file modification times")
 
@@ -469,6 +712,10 @@ def main():
         papers = describe_folder(folder, tag, with_subject, index_dates, keep_dates)
         if write_manifest(folder, var, papers, f"{exam} papers"):
             print(f"  manifest  {folder_rel}/list.js  -> {len(papers)} paper(s)")
+        if papers:
+            print(f"  top {exam} papers (newest first):")
+            for p in papers[:5]:
+                print(f"    {p['updated']}  |  {p['file']}")
         total += len(papers)
 
     print(f"  {total} paper(s) described")
@@ -477,8 +724,10 @@ def main():
     json_n = sum(1 for e in entries if e["kind"] == "json")
     html_n = len(entries) - json_n
     if changed_papers:
-        print(f"  index     question-papers/papers.js -> {len(entries)} paper(s)"
-              f" ({json_n} data, {html_n} standalone)")
+        print(
+            f"  index     question-papers/papers.js -> {len(entries)} paper(s)"
+            f" ({json_n} data, {html_n} standalone)"
+        )
 
     for rel, src, var, grid in PAGE_WIRING:
         if wire_page(rel, src, var, grid):
