@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -39,7 +39,7 @@
   var EXAM_CODE = "573";
   var FOLDER    = "question-papers/573";
   var BASE_PATH = "../question-papers/573/";
-  var CACHE_KEY = "kpsc_qp_" + EXAM_CODE + "_v2";
+  var CACHE_KEY = "kpsc_qp_" + EXAM_CODE + "_v3";
   var CACHE_TTL = 1000 * 60 * 30;   /* 30 minutes */
 
   var grid = document.getElementById("paperGrid");
@@ -69,7 +69,78 @@
     } catch (e) {}
   }
 
-  /* -------- GitHub API: folder contents -------- */
+  /* -------- date parsing & newest-first sort -------- */
+  function getRawUpdated(item) {
+    if (!item) return "";
+    return item.updated || item.updatedAt || item.updateDate ||
+           item.lastUpdated || item.date || "";
+  }
+
+  function parseDateMs(raw) {
+    if (!raw) return 0;
+    if (typeof raw === "number") return isFinite(raw) ? raw : 0;
+
+    var str = String(raw).trim();
+    if (!str) return 0;
+
+    /* ISO timestamp with timezone (e.g. 2026-11-22T13:15:00Z or +05:30) */
+    if (/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+\-]\d{2}:?\d{2})$/i.test(str)) {
+      var iso = Date.parse(str);
+      if (!isNaN(iso)) return iso;
+    }
+
+    /* YYYY-MM-DD or YYYY/MM/DD with optional time */
+    var ymd = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
+    if (ymd) {
+      return new Date(
+        Number(ymd[1]),
+        Number(ymd[2]) - 1,
+        Number(ymd[3]),
+        Number(ymd[4] || 0),
+        Number(ymd[5] || 0),
+        Number(ymd[6] || 0)
+      ).getTime();
+    }
+
+    /* DD-MM-YYYY or DD/MM/YYYY with optional time */
+    var dmy = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
+    if (dmy) {
+      return new Date(
+        Number(dmy[3]),
+        Number(dmy[2]) - 1,
+        Number(dmy[1]),
+        Number(dmy[4] || 0),
+        Number(dmy[5] || 0),
+        Number(dmy[6] || 0)
+      ).getTime();
+    }
+
+    var ts = Date.parse(str);
+    return isNaN(ts) ? 0 : ts;
+  }
+
+  function formatDisplayDate(raw) {
+    if (!raw) return "";
+    var str = String(raw).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+    var ms = parseDateMs(str);
+    if (!ms) return str;
+    var d = new Date(ms);
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
+  }
+
+  /* Newest update date first; filename breaks ties consistently. */
+  function byUpdated(a, b) {
+    var ta = parseDateMs(getRawUpdated(a));
+    var tb = parseDateMs(getRawUpdated(b));
+    if (ta !== tb) return tb - ta;
+    return (a.file || "").localeCompare(b.file || "");
+  }
+
+  /* -------- GitHub API: folder contents & commit date fallback -------- */
   async function fetchFolderList() {
     var repo = detectRepo();
     if (!repo) throw new Error("Not on GitHub Pages — folder listing unavailable.");
@@ -90,17 +161,40 @@
     });
   }
 
-  /* -------- read meta tags of one paper -------- */
-  async function readMeta(filename) {
+  async function fetchCommitDate(repo, filename) {
+    if (!repo) return "";
     try {
-      var res = await fetch(BASE_PATH + filename, { cache: "force-cache" });
+      var url = "https://api.github.com/repos/" + repo.owner + "/" + repo.repo +
+                "/commits?path=" + encodeURIComponent(FOLDER + "/" + filename) + "&per_page=1";
+      var res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+      if (!res.ok) return "";
+      var commits = await res.json();
+      if (Array.isArray(commits) && commits[0] && commits[0].commit) {
+        return (commits[0].commit.committer && commits[0].commit.committer.date) ||
+               (commits[0].commit.author && commits[0].commit.author.date) || "";
+      }
+    } catch (e) {}
+    return "";
+  }
+
+  /* -------- read meta tags + update date of one paper -------- */
+  async function readMeta(filename, force, repo) {
+    try {
+      var res = await fetch(BASE_PATH + filename, { cache: force ? "no-cache" : "default" });
       if (!res.ok) return {};
+      var lastMod = res.headers.get("Last-Modified") || "";
       var text = await res.text();
       var doc  = new DOMParser().parseFromString(text, "text/html");
 
       function meta(name) {
         var el = doc.querySelector('meta[name="' + name + '"]');
         return el ? el.getAttribute("content") : "";
+      }
+
+      var updated = meta("mock:updated") || meta("mock:update-date") ||
+                    meta("mock:date") || lastMod || "";
+      if (!updated && repo) {
+        updated = await fetchCommitDate(repo, filename);
       }
 
       return {
@@ -110,17 +204,10 @@
         duration: parseInt(meta("mock:duration"), 10) || 0,
         qs:       parseInt(meta("mock:qs"), 10)       || 0,
         tag:      meta("mock:tag")      || EXAM_CODE,
-        key:      meta("mock:key")      || ""
+        key:      meta("mock:key")      || "",
+        updated:  updated
       };
     } catch (e) { return {}; }
-  }
-
-  /* Newest paper first; the filename keeps ties stable. */
-  function byUpdated(a, b) {
-    var da = a.updated || "";
-    var db = b.updated || "";
-    if (da !== db) return da < db ? 1 : -1;
-    return (a.file || "").localeCompare(b.file || "");
   }
 
   function titleFromFilename(name) {
@@ -132,22 +219,26 @@
   }
 
   function render(items) {
-    if (!items.length) {
+    if (!items || !items.length) {
       grid.innerHTML = '<p class="empty">No papers found in <code>' + FOLDER + '</code>.</p>';
       return;
     }
-    grid.innerHTML = items.map(function (p) {
+
+    var sorted = items.slice().sort(byUpdated);
+
+    grid.innerHTML = sorted.map(function (p) {
       var badgeCls = p.tag === "573" ? "c573" : p.tag === "883" ? "c883" : "";
       var badgeTxt = p.tag === "573" ? "573 only" : p.tag === "883" ? "883 only" : "BOTH";
       var title    = p.title || titleFromFilename(p.file);
       var key      = p.key || p.file.replace(/\.html?$/i, "");
-      return '<a href="' + BASE_PATH + p.file + '" class="card" data-part="' + key + '" data-total="' + p.qs + '">' +
+      var dateText = formatDisplayDate(getRawUpdated(p));
+      return '<a href="' + BASE_PATH + p.file + '" class="card" data-part="' + key + '" data-total="' + (p.qs || 0) + '">' +
         '<span class="badge ' + badgeCls + '">' + (p.qs || 0) + ' Qs</span>' +
         '<h3>📄 ' + title + '</h3>' +
         '<p class="desc">' + (p.titleMl || "") + (p.desc ? "<br>" + p.desc : "") + '</p>' +
         '<div class="meta">' +
           (p.duration ? '<span>⏱ ' + p.duration + ' min</span>' : '') +
-          (p.updated ? '<span>📅 ' + p.updated + '</span>' : '') +
+          (dateText ? '<span>📅 ' + dateText + '</span>' : '') +
           '<span>' + badgeTxt + '</span>' +
         '</div>' +
         '<div class="bar"><i style="width:0%"></i></div>' +
@@ -163,40 +254,42 @@
     }
   }
 
-
   /* ------------------------------------------------------------------
-     The manifest is the offline source of truth.  A paper dropped into
+     The manifest is the offline source of truth. A paper dropped into
      the folder afterwards is not in it yet, so ask the host for the
      folder listing and fold in anything the manifest does not know.
      Not on GitHub Pages (file://, local server) -> the call throws and
      the manifest list stands unchanged.
      ------------------------------------------------------------------ */
   var supplementTried = false;
-  async function supplement(local) {
+  async function supplement(local, force) {
     if (supplementTried || !local.length) return;
     supplementTried = true;
     try {
+      var repo  = detectRepo();
       var files = await fetchFolderList();
       var known = {};
       local.forEach(function (p) { known[p.file] = 1; });
       var extra = files.filter(function (f) { return !known[f.name]; });
       if (!extra.length) return;
 
-      var metas = await Promise.all(extra.map(function (f) { return readMeta(f.name); }));
+      var metas = await Promise.all(extra.map(function (f) {
+        return readMeta(f.name, force, repo);
+      }));
       var merged = local.concat(extra.map(function (f, i) {
         var m = metas[i] || {};
         return {
-          file: f.name,
-          title: m.title,
-          titleMl: m.titleMl,
-          desc: m.desc,
+          file:     f.name,
+          title:    m.title,
+          titleMl:  m.titleMl,
+          desc:     m.desc,
           duration: m.duration,
-          qs: m.qs,
-          key: m.key,
-          tag: m.tag || EXAM_CODE
+          qs:       m.qs,
+          key:      m.key,
+          tag:      m.tag || EXAM_CODE,
+          updated:  m.updated || ""
         };
       }));
-      merged.sort(byUpdated);
       render(merged);
     } catch (e) { /* offline or no folder listing available */ }
   }
@@ -206,7 +299,7 @@
     var local_MOCK_TESTS_573 = window.MOCK_TESTS_573;
     if (local_MOCK_TESTS_573 && local_MOCK_TESTS_573.length) {
       render(local_MOCK_TESTS_573);
-      await supplement(local_MOCK_TESTS_573);
+      await supplement(local_MOCK_TESTS_573, force);
       return;
     }
 
@@ -216,10 +309,13 @@
     }
 
     try {
+      var repo  = detectRepo();
       var files = await fetchFolderList();
       if (!files.length) { render([]); return; }
 
-      var metas = await Promise.all(files.map(function (f) { return readMeta(f.name); }));
+      var metas = await Promise.all(files.map(function (f) {
+        return readMeta(f.name, force, repo);
+      }));
 
       var items = files.map(function (f, i) {
         var m = metas[i] || {};
@@ -231,12 +327,12 @@
           duration: m.duration,
           qs:       m.qs,
           tag:      m.tag,
-          key:      m.key
+          key:      m.key,
+          updated:  m.updated || ""
         };
       });
 
       items.sort(byUpdated);
-
       saveCache(items);
       render(items);
 
@@ -253,6 +349,7 @@
 
   if (refreshBtn) refreshBtn.addEventListener("click", function () {
     try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+    supplementTried = false;
     load(true);
   });
 
