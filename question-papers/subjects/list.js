@@ -124,6 +124,32 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "History"
   },
   {
+    "id": "kerala-psc-vfa-mock-test-092-2026-m",
+    "key": "kerala-psc-vfa-mock-test-092-2026-m",
+    "title": "Kerala PSC VFA Mock Test 092/2026-M",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "Kerala PSC VFA Mock Test — 092-2026-M.html",
+    "qs": 100,
+    "duration": 90,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
+    "id": "kerala-psc-vfa-mock-test",
+    "key": "kerala-psc-vfa-mock-test",
+    "title": "Kerala PSC VFA Mock Test — Malayalam",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "Kerala PSC VFA Mock Test.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
     "id": "kerala-psc-geography-100-mock-test",
     "key": "kerala-psc-geography-100-mock-test",
     "title": "Kerala PSC Geography Mock Test — 100 Questions",
@@ -161,6 +187,32 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 0,
     "tag": "BOTH",
     "subject": "Physics"
+  },
+  {
+    "id": "university-assistant-mock-test-91-26-m",
+    "key": "university-assistant-mock-test-91-26-m",
+    "title": "Kerala PSC University Assistant Mock Test (91/26 - M)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "University Assistant Mock Test (91-26) - M.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
+    "id": "vfa-571-2025-mock-test-85-26-m-a",
+    "key": "vfa-571-2025-mock-test-85-26-m-a",
+    "title": "Village Field Assistant 571/2025 – Mock Test (Paper 85/26-M, Booklet A)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "VFA_571-2025_Mock_Test_85-26-M_A.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
   },
   {
     "id": "english1",
@@ -213,6 +265,32 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 94,
     "tag": "BOTH",
     "subject": "History"
+  },
+  {
+    "id": "kpsc-073-2026-mock",
+    "key": "kpsc-073-2026-mock",
+    "title": "LGS / Storekeeper / LDC 073/2026 (Booklet A)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "4 questions",
+    "file": "kpsc_073_2026_mock.html",
+    "qs": 4,
+    "duration": 3,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
+    "id": "kpsc-080-2026-mock-test",
+    "key": "kpsc-080-2026-mock-test",
+    "title": "Kerala PSC 080/2026 – LGS / Storeman / LDC (Booklet A)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "kpsc_080_2026_mock_test.html",
+    "qs": 100,
+    "duration": 75,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
   },
   {
     "id": "kpsc-arithmetic-mental-ability-mock",

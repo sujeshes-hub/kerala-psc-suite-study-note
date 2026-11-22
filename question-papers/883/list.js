@@ -7,6 +7,18 @@
    ===================================================================== */
 window.MOCK_TESTS_883 = [
   {
+    "id": "kpsc-098-2026-m-seriesc-mocktest",
+    "key": "kpsc-098-2026-m-seriesc-mocktest",
+    "title": "098/2026-M (Series C) – Kerala PSC Mock Test (100 Q)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "KPSC_098_2026_M_SeriesC_MockTest.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "883"
+  },
+  {
     "id": "legal-metrology-883-mock-test",
     "key": "legal-metrology-883-mock-test",
     "title": "Kerala PSC Inspecting Assistant (883/2025) — Mock Test",
