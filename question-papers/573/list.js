@@ -91,6 +91,18 @@ window.MOCK_TESTS_573 = [
     "tag": "573"
   },
   {
+    "id": "kpsc-mock-test1-full-100q",
+    "key": "kpsc-mock-test1-full-100q",
+    "title": "KPSC Practice Mock Test 1 – 100 Q",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "KPSC_Mock_Test1_Full_100Q.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "573"
+  },
+  {
     "id": "kerala-psc-ja-assistant-grade-ii-hard-mock-test-1",
     "key": "kerala-psc-ja-assistant-grade-ii-hard-mock-test-1",
     "title": "Kerala PSC JA / Assistant Grade II – Hard Mock Test 1",
