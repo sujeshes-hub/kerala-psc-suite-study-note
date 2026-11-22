@@ -4,6 +4,7 @@
    1. Subject page (subjects/NN-name.html)
         - subject has ONE chapter  -> topics are listed right here
                                       (no separate chapter page)
+        - topics with update dates -> sorted newest update first
         - subject has 2+ chapters  -> unchanged (chapter cards)
    2. Chapter page (chapters/<folder>/<file>.html)
         - if it is the only chapter of its subject, jump to the subject
@@ -32,6 +33,42 @@
     return (window.Syllabus && window.Syllabus.getAllSubjects)
       ? window.Syllabus.getAllSubjects()
       : [];
+  }
+
+  function getRawDate(item) {
+    if (!item) return "";
+    return item.updatedAt || item.updateDate || item.updated ||
+      item.lastUpdated || item.date || item.addedDate || "";
+  }
+
+  function parseDateValue(item) {
+    var raw = getRawDate(item);
+    if (!raw) return 0;
+    if (typeof raw === "number") return raw;
+
+    var str = String(raw).trim();
+
+    /* YYYY-MM-DD or YYYY-MM-DD HH:mm(:ss) */
+    var ymd = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
+    if (ymd) {
+      return new Date(
+        Number(ymd[1]),
+        Number(ymd[2]) - 1,
+        Number(ymd[3]),
+        Number(ymd[4] || 0),
+        Number(ymd[5] || 0),
+        Number(ymd[6] || 0)
+      ).getTime();
+    }
+
+    /* DD-MM-YYYY or DD/MM/YYYY */
+    var dmy = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (dmy) {
+      return new Date(Number(dmy[3]), Number(dmy[2]) - 1, Number(dmy[1])).getTime();
+    }
+
+    var ts = Date.parse(str);
+    return isNaN(ts) ? 0 : ts;
   }
 
   /* ------------------------------------------------------------------
@@ -72,8 +109,19 @@
       : null;
     if (!subj || !subj.chapters || subj.chapters.length !== 1) return true;
 
-    var topics = subj.chapters[0].topics || [];
+    var topics = (subj.chapters[0].topics || []).slice();
     if (!topics.length) return true;
+
+    /* Sort newest update date first when any topic has an update date */
+    var hasAnyDate = false;
+    for (var d = 0; d < topics.length; d++) {
+      if (parseDateValue(topics[d]) > 0) { hasAnyDate = true; break; }
+    }
+    if (hasAnyDate) {
+      topics.sort(function (a, b) {
+        return parseDateValue(b) - parseDateValue(a);
+      });
+    }
 
     var head = document.querySelector(".section-head h2");
     if (head) head.textContent = "Topics in this Subject";
@@ -92,12 +140,15 @@
         '</div>';
       }
 
+      var rawDate = getRawDate(t);
+      var mcqText = (t.qs || 0) + ' MCQs' + (rawDate ? ' · ' + esc(rawDate) : '');
+
       return '<a href="../' + esc(t.file) + '" class="card" data-part="' + esc(t.key) +
           '" data-total="' + (t.qs || 0) + '">' +
         '<span class="badge ' + cls + '">' + esc(t.id) + '</span>' +
         '<h3>' + esc(t.title) + '</h3>' +
         '<p class="desc">' + esc(t.titleMl) + '</p>' +
-        '<div class="meta"><span>' + (t.qs || 0) + ' MCQs</span><span>' + badge + '</span></div>' +
+        '<div class="meta"><span>' + mcqText + '</span><span>' + badge + '</span></div>' +
         '<div class="bar"><i style="width:0%"></i></div>' +
         '<div class="progressline"><span class="status">Not started</span><span class="score"></span></div>' +
       '</a>';
