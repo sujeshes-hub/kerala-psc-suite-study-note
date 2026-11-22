@@ -579,6 +579,19 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-22"
   },
   {
+    "id": "kpsc-mock-test1-full-100q",
+    "kind": "html",
+    "title": "KPSC Practice Mock Test 1 – 100 Q",
+    "titleMl": "",
+    "url": "573/KPSC_Mock_Test1_Full_100Q.html",
+    "file": "question-papers/573/KPSC_Mock_Test1_Full_100Q.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "573",
+    "subject": "",
+    "updated": "2026-11-22"
+  },
+  {
     "id": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
     "kind": "html",
     "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
