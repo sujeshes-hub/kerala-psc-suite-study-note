@@ -7,6 +7,19 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
+    "id": "english1",
+    "key": "english1",
+    "title": "Kerala PSC General English – Enhanced Mock Test",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "101 questions",
+    "file": "english1.html",
+    "qs": 101,
+    "duration": 76,
+    "tag": "BOTH",
+    "subject": "English"
+  },
+  {
     "id": "indian-constitution-mock-test-improved",
     "key": "indian-constitution-mock-test-improved",
     "title": "ഇന്ത്യൻ ഭരണഘടന – 100 ചോദ്യങ്ങൾ (Kerala PSC Degree Level)",
@@ -18,45 +31,6 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 1,
     "tag": "BOTH",
     "subject": "Constitution"
-  },
-  {
-    "id": "kpsc-history-mock-test",
-    "key": "kpsc-history-mock-test",
-    "title": "Kerala PSC Mock Test – ചരിത്രം (History) 100 മാർക്ക്",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "101 questions",
-    "file": "KPSC_History_Mock_Test.html",
-    "qs": 101,
-    "duration": 101,
-    "tag": "BOTH",
-    "subject": "History"
-  },
-  {
-    "id": "kpsc-malayalam-100q-mock-test-improved",
-    "key": "kpsc-malayalam-100q-mock-test-improved",
-    "title": "KPSC Mock Test v3 – 100 Q (Malayalam 14.2–14.15)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "KPSC_Malayalam_100Q_Mock_Test_Improved.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Malayalam"
-  },
-  {
-    "id": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
-    "key": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
-    "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "101 questions",
-    "file": "KPSC_Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
-    "qs": 101,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Mental Ability"
   },
   {
     "id": "kerala-administration-governance-acts",
@@ -150,84 +124,6 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "Uncategorised"
   },
   {
-    "id": "kerala-psc-geography-100-mock-test",
-    "key": "kerala-psc-geography-100-mock-test",
-    "title": "Kerala PSC Geography Mock Test — 100 Questions",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "Question paper",
-    "file": "Kerala_PSC_Geography_100_Mock_Test.html",
-    "qs": 0,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Geography"
-  },
-  {
-    "id": "kerala-psc-geography-mock-test-stage1-shell",
-    "key": "kerala-psc-geography-mock-test-stage1-shell",
-    "title": "Kerala PSC Geography Mock Test",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "101 questions",
-    "file": "Kerala_PSC_Geography_Mock_Test_STAGE1_shell.html",
-    "qs": 101,
-    "duration": 76,
-    "tag": "BOTH",
-    "subject": "Geography"
-  },
-  {
-    "id": "physics-mock-test",
-    "key": "physics-mock-test",
-    "title": "Kerala PSC – Physics Mock Test (100 Q)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "Physics Mock Test.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Physics"
-  },
-  {
-    "id": "university-assistant-mock-test-91-26-m",
-    "key": "university-assistant-mock-test-91-26-m",
-    "title": "Kerala PSC University Assistant Mock Test (91/26 - M)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "University Assistant Mock Test (91-26) - M.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Uncategorised"
-  },
-  {
-    "id": "vfa-571-2025-mock-test-85-26-m-a",
-    "key": "vfa-571-2025-mock-test-85-26-m-a",
-    "title": "Village Field Assistant 571/2025 – Mock Test (Paper 85/26-M, Booklet A)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "VFA_571-2025_Mock_Test_85-26-M_A.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Uncategorised"
-  },
-  {
-    "id": "english1",
-    "key": "english1",
-    "title": "Kerala PSC General English – Enhanced Mock Test",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "101 questions",
-    "file": "english1.html",
-    "qs": 101,
-    "duration": 76,
-    "tag": "BOTH",
-    "subject": "English"
-  },
-  {
     "id": "kerala-learners-licence-mock-test",
     "key": "kerala-learners-licence-mock-test",
     "title": "കേരള MVD ലേണേഴ്സ് ലൈസൻസ് ടെസ്റ്റ് — Parivahan STALL Simulator (187 ചോദ്യങ്ങൾ)",
@@ -265,6 +161,32 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 94,
     "tag": "BOTH",
     "subject": "History"
+  },
+  {
+    "id": "kerala-psc-geography-100-mock-test",
+    "key": "kerala-psc-geography-100-mock-test",
+    "title": "Kerala PSC Geography Mock Test — 100 Questions",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "Question paper",
+    "file": "Kerala_PSC_Geography_100_Mock_Test.html",
+    "qs": 0,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Geography"
+  },
+  {
+    "id": "kerala-psc-geography-mock-test-stage1-shell",
+    "key": "kerala-psc-geography-mock-test-stage1-shell",
+    "title": "Kerala PSC Geography Mock Test",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "101 questions",
+    "file": "Kerala_PSC_Geography_Mock_Test_STAGE1_shell.html",
+    "qs": 101,
+    "duration": 76,
+    "tag": "BOTH",
+    "subject": "Geography"
   },
   {
     "id": "kpsc-073-2026-mock",
@@ -306,6 +228,45 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "Arithmetic"
   },
   {
+    "id": "kpsc-history-mock-test",
+    "key": "kpsc-history-mock-test",
+    "title": "Kerala PSC Mock Test – ചരിത്രം (History) 100 മാർക്ക്",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "101 questions",
+    "file": "KPSC_History_Mock_Test.html",
+    "qs": 101,
+    "duration": 101,
+    "tag": "BOTH",
+    "subject": "History"
+  },
+  {
+    "id": "kpsc-malayalam-100q-mock-test-improved",
+    "key": "kpsc-malayalam-100q-mock-test-improved",
+    "title": "KPSC Mock Test v3 – 100 Q (Malayalam 14.2–14.15)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "KPSC_Malayalam_100Q_Mock_Test_Improved.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Malayalam"
+  },
+  {
+    "id": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
+    "key": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
+    "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "101 questions",
+    "file": "KPSC_Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Mental Ability"
+  },
+  {
     "id": "mvd-learner-test",
     "key": "mvd-learner-test",
     "title": "MVD Learner's License Test — Kerala",
@@ -319,6 +280,32 @@ window.MOCK_TESTS_SUBJECTS = [
     "subject": "Uncategorised"
   },
   {
+    "id": "physics-mock-test",
+    "key": "physics-mock-test",
+    "title": "Kerala PSC – Physics Mock Test (100 Q)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "Physics Mock Test.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Physics"
+  },
+  {
+    "id": "university-assistant-mock-test-91-26-m",
+    "key": "university-assistant-mock-test-91-26-m",
+    "title": "Kerala PSC University Assistant Mock Test (91/26 - M)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "University Assistant Mock Test (91-26) - M.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
     "id": "vfa",
     "key": "vfa",
     "title": "Kerala PSC VFA Mock Test — 94/26-M",
@@ -326,6 +313,19 @@ window.MOCK_TESTS_SUBJECTS = [
     "updated": "2026-11-22",
     "desc": "100 questions",
     "file": "vfa.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
+    "id": "vfa-571-2025-mock-test-85-26-m-a",
+    "key": "vfa-571-2025-mock-test-85-26-m-a",
+    "title": "Village Field Assistant 571/2025 – Mock Test (Paper 85/26-M, Booklet A)",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "VFA_571-2025_Mock_Test_85-26-M_A.html",
     "qs": 100,
     "duration": 0,
     "tag": "BOTH",

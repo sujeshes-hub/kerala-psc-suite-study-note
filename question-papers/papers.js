@@ -7,6 +7,81 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
+    "id": "22-11-26-kpsc-573-2025-mock-test-1-100q",
+    "kind": "html",
+    "title": "Kerala PSC 573/2025 – Mock Test 1 (100 Q)",
+    "titleMl": "",
+    "url": "573/22.11.26%20KPSC_573_2025_Mock_Test_1_100Q.html",
+    "file": "question-papers/573/22.11.26 KPSC_573_2025_Mock_Test_1_100Q.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "573",
+    "subject": "",
+    "updated": "2026-11-22 16:48:41"
+  },
+  {
+    "id": "22-11-26-kpsc-mock-test1-full-100q",
+    "kind": "html",
+    "title": "KPSC Practice Mock Test 1 – 100 Q",
+    "titleMl": "",
+    "url": "573/22.11.26%20KPSC_Mock_Test1_Full_100Q.html",
+    "file": "question-papers/573/22.11.26 KPSC_Mock_Test1_Full_100Q.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "573",
+    "subject": "",
+    "updated": "2026-11-22 16:48:41"
+  },
+  {
+    "id": "21-11-26-kpsc-573-2025-mock-test-1-reviewed",
+    "kind": "html",
+    "title": "KPSC Cat. 573/2025 – Mock Test 1 (100 Q)",
+    "titleMl": "",
+    "url": "573/21.11.26%20kpsc_573_2025_mock_test_1_reviewed.html",
+    "file": "question-papers/573/21.11.26 kpsc_573_2025_mock_test_1_reviewed.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "573",
+    "subject": "",
+    "updated": "2026-11-22 16:48:41"
+  },
+  {
+    "id": "qp-002",
+    "kind": "json",
+    "title": "Full Length Mock Test 2",
+    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 2",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-002-full-mock-2.json",
+    "data": "question-papers/573/qp-573-002-full-mock-2.json",
+    "qs": 100,
+    "duration": 75,
+    "tag": "573",
+    "updated": "2026-11-22 16:48:41"
+  },
+  {
+    "id": "qp-001",
+    "kind": "json",
+    "title": "Full Length Mock Test 1",
+    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 1",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-001-full-mock-1.json",
+    "data": "question-papers/573/qp-573-001-full-mock-1.json",
+    "qs": 99,
+    "duration": 74,
+    "tag": "573",
+    "updated": "2026-11-22 16:48:41"
+  },
+  {
+    "id": "qp-573-bio-001",
+    "kind": "json",
+    "title": "Biology & Public Health Mock Test",
+    "titleMl": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-bio-001.json",
+    "data": "question-papers/573/qp-573-bio-001.json",
+    "qs": 25,
+    "duration": 12,
+    "tag": "573",
+    "updated": "2026-11-22 16:48:41"
+  },
+  {
     "id": "kerala-admin-100q-mock-test",
     "kind": "html",
     "title": "കേരളം ഭരണവും ഭരണസംവിധാനങ്ങളും — Kerala PSC 100 Q Mock Test",
@@ -553,19 +628,6 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-22"
   },
   {
-    "id": "kpsc-573-2025-mock-test-1-100q",
-    "kind": "html",
-    "title": "Kerala PSC 573/2025 – Mock Test 1 (100 Q)",
-    "titleMl": "",
-    "url": "573/KPSC_573_2025_Mock_Test_1_100Q.html",
-    "file": "question-papers/573/KPSC_573_2025_Mock_Test_1_100Q.html",
-    "qs": 101,
-    "duration": 0,
-    "tag": "573",
-    "subject": "",
-    "updated": "2026-11-22"
-  },
-  {
     "id": "kpsc-080-2026-mock-test",
     "kind": "html",
     "title": "Kerala PSC 080/2026 – LGS / Storeman / LDC (Booklet A)",
@@ -575,19 +637,6 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "BOTH",
-    "subject": "",
-    "updated": "2026-11-22"
-  },
-  {
-    "id": "kpsc-mock-test1-full-100q",
-    "kind": "html",
-    "title": "KPSC Practice Mock Test 1 – 100 Q",
-    "titleMl": "",
-    "url": "573/KPSC_Mock_Test1_Full_100Q.html",
-    "file": "question-papers/573/KPSC_Mock_Test1_Full_100Q.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "573",
     "subject": "",
     "updated": "2026-11-22"
   },
@@ -631,19 +680,6 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-22"
   },
   {
-    "id": "kpsc-573-2025-mock-test-1-reviewed",
-    "kind": "html",
-    "title": "KPSC Cat. 573/2025 – Mock Test 1 (100 Q)",
-    "titleMl": "",
-    "url": "573/kpsc_573_2025_mock_test_1_reviewed.html",
-    "file": "question-papers/573/kpsc_573_2025_mock_test_1_reviewed.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "573",
-    "subject": "",
-    "updated": "2026-11-22"
-  },
-  {
     "id": "hard-mock-test-4",
     "kind": "html",
     "title": "HARD MOCK TEST  4",
@@ -657,42 +693,6 @@ window.KPSC_PAPERS = [
     "updated": "2026-11-22"
   },
   {
-    "id": "qp-002",
-    "kind": "json",
-    "title": "Full Length Mock Test 2",
-    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 2",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-002-full-mock-2.json",
-    "data": "question-papers/573/qp-573-002-full-mock-2.json",
-    "qs": 100,
-    "duration": 75,
-    "tag": "573",
-    "updated": "2026-11-22"
-  },
-  {
-    "id": "qp-001",
-    "kind": "json",
-    "title": "Full Length Mock Test 1",
-    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 1",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-001-full-mock-1.json",
-    "data": "question-papers/573/qp-573-001-full-mock-1.json",
-    "qs": 99,
-    "duration": 74,
-    "tag": "573",
-    "updated": "2026-11-22"
-  },
-  {
-    "id": "qp-573-bio-001",
-    "kind": "json",
-    "title": "Biology & Public Health Mock Test",
-    "titleMl": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-bio-001.json",
-    "data": "question-papers/573/qp-573-bio-001.json",
-    "qs": 25,
-    "duration": 12,
-    "tag": "573",
-    "updated": "2026-11-22"
-  },
-  {
     "id": "kpsc-098-2026-m-seriesc-mocktest",
     "kind": "html",
     "title": "098/2026-M (Series C) – Kerala PSC Mock Test (100 Q)",
@@ -702,19 +702,6 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 0,
     "tag": "883",
-    "subject": "",
-    "updated": "2026-11-22"
-  },
-  {
-    "id": "qp-573-001-full-sample-mock-test",
-    "kind": "html",
-    "title": "001 full sample mock test",
-    "titleMl": "",
-    "url": "573/qp-573-001-full-sample-mock-test.html",
-    "file": "question-papers/573/qp-573-001-full-sample-mock-test.html",
-    "qs": 3,
-    "duration": 2,
-    "tag": "573",
     "subject": "",
     "updated": "2026-11-22"
   }

@@ -7,6 +7,42 @@
    ===================================================================== */
 window.MOCK_TESTS_573 = [
   {
+    "id": "21-11-26-kpsc-573-2025-mock-test-1-reviewed",
+    "key": "21-11-26-kpsc-573-2025-mock-test-1-reviewed",
+    "title": "KPSC Cat. 573/2025 – Mock Test 1 (100 Q)",
+    "titleMl": "",
+    "updated": "2026-11-22 16:48:41",
+    "desc": "100 questions",
+    "file": "21.11.26 kpsc_573_2025_mock_test_1_reviewed.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "573"
+  },
+  {
+    "id": "22-11-26-kpsc-573-2025-mock-test-1-100q",
+    "key": "22-11-26-kpsc-573-2025-mock-test-1-100q",
+    "title": "Kerala PSC 573/2025 – Mock Test 1 (100 Q)",
+    "titleMl": "",
+    "updated": "2026-11-22 16:48:41",
+    "desc": "101 questions",
+    "file": "22.11.26 KPSC_573_2025_Mock_Test_1_100Q.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "573"
+  },
+  {
+    "id": "22-11-26-kpsc-mock-test1-full-100q",
+    "key": "22-11-26-kpsc-mock-test1-full-100q",
+    "title": "KPSC Practice Mock Test 1 – 100 Q",
+    "titleMl": "",
+    "updated": "2026-11-22 16:48:41",
+    "desc": "100 questions",
+    "file": "22.11.26 KPSC_Mock_Test1_Full_100Q.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "573"
+  },
+  {
     "id": "extreme-hard-mock-test-14",
     "key": "extreme-hard-mock-test-14",
     "title": "Kerala PSC JA – Extreme Hard Mock Test 14",
@@ -28,30 +64,6 @@ window.MOCK_TESTS_573 = [
     "file": "Extreme Hard Mock Test 15.html",
     "qs": 100,
     "duration": 0,
-    "tag": "573"
-  },
-  {
-    "id": "hard-mock-test-4",
-    "key": "hard-mock-test-4",
-    "title": "HARD MOCK TEST  4",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "HARD MOCK TEST- 4.html",
-    "qs": 100,
-    "duration": 75,
-    "tag": "573"
-  },
-  {
-    "id": "hard-mock-test-5",
-    "key": "hard-mock-test-5",
-    "title": "Kerala PSC Hard Mock Test 5 — 100 Questions",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "HARD_MOCK_TEST-_5.html",
-    "qs": 100,
-    "duration": 75,
     "tag": "573"
   },
   {
@@ -79,27 +91,39 @@ window.MOCK_TESTS_573 = [
     "tag": "573"
   },
   {
-    "id": "kpsc-573-2025-mock-test-1-100q",
-    "key": "kpsc-573-2025-mock-test-1-100q",
-    "title": "Kerala PSC 573/2025 – Mock Test 1 (100 Q)",
+    "id": "hard-mock-test-4",
+    "key": "hard-mock-test-4",
+    "title": "HARD MOCK TEST  4",
     "titleMl": "",
     "updated": "2026-11-22",
-    "desc": "101 questions",
-    "file": "KPSC_573_2025_Mock_Test_1_100Q.html",
-    "qs": 101,
+    "desc": "100 questions",
+    "file": "HARD MOCK TEST- 4.html",
+    "qs": 100,
+    "duration": 75,
+    "tag": "573"
+  },
+  {
+    "id": "hard-moke-test-6",
+    "key": "hard-moke-test-6",
+    "title": "Kerala PSC Mock Test 6 — Junior Assistant",
+    "titleMl": "",
+    "updated": "2026-11-22",
+    "desc": "100 questions",
+    "file": "hard moke test  6 .html",
+    "qs": 100,
     "duration": 0,
     "tag": "573"
   },
   {
-    "id": "kpsc-mock-test1-full-100q",
-    "key": "kpsc-mock-test1-full-100q",
-    "title": "KPSC Practice Mock Test 1 – 100 Q",
+    "id": "hard-mock-test-5",
+    "key": "hard-mock-test-5",
+    "title": "Kerala PSC Hard Mock Test 5 — 100 Questions",
     "titleMl": "",
     "updated": "2026-11-22",
     "desc": "100 questions",
-    "file": "KPSC_Mock_Test1_Full_100Q.html",
+    "file": "HARD_MOCK_TEST-_5.html",
     "qs": 100,
-    "duration": 0,
+    "duration": 75,
     "tag": "573"
   },
   {
@@ -124,18 +148,6 @@ window.MOCK_TESTS_573 = [
     "file": "Kerala PSC — Test 11- 2 11 26.html",
     "qs": 100,
     "duration": 75,
-    "tag": "573"
-  },
-  {
-    "id": "hard-moke-test-6",
-    "key": "hard-moke-test-6",
-    "title": "Kerala PSC Mock Test 6 — Junior Assistant",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "hard moke test  6 .html",
-    "qs": 100,
-    "duration": 0,
     "tag": "573"
   },
   {
@@ -175,18 +187,6 @@ window.MOCK_TESTS_573 = [
     "tag": "573"
   },
   {
-    "id": "kpsc-573-2025-mock-test-1-reviewed",
-    "key": "kpsc-573-2025-mock-test-1-reviewed",
-    "title": "KPSC Cat. 573/2025 – Mock Test 1 (100 Q)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "kpsc_573_2025_mock_test_1_reviewed.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "573"
-  },
-  {
     "id": "kpsc-mock-test-10",
     "key": "kpsc-mock-test-10",
     "title": "Kerala PSC Hard Mock Test 10",
@@ -196,18 +196,6 @@ window.MOCK_TESTS_573 = [
     "file": "kpsc_mock_test_10.html",
     "qs": 100,
     "duration": 75,
-    "tag": "573"
-  },
-  {
-    "id": "qp-573-001-full-sample-mock-test",
-    "key": "qp-573-001-full-sample-mock-test",
-    "title": "001 full sample mock test",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "3 questions",
-    "file": "qp-573-001-full-sample-mock-test.html",
-    "qs": 3,
-    "duration": 2,
     "tag": "573"
   },
   {
