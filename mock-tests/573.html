@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>573/2025 Mock Tests — Kerala PSC</title>
 <link rel="stylesheet" href="../assets/css/landing.css">
+<style>
+.card .file-name{
+  display:inline-block;
+  max-width:100%;
+  margin:.1rem 0 .45rem;
+  padding:.18rem .5rem;
+  border-radius:6px;
+  background:#f1f5f9;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-family:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace;
+  font-size:.73rem;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+</style>
 </head>
 <body>
 
@@ -44,6 +61,16 @@
 
   var grid = document.getElementById("paperGrid");
   var refreshBtn = document.getElementById("refreshPapers");
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function safeHref(file) {
+    return BASE_PATH + String(file || "").split("/").map(encodeURIComponent).join("/");
+  }
 
   /* -------- detect repo from location -------- */
   function detectRepo() {
@@ -180,7 +207,7 @@
   /* -------- read meta tags + update date of one paper -------- */
   async function readMeta(filename, force, repo) {
     try {
-      var res = await fetch(BASE_PATH + filename, { cache: force ? "no-cache" : "default" });
+      var res = await fetch(safeHref(filename), { cache: force ? "no-cache" : "default" });
       if (!res.ok) return {};
       var lastMod = res.headers.get("Last-Modified") || "";
       var text = await res.text();
@@ -192,10 +219,11 @@
       }
 
       var updated = meta("mock:updated") || meta("mock:update-date") ||
-                    meta("mock:date") || lastMod || "";
+                    meta("mock:date") || "";
       if (!updated && repo) {
         updated = await fetchCommitDate(repo, filename);
       }
+      if (!updated) updated = lastMod;
 
       return {
         title:    meta("mock:title")    || "",
@@ -220,7 +248,7 @@
 
   function render(items) {
     if (!items || !items.length) {
-      grid.innerHTML = '<p class="empty">No papers found in <code>' + FOLDER + '</code>.</p>';
+      grid.innerHTML = '<p class="empty">No papers found in <code>' + esc(FOLDER) + '</code>.</p>';
       return;
     }
 
@@ -232,13 +260,17 @@
       var title    = p.title || titleFromFilename(p.file);
       var key      = p.key || p.file.replace(/\.html?$/i, "");
       var dateText = formatDisplayDate(getRawUpdated(p));
-      return '<a href="' + BASE_PATH + p.file + '" class="card" data-part="' + key + '" data-total="' + (p.qs || 0) + '">' +
+      var descHtml = (p.titleMl ? esc(p.titleMl) : "") +
+                     (p.titleMl && p.desc ? "<br>" : "") +
+                     (p.desc ? esc(p.desc) : "");
+      return '<a href="' + safeHref(p.file) + '" class="card" data-part="' + esc(key) + '" data-total="' + (p.qs || 0) + '">' +
         '<span class="badge ' + badgeCls + '">' + (p.qs || 0) + ' Qs</span>' +
-        '<h3>📄 ' + title + '</h3>' +
-        '<p class="desc">' + (p.titleMl || "") + (p.desc ? "<br>" + p.desc : "") + '</p>' +
+        '<h3>📄 ' + esc(title) + '</h3>' +
+        '<div class="file-name" title="' + esc(p.file) + '">📁 ' + esc(p.file) + '</div>' +
+        '<p class="desc">' + descHtml + '</p>' +
         '<div class="meta">' +
           (p.duration ? '<span>⏱ ' + p.duration + ' min</span>' : '') +
-          (dateText ? '<span>📅 ' + dateText + '</span>' : '') +
+          (dateText ? '<span>📅 ' + esc(dateText) + '</span>' : '') +
           '<span>' + badgeTxt + '</span>' +
         '</div>' +
         '<div class="bar"><i style="width:0%"></i></div>' +
@@ -340,7 +372,7 @@
       console.warn("Auto-list failed:", err.message);
       grid.innerHTML = '<p class="empty">' +
         '⚠️ Could not auto-load the paper list.<br>' +
-        '<small>' + err.message + '</small><br><br>' +
+        '<small>' + esc(err.message) + '</small><br><br>' +
         'If you are viewing this file locally (file://), open the site through ' +
         '<a href="https://sujeshes-hub.github.io/kerala-psc-suite/">GitHub Pages</a> instead.' +
       '</p>';
