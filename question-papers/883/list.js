@@ -1,9 +1,8 @@
 /* =====================================================================
    883 papers — generated manifest, do not edit by hand
    ---------------------------------------------------------------------
-   Rebuild after adding or removing a paper:
+   Rebuild after adding or removing a file:
        python tools/build_content.py
-   Titles, question counts and durations are read from the papers.
    ===================================================================== */
 window.MOCK_TESTS_883 = [
   {
