@@ -6,6 +6,19 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
+    "id": "kerala-lltest-real-mock-test-182q-1",
+    "key": "kerala-lltest-real-mock-test-182q-1",
+    "title": "Kerala MVD LLTEST — Real Learner's Licence Mock Test (All 182 Questions &amp; 83 Signals)",
+    "titleMl": "",
+    "updated": "2026-11-23 15:03:26",
+    "desc": "Question paper",
+    "file": "Kerala_LLTEST_Real_Mock_Test_182Q (1).html",
+    "qs": 0,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Uncategorised"
+  },
+  {
     "id": "kpsc-general-english-master-mock-100",
     "key": "kpsc-general-english-master-mock-100",
     "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
