@@ -6,20 +6,13 @@ Kerala PSC Study Suite — content build.
        question-papers/573/list.js       -> window.MOCK_TESTS_573
        question-papers/883/list.js       -> window.MOCK_TESTS_883
        question-papers/subjects/list.js  -> window.MOCK_TESTS_SUBJECTS
-   Titles, question counts and timings are read out of each paper, so the
-   manifests can no longer drift from the folder.
 
-2. Wires those manifests into the three listing pages so the lists render
-   from a local file instead of the GitHub contents API.
+2. Regenerates the month-wise Current Affairs manifest automatically:
+       topics/current-affairs/list.js    -> window.CURRENT_AFFAIRS_MONTHLY
+   Scans topics/current-affairs/ (and topics/current-affairs/monthly/ if
+   present), skipping index.html and the 6 fixed syllabus files (15.1.x).
 
-Each entry carries an `updated` timestamp (`YYYY-MM-DD HH:MM:SS`) and the
-lists are ordered newest first. Date resolution order:
-  1. Explicit `<meta name="mock:updated" content="...">` (or JSON `"updated"`).
-  2. Existing manifest date when `--keep-dates` is passed.
-  3. Live filesystem mtime for locally modified or untracked files.
-  4. `.git/index` mtime (if distinct across the folder), falling back to
-     filesystem mtime or per-file `git log` history when a bulk edit or
-     checkout flattened timestamps.
+3. Wires the mock-test manifests into the three listing pages.
 
 Every file is backed up first; the script is idempotent.
 """
@@ -43,20 +36,28 @@ BACKUP = os.path.join(ROOT, "tools", "_backup", STAMP)
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S | re.I)
 SECONDS_RE = re.compile(r"SECONDS_PER_QUESTION\s*=\s*(\d+)")
 META_UPDATED_RE = re.compile(
-    r'<meta\s+[^>]*name=["\']mock:(?:updated|update-date|date)["\'][^>]*content=["\']([^"\']+)["\']',
+    r'<meta\s+[^>]*name=["\'](?:mock|ca):(?:updated|update-date|date)["\'][^>]*content=["\']([^"\']+)["\']',
     re.I,
 )
 META_UPDATED_RE_REV = re.compile(
-    r'<meta\s+[^>]*content=["\']([^"\']+)["\'][^>]*name=["\']mock:(?:updated|update-date|date)["\']',
+    r'<meta\s+[^>]*content=["\']([^"\']+)["\'][^>]*name=["\'](?:mock|ca):(?:updated|update-date|date)["\']',
     re.I,
 )
+META_MONTH_RE = re.compile(
+    r'<meta\s+[^>]*name=["\']ca:month["\'][^>]*content=["\']([^"\']+)["\']',
+    re.I,
+)
+META_MONTH_RE_REV = re.compile(
+    r'<meta\s+[^>]*content=["\']([^"\']+)["\'][^>]*name=["\']ca:month["\']',
+    re.I,
+)
+CA_FIXED_RE = re.compile(r"^15\.\d+\.\d+-", re.I)
 
-# Question-count heuristics: papers use four different literal shapes.
 COUNTERS = [
-    (re.compile(r'\{s:"'), "compact"),                                # {s:"..",q:"..",o:[..],a:1}
-    (re.compile(r'(?<![\w$])["\']?question["\']?\s*:'), "long"),      # {subject:..,question:..}
-    (re.compile(r"\bq\(\s*['\"]"), "helper"),                         # q('H', mt(`..`))
-    (re.compile(r"(?<![\w$])q\s*:"), "bare"),                         # { q: "..", o: [..] }
+    (re.compile(r'\{s:"'), "compact"),
+    (re.compile(r'(?<![\w$])["\']?question["\']?\s*:'), "long"),
+    (re.compile(r"\bq\(\s*['\"]"), "helper"),
+    (re.compile(r"(?<![\w$])q\s*:"), "bare"),
 ]
 
 SUBJECT_OF = [
@@ -90,7 +91,30 @@ PAGE_WIRING = [
     ("mock-tests/subjects.html", "../question-papers/subjects/list.js", "MOCK_TESTS_SUBJECTS", "subjectHost"),
 ]
 
-GENERIC_TITLES = {"", "kerala psc mock test", "kerala psc", "mock test"}
+CA_FOLDER_REL = "topics/current-affairs"
+CA_VAR = "CURRENT_AFFAIRS_MONTHLY"
+
+MONTH_NAMES = [
+    "", "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+]
+
+MONTH_PATTERNS = [
+    (1,  r"(?:january|jan|ജനുവരി)"),
+    (2,  r"(?:february|feb|ഫെബ്രുവരി)"),
+    (3,  r"(?:march|mar|മാർച്ച്|മാര്ച്ച്)"),
+    (4,  r"(?:april|apr|ഏപ്രിൽ|ഏപ്രില്)"),
+    (5,  r"(?:may|മെയ്|മേയ്)"),
+    (6,  r"(?:june|jun|ജൂൺ|ജൂണ്)"),
+    (7,  r"(?:july|jul|ജൂലൈ)"),
+    (8,  r"(?:august|aug|ഓഗസ്റ്റ്|ആഗസ്റ്റ്)"),
+    (9,  r"(?:september|sept|sep|സെപ്റ്റംബർ|സെപ്തംബർ)"),
+    (10, r"(?:october|oct|ഒക്ടോബർ|ഒക്‌ടോബർ)"),
+    (11, r"(?:november|nov|നവംബർ)"),
+    (12, r"(?:december|dec|ഡിസംബർ)"),
+]
+
+GENERIC_TITLES = {"", "kerala psc mock test", "kerala psc", "mock test", "current affairs"}
 
 changed = []
 _GIT_INFO_CACHE = None
@@ -143,7 +167,6 @@ def humanise(stem):
 
 
 def slugify(stem):
-    """Attribute-safe id: filenames contain spaces, & and en-dashes."""
     slug = re.sub(r"[^a-z0-9]+", "-", stem.lower()).strip("-")
     return slug or "paper"
 
@@ -161,12 +184,49 @@ def extract_meta_updated(text):
     return m.group(1).strip() if m else ""
 
 
+def extract_meta_month(text):
+    m = META_MONTH_RE.search(text) or META_MONTH_RE_REV.search(text)
+    return m.group(1).strip() if m else ""
+
+
+def detect_month_year(*sources):
+    """Extract (month_key 'YYYY-MM', month_label 'October 2026', year '2026')."""
+    for raw in sources:
+        if not raw:
+            continue
+        s = str(raw).strip()
+        if not s:
+            continue
+
+        # 1) Named month + 4-digit year (either order)
+        for m_num, pat in MONTH_PATTERNS:
+            rx1 = re.compile(r"(?<!\w)" + pat + r"(?!\w)[\s_\-/,]*(20\d{2})\b", re.I)
+            rx2 = re.compile(r"\b(20\d{2})[\s_\-/,]*" + pat + r"(?!\w)", re.I)
+            m = rx1.search(s) or rx2.search(s)
+            if m:
+                yr = int(m.group(1))
+                return f"{yr:04d}-{m_num:02d}", f"{MONTH_NAMES[m_num]} {yr}", str(yr)
+
+        # 2) Numeric YYYY-MM or YYYY_MM
+        m = re.search(r"(?<!\d)(20\d{2})[_\-/ ](0?[1-9]|1[0-2])(?![0-9])", s)
+        if m:
+            yr, m_num = int(m.group(1)), int(m.group(2))
+            return f"{yr:04d}-{m_num:02d}", f"{MONTH_NAMES[m_num]} {yr}", str(yr)
+
+        # 3) Numeric MM-YYYY or MM_YYYY
+        m = re.search(r"(?<!\d)(0?[1-9]|1[0-2])[_\-/ ](20\d{2})(?![0-9])", s)
+        if m:
+            m_num, yr = int(m.group(1)), int(m.group(2))
+            return f"{yr:04d}-{m_num:02d}", f"{MONTH_NAMES[m_num]} {yr}", str(yr)
+
+    return "", "", ""
+
+
 def format_ts(stamp):
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(stamp))
 
 
 def normalize_date_key(raw):
-    """Comparable sortable key for YYYY-MM-DD, DD-MM-YYYY, or ISO timestamps."""
     s = str(raw or "").strip()
     if not s:
         return ""
@@ -200,7 +260,6 @@ def normalize_date_key(raw):
 
 
 def read_git_index_dates():
-    """path -> epoch seconds, from .git/index (supports index v2 and v3)."""
     idx = os.path.join(ROOT, ".git", "index")
     if not os.path.isfile(idx):
         return {}
@@ -243,11 +302,11 @@ def read_git_info():
         return _GIT_INFO_CACHE
 
     info = {"dirty": set(), "latest": {}, "nonbulk": {}, "added": {}}
+    git_scopes = ["question-papers", CA_FOLDER_REL]
 
-    # 1. Dirty / untracked files under question-papers/
     try:
         proc = subprocess.run(
-            ["git", "status", "--porcelain", "--", "question-papers"],
+            ["git", "status", "--porcelain", "--"] + git_scopes,
             cwd=ROOT,
             capture_output=True,
             text=True,
@@ -267,10 +326,9 @@ def read_git_info():
     except (OSError, subprocess.SubprocessError):
         pass
 
-    # 2. Commit history under question-papers/
     try:
         proc = subprocess.run(
-            ["git", "log", "--format=__KPSC_TS__%at", "--name-only", "--", "question-papers"],
+            ["git", "log", "--format=__KPSC_TS__%at", "--name-only", "--"] + git_scopes,
             cwd=ROOT,
             capture_output=True,
             text=True,
@@ -300,10 +358,9 @@ def read_git_info():
                 commits.append((cur_ts, cur_files))
 
             for ts, files in commits:
-                # Group files touched in this commit by folder to spot bulk edits
                 by_folder = {}
                 for rel in files:
-                    if rel.lower().endswith((".html", ".json")):
+                    if rel.lower().endswith((".html", ".htm", ".json")):
                         by_folder.setdefault(os.path.dirname(rel), []).append(rel)
 
                 for folder_rel, f_list in by_folder.items():
@@ -327,7 +384,6 @@ def _has_spread(timestamps):
 
 
 def _pick_folder_source(paths, index_dates, git_info):
-    """Choose the best timestamp source that wasn't flattened by a bulk edit."""
     rels = [os.path.relpath(p, ROOT) for p in paths]
     fs_vals = []
     for p in paths:
@@ -355,7 +411,6 @@ def _pick_folder_source(paths, index_dates, git_info):
 
 
 def read_manifest_dates(folder):
-    """file -> updated, parsed cleanly from a previously generated list.js."""
     path = os.path.join(folder, "list.js")
     if not os.path.isfile(path):
         return {}
@@ -377,7 +432,6 @@ def read_manifest_dates(folder):
         except ValueError:
             pass
 
-    # Fallback regex supporting either field order
     dates = {}
     for block in re.findall(r"\{[^{}]*\}", text):
         mf = re.search(r'"file"\s*:\s*"([^"]+)"', block)
@@ -388,7 +442,6 @@ def read_manifest_dates(folder):
 
 
 def resolve_updated(path, index_dates, known="", meta_updated="", source="index", git_info=None):
-    """Full update timestamp (YYYY-MM-DD HH:MM:SS) for a paper."""
     if meta_updated:
         return meta_updated
     if known:
@@ -403,11 +456,9 @@ def resolve_updated(path, index_dates, known="", meta_updated="", source="index"
     except OSError:
         fs_mtime = 0
 
-    # Locally modified or newly added (untracked) paper always gets live mtime
     if rel in git_info["dirty"] and fs_mtime:
         return format_ts(fs_mtime)
 
-    stamp = 0
     if source == "index":
         stamp = index_dates.get(rel) or fs_mtime
     elif source == "latest":
@@ -425,6 +476,26 @@ def resolve_updated(path, index_dates, known="", meta_updated="", source="index"
         stamp = fs_mtime or index_dates.get(rel)
 
     return format_ts(stamp) if stamp else ""
+
+
+def fallback_title(filename):
+    stem = os.path.splitext(os.path.basename(filename))[0]
+    pretty = humanise(stem)
+    if len(pretty.strip()) < 4 or pretty.strip().isdigit():
+        return stem
+    return pretty
+
+
+def dedupe_titles(papers, folder):
+    seen = {}
+    for entry in papers:
+        key = entry["title"].strip().lower()
+        seen.setdefault(key, []).append(entry)
+
+    for key, group in seen.items():
+        if len(group) > 1 or key in GENERIC_TITLES:
+            for entry in group:
+                entry["title"] = fallback_title(entry["file"])
 
 
 def describe_folder(folder, tag, with_subject, index_dates=None, keep_dates=False):
@@ -477,44 +548,93 @@ def describe_folder(folder, tag, with_subject, index_dates=None, keep_dates=Fals
         papers.append(entry)
 
     dedupe_titles(papers, folder)
-    # Newest update first; filename keeps exact ties stable.
     papers.sort(key=lambda p: p["file"].lower())
     papers.sort(key=lambda p: normalize_date_key(p.get("updated", "")), reverse=True)
     return papers
 
 
-def fallback_title(filename):
-    """A readable name from the filename, never just a bare number."""
-    stem = os.path.splitext(filename)[0]
-    pretty = humanise(stem)
-    if len(pretty.strip()) < 4 or pretty.strip().isdigit():
-        return stem
-    return pretty
+def describe_current_affairs_monthly(index_dates=None, keep_dates=False):
+    """Auto-discover month-wise Current Affairs HTML files in topics/current-affairs/."""
+    ca_dir = os.path.join(ROOT, CA_FOLDER_REL)
+    items = []
+    if not os.path.isdir(ca_dir):
+        return items
 
+    index_dates = index_dates or {}
+    git_info = read_git_info()
+    recorded = read_manifest_dates(ca_dir) if keep_dates else {}
 
-def dedupe_titles(papers, folder):
-    """Several papers carry the same generic <title>; fall back to the filename."""
-    seen = {}
-    for entry in papers:
-        key = entry["title"].strip().lower()
-        seen.setdefault(key, []).append(entry)
+    candidates = []
+    for root_dir, sub_prefix in [(ca_dir, ""), (os.path.join(ca_dir, "monthly"), "monthly/")]:
+        if not os.path.isdir(root_dir):
+            continue
+        for name in sorted(os.listdir(root_dir)):
+            low = name.lower()
+            if not low.endswith((".html", ".htm")):
+                continue
+            if low == "index.html":
+                continue
+            if not sub_prefix and CA_FIXED_RE.match(name):
+                continue
+            candidates.append((sub_prefix + name, os.path.join(root_dir, name)))
 
-    for key, group in seen.items():
-        if len(group) > 1 or key in GENERIC_TITLES:
-            for entry in group:
-                entry["title"] = fallback_title(entry["file"])
+    if not candidates:
+        return items
+
+    paths = [p for _, p in candidates]
+    source = _pick_folder_source(paths, index_dates, git_info)
+
+    for rel_file, path in candidates:
+        text = read(path)
+        stem = os.path.splitext(os.path.basename(rel_file))[0]
+        qs = count_questions(text)
+        title_match = TITLE_RE.search(text)
+        raw_title = title_match.group(1) if title_match else ""
+        title = clean_title(raw_title, fallback_title(rel_file))
+        meta_updated = extract_meta_updated(text)
+        meta_month = extract_meta_month(text)
+
+        month_key, month_label, year = detect_month_year(meta_month, rel_file, title)
+        updated = resolve_updated(
+            path,
+            index_dates,
+            recorded.get(rel_file, ""),
+            meta_updated=meta_updated,
+            source=source,
+            git_info=git_info,
+        )
+
+        items.append({
+            "id": slugify(stem),
+            "key": "current-affairs-" + slugify(stem),
+            "title": title,
+            "month": month_key,
+            "monthLabel": month_label,
+            "year": year,
+            "file": rel_file,
+            "qs": qs,
+            "tag": "BOTH",
+            "updated": updated,
+        })
+
+    dedupe_titles(items, ca_dir)
+    # Sort: newest month first -> newest updated timestamp -> filename
+    items.sort(key=lambda p: p["file"].lower())
+    items.sort(
+        key=lambda p: (p.get("month") or "", normalize_date_key(p.get("updated", ""))),
+        reverse=True,
+    )
+    return items
 
 
 def render_manifest(var, papers, exam_label):
-    """The manifest text, without touching the disk (used by tools/serve.py)."""
     body = json.dumps(papers, ensure_ascii=False, indent=2)
     return (
         "/* =====================================================================\n"
         f"   {exam_label} — generated manifest, do not edit by hand\n"
         "   ---------------------------------------------------------------------\n"
-        "   Rebuild after adding or removing a paper:\n"
+        "   Rebuild after adding or removing a file:\n"
         "       python tools/build_content.py\n"
-        "   Titles, question counts and durations are read from the papers.\n"
         "   ===================================================================== */\n"
         f"window.{var} = {body};\n"
     )
@@ -534,7 +654,6 @@ def wire_page(rel, manifest_src, var, grid_id):
     text = read(path)
     original = text
 
-    # (a) load the manifest before the inline controller
     tag_line = f'<script src="{manifest_src}"></script>\n'
     if manifest_src not in text:
         m = re.search(r"<script>\s*\(function \(\) \{", text)
@@ -542,7 +661,6 @@ def wire_page(rel, manifest_src, var, grid_id):
             return False
         text = text[: m.start()] + tag_line + text[m.start() :]
 
-    # (b) render from the manifest first, API/cache only as fallback
     guard = (
         f"    var local_{var} = window.{var};\n"
         f"    if (local_{var} && local_{var}.length) {{ render(local_{var}); return; }}\n"
@@ -559,7 +677,6 @@ def wire_page(rel, manifest_src, var, grid_id):
 
 
 def _paper_tag(folder_rel, data=None):
-    """Which exam a paper belongs to, from its folder (or the JSON itself)."""
     name = os.path.basename(folder_rel)
     if data and data.get("tag"):
         return data["tag"]
@@ -569,7 +686,6 @@ def _paper_tag(folder_rel, data=None):
 
 
 def collect_papers(index_dates=None, keep_dates=False):
-    """Every mock test under question-papers/, whatever format it is in."""
     index_dates = index_dates or {}
     git_info = read_git_info()
     base = os.path.join(ROOT, "question-papers")
@@ -580,7 +696,6 @@ def collect_papers(index_dates=None, keep_dates=False):
         folder_rel = os.path.relpath(dirpath, ROOT).replace("\\", "/")
         tag = _paper_tag(folder_rel)
 
-        # ---- data papers (JSON) ----
         json_names = [n for n in sorted(filenames) if n.lower().endswith(".json")]
         json_paths = [os.path.join(dirpath, n) for n in json_names]
         json_source = _pick_folder_source(json_paths, index_dates, git_info) if json_paths else "fs"
@@ -618,7 +733,6 @@ def collect_papers(index_dates=None, keep_dates=False):
                 ),
             })
 
-        # ---- legacy standalone papers (HTML) ----
         html_names = [
             n
             for n in sorted(filenames)
@@ -672,7 +786,6 @@ def papers_manifest_path():
 
 
 def papers_index_stale():
-    """True when a paper is newer than papers.js (or papers.js is missing)."""
     target = papers_manifest_path()
     if not os.path.isfile(target):
         return True
@@ -712,13 +825,21 @@ def main():
         papers = describe_folder(folder, tag, with_subject, index_dates, keep_dates)
         if write_manifest(folder, var, papers, f"{exam} papers"):
             print(f"  manifest  {folder_rel}/list.js  -> {len(papers)} paper(s)")
-        if papers:
-            print(f"  top {exam} papers (newest first):")
-            for p in papers[:5]:
-                print(f"    {p['updated']}  |  {p['file']}")
         total += len(papers)
 
     print(f"  {total} paper(s) described")
+
+    # Month-wise Current Affairs manifest
+    ca_dir = os.path.join(ROOT, CA_FOLDER_REL)
+    ca_items = describe_current_affairs_monthly(index_dates, keep_dates)
+    if os.path.isdir(ca_dir):
+        if write_manifest(ca_dir, CA_VAR, ca_items, "Current Affairs month-wise notes"):
+            print(f"  manifest  {CA_FOLDER_REL}/list.js  -> {len(ca_items)} monthly file(s)")
+        if ca_items:
+            print("  top current-affairs monthly (newest first):")
+            for item in ca_items[:5]:
+                label = item.get("monthLabel") or item.get("updated") or "-"
+                print(f"    {label:16s} | {item['file']}")
 
     changed_papers, entries = write_papers_index(index_dates, keep_dates)
     json_n = sum(1 for e in entries if e["kind"] == "json")
