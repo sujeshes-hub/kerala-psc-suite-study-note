@@ -1,11 +1,23 @@
 /* =====================================================================
    subjects papers — generated manifest, do not edit by hand
    ---------------------------------------------------------------------
-   Rebuild after adding or removing a paper:
+   Rebuild after adding or removing a file:
        python tools/build_content.py
-   Titles, question counts and durations are read from the papers.
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
+  {
+    "id": "kpsc-general-english-master-mock-100",
+    "key": "kpsc-general-english-master-mock-100",
+    "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
+    "titleMl": "",
+    "updated": "2026-11-23 14:30:36",
+    "desc": "101 questions",
+    "file": "kpsc_general_english_master_mock_100.html",
+    "qs": 101,
+    "duration": 101,
+    "tag": "BOTH",
+    "subject": "English"
+  },
   {
     "id": "english1",
     "key": "english1",
