@@ -7,6 +7,55 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
+    "id": "psq-geography-mock-test-improved",
+    "kind": "html",
+    "title": "കേരള PSC ഭൂമിശാസ്ത്രം — 100 ചോദ്യങ്ങളുടെ മാസ്റ്റർ മോക്ക് ടെസ്റ്റ്",
+    "titleMl": "",
+    "url": "subjects/psq%20geography_mock_test_improved.html",
+    "file": "question-papers/subjects/psq geography_mock_test_improved.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "",
+    "updated": "2026-11-24 17:21:38"
+  },
+  {
+    "id": "qp-002",
+    "kind": "json",
+    "title": "Full Length Mock Test 2",
+    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 2",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-002-full-mock-2.json",
+    "data": "question-papers/573/qp-573-002-full-mock-2.json",
+    "qs": 100,
+    "duration": 75,
+    "tag": "573",
+    "updated": "2026-11-24 17:21:38"
+  },
+  {
+    "id": "qp-001",
+    "kind": "json",
+    "title": "Full Length Mock Test 1",
+    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 1",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-001-full-mock-1.json",
+    "data": "question-papers/573/qp-573-001-full-mock-1.json",
+    "qs": 99,
+    "duration": 74,
+    "tag": "573",
+    "updated": "2026-11-24 17:21:38"
+  },
+  {
+    "id": "qp-573-bio-001",
+    "kind": "json",
+    "title": "Biology & Public Health Mock Test",
+    "titleMl": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-bio-001.json",
+    "data": "question-papers/573/qp-573-bio-001.json",
+    "qs": 25,
+    "duration": 12,
+    "tag": "573",
+    "updated": "2026-11-24 17:21:38"
+  },
+  {
     "id": "pyq-english-master-mock-100",
     "kind": "html",
     "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
@@ -43,42 +92,6 @@ window.KPSC_PAPERS = [
     "duration": 0,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-24 13:58:42"
-  },
-  {
-    "id": "qp-002",
-    "kind": "json",
-    "title": "Full Length Mock Test 2",
-    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 2",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-002-full-mock-2.json",
-    "data": "question-papers/573/qp-573-002-full-mock-2.json",
-    "qs": 100,
-    "duration": 75,
-    "tag": "573",
-    "updated": "2026-11-24 13:58:42"
-  },
-  {
-    "id": "qp-001",
-    "kind": "json",
-    "title": "Full Length Mock Test 1",
-    "titleMl": "പൂർണ്ണ ദൈർഘ്യ മോക്ക് ടെസ്റ്റ് 1",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-001-full-mock-1.json",
-    "data": "question-papers/573/qp-573-001-full-mock-1.json",
-    "qs": 99,
-    "duration": 74,
-    "tag": "573",
-    "updated": "2026-11-24 13:58:42"
-  },
-  {
-    "id": "qp-573-bio-001",
-    "kind": "json",
-    "title": "Biology & Public Health Mock Test",
-    "titleMl": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-bio-001.json",
-    "data": "question-papers/573/qp-573-bio-001.json",
-    "qs": 25,
-    "duration": 12,
-    "tag": "573",
     "updated": "2026-11-24 13:58:42"
   },
   {
