@@ -7,17 +7,17 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
-    "id": "kpsc-general-english-master-mock-100",
+    "id": "kerala-lltest-real-mock-test-182q-1",
     "kind": "html",
-    "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
+    "title": "Kerala MVD LLTEST — Real Learner's Licence Mock Test (All 182 Questions &amp; 83 Signals)",
     "titleMl": "",
-    "url": "subjects/kpsc_general_english_master_mock_100.html",
-    "file": "question-papers/subjects/kpsc_general_english_master_mock_100.html",
-    "qs": 101,
-    "duration": 101,
+    "url": "subjects/Kerala_LLTEST_Real_Mock_Test_182Q%20%281%29.html",
+    "file": "question-papers/subjects/Kerala_LLTEST_Real_Mock_Test_182Q (1).html",
+    "qs": 0,
+    "duration": 0,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-23 14:30:36"
+    "updated": "2026-11-23 15:03:26"
   },
   {
     "id": "qp-002",
@@ -29,7 +29,7 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "573",
-    "updated": "2026-11-23 14:30:36"
+    "updated": "2026-11-23 15:03:26"
   },
   {
     "id": "qp-001",
@@ -41,7 +41,7 @@ window.KPSC_PAPERS = [
     "qs": 99,
     "duration": 74,
     "tag": "573",
-    "updated": "2026-11-23 14:30:36"
+    "updated": "2026-11-23 15:03:26"
   },
   {
     "id": "qp-573-bio-001",
@@ -53,6 +53,19 @@ window.KPSC_PAPERS = [
     "qs": 25,
     "duration": 12,
     "tag": "573",
+    "updated": "2026-11-23 15:03:26"
+  },
+  {
+    "id": "kpsc-general-english-master-mock-100",
+    "kind": "html",
+    "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
+    "titleMl": "",
+    "url": "subjects/kpsc_general_english_master_mock_100.html",
+    "file": "question-papers/subjects/kpsc_general_english_master_mock_100.html",
+    "qs": 101,
+    "duration": 101,
+    "tag": "BOTH",
+    "subject": "",
     "updated": "2026-11-23 14:30:36"
   },
   {
