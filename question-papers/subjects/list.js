@@ -6,6 +6,45 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
+    "id": "pyq-english-master-mock-100",
+    "key": "pyq-english-master-mock-100",
+    "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
+    "titleMl": "",
+    "updated": "2026-11-24 13:58:42",
+    "desc": "101 questions",
+    "file": "pyq english_master_mock_100.html",
+    "qs": 101,
+    "duration": 101,
+    "tag": "BOTH",
+    "subject": "English"
+  },
+  {
+    "id": "pyq-maths-mentalability-100q-story-rejection-mocktest",
+    "key": "pyq-maths-mentalability-100q-story-rejection-mocktest",
+    "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
+    "titleMl": "",
+    "updated": "2026-11-24 13:58:42",
+    "desc": "101 questions",
+    "file": "pyq Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Mental Ability"
+  },
+  {
+    "id": "pyqmalayalam-100q-mock-test-improved",
+    "key": "pyqmalayalam-100q-mock-test-improved",
+    "title": "KPSC Mock Test v3 – 100 Q (Malayalam 14.2–14.15)",
+    "titleMl": "",
+    "updated": "2026-11-24 13:58:42",
+    "desc": "100 questions",
+    "file": "pyqMalayalam_100Q_Mock_Test_Improved.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Malayalam"
+  },
+  {
     "id": "kerala-lltest-real-mock-test-182q-1",
     "key": "kerala-lltest-real-mock-test-182q-1",
     "title": "Kerala MVD LLTEST — Real Learner's Licence Mock Test (All 182 Questions &amp; 83 Signals)",
@@ -17,19 +56,6 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 0,
     "tag": "BOTH",
     "subject": "Uncategorised"
-  },
-  {
-    "id": "kpsc-general-english-master-mock-100",
-    "key": "kpsc-general-english-master-mock-100",
-    "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
-    "titleMl": "",
-    "updated": "2026-11-23 14:30:36",
-    "desc": "101 questions",
-    "file": "kpsc_general_english_master_mock_100.html",
-    "qs": 101,
-    "duration": 101,
-    "tag": "BOTH",
-    "subject": "English"
   },
   {
     "id": "english1",
@@ -264,32 +290,6 @@ window.MOCK_TESTS_SUBJECTS = [
     "duration": 101,
     "tag": "BOTH",
     "subject": "History"
-  },
-  {
-    "id": "kpsc-malayalam-100q-mock-test-improved",
-    "key": "kpsc-malayalam-100q-mock-test-improved",
-    "title": "KPSC Mock Test v3 – 100 Q (Malayalam 14.2–14.15)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "100 questions",
-    "file": "KPSC_Malayalam_100Q_Mock_Test_Improved.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Malayalam"
-  },
-  {
-    "id": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
-    "key": "kpsc-maths-mentalability-100q-story-rejection-mocktest",
-    "title": "KPSC Mock Test – 100 Q (Simple Arithmetic &amp; Mental Ability)",
-    "titleMl": "",
-    "updated": "2026-11-22",
-    "desc": "101 questions",
-    "file": "KPSC_Maths_MentalAbility_100Q_Story_Rejection_MockTest.html",
-    "qs": 101,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "Mental Ability"
   },
   {
     "id": "mvd-learner-test",
