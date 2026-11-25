@@ -7,19 +7,6 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
-    "id": "psq-geography-mock-test-improved",
-    "kind": "html",
-    "title": "കേരള PSC ഭൂമിശാസ്ത്രം — 100 ചോദ്യങ്ങളുടെ മാസ്റ്റർ മോക്ക് ടെസ്റ്റ്",
-    "titleMl": "",
-    "url": "subjects/psq%20geography_mock_test_improved.html",
-    "file": "question-papers/subjects/psq geography_mock_test_improved.html",
-    "qs": 100,
-    "duration": 0,
-    "tag": "BOTH",
-    "subject": "",
-    "updated": "2026-11-24 17:21:38"
-  },
-  {
     "id": "qp-002",
     "kind": "json",
     "title": "Full Length Mock Test 2",
@@ -29,7 +16,7 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "573",
-    "updated": "2026-11-24 17:21:38"
+    "updated": "2026-11-25 08:32:55"
   },
   {
     "id": "qp-001",
@@ -41,7 +28,7 @@ window.KPSC_PAPERS = [
     "qs": 99,
     "duration": 74,
     "tag": "573",
-    "updated": "2026-11-24 17:21:38"
+    "updated": "2026-11-25 08:32:55"
   },
   {
     "id": "qp-573-bio-001",
@@ -53,6 +40,19 @@ window.KPSC_PAPERS = [
     "qs": 25,
     "duration": 12,
     "tag": "573",
+    "updated": "2026-11-25 08:32:55"
+  },
+  {
+    "id": "psq-geography-mock-test-improved",
+    "kind": "html",
+    "title": "കേരള PSC ഭൂമിശാസ്ത്രം — 100 ചോദ്യങ്ങളുടെ മാസ്റ്റർ മോക്ക് ടെസ്റ്റ്",
+    "titleMl": "",
+    "url": "subjects/psq%20geography_mock_test_improved.html",
+    "file": "question-papers/subjects/psq geography_mock_test_improved.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "",
     "updated": "2026-11-24 17:21:38"
   },
   {
