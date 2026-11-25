@@ -1,106 +1,722 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>16.4.7 State Human Rights Commission - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="ml"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>സംസ്ഥാന മനുഷ്യാവകാശ കമ്മീഷൻ (16.4.7) | Kerala PSC</title>
+<style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
 
-<header class="topbar">
-  <div class="brand">16.4.7 State Human Rights Commission</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
-</div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
 
-<main>
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>16.4.7 State Human Rights Commission</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
 
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
 
-<section class="view" id="view-result"><div id="resultHost"></div></section>
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
 
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
 
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
 
-</main>
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
 
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 2px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 2px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  
+.mk{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px;margin-right:4px;vertical-align:middle}
+.mk-c{background:#c8e6c9;color:#1b5e20}.mk-f{background:#ffe0b2;color:#e65100}.mk-a{background:#bbdefb;color:#0d47a1}.mk-v{background:#fff59d;color:#5d4300}
+.step{background:#fafafa;border:1px dashed var(--border);border-radius:8px;padding:8px 12px;margin:6px 0;font-size:14px}
+.tier b{color:var(--primary)}
+</style></head><body>
+<div class="layout"><nav class="toc" aria-label="ഉള്ളടക്കം"><div class="toc-title">ഉള്ളടക്കം</div>
+<div class="toc-controls"><button id="expandAll" type="button">എല്ലാം തുറക്കുക</button><button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button></div>
+<ul class="toc-nav" id="tocNav"><li><a href="#sec0">⭐ Star Guide</a></li><li><a href="#sec1">1. വസ്തുതാ പരിശോധനാ നില & 2020 UT മാറ്റം</a></li><li><a href="#sec2">2. ഒറ്റനോട്ടത്തിൽ (Orientation)</a></li><li><a href="#sec3">3. രൂപീകരണം, ഘടന, അധികാരപരിധി (Sec 21)</a></li><li><a href="#sec4">4. നിയമന സമിതി (Sec 22)</a></li><li><a href="#sec5">5. രാജി, നീക്കം ചെയ്യൽ, കാലാവധി (Sec 23–26)</a></li><li><a href="#sec6">6. ഉദ്യോഗസ്ഥർ, റിപ്പോർട്ട്, Sec 29, ഓഡിറ്റ് (Sec 27–29, 33, 35)</a></li><li><a href="#sec7">7. ഭേദഗതികളുടെ ടൈംലൈൻ</a></li><li><a href="#sec8">8. താരതമ്യ പട്ടികകൾ</a></li><li><a href="#sec9">9. പരീക്ഷയിലെ ചതിക്കുഴികൾ (Traps)</a></li><li><a href="#sec10">10. മെമ്മറി ട്രിക്കുകൾ</a></li><li><a href="#sec11">11. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks</a></li><li><a href="#sec12">12. അതിവേഗ റിവിഷൻ (Must Remember)</a></li><li><a href="#sec13">13. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (PSC-style practice)</a></li><li><a href="#sec14">14. പ്രധാന തീയതികളും സംഖ്യകളും</a></li><li><a href="#sec15">15. തിരുത്തൽ രജിസ്റ്റർ</a></li><li><a href="#sec16">16. അവസാനവട്ട ചെക്ക്‌ലിസ്റ്റ്</a></li></ul></nav>
+<main class="main-container"><header class="chapter-header"><div class="label">സാമൂഹ്യക്ഷേമ നിയമങ്ങൾ | സിലബസ് 16.4.7</div>
+<h1>സംസ്ഥാന മനുഷ്യാവകാശ കമ്മീഷൻ</h1><div class="subtitle">State Human Rights Commission – PHRA 1993, Ch. V (Sec 21–29, 33, 35) | Kerala PSC Rank File ★★★</div></header>
+<section class="section" id="sec0"><h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div class="important"><span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span><ul>
+<li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — ഗവർണർ vs രാഷ്ട്രപതി (നിയമനം/രാജി/ആക്ടിംഗ് = ഗവർണർ; നീക്കം ചെയ്യൽ = രാഷ്ട്രപതി); Sec 29-ലെ 9 വകുപ്പുകൾ (Sec 19 ഇല്ല); 3 വർഷം/70 വയസ്സ്; 1+2 ഘടന</li>
+<li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — ഏകമണ്ഡല 4 / ദ്വിമണ്ഡല 6 നിയമന സമിതി; HC ചീഫ് ജസ്റ്റിസുമായി കൂടിയാലോചന; List II & III പരിധി; CAG ഓഡിറ്റ്; Sec 21(6), 21(8)</li>
+<li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — Sec 27 ഉദ്യോഗസ്ഥർ (സെക്രട്ടറി + IGP), Sec 28 റിപ്പോർട്ട്, 5 നേരിട്ടുള്ള നീക്കം ചെയ്യൽ കാരണങ്ങൾ</li>
+<li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — Sec 26 സേവന വ്യവസ്ഥകൾ, Sec 33 ഗ്രാന്റ്, ഭേദഗതി നമ്പറുകൾ</li></ul></div>
+<div class="added-fact"><span class="box-label">➕ ചുരുക്കം (ഒറ്റ നോട്ടം)</span><ul>
+<li><strong>നിയമം:</strong> മനുഷ്യാവകാശ സംരക്ഷണ നിയമം, 1993 (Act 10 of 1994) — SHRC = അധ്യായം V (Sec 21–29)</li>
+<li><strong>ഘടന:</strong> ചെയർപേഴ്സൺ + 2 അംഗങ്ങൾ (1 ജുഡീഷ്യൽ + 1 മനുഷ്യാവകാശ വിദഗ്ധൻ)</li>
+<li><strong>കാലാവധി:</strong> 3 വർഷം / 70 വയസ്സ് — ഏതാണോ ആദ്യം</li>
+<li><strong>ആദ്യ SHRC:</strong> പശ്ചിമ ബംഗാൾ (1995) | <strong>കേരളം:</strong> 1998 ഡിസംബർ 11</li></ul></div>
+<div class="correction"><span class="box-label">🏷️ അടയാളങ്ങൾ (Markers)</span><p><span class="mk mk-c">✅ Confirmed</span> ഔദ്യോഗിക നിയമപാഠവുമായി ഒത്തുനോക്കിയത് &nbsp; <span class="mk mk-f">🔧 Fix</span> തിരുത്തിയത് &nbsp; <span class="mk mk-a">➕ Added</span> പുതുതായി ചേർത്തത് &nbsp; <span class="mk mk-v">🔎 Verify</span> ഔദ്യോഗിക പാഠവുമായി വീണ്ടും ഒത്തുനോക്കുക</p></div>
+</div></section>
+<section class="section" id="sec1"><h2 role="button" tabindex="0" aria-expanded="true">1. വസ്തുതാ പരിശോധനാ നില & 2020 UT മാറ്റം <span class="toggle-icon">▼</span></h2><div class="section-body">
+<p><span class="mk mk-c">✅ Confirmed</span> അധ്യായം V (Sec 21–29), Sec 35, 2006 ഭേദഗതി (Act 43 of 2006, പ്രാബല്യം 2006 നവംബർ 23), 2019 ഭേദഗതി (Act 19 of 2019, പ്രാബല്യം 2019 ഓഗസ്റ്റ് 2) എന്നിവ India Code / NHRC ബെയർ ആക്ടുമായി ഒത്തുനോക്കി (Nov 2026-ൽ). Sec 23-ലെ ഉപവകുപ്പ് ക്രമം (23(1) രാജി, 23(1A) നീക്കം ചെയ്യൽ, 23(2) നേരിട്ടുള്ള കാരണങ്ങൾ) ഉറപ്പിച്ചു.</p>
+<div class="correction"><span class="box-label">🔴 <span class="mk mk-f">🔧 Fix</span> Sec 21(7)–(8) — കേന്ദ്രഭരണ പ്രദേശ വ്യവസ്ഥ</span>
+<p>പഴയ കുറിപ്പ്: "ഡൽഹി ഒഴികെയുള്ള UT-കൾ". <strong>പുതുക്കിയത്:</strong> ലഡാക്ക് UT പുനഃസംഘടന (അഡാപ്റ്റേഷൻ) ഉത്തരവ് S.O. 3774(E), 2020 ഒക്ടോബർ 23 ബെയർ ആക്ടിൽ രേഖപ്പെടുത്തിയിട്ടുണ്ട് <span class="mk mk-c">✅ Confirmed</span>. J&K ഉത്തരവ് S.O. 1123(E) (2020 മാർച്ച് 18) <span class="mk mk-v">🔎 Verify</span>.</p>
+<ul><li>Sec 21(8): ഡൽഹി, ജമ്മു & കാശ്മീർ, ലഡാക്ക് → <strong>NHRC</strong> കൈകാര്യം ചെയ്യും.</li>
+<li>Sec 21(7): ഇവ ഒഴികെയുള്ള UT-കളുടെ ചുമതല കേന്ദ്ര സർക്കാരിന് ഒരു SHRC-യെ ഏൽപ്പിക്കാം.</li></ul></div>
+<div class="added-fact"><span class="box-label"><span class="mk mk-a">➕ Added</span> ഓർക്കുക</span><p>ജമ്മു & കാശ്മീർ പുനഃസംഘടനാ നിയമം 2019 (Act 34 of 2019) വഴി PHRA 1993-ലെ J&K-യ്ക്കുള്ള പ്രത്യേക പ്രൊവൈസോ 2019 ഒക്ടോബർ 31 മുതൽ ഒഴിവാക്കി — അതിനാൽ ഇപ്പോൾ നിയമം രാജ്യം മുഴുവൻ ഒരുപോലെ ബാധകം.</p></div>
+</div></section>
+<section class="section" id="sec2"><h2 role="button" tabindex="0" aria-expanded="true">2. ഒറ്റനോട്ടത്തിൽ (Orientation) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div style="overflow-x:auto"><table><thead><tr><th>വകുപ്പ്</th><th>വിഷയം (Official Title)</th><th>പ്രധാന വ്യവസ്ഥ</th></tr></thead><tbody>
+<tr><td>Sec 21 ⭐⭐⭐</td><td>Constitution of SHRC</td><td>ഓപ്ഷണൽ (may), 1+2 ഘടന, സെക്രട്ടറി, List II & III, 21(6) സംയുക്ത നിയമനം, 21(7)–(8) UT</td></tr>
+<tr><td>Sec 22 ⭐⭐⭐</td><td>Appointment</td><td>ഗവർണർ; സമിതി 4 / 6; സിറ്റിംഗ് ജഡ്ജിക്ക് HC ചീഫ് ജസ്റ്റിസുമായി കൂടിയാലോചന</td></tr>
+<tr><td>Sec 23 ⭐⭐⭐</td><td>Resignation & Removal</td><td>രാജി → ഗവർണർ (23(1)); നീക്കം → രാഷ്ട്രപതി (23(1A), 23(2))</td></tr>
+<tr><td>Sec 24 ⭐⭐⭐</td><td>Term</td><td>3 വർഷം / 70 വയസ്സ്; പുനർനിയമനം; തുടർ ജോലി വിലക്ക്</td></tr>
+<tr><td>Sec 25</td><td>Member to act as Chairperson</td><td>ഗവർണർ ആക്ടിംഗ് ചെയർപേഴ്സണെ വിജ്ഞാപനം ചെയ്യും</td></tr>
+<tr><td>Sec 26</td><td>Terms & conditions</td><td>സംസ്ഥാന സർക്കാർ നിശ്ചയിക്കും; പ്രതികൂലമായി മാറ്റില്ല</td></tr>
+<tr><td>Sec 27</td><td>Officers & staff</td><td>സെക്രട്ടറി (സംസ്ഥാന സെക്രട്ടറി റാങ്ക്) + IGP റാങ്ക് പോലീസ് ഓഫീസർ</td></tr>
+<tr><td>Sec 28</td><td>Reports</td><td>സർക്കാരിന് → നിയമസഭയിൽ</td></tr>
+<tr><td>Sec 29 ⭐⭐⭐</td><td>NHRC വകുപ്പുകൾ ബാധകമാക്കൽ</td><td>9, 10, 12–18 (Sec 19 ഇല്ല)</td></tr>
+<tr><td>Sec 33 & 35</td><td>Grants / Audit</td><td>ഗ്രാന്റ് = സംസ്ഥാന സർക്കാർ; ഓഡിറ്റ് = CAG</td></tr></tbody></table></div>
+</div></section>
+<section class="section" id="sec3"><h2 role="button" tabindex="0" aria-expanded="true">3. രൂപീകരണം, ഘടന, അധികാരപരിധി (Sec 21) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<p><span class="mk mk-c">✅ Confirmed</span> <strong>SHRC</strong> = State Human Rights Commission. ഒരു സംസ്ഥാനത്തെ മനുഷ്യാവകാശ ലംഘന പരാതികൾ അന്വേഷിക്കുന്ന നിയമാധിഷ്ഠിത (statutory) സ്ഥാപനം — ഭരണഘടനാ സ്ഥാപനമല്ല.</p>
+<ul>
+<li><span class="stars">⭐⭐⭐⭐</span> <strong>ആദ്യ SHRC:</strong> പശ്ചിമ ബംഗാൾ — 1995 ജനുവരി 31.</li>
+<li><span class="stars">⭐⭐⭐⭐</span> <strong>കേരള SHRC:</strong> 1998 ഡിസംബർ 11.</li>
+<li><strong>21(1):</strong> "may constitute" — രൂപീകരണം <em>ഓപ്ഷണൽ</em>, നിർബന്ധമല്ല.</li>
+<li><strong>21(2) ഘടന (3 അംഗം, 2006 മുതൽ — മുമ്പ് 5):</strong>
+ <ul><li>(a) ചെയർപേഴ്സൺ: മുൻ HC ചീഫ് ജസ്റ്റിസ് അല്ലെങ്കിൽ മുൻ HC ജഡ്ജി (മുൻ HC ജഡ്ജിയും ആകാം — 2019).</li>
+ <li>(b) ജുഡീഷ്യൽ അംഗം: HC ജഡ്ജി (സേവനത്തിലുള്ള/വിരമിച്ച) അല്ലെങ്കിൽ ആ സംസ്ഥാനത്ത് ≥ 7 വർഷം ജില്ലാ ജഡ്ജിയായി പരിചയമുള്ളയാൾ.</li>
+ <li>(c) മനുഷ്യാവകാശ വിഷയത്തിൽ അറിവ്/പരിചയമുള്ള ഒരു അംഗം.</li></ul></li>
+<li><strong>21(3):</strong> സെക്രട്ടറി — ചെയർപേഴ്സന്റെ നിയന്ത്രണത്തിൽ കമ്മീഷന്റെ ഭരണ-സാമ്പത്തിക അധികാരങ്ങൾ (2019) <span class="mk mk-v">🔎 Verify</span>.</li>
+<li><strong>21(4):</strong> ആസ്ഥാനം സംസ്ഥാന സർക്കാർ വിജ്ഞാപനം ചെയ്യുന്ന സ്ഥലത്ത്.</li>
+<li><span class="stars">⭐⭐⭐⭐</span> <strong>21(5):</strong> ഏഴാം ഷെഡ്യൂളിലെ <strong>List II (സ്റ്റേറ്റ്), List III (കൺകറന്റ്)</strong> വിഷയങ്ങൾ മാത്രം. List I (യൂണിയൻ) ഇല്ല. NHRC/മറ്റ് കമ്മീഷൻ ഇതിനകം അന്വേഷിക്കുന്ന വിഷയം SHRC അന്വേഷിക്കില്ല.</li>
+<li><span class="stars">⭐⭐⭐⭐</span> <strong>21(6):</strong> സമ്മതത്തോടെ രണ്ടോ അതിലധികമോ സംസ്ഥാനങ്ങൾക്ക് ഒരേ വ്യക്തിയെ ചെയർപേഴ്സണായി/അംഗമായി നിയമിക്കാം (2006).</li>
+<li><strong>21(7)–(8):</strong> UT ചുമതല (ഭാഗം 1 കാണുക).</li></ul>
+<div class="added-fact"><span class="box-label"><span class="mk mk-a">➕ Added</span> Sec 36 — SHRC-യ്ക്ക് അന്വേഷിക്കാൻ പറ്റാത്തത്</span><p>List I വിഷയങ്ങൾ, മറ്റൊരു കമ്മീഷൻ പരിഗണിക്കുന്ന വിഷയം, സംഭവം നടന്ന് <strong>1 വർഷം</strong> കഴിഞ്ഞ പരാതികൾ — ഇവ SHRC അന്വേഷിക്കില്ല. <span class="mk mk-v">🔎 Verify</span></p></div>
+<div class="memory"><span class="box-label">🧠 Trick</span><p>"SHRC = <strong>S</strong>tate + <strong>C</strong>oncurrent → List <strong>II + III</strong>; Union (I) ഇല്ല."</p></div>
+</div></section>
+<section class="section" id="sec4"><h2 role="button" tabindex="0" aria-expanded="true">4. നിയമന സമിതി (Sec 22) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<ul><li><span class="mk mk-c">✅ Confirmed</span> <span class="stars">⭐⭐⭐⭐⭐</span> നിയമിക്കുന്നത് <strong>ഗവർണർ</strong> (warrant under hand and seal) — സമിതിയുടെ ശുപാർശ പ്രകാരം.</li>
+<li><strong>ഏകമണ്ഡല (ഉദാ: കേരളം) — 4 അംഗങ്ങൾ:</strong> മുഖ്യമന്ത്രി (അധ്യക്ഷൻ), നിയമസഭാ സ്പീക്കർ, ആഭ്യന്തര മന്ത്രി, നിയമസഭാ പ്രതിപക്ഷ നേതാവ്.</li>
+<li><strong>ദ്വിമണ്ഡല — 6 അംഗങ്ങൾ:</strong> മുകളിലെ 4 + ലെജിസ്ലേറ്റീവ് കൗൺസിൽ ചെയർമാൻ + കൗൺസിൽ പ്രതിപക്ഷ നേതാവ്.</li>
+<li><span class="stars">⭐⭐⭐⭐</span> <strong>കൂടിയാലോചന:</strong> <em>സിറ്റിംഗ്</em> HC ജഡ്ജിയെയോ <em>സിറ്റിംഗ്</em> ജില്ലാ ജഡ്ജിയെയോ നിയമിക്കും മുമ്പ് ആ സംസ്ഥാനത്തെ HC ചീഫ് ജസ്റ്റിസുമായി.</li>
+<li><strong>22(2):</strong> സമിതിയിൽ ഒഴിവുണ്ടെന്ന കാരണത്താൽ നിയമനം അസാധുവാകില്ല.</li></ul>
+<div class="added-fact"><span class="box-label">➕ ആശയ വ്യക്തത</span><p>കൺസൾട്ടേഷൻ (consultation) എന്നാൽ അഭിപ്രായം തേടൽ — CJ-യുടെ സമ്മതം (concurrence) അല്ല. വിരമിച്ച ജഡ്ജിമാർക്ക് ഈ കൺസൾട്ടേഷൻ ബാധകമല്ല.</p></div>
+</div></section>
+<section class="section" id="sec5"><h2 role="button" tabindex="0" aria-expanded="true">5. രാജി, നീക്കം ചെയ്യൽ, കാലാവധി (Sec 23–26) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<h3>Sec 23 <span class="mk mk-c">✅ Confirmed</span></h3>
+<ul><li><strong>രാജി (23(1)):</strong> സ്വന്തം കൈപ്പടയിൽ ഗവർണർക്ക് എഴുതി നൽകണം.</li>
+<li><strong>നീക്കം ചെയ്യൽ (23(1A)):</strong> രാഷ്ട്രപതി മാത്രം — "proved misbehaviour or incapacity" ആരോപിച്ചാൽ വിഷയം സുപ്രീംകോടതിക്ക് വിടും; SC അന്വേഷണ റിപ്പോർട്ടിന് ശേഷം നീക്കം.</li>
+<li><strong>SC അന്വേഷണമില്ലാതെ നീക്കാവുന്ന 5 കാരണങ്ങൾ (23(2)):</strong>
+<ol type="a"><li>പാപ്പരായി (insolvent) വിധിക്കപ്പെട്ടാൽ</li><li>പദവിയിലിരിക്കെ പുറത്ത് ശമ്പളമുള്ള ജോലി ചെയ്താൽ</li><li>ശാരീരിക/മാനസിക അവശത (infirmity) കാരണം തുടരാൻ കഴിയാതായാൽ</li><li>യോഗ്യതയുള്ള കോടതി മാനസികനില തെറ്റിയതായി (unsound mind) പ്രഖ്യാപിച്ചാൽ</li><li>സദാചാരവിരുദ്ധ കുറ്റത്തിന് (moral turpitude) തടവുശിക്ഷ ലഭിച്ചാൽ</li></ol></li></ul>
+<h3>Sec 24 — കാലാവധി <span class="mk mk-c">✅ Confirmed</span></h3>
+<ul><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>3 വർഷം</strong> അല്ലെങ്കിൽ <strong>70 വയസ്സ്</strong> — ഏതാണോ ആദ്യം (2019 മുമ്പ്: 5 വർഷം / 70 വയസ്സ്).</li>
+<li>ചെയർപേഴ്സണും അംഗങ്ങൾക്കും പുനർനിയമനത്തിന് അർഹത (70 വയസ്സ് പരിധിക്കുള്ളിൽ).</li>
+<li>24(3): പദവി ഒഴിഞ്ഞ ശേഷം സംസ്ഥാന/കേന്ദ്ര സർക്കാരിന് കീഴിൽ മറ്റ് ജോലിക്ക് അയോഗ്യത.</li></ul>
+<h3>Sec 25 & 26</h3>
+<ul><li><strong>Sec 25:</strong> ചെയർപേഴ്സൺ സ്ഥാനം ഒഴിഞ്ഞാലോ (മരണം/രാജി) അവധിയിലായാലോ → ഗവർണർ ഒരു അംഗത്തെ ആക്ടിംഗ് ചെയർപേഴ്സണായി വിജ്ഞാപനം ചെയ്യും.</li>
+<li><strong>Sec 26:</strong> ശമ്പള-അലവൻസുകൾ സംസ്ഥാന സർക്കാർ നിശ്ചയിക്കും; നിയമനശേഷം പ്രതികൂലമായി മാറ്റാൻ പാടില്ല.</li></ul>
+<div class="memory"><span class="box-label">🧠 Trick — 23(2)</span><p>"<strong>പാ-പു-അ-മ-ത</strong>": <strong>പാ</strong>പ്പരത്വം, <strong>പു</strong>റംജോലി, <strong>അ</strong>വശത, <strong>മ</strong>നോരോഗം, <strong>ത</strong>ടവുശിക്ഷ."</p></div>
+</div></section>
+<section class="section" id="sec6"><h2 role="button" tabindex="0" aria-expanded="true">6. ഉദ്യോഗസ്ഥർ, റിപ്പോർട്ട്, Sec 29, ഓഡിറ്റ് (Sec 27–29, 33, 35) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<ul><li><strong>Sec 27 <span class="mk mk-c">✅ Confirmed</span>:</strong> സംസ്ഥാന സർക്കാർ നൽകുന്നത് — (a) സംസ്ഥാന സെക്രട്ടറി റാങ്കിൽ കുറയാത്ത ഒരു ഉദ്യോഗസ്ഥൻ (കമ്മീഷൻ സെക്രട്ടറി); (b) <strong>IGP</strong> റാങ്കിൽ കുറയാത്ത ഉദ്യോഗസ്ഥന്റെ കീഴിൽ പോലീസ്-അന്വേഷണ വിഭാഗം. മറ്റ് ജീവനക്കാരെ കമ്മീഷന് നിയമിക്കാം.</li>
+<li><strong>Sec 28 <span class="mk mk-c">✅ Confirmed</span>:</strong> വാർഷിക + പ്രത്യേക റിപ്പോർട്ട് → സംസ്ഥാന സർക്കാരിന് → സർക്കാർ നടപടി വിവരണ മെമ്മോറാണ്ടവും (ശുപാർശ തള്ളിയാൽ കാരണവും) സഹിതം നിയമസഭയുടെ ഓരോ സഭയിലും വെക്കണം.</li></ul>
+<h3>Sec 29 — NHRC-യുടെ 9 വകുപ്പുകൾ SHRC-യ്ക്കും</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>NHRC വകുപ്പ്</th><th>വിഷയം</th></tr></thead><tbody>
+<tr><td>9</td><td>ഒഴിവ് നടപടികളെ അസാധുവാക്കില്ല</td></tr><tr><td>10</td><td>നടപടിക്രമ ചട്ടങ്ങൾ</td></tr><tr><td>12</td><td>കമ്മീഷന്റെ ചുമതലകൾ</td></tr><tr><td>13</td><td>സിവിൽ കോടതി അധികാരങ്ങൾ</td></tr><tr><td>14</td><td>അന്വേഷണം (investigation)</td></tr><tr><td>15</td><td>മൊഴികൾക്കുള്ള പരിരക്ഷ</td></tr><tr><td>16</td><td>ദോഷകരമായി ബാധിക്കാവുന്ന വ്യക്തിക്ക് ഭാഗം കേൾക്കാൻ അവസരം</td></tr><tr><td>17</td><td>പരാതികളിലെ അന്വേഷണം (inquiry)</td></tr><tr><td>18</td><td>അന്വേഷണാനന്തര നടപടി/ശുപാർശ</td></tr></tbody></table></div>
+<div class="trap"><span class="box-label">⚠️ Trap</span><p><strong>Sec 11 (അന്വേഷണ ഉദ്യോഗസ്ഥർ) ഉം Sec 19 (സായുധ സേന) ഉം</strong> Sec 29 പട്ടികയിലില്ല. സായുധ സേന List I-ൽ ആയതിനാൽ SHRC-ക്ക് അതിൽ അധികാരമില്ല.</p></div>
+<ul><li><strong>Sec 33 <span class="mk mk-c">✅ Confirmed</span>:</strong> നിയമസഭ അനുവദിക്കുന്ന തുക സംസ്ഥാന സർക്കാർ ഗ്രാന്റായി നൽകും.</li>
+<li><strong>Sec 35 <span class="mk mk-c">✅ Confirmed</span>:</strong> അക്കൗണ്ടുകൾ CAG-യുമായി ആലോചിച്ച മാതൃകയിൽ സൂക്ഷിക്കും; <strong>CAG ഓഡിറ്റ് ചെയ്യും</strong> (35(2)); റിപ്പോർട്ട് നിയമസഭയിൽ (35(4)).</li></ul>
+</div></section>
+<section class="section" id="sec7"><h2 role="button" tabindex="0" aria-expanded="true">7. ഭേദഗതികളുടെ ടൈംലൈൻ <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div style="overflow-x:auto"><table><thead><tr><th>തീയതി</th><th>സംഭവം</th></tr></thead><tbody>
+<tr><td>1993 സെപ്റ്റംബർ 28</td><td>നിയമം പ്രാബല്യത്തിൽ (Act 10 of 1994) <span class="mk mk-c">✅ Confirmed</span></td></tr>
+<tr><td>1995 ജനുവരി 31</td><td>ആദ്യ SHRC — പശ്ചിമ ബംഗാൾ</td></tr>
+<tr><td>1998 ഡിസംബർ 11</td><td>കേരള SHRC</td></tr>
+<tr><td>2006 നവംബർ 23</td><td>2006 ഭേദഗതി: SHRC 5 → 3 അംഗം; Sec 21(6); Sec 23 ക്രമീകരണം <span class="mk mk-c">✅ Confirmed</span></td></tr>
+<tr><td>2019 ഓഗസ്റ്റ് 2</td><td>2019 ഭേദഗതി: മുൻ HC ജഡ്ജിയും ചെയർപേഴ്സൺ; കാലാവധി 5 → 3 വർഷം; 21(7)–(8) <span class="mk mk-c">✅ Confirmed</span></td></tr>
+<tr><td>2019 ഒക്ടോബർ 31</td><td>J&K പുനഃസംഘടന — J&K പ്രൊവൈസോ ഒഴിവായി <span class="mk mk-c">✅ Confirmed</span></td></tr>
+<tr><td>2020 ഒക്ടോബർ 23</td><td>ലഡാക്ക് അഡാപ്റ്റേഷൻ ഉത്തരവ് S.O. 3774(E) <span class="mk mk-c">✅ Confirmed</span></td></tr></tbody></table></div>
+</div></section>
+<section class="section" id="sec8"><h2 role="button" tabindex="0" aria-expanded="true">8. താരതമ്യ പട്ടികകൾ <span class="toggle-icon">▼</span></h2><div class="section-body">
+<h3>പട്ടിക 1: ആര് എന്ത് ചെയ്യുന്നു?</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>ചുമതല</th><th>അധികാരി</th><th>വകുപ്പ്</th></tr></thead><tbody>
+<tr><td>SHRC രൂപീകരണം, ആസ്ഥാനം</td><td>സംസ്ഥാന സർക്കാർ</td><td>21(1), 21(4)</td></tr>
+<tr><td>ചെയർപേഴ്സൺ/അംഗങ്ങളെ നിയമിക്കൽ</td><td>ഗവർണർ</td><td>22</td></tr>
+<tr><td>സിറ്റിംഗ് ജഡ്ജി നിയമന കൂടിയാലോചന</td><td>HC ചീഫ് ജസ്റ്റിസ്</td><td>22</td></tr>
+<tr><td>രാജി സ്വീകരിക്കൽ</td><td>ഗവർണർ</td><td>23(1)</td></tr>
+<tr><td>നീക്കം ചെയ്യൽ</td><td>രാഷ്ട്രപതി (+ SC അന്വേഷണം)</td><td>23(1A), 23(2)</td></tr>
+<tr><td>ആക്ടിംഗ് ചെയർപേഴ്സൺ</td><td>ഗവർണർ</td><td>25</td></tr>
+<tr><td>ശമ്പളം, സ്റ്റാഫ്</td><td>സംസ്ഥാന സർക്കാർ</td><td>26, 27</td></tr>
+<tr><td>UT ചുമതല നൽകൽ</td><td>കേന്ദ്ര സർക്കാർ</td><td>21(7)</td></tr>
+<tr><td>ഓഡിറ്റ്</td><td>CAG</td><td>35(2)</td></tr></tbody></table></div>
+<h3>പട്ടിക 2: SHRC vs NHRC</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>ഘടകം</th><th>SHRC (ഏകമണ്ഡല)</th><th>SHRC (ദ്വിമണ്ഡല)</th><th>NHRC (Sec 4)</th></tr></thead><tbody>
+<tr><td>സമിതി അംഗങ്ങൾ</td><td>4</td><td>6</td><td>6</td></tr>
+<tr><td>അധ്യക്ഷൻ</td><td>മുഖ്യമന്ത്രി</td><td>മുഖ്യമന്ത്രി</td><td>പ്രധാനമന്ത്രി</td></tr>
+<tr><td>നിയമിക്കുന്നത്</td><td>ഗവർണർ</td><td>ഗവർണർ</td><td>രാഷ്ട്രപതി</td></tr>
+<tr><td>നീക്കം ചെയ്യുന്നത്</td><td colspan="2">രാഷ്ട്രപതി</td><td>രാഷ്ട്രപതി</td></tr>
+<tr><td>അധികാരപരിധി</td><td colspan="2">List II + III</td><td>എല്ലാ ലിസ്റ്റും (പ്രായോഗികമായി)</td></tr></tbody></table></div>
+</div></section>
+<section class="section" id="sec9"><h2 role="button" tabindex="0" aria-expanded="true">9. പരീക്ഷയിലെ ചതിക്കുഴികൾ (Traps) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div class="trap"><span class="box-label">⚠️ Trap 1 — ആക്ടിംഗ് ചെയർപേഴ്സൺ</span><p><strong>Fact:</strong> രാഷ്ട്രപതിയല്ല, <strong>ഗവർണർ</strong> (Sec 25).</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 2 — Sec 21(8)</span><p><strong>Fact:</strong> ഡൽഹി മാത്രമല്ല; ഡൽഹി + J&K + ലഡാക്ക് = NHRC.</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 3 — Sec 29</span><p><strong>Fact:</strong> ബാധകമല്ലാത്തത് Sec 19 (സായുധ സേന); ബാധകം 9, 10, 12–18.</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 4 — HC CJ കൂടിയാലോചന</span><p><strong>Fact:</strong> സിറ്റിംഗ് HC/ജില്ലാ ജഡ്ജിയെ നിയമിക്കുമ്പോൾ മാത്രം; വിരമിച്ചവർക്ക് വേണ്ട.</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 5 — Sec 21(6)</span><p><strong>Fact:</strong> സമ്മതത്തോടെ ഒരാൾക്ക് രണ്ട് സംസ്ഥാനങ്ങളിലെ SHRC-യുടെ ചെയർപേഴ്സൺ/അംഗം ആകാം.</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 6 — ഓഡിറ്റ്</span><p><strong>Fact:</strong> സംസ്ഥാന ഓഡിറ്റ് വകുപ്പല്ല, <strong>CAG</strong>.</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 7 — തുടർ ജോലി</span><p><strong>Fact:</strong> കേന്ദ്ര/സംസ്ഥാന സർക്കാർ ജോലി പാടില്ല (24(3)); പുനർനിയമനം മാത്രം സാധ്യം.</p></div>
+<div class="trap"><span class="box-label">⚠️ Trap 8 — 3 വർഷം</span><p><strong>Fact:</strong> പഴയ ഗൈഡുകളിലെ "5 വർഷം" 2019-ന് മുമ്പുള്ളതാണ് (<span class="mk mk-f">🔧 Fix</span>).</p></div>
+</div></section>
+<section class="section" id="sec10"><h2 role="button" tabindex="0" aria-expanded="true">10. മെമ്മറി ട്രിക്കുകൾ <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div class="memory"><span class="box-label">🧠 Sec 21–29 = C-A-R-T-M-T-O-R-A</span><ul>
+<li>21 <strong>C</strong>onstitution · 22 <strong>A</strong>ppointment · 23 <strong>R</strong>esignation/Removal · 24 <strong>T</strong>erm · 25 <strong>M</strong>ember acts as Chair</li>
+<li>26 <strong>T</strong>erms of service · 27 <strong>O</strong>fficers · 28 <strong>R</strong>eports · 29 <strong>A</strong>pplication of NHRC sections</li></ul></div>
+<div class="memory"><span class="box-label">🧠 ഗവർണർ vs രാഷ്ട്രപതി</span><p>"<strong>ഗ</strong>വർണർ = <strong>ന</strong>ിയമനം, <strong>ര</strong>ാജി, <strong>ആ</strong>ക്ടിംഗ് (22, 23(1), 25) · രാഷ്ട്രപതി = <strong>പുറത്താക്കൽ</strong> മാത്രം (23(1A))."</p></div>
+<div class="memory"><span class="box-label">🧠 DJL</span><p>Delhi + Jammu & Kashmir + Ladakh = NHRC (Sec 21(8)).</p></div>
+<div class="memory"><span class="box-label">🧠 സമിതി 4 / 6</span><p>"മുഖ്യമന്ത്രി-സ്പീക്കർ-ആഭ്യന്തരം-പ്രതിപക്ഷം = 4; കൗൺസിൽ രണ്ടുപേർ കൂടി = 6."</p></div>
+</div></section>
+<section class="section" id="sec11"><h2 role="button" tabindex="0" aria-expanded="true">11. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div class="important"><span class="box-label">⚠️ ആദ്യം വായിക്കുക</span><p>ഈ രീതികൾ ശരിയാകാനുള്ള <em>സാധ്യത</em> കൂട്ടുകയേ ഉള്ളൂ; അറിവിന് പകരമാവില്ല. "ഏറ്റവും നീളമുള്ള ഉത്തരം ശരി", "എപ്പോഴും C" തുടങ്ങിയ രീതികൾ തെറ്റായ മിഥ്യകളാണ്.</p></div>
+<h3>1. Option Elimination + Common-Sense Logic</h3>
+<div class="step"><strong>ചോദ്യം (PSC-style practice):</strong> SHRC ചെയർപേഴ്സണെ നീക്കം ചെയ്യാൻ അധികാരമുള്ളത്? (A) ഗവർണർ (B) രാഷ്ട്രപതി (C) മുഖ്യമന്ത്രി (D) HC ചീഫ് ജസ്റ്റിസ്<br>
+ഘട്ടം 1: മുഖ്യമന്ത്രി നിയമന സമിതിയിലെ ഒരംഗം മാത്രം — സ്വതന്ത്ര സ്ഥാപനത്തെ സർക്കാർ തലവൻ പുറത്താക്കുന്നത് സ്വാതന്ത്ര്യത്തിന് വിരുദ്ധം → (C) ഒഴിവാക്കാം.<br>
+ഘട്ടം 2: ജുഡീഷ്യൽ പദവിയുള്ള വ്യക്തിയെ നീക്കാൻ സുപ്രീംകോടതി അന്വേഷണം ആവശ്യമായതിനാൽ HC CJ-യ്ക്ക് അധികാരമില്ല → (D) ഒഴിവാക്കാം.<br>
+ഘട്ടം 3: ബാക്കി (A) ഗവർണർ vs (B) രാഷ്ട്രപതി — നിയമിക്കുന്നയാൾ തന്നെ നീക്കും എന്ന ധാരണ ഇവിടെ തെറ്റ്; ഇത് അറിയണം. <strong>ഉത്തരം: (B).</strong> <br>⚠️ ഘട്ടം 3 ഊഹം കൊണ്ട് തീർക്കാനാവില്ല — theory വേണം.</div>
+<h3>2. Keyword / Extreme Statement Check</h3>
+<div class="step"><strong>പ്രസ്താവന:</strong> "എല്ലാ സംസ്ഥാനങ്ങളും SHRC രൂപീകരിക്കാൻ നിയമപരമായി <em>ബാധ്യസ്ഥരാണ്</em>."<br>
+"എല്ലാ", "ബാധ്യസ്ഥർ" — അതിശക്ത വാക്കുകൾ → നിയമപാഠം പരിശോധിക്കുക: Sec 21(1) "<em>may</em> constitute" → തെറ്റ്. <br>⚠️ അതിശക്ത വാക്കുള്ള പ്രസ്താവന എപ്പോഴും തെറ്റല്ല; വസ്തുത പരിശോധിച്ചേ തീരുമാനിക്കാവൂ.</div>
+<h3>3. Number Logic</h3>
+<div class="step">കേരള SHRC നിയമന സമിതിയിലെ അംഗങ്ങൾ: (A) 3 (B) 4 (C) 5 (D) 6.<br>ഓർമയുള്ള പേരുകൾ എണ്ണുക: CM, സ്പീക്കർ, ആഭ്യന്തര മന്ത്രി, പ്രതിപക്ഷ നേതാവ് = 4. കേരളത്തിൽ ലെജിസ്ലേറ്റീവ് കൗൺസിൽ ഇല്ല → (D) 6 ഇല്ല. <strong>ഉത്തരം (B).</strong></div>
+<h3>4. Statement-Based</h3>
+<div class="step">ഓരോ പ്രസ്താവനയും വെവ്വേറെ പരിശോധിക്കുക: ഒന്ന് ഉറപ്പായി തെറ്റാണെങ്കിൽ അതുൾപ്പെടുന്ന ഓപ്ഷനുകൾ ഒഴിവാക്കാം (ചോദ്യം 3 കാണുക).</div>
+<h3>5. Match the Following</h3>
+<div class="step">ഉറപ്പുള്ള ഒരു ജോഡി (ഉദാ: Sec 35 = CAG) എടുത്ത് ആ ജോഡിയില്ലാത്ത ഓപ്ഷനുകൾ വെട്ടുക (ചോദ്യം 5 കാണുക).</div>
+<h3>6. Assertion–Reason</h3>
+<div class="step"><strong>A:</strong> Sec 19 SHRC-യ്ക്ക് ബാധകമല്ല. <strong>R:</strong> SHRC-യുടെ അധികാരം List II, III-ൽ മാത്രം; സായുധ സേന യൂണിയൻ വിഷയം.<br>രണ്ടും ശരി; R, A-യെ വിശദീകരിക്കുന്നു → "Both true, R is the correct explanation".</div>
+<h3>7. Negative Marking തീരുമാനം</h3>
+<div class="step">ശരി ഉത്തരത്തിന് +1, തെറ്റിന് −⅓ എന്ന് കരുതുക (നിങ്ങളുടെ വിജ്ഞാപനത്തിൽ പരിശോധിക്കുക). 4 ഓപ്ഷനും ഊഹിച്ചാൽ പ്രതീക്ഷിത മാർക്ക് = 0.25 − 0.75×⅓ = <strong>0</strong>. 2 എണ്ണം ഒഴിവാക്കിയാൽ = 0.5 − 0.5×⅓ ≈ <strong>+0.33</strong> → ഊഹം ലാഭം. ഒന്നും ഒഴിവാക്കാനായില്ലെങ്കിൽ ഒഴിവാക്കുന്നത് സുരക്ഷിതം.</div>
+</div></section>
+<section class="section" id="sec12"><h2 role="button" tabindex="0" aria-expanded="true">12. അതിവേഗ റിവിഷൻ (Must Remember) <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div class="last-minute"><span class="box-label">⚡ Last Minute</span><ul>
+<li><strong>PHRA 1993</strong> അധ്യായം V (21–29); ആദ്യ SHRC: പശ്ചിമ ബംഗാൾ 1995; കേരളം 1998 ഡിസംബർ 11.</li>
+<li><strong>1+2 അംഗങ്ങൾ</strong>; ഓപ്ഷണൽ; List II & III; 21(6) സംയുക്ത നിയമനം; DJL = NHRC.</li>
+<li><strong>ഗവർണർ:</strong> നിയമനം (4/6 സമിതി), രാജി, ആക്ടിംഗ്. <strong>രാഷ്ട്രപതി:</strong> നീക്കം (SC അന്വേഷണം/5 കാരണങ്ങൾ).</li>
+<li><strong>3 വർഷം / 70 വയസ്സ്</strong>; പുനർനിയമനം ആകാം; തുടർ സർക്കാർ ജോലി പാടില്ല.</li>
+<li>Sec 27: സെക്രട്ടറി + IGP; Sec 28: നിയമസഭ; Sec 29: 9, 10, 12–18 (Sec 19 ഇല്ല); Sec 35: CAG.</li></ul></div>
+</div></section>
+<section class="section" id="sec13"><h2 role="button" tabindex="0" aria-expanded="true">13. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (PSC-style practice) <span class="toggle-icon">▼</span></h2><div class="section-body"><p><em>ഇവ പരിശീലന ചോദ്യങ്ങളാണ്; മുൻ വർഷ ചോദ്യങ്ങളല്ല.</em></p><div class="question-item" data-qindex="0" data-correct="C"><div class="q-text">1. ചോദ്യം: PHRA 1993 Sec 22 പ്രകാരം സിറ്റിംഗ് HC ജഡ്ജിയെയോ ജില്ലാ ജഡ്ജിയെയോ SHRC-യിൽ നിയമിക്കും മുമ്പ് ആരുമായി കൂടിയാലോചിക്കണം?</div><div class="options"><span data-opt="A">A. സുപ്രീംകോടതി ചീഫ് ജസ്റ്റിസ്</span><span data-opt="B">B. NHRC ചെയർപേഴ്സൺ</span><span data-opt="C">C. ബന്ധപ്പെട്ട HC ചീഫ് ജസ്റ്റിസ്</span><span data-opt="D">D. അഡ്വക്കേറ്റ് ജനറൽ</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) ബന്ധപ്പെട്ട HC ചീഫ് ജസ്റ്റിസ്</div><div class="explanation">Sec 22 പ്രൊവൈസോ. (A) CJI-യുമായുള്ള കൂടിയാലോചന NHRC (Sec 4) നിയമനത്തിലാണ്. (B), (D)-ന് SHRC നിയമനത്തിൽ നിയമപരമായ പങ്കില്ല.</div></div></div><div class="question-item" data-qindex="1" data-correct="A"><div class="q-text">2. ചോദ്യം: Sec 25 പ്രകാരം SHRC ചെയർപേഴ്സൺ സ്ഥാനം ഒഴിഞ്ഞാൽ ആക്ടിംഗ് ചെയർപേഴ്സണെ അധികാരപ്പെടുത്തുന്നത്?</div><div class="options"><span data-opt="A">A. ഗവർണർ</span><span data-opt="B">B. രാഷ്ട്രപതി</span><span data-opt="C">C. മുഖ്യമന്ത്രി</span><span data-opt="D">D. HC ചീഫ് ജസ്റ്റിസ്</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) ഗവർണർ</div><div class="explanation">Sec 25: ഗവർണർ വിജ്ഞാപനം വഴി. (B) രാഷ്ട്രപതി SHRC-യിൽ നീക്കം ചെയ്യുന്നയാൾ; NHRC ആക്ടിംഗ് ചെയർപേഴ്സണെ (Sec 7) നിയമിക്കുന്നയാൾ. (C) നിയമന സമിതി അധ്യക്ഷൻ മാത്രം. (D) Sec 22 കൂടിയാലോചന, Sec 30 മനുഷ്യാവകാശ കോടതി.</div></div></div><div class="question-item" data-qindex="2" data-correct="D"><div class="q-text">3. ശരിയായ പ്രസ്താവനകൾ ഏവ?<br>1. ആദ്യ SHRC പശ്ചിമ ബംഗാളിൽ (1995).<br>2. Sec 21(8) പ്രകാരം ഡൽഹി, J&K, ലഡാക്ക് NHRC-യുടെ ചുമതലയിൽ.<br>3. Sec 19 SHRC-യ്ക്കും ബാധകം.</div><div class="options"><span data-opt="A">A. 1 മാത്രം</span><span data-opt="B">B. 2, 3 മാത്രം</span><span data-opt="C">C. 1, 2, 3</span><span data-opt="D">D. 1, 2 മാത്രം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) 1, 2 മാത്രം</div><div class="explanation">3 തെറ്റ്: Sec 29-ൽ 9, 10, 12–18 മാത്രം; സായുധ സേന List I. അതിനാൽ (B), (C) ഒഴിവാക്കി; 1, 2 ശരി.</div></div></div><div class="question-item" data-qindex="3" data-correct="B"><div class="q-text">4. ചോദ്യം: ദ്വിമണ്ഡല സംസ്ഥാനത്തെ SHRC നിയമന സമിതിയിലെ അംഗങ്ങളും SHRC അക്കൗണ്ട് ഓഡിറ്റർ (Sec 35) യഥാക്രമം?</div><div class="options"><span data-opt="A">A. 4 — സ്റ്റേറ്റ് ഓഡിറ്റ് ഡയറക്ടർ</span><span data-opt="B">B. 6 — CAG</span><span data-opt="C">C. 6 — സംസ്ഥാനം നിയമിക്കുന്ന ചാർട്ടേഡ് അക്കൗണ്ടന്റ്</span><span data-opt="D">D. 5 — CAG</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) 6 — CAG</div><div class="explanation">Sec 22: 4 + കൗൺസിൽ ചെയർമാൻ + കൗൺസിൽ പ്രതിപക്ഷ നേതാവ് = 6; Sec 35(2): CAG. 4 ഏകമണ്ഡലം; 5 അംഗ സമിതി നിയമത്തിലില്ല; ചാർട്ടേഡ് അക്കൗണ്ടന്റ് വ്യവസ്ഥ ഇല്ല.</div></div></div><div class="question-item" data-qindex="4" data-correct="C"><div class="q-text">5. ചേരുംപടി: a) Sec 21(6) b) Sec 24(3) c) Sec 28 d) Sec 29<br>1. NHRC-യുടെ 9 വകുപ്പ് ബാധകം 2. റിപ്പോർട്ട് നിയമസഭയിൽ 3. പദവിക്ക് ശേഷം സർക്കാർ ജോലി അയോഗ്യത 4. 2+ സംസ്ഥാനങ്ങൾക്ക് ഒരേ വ്യക്തി</div><div class="options"><span data-opt="A">A. a-1, b-3, c-2, d-4</span><span data-opt="B">B. a-4, b-2, c-3, d-1</span><span data-opt="C">C. a-4, b-3, c-2, d-1</span><span data-opt="D">D. a-3, b-4, c-2, d-1</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) a-4, b-3, c-2, d-1</div><div class="explanation">Sec 29 = d-1 → (A) ഒഴിവാക്കാം (d-4). Sec 21(6) = a-4 → (D) ഒഴിവാക്കാം (a-3). Sec 28 = റിപ്പോർട്ട് = c-2 → (B) ഒഴിവാക്കാം (c-3). ബാക്കി (C).</div></div></div><div class="question-item" data-qindex="5" data-correct="B"><div class="q-text">6. Assertion (A): SHRC ഒരു കേന്ദ്ര-ലിസ്റ്റ് വിഷയത്തിലെ ലംഘനം അന്വേഷിക്കില്ല. Reason (R): SHRC-യുടെ അധികാരം ഏഴാം ഷെഡ്യൂളിലെ List II, III-ൽ പരിമിതമാണ് (Sec 21(5)).</div><div class="options"><span data-opt="A">A. A ശരി, R തെറ്റ്</span><span data-opt="B">B. A, R ശരി; R, A-യുടെ ശരിയായ വിശദീകരണം</span><span data-opt="C">C. A, R ശരി; R, A-യെ വിശദീകരിക്കുന്നില്ല</span><span data-opt="D">D. A തെറ്റ്, R ശരി</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) A, R ശരി; R, A-യുടെ ശരിയായ വിശദീകരണം</div><div class="explanation">രണ്ടും ശരി; പരിധി തന്നെയാണ് A-യുടെ കാരണം.</div></div></div><div class="question-item" data-qindex="6" data-correct="A"><div class="q-text">7. 23(2) പ്രകാരം SC അന്വേഷണമില്ലാതെ രാഷ്ട്രപതിക്ക് SHRC അംഗത്തെ നീക്കം ചെയ്യാൻ കഴിയാത്ത സാഹചര്യം ഏത്?</div><div class="options"><span data-opt="A">A. പ്രവൃത്തിയിൽ തെളിയിക്കപ്പെട്ട ദുർനടപ്പ് (misbehaviour)</span><span data-opt="B">B. പാപ്പരായി വിധിക്കപ്പെട്ടാൽ</span><span data-opt="C">C. മാനസികനില തെറ്റിയതായി കോടതി പ്രഖ്യാപിച്ചാൽ</span><span data-opt="D">D. സദാചാരവിരുദ്ധ കുറ്റത്തിന് തടവ്</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) പ്രവൃത്തിയിൽ തെളിയിക്കപ്പെട്ട ദുർനടപ്പ് (misbehaviour)</div><div class="explanation">Misbehaviour/incapacity → Sec 23(1A): SC അന്വേഷണം നിർബന്ധം. (B), (C), (D) 23(2)-ലെ നേരിട്ടുള്ള കാരണങ്ങൾ.</div></div></div><div class="question-item" data-qindex="7" data-correct="D"><div class="q-text">8. SHRC കാലാവധി, 2019 ഭേദഗതിക്ക് ശേഷം?</div><div class="options"><span data-opt="A">A. 5 വർഷം / 65</span><span data-opt="B">B. 5 വർഷം / 70</span><span data-opt="C">C. 3 വർഷം / 65</span><span data-opt="D">D. 3 വർഷം / 70</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) 3 വർഷം / 70</div><div class="explanation">Sec 24: 3 വർഷം അല്ലെങ്കിൽ 70 വയസ്സ്; 5 വർഷം 2019-ന് മുമ്പ്. 65 NHRC/SHRC-യിൽ ബാധകമല്ല.</div></div></div></div></section>
+<section class="section" id="sec14"><h2 role="button" tabindex="0" aria-expanded="true">14. പ്രധാന തീയതികളും സംഖ്യകളും <span class="toggle-icon">▼</span></h2><div class="section-body">
+<ul><li>1995 ജനുവരി 31 — ആദ്യ SHRC (പ. ബംഗാൾ) · 1998 ഡിസംബർ 11 — കേരള SHRC</li>
+<li>2006 നവംബർ 23 — 2006 ഭേദഗതി · 2019 ഓഗസ്റ്റ് 2 — 2019 ഭേദഗതി · 2020 ഒക്ടോബർ 23 — ലഡാക്ക് ഉത്തരവ്</li>
+<li>9 വകുപ്പുകൾ (21–29) · 9 NHRC വകുപ്പുകൾ (Sec 29) · 1+2 അംഗങ്ങൾ · 4 / 6 സമിതി · 3 വർഷം / 70 വയസ്സ് · 7 വർഷം ജില്ലാ ജഡ്ജി പരിചയം · 5 നേരിട്ടുള്ള കാരണങ്ങൾ</li></ul>
+</div></section>
+<section class="section" id="sec15"><h2 role="button" tabindex="0" aria-expanded="true">15. തിരുത്തൽ രജിസ്റ്റർ <span class="toggle-icon">▼</span></h2><div class="section-body">
+<div style="overflow-x:auto"><table><thead><tr><th>ഭാഗം</th><th>മുൻ പാഠം / പ്രശ്നം</th><th>നില</th><th>അടിസ്ഥാനം</th></tr></thead><tbody>
+<tr><td>§1, §3 Sec 21(8)</td><td>"ഡൽഹി ഒഴികെ" മാത്രം</td><td>Updated</td><td>S.O. 3774(E) (ലഡാക്ക്) ബെയർ ആക്ട് കുറിപ്പ്; S.O. 1123(E) — verify</td></tr>
+<tr><td>§5 Sec 24</td><td>5 വർഷം (പഴയ ഗൈഡുകൾ)</td><td>Confirmed 3 വർഷം</td><td>Act 19 of 2019, s.6</td></tr>
+<tr><td>§3 Sec 21(3)</td><td>സെക്രട്ടറി CEO</td><td>Needs verification</td><td>ബെയർ ആക്ട് വീണ്ടും നോക്കുക</td></tr>
+<tr><td>§3 Sec 36</td><td>—</td><td>Added (verify)</td><td>PHRA Sec 36</td></tr>
+<tr><td>§6 Sec 29 പട്ടിക</td><td>—</td><td>Added വിവരണങ്ങൾ</td><td>Sec 29, NHRC Ch. III</td></tr>
+<tr><td>മാതൃകാ ചോദ്യം 4</td><td>"Kerala SC/ST Commission Act Sec 13" പരാമർശം</td><td>Removed</td><td>ഉറപ്പില്ലാത്ത വസ്തുത; ഒഴിവാക്കി</td></tr>
+<tr><td>Q5 വിശദീകരണം</td><td>ഉപഘട്ടങ്ങൾ പുനഃക്രമീകരിച്ചു</td><td>Corrected</td><td>Self-consistency</td></tr></tbody></table></div>
+</div></section>
+<section class="section" id="sec16"><h2 role="button" tabindex="0" aria-expanded="true">16. അവസാനവട്ട ചെക്ക്‌ലിസ്റ്റ് <span class="toggle-icon">▼</span></h2><div class="section-body">
+<ul class="checklist"><li>Sec 21–29 ക്രമവും CARTMTORA കോഡും ഓർമയുണ്ടോ?</li>
+<li>ആദ്യ SHRC (ബംഗാൾ 1995), കേരള SHRC (1998), ഓപ്ഷണൽ രൂപീകരണം, List II & III?</li>
+<li>DJL = NHRC (21(8)); 21(6) സംയുക്ത നിയമനം?</li>
+<li>4 vs 6 സമിതി; സിറ്റിംഗ് ജഡ്ജിക്ക് HC CJ കൂടിയാലോചന?</li>
+<li>ഗവർണർ (നിയമനം, രാജി, ആക്ടിംഗ്) vs രാഷ്ട്രപതി (നീക്കം)?</li>
+<li>3 വർഷം / 70 വയസ്സ്; തുടർ ജോലി വിലക്ക്?</li>
+<li>Sec 29: 9, 10, 12–18 (Sec 19 ഇല്ല); Sec 35 CAG?</li>
+<li>Negative marking: 2 ഓപ്ഷൻ ഒഴിവാക്കിയാൽ മാത്രം ഊഹിക്കുക.</li></ul>
+</div></section>
+</main></div>
 <script>
-window.PART_KEY   = 'important-acts-16.4.7-shrc';
-window.PART_TITLE = '16.4.7 State Human Rights Commission';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
-</body>
-</html>
+  /* ---------- 1. Section collapse/expand ---------- */
+  document.querySelectorAll('.section > h2').forEach(function (h2) {
+    function toggle() {
+      var sec = h2.closest('.section');
+      var collapsed = sec.classList.toggle('collapsed');
+      h2.setAttribute('aria-expanded', String(!collapsed));
+    }
+    h2.addEventListener('click', toggle);
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  /* ---------- 2. Expand all / collapse all ---------- */
+  var expandAll = document.getElementById('expandAll');
+  var collapseAll = document.getElementById('collapseAll');
+  if (expandAll) expandAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.remove('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'true');
+    });
+  });
+  if (collapseAll) collapseAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.add('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- 3. TOC scroll-spy ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#tocNav a'));
+  var spySections = tocLinks
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && spySections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(function (a) {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    spySections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* Smooth scroll for TOC */
+  tocLinks.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ---------- 4. MCQ behaviour ---------- */
+  document.querySelectorAll('.question-item').forEach(function (item) {
+    var opts = item.querySelectorAll('.options span');
+    var correct = (item.dataset.correct || '').trim();
+    var shown = false;
+    var locked = false;
+
+    opts.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (locked || shown) return;
+        opts.forEach(function (o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var status = item.querySelector('.q-status');
+        if (status) status.textContent = 'തിരഞ്ഞെടുത്തു: ' + opt.dataset.opt;
+      });
+    });
+
+    var showBtn = item.querySelector('.btn-show');
+    if (showBtn) showBtn.addEventListener('click', function () {
+      if (shown) return;
+      shown = true;
+      opts.forEach(function (o) {
+        if (o.dataset.opt === correct) o.classList.add('correct');
+        else if (o.classList.contains('selected')) o.classList.add('wrong');
+        o.classList.add('locked');
+      });
+      var block = item.querySelector('.answer-block');
+      if (block) block.classList.add('show');
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ഉത്തരം കാണിച്ചു';
+      showBtn.disabled = true;
+    });
+
+    var markBtn = item.querySelector('.btn-mark');
+    if (markBtn) markBtn.addEventListener('click', function () {
+      markBtn.classList.toggle('active');
+      var status = item.querySelector('.q-status');
+      if (status) {
+        status.textContent = markBtn.classList.contains('active')
+          ? 'മാർക്ക് ചെയ്തു ★'
+          : '';
+      }
+    });
+
+    var lockBtn = item.querySelector('.btn-lock');
+    if (lockBtn) lockBtn.addEventListener('click', function () {
+      locked = true;
+      opts.forEach(function (o) { o.classList.add('locked'); });
+      lockBtn.disabled = true;
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ലോക്ക് ചെയ്തു 🔒';
+    });
+
+    var saveBtn = item.querySelector('.btn-save');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      var selected = item.querySelector('.options span.selected');
+      var status = item.querySelector('.q-status');
+      if (!selected) {
+        if (status) status.textContent = 'ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക';
+        return;
+      }
+      if (status) status.textContent = 'സേവ് ചെയ്തു ✓ (' + selected.dataset.opt + ')';
+    });
+  });
+
+});
+</script>
+</body></html>
