@@ -6,6 +6,19 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
+    "id": "psq-geography-mock-test-improved",
+    "key": "psq-geography-mock-test-improved",
+    "title": "കേരള PSC ഭൂമിശാസ്ത്രം — 100 ചോദ്യങ്ങളുടെ മാസ്റ്റർ മോക്ക് ടെസ്റ്റ്",
+    "titleMl": "",
+    "updated": "2026-11-24 17:21:38",
+    "desc": "100 questions",
+    "file": "psq geography_mock_test_improved.html",
+    "qs": 100,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Geography"
+  },
+  {
     "id": "pyq-english-master-mock-100",
     "key": "pyq-english-master-mock-100",
     "title": "Kerala PSC Mock Test – General English (Grammar &amp; Vocabulary) 100 Q",
