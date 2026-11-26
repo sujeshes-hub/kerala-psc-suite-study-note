@@ -1,106 +1,518 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>16.3.5 Dispute Redressal Commissions - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
-</head>
-<body>
+<!DOCTYPE html><html lang="ml"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ഉപഭോക്തൃ തർക്ക പരിഹാര കമ്മീഷനുകൾ – 16.3.5 | Kerala PSC</title><style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
 
-<header class="topbar">
-  <div class="brand">16.3.5 Dispute Redressal Commissions</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
-</div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
 
-<main>
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>16.3.5 Dispute Redressal Commissions</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
 
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
 
-<section class="view" id="view-result"><div id="resultHost"></div></section>
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
 
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
 
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
 
-</main>
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
 
-<script>
-window.PART_KEY   = 'important-acts-16.3.5-dispute-redressal-commissions';
-window.PART_TITLE = '16.3.5 Dispute Redressal Commissions';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
-</body>
-</html>
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 2px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 2px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style></head><body><div class="layout"><nav class="toc" aria-label="ഉള്ളടക്കം"><div class="toc-title">ഉള്ളടക്കം</div><div class="toc-controls"><button id="expandAll" type="button">എല്ലാം തുറക്കുക</button><button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button></div><ul class="toc-nav" id="tocNav"><li><a href="#sec0">⭐ Star Guide</a></li><li><a href="#sec1">1. വസ്തുതാ പരിശോധനാ നിലയും 2026 അപ്‌ഡേറ്റുകളും</a></li><li><a href="#sec2">2. ഒറ്റനോട്ടത്തിൽ — DCDRC · SCDRC · NCDRC</a></li><li><a href="#sec3">3. തുടക്കക്കാർക്കായി — എന്താണ് ഉപഭോക്തൃ കമ്മീഷൻ?</a></li><li><a href="#sec4">4. ജില്ലാ കമ്മീഷൻ (DCDRC) — Sec 28–41</a></li><li><a href="#sec5">5. സംസ്ഥാന കമ്മീഷൻ (SCDRC) — Sec 42–52</a></li><li><a href="#sec6">6. ദേശീയ കമ്മീഷൻ (NCDRC) — Sec 53–67</a></li><li><a href="#sec7">7. പൊതുവ്യവസ്ഥകൾ — Sec 68–73</a></li><li><a href="#sec8">8. കോർട്ട് ഫീ (2022 ഡിസംബർ 20 മുതൽ)</a></li><li><a href="#sec9">9. 2025–2026 കറന്റ് അഫയേഴ്സ്</a></li><li><a href="#sec10">10. താരതമ്യ പട്ടികകൾ</a></li><li><a href="#sec11">11. ചതിക്കുഴികൾ (Traps)</a></li><li><a href="#sec12">12. മെമ്മറി ട്രിക്കുകൾ</a></li><li><a href="#sec13">13. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks</a></li><li><a href="#sec14">14. ⚡ Last Minute Revision</a></li><li><a href="#sec15">15. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Practice MCQs)</a></li><li><a href="#sec16">16. തിരുത്തൽ രജിസ്റ്ററും ചെക്ക്‌ലിസ്റ്റും</a></li></ul></nav><main class="main-container"><header class="chapter-header"><div class="label">സാമൂഹ്യക്ഷേമ നിയമങ്ങൾ | അധ്യായം 16.3.5</div><h1>ഉപഭോക്തൃ തർക്ക പരിഹാര കമ്മീഷനുകൾ (DCDRC, SCDRC, NCDRC)</h1><div class="subtitle">Consumer Protection Act 2019, Chapter IV (Sec 28–73) | Updated Nov 2026 | Kerala PSC Rank File</div></header><section class="section" id="sec0"><h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span><ul class=""><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — അംഗസംഖ്യ 2–4–4; സാമ്പത്തിക പരിധി ₹50 ലക്ഷം / ₹2 കോടി; അപ്പീൽ 45–30–30 ദിവസം + 50% നിക്ഷേപം; Sec 71, 72, 73</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — 21 ദിവസ Deemed Admission (Sec 36(3)); റിവ്യൂ 40–50–60 (30 ദിവസം); അന്യായ കരാർ (Sec 49(2), 59(2)); കോർട്ട് ഫീ (₹5 ലക്ഷം വരെ ഇല്ല)</li><li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — 35/15, 40/20 യോഗ്യത; 65–67–70 പ്രായപരിധി; Sec 52 (90 ദിവസം); Sec 69 (2 വർഷം)</li><li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — Selukar വിധി, കേരള ഹൈക്കോടതി ഇടക്കാല ഉത്തരവ്, നിലവിലെ അധ്യക്ഷന്മാർ</li></ul></div><div class="added-fact"><span class="box-label">➕ ചുരുക്കം</span><ul class=""><li><strong>നിയമം:</strong> ഉപഭോക്തൃ സംരക്ഷണ നിയമം 2019 (Act 35 of 2019), അധ്യായം IV — Sec 28 മുതൽ 73 വരെ</li><li><strong>സിലബസ് കോഡ്:</strong> 16.3.5 | LDC 573/2025, Inspecting Assistant 883/2025, LGS, University Assistant, Degree Level</li><li><strong>സ്വഭാവം:</strong> ത്രിതല അർദ്ധ-ജുഡീഷ്യൽ (quasi-judicial) സംവിധാനം — ജില്ല → സംസ്ഥാനം → ദേശീയം → സുപ്രീംകോടതി</li></ul></div></div></section><section class="section" id="sec1"><h2 role="button" tabindex="0" aria-expanded="true">1. വസ്തുതാ പരിശോധനാ നിലയും 2026 അപ്‌ഡേറ്റുകളും <span class="toggle-icon">▼</span></h2><div class="section-body"><ul class=""><li><strong>[Confirmed]</strong> 2019 ആക്ടിലെ അധ്യായം IV വകുപ്പുകൾ, 2020 നിയമന ചട്ടങ്ങൾ (<code>G.S.R. 452(E)</code>, വിജ്ഞാപനം 2020 ജൂലൈ 15, പ്രാബല്യം 2020 ജൂലൈ 20) — ഔദ്യോഗിക രേഖകളുമായി ഒത്തുനോക്കി. ജില്ലാ അംഗം: 35 വയസ്സ്/15 വർഷം (Rule 4); സംസ്ഥാന അംഗം: 40 വയസ്സ്/20 വർഷം (Rule 3); ജില്ലയിലും സംസ്ഥാനത്തും പ്രസിഡന്റോ ഒരംഗമെങ്കിലുമോ വനിത.</li><li><strong>[Confirmed — 2026 വെബ് പരിശോധന]</strong> <strong>ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്, 2026 (Act No. 17 of 2026)</strong> — 2026 ഓഗസ്റ്റ് 13-ന് രാഷ്ട്രപതിയുടെ അനുമതി ലഭിച്ചു (ലോക്‌സഭ ഓഗസ്റ്റ് 10, രാജ്യസഭ ഓഗസ്റ്റ് 11-ന് പാസാക്കി). 2021-ലെ ആക്ട് റദ്ദാക്കി; <em>നാഷണൽ ട്രൈബ്യൂണൽസ് കമ്മീഷൻ (NTC)</em> രൂപീകരിച്ചു. ട്രൈബ്യൂണൽ ചെയർപേഴ്സൺ/പ്രസിഡന്റ്: <strong>5 വർഷം അല്ലെങ്കിൽ 70 വയസ്സ്</strong>; അംഗം: <strong>5 വർഷം അല്ലെങ്കിൽ 67 വയസ്സ്</strong> (ഏതാണോ ആദ്യം). NCDRC ഈ ആക്ടിന്റെ ഒന്നാം ഷെഡ്യൂളിൽ ഉൾപ്പെടുന്ന ട്രൈബ്യൂണലുകളിൽ ഒന്നാണ് (മാധ്യമ റിപ്പോർട്ടുകൾ പ്രകാരം ആകെ 16 ട്രൈബ്യൂണലുകൾ). 2021 ആക്ടിൽ ഇത് 4 വർഷമായിരുന്നു.</li><li><strong>[Needs verification]</strong> കൃത്യമായ വകുപ്പ് നമ്പർ (ആക്ടിലെ Sec 17(1), CPA Sec 55(1A) മാറ്റിസ്ഥാപിക്കൽ) — പരീക്ഷയ്ക്ക് <em>വകുപ്പ് നമ്പർ ഓർക്കുന്നതിനേക്കാൾ 5 വർഷം / 70 / 67 എന്ന വസ്തുത</em> പഠിക്കുക.</li><li><strong>[Source note — സ്ഥിരീകരണം ആവശ്യം]</strong> <em>Selukar</em> വിധി (2025 മെയ് 21), 2026 മാർച്ച് 12-ലെ കേരള ഹൈക്കോടതി ഇടക്കാല ഉത്തരവ് (W.P.(C) 8823/2026), നിലവിലെ അധ്യക്ഷന്മാർ (NCDRC: ജസ്റ്റിസ് എ.പി. സാഹി, KSCDRC: ജസ്റ്റിസ് ബി. സുധീന്ദ്ര കുമാർ) — നിങ്ങളുടെ മുൻ കുറിപ്പിൽ നിന്ന് നിലനിർത്തിയതാണ്; ഇവ ഇവിടെ ഞാൻ വീണ്ടും പരിശോധിച്ചിട്ടില്ല. പരീക്ഷയ്ക്ക് മുമ്പ് official site / LiveLaw നോക്കുക.</li></ul><div class="correction"><span class="box-label">🔴 ശ്രദ്ധിക്കുക</span><p>പഴയ പൊതുധാരണ "NCDRC കാലാവധി 4 വർഷം" 2026 ഓഗസ്റ്റിന് ശേഷം <strong>കാലഹരണപ്പെട്ടു</strong>. പരീക്ഷ 2026 ഓഗസ്റ്റിന് ശേഷമാണെങ്കിൽ 5 വർഷം എന്ന ഉത്തരം തിരഞ്ഞെടുക്കുക.</p></div></div></section><section class="section" id="sec2"><h2 role="button" tabindex="0" aria-expanded="true">2. ഒറ്റനോട്ടത്തിൽ — DCDRC · SCDRC · NCDRC <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x:auto;"><table><thead><tr><th>ഘടകം</th><th>ജില്ലാ (DCDRC)</th><th>സംസ്ഥാന (SCDRC)</th><th>ദേശീയ (NCDRC)</th></tr></thead><tbody><tr><td>വകുപ്പുകൾ</td><td><strong>28–41</strong></td><td><strong>42–52</strong></td><td><strong>53–67</strong></td></tr><tr><td>സ്ഥാപിക്കുന്നത്</td><td>സംസ്ഥാന സർക്കാർ (Sec 28)</td><td>സംസ്ഥാന സർക്കാർ (Sec 42)</td><td>കേന്ദ്ര സർക്കാർ (Sec 53)</td></tr><tr><td>അംഗസംഖ്യ</td><td>പ്രസിഡന്റ് + കുറഞ്ഞത് <strong>2</strong></td><td>പ്രസിഡന്റ് + കുറഞ്ഞത് <strong>4</strong></td><td>പ്രസിഡന്റ് + കുറഞ്ഞത് <strong>4</strong> (Sec 54)</td></tr><tr><td>പ്രസിഡന്റ്</td><td>ജില്ലാ ജഡ്ജി ആയതോ ആകാൻ യോഗ്യതയുള്ളതോ</td><td>ഹൈക്കോടതി ജഡ്ജി ആയതോ ആയിരുന്നതോ</td><td>സുപ്രീംകോടതി ജഡ്ജി / ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</td></tr><tr><td>അംഗത്തിന് കുറഞ്ഞ പ്രായം/പരിചയം</td><td><strong>35 / 15 വർഷം</strong></td><td><strong>40 / 20 വർഷം</strong> (അല്ലെങ്കിൽ 10 വർഷം ജില്ലാ കോടതി/ട്രൈബ്യൂണൽ പ്രിസൈഡിംഗ് ഓഫീസർ)</td><td>2026 ട്രൈബ്യൂണൽ ചട്ടക്കൂട്</td></tr><tr><td>കാലാവധി (2020 ചട്ടം)</td><td>4 വർഷം / 65 വയസ്സ്</td><td>പ്രസിഡന്റ് 4 വർഷം / 67; അംഗം 4 വർഷം / 65</td><td><strong>5 വർഷം</strong>: പ്രസിഡന്റ് 70, അംഗം 67 (2026 ആക്ട്)</td></tr><tr><td>സാമ്പത്തിക പരിധി (2021 ഡിസം 30 മുതൽ) — നൽകിയ വില</td><td><strong>₹50 ലക്ഷം വരെ</strong></td><td><strong>₹50 ലക്ഷം – ₹2 കോടി</strong></td><td><strong>₹2 കോടിക്ക് മുകളിൽ</strong></td></tr><tr><td>അന്യായ കരാർ റദ്ദാക്കൽ</td><td><strong>ഇല്ല</strong></td><td>ഉണ്ട് (Sec 47, 49(2))</td><td>ഉണ്ട് (Sec 58, 59(2))</td></tr><tr><td>റിവ്യൂ</td><td>30 ദിവസം (Sec 40)</td><td>30 ദിവസം (Sec 50)</td><td>30 ദിവസം (Sec 60)</td></tr><tr><td>അപ്പീൽ</td><td>സംസ്ഥാന കമ്മീഷൻ — 45 ദിവസം (Sec 41)</td><td>ദേശീയ കമ്മീഷൻ — 30 ദിവസം (Sec 51)</td><td>സുപ്രീംകോടതി — 30 ദിവസം (Sec 67)</td></tr></tbody></table></div><div class="important"><span class="box-label">⭐ ഓർക്കുക</span><p>2019 മൂല ആക്ടിൽ പരിധി ₹1 കോടി / ₹1–10 കോടി / ₹10 കോടിക്ക് മുകളിൽ ആയിരുന്നു; 2021 ഡിസംബർ 30-ലെ ചട്ടം ഇത് ₹50 ലക്ഷം / ₹2 കോടി ആക്കി. പരിധി നിശ്ചയിക്കുന്നത് <strong>നൽകിയ വില (consideration paid)</strong> നോക്കിയാണ്; ആവശ്യപ്പെടുന്ന നഷ്ടപരിഹാരം നോക്കിയല്ല.</p></div></div></section><section class="section" id="sec3"><h2 role="button" tabindex="0" aria-expanded="true">3. തുടക്കക്കാർക്കായി — എന്താണ് ഉപഭോക്തൃ കമ്മീഷൻ? <span class="toggle-icon">▼</span></h2><div class="section-body"><p>ഒരു കടയിൽ നിന്ന് ₹30,000-ന്റെ മൊബൈൽ വാങ്ങി; അത് ആദ്യ ആഴ്ചയിൽ തന്നെ കേടായി, കട മാറ്റിത്തരുന്നില്ല. സാധാരണ കോടതിയിൽ പോയാൽ വർഷങ്ങളും വലിയ ചെലവും വേണ്ടിവരും. ഇതിന് പകരം <strong>വേഗത്തിലും കുറഞ്ഞ ചെലവിലും</strong> പരിഹാരം നൽകാൻ ഉണ്ടാക്കിയ പ്രത്യേക കോടതികളാണ് <strong>ഉപഭോക്തൃ തർക്ക പരിഹാര കമ്മീഷനുകൾ</strong> (Consumer Disputes Redressal Commissions).</p><ul class=""><li><strong>Quasi-judicial (അർദ്ധ-ജുഡീഷ്യൽ):</strong> കോടതിയെപ്പോലെ വിധി പറയും; പക്ഷേ നടപടിക്രമം ലളിതം.</li><li><strong>ത്രിതലം:</strong> ജില്ല (ചെറിയ കേസ്) → സംസ്ഥാനം (ഇടത്തരം) → ദേശീയം (വലിയ കേസ്). പണത്തിന്റെ വലുപ്പമാണ് ആദ്യ കോടതി തീരുമാനിക്കുന്നത്.</li><li><strong>ഉദാഹരണം:</strong> ₹30,000 മൊബൈൽ → ജില്ല; ₹1 കോടിയുടെ ഫ്ലാറ്റ് → സംസ്ഥാനം; ₹5 കോടിയുടെ പ്രോജക്ട് → ദേശീയം.</li></ul><div style="overflow-x:auto;"><table><thead><tr><th>English term</th><th>മലയാള അർത്ഥം</th></tr></thead><tbody><tr><td>Consideration paid</td><td>സാധനത്തിനോ സേവനത്തിനോ നൽകിയ വില</td></tr><tr><td>Original jurisdiction</td><td>ആദ്യമായി കേസ് കേൾക്കാനുള്ള അധികാരം</td></tr><tr><td>Appellate jurisdiction</td><td>അപ്പീൽ കേൾക്കാനുള്ള അധികാരം</td></tr><tr><td>Revisional jurisdiction</td><td>താഴെയുള്ള കമ്മീഷന്റെ അധികാരപിശക് തിരുത്താനുള്ള അധികാരം</td></tr><tr><td>Review</td><td>സ്വന്തം ഉത്തരവ് പുനഃപരിശോധിക്കൽ</td></tr><tr><td>Ex parte order</td><td>എതിർകക്ഷി ഹാജരാകാതെ നൽകിയ ഉത്തരവ്</td></tr><tr><td>Deemed admitted</td><td>സ്വീകരിച്ചതായി കണക്കാക്കൽ</td></tr><tr><td>Unfair contract</td><td>ഉപഭോക്താവിന് ദോഷകരമായ അന്യായ കരാർ</td></tr><tr><td>Limitation period</td><td>പരാതി നൽകാൻ അനുവദിച്ച സമയപരിധി</td></tr><tr><td>Circuit Bench</td><td>തലസ്ഥാനത്തിന് പുറത്ത് സഞ്ചരിക്കുന്ന ബെഞ്ച്</td></tr></tbody></table></div><div class="memory"><span class="box-label">🧠 Trick</span><p>"<strong>ചെറുത് താഴെ, വലുത് മുകളിൽ</strong>" — ₹50 ലക്ഷം വരെ ജില്ല, 2 കോടി വരെ സംസ്ഥാനം, അതിന് മുകളിൽ ദേശീയം.</p></div></div></section><section class="section" id="sec4"><h2 role="button" tabindex="0" aria-expanded="true">4. ജില്ലാ കമ്മീഷൻ (DCDRC) — Sec 28–41 <span class="toggle-icon">▼</span></h2><div class="section-body"><ul class=""><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സ്ഥാപനം (Sec 28):</strong> സംസ്ഥാന സർക്കാർ ഓരോ ജില്ലയിലും (ആവശ്യമെങ്കിൽ ഒന്നിലധികം) സ്ഥാപിക്കും. പ്രസിഡന്റ് + കുറഞ്ഞത് 2 അംഗങ്ങൾ; പ്രസിഡന്റോ ഒരംഗമെങ്കിലുമോ <strong>വനിത</strong>.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>യോഗ്യത (Sec 29 + 2020 Rule 4):</strong> പ്രസിഡന്റ് — ജില്ലാ ജഡ്ജി ആയതോ ആകാൻ യോഗ്യതയുള്ളതോ. അംഗം — 35 വയസ്സ്, ബിരുദം, ഉപഭോക്തൃകാര്യം, നിയമം, പൊതുഭരണം, സാമ്പത്തികശാസ്ത്രം, വാണിജ്യം, വ്യവസായം, ധനകാര്യം, മാനേജ്മെന്റ്, എൻജിനീയറിങ്, സാങ്കേതികവിദ്യ, പൊതുജനാരോഗ്യം, വൈദ്യശാസ്ത്രം എന്നിവയിൽ 15 വർഷ പരിചയം. കാലാവധി 4 വർഷം/65 വയസ്സ്.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സാമ്പത്തിക പരിധി (Sec 34(1)):</strong> നൽകിയ വില ₹50 ലക്ഷം വരെ.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രാദേശിക പരിധി (Sec 34(2)):</strong> എതിർകക്ഷി താമസിക്കുന്ന/വ്യാപാരം ചെയ്യുന്ന സ്ഥലം, കാരണം ഉണ്ടായ സ്ഥലം, അല്ലെങ്കിൽ <strong>പരാതിക്കാരൻ താമസിക്കുന്ന/ജോലി ചെയ്യുന്ന സ്ഥലം</strong> — പരാതിക്കാരന് സ്വന്തം സ്ഥലത്തും ഫയൽ ചെയ്യാം എന്നത് 2019 ആക്ടിന്റെ പുതുമ.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>ഇ-ഫയലിംഗ് (Sec 35):</strong> ഓൺലൈനായി പരാതി നൽകാം; ഇ-ജാഗ്രതി (e-Jagriti) പോർട്ടൽ 2025 ജനുവരി 1 മുതൽ.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Sec 36(3):</strong> പരാതി സ്വീകരിക്കണോ എന്ന് <strong>21 ദിവസത്തിനുള്ളിൽ</strong> തീരുമാനിക്കണം; അല്ലെങ്കിൽ <strong>deemed admitted</strong>.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>Sec 38(2):</strong> എതിർകക്ഷിക്ക് പകർപ്പ് 21 ദിവസത്തിനുള്ളിൽ; മറുപടി 30 ദിവസം (+ പരമാവധി 15 ദിവസം = 45); ലാബ് റിപ്പോർട്ട് 45 ദിവസം. <strong>Sec 38(7):</strong> തീർപ്പാക്കൽ ലക്ഷ്യം 3 മാസം (ലാബ് പരിശോധനയുണ്ടെങ്കിൽ 5 മാസം).</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Sec 40 റിവ്യൂ:</strong> രേഖയിലെ വ്യക്തമായ പിഴവ് (error apparent on the face of the record) — 30 ദിവസം. <strong>Sec 41 അപ്പീൽ:</strong> 45 ദിവസം, സംസ്ഥാന കമ്മീഷനിൽ; പണം നൽകാനുള്ള ഉത്തരവെങ്കിൽ തുകയുടെ 50% നിക്ഷേപിക്കണം.</li></ul><div class="correction"><span class="box-label">🔴 ശ്രദ്ധിക്കുക</span><p>ജില്ലാ കമ്മീഷന് <strong>അന്യായ കരാർ റദ്ദാക്കാൻ അധികാരമില്ല</strong>; അത് സംസ്ഥാന/ദേശീയ കമ്മീഷനുകൾക്ക് മാത്രം.</p></div></div></section><section class="section" id="sec5"><h2 role="button" tabindex="0" aria-expanded="true">5. സംസ്ഥാന കമ്മീഷൻ (SCDRC) — Sec 42–52 <span class="toggle-icon">▼</span></h2><div class="section-body"><ul class=""><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഘടന:</strong> പ്രസിഡന്റ് + കുറഞ്ഞത് 4 അംഗങ്ങൾ; തലസ്ഥാനത്തിന് പുറത്ത് സർക്യൂട്ട് ബെഞ്ചുകൾ. കേരള സംസ്ഥാന കമ്മീഷൻ ആസ്ഥാനം: വഴുതക്കാട്, തിരുവനന്തപുരം.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രസിഡന്റ്:</strong> ഹൈക്കോടതി ജഡ്ജി ആയതോ ആയിരുന്നതോ; ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസുമായി ആലോചിച്ച് നിയമനം. 4 വർഷം/67 വയസ്സ്.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>അംഗം (Rule 3):</strong> 40 വയസ്സ്; 10 വർഷം ജില്ലാ കോടതി/തത്തുല്യ ട്രൈബ്യൂണൽ പ്രിസൈഡിംഗ് ഓഫീസർ, <em>അല്ലെങ്കിൽ</em> ബിരുദം + 20 വർഷം പരിചയം. 4 വർഷം/65 വയസ്സ്. ജുഡീഷ്യൽ അംഗങ്ങളുടെ 50% പരിധി — <strong>[Needs verification]</strong>.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഒറിജിനൽ അധികാരം (Sec 47):</strong> ₹50 ലക്ഷത്തിന് മുകളിൽ ₹2 കോടി വരെ; ₹10 കോടി വരെയുള്ള <strong>അന്യായ കരാർ</strong> അസാധുവാക്കൽ (Sec 49(2)).</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>അപ്പീൽ + റിവിഷൻ:</strong> ജില്ലാ ഉത്തരവുകൾക്കെതിരായ അപ്പീൽ; ജില്ലാ കമ്മീഷന്റെ അധികാരപരിധി പിഴവുകൾക്ക് റിവിഷൻ.</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>Sec 48:</strong> കേസ് ഒരു ജില്ലയിൽ നിന്ന് മറ്റൊന്നിലേക്ക് മാറ്റാം. <strong>Sec 50:</strong> റിവ്യൂ 30 ദിവസം.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Sec 51:</strong> ദേശീയ കമ്മീഷനിൽ അപ്പീൽ 30 ദിവസം, 50% നിക്ഷേപം. ജില്ലാ ഉത്തരവിനെതിരായ അപ്പീലിൽ സംസ്ഥാന കമ്മീഷൻ എടുത്ത തീരുമാനത്തിനെതിരെ ഉള്ള രണ്ടാം അപ്പീലിന് substantial question of law വേണം. <strong>Sec 52:</strong> അപ്പീൽ 90 ദിവസത്തിനുള്ളിൽ തീർപ്പാക്കാൻ ശ്രമിക്കണം.</li></ul></div></section><section class="section" id="sec6"><h2 role="button" tabindex="0" aria-expanded="true">6. ദേശീയ കമ്മീഷൻ (NCDRC) — Sec 53–67 <span class="toggle-icon">▼</span></h2><div class="section-body"><ul class=""><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഘടന:</strong> കേന്ദ്ര സർക്കാർ സ്ഥാപിക്കുന്നു (Sec 53); പ്രസിഡന്റ് + കുറഞ്ഞത് 4 അംഗങ്ങൾ (Sec 54). ആസ്ഥാനം: ഉപഭോക്തൃ ന്യായ് ഭവൻ, ന്യൂഡൽഹി.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>2026 മാറ്റം:</strong> നിയമനം നാഷണൽ ട്രൈബ്യൂണൽസ് കമ്മീഷൻ ഉൾപ്പെട്ട search-cum-selection സംവിധാനം വഴി; കാലാവധി <strong>5 വർഷം (പ്രസിഡന്റ് ≤70, അംഗം ≤67)</strong>.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>ഒറിജിനൽ അധികാരം (Sec 58):</strong> ₹2 കോടിക്ക് മുകളിൽ; ₹10 കോടിക്ക് മുകളിലെ അന്യായ കരാർ അസാധുവാക്കൽ (Sec 59(2)).</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>അപ്പീൽ:</strong> സംസ്ഥാന കമ്മീഷൻ ഉത്തരവുകൾക്കെതിരെ; CCPA ഉത്തരവുകൾക്കെതിരെ (Sec 24, 30 ദിവസം). ബെഞ്ചിൽ ഭിന്നാഭിപ്രായം വന്നാൽ പ്രസിഡന്റിന് കൈമാറി 2 മാസത്തിനുള്ളിൽ (Sec 58(3)).</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>Sec 60:</strong> റിവ്യൂ (30 ദിവസം). <strong>Sec 61:</strong> ex parte ഉത്തരവ് റദ്ദാക്കാൻ. <strong>Sec 62:</strong> കേസ് മാറ്റൽ. <strong>Sec 66:</strong> വിദഗ്ധ സഹായം/assessor.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Sec 67:</strong> NCDRC-യുടെ ഒറിജിനൽ ഉത്തരവിനെതിരെ സുപ്രീംകോടതിയിൽ 30 ദിവസം, 50% നിക്ഷേപം.</li></ul></div></section><section class="section" id="sec7"><h2 role="button" tabindex="0" aria-expanded="true">7. പൊതുവ്യവസ്ഥകൾ — Sec 68–73 <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x:auto;"><table><thead><tr><th>വകുപ്പ്</th><th>വ്യവസ്ഥ</th><th>പ്രധാന വസ്തുത</th></tr></thead><tbody><tr><td><strong>68</strong></td><td>ഉത്തരവുകളുടെ അന്തിമത്വം</td><td>അപ്പീൽ ഇല്ലെങ്കിൽ ഉത്തരവ് അന്തിമം</td></tr><tr><td><strong>69</strong></td><td>Limitation</td><td>കാരണം ഉണ്ടായി <strong>2 വർഷത്തിനുള്ളിൽ</strong> പരാതി; മതിയായ കാരണമുണ്ടെങ്കിൽ കാലതാമസം ക്ഷമിക്കാം</td></tr><tr><td><strong>70</strong></td><td>ഭരണപരമായ നിയന്ത്രണം</td><td>ദേശീയം → സംസ്ഥാനം; സംസ്ഥാനം → ജില്ല</td></tr><tr><td><strong>71</strong></td><td>ഉത്തരവ് നടപ്പാക്കൽ</td><td>സിവിൽ കോടതി ഡിക്രി പോലെ — CPC Order XXI</td></tr><tr><td><strong>72</strong></td><td>ഉത്തരവ് ലംഘനത്തിന് ശിക്ഷ</td><td>1 മാസം–3 വർഷം തടവ് അല്ലെങ്കിൽ ₹25,000–₹1 ലക്ഷം പിഴ, അല്ലെങ്കിൽ രണ്ടും; JMFC അധികാരം; summary trial</td></tr><tr><td><strong>73</strong></td><td>Sec 72 ശിക്ഷയ്ക്കെതിരെ അപ്പീൽ</td><td>എല്ലാ തലത്തിലും <strong>30 ദിവസം</strong></td></tr></tbody></table></div><div class="memory"><span class="box-label">🧠 Trick</span><p>71 = <strong>ഡിക്രി</strong>, 72 = <strong>ശിക്ഷ</strong>, 73 = <strong>ശിക്ഷയ്ക്കെതിരെ അപ്പീൽ</strong> — ഏഴ് ഒന്ന്–രണ്ട്–മൂന്ന്: നടപ്പാക്കൽ, ശിക്ഷ, അപ്പീൽ.</p></div></div></section><section class="section" id="sec8"><h2 role="button" tabindex="0" aria-expanded="true">8. കോർട്ട് ഫീ (2022 ഡിസംബർ 20 മുതൽ) <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x:auto;"><table><thead><tr><th>കമ്മീഷൻ</th><th>നൽകിയ വില</th><th>ഫീസ്</th></tr></thead><tbody><tr><td>ജില്ല</td><td>₹5 ലക്ഷം വരെ</td><td><strong>ഫീസ് ഇല്ല</strong></td></tr><tr><td>ജില്ല</td><td>₹5–10 ലക്ഷം</td><td>₹200</td></tr><tr><td>ജില്ല</td><td>₹10–20 ലക്ഷം</td><td>₹400</td></tr><tr><td>ജില്ല</td><td>₹20–50 ലക്ഷം</td><td>₹1,000</td></tr><tr><td>സംസ്ഥാനം</td><td>₹50 ലക്ഷം–1 കോടി</td><td>₹2,000</td></tr><tr><td>സംസ്ഥാനം</td><td>₹1–2 കോടി</td><td>₹2,500</td></tr><tr><td>ദേശീയം</td><td>₹2–4 കോടി</td><td>₹3,000</td></tr><tr><td>ദേശീയം</td><td>₹4–6 / ₹6–8 / ₹8–10 കോടി</td><td>₹4,000 / ₹5,000 / ₹6,000</td></tr><tr><td>ദേശീയം</td><td>₹10 കോടിക്ക് മുകളിൽ</td><td>₹7,500</td></tr></tbody></table></div><p><em>ഏറ്റവും സാധ്യതയുള്ള ചോദ്യം: "₹5 ലക്ഷം വരെ ഫീസ് ഇല്ല".</em></p></div></section><section class="section" id="sec9"><h2 role="button" tabindex="0" aria-expanded="true">9. 2025–2026 കറന്റ് അഫയേഴ്സ് <span class="toggle-icon">▼</span></h2><div class="section-body"><ul class=""><li><strong>Ganeshkumar Rajeshwarrao Selukar v. Mahendra Bhaskar Limaye</strong> (2025 മെയ് 21, (2025) 8 SCC 634): 5 വർഷ കാലാവധി, selection committee-യിൽ ജുഡീഷ്യൽ ഭൂരിപക്ഷം, ജില്ലാ പ്രസിഡന്റായി സേവനത്തിലുള്ള/വിരമിച്ച ജില്ലാ ജഡ്ജിമാർ, പുതിയ ചട്ടങ്ങൾ വിജ്ഞാപനം ചെയ്യൽ എന്നിവ നിർദ്ദേശിച്ചു. <em>[Source note — മുൻ കുറിപ്പിൽ നിന്ന്]</em></li><li><strong>കേരള ഹൈക്കോടതി, 2026 മാർച്ച് 12</strong> (W.P.(C) 8823/2026): പുതിയ ചട്ടപ്രകാരം നിയമനം നടക്കുംവരെ മലപ്പുറം DCDRC അംഗത്തിന് തുടരാൻ ഇടക്കാല അനുമതി. <em>[Source note]</em></li><li><strong>ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്, 2026</strong> (2026 ഓഗസ്റ്റ് 13): NTC, 5 വർഷ കാലാവധി. <em>[Confirmed]</em></li><li><strong>അധ്യക്ഷന്മാർ</strong> (മുൻ കുറിപ്പ് പ്രകാരം): NCDRC — ജസ്റ്റിസ് എ.പി. സാഹി (2023 ഓഗസ്റ്റ് 2 മുതൽ); KSCDRC — ജസ്റ്റിസ് ബി. സുധീന്ദ്ര കുമാർ. <em>[Needs verification]</em></li></ul></div></section><section class="section" id="sec10"><h2 role="button" tabindex="0" aria-expanded="true">10. താരതമ്യ പട്ടികകൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><h3>പട്ടിക 1: സമയപരിധി ക്ലോക്ക്</h3><div style="overflow-x:auto;"><table><thead><tr><th>നടപടി</th><th>വകുപ്പ്</th><th>സമയം</th></tr></thead><tbody><tr><td>പരാതി സ്വീകരിക്കൽ (അല്ലെങ്കിൽ deemed)</td><td>36(3)</td><td>21 ദിവസം</td></tr><tr><td>എതിർകക്ഷിക്ക് നോട്ടീസ്</td><td>38(2)</td><td>21 ദിവസം</td></tr><tr><td>മറുപടി</td><td>38(2)</td><td>30 + 15 ദിവസം</td></tr><tr><td>ലാബ് റിപ്പോർട്ട്</td><td>38(2)</td><td>45 ദിവസം</td></tr><tr><td>തീർപ്പാക്കൽ ലക്ഷ്യം</td><td>38(7)</td><td>3 / 5 മാസം</td></tr><tr><td>റിവ്യൂ</td><td>40, 50, 60</td><td>30 ദിവസം</td></tr><tr><td>അപ്പീൽ ജില്ല→സംസ്ഥാനം</td><td>41</td><td>45 ദിവസം</td></tr><tr><td>അപ്പീൽ സംസ്ഥാനം→ദേശീയം</td><td>51</td><td>30 ദിവസം</td></tr><tr><td>അപ്പീൽ ദേശീയം→സുപ്രീംകോടതി</td><td>67</td><td>30 ദിവസം</td></tr><tr><td>Sec 72 ശിക്ഷയ്ക്കെതിരെ</td><td>73</td><td>30 ദിവസം</td></tr><tr><td>അപ്പീൽ തീർപ്പാക്കൽ ലക്ഷ്യം</td><td>52</td><td>90 ദിവസം</td></tr><tr><td>ഭിന്നാഭിപ്രായം</td><td>58(3)</td><td>2 മാസം</td></tr><tr><td>Limitation</td><td>69</td><td>2 വർഷം</td></tr></tbody></table></div><h3>പട്ടിക 2: ട്രൈബ്യൂണൽ കാലാവധി — 2021 vs 2026</h3><div style="overflow-x:auto;"><table><thead><tr><th></th><th>2021 ആക്ട്</th><th>2026 ആക്ട്</th></tr></thead><tbody><tr><td>കാലാവധി</td><td>4 വർഷം</td><td><strong>5 വർഷം</strong></td></tr><tr><td>പ്രസിഡന്റ് പ്രായപരിധി</td><td>70</td><td>70</td></tr><tr><td>അംഗം പ്രായപരിധി</td><td>67</td><td>67</td></tr><tr><td>മിനിമം പ്രായം 50</td><td>ഉണ്ടായിരുന്നു</td><td><strong>ഒഴിവാക്കി</strong></td></tr><tr><td>നിയമന സംവിധാനം</td><td>Search-cum-Selection Committee</td><td><strong>National Tribunals Commission</strong> നേതൃത്വം</td></tr></tbody></table></div></div></section><section class="section" id="sec11"><h2 role="button" tabindex="0" aria-expanded="true">11. ചതിക്കുഴികൾ (Traps) <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="trap"><span class="box-label">⚠️ Trap 1 — 45 vs 30 ദിവസം</span><p><strong>Question:</strong> ജില്ലാ ഉത്തരവിനെതിരെ അപ്പീൽ?</p><p><strong>Confusing Options:</strong> 30 / 45 / 60 / 90</p><p><strong>Fact:</strong> സാധാരണ ഉത്തരവ് (Sec 41) = 45 ദിവസം; Sec 72 ശിക്ഷ ഉത്തരവ് (Sec 73) = 30 ദിവസം.</p></div><div class="trap"><span class="box-label">⚠️ Trap 2 — അംഗസംഖ്യ</span><p>ജില്ല 2, സംസ്ഥാനം 4, ദേശീയം 4 (1986 നിയമത്തിൽ സംസ്ഥാനത്ത് 2 മതിയായിരുന്നു).</p></div><div class="trap"><span class="box-label">⚠️ Trap 3 — 21 ദിവസം കഴിഞ്ഞാൽ</span><p>പരാതി തള്ളില്ല; <strong>deemed admitted</strong>.</p></div><div class="trap"><span class="box-label">⚠️ Trap 4 — Sec 71 vs 72</span><p>71: സിവിൽ കോടതി ഡിക്രി (Order XXI CPC). 72: JMFC അധികാരത്തോടെ ക്രിമിനൽ ശിക്ഷ.</p></div><div class="trap"><span class="box-label">⚠️ Trap 5 — പ്രായം</span><p>അംഗം: ജില്ല 35, സംസ്ഥാനം 40. പ്രസിഡന്റ് ഉയർന്ന പ്രായം: 65 → 67 → 70.</p></div><div class="trap"><span class="box-label">⚠️ Trap 6 — NCDRC 4 വർഷം?</span><p>2026 ഓഗസ്റ്റ് മുതൽ 5 വർഷം.</p></div><div class="trap"><span class="box-label">⚠️ Trap 7 — പരിധി നിശ്ചയിക്കുന്നത്</span><p>നൽകിയ വില (consideration paid) — ക്ലെയിം തുകയല്ല.</p></div></div></section><section class="section" id="sec12"><h2 role="button" tabindex="0" aria-expanded="true">12. മെമ്മറി ട്രിക്കുകൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="memory"><span class="box-label">🧠 അംഗസംഖ്യ — 2 · 4 · 4</span><p>"ജില്ലയ്ക്ക് <strong>രണ്ട്</strong>, ബാക്കി രണ്ടിനും <strong>നാല്</strong>."</p></div><div class="memory"><span class="box-label">🧠 റിവ്യൂ — 40 · 50 · 60</span><p>പത്തുകളുടെ ഗുണിതം; മൂന്നിനും 30 ദിവസം.</p></div><div class="memory"><span class="box-label">🧠 അപ്പീൽ — 45 · 30 · 30</span><p>ജില്ലയ്ക്ക് മാത്രം 45; മുകളിലേക്ക് പോകുംതോറും 30.</p></div><div class="memory"><span class="box-label">🧠 പ്രായഗോവണി — 65 · 67 · 70</span><p>ജില്ല → സംസ്ഥാനം → ദേശീയം; കയറുന്തോറും കൂടും.</p></div><div class="memory"><span class="box-label">🧠 പരിധി — 50 ലക്ഷം · 2 കോടി</span><p>"അമ്പത് ലക്ഷത്തിൽ ജില്ല തീരും; രണ്ട് കോടിയിൽ സംസ്ഥാനം തീരും."</p></div></div></section><section class="section" id="sec13"><h2 role="button" tabindex="0" aria-expanded="true">13. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">⚠️ ആദ്യം മനസ്സിലാക്കുക</span><p>ഈ വിദ്യകൾ ശരിയാകാനുള്ള <strong>സാധ്യത കൂട്ടും</strong>; ഉറപ്പുതരില്ല; പഠനത്തിന് പകരമല്ല. "ഏറ്റവും നീളമുള്ള ഉത്തരം ശരി", "എപ്പോഴും C" തുടങ്ങിയ വിശ്വാസങ്ങൾ <strong>തെറ്റാണ്</strong> — ഒരിക്കലും ഉപയോഗിക്കരുത്.</p></div><h3>1. Option Elimination + പ്രായഗോവണി</h3><div class="question-item" style="background:#fafafa"><div class="q-text">SCDRC പ്രസിഡന്റിന്റെ ഉയർന്ന പ്രായപരിധി? (A) 60 (B) 65 (C) 67 (D) 70</div><p><strong>ഘട്ടം 1:</strong> ജില്ല = 65 എന്ന് അറിയാം. സംസ്ഥാന കമ്മീഷൻ ജില്ലയ്ക്ക് മുകളിലാണ്; അതിനാൽ 60, 65 ഒഴിവാക്കാം (സാധ്യമെങ്കിൽ).<br><strong>ഘട്ടം 2:</strong> 70 ദേശീയത്തിന്റേതെന്ന് അറിയാം → ഒഴിവാക്കാം.<br><strong>ഉത്തരം: (C) 67.</strong> <em>മുന്നറിയിപ്പ്:</em> ഗോവണി ഓർമ്മയുണ്ടെങ്കിൽ മാത്രം ഈ യുക്തി ശരിയാകും.</p></div><h3>2. Negative Question — "അല്ലാത്തത്"</h3><div class="question-item" style="background:#fafafa"><div class="q-text">ജില്ലാ കമ്മീഷന് <strong>ഇല്ലാത്ത</strong> അധികാരം? (A) റിവ്യൂ (B) പരാതി സ്വീകരിക്കൽ (C) അന്യായ കരാർ റദ്ദാക്കൽ (D) ഉത്തരവ് നടപ്പാക്കൽ</div><p>ചോദ്യം "ഇല്ലാത്തത്" ആണെന്ന് ആദ്യം അടിവരയിടുക. A (Sec 40), B (Sec 36), D (Sec 71) ജില്ലയ്ക്ക് ഉണ്ട് എന്ന് അറിയാം → <strong>(C)</strong>. ഇവിടെ 3 ഓപ്ഷൻ അറിഞ്ഞാൽ ഉത്തരം ഉറപ്പ്.</p></div><h3>3. Statement-Based</h3><p>ഓരോ പ്രസ്താവനയും വെവ്വേറെ ശരി/തെറ്റ് ഉറപ്പിച്ച് ഓപ്ഷനുകൾ വെട്ടുക. ഒന്ന് തെറ്റെന്ന് ഉറപ്പായാൽ ആ പ്രസ്താവന ഉൾപ്പെട്ട എല്ലാ കോമ്പിനേഷനുകളും പുറത്ത് (ചോദ്യം 3 കാണുക).</p><h3>4. Match the Following</h3><p>ഉറപ്പുള്ള ജോടികൾ ആദ്യം (Sec 72 = ശിക്ഷ; Sec 71 = ഡിക്രി), ബാക്കി ഓപ്ഷനുകൾ ഇതുമായി ഒത്തുപോകാത്തവ വെട്ടുക (ചോദ്യം 5).</p><h3>5. Keyword & Extreme Statements</h3><p>"only", "never", "all" കണ്ടാൽ <em>ഉടൻ തെറ്റ്</em> എന്ന് കരുതരുത്; നിയമം അത് അനുവദിക്കുന്നുണ്ടോ എന്ന് നോക്കുക. ഉദാ: "അന്യായ കരാർ റദ്ദാക്കാൻ <em>സംസ്ഥാന, ദേശീയ കമ്മീഷനുകൾക്ക് മാത്രം</em> അധികാരം" — ശരിയാണ്.</p><h3>6. Chronology / Number Logic</h3><p>2019 നിയമം → 2020 ചട്ടം → 2021 പരിധി മാറ്റം → 2022 ഫീ → 2025 ഇ-ജാഗ്രതി, Selukar → 2026 ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്. ക്രമം അറിയുന്നത് "ഏത് ആദ്യം" ചോദ്യങ്ങളിൽ സഹായിക്കും.</p><h3>7. Negative Marking</h3><p>രണ്ട് ഓപ്ഷൻ ഉറപ്പായി ഒഴിവാക്കാനായാൽ ഊഹം ന്യായമാണ്; നാലും ഒരുപോലെ അജ്ഞാതമെങ്കിൽ ഒഴിവാക്കുന്നതാണ് സുരക്ഷിതം (നെഗറ്റീവ് മാർക്ക് ഉള്ള പരീക്ഷകളിൽ).</p></div></section><section class="section" id="sec14"><h2 role="button" tabindex="0" aria-expanded="true">14. ⚡ Last Minute Revision <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="last-minute"><span class="box-label">⚡ Last Minute</span><p><strong>വകുപ്പ്:</strong> 28–41 | 42–52 | 53–67 | 68–73. <strong>അംഗസംഖ്യ:</strong> 2–4–4. <strong>പരിധി:</strong> ₹50 ലക്ഷം / ₹2 കോടി. <strong>Deemed:</strong> 21 ദിവസം. <strong>റിവ്യൂ:</strong> 30 ദിവസം (40/50/60). <strong>അപ്പീൽ:</strong> 45–30–30 + 50%. <strong>Sec 71:</strong> ഡിക്രി; <strong>72:</strong> 1 മാസം–3 വർഷം/₹25,000–1 ലക്ഷം; <strong>73:</strong> 30 ദിവസം. <strong>ഫീ:</strong> ₹5 ലക്ഷം വരെ ഇല്ല. <strong>NCDRC:</strong> 5 വർഷം, 70/67 (2026).</p></div></div></section><section class="section" id="sec15"><h2 role="button" tabindex="0" aria-expanded="true">15. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Practice MCQs) <span class="toggle-icon">▼</span></h2><div class="section-body"><p><em>എല്ലാം പി.എസ്.സി മാതൃകയിലുള്ള <strong>പ്രാക്ടീസ് ചോദ്യങ്ങൾ</strong> (Practice, യഥാർത്ഥ PYQ അല്ല).</em></p><div class="question-item" data-qindex="0" data-correct="C"><div class="q-text">1. ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്, 2026 പ്രകാരം NCDRC പ്രസിഡന്റിന്റെയും അംഗങ്ങളുടെയും കാലാവധിയും ഉയർന്ന പ്രായപരിധിയും യഥാക്രമം?</div><div class="options"><span data-opt="A">A. 4 വർഷം/70 — 4 വർഷം/67</span><span data-opt="B">B. 5 വർഷം/67 — 5 വർഷം/65</span><span data-opt="C">C. 5 വർഷം/70 — 5 വർഷം/67</span><span data-opt="D">D. 3 വർഷം/70 — 3 വർഷം/65</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) 5 വർഷം/70 — 5 വർഷം/67</div><div class="explanation">2026 ആക്ട് പ്രകാരം ട്രൈബ്യൂണൽ ചെയർപേഴ്സൺ/പ്രസിഡന്റിന് 5 വർഷം/70, അംഗത്തിന് 5 വർഷം/67. (A) 2021 ആക്ടിലെ 4 വർഷം. (B) 67/65 എന്നത് സംസ്ഥാന കമ്മീഷനിലെ പ്രായപരിധിയുമായി കലർന്നതാണ്. (D) ഈ ആക്ടിൽ 3 വർഷം എന്ന വ്യവസ്ഥയില്ല.</div></div></div><div class="question-item" data-qindex="1" data-correct="A"><div class="q-text">2. 2020 നിയമന ചട്ടങ്ങൾ പ്രകാരം ജില്ലാ, സംസ്ഥാന കമ്മീഷൻ അംഗങ്ങൾക്ക് വേണ്ട കുറഞ്ഞ പ്രായവും പരിചയവും?</div><div class="options"><span data-opt="A">A. ജില്ല 35/15 — സംസ്ഥാനം 40/20</span><span data-opt="B">B. ജില്ല 30/10 — സംസ്ഥാനം 35/15</span><span data-opt="C">C. ജില്ല 35/10 — സംസ്ഥാനം 45/20</span><span data-opt="D">D. ജില്ല 40/15 — സംസ്ഥാനം 45/25</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) ജില്ല 35/15 — സംസ്ഥാനം 40/20</div><div class="explanation">Rule 4 (ജില്ല): 35 വയസ്സ്, 15 വർഷം; Rule 3 (സംസ്ഥാനം): 40 വയസ്സ്, 20 വർഷം. മറ്റുള്ളവ ചട്ടത്തിലെ സംഖ്യകളുമായി ഒത്തുപോകുന്നില്ല.</div></div></div><div class="question-item" data-qindex="2" data-correct="D"><div class="q-text">3. ശരിയായ പ്രസ്താവനകൾ? 1) Sec 36(3): 21 ദിവസത്തിനുള്ളിൽ തീരുമാനമില്ലെങ്കിൽ പരാതി deemed admitted. 2) Sec 72 ശിക്ഷയ്ക്കെതിരെ Sec 73 പ്രകാരം 30 ദിവസത്തിൽ അപ്പീൽ. 3) Sec 41 അപ്പീൽ സമയം 30 ദിവസം.</div><div class="options"><span data-opt="A">A. 1 മാത്രം</span><span data-opt="B">B. 2, 3 മാത്രം</span><span data-opt="C">C. 1, 2, 3 എല്ലാം</span><span data-opt="D">D. 1, 2 മാത്രം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) 1, 2 മാത്രം</div><div class="explanation">1, 2 ശരി. 3 തെറ്റ് — Sec 41 അപ്പീൽ 45 ദിവസമാണ് (30 ദിവസം 1986 നിയമത്തിൽ ആയിരുന്നു).</div></div></div><div class="question-item" data-qindex="3" data-correct="B"><div class="q-text">4. Selukar വിധിയും തുടർനടപടികളും സംബന്ധിച്ച <strong>തെറ്റായ</strong> പ്രസ്താവന? <em>(മുൻ കുറിപ്പിലെ വിവരങ്ങളെ ആസ്പദമാക്കി — പരിശോധന ആവശ്യം)</em></div><div class="options"><span data-opt="A">A. സുപ്രീംകോടതി സംസ്ഥാന/ജില്ലാ കമ്മീഷനുകൾക്ക് 5 വർഷ കാലാവധി നിർദ്ദേശിച്ചു</span><span data-opt="B">B. 2026 മാർച്ച് 12-ന് കേരള ഹൈക്കോടതി നിലവിലെ അംഗങ്ങളെ ഉടൻ പിരിച്ചുവിടണമെന്ന് ഉത്തരവിട്ടു</span><span data-opt="C">C. ജില്ലാ പ്രസിഡന്റായി സേവനത്തിലുള്ള/വിരമിച്ച ജില്ലാ ജഡ്ജിമാരെ നിയമിക്കണം</span><span data-opt="D">D. ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട് 2026 NTC സ്ഥാപിച്ചു</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) 2026 മാർച്ച് 12-ന് കേരള ഹൈക്കോടതി നിലവിലെ അംഗങ്ങളെ ഉടൻ പിരിച്ചുവിടണമെന്ന് ഉത്തരവിട്ടു</div><div class="explanation">ഇടക്കാല ഉത്തരവ് അംഗത്തിന് <em>തുടരാൻ</em> അനുവദിക്കുന്നതായിരുന്നു; പിരിച്ചുവിടൽ അല്ല.</div></div></div><div class="question-item" data-qindex="4" data-correct="A"><div class="q-text">5. ചേരുംപടി: a) Sec 49(2) b) Sec 61 c) Sec 71 d) Sec 72 — 1) ex parte ഉത്തരവ് റദ്ദാക്കൽ (NCDRC) 2) ഡിക്രി പോലെ നടപ്പാക്കൽ 3) അന്യായ കരാർ അസാധുവാക്കൽ (സംസ്ഥാനം) 4) ശിക്ഷ</div><div class="options"><span data-opt="A">A. a-3, b-1, c-2, d-4</span><span data-opt="B">B. a-1, b-3, c-2, d-4</span><span data-opt="C">C. a-3, b-2, c-1, d-4</span><span data-opt="D">D. a-4, b-1, c-2, d-3</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) a-3, b-1, c-2, d-4</div><div class="explanation">49(2) → അന്യായ കരാർ; 61 → ex parte റദ്ദാക്കൽ; 71 → ഡിക്രി; 72 → ശിക്ഷ.</div></div></div><div class="question-item" data-qindex="5" data-correct="B"><div class="q-text">6. പ്രസിഡന്റിന് പുറമെ കുറഞ്ഞ അംഗസംഖ്യ ജില്ല–സംസ്ഥാനം–ദേശീയം ക്രമത്തിൽ?</div><div class="options"><span data-opt="A">A. 2–2–4</span><span data-opt="B">B. 2–4–4</span><span data-opt="C">C. 4–4–6</span><span data-opt="D">D. 2–4–6</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) 2–4–4</div><div class="explanation">Sec 28: 2; Sec 42: 4; Sec 54: 4.</div></div></div><div class="question-item" data-qindex="6" data-correct="D"><div class="q-text">7. Sec 72 പ്രകാരം ഉത്തരവ് ലംഘിച്ചാലുള്ള പിഴ?</div><div class="options"><span data-opt="A">A. ₹10,000–₹50,000</span><span data-opt="B">B. ₹25,000 വരെ മാത്രം</span><span data-opt="C">C. ₹50,000–₹2 ലക്ഷം</span><span data-opt="D">D. ₹25,000–₹1 ലക്ഷം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) ₹25,000–₹1 ലക്ഷം</div><div class="explanation">തടവ് 1 മാസം–3 വർഷം; പിഴ ₹25,000–₹1 ലക്ഷം; അല്ലെങ്കിൽ രണ്ടും.</div></div></div><div class="question-item" data-qindex="7" data-correct="C"><div class="q-text">8. അന്യായ കരാർ റദ്ദാക്കാൻ <strong>അധികാരമില്ലാത്ത</strong> കമ്മീഷൻ?</div><div class="options"><span data-opt="A">A. ദേശീയ</span><span data-opt="B">B. സംസ്ഥാന</span><span data-opt="C">C. ജില്ലാ</span><span data-opt="D">D. ദേശീയവും സംസ്ഥാനവും</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) ജില്ലാ</div><div class="explanation">Sec 49(2), 59(2) പ്രകാരം സംസ്ഥാന/ദേശീയ കമ്മീഷനുകൾക്ക് മാത്രം. ജില്ലയ്ക്ക് ഇല്ല.</div></div></div><div class="question-item" data-qindex="8" data-correct="D"><div class="q-text">9. ജില്ലാ കമ്മീഷൻ ഫയലിംഗ് ഫീസ് ഇല്ലാത്തത് ഏത് വില വരെ?</div><div class="options"><span data-opt="A">A. ₹1 ലക്ഷം</span><span data-opt="B">B. ₹2 ലക്ഷം</span><span data-opt="C">C. ₹10 ലക്ഷം</span><span data-opt="D">D. ₹5 ലക്ഷം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) ₹5 ലക്ഷം</div><div class="explanation">2022 ഡിസംബർ 20 മുതൽ ₹5 ലക്ഷം വരെ ഫീസ് ഇല്ല.</div></div></div><div class="question-item" data-qindex="9" data-correct="A"><div class="q-text">10. Sec 40, 50, 60 നൽകുന്ന അധികാരം?</div><div class="options"><span data-opt="A">A. റിവ്യൂ — 30 ദിവസം</span><span data-opt="B">B. അപ്പീൽ — 45 ദിവസം</span><span data-opt="C">C. കേസ് മാറ്റൽ</span><span data-opt="D">D. ശിക്ഷ</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) റിവ്യൂ — 30 ദിവസം</div><div class="explanation">ജില്ല/സംസ്ഥാന/ദേശീയ കമ്മീഷനുകളുടെ റിവ്യൂ അധികാരം, 30 ദിവസം.</div></div></div><div class="question-item" data-qindex="10" data-correct="B"><div class="q-text">11. പരാതി ഫയൽ ചെയ്യാൻ കാരണം ഉണ്ടായ ശേഷം ലഭ്യമായ സമയം (Sec 69)?</div><div class="options"><span data-opt="A">A. 1 വർഷം</span><span data-opt="B">B. 2 വർഷം</span><span data-opt="C">C. 3 വർഷം</span><span data-opt="D">D. 6 മാസം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) 2 വർഷം</div><div class="explanation">2 വർഷം; മതിയായ കാരണമുണ്ടെങ്കിൽ ക്ഷമിക്കാം.</div></div></div></div></section><section class="section" id="sec16"><h2 role="button" tabindex="0" aria-expanded="true">16. തിരുത്തൽ രജിസ്റ്ററും ചെക്ക്‌ലിസ്റ്റും <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x:auto;"><table><thead><tr><th>ഭാഗം</th><th>പ്രശ്നം</th><th>നില</th></tr></thead><tbody><tr><td>NCDRC കാലാവധി</td><td>4 → 5 വർഷം</td><td>Confirmed (Act 17 of 2026, 13 Aug 2026; PRS, Bar & Bench, Drishti)</td></tr><tr><td>2020 യോഗ്യത 35/15, 40/20</td><td>പരിശോധിച്ചു</td><td>Confirmed (Rules 3, 4; Supreme Court judgment text)</td></tr><tr><td>ആക്ടിലെ വകുപ്പ് നമ്പർ 17(1)/55(1A)</td><td>സ്ഥിരീകരിച്ചിട്ടില്ല</td><td>Needs verification</td></tr><tr><td>ജുഡീഷ്യൽ അംഗ പരിധി 50%</td><td>സ്ഥിരീകരിച്ചിട്ടില്ല</td><td>Needs verification</td></tr><tr><td>Selukar, കേരള HC, അധ്യക്ഷന്മാർ</td><td>മുൻ കുറിപ്പിൽ നിന്ന്</td><td>Source note — പുനഃപരിശോധന വേണം</td></tr><tr><td>പഴയ ഓപ്ഷൻ "NHRC 3 വർഷം"</td><td>അനാവശ്യ/അനിശ്ചിത</td><td>ഒഴിവാക്കി</td></tr><tr><td>ഓറിയന്റേഷൻ പട്ടിക</td><td>കാലാവധി നിര വികലമായിരുന്നു</td><td>ശരിയാക്കി</td></tr></tbody></table></div><ul class="checklist"><li>വകുപ്പ് ശ്രേണി 28–41 / 42–52 / 53–67 / 68–73 ✔</li><li>അംഗസംഖ്യ 2–4–4 ✔</li><li>35/15, 40/20, വനിതാ വ്യവസ്ഥ ✔</li><li>പരിധി ₹50 ലക്ഷം/₹2 കോടി, ഫീ ✔</li><li>21 ദിവസം, 30+15, 45, 3/5 മാസം ✔</li><li>റിവ്യൂ 40/50/60 ✔</li><li>അപ്പീൽ 45–30–30 + 50%, Sec 73 ✔</li><li>Sec 71, 72, 73 ✔</li><li>2026 ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട് ✔</li></ul></div></section></main></div><script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ---------- 1. Section collapse/expand ---------- */
+  document.querySelectorAll('.section > h2').forEach(function (h2) {
+    function toggle() {
+      var sec = h2.closest('.section');
+      var collapsed = sec.classList.toggle('collapsed');
+      h2.setAttribute('aria-expanded', String(!collapsed));
+    }
+    h2.addEventListener('click', toggle);
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  /* ---------- 2. Expand all / collapse all ---------- */
+  var expandAll = document.getElementById('expandAll');
+  var collapseAll = document.getElementById('collapseAll');
+  if (expandAll) expandAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.remove('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'true');
+    });
+  });
+  if (collapseAll) collapseAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.add('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- 3. TOC scroll-spy ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#tocNav a'));
+  var spySections = tocLinks
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && spySections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(function (a) {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    spySections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* Smooth scroll for TOC */
+  tocLinks.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ---------- 4. MCQ behaviour ---------- */
+  document.querySelectorAll('.question-item').forEach(function (item) {
+    var opts = item.querySelectorAll('.options span');
+    var correct = (item.dataset.correct || '').trim();
+    var shown = false;
+    var locked = false;
+
+    opts.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (locked || shown) return;
+        opts.forEach(function (o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var status = item.querySelector('.q-status');
+        if (status) status.textContent = 'തിരഞ്ഞെടുത്തു: ' + opt.dataset.opt;
+      });
+    });
+
+    var showBtn = item.querySelector('.btn-show');
+    if (showBtn) showBtn.addEventListener('click', function () {
+      if (shown) return;
+      shown = true;
+      opts.forEach(function (o) {
+        if (o.dataset.opt === correct) o.classList.add('correct');
+        else if (o.classList.contains('selected')) o.classList.add('wrong');
+        o.classList.add('locked');
+      });
+      var block = item.querySelector('.answer-block');
+      if (block) block.classList.add('show');
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ഉത്തരം കാണിച്ചു';
+      showBtn.disabled = true;
+    });
+
+    var markBtn = item.querySelector('.btn-mark');
+    if (markBtn) markBtn.addEventListener('click', function () {
+      markBtn.classList.toggle('active');
+      var status = item.querySelector('.q-status');
+      if (status) {
+        status.textContent = markBtn.classList.contains('active')
+          ? 'മാർക്ക് ചെയ്തു ★'
+          : '';
+      }
+    });
+
+    var lockBtn = item.querySelector('.btn-lock');
+    if (lockBtn) lockBtn.addEventListener('click', function () {
+      locked = true;
+      opts.forEach(function (o) { o.classList.add('locked'); });
+      lockBtn.disabled = true;
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ലോക്ക് ചെയ്തു 🔒';
+    });
+
+    var saveBtn = item.querySelector('.btn-save');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      var selected = item.querySelector('.options span.selected');
+      var status = item.querySelector('.q-status');
+      if (!selected) {
+        if (status) status.textContent = 'ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക';
+        return;
+      }
+      if (status) status.textContent = 'സേവ് ചെയ്തു ✓ (' + selected.dataset.opt + ')';
+    });
+  });
+
+});
+</script></body></html>
