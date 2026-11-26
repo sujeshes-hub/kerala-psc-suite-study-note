@@ -1,106 +1,554 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>16.9.3 Kerala Administrative Tribunal - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- REPLACE: page title -->
+  <title>കേരള അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണൽ (KAT) | Kerala PSC 16.9.3</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 2px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 2px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
+<div class="layout">
+<nav class="toc" aria-label="ഉള്ളടക്കം"><div class="toc-title">ഉള്ളടക്കം</div><div class="toc-controls"><button id="expandAll" type="button">എല്ലാം തുറക്കുക</button><button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button></div><ul class="toc-nav" id="tocNav"><li><a href="#sec0">⭐ Star Guide</a></li><li><a href="#sec1">1. ഫാക്ട്-ചെക്ക് & ഭാരവാഹികൾ</a></li><li><a href="#sec2">2. ഒറ്റനോട്ടത്തിൽ</a></li><li><a href="#sec3">3. ഭരണഘടനയും 1985 ആക്ടും</a></li><li><a href="#sec4">4. KAT: രൂപീകരണം, ബെഞ്ചുകൾ</a></li><li><a href="#sec5">5. അധികാരപരിധിയും ഒഴിവാക്കലും</a></li><li><a href="#sec6">6. നടപടിക്രമം & സമയപരിധി</a></li><li><a href="#sec7">7. 2026 ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്</a></li><li><a href="#sec8">8. സുപ്രീംകോടതി വിധികൾ</a></li><li><a href="#sec9">9. താരതമ്യ പട്ടികകൾ</a></li><li><a href="#sec10">10. Traps & Tricks</a></li><li><a href="#sec11">11. Smart Tricks (Theory അറിയില്ലെങ്കിൽ)</a></li><li><a href="#sec12">12. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li><li><a href="#sec13">13. തീയതികളും തിരുത്തൽ രജിസ്റ്ററും</a></li></ul></nav>
+<main class="main-container">
+<header class="chapter-header"><div class="label">കേരള ഗവേണൻസ് | 16.9.3</div><h1>കേരള അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണൽ (KAT)</h1><div class="subtitle">Art 323A · AT Act 1985 · Tribunals Reforms Act 2026 | Kerala PSC Rank File</div></header>
+<section class="section" id="sec0"><h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span><ul><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — Art 323A, 1985 ആക്ട്, KAT തീയതികൾ, Sec 2 ഒഴിവാക്കൽ, Sec 21, Chandra Kumar</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — 2026 ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്, ബെഞ്ചുകൾ, ചെയർമാന്മാർ</li><li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — ഫീസ്, Sec 17, Sec 22</li><li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — ചട്ടനമ്പറുകൾ</li></ul></div><div class="added-fact"><span class="box-label">➕ മാർക്കർ ലെജൻഡ്</span><ul><li><strong>Confirmed</strong> — ഔദ്യോഗിക/വിശ്വസനീയ സ്രോതസ്സിൽ ഒത്തുനോക്കി</li><li><strong>Added</strong> — ഈ പതിപ്പിൽ കൂട്ടിച്ചേർത്തത്</li><li><strong>🔎 Verify</strong> — പരീക്ഷയ്ക്ക് മുമ്പ് ഉറപ്പാക്കുക</li><li><strong>Fix</strong> — തിരുത്തിയത് (§13 രജിസ്റ്റർ)</li></ul></div><div class="added-fact"><span class="box-label">📌 ചുരുക്കം</span><ul><li><strong>സിലബസ് കോഡ്:</strong> 16.9.3 (കേരള ഗവേണൻസും ഭരണസംവിധാനവും) · ★★★ High-Yield</li><li><strong>ചോദ്യ സാധ്യത:</strong> LDC, LGS, Inspecting Assistant (Cat. 883/2025), University Assistant, Degree Prelims – 1–2 മാർക്ക്</li></ul></div></div></section>
+<section class="section" id="sec1"><h2 role="button" tabindex="0" aria-expanded="true">1. ഫാക്ട്-ചെക്ക് & ഭാരവാഹികൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">Confirmed — Act 13 of 1985</span><ul><li>അഡ്മിനിസ്ട്രേറ്റീവ് ട്രൈബ്യൂണൽസ് ആക്ട്, 1985 (Act 13 of 1985): രാഷ്ട്രപതി ഒപ്പിട്ടത് <strong>1985 ഫെബ്രുവരി 27</strong> (സർക്കാർ രേഖകളിൽ ഒത്തുനോക്കി).</li><li>KAT സ്ഥാപനം Sec 4(2) പ്രകാരം <strong>25-08-2010</strong> (വിജ്ഞാപനം G.S.R. 705(E)); അപ്പോയിന്റഡ് ഡേ <strong>26-08-2010</strong> എന്നത് KAT പോർട്ടൽ പ്രകാരം നൽകിയതാണ് <span class="stars">🔎 Verify</span></li></ul></div><div class="added-fact"><span class="box-label">Added & Confirmed — ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട്, 2026</span><ul><li><strong>Act No. 17 of 2026</strong>: ലോക്സഭ 2026 ഓഗസ്റ്റ് 10, രാജ്യസഭ ഓഗസ്റ്റ് 11, രാഷ്ട്രപതിയുടെ അനുമതി <strong>ഓഗസ്റ്റ് 13</strong>; പ്രാബല്യം <strong>2026 ഓഗസ്റ്റ് 25</strong> (SCC Online റിപ്പോർട്ട്).</li><li>2021-ലെ ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട് ഇതോടെ <strong>റദ്ദായി</strong>; <strong>നാഷണൽ ട്രൈബ്യൂണൽസ് കമ്മീഷൻ (NTC)</strong> നിലവിൽ വന്നു.</li></ul></div><div class="correction"><span class="box-label">🔴 നിലവിലെ ഭാരവാഹികൾ (നൽകിയ കുറിപ്പ് പ്രകാരം, 26-11-2026) <span class="stars">🔎 Verify</span></span><ul><li>ആദ്യ ചെയർമാൻ: <strong>ജസ്റ്റിസ് കെ. ബാലകൃഷ്ണൻ നായർ</strong>; തുടർന്ന് ജസ്റ്റിസ് ടി.ആർ. രാമചന്ദ്രൻ നായർ, ജസ്റ്റിസ് സി.കെ. അബ്ദുൾ റഹീം (2021–2025).</li><li>ആക്ടിംഗ് ചെയർപേഴ്സൺ: <strong>എം.ആർ. ശ്രീലത</strong>. സ്ഥിരം ചെയർമാൻ നിയമനം ഉണ്ടോ എന്ന് CISKAT പോർട്ടലിൽ പരീക്ഷയ്ക്ക് മുമ്പ് നോക്കുക. ഈ പേരുകൾ ഞാൻ സ്വതന്ത്രമായി പരിശോധിച്ചിട്ടില്ല.</li></ul></div></div></section>
+<section class="section" id="sec2"><h2 role="button" tabindex="0" aria-expanded="true">2. ഒറ്റനോട്ടത്തിൽ <span class="toggle-icon">▼</span></h2><div class="section-body"><p>സംസ്ഥാന സർക്കാർ ജീവനക്കാരുടെയും PSC നിയമന ഉദ്യോഗാർത്ഥികളുടെയും <strong>സർവീസ് തർക്കങ്ങൾ</strong> കോടതിയിൽ പോകാതെ വേഗത്തിലും ചെലവു കുറച്ചും തീർക്കുന്ന അർദ്ധ-ജുഡീഷ്യൽ സംവിധാനമാണ് <strong>KAT</strong>. (ഉദാ: പ്രൊമോഷൻ നിഷേധിച്ചാൽ ജീവനക്കാരൻ ആദ്യം പോകുന്നത് KAT-ലേക്ക്.)</p><div style="overflow-x:auto;"><table><thead><tr><th>ഘട്ടം</th><th>എന്ത്</th></tr></thead><tbody><tr><td>1</td><td>42-ാം ഭേദഗതി 1976 → ഭാഗം XIVA → <strong>ആർട്ടിക്കിൾ 323A</strong> (പാർലമെന്റിന് മാത്രം അധികാരം)</td></tr><tr><td>2</td><td><strong>1985 ആക്ട്</strong> → Sec 4(2): കേരള സർക്കാർ ആവശ്യപ്പെട്ടു → കേന്ദ്രം KAT സ്ഥാപിച്ചു</td></tr><tr><td>3</td><td><strong>KAT</strong> (പ്രഥമ വിചാരണാവേദി): തിരുവനന്തപുരം + എറണാകുളം</td></tr><tr><td>4</td><td>KAT ഉത്തരവിനെതിരെ → <strong>ഹൈക്കോടതി ഡിവിഷൻ ബെഞ്ച്</strong> (Art 226/227, OP(KAT))</td></tr><tr><td>5</td><td>തുടർന്ന് → <strong>സുപ്രീംകോടതി</strong> (Art 136, SLP)</td></tr></tbody></table></div></div></section>
+<section class="section" id="sec3"><h2 role="button" tabindex="0" aria-expanded="true">3. ഭരണഘടനയും 1985 ആക്ടും <span class="toggle-icon">▼</span></h2><div class="section-body"><ul><li><strong>ശിപാർശ:</strong> സ്വരൺ സിംഗ് കമ്മിറ്റി → 42-ാം ഭേദഗതി (1976) → ഭാഗം XIVA, <strong>Art 323A</strong> (സർവീസ് ട്രൈബ്യൂണലുകൾ, പാർലമെന്റ് മാത്രം). <strong>Art 323B</strong>: നികുതി, ഭൂപരിഷ്കരണം തുടങ്ങിയ വിഷയങ്ങൾ — പാർലമെന്റിനും നിയമസഭകൾക്കും അധികാരം.</li><li><strong>Act 13 of 1985:</strong> ഒപ്പ് 27-02-1985; പ്രാബല്യം 01-07-1985; CAT സ്ഥാപനം 01-11-1985.</li><li><strong>ഘടന:</strong> 5 അധ്യായം; 37 നമ്പർ വകുപ്പുകൾ + 10A, 10B, 29A, 36A… (ആകെ 41 എന്ന കണക്ക് നൽകിയ കുറിപ്പിലേത് <span class="stars">🔎 Verify</span>).</li><li><strong>Sec 14</strong> CAT · <strong>Sec 15</strong> SAT (KAT) · <strong>Sec 16</strong> JAT — അധികാരപരിധി; <strong>Sec 4(1)/(2)/(3)</strong> സ്ഥാപനം.</li><li><strong>2006 ഭേദഗതി:</strong> വൈസ് ചെയർമാൻ തസ്തിക നിർത്തി (Sec 10A: വൈസ് ചെയർമാൻമാരുടെ സേവനവ്യവസ്ഥ സംരക്ഷണം — ആക്ടിൽ ഉണ്ട്).</li></ul><div class="memory"><span class="box-label">🧠 Term</span><p>Tribunal = അർദ്ധ-ജുഡീഷ്യൽ സമിതി · Appointed Day = നിയമം/സ്ഥാപനം പ്രാബല്യത്തിൽ വരുന്ന ദിവസം · Original Application (OA) = KAT-ലെ ഹർജി.</p></div></div></section>
+<section class="section" id="sec4"><h2 role="button" tabindex="0" aria-expanded="true">4. KAT: രൂപീകരണം, ബെഞ്ചുകൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">3 തീയതികൾ (Trap!)</span><ul><li><strong>25-08-2010</strong> – G.S.R. 705(E) വിജ്ഞാപനം (Confirmed)</li><li><strong>26-08-2010</strong> – അപ്പോയിന്റഡ് ഡേ <span class="stars">🔎 Verify</span></li><li><strong>22-12-2011</strong> – ആദ്യ സിറ്റിംഗ് (നൽകിയ കുറിപ്പ് പ്രകാരം) <span class="stars">🔎 Verify</span></li><li><strong>14-02-2014</strong> – എറണാകുളം അഡീഷണൽ ബെഞ്ച് <span class="stars">🔎 Verify</span></li></ul></div><ul><li><strong>പ്രിൻസിപ്പൽ ബെഞ്ച്:</strong> വഞ്ചിയൂർ, തിരുവനന്തപുരം (പഴയ കളക്ടറേറ്റ് കെട്ടിടം).</li><li><strong>അഡീഷണൽ ബെഞ്ച്:</strong> എറണാകുളം (പഴയ ഹൈക്കോടതി കെട്ടിടം).</li><li><strong>ബെഞ്ച് ഘടന (Sec 5):</strong> ചെയർമാൻ + ജുഡീഷ്യൽ അംഗം + അഡ്മിനിസ്ട്രേറ്റീവ് അംഗം; സാധാരണ ബെഞ്ചിൽ രണ്ടു തരം അംഗങ്ങളും വേണം.</li></ul></div></section>
+<section class="section" id="sec5"><h2 role="button" tabindex="0" aria-expanded="true">5. അധികാരപരിധിയും ഒഴിവാക്കലും <span class="toggle-icon">▼</span></h2><div class="section-body"><ul><li><strong>Sec 15:</strong> സംസ്ഥാന സിവിൽ സർവീസുകളിലെ <strong>റിക്രൂട്ട്മെന്റും സേവനവ്യവസ്ഥകളും</strong> (ശമ്പളം, പെൻഷൻ, പ്രൊമോഷൻ, സീനിയോറിറ്റി, സ്ഥലംമാറ്റം, അച്ചടക്കം) — PSC നിയമന തർക്കങ്ങൾ ഉൾപ്പെടെ.</li><li>വിജ്ഞാപിത തദ്ദേശസ്ഥാപനങ്ങൾ/കോർപ്പറേഷനുകളും ഉൾപ്പെടാം (Sec 15(2)–(3)); മുനിസിപ്പൽ കോമൺ സർവീസ്/പഞ്ചായത്ത് ജീവനക്കാർ — 2013 ഹൈക്കോടതി വിധി <span class="stars">🔎 Verify</span></li></ul><div class="trap"><span class="box-label">⚠️ Sec 2 — ആക്ട് ബാധകമല്ലാത്തവർ (Confirmed from Act text)</span><ul><li><strong>2(a)</strong> – യൂണിയൻ സായുധ സേനാംഗങ്ങൾ</li><li><strong>2(b)</strong> – 1986-ൽ <strong>ഒഴിവാക്കിയ (omitted)</strong> ക്ലോസ്</li><li><strong>2(c)</strong> – സുപ്രീംകോടതി, ഹൈക്കോടതി ജീവനക്കാർ (+ കീഴ്ക്കോടതി, 22-12-1987 മുതൽ)</li><li><strong>2(d)</strong> – പാർലമെന്റ്/നിയമസഭാ സെക്രട്ടേറിയറ്റ് ജീവനക്കാർ</li></ul></div><div class="memory"><span class="box-label">🧠 Trick</span><p><strong>A–C–L:</strong> Armed forces · Court staff · Legislature staff.</p></div></div></section>
+<section class="section" id="sec6"><h2 role="button" tabindex="0" aria-expanded="true">6. നടപടിക്രമം & സമയപരിധി <span class="toggle-icon">▼</span></h2><div class="section-body"><ul><li><strong>Sec 17:</strong> ഹൈക്കോടതിക്കുള്ള കോടതിയലക്ഷ്യ ശിക്ഷാധികാരം KAT-ക്കും.</li><li><strong>Sec 20:</strong> ആദ്യം ഡിപ്പാർട്ട്മെന്റൽ അപ്പീൽ/നിവേദനം; 6 മാസത്തിനകം തീരുമാനം ഇല്ലെങ്കിൽ പരിഹാരം വിനിയോഗിച്ചതായി കണക്കാക്കും.</li><li><strong>Sec 21:</strong> അന്തിമ ഉത്തരവിന്റെ 1 വർഷത്തിനകം അപേക്ഷ; അപ്പീലിൽ 6 മാസം ഉത്തരവില്ലെങ്കിൽ ആ 6 മാസം കഴിഞ്ഞ് 1 വർഷം; മതിയായ കാരണമുണ്ടെങ്കിൽ കാലതാമസം ക്ഷമിക്കാം.</li><li><strong>Sec 22:</strong> CPC-യ്ക്ക് ബാധ്യസ്ഥമല്ല; <strong>സ്വാഭാവിക നീതി</strong> പിന്തുടരും; സമൻസ്, രേഖ, റിവ്യൂ എന്നിവയിൽ സിവിൽ കോടതി അധികാരം.</li><li><strong>ഫീസ്:</strong> OA-ക്ക് ₹50; 5-ൽ കൂടുതൽ എതിർകക്ഷികൾക്ക് ഓരോന്നിനും ₹25 (KAT Rules 2010 — നൽകിയ കുറിപ്പ് പ്രകാരം <span class="stars">🔎 Verify</span>). 2021 ഭേദഗതി: ഇ-ഫയലിംഗ്, വീഡിയോ കോൺഫറൻസ്.</li><li><strong>അഭിഭാഷക പ്രാതിനിധ്യം:</strong> നേരിട്ടോ അഭിഭാഷകൻ വഴിയോ ഹാജരാകാം (വകുപ്പ് നമ്പർ 19/23 <span class="stars">🔎 Verify</span>).</li><li><strong>എക്സ്-പാർട്ടെ ഇടക്കാല ഉത്തരവ് 14 ദിവസം</strong> (Sec 24 <span class="stars">🔎 Verify</span>).</li></ul><div class="added-fact"><span class="box-label">➕ Added</span><p>Sec 21-ൽ ആവർത്തിച്ച നിവേദനങ്ങൾ സമയപരിധി നീട്ടില്ല (S.S. Rathore, 1989).</p></div></div></section>
+<section class="section" id="sec7"><h2 role="button" tabindex="0" aria-expanded="true">7. 2026 ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട് <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="added-fact"><span class="box-label">Confirmed (PIB, PRS, SCC Online, Bar & Bench)</span><ul><li>2025 നവംബർ 19: <em>Madras Bar Association v. UoI</em> — 2021 ആക്ടിലെ ചില വ്യവസ്ഥകൾ സുപ്രീംകോടതി റദ്ദാക്കി; ദേശീയ ട്രൈബ്യൂണൽസ് കമ്മീഷൻ വേണമെന്ന് നിർദ്ദേശിച്ചു.</li><li>2026 ആക്ട്: <strong>ട്രൈബ്യൂണൽ ചെയർപേഴ്സൺ: 5 വർഷം അല്ലെങ്കിൽ 70 വയസ്സ്</strong>; <strong>അംഗം: 5 വർഷം അല്ലെങ്കിൽ 67 വയസ്സ്</strong> (ഏതാണോ ആദ്യം); അംഗങ്ങൾക്ക് പുനർനിയമനത്തിന് പരിഗണന.</li><li>NTC ചെയർപേഴ്സൺ/അംഗങ്ങൾ: 5 വർഷം അല്ലെങ്കിൽ 70 വയസ്സ്.</li><li>2021 ആക്ട്: 4 വർഷം, 50 വയസ്സ് മിനിമം — 2026 ആക്ടിൽ ഒഴിവാക്കി.</li></ul></div><div class="correction"><span class="box-label">🔎 Verify</span><p>നിങ്ങളുടെ കുറിപ്പിലെ വിശദാംശങ്ങൾ (Sec 10B, Sec 17(1), NTC ഘടന 1+2+2, സെർച്ച് കമ്മിറ്റിയിൽ ചീഫ് സെക്രട്ടറി) ഞാൻ പരിശോധിച്ചില്ല; PIB സംഗ്രഹം പ്രകാരം ടെക്നിക്കൽ അംഗങ്ങൾ ഉണ്ട്, ചീഫ് സെക്രട്ടറി ഭാഗം ബിൽ-ടെക്സ്റ്റിൽ നോക്കുക. പഴയ 2006 ഘട്ടത്തിലെ 68/65 വയസ്സ് പരിധി 🔎 Verify.</p></div></div></section>
+<section class="section" id="sec8"><h2 role="button" tabindex="0" aria-expanded="true">8. സുപ്രീംകോടതി വിധികൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x:auto;"><table><thead><tr><th>വിധി</th><th>പ്രധാന ആശയം</th></tr></thead><tbody><tr><td>S.P. Sampath Kumar (1987)</td><td>ട്രൈബ്യൂണൽ ഹൈക്കോടതിക്ക് ഫലപ്രദമായ പകരമാകണം</td></tr><tr><td><strong>L. Chandra Kumar (1997, 7 അംഗ ബെഞ്ച്)</strong></td><td>ഹൈക്കോടതികളുടെ Art 226/227 അധികാരം അടിസ്ഥാന ഘടന; Sec 28 ഭാഗം റദ്ദാക്കി; KAT ഉത്തരവിനെതിരെ ഹൈക്കോടതി <strong>ഡിവിഷൻ ബെഞ്ച്</strong>; ട്രൈബ്യൂണൽ = പ്രഥമ വിചാരണാ കോടതി; മാതൃനിയമത്തിന്റെ സാധുത ചോദ്യം ചെയ്യാനാകില്ല</td></tr><tr><td>S.S. Rathore (1989)</td><td>ആവർത്തിച്ച നിവേദനം സമയപരിധി നീട്ടില്ല</td></tr><tr><td>Madras Bar Association (2025)</td><td>2021 ട്രൈബ്യൂണൽ ആക്ട് വ്യവസ്ഥകൾ റദ്ദാക്കി</td></tr></tbody></table></div></div></section>
+<section class="section" id="sec9"><h2 role="button" tabindex="0" aria-expanded="true">9. താരതമ്യ പട്ടികകൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x:auto;"><table><thead><tr><th></th><th>CAT</th><th>KAT</th><th>JAT</th></tr></thead><tbody><tr><td>സ്ഥാപനം</td><td>Sec 4(1)</td><td>Sec 4(2) — സംസ്ഥാന അഭ്യർത്ഥന പ്രകാരം കേന്ദ്രം</td><td>Sec 4(3) — 2+ സംസ്ഥാന കരാർ</td></tr><tr><td>അധികാരം</td><td>Sec 14: കേന്ദ്ര/അഖിലേന്ത്യാ സർവീസുകൾ</td><td>Sec 15: സംസ്ഥാന സർവീസുകൾ</td><td>Sec 16</td></tr><tr><td>കേരളത്തിൽ</td><td>എറണാകുളം ബെഞ്ച് (CAT)</td><td>തിരുവനന്തപുരം + എറണാകുളം</td><td>—</td></tr></tbody></table></div><div style="overflow-x:auto;"><table><thead><tr><th>ഘടകം</th><th>2021 ആക്ട്</th><th>2026 ആക്ട്</th></tr></thead><tbody><tr><td>ചെയർപേഴ്സൺ</td><td>4 വർഷം / 70</td><td><strong>5 വർഷം / 70</strong></td></tr><tr><td>അംഗം</td><td>4 വർഷം / 67</td><td><strong>5 വർഷം / 67</strong></td></tr><tr><td>നിയമനം</td><td>എക്സിക്യൂട്ടീവ് നിയന്ത്രിത</td><td>NTC ഉൾപ്പെട്ട സെർച്ച്-കം-സെലക്ഷൻ</td></tr></tbody></table></div><p><em>Fix:</em> നൽകിയ കുറിപ്പിലെ CAT/KAT/JAT പട്ടികയുടെ വരി തെറ്റായി കോളം വിട്ടുപോയിരുന്നു; ഇവിടെ ശരിയാക്കി.</p></div></section>
+<section class="section" id="sec10"><h2 role="button" tabindex="0" aria-expanded="true">10. Traps & Tricks <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="trap"><span class="box-label">⚠️ Trap 1</span><p>KAT സ്ഥാപിച്ചത് കേരള സർക്കാരല്ല — <strong>സംസ്ഥാന അഭ്യർത്ഥന പ്രകാരം കേന്ദ്ര സർക്കാർ</strong> (Sec 4(2)).</p></div><div class="trap"><span class="box-label">⚠️ Trap 2</span><p>ഹൈക്കോടതി/കീഴ്ക്കോടതി, നിയമസഭാ സെക്രട്ടേറിയറ്റ് ജീവനക്കാർ → KAT-ൽ പോകാനാകില്ല.</p></div><div class="trap"><span class="box-label">⚠️ Trap 3</span><p>KAT ഉത്തരവ് → ആദ്യം ഹൈക്കോടതി ഡിവിഷൻ ബെഞ്ച്, നേരിട്ട് സുപ്രീംകോടതിയല്ല (1997).</p></div><div class="trap"><span class="box-label">⚠️ Trap 4</span><p>സ്ഥാപനം 2010 vs ആദ്യ സിറ്റിംഗ് 2011 — ചോദ്യത്തിലെ വാക്ക് നോക്കുക. വൈസ് ചെയർമാൻ തസ്തിക ഇപ്പോഴില്ല.</p></div><div class="memory"><span class="box-label">🧠 Trick</span><p><strong>26-08-2010 → 22-12-2011 → 14-02-2014</strong> (സ്ഥാപനം → ആദ്യ സിറ്റിംഗ് → എറണാകുളം). Sec codes: 2 – 4(2) – 15 – 17 – 21 – 22.</p></div></div></section>
+<section class="section" id="sec11"><h2 role="button" tabindex="0" aria-expanded="true">11. Smart Tricks (Theory അറിയില്ലെങ്കിൽ) <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="added-fact"><span class="box-label">Added — ശ്രദ്ധിക്കുക</span><p>ഈ രീതികൾ സാധ്യത കൂട്ടും, ഉത്തരം ഉറപ്പിക്കില്ല. 'ഏറ്റവും നീണ്ട ഓപ്ഷൻ ശരി' പോലുള്ള മിത്തുകൾ വിശ്വസിക്കരുത്. നെഗറ്റീവ് മാർക്ക് ഉണ്ടെങ്കിൽ 2 ഓപ്ഷൻ വരെ ഒഴിവാക്കാനായാൽ മാത്രം ഊഹിക്കുക; അല്ലെങ്കിൽ ഒഴിവാക്കുക.</p></div><ul><li><strong>Option Elimination:</strong> ഉദാ: "KAT ഉത്തരവിനെതിരെ ആദ്യ അപ്പീൽ?" — "CAT" ഒഴിവാക്കാം (CAT മറ്റൊരു ട്രൈബ്യൂണൽ, അപ്പീൽ വേദിയല്ല); "സുപ്രീംകോടതി മാത്രം" എന്ന അതിരുകടന്ന പ്രസ്താവന സംശയിക്കുക.</li><li><strong>Keyword:</strong> "ഉൾപ്പെടുന്നത്" vs "ഉൾപ്പെടാത്തത്" — നെഗറ്റീവ് ചോദ്യങ്ങൾ വായിക്കുക (ചോദ്യം 2).</li><li><strong>Statement-based:</strong> ഓരോ പ്രസ്താവനയും വേറെ വേറെ ശരിയോ തെറ്റോ എന്ന് നോക്കുക; അറിയാവുന്ന ഒന്ന് ശരിയെന്ന് ഉറപ്പായാൽ ആ ഒന്ന് ഇല്ലാത്ത കോമ്പിനേഷനുകൾ ഒഴിവാക്കാം (ചോദ്യം 1).</li><li><strong>Number logic:</strong> 2021 ആക്ടിൽ 4 വർഷമായിരുന്നു; 2026 അത് മാറ്റി എന്ന് അറിയാമെങ്കിൽ "4 വർഷം" ഓപ്ഷൻ പോകും (ചോദ്യം 4).</li><li><strong>Similar options:</strong> "ഡിവിഷൻ ബെഞ്ച്" vs "സിംഗിൾ ബെഞ്ച്" — ഒരു വാക്ക് മാത്രം വ്യത്യാസം; വ്യത്യാസം ഓർക്കുക.</li></ul></div></section>
+<section class="section" id="sec12"><h2 role="button" tabindex="0" aria-expanded="true">12. പ്രതീക്ഷിത ചോദ്യങ്ങൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><p><span class="stars">PSC-style practice questions — യഥാർത്ഥ PYQ അല്ല</span></p><div class="question-item" data-qindex="0" data-correct="B"><div class="q-text">1. KAT-യെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ പരിശോധിക്കുക: (i) Art 323A പ്രകാരമുള്ള 1985 ആക്ട് Sec 4(2) അനുസരിച്ച് സ്ഥാപിച്ചു. (ii) ആദ്യ ചെയർമാൻ ജസ്റ്റിസ് കെ. ബാലകൃഷ്ണൻ നായർ. (iii) എറണാകുളം അഡീഷണൽ ബെഞ്ച് 2014-ൽ ആരംഭിച്ചു.</div><div class="options"><span data-opt="A">A. (i), (ii) മാത്രം</span><span data-opt="B">B. (i), (ii), (iii) എല്ലാം</span><span data-opt="C">C. (ii), (iii) മാത്രം</span><span data-opt="D">D. (i), (iii) മാത്രം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) (i), (ii), (iii) എല്ലാം</div><div class="explanation">മൂന്നും ശരിയാണ് (തീയതികൾ 🔎 ഉൾപ്പെടെ നൽകിയ കുറിപ്പ് പ്രകാരം). Strategy: (i) ഉറപ്പാണെങ്കിൽ (ii),(iii) മാത്രം എന്ന ഓപ്ഷൻ ഒഴിവാക്കാം.</div></div></div><div class="question-item" data-qindex="1" data-correct="D"><div class="q-text">2. ആക്ട് Sec 2 പ്രകാരം KAT-ന്റെ പരിധിയിൽ <strong>ഉൾപ്പെടുന്നത്</strong> ആരുടെ തർക്കം?</div><div class="options"><span data-opt="A">A. കേരള ഹൈക്കോടതി ജീവനക്കാർ</span><span data-opt="B">B. നിയമസഭാ സെക്രട്ടേറിയറ്റ് ജീവനക്കാർ</span><span data-opt="C">C. യൂണിയൻ സായുധ സേനാംഗങ്ങൾ</span><span data-opt="D">D. റവന്യൂ വകുപ്പ് ഉദ്യോഗസ്ഥരും PSC ഉദ്യോഗാർത്ഥികളും</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) റവന്യൂ വകുപ്പ് ഉദ്യോഗസ്ഥരും PSC ഉദ്യോഗാർത്ഥികളും</div><div class="explanation">A→2(c), B→2(d), C→2(a) ഒഴിവാക്കപ്പെട്ടവരാണ്. A–C–L ട്രിക്ക് ഉപയോഗിക്കുക.</div></div></div><div class="question-item" data-qindex="2" data-correct="A"><div class="q-text">3. Sec 21 പ്രകാരം അപേക്ഷാ സമയപരിധിയും KAT ഫീസും?</div><div class="options"><span data-opt="A">A. 1 വർഷം — ₹50</span><span data-opt="B">B. 6 മാസം — ₹100</span><span data-opt="C">C. 2 വർഷം — ₹50</span><span data-opt="D">D. 90 ദിവസം — ഫീസില്ല</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) 1 വർഷം — ₹50</div><div class="explanation">Sec 21(1)(a): 1 വർഷം. ₹50 ഫീസ് നൽകിയ കുറിപ്പ് പ്രകാരം (🔎). 6 മാസം = Sec 20 കാത്തിരിപ്പ്; 2 വർഷം ഉപഭോക്തൃ നിയമം സമയപരിധി; 90 ദിവസം SC/ST ആക്ട് അപ്പീൽ.</div></div></div><div class="question-item" data-qindex="3" data-correct="C"><div class="q-text">4. 2026 ട്രൈബ്യൂണൽസ് റിഫോംസ് ആക്ട് പ്രകാരം ട്രൈബ്യൂണൽ ചെയർപേഴ്സൺ / അംഗം കാലാവധി–പ്രായപരിധി?</div><div class="options"><span data-opt="A">A. 4 വർഷം/70 — 4 വർഷം/67</span><span data-opt="B">B. 5 വർഷം/68 — 5 വർഷം/65</span><span data-opt="C">C. 5 വർഷം/70 — 5 വർഷം/67</span><span data-opt="D">D. 3 വർഷം/70 — 3 വർഷം/65</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) 5 വർഷം/70 — 5 വർഷം/67</div><div class="explanation">PIB/PRS സ്ഥിരീകരിച്ചു. A = 2021 ആക്ട് (4 വർഷം); B, D 2026 ആക്ടിലെ കണക്കുകളല്ല.</div></div></div><div class="question-item" data-qindex="4" data-correct="B"><div class="q-text">5. L. Chandra Kumar (1997) പ്രകാരം KAT ഉത്തരവിനെതിരെ ആദ്യം ഹർജി നൽകേണ്ടത്?</div><div class="options"><span data-opt="A">A. നേരിട്ട് സുപ്രീംകോടതി</span><span data-opt="B">B. ഹൈക്കോടതി ഡിവിഷൻ ബെഞ്ച് (Art 226/227)</span><span data-opt="C">C. ഹൈക്കോടതി സിംഗിൾ ബെഞ്ച്</span><span data-opt="D">D. CAT പ്രിൻസിപ്പൽ ബെഞ്ച്</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) ഹൈക്കോടതി ഡിവിഷൻ ബെഞ്ച് (Art 226/227)</div><div class="explanation">ഡിവിഷൻ ബെഞ്ച് (കേരളത്തിൽ OP(KAT)). A = 1997-ന് മുമ്പുള്ള Sec 28 വ്യവസ്ഥ; CAT അപ്പീൽ വേദിയല്ല.</div></div></div></div></section>
+<section class="section" id="sec13"><h2 role="button" tabindex="0" aria-expanded="true">13. തീയതികളും തിരുത്തൽ രജിസ്റ്ററും <span class="toggle-icon">▼</span></h2><div class="section-body"><ul><li>1976 – 42-ാം ഭേദഗതി (Art 323A)</li><li>27-02-1985 / 01-07-1985 – 1985 ആക്ട് ഒപ്പ് / പ്രാബല്യം</li><li>22-12-1987 – Sec 2(c) കീഴ്ക്കോടതി ഉൾപ്പെടുത്തൽ</li><li>1997 – Chandra Kumar</li><li>25/26-08-2010 – KAT വിജ്ഞാപനം / അപ്പോയിന്റഡ് ഡേ</li><li>22-12-2011 – ആദ്യ സിറ്റിംഗ് <span class="stars">🔎 Verify</span></li><li>14-02-2014 – എറണാകുളം ബെഞ്ച് <span class="stars">🔎 Verify</span></li><li>19-11-2025 – Madras Bar Association</li><li>13-08-2026 / 25-08-2026 – 2026 ആക്ട് അനുമതി / പ്രാബല്യം</li></ul><div style="overflow-x:auto;"><table><thead><tr><th>Section</th><th>Issue</th><th>Status</th><th>Basis</th></tr></thead><tbody><tr><td>§9 പട്ടിക 1</td><td>KAT/JAT വരി തെറ്റ്</td><td>Corrected</td><td>Self-consistency</td></tr><tr><td>§5</td><td>Sec 2(a)–(d) ഘടന</td><td>Confirmed</td><td>Act text (indiankanoon, legitquest ഫലങ്ങൾ)</td></tr><tr><td>§7</td><td>2026 ആക്ട് തീയതി/കാലാവധി</td><td>Confirmed</td><td>PIB, PRS, SCC Online</td></tr><tr><td>§7</td><td>Sec 10B/17(1), NTC 1+2+2, ചീഫ് സെക്രട്ടറി</td><td>Needs verification</td><td>നൽകിയ കുറിപ്പ് മാത്രം</td></tr><tr><td>§1,§4</td><td>ഭാരവാഹികൾ, 2010–14 തീയതികൾ, ഫീസ്, Sec 23/24</td><td>Needs verification</td><td>KAT പോർട്ടൽ</td></tr></tbody></table></div><div class="revision"><span class="box-label">✅ Final Checklist</span><ul class="checklist"><li>Art 323A → 1985 ആക്ട് ചങ്ങല</li><li>3 KAT തീയതികൾ</li><li>A–C–L ഒഴിവാക്കൽ</li><li>Sec 21: 1 വർഷം</li><li>Chandra Kumar → ഹൈക്കോടതി ഡിവിഷൻ ബെഞ്ച്</li><li>2026 ആക്ട്: 5 വർഷം, 70/67</li></ul></div></div></section>
 
-<header class="topbar">
-  <div class="brand">16.9.3 Kerala Administrative Tribunal</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
-
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
-</div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>16.9.3 Kerala Administrative Tribunal</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+</main></div>
+<!-- ============================================================
+     INTERACTION SCRIPT — do not change, works for all chapters.
+     ============================================================ -->
 <script>
-window.PART_KEY   = 'important-acts-16.9.3-kat';
-window.PART_TITLE = '16.9.3 Kerala Administrative Tribunal';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
+  /* ---------- 1. Section collapse/expand ---------- */
+  document.querySelectorAll('.section > h2').forEach(function (h2) {
+    function toggle() {
+      var sec = h2.closest('.section');
+      var collapsed = sec.classList.toggle('collapsed');
+      h2.setAttribute('aria-expanded', String(!collapsed));
+    }
+    h2.addEventListener('click', toggle);
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  /* ---------- 2. Expand all / collapse all ---------- */
+  var expandAll = document.getElementById('expandAll');
+  var collapseAll = document.getElementById('collapseAll');
+  if (expandAll) expandAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.remove('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'true');
+    });
+  });
+  if (collapseAll) collapseAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.add('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- 3. TOC scroll-spy ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#tocNav a'));
+  var spySections = tocLinks
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && spySections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(function (a) {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    spySections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* Smooth scroll for TOC */
+  tocLinks.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ---------- 4. MCQ behaviour ---------- */
+  document.querySelectorAll('.question-item').forEach(function (item) {
+    var opts = item.querySelectorAll('.options span');
+    var correct = (item.dataset.correct || '').trim();
+    var shown = false;
+    var locked = false;
+
+    opts.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (locked || shown) return;
+        opts.forEach(function (o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var status = item.querySelector('.q-status');
+        if (status) status.textContent = 'തിരഞ്ഞെടുത്തു: ' + opt.dataset.opt;
+      });
+    });
+
+    var showBtn = item.querySelector('.btn-show');
+    if (showBtn) showBtn.addEventListener('click', function () {
+      if (shown) return;
+      shown = true;
+      opts.forEach(function (o) {
+        if (o.dataset.opt === correct) o.classList.add('correct');
+        else if (o.classList.contains('selected')) o.classList.add('wrong');
+        o.classList.add('locked');
+      });
+      var block = item.querySelector('.answer-block');
+      if (block) block.classList.add('show');
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ഉത്തരം കാണിച്ചു';
+      showBtn.disabled = true;
+    });
+
+    var markBtn = item.querySelector('.btn-mark');
+    if (markBtn) markBtn.addEventListener('click', function () {
+      markBtn.classList.toggle('active');
+      var status = item.querySelector('.q-status');
+      if (status) {
+        status.textContent = markBtn.classList.contains('active')
+          ? 'മാർക്ക് ചെയ്തു ★'
+          : '';
+      }
+    });
+
+    var lockBtn = item.querySelector('.btn-lock');
+    if (lockBtn) lockBtn.addEventListener('click', function () {
+      locked = true;
+      opts.forEach(function (o) { o.classList.add('locked'); });
+      lockBtn.disabled = true;
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ലോക്ക് ചെയ്തു 🔒';
+    });
+
+    var saveBtn = item.querySelector('.btn-save');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      var selected = item.querySelector('.options span.selected');
+      var status = item.querySelector('.q-status');
+      if (!selected) {
+        if (status) status.textContent = 'ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക';
+        return;
+      }
+      if (status) status.textContent = 'സേവ് ചെയ്തു ✓ (' + selected.dataset.opt + ')';
+    });
+  });
+
+});
+</script>
+
 </body>
 </html>
