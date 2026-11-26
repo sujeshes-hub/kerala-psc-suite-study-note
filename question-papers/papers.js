@@ -7,31 +7,6 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
-    "id": "qp-573-bio-001",
-    "kind": "json",
-    "title": "Biology & Public Health Mock Test",
-    "titleMl": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
-    "url": "../mock-test.html?paper=question-papers/573/qp-573-bio-001.json",
-    "data": "question-papers/573/qp-573-bio-001.json",
-    "qs": 25,
-    "duration": 12,
-    "tag": "573",
-    "updated": "2026-11-26 08:48:55"
-  },
-  {
-    "id": "moke-test-26-7-26",
-    "kind": "html",
-    "title": "Kerala PSC Cat. 573/2025 — Mock Test No. 2 (Offline)",
-    "titleMl": "",
-    "url": "573/moke%20test%2026.7.26.html",
-    "file": "question-papers/573/moke test 26.7.26.html",
-    "qs": 101,
-    "duration": 0,
-    "tag": "573",
-    "subject": "",
-    "updated": "2026-11-26 08:48:54"
-  },
-  {
     "id": "qp-002",
     "kind": "json",
     "title": "Full Length Mock Test 2",
@@ -41,7 +16,7 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "573",
-    "updated": "2026-11-26 08:48:54"
+    "updated": "2026-11-26 15:09:57"
   },
   {
     "id": "qp-001",
@@ -53,6 +28,31 @@ window.KPSC_PAPERS = [
     "qs": 99,
     "duration": 74,
     "tag": "573",
+    "updated": "2026-11-26 15:09:57"
+  },
+  {
+    "id": "qp-573-bio-001",
+    "kind": "json",
+    "title": "Biology & Public Health Mock Test",
+    "titleMl": "ജീവശാസ്ത്രവും പൊതുജനാരോഗ്യവും",
+    "url": "../mock-test.html?paper=question-papers/573/qp-573-bio-001.json",
+    "data": "question-papers/573/qp-573-bio-001.json",
+    "qs": 25,
+    "duration": 12,
+    "tag": "573",
+    "updated": "2026-11-26 15:09:57"
+  },
+  {
+    "id": "moke-test-26-7-26",
+    "kind": "html",
+    "title": "Kerala PSC Cat. 573/2025 — Mock Test No. 2 (Offline)",
+    "titleMl": "",
+    "url": "573/moke%20test%2026.7.26.html",
+    "file": "question-papers/573/moke test 26.7.26.html",
+    "qs": 102,
+    "duration": 0,
+    "tag": "573",
+    "subject": "",
     "updated": "2026-11-26 08:48:54"
   },
   {

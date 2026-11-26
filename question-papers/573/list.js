@@ -11,9 +11,9 @@ window.MOCK_TESTS_573 = [
     "title": "Kerala PSC Cat. 573/2025 — Mock Test No. 2 (Offline)",
     "titleMl": "",
     "updated": "2026-11-26 08:48:54",
-    "desc": "101 questions",
+    "desc": "102 questions",
     "file": "moke test 26.7.26.html",
-    "qs": 101,
+    "qs": 102,
     "duration": 0,
     "tag": "573"
   },
