@@ -6,6 +6,18 @@
    ===================================================================== */
 window.MOCK_TESTS_573 = [
   {
+    "id": "moke-test-26-7-26",
+    "key": "moke-test-26-7-26",
+    "title": "Kerala PSC Cat. 573/2025 — Mock Test No. 2 (Offline)",
+    "titleMl": "",
+    "updated": "2026-11-26 08:48:54",
+    "desc": "101 questions",
+    "file": "moke test 26.7.26.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "573"
+  },
+  {
     "id": "21-11-26-kpsc-573-2025-mock-test-1-reviewed",
     "key": "21-11-26-kpsc-573-2025-mock-test-1-reviewed",
     "title": "KPSC Cat. 573/2025 – Mock Test 1 (100 Q)",
