@@ -7,17 +7,17 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
-    "id": "27-11-26-kpsc-573-2025-mock3-100q",
+    "id": "psq-kpsc-physics-100-mock-test",
     "kind": "html",
-    "title": "Kerala PSC Cat. 573/2025 – Mock Test No. 3 (100 Q)",
+    "title": "കേരള PSC മോക്ക് ടെസ്റ്റ് – ഭൗതികശാസ്ത്രം (100 ചോദ്യങ്ങൾ)",
     "titleMl": "",
-    "url": "573/27.11.26%20KPSC_573_2025_Mock3_100Q.html",
-    "file": "question-papers/573/27.11.26 KPSC_573_2025_Mock3_100Q.html",
-    "qs": 101,
+    "url": "subjects/psq%20kpsc-physics-100-mock-test.html",
+    "file": "question-papers/subjects/psq kpsc-physics-100-mock-test.html",
+    "qs": 2,
     "duration": 0,
-    "tag": "573",
+    "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-27 10:09:27"
+    "updated": "2026-11-27 11:39:40"
   },
   {
     "id": "qp-002",
@@ -29,7 +29,7 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "573",
-    "updated": "2026-11-27 10:09:27"
+    "updated": "2026-11-27 11:39:40"
   },
   {
     "id": "qp-001",
@@ -41,7 +41,7 @@ window.KPSC_PAPERS = [
     "qs": 99,
     "duration": 74,
     "tag": "573",
-    "updated": "2026-11-27 10:09:27"
+    "updated": "2026-11-27 11:39:40"
   },
   {
     "id": "qp-573-bio-001",
@@ -53,6 +53,19 @@ window.KPSC_PAPERS = [
     "qs": 25,
     "duration": 12,
     "tag": "573",
+    "updated": "2026-11-27 11:39:40"
+  },
+  {
+    "id": "27-11-26-kpsc-573-2025-mock3-100q",
+    "kind": "html",
+    "title": "Kerala PSC Cat. 573/2025 – Mock Test No. 3 (100 Q)",
+    "titleMl": "",
+    "url": "573/27.11.26%20KPSC_573_2025_Mock3_100Q.html",
+    "file": "question-papers/573/27.11.26 KPSC_573_2025_Mock3_100Q.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "573",
+    "subject": "",
     "updated": "2026-11-27 10:09:27"
   },
   {
