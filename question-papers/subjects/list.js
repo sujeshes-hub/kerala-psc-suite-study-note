@@ -6,6 +6,19 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
+    "id": "psq-kpsc-physics-100-mock-test",
+    "key": "psq-kpsc-physics-100-mock-test",
+    "title": "കേരള PSC മോക്ക് ടെസ്റ്റ് – ഭൗതികശാസ്ത്രം (100 ചോദ്യങ്ങൾ)",
+    "titleMl": "",
+    "updated": "2026-11-27 11:39:40",
+    "desc": "2 questions",
+    "file": "psq kpsc-physics-100-mock-test.html",
+    "qs": 2,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Physics"
+  },
+  {
     "id": "psq-geography-mock-test-improved",
     "key": "psq-geography-mock-test-improved",
     "title": "കേരള PSC ഭൂമിശാസ്ത്രം — 100 ചോദ്യങ്ങളുടെ മാസ്റ്റർ മോക്ക് ടെസ്റ്റ്",
