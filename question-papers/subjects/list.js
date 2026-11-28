@@ -6,6 +6,19 @@
    ===================================================================== */
 window.MOCK_TESTS_SUBJECTS = [
   {
+    "id": "psq-important-acts-mock-test-100q",
+    "key": "psq-important-acts-mock-test-100q",
+    "title": "KPSC Mock Test – (XI) Important Acts – 100 Q",
+    "titleMl": "",
+    "updated": "2026-11-28 10:40:56",
+    "desc": "101 questions",
+    "file": "psq Important_Acts_Mock_Test_100Q.html",
+    "qs": 101,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "Important Acts"
+  },
+  {
     "id": "psq-kpsc-physics-100-mock-test",
     "key": "psq-kpsc-physics-100-mock-test",
     "title": "കേരള PSC മോക്ക് ടെസ്റ്റ് – ഭൗതികശാസ്ത്രം (100 ചോദ്യങ്ങൾ)",

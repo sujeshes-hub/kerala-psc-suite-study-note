@@ -7,17 +7,17 @@
    ===================================================================== */
 window.KPSC_PAPERS = [
   {
-    "id": "psq-kpsc-physics-100-mock-test",
+    "id": "psq-important-acts-mock-test-100q",
     "kind": "html",
-    "title": "കേരള PSC മോക്ക് ടെസ്റ്റ് – ഭൗതികശാസ്ത്രം (100 ചോദ്യങ്ങൾ)",
+    "title": "KPSC Mock Test – (XI) Important Acts – 100 Q",
     "titleMl": "",
-    "url": "subjects/psq%20kpsc-physics-100-mock-test.html",
-    "file": "question-papers/subjects/psq kpsc-physics-100-mock-test.html",
-    "qs": 2,
+    "url": "subjects/psq%20Important_Acts_Mock_Test_100Q.html",
+    "file": "question-papers/subjects/psq Important_Acts_Mock_Test_100Q.html",
+    "qs": 101,
     "duration": 0,
     "tag": "BOTH",
     "subject": "",
-    "updated": "2026-11-27 11:39:40"
+    "updated": "2026-11-28 10:40:56"
   },
   {
     "id": "qp-002",
@@ -29,7 +29,7 @@ window.KPSC_PAPERS = [
     "qs": 100,
     "duration": 75,
     "tag": "573",
-    "updated": "2026-11-27 11:39:40"
+    "updated": "2026-11-28 10:40:56"
   },
   {
     "id": "qp-001",
@@ -41,7 +41,7 @@ window.KPSC_PAPERS = [
     "qs": 99,
     "duration": 74,
     "tag": "573",
-    "updated": "2026-11-27 11:39:40"
+    "updated": "2026-11-28 10:40:56"
   },
   {
     "id": "qp-573-bio-001",
@@ -53,6 +53,19 @@ window.KPSC_PAPERS = [
     "qs": 25,
     "duration": 12,
     "tag": "573",
+    "updated": "2026-11-28 10:40:56"
+  },
+  {
+    "id": "psq-kpsc-physics-100-mock-test",
+    "kind": "html",
+    "title": "കേരള PSC മോക്ക് ടെസ്റ്റ് – ഭൗതികശാസ്ത്രം (100 ചോദ്യങ്ങൾ)",
+    "titleMl": "",
+    "url": "subjects/psq%20kpsc-physics-100-mock-test.html",
+    "file": "question-papers/subjects/psq kpsc-physics-100-mock-test.html",
+    "qs": 2,
+    "duration": 0,
+    "tag": "BOTH",
+    "subject": "",
     "updated": "2026-11-27 11:39:40"
   },
   {
