@@ -1,106 +1,550 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>16.6.4 JJ Board - Kerala PSC</title>
-<link rel="stylesheet" href="../../assets/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- REPLACE: page title -->
+  <title>ഇന്ത്യൻ ഭരണഘടന – ജുവനൈൽ ജസ്റ്റിസ് ബോർഡ് (16.6.4) | Kerala PSC</title>
+  <style>
+    :root {
+      --primary: #4a148c;
+      --primary-light: #6a1b9a;
+      --secondary: #00695c;
+      --accent: #b83b2c;
+      --bg: #ffffff;
+      --light-bg: #f3e5f5;
+      --border: #e1bee7;
+      --text: #14202b;
+      --text-light: #4a5f72;
+      --important-bg: #fff8e1;
+      --important-border: #f9a825;
+      --memory-bg: #e8f5e9;
+      --memory-border: #43a047;
+      --trap-bg: #fce4ec;
+      --trap-border: #c62828;
+      --correction-bg: #fff3e0;
+      --correction-border: #ef6c00;
+      --added-bg: #e3f2fd;
+      --added-border: #1976d2;
+      --revision-bg: #f3e5f5;
+      --revision-border: #8e24aa;
+      --table-head: #4a148c;
+      --table-alt: #f3e5f5;
+      --star: #f9a825;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Malayalam', 'Manjari', 'Rachana', 'Nirmala UI', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--light-bg);
+      padding: 16px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(74, 20, 140, 0.1);
+      padding: 16px;
+      align-self: start;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-controls button {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--light-bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-controls button:hover { background: var(--primary); color: #fff; }
+
+    .toc-nav { list-style: none; }
+    .toc-nav li { margin-bottom: 2px; }
+
+    .toc-nav a {
+      display: block;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .toc-nav a:hover { background: var(--light-bg); color: var(--primary); }
+
+    .toc-nav a.active {
+      background: var(--light-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main-container {
+      background: var(--bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74, 20, 140, 0.12);
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .chapter-header {
+      background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .chapter-header .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section h2 {
+      background: var(--light-bg);
+      color: var(--primary);
+      padding: 14px 18px;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .section h2:hover { background: #ede7f6; }
+    .section h2:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .toggle-icon { font-size: 14px; transition: transform 0.3s; color: var(--primary); }
+    .section.collapsed .toggle-icon { transform: rotate(-90deg); }
+    .section.collapsed > *:not(h2) { display: none; }
+    .section-body { padding: 16px 18px; }
+
+    .important, .memory, .trap, .correction, .added-fact, .revision, .last-minute, .viz-box {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 2px solid;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .important { background: var(--important-bg); border-left-color: var(--important-border); }
+    .memory { background: var(--memory-bg); border-left-color: var(--memory-border); }
+    .trap { background: var(--trap-bg); border-left-color: var(--trap-border); }
+    .correction { background: var(--correction-bg); border-left-color: var(--correction-border); }
+    .added-fact { background: var(--added-bg); border-left-color: var(--added-border); }
+    .revision { background: var(--revision-bg); border-left-color: var(--revision-border); }
+    .last-minute { background: #4a148c; color: #fff; border-left-color: #7c43bd; }
+    .last-minute strong { color: #ffd54f; }
+    .viz-box { background: #fafafa; border-left-color: var(--primary); text-align: center; }
+
+    .viz-caption {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .box-label { font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+    .stars { color: var(--star); font-size: 13px; letter-spacing: 1px; }
+
+    ul, ol { padding-left: 22px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead th {
+      background: var(--table-head);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody tr:hover { background: #ede7f6; }
+
+    .question-item {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 15.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .options span {
+      display: block;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .options span:hover { border-color: var(--primary-light); background: var(--light-bg); }
+    .options span.selected { border-color: var(--primary); background: #ede7f6; font-weight: 600; }
+    .options span.correct { border-color: var(--memory-border); background: #c8e6c9; }
+    .options span.wrong { border-color: var(--trap-border); background: #ffcdd2; }
+    .options span.locked { cursor: not-allowed; opacity: 0.8; }
+
+    .q-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .q-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .q-controls button:hover { background: var(--light-bg); }
+    .btn-save { background: var(--secondary) !important; color: #fff !important; border-color: var(--secondary) !important; }
+    .btn-show { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    .btn-mark.active { background: var(--star) !important; color: #fff !important; border-color: var(--star) !important; }
+    .btn-lock { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+    .q-status { font-size: 12px; font-weight: 600; margin-left: auto; color: var(--text-light); }
+
+    .answer-block {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--memory-bg);
+      border-radius: 8px;
+      border-left: 2px solid var(--memory-border);
+    }
+
+    .answer-block.show { display: block; }
+
+    .answer-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .explanation {
+      font-size: 13.5px;
+      color: var(--text-light);
+    }
+
+    h3 { font-size: 17px; color: var(--primary); margin: 14px 0 8px; }
+    p { margin: 8px 0; }
+    strong { color: var(--primary); }
+    .last-minute strong { color: #ffd54f; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "✔ "; color: var(--secondary); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px 12px;
+        border-radius: 0 0 12px 12px;
+        z-index: 100;
+      }
+      .toc-title, .toc-controls { display: none; }
+      .toc-nav { display: flex; gap: 6px; white-space: nowrap; padding-bottom: 4px; }
+      .toc-nav li { margin: 0; }
+      .toc-nav a {
+        padding: 6px 12px;
+        background: var(--light-bg);
+        border-radius: 20px;
+        border-left: none;
+        font-size: 12px;
+      }
+      .toc-nav a.active { background: var(--primary); color: #fff; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15.2px; }
+      .chapter-header h1 { font-size: 21px; }
+      .section h2 { font-size: 17.5px; }
+      h3 { font-size: 16px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 6px 8px; }
+      .q-text { font-size: 14.7px; }
+      .options { grid-template-columns: 1fr; }
+      .options span { font-size: 13.5px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; padding: 0; }
+      .layout { display: block; }
+      .toc { display: none; }
+      .main-container { box-shadow: none; border-radius: 0; padding: 0; }
+      .chapter-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .last-minute { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #4a148c !important; color: #fff !important; }
+      .section.collapsed > *:not(h2) { display: block !important; }
+      .section { page-break-inside: avoid; border: 1px solid #ccc; }
+      .section h2 { cursor: default; background: #f3e5f5 !important; }
+      .toggle-icon { display: none; }
+      .q-controls { display: none; }
+      .answer-block { display: block !important; }
+    }
+
+    .map-container { max-width: 100%; overflow-x: auto; }
+    .map-container svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
-
-<header class="topbar">
-  <div class="brand">16.6.4 JJ Board</div>
-  <div class="tabs" id="tabs">
-    <button data-view="notes" class="active">Notes</button>
-    <button data-view="test">Practice</button>
-    <button data-view="result">Result</button>
-    <button data-view="bookmarks">Bookmarks</button>
-    <button data-view="revision">Revision</button>
-    <button data-view="search">Search</button>
-  </div>
-</header>
-
-<div class="scorebar">
-  <div class="sbitem"><span>Net</span><b id="sbScore">0.00 / 0</b></div>
-  <div class="sbitem"><span>Attempted</span><b id="sbAtt">0</b></div>
-  <div class="sbitem"><span>Correct</span><b id="sbCor">0</b></div>
-  <div class="sbitem"><span>Wrong</span><b id="sbWr">0</b></div>
-  <div class="sbitem"><span>Remaining</span><b id="sbRem">0</b></div>
-  <div class="sbitem"><span>Accuracy</span><b id="sbAcc">0.0%</b></div>
-</div>
-<div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
-
-<main>
-
-<section class="view active" id="view-notes">
-  <div class="viewhead">
-    <h2>16.6.4 JJ Board</h2>
-    <p class="hint">Notes coming soon. Meanwhile, practise questions in the Practice tab.</p>
-  </div>
-</section>
-
-<section class="view" id="view-test">
-  <div class="toolbar">
-    <div class="filters">
-      <span class="flabel">Category:</span>
-      <button class="chip active" data-cat="ALL">All</button>
-      <button class="chip" data-cat="573">573</button>
-      <button class="chip" data-cat="883">883</button>
-    </div>
-    <div class="tools">
-      <select id="topicFilter"><option value="ALL">All Topics</option></select>
-      <select id="diffFilter">
-        <option value="ALL">All Difficulty</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Hard">Very Hard</option>
-      </select>
-      <label class="flabel">Neg:
-        <input type="number" id="negInput" step="0.01" min="0" value="0.33" style="width:70px">
-      </label>
-      <button class="btn ghost" id="resetBtn">Reset</button>
-      <button class="btn primary" id="finishBtn">Finish</button>
-    </div>
-  </div>
-  <div class="qcard" id="qcard"></div>
-  <div class="navwrap">
-    <h4>Question Navigator</h4>
-    <div class="navgrid" id="navgrid"></div>
-    <div id="setInfo" class="hint" style="margin-top:.6rem"></div>
-  </div>
-</section>
-
-<section class="view" id="view-result"><div id="resultHost"></div></section>
-
-<section class="view" id="view-bookmarks">
-  <div class="viewhead"><h2>Bookmarks</h2></div>
-  <div id="bookmarkList"></div>
-</section>
-
-<section class="view" id="view-revision">
-  <div class="viewhead"><h2>Revision Mode</h2></div>
-  <div class="setgrid" id="setgrid"></div>
-</section>
-
-<section class="view" id="view-search">
-  <div class="viewhead"><h2>Search</h2></div>
-  <div class="searchbox">
-    <input type="search" id="searchInput" placeholder="Search...">
-    <button class="btn ghost" id="clearSearch">Clear</button>
-  </div>
-  <div id="searchResults"></div>
-</section>
-
-</main>
-
+<div class="layout">
+<nav class="toc" aria-label="ഉള്ളടക്കം"><div class="toc-title">ഉള്ളടക്കം</div><div class="toc-controls"><button id="expandAll" type="button">എല്ലാം തുറക്കുക</button><button id="collapseAll" type="button">എല്ലാം അടയ്ക്കുക</button></div><ul class="toc-nav" id="tocNav"><li><a href="#sec0">⭐ Star Guide</a></li><li><a href="#sec1">1. വസ്തുതാ പരിശോധനാ നിലയും 2021–2026 മാറ്റങ്ങളും</a></li><li><a href="#sec2">2. ഒറ്റനോട്ടത്തിൽ</a></li><li><a href="#sec3">3. JJB രൂപീകരണം, ഘടന, യോഗ്യത, കാലാവധി</a></li><li><a href="#sec4">4. 18 തികയൽ</a></li><li><a href="#sec5">5. പിടികൂടൽ</a></li><li><a href="#sec6">6. പ്രാഥമിക വിലയിരുത്തൽ</a></li><li><a href="#sec7">7. ത്രിതല പെൻഡൻസി അവലോകനം</a></li><li><a href="#sec8">8. പ്രധാന സുപ്രീംകോടതി & ഹൈക്കോടതി വിധികൾ</a></li><li><a href="#sec9">9. താരതമ്യ പട്ടികകൾ</a></li><li><a href="#sec10">10. പരീക്ഷയിലെ ചതിക്കുഴികൾ</a></li><li><a href="#sec11">11. മെമ്മറി ട്രിക്കുകൾ</a></li><li><a href="#sec12">12. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്</a></li><li><a href="#sec13">13. പ്രതീക്ഷിത ചോദ്യങ്ങൾ</a></li><li><a href="#sec14">14. അതിവേഗ റിവിഷനും പ്രധാന തീയതികളും</a></li><li><a href="#sec15">15. തിരുത്തൽ രജിസ്റ്ററും അവസാന ചെക്ക്‌ലിസ്റ്റും</a></li></ul></nav>
+<main class="main-container">
+<header class="chapter-header"><div class="label">കേരള ഗവേണൻസ് | 16.6.4</div><h1>ജുവനൈൽ ജസ്റ്റിസ് ബോർഡ് (JJB)</h1><div class="subtitle">JJ Act 2015 Chapters III &amp; IV | 2021 Amendment | Model Rules | Kerala PSC Rank File</div></header>
+<section class="section" id="sec0"><h2 role="button" tabindex="0" aria-expanded="true">⭐ Star Guide <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">⭐ പ്രാധാന്യ സൂചകങ്ങൾ</span><ul><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>അതിപ്രധാനം</strong> — JJB ഘടന (<strong>1 + 2 = 3</strong>, JMFC 3 വർഷം, CJM/CMM അല്ല), ക്വാറം (Sec 7(3)), 24 മണിക്കൂർ (Sec 10), ജാമ്യം പൊതുനിയമം (Sec 12), അന്വേഷണം 4+2 മാസം (Sec 14), Sec 15 പ്രാഥമിക വിലയിരുത്തൽ, Sec 16 ത്രിതല അവലോകനം</li><li><span class="stars">⭐⭐⭐⭐</span> <strong>പ്രധാനം</strong> — Sec 18 ലെ 7 ഉത്തരവുകൾ, Sec 21–24, 26 സംരക്ഷണങ്ങൾ, 60 ദിവസ പരിശീലനം, SIR 2 ആഴ്ച, Sec 101 അപ്പീൽ</li><li><span class="stars">⭐⭐⭐</span> <strong>ശ്രദ്ധിക്കേണ്ടത്</strong> — Model Rules (6 മണിക്കൂർ സിറ്റിംഗ്, 7 വർഷ രേഖാ നശീകരണം), 2021 ഭേദഗതി മാറ്റങ്ങൾ</li><li><span class="stars">⭐⭐</span> <strong>അറിഞ്ഞാൽ മതി</strong> — 2024–2026 വിധികളുടെ തീയതികൾ, ചട്ട നമ്പറുകൾ</li></ul></div><div class="added-fact"><span class="box-label">➕ ചുരുക്കം</span><ul><li><strong>JJB:</strong> നിയമവുമായി പൊരുത്തപ്പെടാത്ത കുട്ടികളെ (CCL) വിചാരണ/അന്വേഷണം ചെയ്യുന്ന ജില്ലാതല ബെഞ്ച് — JJ Act 2015 അധ്യായം III (Sec 4–9) & IV (Sec 10–26)</li><li><strong>നിയമം:</strong> Act No. 2 of 2016 — പ്രാബല്യം 2016 ജനുവരി 15</li><li><strong>ഭേദഗതി:</strong> Act 23 of 2021 (ഒപ്പ് 2021 ഓഗസ്റ്റ് 7; പ്രാബല്യം 2022 സെപ്റ്റംബർ 1)</li><li><strong>സിലബസ് കോഡ്:</strong> 16.6.4 | ★★★ High-Yield (Cat. No. 883/2025, 573/2025, LGS, University Assistant, Degree, ICDS Supervisor, SI/CPO)</li></ul></div><div class="memory"><span class="box-label">🧠 തുടക്കക്കാർക്ക്: JJB എന്നാൽ?</span><p>കുട്ടികൾ തെറ്റ് ചെയ്താൽ സാധാരണ കോടതിയിലല്ല, <strong>കുട്ടികൾക്കായുള്ള പ്രത്യേക ബെഞ്ചിലാണ്</strong> വിചാരണ. ലക്ഷ്യം ശിക്ഷയല്ല, <strong>തിരുത്തലും പുനരധിവാസവും</strong>. ഉദാഹരണം: 15 വയസ്സുകാരൻ മോഷ്ടിച്ചാൽ ജയിലിലല്ല, JJB മുമ്പാകെ — ഉപദേശം, കൗൺസിലിംഗ്, പ്രൊബേഷൻ പോലുള്ള ഉത്തരവുകളാണ് ലഭിക്കുക.</p></div></div></section>
+<section class="section" id="sec1"><h2 role="button" tabindex="0" aria-expanded="true">1. വസ്തുതാ പരിശോധനാ നിലയും 2021–2026 മാറ്റങ്ങളും <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="added-fact"><span class="box-label">✅ ഉറപ്പുവരുത്തിയവ (Bare Act / ഔദ്യോഗിക ഗസറ്റ് വഴി)</span><ul><li><strong>Sec 16(4)</strong> — 2021 ഭേദഗതി ചേർത്തു: ജില്ലാ മജിസ്ട്രേറ്റിന് (DM) കുട്ടിയുടെ ഉത്തമ താല്പര്യത്തിനായി ബോർഡ്, കമ്മിറ്റി ഉൾപ്പെടെ എല്ലാ പങ്കാളികളിൽ നിന്നും വിവരം ആവശ്യപ്പെടാം.</li><li><strong>Act 23 of 2021</strong> — 2021 ഓഗസ്റ്റ് 7-ന് രാഷ്ട്രപതിയുടെ അനുമതി; 2022 സെപ്റ്റംബർ 1 മുതൽ പ്രാബല്യം.</li><li><strong>Sec 7</strong> — 7(3): അന്തിമ തീർപ്പിന് പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ് ഉൾപ്പെടെ കുറഞ്ഞത് 2 അംഗങ്ങൾ; 7(4): ഭിന്നാഭിപ്രായത്തിൽ ഭൂരിപക്ഷം, ഇല്ലെങ്കിൽ പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ്.</li><li><strong>Sec 4(7)(iii)</strong> — 2021 ഭേദഗതി: വർഷത്തിലെ സിറ്റിംഗുകളിൽ "minimum" നാലിൽ മൂന്ന് പങ്കെടുക്കാത്തയാളെ നീക്കാം.</li><li><strong>Sec 12(2)</strong> — 2021 ഭേദഗതി: ജാമ്യം നൽകാത്ത കുട്ടിയെ ഒബ്സർവേഷൻ ഹോമിലോ <strong>പ്ലേസ് ഓഫ് സേഫ്റ്റിയിലോ</strong> പാർപ്പിക്കാം.</li><li><strong>Sec 14(3) സമയപരിധി</strong> — സുപ്രീംകോടതി (Child in Conflict with Law v. State of Karnataka, 2024 മെയ് 7): 3 മാസ പരിധി <em>directory</em>.</li></ul></div><div class="added-fact"><span class="box-label">➕ കൂടുതൽ: 2021 ഭേദഗതിയിലെ മറ്റ് പ്രധാന മാറ്റങ്ങൾ</span><ul><li><strong>Sec 2(54) ഗുരുതര കുറ്റം (Serious):</strong> 3–7 വർഷം തടവുള്ളവ; കൂടാതെ പരമാവധി ശിക്ഷ 7 വർഷത്തിൽ കൂടുതലും എന്നാൽ കുറഞ്ഞ ശിക്ഷ ഇല്ലാത്തതോ 7 വർഷത്തിൽ താഴെയുള്ളതോ ആയ കുറ്റങ്ങളും ഇനി "ഗുരുതര" വിഭാഗത്തിൽ.</li><li><strong>Sec 86(4):</strong> JJ Act പ്രകാരമുള്ള കുറ്റങ്ങൾ ചിൽഡ്രൻസ് കോടതിയാണ് വിചാരണ ചെയ്യുക (ഡൽഹി ഹൈക്കോടതി: മുൻകാല പ്രാബല്യം).</li><li>ദത്തെടുക്കൽ ഉത്തരവ് ഇപ്പോൾ ജില്ലാ മജിസ്ട്രേറ്റ് നൽകും; DM-ന് CWC/ശിശുസംരക്ഷണ സ്ഥാപനങ്ങളുടെ മേൽനോട്ട അധികാരം.</li></ul></div><div class="correction"><span class="box-label">🔴 ശ്രദ്ധിക്കുക — "Needs verification" ഇനങ്ങൾ</span><ul><li><strong>Model Rules 2022 Rule 5(2):</strong> സാമൂഹ്യപ്രവർത്തക അംഗത്തിന്റെ 2 തവണ നിയമനത്തിലെ "തുടർച്ചയായിരിക്കാൻ പാടില്ല" എന്ന വാചകം 2022 ഭേദഗതി ചട്ടങ്ങൾ ഒഴിവാക്കിയെന്ന് നിങ്ങളുടെ കുറിപ്പ് പറയുന്നു. കേരള 2017 ചട്ടങ്ങളിൽ ഇത് ബാധകമാണോ എന്ന് പരിശോധിക്കുക.</li><li><strong>പ്രായപരിധി 35–65</strong> (കേരള ചട്ടങ്ങളിൽ 70 എന്ന് കുറിപ്പിൽ) — ചട്ട പാഠം നോക്കി ഉറപ്പിക്കുക.</li><li><strong>2026-ലെ വിധികൾ</strong> (Juvenile Delinquent v. State of U.P., X v. State of Bihar, Sreejisha M. v. State of Kerala) — നിങ്ങളുടെ ഉറവിടത്തിൽ നിന്ന് എടുത്തവയാണ്; ഞാൻ സ്വതന്ത്രമായി ഒത്തുനോക്കിയിട്ടില്ല.</li><li><strong>Sec 8(3) ഉപഖണ്ഡ അക്ഷരങ്ങളും Model Rule നമ്പറുകളും</strong> — പരീക്ഷയ്ക്ക് ആശയം പഠിക്കുക; അക്ഷരം/നമ്പർ Bare Act നോക്കി ഉറപ്പിക്കുക.</li></ul></div></div></section>
+<section class="section collapsed" id="sec2"><h2 role="button" tabindex="0" aria-expanded="false">2. ഒറ്റനോട്ടത്തിൽ (Orientation) <span class="toggle-icon">▼</span></h2><div class="section-body"><p>Sec 2(10): <strong>"Board"</strong> = Sec 4 പ്രകാരമുള്ള JJB. Sec 2(13): <strong>CCL</strong> (Child in Conflict with Law). Sec 2(14): <strong>CNCP</strong> (Child in Need of Care and Protection — CWC-യുടെ വിഷയം).</p><div style="overflow-x: auto;"><table><thead><tr><th>അധ്യായം</th><th>വകുപ്പ്</th><th>പ്രധാന വിഷയം</th></tr></thead><tbody><tr><td>III</td><td><strong>4</strong> ★★★</td><td>ഓരോ ജില്ലയിലും JJB, 1+2=3 ഘടന, 60 ദിവസ പരിശീലനം, 4 അയോഗ്യതകൾ, നീക്കം ചെയ്യൽ (4(7))</td></tr><tr><td>III</td><td>5 & 6</td><td>അന്വേഷണത്തിനിടെ 18 തികഞ്ഞാലും JJB തുടരും (5); 18 തികഞ്ഞ ശേഷം പിടിച്ചാലും ജെ.ജെ ആക്ട് (6) — പ്ലേസ് ഓഫ് സേഫ്റ്റി</td></tr><tr><td>III</td><td><strong>7</strong> ★★★</td><td>നടപടിക്രമം: 1 അംഗം മുമ്പാകെ ഹാജരാക്കാം; അന്തിമ തീർപ്പിന് 2 അംഗങ്ങൾ (PM ഉൾപ്പെടെ); ഭിന്നാഭിപ്രായം</td></tr><tr><td>III</td><td><strong>8</strong> ★★★</td><td>JJB-യുടെ ഏക അധികാരവും ചുമതലകളും; ജയിൽ പരിശോധന; FIR ഉത്തരവ്</td></tr><tr><td>III</td><td>9</td><td>JJB അല്ലാത്ത കോടതിക്ക് മുമ്പാകെ പ്രായവാദം → JJB-യ്ക്ക് കൈമാറൽ</td></tr><tr><td>IV</td><td>10–11</td><td>ലോക്കപ്പ്/ജയിൽ വിലക്ക്; <strong>24 മണിക്കൂർ</strong> ഹാജരാക്കൽ</td></tr><tr><td>IV</td><td><strong>12</strong> ★★★</td><td>ജാമ്യം പൊതുനിയമം; 7 ദിവസ വ്യവസ്ഥ</td></tr><tr><td>IV</td><td>13</td><td>മാതാപിതാക്കളെ അറിയിക്കൽ; <strong>SIR 2 ആഴ്ച</strong></td></tr><tr><td>IV</td><td><strong>14</strong> ★★★</td><td>അന്വേഷണം <strong>4+2 മാസം</strong>; 3 കുറ്റവിഭാഗം നടപടിക്രമം</td></tr><tr><td>IV</td><td><strong>15</strong> ★★★</td><td>16–18 വയസ്സ്, കൊടും കുറ്റം: പ്രാഥമിക വിലയിരുത്തൽ (3 മാസം)</td></tr><tr><td>IV</td><td><strong>16</strong> ★★★</td><td>പെൻഡൻസി അവലോകനം: CJM 3 മാസം / SLSA ഉന്നതസമിതി 6 മാസം / DM (16(4))</td></tr><tr><td>IV</td><td>17–18</td><td>കുറ്റക്കാരനല്ലെങ്കിൽ വിടുക/CWC (17); 7 ഉത്തരവുകൾ (18)</td></tr><tr><td>IV</td><td>19–21</td><td>ചിൽഡ്രൻസ് കോടതി (19); 21 വയസ്സ് വിലയിരുത്തൽ (20); വധശിക്ഷ/മോചനമില്ലാത്ത ജീവപര്യന്തം വിലക്ക് (21)</td></tr><tr><td>IV</td><td>22–26</td><td>CrPC അധ്യായം VIII വിലക്ക് (22); സംയുക്ത വിചാരണ വിലക്ക് (23); അയോഗ്യത നീക്കൽ (24); പഴയ കേസുകൾ (25); ഒളിച്ചോടിയ കുട്ടി (26)</td></tr></tbody></table></div></div></section>
+<section class="section collapsed" id="sec3"><h2 role="button" tabindex="0" aria-expanded="false">3. JJB രൂപീകരണം, ഘടന, യോഗ്യത, കാലാവധി (Sec 4) <span class="toggle-icon">▼</span></h2><div class="section-body"><p><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Sec 4(1):</strong> സംസ്ഥാന സർക്കാർ ഓരോ ജില്ലയിലും ഒന്നോ അതിലധികമോ JJB <strong>നിർബന്ധമായും</strong> രൂപീകരിക്കണം.</p><h3>ഘടന — Sec 4(2): 3 അംഗങ്ങൾ</h3><ul><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ് (1):</strong> കുറഞ്ഞത് <strong>3 വർഷം പരിചയമുള്ള</strong> മെട്രോപൊളിറ്റൻ മജിസ്ട്രേറ്റ് (MM) അല്ലെങ്കിൽ JMFC. <strong>CMM / CJM ആകാൻ പാടില്ല.</strong></li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>സാമൂഹ്യപ്രവർത്തകർ (2):</strong> ഇതിൽ <strong>കുറഞ്ഞത് ഒരാൾ വനിത</strong>. കഴിയുന്നതും വ്യത്യസ്ത മേഖലകളിൽ നിന്ന് (ചട്ടം 4(4)).</li><li>അധികാരം: CrPC (ഇപ്പോൾ BNSS 2023) പ്രകാരം MM/JMFC-ക്കുള്ള എല്ലാ അധികാരങ്ങളും ബെഞ്ചിന്.</li></ul><div class="memory"><span class="box-label">🧠 Trick</span><p><strong>"1 + 2 = 3"</strong> — ഒരു മജിസ്ട്രേറ്റ് + രണ്ട് സാമൂഹ്യപ്രവർത്തകർ. <strong>CJM = Chief</strong> ആയതിനാൽ "ചീഫ്" ആരും JJB-യിൽ ഇരിക്കില്ല; ചീഫ് <strong>പുറത്തുനിന്ന് മേൽനോട്ടം</strong> (Sec 16) ചെയ്യും.</p></div><h3>സാമൂഹ്യപ്രവർത്തക അംഗം — യോഗ്യത (Sec 4(3))</h3><ul><li>കുട്ടികളുടെ ആരോഗ്യം/വിദ്യാഭ്യാസം/ക്ഷേമം എന്നിവയിൽ കുറഞ്ഞത് <strong>7 വർഷം</strong> സജീവ പരിചയം, <strong>അല്ലെങ്കിൽ</strong></li><li>ചൈൽഡ് സൈക്കോളജി / സൈക്യാട്രി / സോഷ്യോളജി / നിയമം എന്നിവയിൽ ബിരുദമുള്ള പ്രാക്ടീസിംഗ് പ്രൊഫഷണൽ.</li><li>പ്രായം (Model Rules): <strong>35 മുതൽ 65 വരെ</strong> (കേരള 2017 ചട്ടത്തിൽ 70 എന്ന് കുറിപ്പിൽ — <em>verify</em>).</li></ul><div class="trap"><span class="box-label">⚠️ 4 അയോഗ്യതകൾ — Sec 4(4)</span><ul><li>മനുഷ്യാവകാശ/ബാലാവകാശ ലംഘനത്തിന്റെ മുൻകാല രേഖ</li><li>സദാചാരവിരുദ്ധ (moral turpitude) കുറ്റത്തിന് ശിക്ഷ — റദ്ദാക്കുകയോ മാപ്പ് ലഭിക്കുകയോ ചെയ്തില്ലെങ്കിൽ</li><li>കേന്ദ്ര/സംസ്ഥാന/പൊതുമേഖലാ സർവീസിൽ നിന്ന് പിരിച്ചുവിടൽ/നീക്കം</li><li>ബാലപീഡനം, ബാലവേല, മറ്റ് മനുഷ്യാവകാശ/ബാലാവകാശ ലംഘനം ചെയ്തതായി കണ്ടെത്തൽ</li></ul></div><h3>പരിശീലനവും കാലാവധിയും</h3><ul><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Sec 4(5):</strong> പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ് ഉൾപ്പെടെ എല്ലാ അംഗങ്ങൾക്കും നിയമനം മുതൽ <strong>60 ദിവസത്തിനുള്ളിൽ</strong> ഇൻഡക്ഷൻ പരിശീലനം.</li><li>സാമൂഹ്യപ്രവർത്തക അംഗത്തിന്റെ കാലാവധി <strong>പരമാവധി 3 വർഷം</strong>; <strong>പരമാവധി 2 തവണ</strong> നിയമനം (Model Rules Rule 5). ക്വാറം ബാധിച്ചാൽ പുതിയ നിയമനം വരെ / പരമാവധി 6 മാസം നീട്ടാം.</li><li><strong>2022 ഭേദഗതി ചട്ടം:</strong> "തുടർച്ചയായിരിക്കാൻ പാടില്ല" വിലക്ക് ഒഴിവാക്കി (കേരളത്തിൽ ബാധകമോ എന്ന് <em>verify</em>).</li></ul><div class="correction"><span class="box-label">🔴 നീക്കം ചെയ്യൽ — Sec 4(7)</span><p><strong>പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ് ഒഴികെ</strong> ഏതൊരു അംഗത്തെയും സംസ്ഥാന സർക്കാരിന് അന്വേഷണത്തിന് ശേഷം നീക്കാം:</p><ul><li>അധികാര ദുർവിനിയോഗം</li><li>കാരണമില്ലാതെ <strong>തുടർച്ചയായി 3 മാസം</strong> ഹാജരാകാതിരിക്കൽ</li><li>ഒരു വർഷത്തെ സിറ്റിംഗുകളിൽ കുറഞ്ഞത് <strong>3/4</strong> പങ്കെടുക്കാതിരിക്കൽ (2021: "minimum")</li><li>കാലാവധിക്കിടെ Sec 4(4) അയോഗ്യത വരൽ</li></ul><p>ജുഡീഷ്യൽ ഓഫീസർക്കെതിരായ പരാതി ഹൈക്കോടതി രജിസ്ട്രാർക്ക് കൈമാറും; സംസ്ഥാന സർക്കാർ അന്വേഷണം 2 മാസത്തിനുള്ളിൽ തീർത്ത് 1 മാസത്തിനുള്ളിൽ നടപടി (Model Rules).</p></div></div></section>
+<section class="section collapsed" id="sec4"><h2 role="button" tabindex="0" aria-expanded="false">4. 18 തികയൽ (Sec 5–6), ബാലസൗഹൃദ സിറ്റിംഗ് (Sec 7), അധികാരങ്ങൾ (Sec 8), മജിസ്ട്രേറ്റ് നടപടി (Sec 9) <span class="toggle-icon">▼</span></h2><div class="section-body"><h3>Sec 5 & 6</h3><ul><li><strong>Sec 5:</strong> അന്വേഷണത്തിനിടെ കുട്ടിക്ക് 18 തികഞ്ഞാലും JJB അന്വേഷണം തുടർന്ന് ഉത്തരവിടും (കുട്ടിയായി തുടരുന്നതുപോലെ).</li><li><strong>Sec 6:</strong> 18-ന് താഴെ ചെയ്ത കുറ്റത്തിന് 18 തികഞ്ഞ ശേഷം പിടിച്ചാലും JJ ആക്ട് ബാധകം. ജാമ്യമില്ലെങ്കിൽ <strong>ജയിലല്ല, പ്ലേസ് ഓഫ് സേഫ്റ്റി</strong>.</li></ul><div class="memory"><span class="box-label">🧠 Trick</span><p><strong>"പ്രായം നോക്കുന്നത് കുറ്റം ചെയ്ത ദിവസത്തെ"</strong> — പിടിച്ച ദിവസത്തെയോ വിധി ദിവസത്തെയോ പ്രായമല്ല.</p></div><h3>Sec 7 — ബാലസൗഹൃദ സിറ്റിംഗ് <span class="stars">⭐⭐⭐⭐⭐</span></h3><ul><li><strong>സ്ഥലം:</strong> ഒബ്സർവേഷൻ ഹോം പരിസരം / CCL-ക്കുള്ള CCI; <strong>സാധാരണ ക്രിമിനൽ കോടതി പരിസരത്ത് പാടില്ല</strong> (Sec 5-ന്റെ ആശയം Rule 6).</li><li><strong>ബാലസൗഹൃദ രൂപകല്പന:</strong> ഉയർന്ന പ്ലാറ്റ്ഫോമിൽ ഇരിക്കരുത്; വിറ്റ്നസ് ബോക്സോ ഇരുമ്പഴികളോ പാടില്ല; മുഖാമുഖം ഇരിപ്പിടം.</li><li><strong>സിറ്റിംഗ് സമയം (Rule 6(7)):</strong> എല്ലാ പ്രവൃത്തിദിവസവും മജിസ്ട്രേറ്റ് കോടതി സമയത്തിനനുസരിച്ച് <strong>കുറഞ്ഞത് 6 മണിക്കൂർ</strong>.</li><li><strong>Sec 7(2):</strong> ബോർഡ് സിറ്റിംഗിൽ ഇല്ലെങ്കിൽ കുട്ടിയെ <strong>ഒരൊറ്റ അംഗത്തിന്</strong> മുമ്പാകെ ഹാജരാക്കാം.</li><li><strong>Sec 7(3):</strong> ഒരു അംഗത്തിന്റെ അസാന്നിധ്യത്താൽ ഉത്തരവ് അസാധുവാകില്ല; പക്ഷേ <strong>അന്തിമ തീർപ്പിനും Sec 18(3) ഉത്തരവിനും PM ഉൾപ്പെടെ കുറഞ്ഞത് 2 അംഗങ്ങൾ</strong>.</li><li><strong>Sec 7(4):</strong> ഭിന്നാഭിപ്രായത്തിൽ <strong>ഭൂരിപക്ഷം</strong>; ഭൂരിപക്ഷമില്ലെങ്കിൽ <strong>പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റിന്റെ അഭിപ്രായം</strong>.</li></ul><div class="added-fact"><span class="box-label">➕ ഉദാഹരണം</span><p>PM അവധിയിലാണ്, രണ്ട് സാമൂഹ്യപ്രവർത്തകർ ഉണ്ട്. ജാമ്യ ഹർജി ഇടക്കാലത്ത് പരിഗണിക്കാം, പക്ഷേ <strong>അന്തിമ വിധി പറയാൻ കഴിയില്ല</strong> (Sec 7(3) — 2 സാമൂഹ്യപ്രവർത്തകർ മാത്രം പോരാ).</p></div><h3>Sec 8 — അധികാരങ്ങളും ചുമതലകളും <span class="stars">⭐⭐⭐⭐⭐</span></h3><ul><li><strong>Sec 8(1):</strong> CCL വിഷയങ്ങളിൽ ഇടപെടാനുള്ള <strong>ഏക അധികാരം</strong> JJB-ക്ക്.</li><li>കുട്ടിയുടെ/രക്ഷിതാവിന്റെ അറിവോടെയുള്ള പങ്കാളിത്തം, അവകാശ സംരക്ഷണം, <strong>സൗജന്യ നിയമസഹായം</strong>, ആവശ്യമെങ്കിൽ പരിഭാഷകൻ/സ്പെഷ്യൽ എജ്യുക്കേറ്റർ.</li><li>പ്രൊബേഷൻ ഓഫീസറോട് SIR തയ്യാറാക്കാൻ നിർദ്ദേശം.</li><li>കുട്ടി CNCP കൂടിയാണെങ്കിൽ <strong>ഏത് ഘട്ടത്തിലും CWC-യ്ക്ക് കൈമാറാം</strong>.</li><li><strong>FIR ഉത്തരവ്:</strong> CCL കുട്ടിക്കെതിരായ കുറ്റത്തിലും, CWC രേഖാമൂലം പരാതി നൽകിയ CNCP കുട്ടിക്കെതിരായ കുറ്റത്തിലും FIR രജിസ്റ്റർ ചെയ്യാൻ പോലീസിനോട് ഉത്തരവിടാം (Sec 8(3)(k)–(l) എന്ന് കുറിപ്പിൽ).</li><li><strong>മുതിർന്നവരുടെ ജയിൽ പരിശോധന:</strong> കുട്ടി ജയിലിലുണ്ടോ എന്ന് പതിവായി പരിശോധിച്ച് ഉടൻ ഒബ്സർവേഷൻ ഹോമിലേക്ക് മാറ്റൽ (Sec 8(3)(o) എന്ന് കുറിപ്പിൽ — <em>അക്ഷരം verify</em>).</li><li>സ്ഥാപനങ്ങൾ: ഫിറ്റ് പേഴ്സൺ/ഫിറ്റ് ഫെസിലിറ്റി പ്രഖ്യാപന അന്വേഷണം; CCL-ക്കുള്ള ഭവനങ്ങളിൽ പ്രതിമാസ സന്ദർശനം [<em>ഉറപ്പിക്കേണ്ടത്</em>].</li></ul><h3>Sec 9 — JJB അല്ലാത്ത കോടതിക്ക് മുമ്പാകെ പ്രായവാദം</h3><ul><li>പ്രതി കുറ്റസമയത്ത് കുട്ടിയായിരുന്നു എന്ന വാദം <strong>ഏത് കോടതിയിലും, ഏത് ഘട്ടത്തിലും, അന്തിമ തീർപ്പിന് ശേഷവും</strong> ഉന്നയിക്കാം.</li><li>കോടതി തെളിവെടുത്ത് (സത്യവാങ്മൂലം പോരാ) പ്രായം കണ്ടെത്തണം; കുട്ടിയെങ്കിൽ <strong>കേസ് JJB-യ്ക്ക് കൈമാറണം; കോടതി വിധിച്ച ശിക്ഷയ്ക്ക് ഫലമില്ല</strong>.</li><li>അന്വേഷണകാലത്ത് കസ്റ്റഡി വേണമെങ്കിൽ <strong>പ്ലേസ് ഓഫ് സേഫ്റ്റിയിൽ</strong>.</li></ul><div class="added-fact"><span class="box-label">➕ പ്രായ നിർണ്ണയം — Sec 94 (മുൻഗണനാക്രമം)</span><ol><li>സ്കൂൾ / മെട്രിക്കുലേഷൻ സർട്ടിഫിക്കറ്റിലെ ജനനത്തീയതി</li><li>കോർപ്പറേഷൻ / മുനിസിപ്പാലിറ്റി / പഞ്ചായത്ത് നൽകിയ ജനന സർട്ടിഫിക്കറ്റ്</li><li>ഇവ രണ്ടുമില്ലെങ്കിൽ <strong>മാത്രം</strong> വൈദ്യ പരിശോധന (ossification test)</li></ol><p>ഈ ക്രമം തെറ്റിച്ച് ആദ്യം ഓസിഫിക്കേഷൻ ടെസ്റ്റ് എന്ന് വരുന്ന ഓപ്ഷൻ തെറ്റാണ്. (Sec 94 — ഉറപ്പിനായി Bare Act നോക്കുക.)</p></div></div></section>
+<section class="section collapsed" id="sec5"><h2 role="button" tabindex="0" aria-expanded="false">5. പിടികൂടൽ (Sec 10), ജാമ്യം (Sec 12), SIR (Sec 13), അന്വേഷണം (Sec 14) <span class="toggle-icon">▼</span></h2><div class="section-body"><h3>Sec 10 — പിടികൂടൽ</h3><ul><li><span class="stars">⭐⭐⭐⭐⭐</span> കുട്ടിയെ <strong>പോലീസ് ലോക്കപ്പിലോ ജയിലിലോ ഇടരുത്</strong>; ഉടൻ SJPU / നിയുക്ത ചൈൽഡ് വെൽഫെയർ പോലീസ് ഓഫീസറുടെ ചുമതലയിൽ.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> യാത്രാസമയം ഒഴികെ <strong>24 മണിക്കൂറിനുള്ളിൽ</strong> JJB-ക്ക് മുമ്പാകെ ഹാജരാക്കണം (അസമയമെങ്കിൽ ഒബ്സർവേഷൻ ഹോമിൽ പാർപ്പിച്ച്).</li><li><strong>Sec 11:</strong> കുട്ടിയെ ഏൽപ്പിക്കപ്പെട്ട വ്യക്തിയുടെ ഉത്തരവാദിത്തം.</li></ul><h3>Sec 12 — ജാമ്യം <span class="stars">⭐⭐⭐⭐⭐</span></h3><ul><li>കുറ്റം ജാമ്യമുള്ളതോ ഇല്ലാത്തതോ ആകട്ടെ, <strong>ജാമ്യം നൽകലാണ് പൊതുനിയമം</strong> (ജാമ്യത്തുക/ആൾജാമ്യത്തോടെയോ ഇല്ലാതെയോ, പ്രൊബേഷൻ ഓഫീസർ/ഫിറ്റ് പേഴ്സൺ മേൽനോട്ടത്തിൽ).</li><li>ജാമ്യം <strong>നിഷേധിക്കാവുന്ന 3 കാരണങ്ങൾ</strong>: (1) അറിയപ്പെടുന്ന കുറ്റവാളിയുമായി കൂട്ടുകൂടാൻ സാധ്യത, (2) ധാർമ്മിക/ശാരീരിക/മാനസിക അപകട സാധ്യത, (3) മോചനം <strong>നീതിയുടെ ലക്ഷ്യം പരാജയപ്പെടുത്താൻ</strong> സാധ്യത.</li><li>നിഷേധിച്ചാൽ ഒബ്സർവേഷൻ ഹോം / പ്ലേസ് ഓഫ് സേഫ്റ്റി.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>7 ദിവസ നിയമം (Sec 12(4)):</strong> ജാമ്യ ഉത്തരവ് കിട്ടി 7 ദിവസത്തിനകം വ്യവസ്ഥ പാലിക്കാനായില്ലെങ്കിൽ വ്യവസ്ഥ ഭേദഗതിക്കായി വീണ്ടും JJB-യിൽ ഹാജരാക്കണം.</li></ul><div class="added-fact"><span class="box-label">➕ ഉദാഹരണം</span><p>ബാലൻ ₹10,000 ജാമ്യത്തുക കെട്ടാൻ ആളില്ലാതെ 7 ദിവസം കഴിഞ്ഞു → ജയിലിൽ തുടരില്ല; ബോർഡ് തുക കുറയ്ക്കുകയോ വ്യവസ്ഥ മാറ്റുകയോ ചെയ്യും.</p></div><h3>Sec 13 — വിവരം നൽകലും SIR</h3><ul><li>പിടികൂടിയാലുടൻ മാതാപിതാക്കളെ/രക്ഷിതാവിനെയും പ്രൊബേഷൻ ഓഫീസറെയും (ഇല്ലെങ്കിൽ ചൈൽഡ് വെൽഫെയർ ഓഫീസർ) അറിയിക്കണം.</li><li><span class="stars">⭐⭐⭐⭐⭐</span> <strong>Social Investigation Report (SIR)</strong> — കുടുംബപശ്ചാത്തലം, സാഹചര്യം: <strong>2 ആഴ്ചയ്ക്കുള്ളിൽ</strong> JJB-ക്ക്.</li></ul><h3>Sec 14 — അന്വേഷണം <span class="stars">⭐⭐⭐⭐⭐</span></h3><ul><li><strong>Sec 14(2):</strong> ആദ്യ ഹാജരാക്കൽ മുതൽ <strong>4 മാസം</strong>; കാരണം രേഖപ്പെടുത്തി <strong>പരമാവധി 2 മാസം</strong> കൂടി (ആകെ 6).</li><li><strong>Sec 14(3):</strong> കൊടും കുറ്റത്തിലെ പ്രാഥമിക വിലയിരുത്തൽ <strong>3 മാസം</strong> (SC 2024: <em>directory</em>).</li><li><strong>Sec 14(4):</strong> <strong>ചെറുകിട</strong> കുറ്റത്തിൽ നീട്ടിയ കാലാവധിക്കും തീർന്നില്ലെങ്കിൽ നടപടി <strong>അവസാനിക്കും</strong>; <strong>ഗുരുതര</strong> കുറ്റത്തിൽ ബോർഡ് CJM/CMM-ന് റിപ്പോർട്ട് നൽകി, അദ്ദേഹത്തിന്റെ ഉത്തരവോടെ നീട്ടാം.</li></ul><h3>3 കുറ്റവിഭാഗങ്ങൾ</h3><div style="overflow-x: auto;"><table><thead><tr><th>വിഭാഗം</th><th>ശിക്ഷ</th><th>JJB നടപടിക്രമം</th></tr></thead><tbody><tr><td>ചെറുകിട (Petty) — Sec 2(45)</td><td>പരമാവധി 3 വർഷം വരെ</td><td>സംക്ഷിപ്ത വിചാരണ (Summary)</td></tr><tr><td>ഗുരുതര (Serious) — Sec 2(54)</td><td>3–7 വർഷം (+ 2021: പരമാവധി >7, കുറഞ്ഞത് ഇല്ല/<7)</td><td>സമൻസ് കേസ് നടപടിക്രമം</td></tr><tr><td>കൊടും (Heinous) — Sec 2(33)</td><td>കുറഞ്ഞത് 7 വർഷമോ അതിലധികമോ</td><td><16 വയസ്സ്: സമൻസ് രീതി; 16–18: Sec 15 പ്രാഥമിക വിലയിരുത്തൽ</td></tr></tbody></table></div><div class="added-fact"><span class="box-label">➕ പോലീസ് റിപ്പോർട്ട് സമയം (Model Rules Rule 10 — കുറിപ്പ് പ്രകാരം)</span><ul><li>16+ കൊടും കുറ്റം: ആദ്യ ഹാജരാക്കലിന് <strong>1 മാസത്തിനുള്ളിൽ</strong> സാക്ഷിമൊഴി/രേഖകൾ</li><li>ചെറുകിട/ഗുരുതര: <strong>2 മാസത്തിനുള്ളിൽ</strong> അന്തിമ റിപ്പോർട്ട്</li></ul></div></div></section>
+<section class="section collapsed" id="sec6"><h2 role="button" tabindex="0" aria-expanded="false">6. പ്രാഥമിക വിലയിരുത്തൽ (Sec 15), 7 ഉത്തരവുകൾ (Sec 18), ചിൽഡ്രൻസ് കോടതി (Sec 19–21) <span class="toggle-icon">▼</span></h2><div class="section-body"><h3>Sec 15 — Preliminary Assessment <span class="stars">⭐⭐⭐⭐⭐</span></h3><ul><li><strong>ആർക്ക്?</strong> 16 വയസ്സ് പൂർത്തിയായ കുട്ടി <strong>കൊടും കുറ്റം</strong> ചെയ്തെന്ന് ആരോപിക്കപ്പെടുമ്പോൾ.</li><li><strong>3 കാര്യങ്ങൾ വിലയിരുത്തണം:</strong> (1) കുറ്റം ചെയ്യാനുള്ള മാനസിക-ശാരീരിക ശേഷി, (2) പ്രത്യാഘാതം മനസ്സിലാക്കാനുള്ള കഴിവ്, (3) കുറ്റം ചെയ്ത സാഹചര്യം.</li><li><strong>3 മാസത്തിനുള്ളിൽ</strong> (Sec 14(3)); ഇത് <strong>വിചാരണയല്ല</strong> (not a trial). പരിചയസമ്പന്ന മനഃശാസ്ത്രജ്ഞരുടെ/സൈക്കോ-സോഷ്യൽ വർക്കർമാരുടെ സഹായം തേടാം.</li><li>ഫലം: JJB തന്നെ കുട്ടിയായി തീർപ്പാക്കും, അല്ലെങ്കിൽ Sec 18(3) പ്രകാരം <strong>ചിൽഡ്രൻസ് കോടതിക്ക്</strong> കൈമാറും.</li></ul><div class="memory"><span class="box-label">🧠 Trick</span><p><strong>"3 ശേഷി-ബോധം-സാഹചര്യം"</strong> → ശേഷി (capacity), ബോധം (understanding consequences), സാഹചര്യം (circumstances).</p></div><h3>Sec 18 — കുറ്റക്കാരനെന്ന് കണ്ടാൽ 7 ഉത്തരവുകൾ <span class="stars">⭐⭐⭐⭐⭐</span></h3><div style="overflow-x: auto;"><table><thead><tr><th>ഖണ്ഡം</th><th>ഉത്തരവ്</th></tr></thead><tbody><tr><td>(a)</td><td>ഉപദേശവും മുന്നറിയിപ്പും നൽകി വീട്ടിലേക്ക് വിടൽ</td></tr><tr><td>(b)</td><td>ഗ്രൂപ്പ് കൗൺസിലിംഗിൽ പങ്കെടുക്കാൻ നിർദ്ദേശം</td></tr><tr><td>(c)</td><td><strong>കമ്മ്യൂണിറ്റി സർവീസ്</strong> (മോഡൽ ചട്ടപ്രകാരം <strong>14 വയസ്സിന് മുകളിൽ</strong> മാത്രം — കുറിപ്പ്: Rule 2(1)(vi))</td></tr><tr><td>(d)</td><td>കുട്ടിയിലോ മാതാപിതാക്കളിലോ <strong>പിഴ</strong></td></tr><tr><td>(e)</td><td>നല്ലനടപ്പ് പ്രൊബേഷൻ — മാതാപിതാക്കൾ/ഫിറ്റ് പേഴ്സൺ സംരക്ഷണത്തിൽ (<strong>പരമാവധി 3 വർഷം</strong>)</td></tr><tr><td>(f)</td><td>നല്ലനടപ്പ് പ്രൊബേഷൻ — ഫിറ്റ് ഫെസിലിറ്റിയിൽ (<strong>പരമാവധി 3 വർഷം</strong>)</td></tr><tr><td>(g)</td><td><strong>സ്പെഷ്യൽ ഹോം</strong> — പരമാവധി <strong>3 വർഷം</strong> (അപകടകാരിയെങ്കിൽ പ്ലേസ് ഓഫ് സേഫ്റ്റി)</td></tr></tbody></table></div><ul><li><strong>Sec 18(2):</strong> സ്കൂൾ / തൊഴിൽ പരിശീലനം / ലഹരിവിമുക്ത കേന്ദ്രം എന്നിവയ്ക്ക് നിർദ്ദേശിക്കാം.</li><li><strong>Sec 18(3):</strong> 16–18 കൊടും കുറ്റത്തിൽ ചിൽഡ്രൻസ് കോടതിക്ക് കൈമാറൽ — ഇതിന് PM ഉൾപ്പെടെ 2 അംഗങ്ങൾ വേണം (Sec 7(3)); കാരണം രേഖപ്പെടുത്തി പകർപ്പ് കുട്ടിക്ക് നൽകണം.</li></ul><div class="memory"><span class="box-label">🧠 Trick — 18(1) ഓർക്കാൻ</span><p><strong>"ഉപദേശം-കൗൺസിലിംഗ്-സേവനം-പിഴ-പ്രൊബേഷൻ(വീട്)-പ്രൊബേഷൻ(സ്ഥാപനം)-സ്പെഷ്യൽ ഹോം"</strong> — ലഘുവിൽ നിന്ന് കഠിനത്തിലേക്ക്. പ്രൊബേഷനും സ്പെഷ്യൽ ഹോമും എല്ലാം <strong>3 വർഷം</strong>.</p></div><h3>Sec 19–21</h3><ul><li><strong>Sec 19:</strong> ചിൽഡ്രൻസ് കോടതി വീണ്ടും സ്വതന്ത്രമായി വിലയിരുത്തി മുതിർന്നയാളായി വിചാരണ വേണോ എന്ന് തീരുമാനിക്കും.</li><li><strong>Sec 20:</strong> കുട്ടിക്ക് <strong>21 വയസ്സ്</strong> ആകുമ്പോൾ പരിവർത്തനം വിലയിരുത്തി മോചിപ്പിക്കണോ ജയിലിലേക്ക് മാറ്റണോ എന്ന് തീരുമാനം.</li><li><strong>Sec 21:</strong> <strong>വധശിക്ഷയോ മോചനസാധ്യതയില്ലാത്ത ജീവപര്യന്തമോ പാടില്ല.</strong></li></ul></div></section>
+<section class="section collapsed" id="sec7"><h2 role="button" tabindex="0" aria-expanded="false">7. ത്രിതല പെൻഡൻസി അവലോകനം (Sec 16), സംരക്ഷണങ്ങൾ (Sec 17, 22–26), അപ്പീൽ (Sec 101) <span class="toggle-icon">▼</span></h2><div class="section-body"><h3>Sec 16 — Pendency Review <span class="stars">⭐⭐⭐⭐⭐</span></h3><div style="overflow-x: auto;"><table><thead><tr><th>തലം</th><th>ആര്</th><th>എത്ര ഇടവേള</th></tr></thead><tbody><tr><td>16(1)</td><td><strong>CJM / CMM</strong> — സിറ്റിംഗ് കൂട്ടാനോ അധിക JJB-ക്കോ ശുപാർശ</td><td><strong>3 മാസം</strong></td></tr><tr><td>16(2)</td><td><strong>ഉന്നതതല സമിതി:</strong> SLSA എക്സിക്യൂട്ടീവ് ചെയർപേഴ്സൺ (അധ്യക്ഷൻ), ആഭ്യന്തര സെക്രട്ടറി, വനിതാ-ശിശുവികസന സെക്രട്ടറി, NGO പ്രതിനിധി</td><td><strong>6 മാസം</strong></td></tr><tr><td>16(3)</td><td>JJB തന്നെ CJM-നും DM-നും പെൻഡൻസി വിവരം നൽകൽ (ഫോറം 12 — കുറിപ്പ്)</td><td>ത്രൈമാസം</td></tr><tr><td>16(4)</td><td><strong>ജില്ലാ മജിസ്ട്രേറ്റ്</strong> — ബോർഡ്/CWC ഉൾപ്പെടെ ആരിൽ നിന്നും വിവരം തേടാം (<strong>2021 ഭേദഗതി</strong>)</td><td>ആവശ്യാനുസരണം</td></tr></tbody></table></div><div class="memory"><span class="box-label">🧠 Trick</span><p><strong>"3 – 6 – DM"</strong>: 3 മാസം CJM, 6 മാസം SLSA സമിതി, DM ആവശ്യമുള്ളപ്പോൾ.</p></div><h3>സംരക്ഷണ വകുപ്പുകൾ</h3><div style="overflow-x: auto;"><table><thead><tr><th>വകുപ്പ്</th><th>വ്യവസ്ഥ</th></tr></thead><tbody><tr><td>17</td><td>കുറ്റക്കാരനല്ലെങ്കിൽ വിടുക; പരിചരണം വേണമെങ്കിൽ CWC-യ്ക്ക് കൈമാറാം</td></tr><tr><td>21</td><td>വധശിക്ഷ / മോചനമില്ലാത്ത ജീവപര്യന്തം വിലക്ക്</td></tr><tr><td>22</td><td>CrPC (BNSS) <strong>അധ്യായം VIII</strong> (സമാധാന/നല്ലനടപ്പ് ജാമ്യ) നടപടികൾ കുട്ടിക്കെതിരെ പാടില്ല</td></tr><tr><td>23</td><td>മുതിർന്ന പ്രതിയോടൊപ്പം <strong>സംയുക്ത വിചാരണ</strong> പാടില്ല</td></tr><tr><td>24</td><td>JJ ആക്ട് പ്രകാരം കുറ്റക്കാരനായാലും <strong>അയോഗ്യത ഉണ്ടാകില്ല</strong> (Sec 19(1)(i) പ്രകാരം മുതിർന്നയാളായി ശിക്ഷിച്ച കൊടും കുറ്റം ഒഴികെ). Model Rules: രേഖകൾ അപ്പീൽ കാലാവധി/പരമാവധി <strong>7 വർഷം</strong> കഴിഞ്ഞ് നശിപ്പിക്കണം</td></tr><tr><td>25</td><td>2015 ആക്ടിന് മുമ്പുള്ള കേസുകൾ പഴയ നിയമപ്രകാരം തുടരും</td></tr><tr><td>26</td><td>സ്പെഷ്യൽ/ഒബ്സർവേഷൻ ഹോമിൽ നിന്ന് ഒളിച്ചോടിയാൽ പോലീസ് പിടിച്ച് <strong>24 മണിക്കൂറിനുള്ളിൽ</strong> JJB-ക്ക്; <strong>ഒളിച്ചോടിയതിന് അധിക നടപടി പാടില്ല</strong></td></tr></tbody></table></div><h3>Sec 101 — അപ്പീൽ</h3><ul><li>JJB ഉത്തരവിനെതിരെ <strong>30 ദിവസത്തിനുള്ളിൽ ചിൽഡ്രൻസ് കോടതിയിൽ</strong> (101(1)).</li><li>Sec 15 ഉത്തരവിനെതിരെ <strong>സെഷൻസ് കോടതിയിൽ</strong> (101(2)) — SC 2024: 30 ദിവസം.</li><li>101(3): കുട്ടിയെ വെറുതെ വിടുന്ന (acquittal) ഉത്തരവിനെതിരെ സാധാരണ അപ്പീൽ ഇല്ല — <em>എന്നാൽ നിയമപാഠത്തിലെ വിലക്ക് "16+ കുട്ടി ചെയ്ത കൊടും ഒഴികെയുള്ള കുറ്റത്തിലെ" വെറുതെ വിടലിനാണ്; കൃത്യമായ പദപ്രയോഗം Bare Act-ൽ ഉറപ്പിക്കുക.</em></li></ul></div></section>
+<section class="section collapsed" id="sec8"><h2 role="button" tabindex="0" aria-expanded="false">8. പ്രധാന സുപ്രീംകോടതി & ഹൈക്കോടതി വിധികൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x: auto;"><table><thead><tr><th>വിധി</th><th>കാര്യം</th><th>നില</th></tr></thead><tbody><tr><td><strong>Barun Chandra Thakur v. Master Bholu</strong> (SC, 2022 ജൂലൈ 13)</td><td>Sec 15(1)-ൽ വിദഗ്ദ്ധ സഹായം തേടൽ നിർബന്ധം; വിലയിരുത്തൽ യാന്ത്രികമാകരുത്</td><td>കുറിപ്പ് പ്രകാരം</td></tr><tr><td><strong>Thirumoorthy v. State</strong> (SC, 2024 മാർച്ച്) ★★★</td><td>കുട്ടിയാണെന്നറിഞ്ഞിട്ടും JJB, Sec 15 എന്നിവ മറികടന്ന വിചാരണയും ശിക്ഷയും <strong>അസാധു</strong></td><td>കുറിപ്പ് പ്രകാരം</td></tr><tr><td><strong>Child in Conflict with Law v. State of Karnataka</strong> (SC, 2024 മെയ് 7)</td><td>Sec 14(3) 3 മാസം <em>directory</em>; Sec 101(2) അപ്പീൽ സെഷൻസ് കോടതിയിൽ</td><td>✅ ഓൺലൈൻ ഒത്തുനോക്കി</td></tr><tr><td><strong>Juvenile Delinquent v. State of U.P.</strong> (2026 INSC 387)</td><td>Sec 15 ഇല്ലാതെ മുതിർന്നയാളായി വിചാരണ പാടില്ല; ഊഹത്തിൽ ജാമ്യം നിഷേധിക്കരുത്</td><td>⚠️ verify</td></tr><tr><td><strong>X v. State of Bihar</strong> (2026 INSC 728)</td><td>കൊലപാതകം കൊടും കുറ്റം; വിദഗ്ദ്ധ റിപ്പോർട്ട് അന്തിമമല്ല</td><td>⚠️ verify</td></tr><tr><td><strong>Sreejisha M. v. State of Kerala</strong> (KER HC, 2026)</td><td>പ്രായപൂർത്തിയാകാത്തയാളുടെ വാഹനാപകടം: രക്ഷിതാവിനെതിരെ MV Act 199A — Rule 10(6) പ്രകാരം 2 മാസത്തിനകം റിപ്പോർട്ട്</td><td>⚠️ verify</td></tr></tbody></table></div></div></section>
+<section class="section collapsed" id="sec9"><h2 role="button" tabindex="0" aria-expanded="false">9. താരതമ്യ പട്ടികകൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><h3>പട്ടിക 1: JJB vs CWC ★★★</h3><div style="overflow-x: auto;"><table><thead><tr><th>സവിശേഷത</th><th>JJB</th><th>CWC</th></tr></thead><tbody><tr><td>അധ്യായം</td><td>III & IV (Sec 4–26)</td><td>V & VI (Sec 27–38)</td></tr><tr><td>കുട്ടി</td><td>CCL (Sec 2(13))</td><td>CNCP (Sec 2(14))</td></tr><tr><td>അംഗസംഖ്യ</td><td>3 (1 + 2; 1 വനിത)</td><td>5 (ചെയർപേഴ്സൺ + 4; 1 വനിത, 1 ശിശുവിദഗ്ദ്ധൻ)</td></tr><tr><td>അന്തിമ ക്വാറം</td><td>PM ഉൾപ്പെടെ 2 (Sec 7(3))</td><td>3 അംഗങ്ങൾ</td></tr><tr><td>സിറ്റിംഗ്</td><td>എല്ലാ പ്രവൃത്തിദിവസം, കുറഞ്ഞത് 6 മണിക്കൂർ</td><td>മാസത്തിൽ കുറഞ്ഞത് 20 ദിവസം</td></tr><tr><td>പരിശീലനം</td><td>60 ദിവസത്തിനുള്ളിൽ</td><td>2 മാസം</td></tr><tr><td>അവലോകനം</td><td>CJM 3 മാസം / SLSA സമിതി 6 മാസം / DM</td><td>DM ത്രൈമാസം</td></tr></tbody></table></div><h3>പട്ടിക 2: സമയപരിധികൾ ഒറ്റനോട്ടത്തിൽ</h3><div style="overflow-x: auto;"><table><thead><tr><th>സമയം</th><th>എന്ത്</th><th>വകുപ്പ്</th></tr></thead><tbody><tr><td>24 മണിക്കൂർ</td><td>JJB-യിൽ ഹാജരാക്കൽ / ഒളിച്ചോടിയ കുട്ടി</td><td>10, 26</td></tr><tr><td>7 ദിവസം</td><td>ജാമ്യവ്യവസ്ഥ പാലിക്കാനായില്ലെങ്കിൽ പുനർഹാജരാക്കൽ</td><td>12(4)</td></tr><tr><td>2 ആഴ്ച</td><td>SIR</td><td>13</td></tr><tr><td>1 മാസം / 2 മാസം</td><td>പോലീസ് രേഖ/അന്തിമ റിപ്പോർട്ട്</td><td>Rule 10</td></tr><tr><td>60 ദിവസം</td><td>ഇൻഡക്ഷൻ പരിശീലനം</td><td>4(5)</td></tr><tr><td>3 മാസം</td><td>പ്രാഥമിക വിലയിരുത്തൽ; CJM അവലോകനം</td><td>14(3), 16(1)</td></tr><tr><td>4 + 2 മാസം</td><td>അന്വേഷണം</td><td>14(2)</td></tr><tr><td>6 മാസം</td><td>SLSA സമിതി</td><td>16(2)</td></tr><tr><td>30 ദിവസം</td><td>അപ്പീൽ</td><td>101</td></tr><tr><td>7 വർഷം</td><td>രേഖാ നശീകരണം</td><td>Rule 14</td></tr></tbody></table></div></div></section>
+<section class="section collapsed" id="sec10"><h2 role="button" tabindex="0" aria-expanded="false">10. പരീക്ഷയിലെ ചതിക്കുഴികൾ (Traps) <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="trap"><span class="box-label">⚠️ Trap 1</span><p><strong>ചോദ്യം:</strong> JJB പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ് ആരാകാം?<br><strong>കെണി:</strong> CJM / CMM.<br><strong>വസ്തുത:</strong> MM/JMFC (3 വർഷ പരിചയം); <strong>CJM/CMM പാടില്ല</strong> — അവരാണ് Sec 16 അവലോകനം ചെയ്യുന്നത്.</p></div><div class="trap"><span class="box-label">⚠️ Trap 2</span><p>സിറ്റിംഗ് കുറഞ്ഞത് 3 മണിക്കൂറോ? <strong>ഇല്ല — 6 മണിക്കൂർ</strong> (Rule 6(7)).</p></div><div class="trap"><span class="box-label">⚠️ Trap 3</span><p>കമ്മ്യൂണിറ്റി സർവീസ് ഏത് പ്രായത്തിൽ? <strong>14 വയസ്സിന് മുകളിൽ</strong> മാത്രം.</p></div><div class="trap"><span class="box-label">⚠️ Trap 4</span><p>ഒളിച്ചോടിയ കുട്ടിക്കെതിരെ പുതിയ കേസ്? <strong>പാടില്ല</strong> (Sec 26(4)).</p></div><div class="trap"><span class="box-label">⚠️ Trap 5</span><p>Sec 16(2) സമിതി അധ്യക്ഷൻ? ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസോ കളക്ടറോ അല്ല — <strong>SLSA എക്സിക്യൂട്ടീവ് ചെയർപേഴ്സൺ</strong>.</p></div><div class="trap"><span class="box-label">⚠️ Trap 6</span><p>അന്തിമ വിധിക്ക് PM ഇല്ലാതെ 2 സാമൂഹ്യപ്രവർത്തകർ മതിയോ? <strong>പോരാ</strong> — Sec 7(3).</p></div><div class="trap"><span class="box-label">⚠️ Trap 7</span><p>Sec 15 ഒരു വിചാരണയാണോ? <strong>അല്ല</strong> — ശേഷി വിലയിരുത്തൽ മാത്രം.</p></div><div class="correction"><span class="box-label">🔴 ശ്രദ്ധിക്കുക</span><p>പ്രായ നിർണ്ണയത്തിൽ ആദ്യം ഓസിഫിക്കേഷൻ ടെസ്റ്റ് എന്നത് തെറ്റ്; സ്കൂൾ/ജനന സർട്ടിഫിക്കറ്റ് ആദ്യം (Sec 94).</p></div></div></section>
+<section class="section collapsed" id="sec11"><h2 role="button" tabindex="0" aria-expanded="false">11. മെമ്മറി ട്രിക്കുകൾ <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="memory"><span class="box-label">🧠 സമയ ഏണി</span><p><strong>24 മണിക്കൂർ → 7 ദിവസം → 2 ആഴ്ച → 1/2 മാസം → 60 ദിവസം → 3 മാസം → 4+2 മാസം → 6 മാസം → 7 വർഷം</strong> — ഹാജരാക്കൽ, ജാമ്യം, SIR, പോലീസ് റിപ്പോർട്ട്, പരിശീലനം, വിലയിരുത്തൽ, അന്വേഷണം, സമിതി, രേഖ.</p></div><div class="memory"><span class="box-label">🧠 സംരക്ഷണ കോഡ് 21–22–23–24–26</span><p>21 തൂക്ക് ഇല്ല | 22 കരുതൽ നടപടി ഇല്ല | 23 കൂട്ടുവിചാരണ ഇല്ല | 24 അയോഗ്യത ഇല്ല | 26 ഒളിച്ചോട്ട കേസ് ഇല്ല → <strong>"ഇല്ല-ഇല്ല"</strong> വകുപ്പുകൾ!</p></div><div class="memory"><span class="box-label">🧠 3 – 6 – DM</span><p>CJM 3 മാസം | SLSA 6 മാസം | DM (16(4)).</p></div></div></section>
+<section class="section collapsed" id="sec12"><h2 role="button" tabindex="0" aria-expanded="false">12. Theory അറിയില്ലെങ്കിലും ഉത്തരം കണ്ടെത്താനുള്ള PSC Smart Tricks <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="important"><span class="box-label">⭐ ആദ്യം മനസ്സിലാക്കുക</span><p>ഈ വിദ്യകൾ <strong>ശരിയാകാനുള്ള സാധ്യത കൂട്ടുന്നു, ഉറപ്പ് നൽകുന്നില്ല</strong>. "ഏറ്റവും നീണ്ട ഉത്തരം ശരി", "എപ്പോഴും C" തുടങ്ങിയ മിത്തുകൾ വിശ്വസിക്കരുത്. KPSC-ക്ക് സാധാരണ തെറ്റുത്തരത്തിന് <strong>1/3 മാർക്ക് കുറയ്ക്കൽ</strong> ഉണ്ട് (വിജ്ഞാപനം നോക്കുക): 2 ഓപ്ഷൻ വരെ ഒഴിവാക്കാനായാൽ ഊഹം പരിഗണിക്കാം; ഒന്നും ഒഴിവാക്കാനായില്ലെങ്കിൽ ഒഴിവാക്കുന്നതാണ് സുരക്ഷിതം.</p></div><h3>1. Option Elimination (ഓപ്ഷൻ ഒഴിവാക്കൽ)</h3><div class="added-fact"><span class="box-label">📝 ഉദാഹരണം</span><p><strong>JJB-യിലെ അംഗങ്ങളുടെ എണ്ണം?</strong></p><p>(A) 1 (B) 3 (C) 5 (D) 7</p><ol><li>"Board" = ബെഞ്ച് (ജഡ്ജിയും സാമൂഹ്യപ്രവർത്തകരും) എന്ന് അറിയാം → 1 അല്ല, (A) ഒഴിവ്.</li><li>5 അംഗങ്ങൾ CWC-ക്ക് എന്ന് ഓർക്കുന്നുവെങ്കിൽ (C) ഒഴിവ്.</li><li>7 അനാവശ്യമായി വലുത് (ജില്ലാ ബെഞ്ചിന് യുക്തിയില്ല) → (D) ഒഴിവ്.</li></ol><p><strong>ഉത്തരം: (B) 3</strong></p></div><div class="correction"><span class="box-label">⚠️ മുന്നറിയിപ്പ്</span><p>"യുക്തിയില്ല" എന്നത് ഊഹമാണ്; 1+2=3 ഓർമ്മിക്കലാണ് ഉറപ്പ്.</p></div><h3>2. Keyword Tricks & Extreme Statement Check</h3><ul><li><strong>only, always, never, all, none</strong> കണ്ടാൽ തെറ്റെന്ന് തീരുമാനിക്കരുത് — <em>പരിശോധിക്കാനുള്ള സൂചന</em> മാത്രം.</li><li>"<strong>ഇല്ല/പാടില്ല</strong>" ഉള്ള നിയമങ്ങൾ (Sec 10, 21–23, 26) യഥാർത്ഥത്തിൽ കേവല നിരോധനങ്ങളാണ് — അവിടെ extreme പ്രസ്താവന ശരിയാകും!</li></ul><div class="added-fact"><span class="box-label">📝 ഉദാഹരണം</span><p><strong>കുട്ടിയെ ലോക്കപ്പിൽ ഇടാൻ ഒരിക്കലും പാടില്ല — ശരിയോ?</strong></p><p>(A) ശരി (B) തെറ്റ്</p><ol><li>"ഒരിക്കലും" = extreme. നിയമം അറിയാതെ ഒഴിവാക്കിയാൽ തെറ്റ്.</li><li>Sec 10 നിരോധനം കേവലമാണ് → പ്രസ്താവന ശരി.</li></ol><p><strong>ഉത്തരം: (A)</strong></p></div><div class="correction"><span class="box-label">⚠️ മുന്നറിയിപ്പ്</span><p>Extreme വാക്ക് കണ്ടാൽ ഓട്ടോമാറ്റിക് "തെറ്റ്" എന്നത് ചതിയാണ്.</p></div><h3>3. Statement-Based Questions</h3><div class="added-fact"><span class="box-label">📝 ഉദാഹരണം</span><p><strong>(1) JJB-യിൽ CJM അംഗമാകാം. (2) JJB-യിൽ ഒരു വനിത നിർബന്ധം. ശരിയായത്?</strong></p><p>(A) 1 മാത്രം (B) 2 മാത്രം (C) രണ്ടും (D) ഒന്നുമില്ല</p><ol><li>ഓരോ പ്രസ്താവനയും വേറെ പരിശോധിക്കുക.</li><li>(1) തെറ്റ് — CJM/CMM പാടില്ല → (A), (C) ഒഴിവ്.</li><li>(2) ശരി → (D) ഒഴിവ്.</li></ol><p><strong>ഉത്തരം: (B)</strong></p></div><div class="correction"><span class="box-label">⚠️ മുന്നറിയിപ്പ്</span><p>ഒരു പ്രസ്താവന മാത്രം ഉറപ്പായാലും 2 ഓപ്ഷൻ ഒഴിയും — ഊഹത്തിന് നല്ല അവസരം.</p></div><h3>4. Match the Following</h3><div class="added-fact"><span class="box-label">📝 ഉദാഹരണം</span><p><strong>Sec 13 – ?, Sec 22 – ?, Sec 24 – ?</strong></p><p>അറിയുന്ന ജോഡി: Sec 13 = SIR</p><ol><li>അറിയുന്ന ജോഡി ആദ്യം ഉറപ്പിക്കുക (13 = SIR).</li><li>ആ ജോഡിയില്ലാത്ത ഓപ്ഷനുകൾ ഒഴിവാക്കുക.</li><li>ബാക്കി ജോഡികളിൽ "ഇല്ല-ഇല്ല" കോഡ് (22 = കരുതൽ നടപടി ഇല്ല) ഉപയോഗിക്കുക.</li></ol><p><strong>ഉത്തരം: അറിയുന്ന 1–2 ജോഡി മതി</strong></p></div><div class="correction"><span class="box-label">⚠️ മുന്നറിയിപ്പ്</span><p>ഒരു ജോഡി മാത്രം അറിയാമെങ്കിൽ ഒന്നിലധികം ഓപ്ഷൻ ബാക്കിയാകാം.</p></div><h3>5. Assertion–Reason</h3><div class="added-fact"><span class="box-label">📝 ഉദാഹരണം</span><p><strong>A: JJB-യിൽ CJM ഇരിക്കില്ല. R: CJM ആണ് Sec 16(1) പ്രകാരം JJB പെൻഡൻസി അവലോകനം ചെയ്യുന്നത്.</strong></p><p>(A) A,R ശരി; R, A-യെ വിശദീകരിക്കുന്നു (B) A,R ശരി; വിശദീകരണമല്ല (C) A ശരി, R തെറ്റ് (D) A തെറ്റ്, R ശരി</p><ol><li>A ശരി; R ശരി.</li><li>R ശരിയായ കാരണമാണോ? മേൽനോട്ടക്കാരൻ ബെഞ്ചിൽ ഇരിക്കരുത് എന്ന യുക്തി → ചേരുന്നു (നിയമം തന്നെ ഇത് വ്യക്തമായി പറയുന്നില്ല, പ്രയോഗത്തിലെ ന്യായം).</li></ol><p><strong>ഉത്തരം: (A) — പരീക്ഷാ കീ പ്രകാരം പരിശോധിക്കുക</strong></p></div><div class="correction"><span class="box-label">⚠️ മുന്നറിയിപ്പ്</span><p>Reason വിശദീകരണമാണോ എന്ന വിധി ചിലപ്പോൾ ആത്മനിഷ്ഠമാണ്; ചോദ്യത്തിലെ ഓപ്ഷൻ വാചകം വായിക്കുക.</p></div><h3>6. Chronology & Number Logic; Similar-Option Comparison; Wording</h3><ul><li><strong>സംഖ്യാ ഏണി:</strong> 24 മണിക്കൂർ < 7 ദിവസം < 2 ആഴ്ച < 2 മാസം < 3 മാസം < 4 മാസം < 6 മാസം. ഒരു സംഖ്യ ഉറപ്പെങ്കിൽ മറ്റുള്ളവയുമായി താരതമ്യം ചെയ്യാം.</li><li><strong>സമാന ഓപ്ഷനുകൾ</strong> (3 മാസം vs 6 മാസം): "ആര്" എന്ന് ചോദിക്കുക — CJM → 3; സമിതി → 6.</li><li><strong>"തെറ്റായത്", "ഒഴികെ", "അല്ലാത്തത്"</strong> — ചോദ്യം രണ്ടുതവണ വായിക്കുക; Q-കളിൽ ഏറ്റവും കൂടുതൽ മാർക്ക് നഷ്ടപ്പെടുന്നത് ഇവിടെയാണ്.</li><li><strong>PSC pattern:</strong> സമയപരിധികൾ, ഘടന, "പാടില്ല" വ്യവസ്ഥകൾ ഇടയ്ക്കിടെ വരാറുണ്ട് — ഇത് ഉത്തരം ഉറപ്പിക്കില്ല, പഠന മുൻഗണന മാത്രം.</li></ul><div class="correction"><span class="box-label">🔴 അവസാനമായി</span><p>നീളം, ക്രമം, "C ആവർത്തനം" എന്നിവ നോക്കി ഉത്തരം തീരുമാനിക്കരുത്. Smart trick = <strong>അറിയാവുന്ന ഒരു വസ്തുത + യുക്തി</strong>.</p></div></div></section>
+<section class="section collapsed" id="sec13"><h2 role="button" tabindex="0" aria-expanded="false">13. പ്രതീക്ഷിത ചോദ്യങ്ങൾ (Practice MCQs) <span class="toggle-icon">▼</span></h2><div class="section-body"><p>ശ്രദ്ധിക്കുക: ഇവ <strong>പുതുതായി തയ്യാറാക്കിയ practice ചോദ്യങ്ങളാണ്</strong>; യഥാർത്ഥ PYQ അല്ല.</p><div class="question-item" data-qindex="0" data-correct="A"><div class="q-text">1. JJB-യുടെ അന്തിമ തീർപ്പാക്കൽ ക്വാറവും ഇൻഡക്ഷൻ പരിശീലന സമയപരിധിയും (Sec 7(3), 4(5)) യഥാക്രമം?<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. PM ഉൾപ്പെടെ 2 അംഗങ്ങൾ — 60 ദിവസം</span><span data-opt="B">B. 3 അംഗങ്ങൾ — 90 ദിവസം</span><span data-opt="C">C. 2 സാമൂഹ്യപ്രവർത്തകർ — 30 ദിവസം</span><span data-opt="D">D. PM തനിച്ച് — 2 മാസം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (A) PM ഉൾപ്പെടെ 2 അംഗങ്ങൾ — 60 ദിവസം</div><div class="explanation">(A) ശരി — Sec 7(3), 4(5). (B) 3 അംഗം CWC ക്വാറമാണ്. (C) PM ഇല്ലാതെ അന്തിമ വിധി പാടില്ല. (D) PM മാത്രം പോരാ, മറ്റൊരു അംഗം വേണം.</div></div></div><div class="question-item" data-qindex="1" data-correct="C"><div class="q-text">2. JJB പെൻഡൻസി ഓരോ 3 മാസത്തിലും 6 മാസത്തിലും അവലോകനം ചെയ്യുന്നവർ യഥാക്രമം?<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. DM — ഹൈക്കോടതി ചീഫ് ജസ്റ്റിസ്</span><span data-opt="B">B. CWC ചെയർപേഴ്സൺ — വനിതാശിശുവികസന മന്ത്രി</span><span data-opt="C">C. CJM/CMM — SLSA എക്സിക്യൂട്ടീവ് ചെയർപേഴ്സൺ അധ്യക്ഷനായ ഉന്നതസമിതി</span><span data-opt="D">D. സെഷൻസ് ജഡ്ജി — KeSCPCR</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) CJM/CMM — SLSA എക്സിക്യൂട്ടീവ് ചെയർപേഴ്സൺ അധ്യക്ഷനായ ഉന്നതസമിതി</div><div class="explanation">(C) ശരി — Sec 16(1), 16(2). DM-ന് 16(4) പ്രകാരം വിവരം തേടാനേ അധികാരമുള്ളൂ. CWC-ക്ക് JJB-യുടെ മേൽ അവലോകന അധികാരമില്ല. സെഷൻസ് കോടതി Sec 15 അപ്പീൽ വേദിയാണ്.</div></div></div><div class="question-item" data-qindex="2" data-correct="D"><div class="q-text">3. പ്രസ്താവനകൾ: 1) Sec 12(4): 7 ദിവസത്തിനകം ജാമ്യവ്യവസ്ഥ പാലിക്കാനായില്ലെങ്കിൽ വീണ്ടും JJB-യിൽ ഹാജരാക്കണം. 2) Sec 26(4): ഒളിച്ചോടിയ കുട്ടിക്കെതിരെ അധിക നടപടി പാടില്ല. 3) Rule 6(7): കുറഞ്ഞത് 3 മണിക്കൂർ സിറ്റിംഗ് മതി.<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. 1 മാത്രം</span><span data-opt="B">B. 2, 3 മാത്രം</span><span data-opt="C">C. 1, 2, 3</span><span data-opt="D">D. 1, 2 മാത്രം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (D) 1, 2 മാത്രം</div><div class="explanation">1, 2 ശരി. 3 തെറ്റ് — കുറഞ്ഞത് 6 മണിക്കൂർ.</div></div></div><div class="question-item" data-qindex="3" data-correct="B"><div class="q-text">4. തെറ്റായ പ്രസ്താവന ഏത്?<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. 2022 ഭേദഗതി ചട്ടത്തിൽ "തുടർച്ചയായിരിക്കാൻ പാടില്ല" വാചകം ഒഴിവാക്കി (കുറിപ്പ് പ്രകാരം)</span><span data-opt="B">B. Thirumoorthy (2024): JJB-യെ മറികടന്ന വിചാരണ ചെയ്താലും ശിക്ഷ നിലനിൽക്കും</span><span data-opt="C">C. കമ്മ്യൂണിറ്റി സർവീസ് 14 വയസ്സിന് മുകളിലുള്ളവർക്ക് മാത്രം</span><span data-opt="D">D. സാധാരണ രേഖകൾ പരമാവധി 7 വർഷത്തിന് ശേഷം നശിപ്പിക്കണം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) Thirumoorthy (2024): JJB-യെ മറികടന്ന വിചാരണ ചെയ്താലും ശിക്ഷ നിലനിൽക്കും</div><div class="explanation">(B) തെറ്റ്: ആ വിധിയിൽ ശിക്ഷ അസാധുവായി. മറ്റുള്ളവ കുറിപ്പ് പ്രകാരം ശരി.</div></div></div><div class="question-item" data-qindex="4" data-correct="C"><div class="q-text">5. ചേരുംപടി: a) Sec 8(3) ജയിൽ പരിശോധന b) Sec 13 c) Sec 22 d) Sec 24 — 1) SIR 2 ആഴ്ച 2) അയോഗ്യത നീക്കൽ 3) കുട്ടി ജയിലിൽ ഉണ്ടോ പരിശോധന 4) CrPC അധ്യായം VIII വിലക്ക്<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. a-1 b-3 c-4 d-2</span><span data-opt="B">B. a-3 b-4 c-1 d-2</span><span data-opt="C">C. a-3 b-1 c-4 d-2</span><span data-opt="D">D. a-4 b-1 c-3 d-2</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) a-3 b-1 c-4 d-2</div><div class="explanation">a-3, b-1, c-4, d-2. Sec 13 = SIR ഉറപ്പെങ്കിൽ b-1 ഇല്ലാത്ത (A),(B) ഒഴിവാകും. പിന്നെ Sec 8 ജയിൽ പരിശോധന (a-3) അറിയാമെങ്കിൽ (D) ഒഴിവായി (C) ശേഷിക്കും.</div></div></div><div class="question-item" data-qindex="5" data-correct="C"><div class="q-text">6. JJB പ്രിൻസിപ്പൽ മജിസ്ട്രേറ്റ് ആയി നിയമിക്കാൻ പാടില്ലാത്തത് ആരെ?<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. JMFC (3 വർഷ പരിചയം)</span><span data-opt="B">B. മെട്രോപൊളിറ്റൻ മജിസ്ട്രേറ്റ്</span><span data-opt="C">C. ചീഫ് ജുഡീഷ്യൽ മജിസ്ട്രേറ്റ്</span><span data-opt="D">D. JMFC (5 വർഷ പരിചയം)</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) ചീഫ് ജുഡീഷ്യൽ മജിസ്ട്രേറ്റ്</div><div class="explanation">Sec 4(2): CMM/CJM പാടില്ല.</div></div></div><div class="question-item" data-qindex="6" data-correct="C"><div class="q-text">7. JJB അന്വേഷണത്തിന്റെ സാധാരണ കാലയളവും നീട്ടാവുന്ന പരമാവധിയും?<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. 2 മാസം + 1 മാസം</span><span data-opt="B">B. 3 മാസം + 3 മാസം</span><span data-opt="C">C. 4 മാസം + 2 മാസം</span><span data-opt="D">D. 6 മാസം + 6 മാസം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) 4 മാസം + 2 മാസം</div><div class="explanation">Sec 14(2): 4 + 2 = 6 മാസം.</div></div></div><div class="question-item" data-qindex="7" data-correct="C"><div class="q-text">8. Sec 18(1) പ്രകാരം പരമാവധി ശിക്ഷാ കാലാവധി (സ്പെഷ്യൽ ഹോം/പ്രൊബേഷൻ)?<br><small style="font-weight:400;color:#4a5f72">[PSC-style practice (original)]</small></div><div class="options"><span data-opt="A">A. 1 വർഷം</span><span data-opt="B">B. 2 വർഷം</span><span data-opt="C">C. 3 വർഷം</span><span data-opt="D">D. 7 വർഷം</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (C) 3 വർഷം</div><div class="explanation">പ്രൊബേഷനും സ്പെഷ്യൽ ഹോമും പരമാവധി 3 വർഷം. 7 വർഷം = രേഖാ നശീകരണ പരിധി.</div></div></div><div class="question-item" data-qindex="8" data-correct="B"><div class="q-text">9. Sec 94 പ്രകാരം പ്രായ നിർണ്ണയത്തിൽ ആദ്യ മുൻഗണന ഏതിന്?<br><small style="font-weight:400;color:#4a5f72">[പുതിയ practice (original)]</small></div><div class="options"><span data-opt="A">A. ഓസിഫിക്കേഷൻ ടെസ്റ്റ്</span><span data-opt="B">B. സ്കൂൾ/മെട്രിക്കുലേഷൻ സർട്ടിഫിക്കറ്റ്</span><span data-opt="C">C. മാതാപിതാക്കളുടെ സത്യവാങ്മൂലം</span><span data-opt="D">D. ആധാർ കാർഡ്</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) സ്കൂൾ/മെട്രിക്കുലേഷൻ സർട്ടിഫിക്കറ്റ്</div><div class="explanation">ക്രമം: സ്കൂൾ/മെട്രിക് → തദ്ദേശ സ്ഥാപന ജനന സർട്ടിഫിക്കറ്റ് → അവ ഇല്ലെങ്കിൽ മാത്രം വൈദ്യ പരിശോധന. (Bare Act-ൽ ഉറപ്പിക്കുക)</div></div></div><div class="question-item" data-qindex="9" data-correct="B"><div class="q-text">10. 2021 ഭേദഗതി പ്രകാരം Sec 16(4) കൊണ്ടുവന്ന മാറ്റം?<br><small style="font-weight:400;color:#4a5f72">[പുതിയ practice (original)]</small></div><div class="options"><span data-opt="A">A. CJM-ക്ക് JJB നീക്കാൻ അധികാരം</span><span data-opt="B">B. ജില്ലാ മജിസ്ട്രേറ്റിന് ബോർഡ്/CWC ഉൾപ്പെടെ എല്ലാവരിൽ നിന്നും വിവരം തേടാം</span><span data-opt="C">C. JJB അംഗങ്ങൾ 5 ആക്കി</span><span data-opt="D">D. കുട്ടികൾക്ക് വധശിക്ഷ</span></div><div class="q-controls"><button type="button" class="btn-show">ഉത്തരം കാണിക്കുക</button><button type="button" class="btn-mark">മാർക്ക് ചെയ്യുക</button><button type="button" class="btn-lock">ലോക്ക് ചെയ്യുക</button><button type="button" class="btn-save">സേവ്</button><span class="q-status"></span></div><div class="answer-block"><div class="answer-label">ശരിയുത്തരം: (B) ജില്ലാ മജിസ്ട്രേറ്റിന് ബോർഡ്/CWC ഉൾപ്പെടെ എല്ലാവരിൽ നിന്നും വിവരം തേടാം</div><div class="explanation">Sec 16(4) — ഔദ്യോഗിക ഭേദഗതി പാഠം പ്രകാരം.</div></div></div></div></section>
+<section class="section collapsed" id="sec14"><h2 role="button" tabindex="0" aria-expanded="false">14. അതിവേഗ റിവിഷനും പ്രധാന തീയതികളും <span class="toggle-icon">▼</span></h2><div class="section-body"><div class="last-minute"><span class="box-label">⚡ Last Minute</span><ul><li><strong>1+2=3</strong> | PM = JMFC/MM 3 വർഷം, CJM/CMM അല്ല | 1 വനിത | 7 വർഷ പരിചയം</li><li>പരിശീലനം <strong>60 ദിവസം</strong> | സിറ്റിംഗ് <strong>6 മണിക്കൂർ</strong> | ക്വാറം <strong>PM ഉൾപ്പെടെ 2</strong></li><li><strong>24 മണിക്കൂർ</strong> – <strong>7 ദിവസം</strong> – SIR <strong>2 ആഴ്ച</strong> – അന്വേഷണം <strong>4+2</strong> – Sec 15 <strong>3 മാസം</strong></li><li>Sec 16: <strong>3 – 6 – DM</strong> | Sec 18: <strong>7 ഉത്തരവ്</strong>, 3 വർഷം | 21 വയസ്സ് (Sec 20)</li><li>Sec 21–24, 26: <strong>"ഇല്ല"</strong> വകുപ്പുകൾ</li></ul></div><div style="overflow-x: auto;"><table><thead><tr><th>തീയതി</th><th>സംഭവം</th></tr></thead><tbody><tr><td>2015 ഡിസം 31 / 2016 ജനു 15</td><td>JJ Act 2015 (Act 2 of 2016) അനുമതി / പ്രാബല്യം</td></tr><tr><td>2021 ഓഗസ്റ്റ് 7</td><td>Amendment Act 2021 (Act 23 of 2021) അനുമതി</td></tr><tr><td>2022 സെപ്റ്റംബർ 1</td><td>2021 ഭേദഗതി പ്രാബല്യം</td></tr><tr><td>2022 സെപ്റ്റംബർ 2</td><td>Model Amendment Rules 2022 (കുറിപ്പ് പ്രകാരം)</td></tr><tr><td>2024 മാർച്ച്</td><td>Thirumoorthy v. State</td></tr><tr><td>2024 മെയ് 7</td><td>Child in Conflict with Law v. State of Karnataka</td></tr></tbody></table></div></div></section>
+<section class="section collapsed" id="sec15"><h2 role="button" tabindex="0" aria-expanded="false">15. തിരുത്തൽ രജിസ്റ്ററും അവസാന ചെക്ക്‌ലിസ്റ്റും <span class="toggle-icon">▼</span></h2><div class="section-body"><div style="overflow-x: auto;"><table><thead><tr><th>ഭാഗം</th><th>പ്രശ്നം/മാറ്റം</th><th>നില</th></tr></thead><tbody><tr><td>Sec 16(4)</td><td>DM അധികാരം</td><td>✅ ഭേദഗതി പാഠം വഴി ഉറപ്പിച്ചു</td></tr><tr><td>Sec 7(3), 7(4)</td><td>ക്വാറം, ഭിന്നാഭിപ്രായം</td><td>✅ SC വിധി/നിയമ പാഠം വഴി ഉറപ്പിച്ചു</td></tr><tr><td>Sec 2(54)</td><td>2021: ഗുരുതര കുറ്റ നിർവചനം വിപുലീകരിച്ചു</td><td>✅ പൊതു ഉറവിടങ്ങൾ; Bare Act നോക്കുക</td></tr><tr><td>Sec 101(3)</td><td>അപ്പീൽ വിലക്കിന്റെ വ്യാപ്തി</td><td>⚠️ കുറിപ്പിലെ പൊതു പ്രസ്താവന നിയന്ത്രിച്ചു; verify</td></tr><tr><td>Rule 5(2) 2022</td><td>"തുടർച്ചയായി" വാചകം</td><td>⚠️ കുറിപ്പ് പ്രകാരം; കേരള ചട്ടം verify</td></tr><tr><td>2026 വിധികൾ</td><td>Juvenile Delinquent, X v. Bihar, Sreejisha</td><td>⚠️ ഉറവിടം പ്രകാരം; verify</td></tr><tr><td>Model Rule നമ്പറുകൾ</td><td>6(7), 10(5)–(6), 14, 2(1)(vi)</td><td>⚠️ കുറിപ്പ് പ്രകാരം; ചട്ട പാഠം നോക്കുക</td></tr></tbody></table></div><ul class="checklist"><li>ഘടന 1+2=3, CJM അല്ല, 60 ദിവസം</li><li>ക്വാറം, 6 മണിക്കൂർ, ഭിന്നാഭിപ്രായം</li><li>Sec 10, 12, 13, 14 സമയപരിധികൾ</li><li>Sec 15 ഉം Sec 18 ലെ 7 ഉത്തരവുകളും</li><li>Sec 16 ത്രിതല അവലോകനം</li><li>Sec 21–26 സംരക്ഷണങ്ങൾ, Sec 101 അപ്പീൽ</li></ul></div></section>
+</main></div>
 <script>
-window.PART_KEY   = 'important-acts-16.6.4-jj-board';
-window.PART_TITLE = '16.6.4 JJ Board';
-window.QUESTIONS  = [];
-</script>
-<script src="../../assets/js/engine.js"></script>
+document.addEventListener('DOMContentLoaded', function () {
 
-<script src="../../assets/js/sync.js" data-kpsc-sync="1"></script>
-</body>
-</html>
+  /* ---------- 1. Section collapse/expand ---------- */
+  document.querySelectorAll('.section > h2').forEach(function (h2) {
+    function toggle() {
+      var sec = h2.closest('.section');
+      var collapsed = sec.classList.toggle('collapsed');
+      h2.setAttribute('aria-expanded', String(!collapsed));
+    }
+    h2.addEventListener('click', toggle);
+    h2.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  /* ---------- 2. Expand all / collapse all ---------- */
+  var expandAll = document.getElementById('expandAll');
+  var collapseAll = document.getElementById('collapseAll');
+  if (expandAll) expandAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.remove('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'true');
+    });
+  });
+  if (collapseAll) collapseAll.addEventListener('click', function () {
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.add('collapsed');
+      var h = s.querySelector('h2');
+      if (h) h.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- 3. TOC scroll-spy ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#tocNav a'));
+  var spySections = tocLinks
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && spySections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(function (a) {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    spySections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* Smooth scroll for TOC */
+  tocLinks.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ---------- 4. MCQ behaviour ---------- */
+  document.querySelectorAll('.question-item').forEach(function (item) {
+    var opts = item.querySelectorAll('.options span');
+    var correct = (item.dataset.correct || '').trim();
+    var shown = false;
+    var locked = false;
+
+    opts.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (locked || shown) return;
+        opts.forEach(function (o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var status = item.querySelector('.q-status');
+        if (status) status.textContent = 'തിരഞ്ഞെടുത്തു: ' + opt.dataset.opt;
+      });
+    });
+
+    var showBtn = item.querySelector('.btn-show');
+    if (showBtn) showBtn.addEventListener('click', function () {
+      if (shown) return;
+      shown = true;
+      opts.forEach(function (o) {
+        if (o.dataset.opt === correct) o.classList.add('correct');
+        else if (o.classList.contains('selected')) o.classList.add('wrong');
+        o.classList.add('locked');
+      });
+      var block = item.querySelector('.answer-block');
+      if (block) block.classList.add('show');
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ഉത്തരം കാണിച്ചു';
+      showBtn.disabled = true;
+    });
+
+    var markBtn = item.querySelector('.btn-mark');
+    if (markBtn) markBtn.addEventListener('click', function () {
+      markBtn.classList.toggle('active');
+      var status = item.querySelector('.q-status');
+      if (status) {
+        status.textContent = markBtn.classList.contains('active')
+          ? 'മാർക്ക് ചെയ്തു ★'
+          : '';
+      }
+    });
+
+    var lockBtn = item.querySelector('.btn-lock');
+    if (lockBtn) lockBtn.addEventListener('click', function () {
+      locked = true;
+      opts.forEach(function (o) { o.classList.add('locked'); });
+      lockBtn.disabled = true;
+      var status = item.querySelector('.q-status');
+      if (status) status.textContent = 'ലോക്ക് ചെയ്തു 🔒';
+    });
+
+    var saveBtn = item.querySelector('.btn-save');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      var selected = item.querySelector('.options span.selected');
+      var status = item.querySelector('.q-status');
+      if (!selected) {
+        if (status) status.textContent = 'ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക';
+        return;
+      }
+      if (status) status.textContent = 'സേവ് ചെയ്തു ✓ (' + selected.dataset.opt + ')';
+    });
+  });
+
+});
+</script>
+</body></html>
